@@ -1,0 +1,406 @@
+/* ========================================
+   Poker ID - Global UI
+======================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #000;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #000;
+  color: #f5f5f5;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+/* ========================================
+   Main layout
+======================================== */
+
+.app {
+  width: 100%;
+  min-height: 100vh;
+  background: #000;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.card {
+  width: 100%;
+  max-width: 600px;
+  min-height: 100vh;
+
+  padding: 28px 20px 110px;
+
+  background: #000;
+
+  border-left: 1px solid #242424;
+  border-right: 1px solid #242424;
+
+  text-align: left;
+}
+
+
+/* ========================================
+   Logo / page title
+======================================== */
+
+.logo {
+  margin: 0;
+
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.1;
+
+  letter-spacing: -1px;
+
+  color: #fff;
+}
+
+.subtitle {
+  margin: 8px 0 28px;
+
+  color: #777;
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+
+/* ========================================
+   Forms
+======================================== */
+
+input,
+textarea,
+select {
+  width: 100%;
+
+  padding: 13px 14px;
+
+  color: #fff;
+  background: #111;
+
+  border: 1px solid #2d2d2d;
+  border-radius: 12px;
+
+  outline: none;
+
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #666;
+  background: #151515;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #666;
+}
+
+textarea {
+  resize: vertical;
+}
+
+
+/* ========================================
+   Buttons
+======================================== */
+
+button {
+  border: none;
+
+  transition:
+    background 0.15s ease,
+    opacity 0.15s ease,
+    transform 0.1s ease;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.login-button {
+  display: block;
+
+  width: 100%;
+
+  padding: 13px 16px;
+
+  color: #000;
+  background: #fff;
+
+  border: 1px solid #fff;
+  border-radius: 999px;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.login-button:hover {
+  background: #e9e9e9;
+}
+
+.signup-button {
+  display: block;
+
+  width: 100%;
+
+  padding: 13px 16px;
+
+  color: #fff;
+  background: transparent;
+
+  border: 1px solid #383838;
+  border-radius: 999px;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.signup-button:hover {
+  background: #111;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+
+/* ========================================
+   Common SNS components
+======================================== */
+
+.sns-divider {
+  width: 100%;
+  height: 1px;
+
+  background: #242424;
+}
+
+.sns-section {
+  padding: 20px 0;
+
+  border-bottom: 1px solid #242424;
+}
+
+.sns-avatar {
+  width: 46px;
+  height: 46px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+
+  background: #1b1b1b;
+
+  border: 1px solid #333;
+}
+
+.sns-avatar-fallback {
+  width: 46px;
+  height: 46px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #1b1b1b;
+  border: 1px solid #333;
+
+  font-size: 20px;
+}
+
+.sns-user-name {
+  color: #f5f5f5;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.sns-user-id {
+  color: #777;
+
+  font-size: 14px;
+}
+
+.sns-muted {
+  color: #777;
+}
+
+
+/* ========================================
+   Fixed bottom navigation
+======================================== */
+
+.bottom-nav {
+  position: fixed;
+
+  left: 50%;
+  bottom: 0;
+
+  transform: translateX(-50%);
+
+  z-index: 1000;
+
+  width: 100%;
+  max-width: 600px;
+  height: 68px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  background: rgba(0, 0, 0, 0.94);
+
+  border-top: 1px solid #282828;
+  border-left: 1px solid #242424;
+  border-right: 1px solid #242424;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.bottom-nav-item {
+  flex: 1;
+
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 3px;
+
+  color: #777;
+
+  background: transparent;
+
+  border: none;
+  border-radius: 0;
+
+  font-size: 11px;
+  font-weight: 500;
+
+  padding: 0;
+}
+
+.bottom-nav-item:hover {
+  background: #0c0c0c;
+}
+
+.bottom-nav-item.active {
+  color: #fff;
+}
+
+.bottom-nav-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+
+/* ========================================
+   Desktop
+======================================== */
+
+@media (min-width: 900px) {
+  body {
+    background: #080808;
+  }
+
+  .app {
+    background: #080808;
+  }
+
+  .card {
+    background: #000;
+  }
+}
+
+
+/* ========================================
+   Mobile
+======================================== */
+
+@media (max-width: 600px) {
+  .card {
+    max-width: none;
+
+    padding:
+      22px
+      16px
+      calc(95px + env(safe-area-inset-bottom));
+
+    border-left: none;
+    border-right: none;
+  }
+
+  .bottom-nav {
+    max-width: none;
+
+    padding-bottom: env(safe-area-inset-bottom);
+
+    height: calc(
+      68px + env(safe-area-inset-bottom)
+    );
+
+    border-left: none;
+    border-right: none;
+  }
+}
