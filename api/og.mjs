@@ -2,16 +2,40 @@ import { ImageResponse } from '@vercel/og'
 
 const money = (value) => {
   const n = Number(value)
+  return Number.isFinite(n) ? `¥${Math.round(n).toLocaleString('ja-JP')}` : '—'
+}
 
-  return Number.isFinite(n)
-    ? `¥${Math.round(n).toLocaleString('ja-JP')}`
-    : '—'
+const number = (value, digits = 0) => {
+  const n = Number(value)
+  if (!Number.isFinite(n)) return '—'
+  return n.toLocaleString('ja-JP', {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+  })
+}
+
+const dateLabel = (value) => {
+  if (!value) return ''
+  const parts = String(value).slice(0, 10).split('-')
+  if (parts.length !== 3) return String(value)
+  return `${parts[0]}.${parts[1]}.${parts[2]}`
+}
+
+const ordinal = (rank) => {
+  const n = Number(rank)
+  if (!Number.isFinite(n)) return ''
+  const mod100 = n % 100
+  if (mod100 >= 11 && mod100 <= 13) return `${n}TH`
+  const mod10 = n % 10
+  if (mod10 === 1) return `${n}ST`
+  if (mod10 === 2) return `${n}ND`
+  if (mod10 === 3) return `${n}RD`
+  return `${n}TH`
 }
 
 export async function GET(request) {
   try {
     const url = new URL(request.url)
-
     const type = url.searchParams.get('type') || ''
     const id = url.searchParams.get('id') || ''
 
@@ -54,7 +78,6 @@ export async function GET(request) {
 
     if (!dbResponse.ok) {
       const body = await dbResponse.text()
-
       return new Response(
         `Supabase error ${dbResponse.status}\n${body}`,
         { status: 500 },
@@ -72,8 +95,10 @@ export async function GET(request) {
     let title = 'Poker ID'
     let main = 'RESULT'
     let sub = ''
-    let detail = ''
+    let metaLeft = ''
+    let metaRight = ''
     let badge = ''
+    let accent = '#ffffff'
 
     if (type === 'tournament') {
       eyebrow = 'TOURNAMENT RESULT'
@@ -81,25 +106,28 @@ export async function GET(request) {
 
       if (!r.rank_unknown && r.rank) {
         const rank = Number(r.rank)
+        main = ordinal(rank)
 
-        const suffix =
-          rank === 1
-            ? 'ST'
-            : rank === 2
-              ? 'ND'
-              : rank === 3
-                ? 'RD'
-                : 'TH'
-
-        main = `${rank}${suffix}`
-
-        if (rank === 1) badge = 'WINNER'
-        else if (rank === 2) badge = '2ND PLACE'
-        else if (rank === 3) badge = '3RD PLACE'
-        else if (r.is_itm) badge = 'ITM'
+        if (rank === 1) {
+          badge = 'WINNER'
+          accent = '#f5c451'
+        } else if (rank === 2) {
+          badge = '2ND PLACE'
+          accent = '#d4d4d8'
+        } else if (rank === 3) {
+          badge = '3RD PLACE'
+          accent = '#c98b5b'
+        } else if (r.is_itm) {
+          badge = 'ITM'
+          accent = '#62d98b'
+        }
       } else if (r.is_itm) {
         main = 'ITM'
         badge = 'IN THE MONEY'
+        accent = '#62d98b'
+      } else {
+        main = 'PLAYED'
+        badge = 'TOURNAMENT'
       }
 
       if (r.entry_count) {
@@ -107,10 +135,12 @@ export async function GET(request) {
       }
 
       if (Number(r.prize_amount) > 0) {
-        detail = `PRIZE VALUE  ${money(r.prize_amount)}`
+        metaLeft = `PRIZE  ${money(r.prize_amount)}`
       } else if (r.venue) {
-        detail = r.venue
+        metaLeft = r.venue
       }
+
+      metaRight = dateLabel(r.played_at)
     }
 
     if (type === 'amusement') {
@@ -131,31 +161,79 @@ export async function GET(request) {
           ? (endingStack - (startingStack + additionalStack)) / bigBlind
           : 0
 
-      main = `${bb >= 0 ? '+' : ''}${bb.toFixed(1)} BB`
+      main = `${bb >= 0 ? '+' : ''}${number(bb, 1)} BB`
 
-      sub = r.game_type || r.game || ''
-      detail = r.played_at || ''
+      const blindText =
+        Number(r.small_blind) > 0 && Number(r.big_blind) > 0
+          ? `${number(r.small_blind)}/${number(r.big_blind)}`
+          : ''
 
-      badge =
-        bb >= 100
-          ? 'BIG WIN'
-          : bb >= 0
-            ? 'WIN'
-            : bb <= -100
-              ? 'BIG LOSS'
-              : 'LOSS'
+      sub = [r.game_type || r.game || '', blindText].filter(Boolean).join('  ·  ')
+
+      if (bb >= 100) {
+        badge = 'BIG WIN'
+        accent = '#62d98b'
+      } else if (bb >= 0) {
+        badge = 'WIN'
+        accent = '#62d98b'
+      } else if (bb <= -100) {
+        badge = 'BIG LOSS'
+        accent = '#ff6b6b'
+      } else {
+        badge = 'LOSS'
+        accent = '#ff6b6b'
+      }
+
+      if (Number(r.play_minutes) > 0) {
+        const minutes = Number(r.play_minutes)
+        const hours = Math.floor(minutes / 60)
+        const mins = minutes % 60
+        metaLeft = `PLAY TIME  ${hours > 0 ? `${hours}h ` : ''}${mins > 0 ? `${mins}m` : ''}`.trim()
+      }
+
+      metaRight = dateLabel(r.played_at)
     }
 
     if (type === 'cash') {
-      eyebrow = 'CASH GAME RESULT'
-      title = r.venue || r.site || 'Cash Game'
+      const isOnline = r.play_type === 'online'
+      eyebrow = isOnline ? 'ONLINE CASH RESULT' : 'LIVE CASH RESULT'
+      title = r.venue || r.site || (isOnline ? 'Online Cash Game' : 'Cash Game')
 
-      const profit = Number(r.profit_jpy ?? r.profit ?? 0)
+      const profitJpy = Number(r.profit_jpy ?? 0)
+      const profitAmount = Number(r.profit_amount ?? 0)
+      const bigBlind = Number(r.big_blind)
 
-      main = `${profit >= 0 ? '+' : ''}${money(profit)}`
-      sub = r.game_type || r.game || ''
-      detail = r.played_at || ''
-      badge = profit >= 0 ? 'WIN' : 'LOSS'
+      const bb =
+        Number.isFinite(profitAmount) &&
+        Number.isFinite(bigBlind) &&
+        bigBlind > 0
+          ? profitAmount / bigBlind
+          : null
+
+      main = `${profitJpy >= 0 ? '+' : ''}${money(profitJpy)}`
+
+      const blindText =
+        Number(r.small_blind) > 0 && Number(r.big_blind) > 0
+          ? `${number(r.small_blind)}/${number(r.big_blind)} ${r.currency || ''}`.trim()
+          : ''
+
+      sub = [r.game_type || r.game || '', blindText].filter(Boolean).join('  ·  ')
+
+      if (profitJpy >= 0) {
+        badge = 'WIN'
+        accent = '#62d98b'
+      } else {
+        badge = 'LOSS'
+        accent = '#ff6b6b'
+      }
+
+      if (bb !== null) {
+        metaLeft = `${bb >= 0 ? '+' : ''}${number(bb, 1)} BB`
+      } else if (r.currency && r.currency !== 'JPY') {
+        metaLeft = `${profitAmount >= 0 ? '+' : ''}${number(profitAmount, 2)} ${r.currency}`
+      }
+
+      metaRight = dateLabel(r.played_at)
     }
 
     const element = {
@@ -166,135 +244,236 @@ export async function GET(request) {
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'space-between',
           background: '#050505',
           color: '#ffffff',
-          padding: '64px 72px',
           fontFamily: 'sans-serif',
+          position: 'relative',
+          overflow: 'hidden',
         },
-
         children: [
           {
             type: 'div',
             props: {
               style: {
+                position: 'absolute',
+                width: '520px',
+                height: '520px',
+                borderRadius: '999px',
+                right: '-170px',
+                top: '-240px',
+                background: accent,
+                opacity: 0.08,
                 display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
               },
-
-              children: [
-                {
-                  type: 'div',
-                  props: {
-                    style: {
-                      display: 'flex',
-                      fontSize: 32,
-                      fontWeight: 800,
-                      letterSpacing: '-1px',
-                    },
-
-                    children: '♠ POKER ID',
-                  },
-                },
-
-                {
-                  type: 'div',
-                  props: {
-                    style: {
-                      display: 'flex',
-                      fontSize: 18,
-                      letterSpacing: '4px',
-                      color: '#a3a3a3',
-                    },
-
-                    children: eyebrow,
-                  },
-                },
-              ],
             },
           },
-
           {
             type: 'div',
             props: {
               style: {
+                position: 'absolute',
+                width: '2px',
+                height: '420px',
+                right: '138px',
+                top: '62px',
+                background: accent,
+                opacity: 0.35,
+                transform: 'rotate(28deg)',
+                display: 'flex',
+              },
+            },
+          },
+          {
+            type: 'div',
+            props: {
+              style: {
+                height: '505px',
+                padding: '54px 70px 34px 70px',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '18px',
               },
-
               children: [
-                badge
-                  ? {
-                      type: 'div',
-                      props: {
-                        style: {
-                          display: 'flex',
-                          alignSelf: 'flex-start',
-                          border: '2px solid #ffffff',
-                          borderRadius: '999px',
-                          padding: '8px 18px',
-                          fontSize: 18,
-                          fontWeight: 700,
-                          letterSpacing: '2px',
-                        },
-
-                        children: badge,
-                      },
-                    }
-                  : null,
-
                 {
                   type: 'div',
                   props: {
                     style: {
                       display: 'flex',
-                      fontSize: 34,
-                      color: '#d4d4d4',
-                      maxWidth: '1000px',
-                      overflow: 'hidden',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
                     },
-
-                    children: title,
-                  },
-                },
-
-                {
-                  type: 'div',
-                  props: {
-                    style: {
-                      display: 'flex',
-                      alignItems: 'baseline',
-                      gap: '24px',
-                    },
-
                     children: [
                       {
                         type: 'div',
                         props: {
                           style: {
                             display: 'flex',
-                            fontSize: 112,
-                            fontWeight: 900,
-                            lineHeight: 1,
-                            letterSpacing: '-6px',
+                            alignItems: 'center',
+                            gap: '14px',
                           },
-
-                          children: main,
+                          children: [
+                            {
+                              type: 'div',
+                              props: {
+                                style: {
+                                  width: '42px',
+                                  height: '42px',
+                                  borderRadius: '12px',
+                                  background: '#ffffff',
+                                  color: '#050505',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  fontSize: 27,
+                                  fontWeight: 900,
+                                },
+                                children: '♠',
+                              },
+                            },
+                            {
+                              type: 'div',
+                              props: {
+                                style: {
+                                  display: 'flex',
+                                  fontSize: 30,
+                                  fontWeight: 900,
+                                  letterSpacing: '-1px',
+                                },
+                                children: 'POKER ID',
+                              },
+                            },
+                          ],
                         },
                       },
-
                       {
                         type: 'div',
                         props: {
                           style: {
                             display: 'flex',
-                            fontSize: 28,
-                            color: '#bdbdbd',
+                            fontSize: 16,
+                            fontWeight: 700,
+                            letterSpacing: '4px',
+                            color: '#8d8d93',
                           },
-
-                          children: sub,
+                          children: eyebrow,
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  type: 'div',
+                  props: {
+                    style: {
+                      marginTop: '52px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                    },
+                    children: [
+                      {
+                        type: 'div',
+                        props: {
+                          style: {
+                            display: 'flex',
+                            alignSelf: 'flex-start',
+                            border: `1px solid ${accent}`,
+                            color: accent,
+                            borderRadius: '999px',
+                            padding: '8px 17px',
+                            fontSize: 16,
+                            fontWeight: 900,
+                            letterSpacing: '2px',
+                          },
+                          children: badge,
+                        },
+                      },
+                      {
+                        type: 'div',
+                        props: {
+                          style: {
+                            display: 'flex',
+                            marginTop: '18px',
+                            fontSize: 31,
+                            fontWeight: 700,
+                            color: '#d2d2d6',
+                            maxWidth: '930px',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                          },
+                          children: title,
+                        },
+                      },
+                      {
+                        type: 'div',
+                        props: {
+                          style: {
+                            display: 'flex',
+                            alignItems: 'baseline',
+                            marginTop: '8px',
+                            gap: '24px',
+                          },
+                          children: [
+                            {
+                              type: 'div',
+                              props: {
+                                style: {
+                                  display: 'flex',
+                                  fontSize: main.length > 13 ? 82 : 104,
+                                  fontWeight: 900,
+                                  lineHeight: 1,
+                                  letterSpacing: '-5px',
+                                  color: '#ffffff',
+                                },
+                                children: main,
+                              },
+                            },
+                            sub
+                              ? {
+                                  type: 'div',
+                                  props: {
+                                    style: {
+                                      display: 'flex',
+                                      fontSize: 23,
+                                      fontWeight: 700,
+                                      color: '#8d8d93',
+                                    },
+                                    children: sub,
+                                  },
+                                }
+                              : null,
+                          ],
+                        },
+                      },
+                      {
+                        type: 'div',
+                        props: {
+                          style: {
+                            display: 'flex',
+                            marginTop: '25px',
+                            gap: '30px',
+                            fontSize: 19,
+                            fontWeight: 700,
+                            color: '#a7a7ad',
+                          },
+                          children: [
+                            metaLeft
+                              ? {
+                                  type: 'div',
+                                  props: {
+                                    style: { display: 'flex' },
+                                    children: metaLeft,
+                                  },
+                                }
+                              : null,
+                            metaRight
+                              ? {
+                                  type: 'div',
+                                  props: {
+                                    style: { display: 'flex' },
+                                    children: metaRight,
+                                  },
+                                }
+                              : null,
+                          ],
                         },
                       },
                     ],
@@ -303,41 +482,39 @@ export async function GET(request) {
               ],
             },
           },
-
           {
             type: 'div',
             props: {
               style: {
+                height: '125px',
+                borderTop: '1px solid #202024',
+                padding: '23px 70px 0 70px',
                 display: 'flex',
                 justifyContent: 'space-between',
-                alignItems: 'flex-end',
-                borderTop: '1px solid #333333',
-                paddingTop: '28px',
+                alignItems: 'flex-start',
+                color: '#66666d',
               },
-
               children: [
                 {
                   type: 'div',
                   props: {
                     style: {
                       display: 'flex',
-                      fontSize: 26,
+                      fontSize: 15,
                       fontWeight: 700,
+                      letterSpacing: '2px',
                     },
-
-                    children: detail,
+                    children: 'YOUR POKER HISTORY, IN ONE ID.',
                   },
                 },
-
                 {
                   type: 'div',
                   props: {
                     style: {
                       display: 'flex',
-                      fontSize: 18,
-                      color: '#777777',
+                      fontSize: 15,
+                      fontWeight: 700,
                     },
-
                     children: 'poker-sns-vert.vercel.app',
                   },
                 },
@@ -351,10 +528,8 @@ export async function GET(request) {
     return new ImageResponse(element, {
       width: 1200,
       height: 630,
-
       headers: {
-        'Cache-Control':
-          'public, s-maxage=3600, stale-while-revalidate=86400',
+        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
       },
     })
   } catch (error) {
@@ -365,7 +540,6 @@ export async function GET(request) {
 
     return new Response(`OG ERROR\n\n${message}`, {
       status: 500,
-
       headers: {
         'Content-Type': 'text/plain; charset=utf-8',
       },
