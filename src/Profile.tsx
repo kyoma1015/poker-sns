@@ -533,6 +533,27 @@ function Profile() {
     points.push({ label: shortDate(result.played_at), value: previous + sessionBb, detail: `${result.venue} / 今回 ${cashBb(sessionBb)}` })
     return points
   }, [])
+  const mainPlayLabels: Record<string, string> = {
+    tournament: 'トーナメント中心',
+    ring: 'リング中心',
+    cash: 'キャッシュ中心',
+    balanced: 'バランス',
+  }
+
+  const playEnvironmentLabels: Record<string, string> = {
+    live: 'ライブ中心',
+    online: 'オンライン中心',
+    both: 'ライブ・オンライン',
+  }
+
+  const pokerFrequencyLabels: Record<string, string> = {
+    less_than_monthly: '月1回未満',
+    monthly_1_3: '月1〜3回',
+    weekly_1: '週1回程度',
+    weekly_2_3: '週2〜3回',
+    weekly_4_plus: '週4回以上',
+  }
+
   return (
     <main className="app">
       <div
@@ -804,78 +825,136 @@ function Profile() {
             {profile.bio ||
               '自己紹介はまだありません'}
           </p>
-          {/* ポーカー情報 */}
+          {/* PLAYER PROFILE */}
           <div
             style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '8px',
-              marginTop: '17px',
+              marginTop: '20px',
+              padding: '16px',
+              background: '#0d0d0d',
+              border: '1px solid #242424',
+              borderRadius: '16px',
             }}
           >
             <div
               style={{
-                padding:
-                  '7px 11px',
-                background: '#111',
-                border:
-                  '1px solid #292929',
-                borderRadius:
-                  '999px',
-                color: '#bbb',
-                fontSize: '12px',
+                fontSize: '11px',
+                fontWeight: 800,
+                letterSpacing: '1.2px',
+                color: '#777',
               }}
             >
-              ♠ ポーカー歴{' '}
-              <strong
-                style={{
-                  color: '#fff',
-                }}
-              >
-                {profile.poker_years ||
-                  '-'}
-                年
-              </strong>
+              PLAYER PROFILE
             </div>
+
             <div
               style={{
-                padding:
-                  '7px 11px',
-                background: '#111',
-                border:
-                  '1px solid #292929',
-                borderRadius:
-                  '999px',
-                color: '#bbb',
-                fontSize: '12px',
+                marginTop: '14px',
+                display: 'grid',
+                gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+                gap: '10px',
               }}
             >
-              メイン{' '}
-              <strong
-                style={{
-                  color: '#fff',
-                }}
-              >
-                {profile.main_game ||
-                  '-'}
-              </strong>
-            </div>
-            {favoriteVenues.map((venue) => (
-              <div
-                key={venue.id}
-                style={{
-                  padding: '7px 11px',
-                  background: '#111',
-                  border: '1px solid #292929',
-                  borderRadius: '999px',
-                  color: '#bbb',
-                  fontSize: '12px',
-                }}
-              >
-                📍 よく行く店舗{' '}
-                <strong style={{ color: '#fff' }}>{venue.name}</strong>
+              <div style={{ padding: '11px', background: '#141414', borderRadius: '12px' }}>
+                <div style={{ color: '#666', fontSize: '10px' }}>♠ メインゲーム</div>
+                <div style={{ marginTop: '5px', fontSize: '13px', fontWeight: 800 }}>
+                  {profile.main_game || '未設定'}
+                </div>
               </div>
-            ))}
+
+              <div style={{ padding: '11px', background: '#141414', borderRadius: '12px' }}>
+                <div style={{ color: '#666', fontSize: '10px' }}>🏆 メインプレイ</div>
+                <div style={{ marginTop: '5px', fontSize: '13px', fontWeight: 800 }}>
+                  {mainPlayLabels[profile.main_play] || '未設定'}
+                </div>
+              </div>
+
+              <div style={{ padding: '11px', background: '#141414', borderRadius: '12px' }}>
+                <div style={{ color: '#666', fontSize: '10px' }}>🎰 プレイ環境</div>
+                <div style={{ marginTop: '5px', fontSize: '13px', fontWeight: 800 }}>
+                  {playEnvironmentLabels[profile.play_environment] || '未設定'}
+                </div>
+              </div>
+
+              <div style={{ padding: '11px', background: '#141414', borderRadius: '12px' }}>
+                <div style={{ color: '#666', fontSize: '10px' }}>🔥 ポーカー頻度</div>
+                <div style={{ marginTop: '5px', fontSize: '13px', fontWeight: 800 }}>
+                  {pokerFrequencyLabels[profile.poker_frequency] || '未設定'}
+                </div>
+              </div>
+
+              <div style={{ padding: '11px', background: '#141414', borderRadius: '12px' }}>
+                <div style={{ color: '#666', fontSize: '10px' }}>🕒 ポーカー歴</div>
+                <div style={{ marginTop: '5px', fontSize: '13px', fontWeight: 800 }}>
+                  {profile.poker_years ? `${profile.poker_years}年` : '未設定'}
+                </div>
+              </div>
+
+              <div style={{ padding: '11px', background: '#141414', borderRadius: '12px' }}>
+                <div style={{ color: '#666', fontSize: '10px' }}>📍 活動エリア</div>
+                <div style={{ marginTop: '5px', fontSize: '13px', fontWeight: 800, lineHeight: 1.5 }}>
+                  {Array.isArray(profile.activity_areas) && profile.activity_areas.length > 0
+                    ? profile.activity_areas.join('・')
+                    : '未設定'}
+                </div>
+              </div>
+            </div>
+
+            <div style={{ marginTop: '14px', paddingTop: '14px', borderTop: '1px solid #222' }}>
+              <div style={{ color: '#666', fontSize: '10px', marginBottom: '8px' }}>
+                🎴 プレイ可能ゲーム
+              </div>
+              {Array.isArray(profile.playable_games) && profile.playable_games.length > 0 ? (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '7px' }}>
+                  {profile.playable_games.map((game: string) => (
+                    <div
+                      key={game}
+                      style={{
+                        padding: '7px 10px',
+                        background: '#141414',
+                        border: '1px solid #292929',
+                        borderRadius: '999px',
+                        color: '#eee',
+                        fontSize: '11px',
+                        fontWeight: 700,
+                        lineHeight: 1.35,
+                      }}
+                    >
+                      {game}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div style={{ color: '#777', fontSize: '12px' }}>未設定</div>
+              )}
+            </div>
+
+            <div style={{ marginTop: '14px', paddingTop: '14px', borderTop: '1px solid #222' }}>
+              <div style={{ color: '#666', fontSize: '10px', marginBottom: '8px' }}>
+                よく行く店舗
+              </div>
+              {favoriteVenues.length > 0 ? (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '7px' }}>
+                  {favoriteVenues.map((venue) => (
+                    <div
+                      key={venue.id}
+                      style={{
+                        padding: '7px 10px',
+                        background: '#141414',
+                        border: '1px solid #292929',
+                        borderRadius: '999px',
+                        color: '#eee',
+                        fontSize: '12px',
+                        fontWeight: 700,
+                      }}
+                    >
+                      {venue.name}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div style={{ color: '#777', fontSize: '12px' }}>未設定</div>
+              )}
+            </div>
           </div>
         </section>
         {/* プロフィールメニュー */}

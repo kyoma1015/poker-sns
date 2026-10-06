@@ -29,6 +29,7 @@ import AmusementRingCreate from './AmusementRingCreate'
 import AmusementRingEdit from './AmusementRingEdit'
 import CashGameCreate from './CashGameCreate'
 import CashGameEdit from './CashGameEdit'
+import TDA from './TDA'
 
 function Top() {
   const navigate = useNavigate()
@@ -77,25 +78,13 @@ function AppLayout() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        <Route
-          path="/home"
-          element={<Home />}
-        />
+        <Route path="/home" element={<Home />} />
 
-        <Route
-          path="/timeline"
-          element={<Timeline />}
-        />
+        <Route path="/timeline" element={<Timeline />} />
 
-        <Route
-          path="/post/:id"
-          element={<PostDetail />}
-        />
+        <Route path="/post/:id" element={<PostDetail />} />
 
-        <Route
-          path="/dm"
-          element={<DirectMessages />}
-        />
+        <Route path="/dm" element={<DirectMessages />} />
 
         <Route
           path="/dm/:userId"
@@ -112,10 +101,7 @@ function AppLayout() {
           element={<ProfileEdit />}
         />
 
-        <Route
-          path="/profile"
-          element={<Profile />}
-        />
+        <Route path="/profile" element={<Profile />} />
 
         <Route
           path="/profile/results/new"
@@ -170,6 +156,11 @@ function AppLayout() {
         <Route
           path="/player/:id/rate"
           element={<StyleRating />}
+        />
+
+        <Route
+          path="/tda"
+          element={<TDA />}
         />
       </Routes>
 

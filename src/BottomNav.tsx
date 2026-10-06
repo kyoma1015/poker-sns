@@ -19,6 +19,10 @@ function BottomNav() {
       )
     }
 
+    if (path === '/tda') {
+      return location.pathname.startsWith('/tda')
+    }
+
     if (path === '/notifications') {
       return location.pathname === '/notifications'
     }
@@ -53,6 +57,25 @@ function BottomNav() {
       >
         <span className="bottom-nav-icon">⌕</span>
         <span>検索</span>
+      </button>
+
+      <button
+        className={`bottom-nav-item ${
+          isActive('/tda') ? 'active' : ''
+        }`}
+        onClick={() => navigate('/tda')}
+      >
+        <span
+          className="bottom-nav-icon"
+          style={{
+            fontSize: '16px',
+            fontWeight: 800,
+            letterSpacing: '-1px',
+          }}
+        >
+          TDA
+        </span>
+        <span>ルール</span>
       </button>
 
       <button
