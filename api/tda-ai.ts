@@ -143,6 +143,7 @@ export default async function handler(req: any, res: any) {
     const allSearchTexts = Array.from(
       new Set([question, ...searchQueries]),
     );
+    console.log("TDA AI search queries:", allSearchTexts);
 
     /*
      * STEP 2
