@@ -2,6 +2,7 @@ import { ImageResponse } from '@vercel/og'
 
 const money = (value) => {
   const n = Number(value)
+
   return Number.isFinite(n)
     ? `¥${Math.round(n).toLocaleString('ja-JP')}`
     : '—'
@@ -10,6 +11,7 @@ const money = (value) => {
 export async function GET(request) {
   try {
     const url = new URL(request.url)
+
     const type = url.searchParams.get('type') || ''
     const id = url.searchParams.get('id') || ''
 
@@ -115,15 +117,33 @@ export async function GET(request) {
       eyebrow = 'AMUSEMENT RING RESULT'
       title = r.venue || 'Amusement Poker'
 
-      const bb = Number(r.result_bb ?? r.profit_bb ?? 0)
+      const bigBlind = Number(r.big_blind)
+      const startingStack = Number(r.starting_stack)
+      const additionalStack = Number(r.additional_stack ?? 0)
+      const endingStack = Number(r.ending_stack)
 
-      main = `${bb >= 0 ? '+' : ''}${
-        Number.isFinite(bb) ? bb.toFixed(1) : '0.0'
-      } BB`
+      const bb =
+        Number.isFinite(bigBlind) &&
+        bigBlind > 0 &&
+        Number.isFinite(startingStack) &&
+        Number.isFinite(additionalStack) &&
+        Number.isFinite(endingStack)
+          ? (endingStack - (startingStack + additionalStack)) / bigBlind
+          : 0
+
+      main = `${bb >= 0 ? '+' : ''}${bb.toFixed(1)} BB`
 
       sub = r.game_type || r.game || ''
       detail = r.played_at || ''
-      badge = bb >= 0 ? 'WIN' : 'LOSS'
+
+      badge =
+        bb >= 100
+          ? 'BIG WIN'
+          : bb >= 0
+            ? 'WIN'
+            : bb <= -100
+              ? 'BIG LOSS'
+              : 'LOSS'
     }
 
     if (type === 'cash') {
@@ -152,6 +172,7 @@ export async function GET(request) {
           padding: '64px 72px',
           fontFamily: 'sans-serif',
         },
+
         children: [
           {
             type: 'div',
@@ -161,6 +182,7 @@ export async function GET(request) {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               },
+
               children: [
                 {
                   type: 'div',
@@ -171,9 +193,11 @@ export async function GET(request) {
                       fontWeight: 800,
                       letterSpacing: '-1px',
                     },
+
                     children: '♠ POKER ID',
                   },
                 },
+
                 {
                   type: 'div',
                   props: {
@@ -183,6 +207,7 @@ export async function GET(request) {
                       letterSpacing: '4px',
                       color: '#a3a3a3',
                     },
+
                     children: eyebrow,
                   },
                 },
@@ -198,6 +223,7 @@ export async function GET(request) {
                 flexDirection: 'column',
                 gap: '18px',
               },
+
               children: [
                 badge
                   ? {
@@ -213,6 +239,7 @@ export async function GET(request) {
                           fontWeight: 700,
                           letterSpacing: '2px',
                         },
+
                         children: badge,
                       },
                     }
@@ -228,6 +255,7 @@ export async function GET(request) {
                       maxWidth: '1000px',
                       overflow: 'hidden',
                     },
+
                     children: title,
                   },
                 },
@@ -240,6 +268,7 @@ export async function GET(request) {
                       alignItems: 'baseline',
                       gap: '24px',
                     },
+
                     children: [
                       {
                         type: 'div',
@@ -251,9 +280,11 @@ export async function GET(request) {
                             lineHeight: 1,
                             letterSpacing: '-6px',
                           },
+
                           children: main,
                         },
                       },
+
                       {
                         type: 'div',
                         props: {
@@ -262,6 +293,7 @@ export async function GET(request) {
                             fontSize: 28,
                             color: '#bdbdbd',
                           },
+
                           children: sub,
                         },
                       },
@@ -282,6 +314,7 @@ export async function GET(request) {
                 borderTop: '1px solid #333333',
                 paddingTop: '28px',
               },
+
               children: [
                 {
                   type: 'div',
@@ -291,9 +324,11 @@ export async function GET(request) {
                       fontSize: 26,
                       fontWeight: 700,
                     },
+
                     children: detail,
                   },
                 },
+
                 {
                   type: 'div',
                   props: {
@@ -302,6 +337,7 @@ export async function GET(request) {
                       fontSize: 18,
                       color: '#777777',
                     },
+
                     children: 'poker-sns-vert.vercel.app',
                   },
                 },
@@ -315,16 +351,21 @@ export async function GET(request) {
     return new ImageResponse(element, {
       width: 1200,
       height: 630,
+
       headers: {
-        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+        'Cache-Control':
+          'public, s-maxage=3600, stale-while-revalidate=86400',
       },
     })
   } catch (error) {
     const message =
-      error instanceof Error ? error.stack || error.message : String(error)
+      error instanceof Error
+        ? error.stack || error.message
+        : String(error)
 
     return new Response(`OG ERROR\n\n${message}`, {
       status: 500,
+
       headers: {
         'Content-Type': 'text/plain; charset=utf-8',
       },
