@@ -2,7 +2,15 @@ import { useEffect, useMemo, useState } from 'react'
 
 
 
+
+
+
+
 import { useNavigate } from 'react-router-dom'
+
+
+
+
 
 
 
@@ -10,7 +18,15 @@ import { supabase } from './supabase'
 
 
 
+
+
+
+
 type PastRingResult = {
+
+
+
+
 
 
 
@@ -18,7 +34,15 @@ type PastRingResult = {
 
 
 
+
+
+
+
   game_type: string
+
+
+
+
 
 
 
@@ -26,7 +50,15 @@ type PastRingResult = {
 
 
 
+
+
+
+
   big_blind: number
+
+
+
+
 
 
 
@@ -34,11 +66,23 @@ type PastRingResult = {
 
 
 
+
+
+
+
   created_at: string
 
 
 
+
+
+
+
 }
+
+
+
+
 
 
 
@@ -46,7 +90,15 @@ function getToday() {
 
 
 
+
+
+
+
   const now = new Date()
+
+
+
+
 
 
 
@@ -54,7 +106,15 @@ function getToday() {
 
 
 
+
+
+
+
   const month = String(now.getMonth() + 1).padStart(2, '0')
+
+
+
+
 
 
 
@@ -62,7 +122,15 @@ function getToday() {
 
 
 
+
+
+
+
   return `${year}-${month}-${day}`
+
+
+
+
 
 
 
@@ -70,7 +138,15 @@ function getToday() {
 
 
 
+
+
+
+
 function AmusementRingCreate() {
+
+
+
+
 
 
 
@@ -78,7 +154,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
   const [playedAt, setPlayedAt] = useState(getToday())
+
+
+
+
 
 
 
@@ -86,7 +170,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
   const [gameType, setGameType] = useState('NLH')
+
+
+
+
 
 
 
@@ -94,7 +186,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
   const [bigBlind, setBigBlind] = useState('')
+
+
+
+
 
 
 
@@ -102,7 +202,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
   const [additionalStack, setAdditionalStack] = useState('0')
+
+
+
+
 
 
 
@@ -110,7 +218,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
   const [playHours, setPlayHours] = useState('')
+
+
+
+
 
 
 
@@ -118,7 +234,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
   const [memo, setMemo] = useState('')
+
+
+
+
 
 
 
@@ -126,7 +250,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
   const [postToTimeline, setPostToTimeline] = useState(false)
+
+
+
+
 
 
 
@@ -134,7 +266,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
   const [pastResults, setPastResults] = useState<PastRingResult[]>([])
+
+
+
+
 
 
 
@@ -142,11 +282,23 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
   const [isSaving, setIsSaving] = useState(false)
+
+
 
   const [savedSuccessfully, setSavedSuccessfully] = useState(false)
 
+
+
   const [savedResultId, setSavedResultId] = useState<string | null>(null)
+
+
+
+
 
 
 
@@ -154,7 +306,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     const loadPastResults = async () => {
+
+
+
+
 
 
 
@@ -162,7 +322,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
         data: { user },
+
+
+
+
 
 
 
@@ -170,7 +338,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       if (!user) {
+
+
+
+
 
 
 
@@ -178,11 +354,23 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
         return
 
 
 
+
+
+
+
       }
+
+
+
+
 
 
 
@@ -190,7 +378,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
         .from('amusement_ring_results')
+
+
+
+
 
 
 
@@ -198,11 +394,23 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
           'venue, game_type, small_blind, big_blind, played_at, created_at'
 
 
 
+
+
+
+
         )
+
+
+
+
 
 
 
@@ -210,7 +418,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
         .order('played_at', { ascending: false })
+
+
+
+
 
 
 
@@ -218,7 +434,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       if (error) {
+
+
+
+
 
 
 
@@ -226,11 +450,23 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
         return
 
 
 
+
+
+
+
       }
+
+
+
+
 
 
 
@@ -238,7 +474,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     }
+
+
+
+
 
 
 
@@ -246,7 +490,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
   }, [navigate])
+
+
+
+
 
 
 
@@ -254,7 +506,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     const uniqueVenues: string[] = []
+
+
+
+
 
 
 
@@ -262,7 +522,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       const trimmedVenue = result.venue.trim()
+
+
+
+
 
 
 
@@ -270,7 +538,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
         trimmedVenue &&
+
+
+
+
 
 
 
@@ -278,7 +554,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
           (existing) =>
+
+
+
+
 
 
 
@@ -286,7 +570,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
             trimmedVenue.toLocaleLowerCase('ja-JP')
+
+
+
+
 
 
 
@@ -294,7 +586,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       ) {
+
+
+
+
 
 
 
@@ -302,11 +602,23 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       }
 
 
 
+
+
+
+
     }
+
+
+
+
 
 
 
@@ -314,7 +626,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
   }, [pastResults])
+
+
+
+
 
 
 
@@ -322,7 +642,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     setVenue(venueName)
+
+
+
+
 
 
 
@@ -330,7 +658,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     if (!normalizedVenue) return
+
+
+
+
 
 
 
@@ -338,7 +674,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       (result) =>
+
+
+
+
 
 
 
@@ -346,7 +690,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     )
+
+
+
+
 
 
 
@@ -354,7 +706,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     setGameType(latest.game_type || 'NLH')
+
+
+
+
 
 
 
@@ -362,7 +722,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     setBigBlind(String(latest.big_blind))
+
+
+
+
 
 
 
@@ -370,7 +738,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
   const calculated = useMemo(() => {
+
+
+
+
 
 
 
@@ -378,7 +754,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     const start = Number(startingStack)
+
+
+
+
 
 
 
@@ -386,7 +770,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     const end = Number(endingStack)
+
+
+
+
 
 
 
@@ -394,7 +786,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     const minutes = Number(playMinutes || 0)
+
+
+
+
 
 
 
@@ -402,7 +802,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     if (
+
+
+
+
 
 
 
@@ -410,7 +818,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       !startingStack ||
+
+
+
+
 
 
 
@@ -418,7 +834,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       !Number.isFinite(bb) ||
+
+
+
+
 
 
 
@@ -426,7 +850,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       !Number.isFinite(additional) ||
+
+
+
+
 
 
 
@@ -434,11 +866,23 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       bb <= 0
 
 
 
+
+
+
+
     ) {
+
+
+
+
 
 
 
@@ -446,7 +890,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     }
+
+
+
+
 
 
 
@@ -454,7 +906,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     const totalInvestedStack = start + additional
+
+
+
+
 
 
 
@@ -462,7 +922,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     const bbProfit = chipProfit / bb
+
+
+
+
 
 
 
@@ -470,7 +938,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       totalMinutes > 0 ? bbProfit / (totalMinutes / 60) : null
+
+
+
+
 
 
 
@@ -478,7 +954,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       startingBb,
+
+
+
+
 
 
 
@@ -486,7 +970,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       chipProfit,
+
+
+
+
 
 
 
@@ -494,7 +986,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       bbPerHour,
+
+
+
+
 
 
 
@@ -502,7 +1002,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     }
+
+
+
+
 
 
 
@@ -510,7 +1018,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     bigBlind,
+
+
+
+
 
 
 
@@ -518,7 +1034,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     additionalStack,
+
+
+
+
 
 
 
@@ -526,7 +1050,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     playHours,
+
+
+
+
 
 
 
@@ -534,7 +1066,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
   ])
+
+
+
+
 
 
 
@@ -542,7 +1082,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     setMessage('')
+
+
+
+
 
 
 
@@ -550,7 +1098,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     if (!playedAt) {
+
+
+
+
 
 
 
@@ -558,11 +1114,23 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       return
 
 
 
+
+
+
+
     }
+
+
+
+
 
 
 
@@ -570,7 +1138,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       setMessage('店舗名を入力してください。')
+
+
+
+
 
 
 
@@ -578,7 +1154,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     }
+
+
+
+
 
 
 
@@ -586,7 +1170,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       setMessage('ゲーム種別を選択してください。')
+
+
+
+
 
 
 
@@ -594,7 +1186,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     }
+
+
+
+
 
 
 
@@ -602,7 +1202,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     const bb = Number(bigBlind)
+
+
+
+
 
 
 
@@ -610,7 +1218,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     const additional = Number(additionalStack || 0)
+
+
+
+
 
 
 
@@ -618,7 +1234,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     const hours = Number(playHours || 0)
+
+
+
+
 
 
 
@@ -626,7 +1250,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     const totalMinutes = hours * 60 + minutes
+
+
+
+
 
 
 
@@ -634,7 +1266,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       setMessage('SBを正しく入力してください。')
+
+
+
+
 
 
 
@@ -642,7 +1282,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     }
+
+
+
+
 
 
 
@@ -650,7 +1298,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       setMessage('BBを正しく入力してください。')
+
+
+
+
 
 
 
@@ -658,7 +1314,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     }
+
+
+
+
 
 
 
@@ -666,7 +1330,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       setMessage('BBはSBより大きい数字を入力してください。')
+
+
+
+
 
 
 
@@ -674,7 +1346,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     }
+
+
+
+
 
 
 
@@ -682,7 +1362,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       setMessage('開始スタックを正しく入力してください。')
+
+
+
+
 
 
 
@@ -690,7 +1378,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     }
+
+
+
+
 
 
 
@@ -698,7 +1394,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       setMessage('追加スタックを正しく入力してください。')
+
+
+
+
 
 
 
@@ -706,7 +1410,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     }
+
+
+
+
 
 
 
@@ -714,7 +1426,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       setMessage('終了スタックを正しく入力してください。')
+
+
+
+
 
 
 
@@ -722,7 +1442,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     }
+
+
+
+
 
 
 
@@ -730,7 +1458,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       !Number.isInteger(hours) ||
+
+
+
+
 
 
 
@@ -738,7 +1474,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       !Number.isInteger(minutes) ||
+
+
+
+
 
 
 
@@ -746,7 +1490,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       minutes > 59 ||
+
+
+
+
 
 
 
@@ -754,7 +1506,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     ) {
+
+
+
+
 
 
 
@@ -762,11 +1522,23 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       return
 
 
 
+
+
+
+
     }
+
+
+
+
 
 
 
@@ -774,7 +1546,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     const {
+
+
+
+
 
 
 
@@ -782,7 +1562,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     } = await supabase.auth.getUser()
+
+
+
+
 
 
 
@@ -790,7 +1578,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       setIsSaving(false)
+
+
+
+
 
 
 
@@ -798,11 +1594,23 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       return
 
 
 
+
+
+
+
     }
+
+
+
+
 
 
 
@@ -814,7 +1622,19 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
+
+
+
+
     const { data: insertedResult, error } = await supabase
+
+
+
+
 
 
 
@@ -822,7 +1642,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       .insert({
+
+
+
+
 
 
 
@@ -830,7 +1658,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
         played_at: playedAt,
+
+
+
+
 
 
 
@@ -838,7 +1674,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
         game_type: gameType,
+
+
+
+
 
 
 
@@ -846,7 +1690,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
         big_blind: bb,
+
+
+
+
 
 
 
@@ -854,7 +1706,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
         additional_stack: additional,
+
+
+
+
 
 
 
@@ -862,7 +1722,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
         play_minutes: totalMinutes,
+
+
+
+
 
 
 
@@ -870,7 +1738,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
         is_public: shouldBePublic,
+
+
+
+
 
 
 
@@ -878,7 +1754,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       .select('id')
+
+
+
+
 
 
 
@@ -890,7 +1774,19 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
+
+
+
+
     if (error || !insertedResult) {
+
+
+
+
 
 
 
@@ -898,7 +1794,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       setMessage(
+
+
+
+
 
 
 
@@ -906,7 +1810,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       )
+
+
+
+
 
 
 
@@ -914,11 +1826,27 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       return
 
 
 
+
+
+
+
     }
+
+
+
+
+
+
+
+
 
 
 
@@ -930,7 +1858,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
       const bbProfit = (end - (start + additional)) / bb
+
+
+
+
 
 
 
@@ -938,7 +1874,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
         `${trimmedVenue}でアミューズリングをプレイ。` +
+
+
+
+
 
 
 
@@ -950,7 +1894,19 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
+
+
+
+
       const { error: postError } = await supabase.from('posts').insert({
+
+
+
+
 
 
 
@@ -958,7 +1914,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
         content: timelineComment.trim() || defaultPostText,
+
+
+
+
 
 
 
@@ -966,11 +1930,23 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
         result_type: 'amusement',
 
 
 
+
+
+
+
         result_id: insertedResult.id,
+
+
+
+
 
 
 
@@ -982,7 +1958,19 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
+
+
+
+
       if (postError) {
+
+
+
+
 
 
 
@@ -990,7 +1978,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
         setMessage(
+
+
+
+
 
 
 
@@ -998,7 +1994,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
         )
+
+
+
+
 
 
 
@@ -1006,7 +2010,15 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
         return
+
+
+
+
 
 
 
@@ -1014,32 +2026,54 @@ function AmusementRingCreate() {
 
 
 
+
+
+
+
     }
 
+
+
   setSavedResultId(insertedResult.id)
+
   setSavedSuccessfully(true)
+
   setIsSaving(false)
 
+
+
 }
+
+
+
+
 
 
 
   const handleShareToX = () => {
   if (!savedResultId) return
 
-  const shareUrl = `https://poker-sns-vert.vercel.app/share/amusement/${savedResultId}`
+  const shareUrl = `${window.location.origin}/share/amusement/${savedResultId}`
   const bbProfit = calculated?.bbProfit ?? 0
-  const resultText = `${bbProfit >= 0 ? '+' : ''}${bbProfit.toFixed(1)}BB`
-  const blindText = smallBlind && bigBlind ? `${smallBlind}/${bigBlind}` : ''
+  const absBb = Math.abs(bbProfit)
+  const bbText = `${bbProfit >= 0 ? '+' : '-'}${Number(absBb.toFixed(1)).toLocaleString('ja-JP')}BB`
+
+  let resultLine = `本日の結果は ${bbText}`
+  if (bbProfit >= 100) {
+    resultLine = `本日の結果は ${bbText}のBIG WIN 🔥`
+  } else if (bbProfit > 0) {
+    resultLine = `本日の結果は ${bbText}！`
+  } else if (bbProfit === 0) {
+    resultLine = '本日の結果は ±0BB'
+  }
 
   const shareText = [
-    '♠ Poker ID Amusement Ring Result',
-    venue.trim(),
-    [gameType, blindText, resultText].filter(Boolean).join(' / '),
+    `♠️ ${venue.trim()}でリングゲームをプレイ！`,
+    resultLine,
+    '',
+    'Poker IDであなたのポーカー戦績を記録しよう。',
     '#PokerID #ポーカー',
-  ]
-    .filter(Boolean)
-    .join('\n')
+  ].join('\n')
 
   const intentUrl =
     `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}` +
@@ -1048,7 +2082,13 @@ function AmusementRingCreate() {
   window.open(intentUrl, '_blank', 'noopener,noreferrer')
 }
 
+
+
 const inputLabelStyle = {
+
+
+
+
 
 
 
@@ -1056,7 +2096,15 @@ const inputLabelStyle = {
 
 
 
+
+
+
+
     marginBottom: '7px',
+
+
+
+
 
 
 
@@ -1064,7 +2112,15 @@ const inputLabelStyle = {
 
 
 
+
+
+
+
     fontSize: '12px',
+
+
+
+
 
 
 
@@ -1072,7 +2128,15 @@ const inputLabelStyle = {
 
 
 
+
+
+
+
   } as const
+
+
+
+
 
 
 
@@ -1080,7 +2144,15 @@ const inputLabelStyle = {
 
 
 
+
+
+
+
     padding: '20px 0',
+
+
+
+
 
 
 
@@ -1088,45 +2160,91 @@ const inputLabelStyle = {
 
 
 
+
+
+
+
   } as const
+
+
+
+
 
 
 
 if (savedSuccessfully && savedResultId) {
 
+
+
   return (
+
+
 
     <main className="app">
 
+
+
       <div className="card" style={{ padding: '28px 20px', textAlign: 'center' }}>
+
+
 
         <div style={{ fontSize: '22px', fontWeight: 900 }}>保存しました</div>
 
+
+
         <div style={{ marginTop: '8px', color: '#888', fontSize: '12px', lineHeight: 1.6 }}>
+
+
 
           アミューズリング記録を保存しました。
 
+
+
         </div>
+
+
 
         <button type="button" onClick={handleShareToX} style={{ width: '100%', marginTop: '24px', padding: '14px 18px', background: '#fff', color: '#000', borderRadius: '999px', fontSize: '14px', fontWeight: 800 }}>
 
+
+
           Xでシェア
 
+
+
         </button>
+
+
 
         <button type="button" onClick={() => navigate('/profile')} style={{ width: '100%', marginTop: '12px', padding: '14px 18px', background: '#111', color: '#fff', border: '1px solid #333', borderRadius: '999px', fontSize: '14px', fontWeight: 800 }}>
 
+
+
           プロフィールへ戻る
+
+
 
         </button>
 
+
+
       </div>
+
+
 
     </main>
 
+
+
   )
 
+
+
 }
+
+
+
+
 
 
 
@@ -1134,7 +2252,15 @@ return (
 
 
 
+
+
+
+
     <main className="app">
+
+
+
+
 
 
 
@@ -1142,7 +2268,15 @@ return (
 
 
 
+
+
+
+
         className="card"
+
+
+
+
 
 
 
@@ -1150,7 +2284,15 @@ return (
 
 
 
+
+
+
+
           paddingTop: 0,
+
+
+
+
 
 
 
@@ -1158,7 +2300,15 @@ return (
 
 
 
+
+
+
+
       >
+
+
+
+
 
 
 
@@ -1166,7 +2316,15 @@ return (
 
 
 
+
+
+
+
           style={{
+
+
+
+
 
 
 
@@ -1174,7 +2332,15 @@ return (
 
 
 
+
+
+
+
             top: 0,
+
+
+
+
 
 
 
@@ -1182,7 +2348,15 @@ return (
 
 
 
+
+
+
+
             margin: '0 -20px',
+
+
+
+
 
 
 
@@ -1190,7 +2364,15 @@ return (
 
 
 
+
+
+
+
             display: 'flex',
+
+
+
+
 
 
 
@@ -1198,7 +2380,15 @@ return (
 
 
 
+
+
+
+
             gap: '14px',
+
+
+
+
 
 
 
@@ -1206,7 +2396,15 @@ return (
 
 
 
+
+
+
+
             borderBottom: '1px solid #242424',
+
+
+
+
 
 
 
@@ -1214,7 +2412,15 @@ return (
 
 
 
+
+
+
+
             WebkitBackdropFilter: 'blur(14px)',
+
+
+
+
 
 
 
@@ -1222,11 +2428,23 @@ return (
 
 
 
+
+
+
+
         >
 
 
 
+
+
+
+
           <button
+
+
+
+
 
 
 
@@ -1234,7 +2452,15 @@ return (
 
 
 
+
+
+
+
             style={{
+
+
+
+
 
 
 
@@ -1242,7 +2468,15 @@ return (
 
 
 
+
+
+
+
               height: '36px',
+
+
+
+
 
 
 
@@ -1250,11 +2484,23 @@ return (
 
 
 
+
+
+
+
               display: 'flex',
 
 
 
+
+
+
+
               alignItems: 'center',
+
+
+
+
 
 
 
@@ -1262,11 +2508,23 @@ return (
 
 
 
+
+
+
+
               background: 'transparent',
 
 
 
+
+
+
+
               color: '#fff',
+
+
+
+
 
 
 
@@ -1274,7 +2532,15 @@ return (
 
 
 
+
+
+
+
               fontSize: '23px',
+
+
+
+
 
 
 
@@ -1282,7 +2548,15 @@ return (
 
 
 
+
+
+
+
           >
+
+
+
+
 
 
 
@@ -1290,7 +2564,15 @@ return (
 
 
 
+
+
+
+
           </button>
+
+
+
+
 
 
 
@@ -1298,11 +2580,23 @@ return (
 
 
 
+
+
+
+
             <div
 
 
 
+
+
+
+
               style={{
+
+
+
+
 
 
 
@@ -1310,7 +2604,15 @@ return (
 
 
 
+
+
+
+
                 fontWeight: 800,
+
+
+
+
 
 
 
@@ -1318,7 +2620,15 @@ return (
 
 
 
+
+
+
+
             >
+
+
+
+
 
 
 
@@ -1326,7 +2636,15 @@ return (
 
 
 
+
+
+
+
             </div>
+
+
+
+
 
 
 
@@ -1334,7 +2652,15 @@ return (
 
 
 
+
+
+
+
               style={{
+
+
+
+
 
 
 
@@ -1342,7 +2668,15 @@ return (
 
 
 
+
+
+
+
                 color: '#666',
+
+
+
+
 
 
 
@@ -1350,11 +2684,23 @@ return (
 
 
 
+
+
+
+
               }}
 
 
 
+
+
+
+
             >
+
+
+
+
 
 
 
@@ -1362,11 +2708,23 @@ return (
 
 
 
+
+
+
+
             </div>
 
 
 
+
+
+
+
           </div>
+
+
+
+
 
 
 
@@ -1374,7 +2732,15 @@ return (
 
 
 
+
+
+
+
         <section style={sectionStyle}>
+
+
+
+
 
 
 
@@ -1382,7 +2748,15 @@ return (
 
 
 
+
+
+
+
           <input
+
+
+
+
 
 
 
@@ -1390,7 +2764,15 @@ return (
 
 
 
+
+
+
+
             value={playedAt}
+
+
+
+
 
 
 
@@ -1398,7 +2780,15 @@ return (
 
 
 
+
+
+
+
           />
+
+
+
+
 
 
 
@@ -1406,7 +2796,15 @@ return (
 
 
 
+
+
+
+
         <section style={sectionStyle}>
+
+
+
+
 
 
 
@@ -1414,7 +2812,15 @@ return (
 
 
 
+
+
+
+
           <input
+
+
+
+
 
 
 
@@ -1422,7 +2828,15 @@ return (
 
 
 
+
+
+
+
             list="amusement-ring-venues"
+
+
+
+
 
 
 
@@ -1430,7 +2844,15 @@ return (
 
 
 
+
+
+
+
             onChange={(e) => applyVenuePreset(e.target.value)}
+
+
+
+
 
 
 
@@ -1438,7 +2860,15 @@ return (
 
 
 
+
+
+
+
           />
+
+
+
+
 
 
 
@@ -1446,7 +2876,15 @@ return (
 
 
 
+
+
+
+
             {venueSuggestions.map((venueName) => (
+
+
+
+
 
 
 
@@ -1454,7 +2892,15 @@ return (
 
 
 
+
+
+
+
             ))}
+
+
+
+
 
 
 
@@ -1462,11 +2908,23 @@ return (
 
 
 
+
+
+
+
           <div
 
 
 
+
+
+
+
             style={{
+
+
+
+
 
 
 
@@ -1474,7 +2932,15 @@ return (
 
 
 
+
+
+
+
               color: '#666',
+
+
+
+
 
 
 
@@ -1482,7 +2948,15 @@ return (
 
 
 
+
+
+
+
               lineHeight: 1.5,
+
+
+
+
 
 
 
@@ -1490,7 +2964,15 @@ return (
 
 
 
+
+
+
+
           >
+
+
+
+
 
 
 
@@ -1498,7 +2980,15 @@ return (
 
 
 
+
+
+
+
           </div>
+
+
+
+
 
 
 
@@ -1506,7 +2996,15 @@ return (
 
 
 
+
+
+
+
         <section style={sectionStyle}>
+
+
+
+
 
 
 
@@ -1514,7 +3012,15 @@ return (
 
 
 
+
+
+
+
           <select
+
+
+
+
 
 
 
@@ -1522,11 +3028,23 @@ return (
 
 
 
+
+
+
+
             onChange={(e) => setGameType(e.target.value)}
 
 
 
+
+
+
+
           >
+
+
+
+
 
 
 
@@ -1534,7 +3052,15 @@ return (
 
 
 
+
+
+
+
             <option value="PLO">PLO</option>
+
+
+
+
 
 
 
@@ -1542,7 +3068,15 @@ return (
 
 
 
+
+
+
+
             <option value="その他">その他</option>
+
+
+
+
 
 
 
@@ -1550,7 +3084,15 @@ return (
 
 
 
+
+
+
+
         </section>
+
+
+
+
 
 
 
@@ -1558,7 +3100,15 @@ return (
 
 
 
+
+
+
+
           <div
+
+
+
+
 
 
 
@@ -1566,7 +3116,15 @@ return (
 
 
 
+
+
+
+
               display: 'grid',
+
+
+
+
 
 
 
@@ -1574,7 +3132,15 @@ return (
 
 
 
+
+
+
+
               gap: '12px',
+
+
+
+
 
 
 
@@ -1582,11 +3148,23 @@ return (
 
 
 
+
+
+
+
           >
 
 
 
+
+
+
+
             <div>
+
+
+
+
 
 
 
@@ -1594,7 +3172,15 @@ return (
 
 
 
+
+
+
+
               <input
+
+
+
+
 
 
 
@@ -1602,11 +3188,23 @@ return (
 
 
 
+
+
+
+
                 inputMode="numeric"
 
 
 
+
+
+
+
                 min="1"
+
+
+
+
 
 
 
@@ -1614,7 +3212,15 @@ return (
 
 
 
+
+
+
+
                 onChange={(e) => setSmallBlind(e.target.value)}
+
+
+
+
 
 
 
@@ -1622,7 +3228,15 @@ return (
 
 
 
+
+
+
+
               />
+
+
+
+
 
 
 
@@ -1630,7 +3244,15 @@ return (
 
 
 
+
+
+
+
             <div>
+
+
+
+
 
 
 
@@ -1638,7 +3260,15 @@ return (
 
 
 
+
+
+
+
               <input
+
+
+
+
 
 
 
@@ -1646,7 +3276,15 @@ return (
 
 
 
+
+
+
+
                 inputMode="numeric"
+
+
+
+
 
 
 
@@ -1654,7 +3292,15 @@ return (
 
 
 
+
+
+
+
                 value={bigBlind}
+
+
+
+
 
 
 
@@ -1662,7 +3308,15 @@ return (
 
 
 
+
+
+
+
                 placeholder="200"
+
+
+
+
 
 
 
@@ -1670,7 +3324,15 @@ return (
 
 
 
+
+
+
+
             </div>
+
+
+
+
 
 
 
@@ -1678,7 +3340,15 @@ return (
 
 
 
+
+
+
+
         </section>
+
+
+
+
 
 
 
@@ -1686,7 +3356,15 @@ return (
 
 
 
+
+
+
+
           <div
+
+
+
+
 
 
 
@@ -1694,11 +3372,23 @@ return (
 
 
 
+
+
+
+
               fontSize: '15px',
 
 
 
+
+
+
+
               fontWeight: 800,
+
+
+
+
 
 
 
@@ -1706,11 +3396,23 @@ return (
 
 
 
+
+
+
+
             }}
 
 
 
+
+
+
+
           >
+
+
+
+
 
 
 
@@ -1718,7 +3420,15 @@ return (
 
 
 
+
+
+
+
           </div>
+
+
+
+
 
 
 
@@ -1726,11 +3436,23 @@ return (
 
 
 
+
+
+
+
             style={{
 
 
 
+
+
+
+
               display: 'flex',
+
+
+
+
 
 
 
@@ -1738,7 +3460,15 @@ return (
 
 
 
+
+
+
+
               gap: '14px',
+
+
+
+
 
 
 
@@ -1746,11 +3476,23 @@ return (
 
 
 
+
+
+
+
           >
 
 
 
+
+
+
+
             <div>
+
+
+
+
 
 
 
@@ -1758,7 +3500,15 @@ return (
 
 
 
+
+
+
+
               <input
+
+
+
+
 
 
 
@@ -1766,11 +3516,23 @@ return (
 
 
 
+
+
+
+
                 inputMode="numeric"
 
 
 
+
+
+
+
                 min="0"
+
+
+
+
 
 
 
@@ -1778,7 +3540,15 @@ return (
 
 
 
+
+
+
+
                 onChange={(e) => setStartingStack(e.target.value)}
+
+
+
+
 
 
 
@@ -1786,7 +3556,15 @@ return (
 
 
 
+
+
+
+
               />
+
+
+
+
 
 
 
@@ -1794,7 +3572,15 @@ return (
 
 
 
+
+
+
+
             <div>
+
+
+
+
 
 
 
@@ -1802,7 +3588,15 @@ return (
 
 
 
+
+
+
+
               <input
+
+
+
+
 
 
 
@@ -1810,11 +3604,23 @@ return (
 
 
 
+
+
+
+
                 inputMode="numeric"
 
 
 
+
+
+
+
                 min="0"
+
+
+
+
 
 
 
@@ -1822,7 +3628,15 @@ return (
 
 
 
+
+
+
+
                 onChange={(e) => setAdditionalStack(e.target.value)}
+
+
+
+
 
 
 
@@ -1830,7 +3644,15 @@ return (
 
 
 
+
+
+
+
               />
+
+
+
+
 
 
 
@@ -1838,7 +3660,15 @@ return (
 
 
 
+
+
+
+
                 style={{
+
+
+
+
 
 
 
@@ -1846,7 +3676,15 @@ return (
 
 
 
+
+
+
+
                   color: '#666',
+
+
+
+
 
 
 
@@ -1854,11 +3692,23 @@ return (
 
 
 
+
+
+
+
                 }}
 
 
 
+
+
+
+
               >
+
+
+
+
 
 
 
@@ -1866,7 +3716,15 @@ return (
 
 
 
+
+
+
+
               </div>
+
+
+
+
 
 
 
@@ -1874,7 +3732,15 @@ return (
 
 
 
+
+
+
+
             <div>
+
+
+
+
 
 
 
@@ -1882,7 +3748,15 @@ return (
 
 
 
+
+
+
+
               <input
+
+
+
+
 
 
 
@@ -1890,11 +3764,23 @@ return (
 
 
 
+
+
+
+
                 inputMode="numeric"
 
 
 
+
+
+
+
                 min="0"
+
+
+
+
 
 
 
@@ -1902,7 +3788,15 @@ return (
 
 
 
+
+
+
+
                 onChange={(e) => setEndingStack(e.target.value)}
+
+
+
+
 
 
 
@@ -1910,7 +3804,15 @@ return (
 
 
 
+
+
+
+
               />
+
+
+
+
 
 
 
@@ -1918,7 +3820,15 @@ return (
 
 
 
+
+
+
+
           </div>
+
+
+
+
 
 
 
@@ -1926,7 +3836,15 @@ return (
 
 
 
+
+
+
+
         <section style={sectionStyle}>
+
+
+
+
 
 
 
@@ -1934,11 +3852,23 @@ return (
 
 
 
+
+
+
+
           <div
 
 
 
+
+
+
+
             style={{
+
+
+
+
 
 
 
@@ -1946,7 +3876,15 @@ return (
 
 
 
+
+
+
+
               gridTemplateColumns: '1fr 1fr',
+
+
+
+
 
 
 
@@ -1954,7 +3892,15 @@ return (
 
 
 
+
+
+
+
             }}
+
+
+
+
 
 
 
@@ -1962,7 +3908,15 @@ return (
 
 
 
+
+
+
+
             <div
+
+
+
+
 
 
 
@@ -1970,7 +3924,15 @@ return (
 
 
 
+
+
+
+
                 position: 'relative',
+
+
+
+
 
 
 
@@ -1978,7 +3940,15 @@ return (
 
 
 
+
+
+
+
             >
+
+
+
+
 
 
 
@@ -1986,7 +3956,15 @@ return (
 
 
 
+
+
+
+
                 type="number"
+
+
+
+
 
 
 
@@ -1994,7 +3972,15 @@ return (
 
 
 
+
+
+
+
                 min="0"
+
+
+
+
 
 
 
@@ -2002,7 +3988,15 @@ return (
 
 
 
+
+
+
+
                 onChange={(e) => setPlayHours(e.target.value)}
+
+
+
+
 
 
 
@@ -2010,7 +4004,15 @@ return (
 
 
 
+
+
+
+
                 style={{
+
+
+
+
 
 
 
@@ -2018,7 +4020,15 @@ return (
 
 
 
+
+
+
+
                 }}
+
+
+
+
 
 
 
@@ -2026,7 +4036,15 @@ return (
 
 
 
+
+
+
+
               <span
+
+
+
+
 
 
 
@@ -2034,7 +4052,15 @@ return (
 
 
 
+
+
+
+
                   position: 'absolute',
+
+
+
+
 
 
 
@@ -2042,7 +4068,15 @@ return (
 
 
 
+
+
+
+
                   top: '50%',
+
+
+
+
 
 
 
@@ -2050,7 +4084,15 @@ return (
 
 
 
+
+
+
+
                   color: '#777',
+
+
+
+
 
 
 
@@ -2058,7 +4100,15 @@ return (
 
 
 
+
+
+
+
                   pointerEvents: 'none',
+
+
+
+
 
 
 
@@ -2066,7 +4116,15 @@ return (
 
 
 
+
+
+
+
               >
+
+
+
+
 
 
 
@@ -2074,7 +4132,15 @@ return (
 
 
 
+
+
+
+
               </span>
+
+
+
+
 
 
 
@@ -2082,11 +4148,23 @@ return (
 
 
 
+
+
+
+
             <div
 
 
 
+
+
+
+
               style={{
+
+
+
+
 
 
 
@@ -2094,11 +4172,23 @@ return (
 
 
 
+
+
+
+
               }}
 
 
 
+
+
+
+
             >
+
+
+
+
 
 
 
@@ -2106,7 +4196,15 @@ return (
 
 
 
+
+
+
+
                 type="number"
+
+
+
+
 
 
 
@@ -2114,7 +4212,15 @@ return (
 
 
 
+
+
+
+
                 min="0"
+
+
+
+
 
 
 
@@ -2122,7 +4228,15 @@ return (
 
 
 
+
+
+
+
                 value={playMinutes}
+
+
+
+
 
 
 
@@ -2130,11 +4244,23 @@ return (
 
 
 
+
+
+
+
                 placeholder="30"
 
 
 
+
+
+
+
                 style={{
+
+
+
+
 
 
 
@@ -2142,11 +4268,23 @@ return (
 
 
 
+
+
+
+
                 }}
 
 
 
+
+
+
+
               />
+
+
+
+
 
 
 
@@ -2154,7 +4292,15 @@ return (
 
 
 
+
+
+
+
                 style={{
+
+
+
+
 
 
 
@@ -2162,7 +4308,15 @@ return (
 
 
 
+
+
+
+
                   right: '14px',
+
+
+
+
 
 
 
@@ -2170,7 +4324,15 @@ return (
 
 
 
+
+
+
+
                   transform: 'translateY(-50%)',
+
+
+
+
 
 
 
@@ -2178,7 +4340,15 @@ return (
 
 
 
+
+
+
+
                   fontSize: '12px',
+
+
+
+
 
 
 
@@ -2186,11 +4356,23 @@ return (
 
 
 
+
+
+
+
                 }}
 
 
 
+
+
+
+
               >
+
+
+
+
 
 
 
@@ -2198,7 +4380,15 @@ return (
 
 
 
+
+
+
+
               </span>
+
+
+
+
 
 
 
@@ -2206,11 +4396,23 @@ return (
 
 
 
+
+
+
+
           </div>
 
 
 
+
+
+
+
         </section>
+
+
+
+
 
 
 
@@ -2218,7 +4420,15 @@ return (
 
 
 
+
+
+
+
           <section style={sectionStyle}>
+
+
+
+
 
 
 
@@ -2226,7 +4436,15 @@ return (
 
 
 
+
+
+
+
               style={{
+
+
+
+
 
 
 
@@ -2234,7 +4452,15 @@ return (
 
 
 
+
+
+
+
                 fontWeight: 800,
+
+
+
+
 
 
 
@@ -2242,7 +4468,15 @@ return (
 
 
 
+
+
+
+
             >
+
+
+
+
 
 
 
@@ -2250,7 +4484,15 @@ return (
 
 
 
+
+
+
+
             </div>
+
+
+
+
 
 
 
@@ -2258,7 +4500,15 @@ return (
 
 
 
+
+
+
+
               style={{
+
+
+
+
 
 
 
@@ -2266,7 +4516,15 @@ return (
 
 
 
+
+
+
+
                 display: 'grid',
+
+
+
+
 
 
 
@@ -2274,7 +4532,15 @@ return (
 
 
 
+
+
+
+
                 gap: '9px',
+
+
+
+
 
 
 
@@ -2282,7 +4548,15 @@ return (
 
 
 
+
+
+
+
             >
+
+
+
+
 
 
 
@@ -2290,7 +4564,15 @@ return (
 
 
 
+
+
+
+
                 style={{
+
+
+
+
 
 
 
@@ -2298,7 +4580,15 @@ return (
 
 
 
+
+
+
+
                   background: '#0d0d0d',
+
+
+
+
 
 
 
@@ -2306,7 +4596,15 @@ return (
 
 
 
+
+
+
+
                   borderRadius: '13px',
+
+
+
+
 
 
 
@@ -2314,7 +4612,15 @@ return (
 
 
 
+
+
+
+
               >
+
+
+
+
 
 
 
@@ -2322,7 +4628,15 @@ return (
 
 
 
+
+
+
+
                   style={{
+
+
+
+
 
 
 
@@ -2330,7 +4644,15 @@ return (
 
 
 
+
+
+
+
                     fontSize: '10px',
+
+
+
+
 
 
 
@@ -2338,7 +4660,15 @@ return (
 
 
 
+
+
+
+
                 >
+
+
+
+
 
 
 
@@ -2346,7 +4676,15 @@ return (
 
 
 
+
+
+
+
                 </div>
+
+
+
+
 
 
 
@@ -2354,7 +4692,15 @@ return (
 
 
 
+
+
+
+
                   style={{
+
+
+
+
 
 
 
@@ -2362,7 +4708,15 @@ return (
 
 
 
+
+
+
+
                     fontSize: '17px',
+
+
+
+
 
 
 
@@ -2370,11 +4724,23 @@ return (
 
 
 
+
+
+
+
                   }}
 
 
 
+
+
+
+
                 >
+
+
+
+
 
 
 
@@ -2382,7 +4748,15 @@ return (
 
 
 
+
+
+
+
                 </div>
+
+
+
+
 
 
 
@@ -2390,7 +4764,15 @@ return (
 
 
 
+
+
+
+
               <div
+
+
+
+
 
 
 
@@ -2398,7 +4780,15 @@ return (
 
 
 
+
+
+
+
                   padding: '13px',
+
+
+
+
 
 
 
@@ -2406,7 +4796,15 @@ return (
 
 
 
+
+
+
+
                   border: '1px solid #292929',
+
+
+
+
 
 
 
@@ -2414,7 +4812,15 @@ return (
 
 
 
+
+
+
+
                 }}
+
+
+
+
 
 
 
@@ -2422,7 +4828,15 @@ return (
 
 
 
+
+
+
+
                 <div
+
+
+
+
 
 
 
@@ -2430,7 +4844,15 @@ return (
 
 
 
+
+
+
+
                     color: '#777',
+
+
+
+
 
 
 
@@ -2438,11 +4860,23 @@ return (
 
 
 
+
+
+
+
                   }}
 
 
 
+
+
+
+
                 >
+
+
+
+
 
 
 
@@ -2450,7 +4884,15 @@ return (
 
 
 
+
+
+
+
                 </div>
+
+
+
+
 
 
 
@@ -2458,7 +4900,15 @@ return (
 
 
 
+
+
+
+
                   style={{
+
+
+
+
 
 
 
@@ -2466,7 +4916,15 @@ return (
 
 
 
+
+
+
+
                     fontSize: '17px',
+
+
+
+
 
 
 
@@ -2474,11 +4932,23 @@ return (
 
 
 
+
+
+
+
                   }}
 
 
 
+
+
+
+
                 >
+
+
+
+
 
 
 
@@ -2486,7 +4956,15 @@ return (
 
 
 
+
+
+
+
                   {calculated.bbProfit.toFixed(1)}BB
+
+
+
+
 
 
 
@@ -2494,7 +4972,15 @@ return (
 
 
 
+
+
+
+
               </div>
+
+
+
+
 
 
 
@@ -2502,7 +4988,15 @@ return (
 
 
 
+
+
+
+
                 style={{
+
+
+
+
 
 
 
@@ -2510,7 +5004,15 @@ return (
 
 
 
+
+
+
+
                   background: '#0d0d0d',
+
+
+
+
 
 
 
@@ -2518,7 +5020,15 @@ return (
 
 
 
+
+
+
+
                   borderRadius: '13px',
+
+
+
+
 
 
 
@@ -2526,7 +5036,15 @@ return (
 
 
 
+
+
+
+
               >
+
+
+
+
 
 
 
@@ -2534,7 +5052,15 @@ return (
 
 
 
+
+
+
+
                   style={{
+
+
+
+
 
 
 
@@ -2542,7 +5068,15 @@ return (
 
 
 
+
+
+
+
                     fontSize: '10px',
+
+
+
+
 
 
 
@@ -2550,7 +5084,15 @@ return (
 
 
 
+
+
+
+
                 >
+
+
+
+
 
 
 
@@ -2558,7 +5100,15 @@ return (
 
 
 
+
+
+
+
                 </div>
+
+
+
+
 
 
 
@@ -2566,7 +5116,15 @@ return (
 
 
 
+
+
+
+
                   style={{
+
+
+
+
 
 
 
@@ -2574,7 +5132,15 @@ return (
 
 
 
+
+
+
+
                     fontSize: '17px',
+
+
+
+
 
 
 
@@ -2582,11 +5148,23 @@ return (
 
 
 
+
+
+
+
                   }}
 
 
 
+
+
+
+
                 >
+
+
+
+
 
 
 
@@ -2594,7 +5172,15 @@ return (
 
 
 
+
+
+
+
                     ? '-'
+
+
+
+
 
 
 
@@ -2602,7 +5188,15 @@ return (
 
 
 
+
+
+
+
                 </div>
+
+
+
+
 
 
 
@@ -2610,11 +5204,23 @@ return (
 
 
 
+
+
+
+
               <div
 
 
 
+
+
+
+
                 style={{
+
+
+
+
 
 
 
@@ -2622,7 +5228,15 @@ return (
 
 
 
+
+
+
+
                   background: '#0d0d0d',
+
+
+
+
 
 
 
@@ -2630,7 +5244,15 @@ return (
 
 
 
+
+
+
+
                   borderRadius: '13px',
+
+
+
+
 
 
 
@@ -2638,7 +5260,15 @@ return (
 
 
 
+
+
+
+
               >
+
+
+
+
 
 
 
@@ -2646,7 +5276,15 @@ return (
 
 
 
+
+
+
+
                   style={{
+
+
+
+
 
 
 
@@ -2654,7 +5292,15 @@ return (
 
 
 
+
+
+
+
                     fontSize: '10px',
+
+
+
+
 
 
 
@@ -2662,7 +5308,15 @@ return (
 
 
 
+
+
+
+
                 >
+
+
+
+
 
 
 
@@ -2670,7 +5324,15 @@ return (
 
 
 
+
+
+
+
                 </div>
+
+
+
+
 
 
 
@@ -2678,7 +5340,15 @@ return (
 
 
 
+
+
+
+
                   style={{
+
+
+
+
 
 
 
@@ -2686,7 +5356,15 @@ return (
 
 
 
+
+
+
+
                     fontSize: '17px',
+
+
+
+
 
 
 
@@ -2694,7 +5372,15 @@ return (
 
 
 
+
+
+
+
                   }}
+
+
+
+
 
 
 
@@ -2702,7 +5388,15 @@ return (
 
 
 
+
+
+
+
                   {calculated.totalInvestedStack.toLocaleString()}
+
+
+
+
 
 
 
@@ -2710,11 +5404,23 @@ return (
 
 
 
+
+
+
+
               </div>
 
 
 
+
+
+
+
             </div>
+
+
+
+
 
 
 
@@ -2722,11 +5428,23 @@ return (
 
 
 
+
+
+
+
         )}
 
 
 
+
+
+
+
         <section style={sectionStyle}>
+
+
+
+
 
 
 
@@ -2734,7 +5452,15 @@ return (
 
 
 
+
+
+
+
           <textarea
+
+
+
+
 
 
 
@@ -2742,7 +5468,15 @@ return (
 
 
 
+
+
+
+
             onChange={(e) => setMemo(e.target.value)}
+
+
+
+
 
 
 
@@ -2750,7 +5484,15 @@ return (
 
 
 
+
+
+
+
             rows={4}
+
+
+
+
 
 
 
@@ -2758,11 +5500,23 @@ return (
 
 
 
+
+
+
+
         </section>
 
 
 
+
+
+
+
         <section style={sectionStyle}>
+
+
+
+
 
 
 
@@ -2770,7 +5524,15 @@ return (
 
 
 
+
+
+
+
             style={{
+
+
+
+
 
 
 
@@ -2778,7 +5540,15 @@ return (
 
 
 
+
+
+
+
               fontWeight: 800,
+
+
+
+
 
 
 
@@ -2786,7 +5556,15 @@ return (
 
 
 
+
+
+
+
           >
+
+
+
+
 
 
 
@@ -2794,7 +5572,15 @@ return (
 
 
 
+
+
+
+
           </div>
+
+
+
+
 
 
 
@@ -2802,7 +5588,15 @@ return (
 
 
 
+
+
+
+
             type="button"
+
+
+
+
 
 
 
@@ -2810,7 +5604,15 @@ return (
 
 
 
+
+
+
+
             style={{
+
+
+
+
 
 
 
@@ -2818,7 +5620,15 @@ return (
 
 
 
+
+
+
+
               marginTop: '13px',
+
+
+
+
 
 
 
@@ -2826,7 +5636,15 @@ return (
 
 
 
+
+
+
+
               display: 'flex',
+
+
+
+
 
 
 
@@ -2834,7 +5652,15 @@ return (
 
 
 
+
+
+
+
               justifyContent: 'space-between',
+
+
+
+
 
 
 
@@ -2842,7 +5668,15 @@ return (
 
 
 
+
+
+
+
               background: '#0d0d0d',
+
+
+
+
 
 
 
@@ -2850,7 +5684,15 @@ return (
 
 
 
+
+
+
+
               border: '1px solid #292929',
+
+
+
+
 
 
 
@@ -2858,7 +5700,15 @@ return (
 
 
 
+
+
+
+
               textAlign: 'left',
+
+
+
+
 
 
 
@@ -2866,7 +5716,15 @@ return (
 
 
 
+
+
+
+
           >
+
+
+
+
 
 
 
@@ -2874,11 +5732,23 @@ return (
 
 
 
+
+
+
+
               <div
 
 
 
+
+
+
+
                 style={{
+
+
+
+
 
 
 
@@ -2886,7 +5756,15 @@ return (
 
 
 
+
+
+
+
                   fontWeight: 700,
+
+
+
+
 
 
 
@@ -2894,7 +5772,15 @@ return (
 
 
 
+
+
+
+
               >
+
+
+
+
 
 
 
@@ -2902,7 +5788,15 @@ return (
 
 
 
+
+
+
+
               </div>
+
+
+
+
 
 
 
@@ -2910,7 +5804,15 @@ return (
 
 
 
+
+
+
+
                 style={{
+
+
+
+
 
 
 
@@ -2918,7 +5820,15 @@ return (
 
 
 
+
+
+
+
                   color: '#666',
+
+
+
+
 
 
 
@@ -2926,7 +5836,15 @@ return (
 
 
 
+
+
+
+
                 }}
+
+
+
+
 
 
 
@@ -2934,7 +5852,15 @@ return (
 
 
 
+
+
+
+
                 {isPublic
+
+
+
+
 
 
 
@@ -2942,7 +5868,15 @@ return (
 
 
 
+
+
+
+
                   : 'この記録は自分だけが確認できます'}
+
+
+
+
 
 
 
@@ -2950,7 +5884,15 @@ return (
 
 
 
+
+
+
+
             </div>
+
+
+
+
 
 
 
@@ -2958,7 +5900,15 @@ return (
 
 
 
+
+
+
+
               style={{
+
+
+
+
 
 
 
@@ -2966,7 +5916,15 @@ return (
 
 
 
+
+
+
+
                 height: '25px',
+
+
+
+
 
 
 
@@ -2974,7 +5932,15 @@ return (
 
 
 
+
+
+
+
                 background: isPublic ? '#fff' : '#292929',
+
+
+
+
 
 
 
@@ -2982,7 +5948,15 @@ return (
 
 
 
+
+
+
+
                 transition: 'background .15s ease',
+
+
+
+
 
 
 
@@ -2990,7 +5964,15 @@ return (
 
 
 
+
+
+
+
             >
+
+
+
+
 
 
 
@@ -2998,7 +5980,15 @@ return (
 
 
 
+
+
+
+
                 style={{
+
+
+
+
 
 
 
@@ -3006,7 +5996,15 @@ return (
 
 
 
+
+
+
+
                   height: '19px',
+
+
+
+
 
 
 
@@ -3014,7 +6012,15 @@ return (
 
 
 
+
+
+
+
                   background: isPublic ? '#000' : '#777',
+
+
+
+
 
 
 
@@ -3022,7 +6028,15 @@ return (
 
 
 
+
+
+
+
                   transition: 'margin .15s ease',
+
+
+
+
 
 
 
@@ -3030,7 +6044,15 @@ return (
 
 
 
+
+
+
+
               />
+
+
+
+
 
 
 
@@ -3038,7 +6060,15 @@ return (
 
 
 
+
+
+
+
           </button>
+
+
+
+
 
 
 
@@ -3046,7 +6076,15 @@ return (
 
 
 
+
+
+
+
         <section style={sectionStyle}>
+
+
+
+
 
 
 
@@ -3054,11 +6092,27 @@ return (
 
 
 
+
+
+
+
           タイムライン投稿
 
 
 
+
+
+
+
         </div>
+
+
+
+
+
+
+
+
 
 
 
@@ -3070,7 +6124,15 @@ return (
 
 
 
+
+
+
+
           type="button"
+
+
+
+
 
 
 
@@ -3078,7 +6140,15 @@ return (
 
 
 
+
+
+
+
             const next = !postToTimeline
+
+
+
+
 
 
 
@@ -3086,11 +6156,23 @@ return (
 
 
 
+
+
+
+
             if (next) setIsPublic(true)
 
 
 
+
+
+
+
           }}
+
+
+
+
 
 
 
@@ -3098,7 +6180,15 @@ return (
 
 
 
+
+
+
+
             width: '100%',
+
+
+
+
 
 
 
@@ -3106,7 +6196,15 @@ return (
 
 
 
+
+
+
+
             padding: '14px',
+
+
+
+
 
 
 
@@ -3114,7 +6212,15 @@ return (
 
 
 
+
+
+
+
             alignItems: 'center',
+
+
+
+
 
 
 
@@ -3122,7 +6228,15 @@ return (
 
 
 
+
+
+
+
             gap: '15px',
+
+
+
+
 
 
 
@@ -3130,7 +6244,15 @@ return (
 
 
 
+
+
+
+
             color: '#fff',
+
+
+
+
 
 
 
@@ -3138,7 +6260,15 @@ return (
 
 
 
+
+
+
+
             borderRadius: '13px',
+
+
+
+
 
 
 
@@ -3146,7 +6276,15 @@ return (
 
 
 
+
+
+
+
           }}
+
+
+
+
 
 
 
@@ -3154,7 +6292,15 @@ return (
 
 
 
+
+
+
+
           <div>
+
+
+
+
 
 
 
@@ -3162,11 +6308,23 @@ return (
 
 
 
+
+
+
+
               タイムラインにも投稿する
 
 
 
+
+
+
+
             </div>
+
+
+
+
 
 
 
@@ -3174,7 +6332,15 @@ return (
 
 
 
+
+
+
+
               style={{
+
+
+
+
 
 
 
@@ -3182,7 +6348,15 @@ return (
 
 
 
+
+
+
+
                 color: '#666',
+
+
+
+
 
 
 
@@ -3190,7 +6364,15 @@ return (
 
 
 
+
+
+
+
                 lineHeight: 1.5,
+
+
+
+
 
 
 
@@ -3198,7 +6380,15 @@ return (
 
 
 
+
+
+
+
             >
+
+
+
+
 
 
 
@@ -3206,7 +6396,15 @@ return (
 
 
 
+
+
+
+
                 ? 'この記録を公開して、結果カード付きで投稿します'
+
+
+
+
 
 
 
@@ -3214,11 +6412,27 @@ return (
 
 
 
+
+
+
+
             </div>
 
 
 
+
+
+
+
           </div>
+
+
+
+
+
+
+
+
 
 
 
@@ -3230,7 +6444,15 @@ return (
 
 
 
+
+
+
+
             style={{
+
+
+
+
 
 
 
@@ -3238,7 +6460,15 @@ return (
 
 
 
+
+
+
+
               height: '25px',
+
+
+
+
 
 
 
@@ -3246,7 +6476,15 @@ return (
 
 
 
+
+
+
+
               background: postToTimeline ? '#fff' : '#292929',
+
+
+
+
 
 
 
@@ -3254,7 +6492,15 @@ return (
 
 
 
+
+
+
+
               transition: 'background .15s ease',
+
+
+
+
 
 
 
@@ -3262,7 +6508,15 @@ return (
 
 
 
+
+
+
+
             }}
+
+
+
+
 
 
 
@@ -3270,7 +6524,15 @@ return (
 
 
 
+
+
+
+
             <div
+
+
+
+
 
 
 
@@ -3278,7 +6540,15 @@ return (
 
 
 
+
+
+
+
                 width: '19px',
+
+
+
+
 
 
 
@@ -3286,7 +6556,15 @@ return (
 
 
 
+
+
+
+
                 marginLeft: postToTimeline ? '19px' : 0,
+
+
+
+
 
 
 
@@ -3294,7 +6572,15 @@ return (
 
 
 
+
+
+
+
                 borderRadius: '50%',
+
+
+
+
 
 
 
@@ -3302,7 +6588,15 @@ return (
 
 
 
+
+
+
+
               }}
+
+
+
+
 
 
 
@@ -3310,11 +6604,27 @@ return (
 
 
 
+
+
+
+
           </div>
 
 
 
+
+
+
+
         </button>
+
+
+
+
+
+
+
+
 
 
 
@@ -3326,7 +6636,15 @@ return (
 
 
 
+
+
+
+
           <>
+
+
+
+
 
 
 
@@ -3334,7 +6652,15 @@ return (
 
 
 
+
+
+
+
               style={{
+
+
+
+
 
 
 
@@ -3342,7 +6668,15 @@ return (
 
 
 
+
+
+
+
                 padding: '10px 12px',
+
+
+
+
 
 
 
@@ -3350,7 +6684,15 @@ return (
 
 
 
+
+
+
+
                 background: '#111',
+
+
+
+
 
 
 
@@ -3358,7 +6700,15 @@ return (
 
 
 
+
+
+
+
                 borderRadius: '11px',
+
+
+
+
 
 
 
@@ -3366,7 +6716,15 @@ return (
 
 
 
+
+
+
+
                 lineHeight: 1.5,
+
+
+
+
 
 
 
@@ -3374,11 +6732,23 @@ return (
 
 
 
+
+
+
+
             >
 
 
 
+
+
+
+
               タイムラインに投稿する場合、この記録は公開になります。
+
+
+
+
 
 
 
@@ -3390,7 +6760,19 @@ return (
 
 
 
+
+
+
+
+
+
+
+
             <textarea
+
+
+
+
 
 
 
@@ -3398,7 +6780,15 @@ return (
 
 
 
+
+
+
+
               onChange={(e) => setTimelineComment(e.target.value)}
+
+
+
+
 
 
 
@@ -3406,7 +6796,15 @@ return (
 
 
 
+
+
+
+
               rows={3}
+
+
+
+
 
 
 
@@ -3414,7 +6812,15 @@ return (
 
 
 
+
+
+
+
               style={{ marginTop: '12px' }}
+
+
+
+
 
 
 
@@ -3422,11 +6828,23 @@ return (
 
 
 
+
+
+
+
           </>
 
 
 
+
+
+
+
         )}
+
+
+
+
 
 
 
@@ -3438,7 +6856,19 @@ return (
 
 
 
+
+
+
+
+
+
+
+
       {message && (
+
+
+
+
 
 
 
@@ -3446,7 +6876,15 @@ return (
 
 
 
+
+
+
+
             style={{
+
+
+
+
 
 
 
@@ -3454,7 +6892,15 @@ return (
 
 
 
+
+
+
+
               padding: '12px 14px',
+
+
+
+
 
 
 
@@ -3462,7 +6908,15 @@ return (
 
 
 
+
+
+
+
               background: '#1a0d0d',
+
+
+
+
 
 
 
@@ -3470,7 +6924,15 @@ return (
 
 
 
+
+
+
+
               borderRadius: '12px',
+
+
+
+
 
 
 
@@ -3478,7 +6940,15 @@ return (
 
 
 
+
+
+
+
               lineHeight: 1.5,
+
+
+
+
 
 
 
@@ -3486,7 +6956,15 @@ return (
 
 
 
+
+
+
+
           >
+
+
+
+
 
 
 
@@ -3494,7 +6972,15 @@ return (
 
 
 
+
+
+
+
           </div>
+
+
+
+
 
 
 
@@ -3502,7 +6988,15 @@ return (
 
 
 
+
+
+
+
         <button
+
+
+
+
 
 
 
@@ -3510,7 +7004,15 @@ return (
 
 
 
+
+
+
+
           disabled={isSaving}
+
+
+
+
 
 
 
@@ -3518,7 +7020,15 @@ return (
 
 
 
+
+
+
+
             width: '100%',
+
+
+
+
 
 
 
@@ -3526,7 +7036,15 @@ return (
 
 
 
+
+
+
+
             padding: '14px 18px',
+
+
+
+
 
 
 
@@ -3534,7 +7052,15 @@ return (
 
 
 
+
+
+
+
             color: '#000',
+
+
+
+
 
 
 
@@ -3542,7 +7068,15 @@ return (
 
 
 
+
+
+
+
             fontSize: '14px',
+
+
+
+
 
 
 
@@ -3550,7 +7084,15 @@ return (
 
 
 
+
+
+
+
           }}
+
+
+
+
 
 
 
@@ -3558,7 +7100,15 @@ return (
 
 
 
+
+
+
+
           {isSaving ? '保存中...' : 'アミューズリング記録を保存'}
+
+
+
+
 
 
 
@@ -3566,7 +7116,15 @@ return (
 
 
 
+
+
+
+
       </div>
+
+
+
+
 
 
 
@@ -3574,11 +7132,23 @@ return (
 
 
 
+
+
+
+
   )
 
 
 
+
+
+
+
 }
+
+
+
+
 
 
 
