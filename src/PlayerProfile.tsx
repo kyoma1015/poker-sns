@@ -2925,7 +2925,163 @@ function PlayerProfile() {
 
 
 
-      {/* プレイスタイル */}
+      {/* 主なトーナメント実績 */}
+
+
+
+        {pokerResults.some((result) => result.is_featured) && (
+
+
+
+          <section style={{ marginTop: '10px', padding: '21px 0', borderTop: '1px solid #242424' }}>
+
+
+
+            <div style={{ fontSize: '17px', fontWeight: 800 }}>主なトーナメント実績</div>
+
+
+
+            <div style={{ marginTop: '5px', color: '#666', fontSize: '12px' }}>このプレイヤーが選んだ主な実績</div>
+
+
+
+            <div style={{ marginTop: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+
+
+
+              {pokerResults.filter((result) => result.is_featured).map((result) => (
+
+
+
+                <div key={`featured-${result.id}`} style={{ padding: '17px', background: '#0d0d0d', border: '1px solid #343434', borderRadius: '16px' }}>
+
+
+
+                  <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px' }}>
+
+
+
+                    <div style={{ minWidth: 0 }}>
+
+
+
+                      <div style={{ color: '#fff', fontSize: '15px', fontWeight: 800, lineHeight: 1.4, wordBreak: 'break-word' }}>{result.tournament_name}</div>
+
+
+
+                      <div style={{ marginTop: '5px', color: '#666', fontSize: '11px' }}>
+
+
+
+                        {new Date(`${result.played_at}T00:00:00`).toLocaleDateString('ja-JP')}
+
+
+
+                        {result.venue ? ` ・ ${result.venue}` : ''}
+
+
+
+                      </div>
+
+
+
+                    </div>
+
+
+
+                    <div style={{ flexShrink: 0, padding: '6px 10px', background: '#171717', border: '1px solid #383838', borderRadius: '999px', color: '#fff', fontSize: '12px', fontWeight: 800 }}>
+
+
+
+                      {result.rank_unknown ? '順位不明' : result.rank !== null ? `${result.rank}位` : '順位不明'}
+
+
+
+                    </div>
+
+
+
+                  </div>
+
+
+
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '13px' }}>
+
+
+
+                    {result.entry_count !== null && (
+
+
+
+                      <div style={{ padding: '6px 9px', background: '#141414', borderRadius: '8px', color: '#aaa', fontSize: '11px' }}>{result.entry_count}人参加</div>
+
+
+
+                    )}
+
+
+
+                    {result.is_itm && (
+
+
+
+                      <div style={{ padding: '6px 9px', background: '#141414', borderRadius: '8px', color: '#fff', fontSize: '11px', fontWeight: 700 }}>ITM</div>
+
+
+
+                    )}
+
+
+
+                    {result.prize_amount !== null && result.prize_amount > 0 && (
+
+
+
+                      <div style={{ padding: '6px 9px', background: '#141414', borderRadius: '8px', color: '#fff', fontSize: '11px', fontWeight: 700 }}>プライズ相当額 ¥{result.prize_amount.toLocaleString()}</div>
+
+
+
+                    )}
+
+
+
+                  </div>
+
+
+
+                  {result.prize_description && (
+
+
+
+                    <div style={{ marginTop: '12px', color: '#aaa', fontSize: '12px', lineHeight: 1.6 }}>獲得内容：{result.prize_description}</div>
+
+
+
+                  )}
+
+
+
+                </div>
+
+
+
+              ))}
+
+
+
+            </div>
+
+
+
+          </section>
+
+
+
+        )}
+
+
+
+          {/* プレイスタイル */}
 
 
 
@@ -5105,163 +5261,7 @@ function PlayerProfile() {
 
 
 
-        {/* 主なトーナメント実績 */}
-
-
-
-        {pokerResults.some((result) => result.is_featured) && (
-
-
-
-          <section style={{ marginTop: '10px', padding: '21px 0', borderTop: '1px solid #242424' }}>
-
-
-
-            <div style={{ fontSize: '17px', fontWeight: 800 }}>主なトーナメント実績</div>
-
-
-
-            <div style={{ marginTop: '5px', color: '#666', fontSize: '12px' }}>このプレイヤーが選んだ主な実績</div>
-
-
-
-            <div style={{ marginTop: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-
-
-
-              {pokerResults.filter((result) => result.is_featured).map((result) => (
-
-
-
-                <div key={`featured-${result.id}`} style={{ padding: '17px', background: '#0d0d0d', border: '1px solid #343434', borderRadius: '16px' }}>
-
-
-
-                  <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px' }}>
-
-
-
-                    <div style={{ minWidth: 0 }}>
-
-
-
-                      <div style={{ color: '#fff', fontSize: '15px', fontWeight: 800, lineHeight: 1.4, wordBreak: 'break-word' }}>{result.tournament_name}</div>
-
-
-
-                      <div style={{ marginTop: '5px', color: '#666', fontSize: '11px' }}>
-
-
-
-                        {new Date(`${result.played_at}T00:00:00`).toLocaleDateString('ja-JP')}
-
-
-
-                        {result.venue ? ` ・ ${result.venue}` : ''}
-
-
-
-                      </div>
-
-
-
-                    </div>
-
-
-
-                    <div style={{ flexShrink: 0, padding: '6px 10px', background: '#171717', border: '1px solid #383838', borderRadius: '999px', color: '#fff', fontSize: '12px', fontWeight: 800 }}>
-
-
-
-                      {result.rank_unknown ? '順位不明' : result.rank !== null ? `${result.rank}位` : '順位不明'}
-
-
-
-                    </div>
-
-
-
-                  </div>
-
-
-
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '13px' }}>
-
-
-
-                    {result.entry_count !== null && (
-
-
-
-                      <div style={{ padding: '6px 9px', background: '#141414', borderRadius: '8px', color: '#aaa', fontSize: '11px' }}>{result.entry_count}人参加</div>
-
-
-
-                    )}
-
-
-
-                    {result.is_itm && (
-
-
-
-                      <div style={{ padding: '6px 9px', background: '#141414', borderRadius: '8px', color: '#fff', fontSize: '11px', fontWeight: 700 }}>ITM</div>
-
-
-
-                    )}
-
-
-
-                    {result.prize_amount !== null && result.prize_amount > 0 && (
-
-
-
-                      <div style={{ padding: '6px 9px', background: '#141414', borderRadius: '8px', color: '#fff', fontSize: '11px', fontWeight: 700 }}>プライズ相当額 ¥{result.prize_amount.toLocaleString()}</div>
-
-
-
-                    )}
-
-
-
-                  </div>
-
-
-
-                  {result.prize_description && (
-
-
-
-                    <div style={{ marginTop: '12px', color: '#aaa', fontSize: '12px', lineHeight: 1.6 }}>獲得内容：{result.prize_description}</div>
-
-
-
-                  )}
-
-
-
-                </div>
-
-
-
-              ))}
-
-
-
-            </div>
-
-
-
-          </section>
-
-
-
-        )}
-
-
-
-          </>
+        </>
 
 
 
