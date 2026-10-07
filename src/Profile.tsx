@@ -115,6 +115,7 @@ function Profile() {
   const [cashGraphMode, setCashGraphMode] = useState<'jpy' | 'bb'>('jpy')
   const [profileTab, setProfileTab] = useState<'pokerId' | 'records'>('pokerId')
   const [recordTab, setRecordTab] = useState<'tournament' | 'amusement' | 'cash'>('tournament')
+  const [showAllPlayableGames, setShowAllPlayableGames] = useState(false)
   useEffect(() => {
     const loadProfile = async () => {
       const {
@@ -904,25 +905,47 @@ function Profile() {
                 🎴 プレイ可能ゲーム
               </div>
               {Array.isArray(profile.playable_games) && profile.playable_games.length > 0 ? (
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '7px' }}>
-                  {profile.playable_games.map((game: string) => (
-                    <div
-                      key={game}
+                <>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '7px' }}>
+                    {(showAllPlayableGames ? profile.playable_games : profile.playable_games.slice(0, 6)).map((game: string) => (
+                      <div
+                        key={game}
+                        style={{
+                          padding: '7px 10px',
+                          background: '#141414',
+                          border: '1px solid #292929',
+                          borderRadius: '999px',
+                          color: '#eee',
+                          fontSize: '11px',
+                          fontWeight: 700,
+                          lineHeight: 1.35,
+                        }}
+                      >
+                        {game}
+                      </div>
+                    ))}
+                  </div>
+                  {profile.playable_games.length > 6 && (
+                    <button
+                      type="button"
+                      onClick={() => setShowAllPlayableGames((prev) => !prev)}
                       style={{
-                        padding: '7px 10px',
-                        background: '#141414',
+                        width: '100%',
+                        marginTop: '10px',
+                        padding: '9px 12px',
+                        background: '#111',
                         border: '1px solid #292929',
-                        borderRadius: '999px',
-                        color: '#eee',
+                        borderRadius: '10px',
+                        color: '#aaa',
                         fontSize: '11px',
                         fontWeight: 700,
-                        lineHeight: 1.35,
+                        cursor: 'pointer',
                       }}
                     >
-                      {game}
-                    </div>
-                  ))}
-                </div>
+                      {showAllPlayableGames ? '閉じる' : `すべて表示（+${profile.playable_games.length - 6}）`}
+                    </button>
+                  )}
+                </>
               ) : (
                 <div style={{ color: '#777', fontSize: '12px' }}>未設定</div>
               )}
