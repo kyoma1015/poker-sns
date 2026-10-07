@@ -118,50 +118,6 @@ type TdaRule = {
 
 
 
-type TdaAiRule = {
-
-
-
-  rule_number: number
-
-
-
-  title_ja: string | null
-
-
-
-}
-
-
-
-
-
-
-
-type TdaAiResponse = {
-
-
-
-  answer: string
-
-
-
-  grounded: boolean
-
-
-
-  rules: TdaAiRule[]
-
-
-
-}
-
-
-
-
-
-
-
 type TdaQuizOption = {
 
   id: string
@@ -228,10 +184,15 @@ type TdaQuizFilters = {
   categories: string[]
 
 }
+type TdaQuizReviewItem = {
+  question: TdaQuizQuestion
+  selected_option_id: string
+  answer: TdaQuizAnswer
+}
 
 
 
-type TdaTab = 'search' | 'ai' | 'quiz' | 'updates'
+type TdaTab = 'search' | 'quiz' | 'updates'
 
 
 
@@ -383,19 +344,15 @@ function TDA() {
 
 
 
-  const [aiQuestion, setAiQuestion] = useState('')
 
 
 
-  const [aiLoading, setAiLoading] = useState(false)
 
 
 
-  const [aiError, setAiError] = useState('')
 
 
 
-  const [aiResult, setAiResult] = useState<TdaAiResponse | null>(null)
 
 
 
@@ -431,6 +388,7 @@ function TDA() {
 
   const [quizFinished, setQuizFinished] = useState(false)
   const [quizMode, setQuizMode] = useState<'normal' | 'hard' | 'wrong'>('normal')
+  const [quizReview, setQuizReview] = useState<TdaQuizReviewItem[]>([])
 
 
 
@@ -562,6 +520,7 @@ function TDA() {
     setQuizScore(0)
     setQuizSelectedOption(null)
     setQuizAnswer(null)
+    setQuizReview([])
 
     const { data, error } = await supabase.rpc('get_tda_quiz_hard_questions', {
       p_limit: 10,
@@ -576,13 +535,12 @@ function TDA() {
 
     const questions = (data ?? []) as TdaQuizQuestion[]
     if (questions.length === 0) {
-      setQuizError('まだ集計中です。10回答以上集まった問題から公開されます。')
+      setQuizError('まだ集計中です。10人以上が回答した問題から公開されます。')
       setQuizLoading(false)
       return
     }
 
     setQuizMode('hard')
-    setQuizMode('normal')
     setQuizQuestions(questions)
     setQuizStarted(true)
     setQuizLoading(false)
@@ -601,6 +559,7 @@ function TDA() {
     setQuizScore(0)
     setQuizSelectedOption(null)
     setQuizAnswer(null)
+    setQuizReview([])
 
     const { data, error } = await supabase.rpc('get_my_wrong_tda_quiz_questions', {
       p_limit: 10,
@@ -680,7 +639,7 @@ function TDA() {
     const totalAnswers = Number(submitRow.total_answers ?? 0)
     const correctAnswers = Number(submitRow.correct_answers ?? 0)
 
-    setQuizAnswer({
+    const answerResult: TdaQuizAnswer = {
       is_correct: Boolean(submitRow.is_correct),
       correct_option_id: String(submitRow.correct_option_id),
       explanation: detailRow?.explanation ?? submitRow.explanation ?? null,
@@ -691,7 +650,17 @@ function TDA() {
         totalAnswers >= 10 && submitRow.correct_rate !== null
           ? Number(submitRow.correct_rate)
           : null,
-    })
+    }
+
+    setQuizAnswer(answerResult)
+    setQuizReview((items) => [
+      ...items,
+      {
+        question,
+        selected_option_id: optionId,
+        answer: answerResult,
+      },
+    ])
 
     if (submitRow.is_correct) {
       setQuizScore((score) => score + 1)
@@ -944,170 +913,6 @@ function TDA() {
 
 
 
-
-
-
-  }
-
-
-
-
-
-
-
-  const askTdaAi = async () => {
-
-
-
-    const trimmed = aiQuestion.trim()
-
-
-
-
-
-
-
-    if (!trimmed || aiLoading) return
-
-
-
-
-
-
-
-    setAiLoading(true)
-
-
-
-    setAiError('')
-
-
-
-    setAiResult(null)
-
-
-
-
-
-
-
-    try {
-
-
-
-      const response = await fetch('/api/tda-ai', {
-
-
-
-        method: 'POST',
-
-
-
-        headers: {
-
-
-
-          'Content-Type': 'application/json',
-
-
-
-        },
-
-
-
-        body: JSON.stringify({ question: trimmed }),
-
-
-
-      })
-
-
-
-
-
-
-
-      const data = await response.json()
-
-
-
-
-
-
-
-      if (!response.ok) {
-
-
-
-        throw new Error(data?.error || 'AIへの質問に失敗しました。')
-
-
-
-      }
-
-
-
-
-
-
-
-      setAiResult({
-
-
-
-        answer: data.answer ?? '',
-
-
-
-        grounded: Boolean(data.grounded),
-
-
-
-        rules: Array.isArray(data.rules) ? data.rules : [],
-
-
-
-      })
-
-
-
-    } catch (error) {
-
-
-
-      console.error(error)
-
-
-
-      setAiError(
-
-
-
-        error instanceof Error
-
-
-
-          ? error.message
-
-
-
-          : 'AIへの質問中にエラーが発生しました。',
-
-
-
-      )
-
-
-
-    } finally {
-
-
-
-      setAiLoading(false)
-
-
-
-    }
 
 
 
@@ -1515,63 +1320,6 @@ function TDA() {
 
 
 
-          <button
-
-
-
-
-
-
-
-            type="button"
-
-
-
-
-
-
-
-            className={activeTab === 'ai' ? 'active' : ''}
-
-
-
-
-
-
-
-            onClick={() => setActiveTab('ai')}
-
-
-
-
-
-
-
-          >
-
-
-
-
-
-
-
-            <strong>✦</strong>
-
-
-
-
-
-
-
-            <span>AIに質問</span>
-
-
-
-
-
-
-
-          </button>
 
 
 
@@ -3571,382 +3319,6 @@ function TDA() {
 
 
 
-        {activeTab === 'ai' && (
-
-
-
-          <section className="tda-ai-section">
-
-
-
-            <div className="tda-search-intro">
-
-
-
-              <h2>AIに質問</h2>
-
-
-
-              <p>
-
-
-
-                実戦で起きた状況を文章で入力してください。
-
-
-
-                <br />
-
-
-
-                Poker IDに登録された検証済みTDAルールを根拠に回答します。
-
-
-
-              </p>
-
-
-
-            </div>
-
-
-
-
-
-
-
-            <form
-
-
-
-              className="tda-ai-form"
-
-
-
-              onSubmit={(event) => {
-
-
-
-                event.preventDefault()
-
-
-
-                askTdaAi()
-
-
-
-              }}
-
-
-
-            >
-
-
-
-              <textarea
-
-
-
-                value={aiQuestion}
-
-
-
-                onChange={(event) => setAiQuestion(event.target.value)}
-
-
-
-                placeholder="例：BTNが1000にベット。SBが1500オールイン。BBがコール。BTNに戻ったとき、BTNはレイズできますか？"
-
-
-
-                maxLength={1000}
-
-
-
-              />
-
-
-
-
-
-
-
-              <div className="tda-ai-form-bottom">
-
-
-
-                <span>{aiQuestion.length}/1000</span>
-
-
-
-                <button
-
-
-
-                  type="submit"
-
-
-
-                  disabled={!aiQuestion.trim() || aiLoading}
-
-
-
-                >
-
-
-
-                  {aiLoading ? '確認中...' : 'TDA AIに質問'}
-
-
-
-                </button>
-
-
-
-              </div>
-
-
-
-            </form>
-
-
-
-
-
-
-
-            <div className="tda-ai-safety">
-
-
-
-              <strong>回答方針</strong>
-
-
-
-              <p>
-
-
-
-                AIの記憶だけでは裁定しません。Poker IDの検証済みTDAデータから
-
-
-
-                根拠を取得できない場合は、推測せず判断できない旨を回答します。
-
-
-
-              </p>
-
-
-
-            </div>
-
-
-
-
-
-
-
-            {aiLoading && (
-
-
-
-              <div className="tda-status">
-
-
-
-                <div className="tda-spinner" />
-
-
-
-                <span>TDAルールを確認しています...</span>
-
-
-
-              </div>
-
-
-
-            )}
-
-
-
-
-
-
-
-            {!aiLoading && aiError && (
-
-
-
-              <div className="tda-error">{aiError}</div>
-
-
-
-            )}
-
-
-
-
-
-
-
-            {!aiLoading && aiResult && (
-
-
-
-              <article className="tda-ai-answer">
-
-
-
-                <div className="tda-rule-top">
-
-
-
-                  <div className="tda-rule-number">TDA AI</div>
-
-
-
-                  <div className={aiResult.grounded ? 'tda-verified' : 'tda-ai-unverified'}>
-
-
-
-                    <span />
-
-
-
-                    {aiResult.grounded ? 'GROUNDED' : '根拠不足'}
-
-
-
-                  </div>
-
-
-
-                </div>
-
-
-
-
-
-
-
-                <h3>回答</h3>
-
-
-
-                <div className="tda-ai-answer-body">{aiResult.answer}</div>
-
-
-
-
-
-
-
-                {aiResult.rules.length > 0 && (
-
-
-
-                  <section className="tda-related">
-
-
-
-                    <div className="tda-content-label">参照された候補ルール</div>
-
-
-
-                    <div className="tda-related-buttons">
-
-
-
-                      {aiResult.rules.map((rule) => (
-
-
-
-                        <button
-
-
-
-                          key={rule.rule_number}
-
-
-
-                          type="button"
-
-
-
-                          onClick={() => searchRelatedRule(rule.rule_number)}
-
-
-
-                        >
-
-
-
-                          Rule {rule.rule_number}
-
-
-
-                          {rule.title_ja ? ` · ${rule.title_ja}` : ''}
-
-
-
-                        </button>
-
-
-
-                      ))}
-
-
-
-                    </div>
-
-
-
-                  </section>
-
-
-
-                )}
-
-
-
-
-
-
-
-                <div className="tda-ai-disclaimer">
-
-
-
-                  ※ 最終的なトーナメント裁定は、そのイベントのフロア・TDの判断が優先される場合があります。
-
-
-
-                </div>
-
-
-
-              </article>
-
-
-
-            )}
-
-
-
-          </section>
-
-
-
-        )}
-
-
-
-
-
-
-
         {activeTab === 'quiz' && (
 
           <section className="tda-quiz-section">
@@ -4039,9 +3411,9 @@ function TDA() {
 
                 <div className="tda-quiz-info">
 
-                  <strong>10問チャレンジ</strong>
+                  <strong>最大10問チャレンジ</strong>
 
-                  <p>公開・検証済みの問題からランダムで10問出題します。</p>
+                  <p>公開・検証済みの問題から、選択した条件に合う問題をランダムで最大10問出題します。</p>
 
                 </div>
 
@@ -4066,7 +3438,7 @@ function TDA() {
               <div className="tda-quiz-hard-card">
                 <div>
                   <strong>🔥 みんなが間違えた問題</strong>
-                  <p>10回答以上集まった問題から、正答率が低い順に最大10問出題します。</p>
+                  <p>10人以上が回答した問題から、正答率が低い順に最大10問出題します。</p>
                 </div>
                 <button type="button" onClick={startHardQuiz} disabled={quizLoading}>
                   挑戦する
@@ -4255,8 +3627,15 @@ function TDA() {
 
                       <div className="tda-quiz-result-title">
 
-                        {quizAnswer.is_correct ? '正解' : '不正解'}
+                        {quizAnswer.is_correct ? '✓ 正解' : '✕ 不正解'}
 
+                      </div>
+
+                      <div className="tda-quiz-correct-answer">
+                        <strong>正解：</strong>
+                        {quizQuestions[quizIndex].options.find(
+                          (option) => option.id === quizAnswer.correct_option_id,
+                        )?.option_text ?? '正解を取得できませんでした'}
                       </div>
 
 
@@ -4271,7 +3650,7 @@ function TDA() {
                       <div className="tda-quiz-community-stat">
                         <span>みんなの正答率</span>
                         <strong>{quizAnswer.correct_rate.toFixed(1)}%</strong>
-                        <small>{quizAnswer.total_answers}回答</small>
+                        <small>{quizAnswer.total_answers}人</small>
                       </div>
                     )}
 
@@ -4348,45 +3727,68 @@ function TDA() {
 
 
             {quizFinished && (
-
               <div className="tda-quiz-finished">
-
                 <div className="tda-quiz-finished-icon">✓</div>
-
                 <div className="tda-quiz-finished-label">RESULT</div>
-
                 <h3>
-
                   {quizScore} / {quizQuestions.length}
-
                 </h3>
-
                 <p>
-
                   {quizScore === quizQuestions.length
-
                     ? '全問正解です。'
-
                     : quizScore >= Math.ceil(quizQuestions.length * 0.8)
-
                       ? 'かなり理解できています。'
-
                       : quizScore >= Math.ceil(quizQuestions.length * 0.5)
-
                         ? 'もう少しで安定して正解できそうです。'
-
                         : '解説とルールを確認して、もう一度挑戦してみましょう。'}
-
                 </p>
 
+                {quizReview.length > 0 && (
+                  <div className="tda-quiz-review">
+                    <h4>回答を振り返る</h4>
+                    {quizReview.map((item, index) => {
+                      const selected = item.question.options.find(
+                        (option) => option.id === item.selected_option_id,
+                      )
+                      const correct = item.question.options.find(
+                        (option) => option.id === item.answer.correct_option_id,
+                      )
+
+                      return (
+                        <article
+                          key={`${item.question.question_id}-${index}`}
+                          className="tda-quiz-review-item"
+                        >
+                          <div className="tda-quiz-review-head">
+                            <span>Q{index + 1}</span>
+                            <strong className={item.answer.is_correct ? 'correct' : 'wrong'}>
+                              {item.answer.is_correct ? '✓ 正解' : '✕ 不正解'}
+                            </strong>
+                          </div>
+                          <h5>{item.question.question_text}</h5>
+                          <p className="tda-quiz-review-choice">
+                            あなたの回答：{selected?.option_text ?? '取得できませんでした'}
+                          </p>
+                          {!item.answer.is_correct && (
+                            <p className="tda-quiz-review-choice correct">
+                              正解：{correct?.option_text ?? '取得できませんでした'}
+                            </p>
+                          )}
+                          {item.answer.explanation && (
+                            <p className="tda-quiz-review-explanation">
+                              {item.answer.explanation}
+                            </p>
+                          )}
+                        </article>
+                      )
+                    })}
+                  </div>
+                )}
+
                 <button type="button" onClick={resetQuiz}>
-
                   もう一度挑戦する
-
                 </button>
-
               </div>
-
             )}
 
           </section>
@@ -5015,7 +4417,7 @@ function TDA() {
 
 
 
-          grid-template-columns: repeat(4, 1fr);
+          grid-template-columns: repeat(3, 1fr);
 
 
 
@@ -8103,507 +7505,7 @@ function TDA() {
 
 
 
-        .tda-ai-form {
-
-
-
-        margin-top: 4px;
-
-
-
-        padding: 14px;
-
-
-
-        border: 1px solid #292e35;
-
-
-
-        border-radius: 14px;
-
-
-
-        background: #121519;
-
-
-
-      }
-
-
-
-
-
-
-
-      .tda-ai-form textarea {
-
-
-
-        width: 100%;
-
-
-
-        min-height: 150px;
-
-
-
-        resize: vertical;
-
-
-
-        box-sizing: border-box;
-
-
-
-        border: 0;
-
-
-
-        outline: 0;
-
-
-
-        background: transparent;
-
-
-
-        color: #f1f2f3;
-
-
-
-        font: inherit;
-
-
-
-        font-size: 14px;
-
-
-
-        line-height: 1.75;
-
-
-
-      }
-
-
-
-
-
-
-
-      .tda-ai-form textarea::placeholder { color: #5f656d; }
-
-
-
-
-
-
-
-      .tda-ai-form-bottom {
-
-
-
-        display: flex;
-
-
-
-        align-items: center;
-
-
-
-        justify-content: space-between;
-
-
-
-        gap: 12px;
-
-
-
-        padding-top: 12px;
-
-
-
-        margin-top: 8px;
-
-
-
-        border-top: 1px solid #24292f;
-
-
-
-      }
-
-
-
-
-
-
-
-      .tda-ai-form-bottom > span {
-
-
-
-        color: #666d76;
-
-
-
-        font-size: 9px;
-
-
-
-      }
-
-
-
-
-
-
-
-      .tda-ai-form-bottom button {
-
-
-
-        border: 1px solid #34513e;
-
-
-
-        border-radius: 10px;
-
-
-
-        background: #17301f;
-
-
-
-        color: #dff3e5;
-
-
-
-        padding: 9px 13px;
-
-
-
-        font-size: 11px;
-
-
-
-        font-weight: 800;
-
-
-
-        cursor: pointer;
-
-
-
-      }
-
-
-
-
-
-
-
-      .tda-ai-form-bottom button:disabled {
-
-
-
-        opacity: .45;
-
-
-
-        cursor: not-allowed;
-
-
-
-      }
-
-
-
-
-
-
-
-      .tda-ai-safety {
-
-
-
-        margin-top: 12px;
-
-
-
-        padding: 12px 13px;
-
-
-
-        border: 1px solid #252a30;
-
-
-
-        border-radius: 12px;
-
-
-
-        background: #101317;
-
-
-
-      }
-
-
-
-
-
-
-
-      .tda-ai-safety strong {
-
-
-
-        color: #75a985;
-
-
-
-        font-size: 10px;
-
-
-
-      }
-
-
-
-
-
-
-
-      .tda-ai-safety p {
-
-
-
-        margin: 5px 0 0;
-
-
-
-        color: #7f858e;
-
-
-
-        font-size: 10px;
-
-
-
-        line-height: 1.7;
-
-
-
-      }
-
-
-
-
-
-
-
-      .tda-ai-answer {
-
-
-
-        margin-top: 22px;
-
-
-
-        padding: 17px;
-
-
-
-        border: 1px solid #294032;
-
-
-
-        border-radius: 16px;
-
-
-
-        background: #101317;
-
-
-
-        box-shadow: 0 10px 35px rgba(0, 0, 0, .12);
-
-
-
-      }
-
-
-
-
-
-
-
-      .tda-ai-answer > h3 {
-
-
-
-        margin: 8px 0 12px;
-
-
-
-        font-size: 18px;
-
-
-
-      }
-
-
-
-
-
-
-
-      .tda-ai-answer-body {
-
-
-
-        padding: 14px;
-
-
-
-        border: 1px solid #2d4736;
-
-
-
-        border-radius: 12px;
-
-
-
-        background: #111a14;
-
-
-
-        color: #edf6ef;
-
-
-
-        font-size: 13px;
-
-
-
-        line-height: 1.9;
-
-
-
-        white-space: pre-wrap;
-
-
-
-      }
-
-
-
-
-
-
-
-      .tda-ai-unverified {
-
-
-
-        display: flex;
-
-
-
-        align-items: center;
-
-
-
-        gap: 5px;
-
-
-
-        color: #c5ad67;
-
-
-
-        font-size: 8px;
-
-
-
-        font-weight: 800;
-
-
-
-      }
-
-
-
-
-
-
-
-      .tda-ai-unverified span {
-
-
-
-        width: 5px;
-
-
-
-        height: 5px;
-
-
-
-        border-radius: 50%;
-
-
-
-        background: #c5ad67;
-
-
-
-      }
-
-
-
-
-
-
-
-      .tda-ai-disclaimer {
-
-
-
-        margin-top: 15px;
-
-
-
-        padding-top: 11px;
-
-
-
-        border-top: 1px solid #24292f;
-
-
-
-        color: #646a72;
-
-
-
-        font-size: 9px;
-
-
-
-        line-height: 1.7;
-
-
-
-      }
-
-
-
-
-
-
-
-      .tda-quiz-setup,
+        .tda-quiz-setup,
 
       .tda-quiz-card,
 
@@ -9169,6 +8071,75 @@ function TDA() {
         margin-left: auto;
         color: #686f78;
         font-size: 10px;
+      }
+
+      .tda-quiz-correct-answer {
+        margin-top: 9px;
+        padding: 10px 11px;
+        border: 1px solid rgba(255, 255, 255, .08);
+        border-radius: 9px;
+        background: rgba(255, 255, 255, .035);
+        color: #e7e9eb;
+        font-size: 11px;
+        line-height: 1.7;
+      }
+
+      .tda-quiz-review {
+        margin: 22px 0 18px;
+        text-align: left;
+      }
+
+      .tda-quiz-review > h4 {
+        margin: 0 0 10px;
+        color: #e8eaed;
+        font-size: 13px;
+      }
+
+      .tda-quiz-review-item {
+        margin-top: 9px;
+        padding: 13px;
+        border: 1px solid #292e35;
+        border-radius: 12px;
+        background: #15191e;
+      }
+
+      .tda-quiz-review-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        color: #7f868f;
+        font-size: 9px;
+        font-weight: 800;
+      }
+
+      .tda-quiz-review-head strong.correct { color: #78b389; }
+      .tda-quiz-review-head strong.wrong { color: #d98989; }
+
+      .tda-quiz-review-item h5 {
+        margin: 8px 0 10px;
+        color: #f0f2f4;
+        font-size: 12px;
+        line-height: 1.7;
+      }
+
+      .tda-quiz-review-choice,
+      .tda-quiz-review-explanation {
+        margin: 5px 0 0 !important;
+        color: #aeb4bb !important;
+        font-size: 10px !important;
+        line-height: 1.7 !important;
+      }
+
+      .tda-quiz-review-choice.correct {
+        color: #9fd0ac !important;
+      }
+
+      .tda-quiz-review-explanation {
+        margin-top: 9px !important;
+        padding-top: 9px;
+        border-top: 1px solid rgba(255, 255, 255, .07);
+        color: #cfd3d7 !important;
       }
 
       .tda-quiz-rules {
