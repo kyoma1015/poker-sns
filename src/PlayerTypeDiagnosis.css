@@ -433,3 +433,110 @@
         padding: 16px;
       }
     }
+
+/* Result share controls: clear primary and secondary actions */
+.ptd-share-area {
+  max-width: 460px;
+  margin: 28px auto 0;
+  text-align: left;
+}
+.ptd-share-panel {
+  border: 1px solid #655329;
+  border-radius: 18px;
+  padding: 20px;
+  background: linear-gradient(180deg, #19160f, #12110e);
+}
+.ptd-share-heading {
+  margin: 0 0 18px;
+  text-align: center;
+  color: #e8c878;
+  font-size: 18px;
+  font-weight: 800;
+}
+.ptd-share-x,
+.ptd-share-save {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 52px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.ptd-share-x {
+  border: 1px solid #d8ba6b;
+  color: #10100d;
+  background: linear-gradient(180deg, #d9b967, #bb9545);
+}
+.ptd-share-save {
+  margin-top: 10px;
+  border: 1px solid #665a3b;
+  background: #151411;
+  color: #e8c878;
+}
+.ptd-share-save:disabled {
+  opacity: .55;
+  cursor: default;
+}
+.ptd-share-actions {
+  margin-top: 14px;
+  padding: 0 16px;
+  border-radius: 16px;
+  border: 1px solid #34322d;
+  background: #141413;
+}
+.ptd-share-action {
+  width: 100%;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 0;
+  background: transparent;
+  color: #e6e1d6;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+.ptd-share-action > span:last-child {
+  font-size: 24px;
+  color: #c9a453;
+}
+.ptd-share-retry {
+  border-top: 1px solid #34322d;
+  color: #aaa59a;
+}
+.ptd-share-editor {
+  padding: 18px 0;
+}
+.ptd-share-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #655332;
+  background: #080808;
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.6;
+  resize: vertical;
+}
+.ptd-share-count {
+  color: #b9a67c;
+  font-size: 12px;
+  text-align: right;
+  margin-top: 6px;
+}
+.ptd-share-note {
+  color: #b9a67c;
+  font-size: 12px;
+}
+@media (max-width: 520px) {
+  .ptd-share-panel { padding: 16px; }
+  .ptd-share-actions { padding: 0 14px; }
+}
