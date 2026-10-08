@@ -1,23 +1,36 @@
 import { ImageResponse } from '@vercel/og'
 async function getPlayerTypeResult(supabaseUrl, serviceKey, id) {
   const headers = { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` }
-  const resultsResponse = await fetch(`${supabaseUrl}/rest/v1/player_type_diagnosis_results?id=eq.${encodeURIComponent(id)}&is_public=eq.true&select=id,result_type_key,version_id`, { headers })
+  const resultsResponse = await fetch(
+    `${supabaseUrl}/rest/v1/player_type_diagnosis_results?id=eq.${encodeURIComponent(id)}&is_public=eq.true&select=id,result_type_key`,
+    { headers },
+  )
   if (!resultsResponse.ok) {
     const errorBody = (await resultsResponse.text()).slice(0, 1200)
     console.error('Player type result lookup failed', { status: resultsResponse.status, body: errorBody })
-    throw new Error(`Result lookup failed: ${resultsResponse.status}. Check Vercel function logs for the Supabase error body.`)
+    throw new Error(`Result lookup failed: ${resultsResponse.status}. Check Vercel logs.`)
   }
   const result = (await resultsResponse.json())[0]
   if (!result) return null
-  const versionsResponse = await fetch(`${supabaseUrl}/rest/v1/player_type_diagnosis_versions?id=eq.${encodeURIComponent(result.version_id)}&version_key=eq.player-type-v2&select=id`, { headers })
-  if (!versionsResponse.ok || !(await versionsResponse.json()).length) return null
-  const definitionsResponse = await fetch(`${supabaseUrl}/rest/v1/player_type_definitions?type_key=eq.${encodeURIComponent(result.result_type_key)}&select=animal_name_ja,catchphrase`, { headers })
-  if (!definitionsResponse.ok) throw new Error(`Definition lookup failed: ${definitionsResponse.status}`)
+
+  // 公開済み結果は過去の診断バージョンでも表示できるようにする。
+  // version_key の固定値による追加フィルタは行わない。
+  const definitionsResponse = await fetch(
+    `${supabaseUrl}/rest/v1/player_type_definitions?type_key=eq.${encodeURIComponent(result.result_type_key)}&select=animal_name_ja,catchphrase`,
+    { headers },
+  )
+  if (!definitionsResponse.ok) {
+    const errorBody = (await definitionsResponse.text()).slice(0, 1200)
+    console.error('Player type definition lookup failed', { status: definitionsResponse.status, body: errorBody })
+    throw new Error(`Definition lookup failed: ${definitionsResponse.status}. Check Vercel logs.`)
+  }
   const definition = (await definitionsResponse.json())[0]
-  if (!definition) return null
+  if (!definition) {
+    console.error('Player type definition missing', { type_key: result.result_type_key })
+    throw new Error(`Definition not found for animal type: ${result.result_type_key}`)
+  }
   return { ...result, ...definition }
 }
-
 
 const money = (value) => {
   const n = Number(value)
