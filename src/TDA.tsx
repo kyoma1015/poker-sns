@@ -456,6 +456,10 @@ function TDA() {
 
     setQuizAnswer(null)
 
+    setQuizReview([])
+
+    setQuizMode('normal')
+
 
 
     const { data, error } = await supabase.rpc('get_tda_quiz_questions', {
@@ -709,6 +713,8 @@ function TDA() {
     setQuizSelectedOption(null)
 
     setQuizAnswer(null)
+
+    setQuizReview([])
 
     setQuizError('')
 
