@@ -7,11 +7,11 @@ import {
   Route,
   useLocation,
   useNavigate,
+  Navigate,
 } from 'react-router-dom'
 
 import Signup from './Signup'
 import Login from './Login'
-import Home from './Home'
 import ProfileEdit from './ProfileEdit'
 import Profile from './Profile'
 import PlayerProfile from './PlayerProfile'
@@ -104,7 +104,7 @@ function AppLayout() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        <Route path="/home" element={<Home />} />
+        <Route path="/home" element={<Navigate to="/timeline" replace />} />
 
         <Route path="/timeline" element={<Timeline />} />
         <Route path="/admin/reports" element={<AdminReports />} />

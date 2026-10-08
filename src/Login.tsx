@@ -21,7 +21,7 @@ function Login() {
       return
     }
 
-    navigate('/home')
+    navigate('/timeline', { replace: true })
   }
 
   return (
