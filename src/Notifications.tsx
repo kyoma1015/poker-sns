@@ -2,6 +2,17 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from './supabase'
 
+
+// ブロックは双方の関係を確認する（自分→相手、相手→自分）。
+async function getBlockedUserIds(userId: string): Promise<Set<string>> {
+  const { data, error } = await supabase
+    .from('user_blocks')
+    .select('blocker_id, blocked_id')
+    .or(`blocker_id.eq.${userId},blocked_id.eq.${userId}`)
+  if (error) throw error
+  return new Set((data || []).map(row => row.blocker_id === userId ? row.blocked_id : row.blocker_id))
+}
+
 type NotificationItem = {
   id: string
   created_at: string
@@ -57,9 +68,25 @@ function Notifications() {
         return
       }
 
+      let blockedUserIds: Set<string>
+      try {
+        blockedUserIds = await getBlockedUserIds(user.id)
+      } catch (blockError) {
+        console.error('ブロック情報取得エラー:', blockError)
+        setNotifications([])
+        setMessage('ブロック情報を取得できませんでした。再読み込みしてください。')
+        return
+      }
+      const visibleData = data.filter(notification => !blockedUserIds.has(notification.actor_id))
+      if (visibleData.length === 0) {
+        setNotifications([])
+        setMessage('')
+        return
+      }
+
       const actorIds = [
         ...new Set(
-          data.map(
+          visibleData.map(
             (notification) =>
               notification.actor_id
           )
@@ -85,7 +112,7 @@ function Notifications() {
       }
 
       const notificationList: NotificationItem[] =
-        data.map((notification) => {
+        visibleData.map((notification) => {
           const actor = profiles?.find(
             (profile) =>
               profile.id ===
@@ -112,7 +139,7 @@ function Notifications() {
 
       setMessage('')
 
-      const unreadIds = data
+      const unreadIds = visibleData
         .filter(
           (notification) =>
             notification.read_at ===

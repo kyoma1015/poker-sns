@@ -2,6 +2,17 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from './supabase'
 
+
+// ブロックは双方の関係を確認する（自分→相手、相手→自分）。
+async function getBlockedUserIds(userId: string): Promise<Set<string>> {
+  const { data, error } = await supabase
+    .from('user_blocks')
+    .select('blocker_id, blocked_id')
+    .or(`blocker_id.eq.${userId},blocked_id.eq.${userId}`)
+  if (error) throw error
+  return new Set((data || []).map(row => row.blocker_id === userId ? row.blocked_id : row.blocker_id))
+}
+
 type Conversation = {
   userId: string
   displayName: string
@@ -66,9 +77,28 @@ function DirectMessages() {
           return
         }
 
+        let blockedUserIds: Set<string>
+        try {
+          blockedUserIds = await getBlockedUserIds(user.id)
+        } catch (blockError) {
+          console.error('ブロック情報取得エラー:', blockError)
+          setConversations([])
+          setMessage('ブロック情報を取得できませんでした。再読み込みしてください。')
+          return
+        }
+
+        const visibleMessages = messages.filter(dm =>
+          !blockedUserIds.has(dm.sender_id === user.id ? dm.receiver_id : dm.sender_id)
+        )
+        if (visibleMessages.length === 0) {
+          setConversations([])
+          setMessage('')
+          return
+        }
+
         const otherUserIds = [
           ...new Set(
-            messages.map((dm) =>
+            visibleMessages.map((dm) =>
               dm.sender_id === user.id
                 ? dm.receiver_id
                 : dm.sender_id
@@ -100,7 +130,7 @@ function DirectMessages() {
           otherUserIds.map(
             (otherUserId) => {
               const conversationMessages =
-                messages.filter(
+                visibleMessages.filter(
                   (dm) =>
                     (dm.sender_id ===
                       user.id &&

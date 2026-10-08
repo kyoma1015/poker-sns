@@ -30,6 +30,9 @@ import AmusementRingEdit from './AmusementRingEdit'
 import CashGameCreate from './CashGameCreate'
 import CashGameEdit from './CashGameEdit'
 import TDA from './TDA'
+import PlayerTypeDiagnosis from './PlayerTypeDiagnosis'
+import AdminReports from './AdminReports'
+import Settings from './Settings'
 
 function Top() {
   const navigate = useNavigate()
@@ -69,7 +72,9 @@ function AppLayout() {
   const hideBottomNav =
     location.pathname === '/' ||
     location.pathname === '/login' ||
-    location.pathname === '/signup'
+    location.pathname === '/signup' ||
+    location.pathname === '/player-type' ||
+    location.pathname === '/admin/reports'
 
   return (
     <>
@@ -81,6 +86,7 @@ function AppLayout() {
         <Route path="/home" element={<Home />} />
 
         <Route path="/timeline" element={<Timeline />} />
+        <Route path="/admin/reports" element={<AdminReports />} />
 
         <Route path="/post/:id" element={<PostDetail />} />
 
@@ -102,6 +108,7 @@ function AppLayout() {
         />
 
         <Route path="/profile" element={<Profile />} />
+        <Route path="/settings" element={<Settings />} />
 
         <Route
           path="/profile/results/new"
@@ -161,6 +168,11 @@ function AppLayout() {
         <Route
           path="/tda"
           element={<TDA />}
+        />
+
+        <Route
+          path="/player-type"
+          element={<PlayerTypeDiagnosis />}
         />
       </Routes>
 

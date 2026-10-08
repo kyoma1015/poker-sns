@@ -57,6 +57,33 @@ function PlayerSearch() {
     setIsSearching(true)
     setMessage('')
 
+    // 双方向ブロックを取得し、検索結果から除外する
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    if (authError || !user) {
+      setIsSearching(false)
+      setPlayers([])
+      setMessage('ログイン情報を確認できませんでした。再ログインしてください。')
+      return
+    }
+
+    const { data: blockRows, error: blockError } = await supabase
+      .from('user_blocks')
+      .select('blocker_id, blocked_id')
+      .or(`blocker_id.eq.${user.id},blocked_id.eq.${user.id}`)
+
+    if (blockError) {
+      console.error('ブロック情報取得エラー:', blockError)
+      setIsSearching(false)
+      setHasSearched(true)
+      setPlayers([])
+      setMessage('ブロック情報を取得できませんでした。もう一度お試しください。')
+      return
+    }
+
+    const blockedIds = [...new Set((blockRows || []).map(row =>
+      row.blocker_id === user.id ? row.blocked_id : row.blocker_id
+    ))]
+
     let query = supabase
       .from('profiles')
       .select(
@@ -67,6 +94,11 @@ function PlayerSearch() {
       query = query.or(
         `poker_id.ilike.%${trimmedKeyword}%,display_name.ilike.%${trimmedKeyword}%`
       )
+    }
+
+    // 50件制限の前に除外することで、検索結果の件数を確保する
+    if (blockedIds.length > 0) {
+      query = query.not('id', 'in', `(${blockedIds.join(',')})`)
     }
 
     if (mainGame) query = query.eq('main_game', mainGame)

@@ -14,12 +14,39 @@ function FollowList() {
   const navigate = useNavigate()
 
   const [users, setUsers] = useState<UserProfile[]>([])
+  const [loadError, setLoadError] = useState('')
 
   useEffect(() => {
     const loadFollowing = async () => {
+      setLoadError('')
       if (!id) {
         setUsers([])
         return
+      }
+
+      const { data: { user }, error: authError } = await supabase.auth.getUser()
+      if (authError || !user) {
+        setUsers([])
+        navigate('/login')
+        return
+      }
+
+      // ブロックは双方向に適用。取得失敗時は一覧を表示しない。
+      const { data: blockRows, error: blockError } = await supabase
+        .from('user_blocks')
+        .select('blocker_id, blocked_id')
+        .or(`blocker_id.eq.${user.id},blocked_id.eq.${user.id}`)
+
+      if (blockError) {
+        console.error('ブロック情報取得エラー:', blockError)
+        setUsers([])
+        setLoadError('ブロック情報を取得できませんでした。')
+        return
+      }
+
+      const blockedIds = new Set<string>()
+      for (const block of blockRows || []) {
+        blockedIds.add(block.blocker_id === user.id ? block.blocked_id : block.blocker_id)
       }
 
       const { data, error } = await supabase
@@ -32,9 +59,9 @@ function FollowList() {
         return
       }
 
-      const followingIds = (data || []).map(
-        (item) => item.following_id
-      )
+      const followingIds = (data || [])
+        .map((item) => item.following_id)
+        .filter((userId) => !blockedIds.has(userId))
 
       if (followingIds.length === 0) {
         setUsers([])
@@ -54,18 +81,20 @@ function FollowList() {
         return
       }
 
-      setUsers(profiles || [])
+      setUsers((profiles || []).filter((profile) => !blockedIds.has(profile.id)))
     }
 
     loadFollowing()
-  }, [id])
+  }, [id, navigate])
 
   return (
     <main className="app">
       <div className="card">
         <h1>フォロー一覧</h1>
 
-        {users.length === 0 && (
+        {loadError && <p style={{ color: '#ff8888' }}>{loadError}</p>}
+
+        {!loadError && users.length === 0 && (
           <p
             style={{
               color: '#999',

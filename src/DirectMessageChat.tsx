@@ -45,6 +45,8 @@ function DirectMessageChat() {
     setStatusMessage,
   ] = useState('読み込み中...')
 
+  const [isBlocked, setIsBlocked] = useState(false)
+
   const [isSending, setIsSending] =
     useState(false)
 
@@ -107,6 +109,17 @@ function DirectMessageChat() {
     }
 
     setCurrentUserId(user.id)
+    const { data: blockRows, error: blockError } = await supabase.from('user_blocks')
+      .select('blocker_id')
+      .or(`and(blocker_id.eq.${user.id},blocked_id.eq.${userId}),and(blocker_id.eq.${userId},blocked_id.eq.${user.id})`)
+    if (blockError) { setIsBlocked(true); setMessages([]); setStatusMessage('ブロック状態を確認できませんでした。'); return }
+    if ((blockRows || []).length > 0) {
+      setIsBlocked(true)
+      setMessages([])
+      setStatusMessage('ブロック中のため、このユーザーとメッセージを送受信できません。')
+      return
+    }
+    setIsBlocked(false)
 
     if (user.id === userId) {
       setStatusMessage(
@@ -337,6 +350,14 @@ function DirectMessageChat() {
       return
     }
 
+    const { data: currentBlocks, error: blockCheckError } = await supabase.from('user_blocks')
+      .select('blocker_id')
+      .or(`and(blocker_id.eq.${currentUserId},blocked_id.eq.${userId}),and(blocker_id.eq.${userId},blocked_id.eq.${currentUserId})`)
+    if (blockCheckError || (currentBlocks || []).length > 0) {
+      setIsBlocked(true)
+      setStatusMessage('ブロック中のためメッセージを送信できません。')
+      return
+    }
     setIsSending(true)
 
     const { error } =
@@ -886,7 +907,7 @@ function DirectMessageChat() {
         </div>
 
         {/* 送信欄 */}
-        <div
+        {!isBlocked && <div
           style={{
             position: 'fixed',
             left: '50%',
@@ -985,7 +1006,7 @@ function DirectMessageChat() {
               ↑
             </button>
           </div>
-        </div>
+        </div>}
       </div>
     </main>
   )

@@ -2,6 +2,17 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { supabase } from './supabase'
 
+
+// ブロックは双方の関係を確認する（自分→相手、相手→自分）。
+async function getBlockedUserIds(userId: string): Promise<Set<string>> {
+  const { data, error } = await supabase
+    .from('user_blocks')
+    .select('blocker_id, blocked_id')
+    .or(`blocker_id.eq.${userId},blocked_id.eq.${userId}`)
+  if (error) throw error
+  return new Set((data || []).map(row => row.blocker_id === userId ? row.blocked_id : row.blocker_id))
+}
+
 type Profile = {
   display_name: string
   poker_id: string
@@ -26,6 +37,7 @@ type Post = {
   likeCount: number
   likedByMe: boolean
   comments: Comment[]
+  image_urls?: string[] | null
 }
 
 function PostDetail() {
@@ -36,6 +48,7 @@ function PostDetail() {
   const [currentUserId, setCurrentUserId] = useState('')
   const [commentInput, setCommentInput] = useState('')
   const [message, setMessage] = useState('読み込み中...')
+  const [expandedImage, setExpandedImage] = useState<string | null>(null)
 
   const loadPost = async () => {
     if (!id) {
@@ -53,6 +66,16 @@ function PostDetail() {
     }
 
     setCurrentUserId(user.id)
+    setPost(null)
+    setMessage('読み込み中...')
+    let blockedUserIds: Set<string>
+    try {
+      blockedUserIds = await getBlockedUserIds(user.id)
+    } catch (blockError) {
+      console.error('ブロック情報取得エラー:', blockError)
+      setMessage('ブロック情報を取得できませんでした。再読み込みしてください。')
+      return
+    }
 
     const { data: postData, error } = await supabase
       .from('posts')
@@ -71,6 +94,12 @@ function PostDetail() {
     if (!postData) {
       setPost(null)
       setMessage('投稿が見つかりませんでした。')
+      return
+    }
+
+    if (blockedUserIds.has(postData.user_id)) {
+      setPost(null)
+      setMessage('この投稿は表示できません。')
       return
     }
 
@@ -133,7 +162,7 @@ function PostDetail() {
     )
 
     const commentsWithProfiles: Comment[] = (
-      comments || []
+      (comments || []).filter(comment => !blockedUserIds.has(comment.user_id))
     ).map((comment) => {
       const commentProfile = profiles?.find(
         (profile) => profile.id === comment.user_id
@@ -427,6 +456,49 @@ function PostDetail() {
                 {post.content}
               </p>
 
+              {Array.isArray(post.image_urls) && post.image_urls.length > 0 && (
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: post.image_urls.length === 1 ? '1fr' : 'repeat(2, minmax(0, 1fr))',
+                    gap: '6px',
+                    marginTop: '12px',
+                    marginBottom: '12px',
+                  }}
+                >
+                  {post.image_urls.map((url, index) => (
+                    <button
+                      key={`${url}-${index}`}
+                      type="button"
+                      onClick={() => setExpandedImage(url)}
+                      aria-label={`画像${index + 1}を拡大`}
+                      style={{
+                        display: 'block',
+                        padding: 0,
+                        width: '100%',
+                        border: 'none',
+                        borderRadius: '10px',
+                        background: '#181818',
+                        overflow: 'hidden',
+                        cursor: 'zoom-in',
+                      }}
+                    >
+                      <img
+                        src={url}
+                        alt={`投稿画像 ${index + 1}`}
+                        loading="lazy"
+                        style={{
+                          display: 'block',
+                          width: '100%',
+                          maxHeight: post.image_urls?.length === 1 ? '520px' : '260px',
+                          objectFit: 'cover',
+                        }}
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
+
               <p
                 style={{
                   color: '#777',
@@ -626,6 +698,52 @@ function PostDetail() {
               )}
             </div>
           </>
+        )}
+
+        {expandedImage && (
+          <div
+            role="presentation"
+            onClick={() => setExpandedImage(null)}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              zIndex: 1000,
+              background: 'rgba(0,0,0,0.92)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '20px',
+              boxSizing: 'border-box',
+              cursor: 'zoom-out',
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => setExpandedImage(null)}
+              aria-label="拡大画像を閉じる"
+              style={{
+                position: 'absolute',
+                top: '16px',
+                right: '16px',
+                width: '42px',
+                height: '42px',
+                fontSize: '26px',
+                color: '#fff',
+                background: '#333',
+                border: 'none',
+                borderRadius: '50%',
+                cursor: 'pointer',
+              }}
+            >
+              ×
+            </button>
+            <img
+              src={expandedImage}
+              alt="拡大した投稿画像"
+              onClick={(event) => event.stopPropagation()}
+              style={{ maxWidth: '100%', maxHeight: '90vh', objectFit: 'contain' }}
+            />
+          </div>
         )}
 
         <button
