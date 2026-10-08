@@ -1,20 +1,9 @@
 {
   "rewrites": [
-    {
-      "source": "/share/tournament/:id",
-      "destination": "/api/share?type=tournament&id=:id"
-    },
-    {
-      "source": "/share/amusement/:id",
-      "destination": "/api/share?type=amusement&id=:id"
-    },
-    {
-      "source": "/share/cash/:id",
-      "destination": "/api/share?type=cash&id=:id"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/share/player-type/:id", "destination": "/api/share?type=player-type&id=:id" },
+    { "source": "/share/tournament/:id", "destination": "/api/share?type=tournament&id=:id" },
+    { "source": "/share/amusement/:id", "destination": "/api/share?type=amusement&id=:id" },
+    { "source": "/share/cash/:id", "destination": "/api/share?type=cash&id=:id" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

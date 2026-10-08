@@ -182,6 +182,8 @@ function PlayerTypeDiagnosis() {
   const [shareMessage, setShareMessage] = useState('')
   const [shareEditorOpen, setShareEditorOpen] = useState(false)
   const [shareText, setShareText] = useState('')
+  const [externalShareError, setExternalShareError] = useState('')
+  const [imageSaving, setImageSaving] = useState(false)
 
   useEffect(() => {
     void loadQuestions()
@@ -528,6 +530,160 @@ function PlayerTypeDiagnosis() {
     }
   }
 
+  async function createShareImage(): Promise<Blob> {
+    if (!result) throw new Error('診断結果がありません')
+    if (!detail) throw new Error('詳細分析を読み込み中です。少し待ってからお試しください')
+
+    const canvas = document.createElement('canvas')
+    canvas.width = 1080
+    canvas.height = 1500
+    const ctx = canvas.getContext('2d')
+    if (!ctx) throw new Error('画像作成に対応していないブラウザです')
+
+    const background = ctx.createLinearGradient(0, 0, 1080, 1500)
+    background.addColorStop(0, '#17130c')
+    background.addColorStop(0.55, '#080808')
+    background.addColorStop(1, '#20170b')
+    ctx.fillStyle = background
+    ctx.fillRect(0, 0, 1080, 1500)
+    ctx.strokeStyle = '#b9954d'
+    ctx.lineWidth = 5
+    ctx.strokeRect(40, 40, 1000, 1420)
+    ctx.strokeStyle = '#564323'
+    ctx.lineWidth = 2
+    ctx.strokeRect(58, 58, 964, 1384)
+
+    ctx.textAlign = 'center'
+    ctx.fillStyle = '#d8b56a'
+    ctx.font = 'bold 42px sans-serif'
+    ctx.fillText('POKER ID', 540, 124)
+    ctx.font = '24px sans-serif'
+    ctx.fillText('PLAYER TYPE DIAGNOSIS', 540, 169)
+
+    const animal = new Image()
+    animal.src = `/animals/${result.result_type_key}.png`
+    await new Promise<void>((resolve, reject) => {
+      animal.onload = () => resolve()
+      animal.onerror = () => reject(new Error('動物画像を読み込めませんでした'))
+    })
+    // Keep the original animal artwork, without cropping or stretching.
+    ctx.drawImage(animal, 260, 196, 560, 560)
+
+    ctx.fillStyle = '#bda56f'
+    ctx.font = '23px sans-serif'
+    ctx.fillText('YOUR PLAYER TYPE', 540, 788)
+    ctx.fillStyle = '#fff3d3'
+    ctx.font = 'bold 72px sans-serif'
+    ctx.fillText(result.animal_name_ja, 540, 870, 900)
+
+    const drawingContext = ctx
+
+    function drawWrappedText(value: string, centerX: number, startY: number, maxWidth: number, lineHeight: number, maxLines: number) {
+      const lines: string[] = []
+      let line = ''
+      for (const char of Array.from(value.replace(/\s+/g, ' ').trim())) {
+        if (drawingContext.measureText(line + char).width > maxWidth && line) {
+          lines.push(line)
+          line = char
+        } else {
+          line += char
+        }
+      }
+      if (line) lines.push(line)
+      lines.slice(0, maxLines).forEach((text, index) => {
+        const truncated = index === maxLines - 1 && lines.length > maxLines
+          ? `${text.slice(0, -2)}…` : text
+        drawingContext.fillText(truncated, centerX, startY + index * lineHeight, maxWidth)
+      })
+      return Math.min(lines.length, maxLines)
+    }
+
+    ctx.fillStyle = '#e3cb94'
+    ctx.font = '30px sans-serif'
+    drawWrappedText(result.catchphrase, 540, 929, 880, 40, 2)
+
+    ctx.strokeStyle = '#6c532a'
+    ctx.lineWidth = 2
+    ctx.beginPath()
+    ctx.moveTo(132, 1010)
+    ctx.lineTo(948, 1010)
+    ctx.stroke()
+
+    ctx.fillStyle = '#d8b56a'
+    ctx.font = 'bold 28px sans-serif'
+    ctx.fillText('特に強く出ている3つの傾向', 540, 1062)
+
+    const traits = topPersonalTraits(detail)
+    ctx.textAlign = 'left'
+    ctx.font = 'bold 29px sans-serif'
+    traits.forEach((trait, index) => {
+      const y = 1123 + index * 67
+      ctx.fillStyle = '#b9954d'
+      ctx.fillText(`0${index + 1}`, 145, y)
+      ctx.fillStyle = '#fff0cc'
+      ctx.fillText(trait.label, 225, y, 710)
+    })
+
+    if (traits.length === 0) {
+      ctx.textAlign = 'center'
+      ctx.fillStyle = '#e3cb94'
+      ctx.font = '25px sans-serif'
+      drawWrappedText(detail.description, 540, 1150, 770, 39, 3)
+    }
+
+    ctx.textAlign = 'center'
+    ctx.strokeStyle = '#6c532a'
+    ctx.beginPath()
+    ctx.moveTo(132, 1350)
+    ctx.lineTo(948, 1350)
+    ctx.stroke()
+    ctx.fillStyle = '#f1d59a'
+    ctx.font = 'bold 28px sans-serif'
+    ctx.fillText('あなたはどのタイプ？', 540, 1393)
+    ctx.font = '22px sans-serif'
+    ctx.fillText('全50問・36種類の動物タイプ｜Poker IDで無料診断', 540, 1428)
+
+    return await new Promise<Blob>((resolve, reject) => {
+      canvas.toBlob((value) => value
+        ? resolve(value)
+        : reject(new Error('画像データを作成できませんでした')), 'image/png')
+    })
+  }
+
+  function downloadShareImage(blob: Blob) {
+    if (!result) return
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `PokerID_${result.result_type_key}_${result.result_id.slice(0, 8)}.png`
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    window.setTimeout(() => URL.revokeObjectURL(url), 30000)
+  }
+
+  async function saveShareImage() {
+    if (!result || imageSaving) return
+    setImageSaving(true)
+    setExternalShareError('')
+    try {
+      downloadShareImage(await createShareImage())
+    } catch (e) {
+      setExternalShareError(`画像の保存に失敗しました：${e instanceof Error ? e.message : String(e)}`)
+    } finally {
+      setImageSaving(false)
+    }
+  }
+
+  function shareToX() {
+    if (!result) return
+    const message = `Poker IDのプレイヤータイプ診断は「${result.animal_name_ja}」！\n${result.catchphrase}\n\nあなたは何タイプ？ #PokerID #ポーカー`
+    const intent = new URL('https://twitter.com/intent/tweet')
+    intent.searchParams.set('text', message)
+    intent.searchParams.set('url', `https://poker-sns-vert.vercel.app/share/player-type/${encodeURIComponent(result.result_id)}`)
+    window.open(intent.toString(), '_blank', 'noopener,noreferrer')
+  }
+
   if (screen === 'result' && result) {
     const emoji = animalEmoji[result.result_type_key] ?? '♠️'
     const personalTraits = detail ? topPersonalTraits(detail) : []
@@ -629,6 +785,18 @@ function PlayerTypeDiagnosis() {
                 )}
                 {shareMessage && <p className="ptd-result-hint" role="status">{shareMessage}</p>}
               </>
+            )}
+
+            {isOwner === true && (
+              <div style={{ marginTop: 20, padding: 18, border: '1px solid #92733a', borderRadius: 16, background: '#12100c' }}>
+                <div style={{ fontWeight: 800, marginBottom: 12, color: '#e5ca89' }}>診断結果をSNSでシェア</div>
+                <button className="ptd-primary" type="button" disabled={imageSaving || !detail} onClick={() => void saveShareImage()}>
+                  {imageSaving ? '画像を作成中...' : '診断結果の画像を保存'}
+                </button>
+                <button className="ptd-secondary" type="button" disabled={imageSaving || !detail} onClick={shareToX}>Xでシェア</button>
+                <p className="ptd-result-hint">対応端末では画像付きの共有画面が開きます。非対応環境では画像を保存してXの投稿画面を開きます。</p>
+                {externalShareError && <p className="ptd-error" role="alert">{externalShareError}</p>}
+              </div>
             )}
 
             {isOwner === true && (
