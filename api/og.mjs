@@ -2,7 +2,11 @@ import { ImageResponse } from '@vercel/og'
 async function getPlayerTypeResult(supabaseUrl, serviceKey, id) {
   const headers = { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` }
   const resultsResponse = await fetch(`${supabaseUrl}/rest/v1/player_type_diagnosis_results?id=eq.${encodeURIComponent(id)}&is_public=eq.true&select=id,result_type_key,version_id`, { headers })
-  if (!resultsResponse.ok) throw new Error(`Result lookup failed: ${resultsResponse.status}`)
+  if (!resultsResponse.ok) {
+    const errorBody = (await resultsResponse.text()).slice(0, 1200)
+    console.error('Player type result lookup failed', { status: resultsResponse.status, body: errorBody })
+    throw new Error(`Result lookup failed: ${resultsResponse.status}. Check Vercel function logs for the Supabase error body.`)
+  }
   const result = (await resultsResponse.json())[0]
   if (!result) return null
   const versionsResponse = await fetch(`${supabaseUrl}/rest/v1/player_type_diagnosis_versions?id=eq.${encodeURIComponent(result.version_id)}&version_key=eq.player-type-v2&select=id`, { headers })
