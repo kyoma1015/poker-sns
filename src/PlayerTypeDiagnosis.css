@@ -1,0 +1,435 @@
+    .ptd-page {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 50% -10%, rgba(201, 164, 83, 0.14), transparent 34rem),
+        #080808;
+      color: #f5f2ea;
+      padding: 18px 16px 110px;
+    }
+
+    .ptd-shell {
+      width: min(100%, 680px);
+      margin: 0 auto;
+    }
+
+    .ptd-center {
+      min-height: 70vh;
+      display: grid;
+      place-items: center;
+      align-content: center;
+      gap: 14px;
+      color: #aaa59a;
+    }
+
+    .ptd-spinner {
+      width: 30px;
+      height: 30px;
+      border: 3px solid #2a2926;
+      border-top-color: #c9a453;
+      border-radius: 50%;
+      animation: ptd-spin .8s linear infinite;
+    }
+
+    @keyframes ptd-spin { to { transform: rotate(360deg); } }
+
+    .ptd-back {
+      border: 0;
+      background: transparent;
+      color: #bdb8ad;
+      font-size: 15px;
+      padding: 8px 2px;
+      cursor: pointer;
+    }
+
+    .ptd-hero,
+    .ptd-result {
+      text-align: center;
+      padding: 46px 0 20px;
+    }
+
+    .ptd-kicker {
+      color: #c9a453;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .2em;
+      margin-bottom: 20px;
+    }
+
+    .ptd-animal-row {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      font-size: 30px;
+      margin-bottom: 20px;
+      filter: saturate(.82);
+    }
+
+    .ptd-hero h1,
+    .ptd-result h1 {
+      margin: 0;
+      font-size: clamp(30px, 8vw, 46px);
+      line-height: 1.22;
+      letter-spacing: -.04em;
+    }
+
+    .ptd-lead {
+      max-width: 540px;
+      margin: 20px auto 0;
+      color: #aaa59a;
+      font-size: 14px;
+      line-height: 1.85;
+    }
+
+    .ptd-time {
+      margin: 28px auto 0;
+      max-width: 460px;
+      padding: 17px;
+      border: 1px solid #302b20;
+      border-radius: 14px;
+      background: rgba(201, 164, 83, .06);
+      display: grid;
+      gap: 4px;
+    }
+
+    .ptd-time strong {
+      color: #e1bd68;
+      font-size: 18px;
+    }
+
+    .ptd-time span {
+      color: #918d84;
+      font-size: 12px;
+    }
+
+    .ptd-note {
+      margin: 18px auto 26px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      color: #8d8980;
+      font-size: 11px;
+    }
+
+    .ptd-primary,
+    .ptd-secondary {
+      width: 100%;
+      max-width: 460px;
+      min-height: 54px;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .ptd-primary {
+      border: 1px solid #d7b866;
+      background: linear-gradient(180deg, #d2b15e, #b38d3f);
+      color: #0b0a08;
+      box-shadow: 0 10px 32px rgba(201, 164, 83, .13);
+    }
+
+    .ptd-primary:disabled,
+    .ptd-option:disabled {
+      opacity: .55;
+      cursor: default;
+    }
+
+    .ptd-secondary {
+      margin-top: 10px;
+      border: 1px solid #35332e;
+      background: #121210;
+      color: #d7d3ca;
+    }
+
+    .ptd-small {
+      color: #69665f;
+      font-size: 11px;
+      margin-top: 14px;
+    }
+
+    .ptd-error {
+      margin: 16px auto;
+      max-width: 520px;
+      border: 1px solid #633;
+      background: rgba(120, 35, 35, .16);
+      color: #e3a6a6;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .ptd-quiz-header {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      padding-top: 8px;
+    }
+
+    .ptd-progress-wrap {
+      flex: 1;
+    }
+
+    .ptd-progress-copy {
+      display: flex;
+      justify-content: space-between;
+      color: #8f8b83;
+      font-size: 11px;
+      margin-bottom: 7px;
+    }
+
+    .ptd-progress-copy strong {
+      color: #d8d4cb;
+    }
+
+    .ptd-progress-track {
+      height: 4px;
+      background: #24231f;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .ptd-progress-bar {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #967536, #d6b45f);
+      transition: width .2s ease;
+    }
+
+    .ptd-extra-message {
+      margin: 22px 0 0;
+      padding: 11px 13px;
+      border-radius: 10px;
+      background: rgba(201, 164, 83, .07);
+      border: 1px solid #302b20;
+      color: #c5b587;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .ptd-question-card {
+      padding-top: 54px;
+    }
+
+    .ptd-question-number {
+      color: #9e8142;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      margin-bottom: 12px;
+    }
+
+    .ptd-question-card h2 {
+      margin: 0;
+      min-height: 76px;
+      font-size: clamp(20px, 5vw, 26px);
+      line-height: 1.55;
+      letter-spacing: -.02em;
+    }
+
+    .ptd-options {
+      display: grid;
+      gap: 11px;
+      margin-top: 30px;
+    }
+
+    .ptd-option {
+      width: 100%;
+      border: 1px solid #2d2c28;
+      border-radius: 14px;
+      background: #11110f;
+      color: #e4e0d8;
+      padding: 15px 16px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      text-align: left;
+      font-size: 13px;
+      line-height: 1.55;
+      cursor: pointer;
+      transition: border-color .15s ease, background .15s ease, transform .08s ease;
+    }
+
+    .ptd-option:hover {
+      border-color: #67562e;
+      background: #15140f;
+    }
+
+    .ptd-option:active {
+      transform: scale(.995);
+    }
+
+    .ptd-option-letter {
+      flex: 0 0 30px;
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #211e16;
+      color: #d1ad58;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .ptd-calculating {
+      margin-top: 18px;
+      color: #b49a5d;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .ptd-quiz-foot {
+      color: #5f5c55;
+      font-size: 10px;
+      text-align: center;
+      margin-top: 28px;
+    }
+
+    .ptd-result-animal {
+      font-size: 92px;
+      line-height: 1;
+      margin: 24px 0 20px;
+    }
+
+    .ptd-result-label {
+      color: #8f8a81;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .ptd-catchphrase {
+      margin: 14px auto 0;
+      color: #d6b45f;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .ptd-result-meta {
+      margin: 24px 0 12px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .ptd-result-meta span {
+      border: 1px solid #2e2c27;
+      background: #11110f;
+      border-radius: 999px;
+      padding: 6px 10px;
+      color: #8e8a81;
+      font-size: 10px;
+    }
+
+    .ptd-result-hint {
+      color: #77736b;
+      font-size: 12px;
+      margin: 0 0 25px;
+    }
+
+    @media (max-width: 520px) {
+      .ptd-page {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .ptd-hero {
+        padding-top: 34px;
+      }
+
+      .ptd-question-card {
+        padding-top: 42px;
+      }
+
+      .ptd-option {
+        padding: 14px;
+      }
+    }
+
+
+    /* v30 detailed diagnosis result */
+    .ptd-detail {
+      display: grid;
+      gap: 12px;
+      margin: 30px 0;
+      text-align: left;
+    }
+
+    .ptd-detail-loading {
+      margin: 28px 0;
+      color: #b49a5d;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .ptd-detail-card {
+      border: 1px solid #2e2c27;
+      border-radius: 16px;
+      background: #11110f;
+      padding: 18px;
+    }
+
+    .ptd-detail-main {
+      border-color: #4a3e24;
+      background:
+        linear-gradient(180deg, rgba(201, 164, 83, .07), rgba(201, 164, 83, .015)),
+        #11110f;
+    }
+
+    .ptd-detail-kicker {
+      color: #d1ad58;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      margin-bottom: 10px;
+    }
+
+    .ptd-detail-card > p,
+    .ptd-trait p {
+      margin: 0;
+      color: #cbc7bd;
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .ptd-detail-card h2 {
+      margin: 22px 0 12px;
+      color: #f1ede4;
+      font-size: 14px;
+    }
+
+    .ptd-trait-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .ptd-trait {
+      border: 1px solid #2a2925;
+      border-radius: 12px;
+      background: #0c0c0b;
+      padding: 13px;
+    }
+
+    .ptd-trait strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #e0c374;
+      font-size: 12px;
+    }
+
+    .ptd-trait p {
+      color: #a9a59c;
+      font-size: 12px;
+    }
+
+    .ptd-advice-card {
+      border-color: #514224;
+      background: rgba(201, 164, 83, .055);
+    }
+
+    @media (max-width: 520px) {
+      .ptd-detail-card {
+        padding: 16px;
+      }
+    }
