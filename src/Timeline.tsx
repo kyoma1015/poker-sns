@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'
 
 import { supabase } from './supabase'
 
+const playerTypeEmoji: Record<string, string> = {lion:'🦁',tiger:'🐯',leopard:'🐆',bison:'🦬',gorilla:'🦍',rhino:'🦏',shark:'🦈',owl:'🦉',eagle:'🦅',elephant:'🐘',giraffe:'🦒',wolf:'🐺',hyena:'🐾',cat:'🐈',chameleon:'🦎',dolphin:'🐬',fox:'🦊',snake:'🐍',raccoon:'🦝',turtle:'🐢',rabbit:'🐇',crocodile:'🐊',hedgehog:'🦔',deer:'🦌',sloth:'🦥',dog:'🐕',bear:'🐻',bull:'🐄',badger:'🦡',monkey:'🐒',magpie:'🐦‍⬛',penguin:'🐧',horse:'🐎',squirrel:'🐿️',mountain_goat:'🐐',otter:'🦦'}
+
 type Post = {
 
   id: string
@@ -32,10 +34,11 @@ type Post = {
 
   post_type: 'normal' | 'result'
 
-  result_type: 'tournament' | 'amusement' | 'cash' | null
+  result_type: 'tournament' | 'amusement' | 'cash' | 'player_type' | null
 
   result_id: string | null
 
+  playerTypeData?: { animal_name_ja: string; catchphrase: string; result_type_key: string } | null
   resultData?: {
 
     tournament_name: string
@@ -356,6 +359,21 @@ function Timeline() {
 
 
 
+    const playerTypeResultIds = [...new Set(postData
+      .filter((post) => post.post_type === 'result' && post.result_type === 'player_type' && post.result_id)
+      .map((post) => post.result_id as string))]
+    const playerTypeResults = new Map<string, { animal_name_ja: string; catchphrase: string; result_type_key: string }>()
+    await Promise.all(playerTypeResultIds.map(async (resultId) => {
+      const { data, error } = await supabase.rpc('get_player_type_v2_result_detail', { p_result_id: resultId })
+      if (error) { console.error('プレイヤータイプ取得エラー:', error); return }
+      const row = Array.isArray(data) ? data[0] : data
+      if (row) playerTypeResults.set(resultId, {
+        animal_name_ja: String(row.animal_name_ja || ''),
+        catchphrase: String(row.catchphrase || ''),
+        result_type_key: String(row.result_type_key || ''),
+      })
+    }))
+
     const postIds = postData.map(
 
       (post) => post.id
@@ -528,6 +546,8 @@ function Timeline() {
 
           commentCount,
 
+          playerTypeData: post.result_type === 'player_type' && post.result_id
+            ? playerTypeResults.get(post.result_id) || null : null,
           resultData:
 
             post.post_type === 'result' &&
@@ -2977,6 +2997,25 @@ function Timeline() {
                       renderCashResultCard(post)}
 
 
+
+                    {post.post_type === 'result' && post.result_type === 'player_type' && post.result_id && (
+                      <button type="button" onClick={() => navigate(`/player-type?result=${post.result_id}`)}
+                        style={{ display: 'block', width: '100%', textAlign: 'left', padding: '20px', margin: '5px 0 14px', borderRadius: 16, border: '1px solid #92733a', background: 'linear-gradient(145deg, #251d0f, #0c0c0c 75%)', color: '#f6e5bf', cursor: 'pointer' }}>
+                        <div style={{ fontSize: 11, fontWeight: 900, letterSpacing: 2, color: '#c9a75e' }}>POKER ID · PLAYER TYPE</div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 10 }}>
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <div style={{ fontSize: 28, fontWeight: 900 }}>{post.playerTypeData?.animal_name_ja || 'プレイヤータイプ診断'}</div>
+                            {post.playerTypeData?.catchphrase && <div style={{ fontSize: 14, lineHeight: 1.6, marginTop: 6 }}>{post.playerTypeData.catchphrase}</div>}
+                          </div>
+                          <div aria-hidden="true" style={{ flexShrink: 0, width: 96, height: 96, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 16, overflow: 'hidden', background: '#0b0906', border: '1px solid #5b4926', fontSize: 66, lineHeight: 1 }}>
+                            {post.playerTypeData?.result_type_key && Object.prototype.hasOwnProperty.call(playerTypeEmoji, post.playerTypeData.result_type_key) ? (
+                              <img src={`/animals/${post.playerTypeData.result_type_key}.png`} alt="" style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover' }} />
+                            ) : (playerTypeEmoji[post.playerTypeData?.result_type_key ?? ''] ?? '♠️')}
+                          </div>
+                        </div>
+                        <div style={{ marginTop: 14, fontSize: 12, color: '#d4b777' }}>診断結果を見る →</div>
+                      </button>
+                    )}
 
                     {/* アクション */}
 
