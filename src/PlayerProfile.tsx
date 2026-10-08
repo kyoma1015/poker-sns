@@ -875,19 +875,36 @@
                   >
                     <div
                       style={{
-                        width: '52px',
-                        height: '52px',
+                        width: 'clamp(88px, 24vw, 120px)',
+                        height: 'clamp(88px, 24vw, 120px)',
+                        position: 'relative',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         flexShrink: 0,
+                        overflow: 'hidden',
                         background: '#15130e',
                         border: '1px solid #403821',
-                        borderRadius: '14px',
-                        fontSize: '29px',
+                        borderRadius: '16px',
+                        fontSize: '40px',
                       }}
                     >
-                      {playerTypeEmoji[playerType.result_type_key] ?? '♠️'}
+                      <span aria-hidden="true">{playerTypeEmoji[playerType.result_type_key] ?? '♠️'}</span>
+                      {Object.prototype.hasOwnProperty.call(playerTypeEmoji, playerType.result_type_key) && (
+                        <img
+                          src={`/animals/${playerType.result_type_key}.png`}
+                          alt={`${playerType.animal_name_ja}のプレイヤータイプ画像`}
+                          loading="lazy"
+                          onError={(event) => { event.currentTarget.style.display = 'none' }}
+                          style={{
+                            position: 'absolute',
+                            inset: 0,
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                          }}
+                        />
+                      )}
                     </div>
 
                     <div style={{ minWidth: 0, flex: 1 }}>
