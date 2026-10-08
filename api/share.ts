@@ -5,8 +5,6 @@ async function getPublicPlayerTypeResult(supabaseUrl: string, serviceKey: string
   if (!response.ok) throw new Error(`Result lookup failed: ${response.status}`)
   const result = (await response.json())[0]
   if (!result) return null
-  const versionResponse = await fetch(`${supabaseUrl}/rest/v1/player_type_diagnosis_versions?id=eq.${encodeURIComponent(result.version_id)}&version_key=eq.player-type-v2&select=id`, { headers })
-  if (!versionResponse.ok || !(await versionResponse.json()).length) return null
   const defResponse = await fetch(`${supabaseUrl}/rest/v1/player_type_definitions?type_key=eq.${encodeURIComponent(result.result_type_key)}&select=animal_name_ja,catchphrase`, { headers })
   if (!defResponse.ok) throw new Error(`Definition lookup failed: ${defResponse.status}`)
   const definition = (await defResponse.json())[0]
