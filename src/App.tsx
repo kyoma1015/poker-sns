@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+import { supabase } from './supabase'
 import './App.css'
 import {
   BrowserRouter,
@@ -36,6 +38,25 @@ import Settings from './Settings'
 
 function Top() {
   const navigate = useNavigate()
+  const [checkingSession, setCheckingSession] = useState(true)
+
+  useEffect(() => {
+    let active = true
+    supabase.auth.getSession().then(({ data: { session }, error }) => {
+      if (!active) return
+      if (error) console.error('セッション復元エラー:', error)
+      if (session) navigate('/timeline', { replace: true })
+      else setCheckingSession(false)
+    }).catch((error) => {
+      console.error('セッション確認エラー:', error)
+      if (active) setCheckingSession(false)
+    })
+    return () => { active = false }
+  }, [navigate])
+
+  if (checkingSession) {
+    return <main className="app"><div className="card"><p className="subtitle">ログイン状態を確認中...</p></div></main>
+  }
 
   return (
     <main className="app">
