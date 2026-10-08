@@ -1102,7 +1102,7 @@
                   padding: '17px',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '14px',
+                  gap: '16px',
                   background: '#0d0d0d',
                   border: '1px solid #3b3423',
                   borderRadius: '16px',
@@ -1112,23 +1112,23 @@
               >
                 <div
                   style={{
-                    width: '52px',
-                    height: '52px',
+                    width: 'clamp(100px, 27vw, 132px)',
+                    aspectRatio: '1 / 1',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     flexShrink: 0,
                     background: '#15130e',
                     border: '1px solid #403821',
-                    borderRadius: '14px',
-                    fontSize: '29px',
+                    borderRadius: '16px',
+                    overflow: 'hidden',
                   }}
                 >
                   <img
                     src={`/animals/${playerType.result_type_key}.png`}
                     alt={`${playerType.animal_name_ja}の3Dマスコット`}
                     loading="lazy"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '13px', display: 'block' }}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '15px', display: 'block' }}
                   />
                 </div>
 
