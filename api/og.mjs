@@ -186,7 +186,7 @@ export async function GET(request) {
                 style: { display: 'flex', flexDirection: 'row', justifyContent: 'space-between', borderTop: '1px solid #6c532a', paddingTop: '14px' },
                 children: [
                   textNode('全50問・36種類の動物タイプ', { fontSize: 20, color: '#d4b879' }),
-                  textNode('あなたもPoker IDで無料診断！', { fontSize: 20, color: '#d4b879' }),
+                  textNode('詳しい診断結果はPoker IDで！', { fontSize: 20, color: '#d4b879', fontWeight: 800 }),
                 ],
               },
             },
