@@ -96,16 +96,6 @@
       completed_at: string
     }
 
-    const playerTypeEmoji: Record<string, string> = {
-      lion: '🦁', tiger: '🐯', leopard: '🐆', bison: '🦬', gorilla: '🦍',
-      rhino: '🦏', shark: '🦈', owl: '🦉', eagle: '🦅', elephant: '🐘',
-      giraffe: '🦒', wolf: '🐺', hyena: '🐾', cat: '🐈', chameleon: '🦎',
-      dolphin: '🐬', fox: '🦊', snake: '🐍', raccoon: '🦝', turtle: '🐢',
-      rabbit: '🐇', crocodile: '🐊', hedgehog: '🦔', deer: '🦌', sloth: '🦥',
-      dog: '🐕', bear: '🐻', bull: '🐄', badger: '🦡', monkey: '🐒',
-      magpie: '🐦‍⬛', penguin: '🐧', horse: '🐎', squirrel: '🐿️',
-      mountain_goat: '🐐', otter: '🦦',
-    }
 
     function Profile() {
       const navigate = useNavigate()
@@ -266,20 +256,63 @@
           setFollowerCount(
             followers || 0
           )
-          const { data: ratingSummary, error: ratingsError } = await supabase.rpc(
-            'get_player_style_rating_summary',
-            { p_user_id: user.id }
-          )
+          const {
+            data: ratings,
+            error: ratingsError,
+          } = await supabase
+            .from(
+              'player_style_ratings'
+            )
+            .select(
+              'aggression, looseness'
+            )
+            .eq(
+              'rated_user_id',
+              user.id
+            )
           if (ratingsError) {
-            console.error('匿名評価集計エラー:', ratingsError)
+            console.error(
+              ratingsError
+            )
+            return
+          }
+          if (
+            ratings &&
+            ratings.length > 0
+          ) {
+            const aggressionTotal =
+              ratings.reduce(
+                (total, rating) =>
+                  total +
+                  rating.aggression,
+                0
+              )
+            const loosenessTotal =
+              ratings.reduce(
+                (total, rating) =>
+                  total +
+                  rating.looseness,
+                0
+              )
+            setAverageAggression(
+              Math.round(
+                aggressionTotal /
+                  ratings.length
+              )
+            )
+            setAverageLooseness(
+              Math.round(
+                loosenessTotal /
+                  ratings.length
+              )
+            )
+            setRatingCount(
+              ratings.length
+            )
+          } else {
             setAverageAggression(null)
             setAverageLooseness(null)
             setRatingCount(0)
-          } else {
-            const summary = ratingSummary?.[0]
-            setRatingCount(Number(summary?.rating_count ?? 0))
-            setAverageAggression(summary?.average_aggression == null ? null : Number(summary.average_aggression))
-            setAverageLooseness(summary?.average_looseness == null ? null : Number(summary.average_looseness))
           }
         }
         loadProfile()
@@ -1091,7 +1124,12 @@
                     fontSize: '29px',
                   }}
                 >
-                  {playerTypeEmoji[playerType.result_type_key] ?? '♠️'}
+                  <img
+                    src={`/animals/${playerType.result_type_key}.png`}
+                    alt={`${playerType.animal_name_ja}の3Dマスコット`}
+                    loading="lazy"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '13px', display: 'block' }}
+                  />
                 </div>
 
                 <div style={{ minWidth: 0, flex: 1 }}>
