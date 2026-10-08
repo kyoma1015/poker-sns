@@ -2,7 +2,7 @@ import { ImageResponse } from '@vercel/og'
 async function getPlayerTypeResult(supabaseUrl, serviceKey, id) {
   const headers = { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` }
   const resultsResponse = await fetch(
-    `${supabaseUrl}/rest/v1/player_type_diagnosis_results?id=eq.${encodeURIComponent(id)}&is_public=eq.true&select=id,result_type_key`,
+    `${supabaseUrl}/rest/v1/player_type_diagnosis_results?id=eq.${encodeURIComponent(id)}&is_public=eq.true&select=id,result_type_key,trait_scores,discriminator_scores`,
     { headers },
   )
   if (!resultsResponse.ok) {
@@ -30,6 +30,41 @@ async function getPlayerTypeResult(supabaseUrl, serviceKey, id) {
     throw new Error(`Definition not found for animal type: ${result.result_type_key}`)
   }
   return { ...result, ...definition }
+}
+
+const playerTraitLabels = {
+  "initiative": "自分から動く",
+  "risk_tolerance": "リスクを取れる",
+  "patience": "待てる",
+  "analytical": "理屈から組み立てる",
+  "player_read": "相手を見る",
+  "adaptability": "戦い方を変えられる",
+  "deception": "イメージを利用する",
+  "value_directness": "取れる時に取り切る",
+  "threat_sensitivity": "危険信号を拾う",
+  "novelty": "新しい選択を試す",
+  "stability": "基準がぶれにくい",
+  "confidence": "判断を信じられる",
+  "exploit": "弱点を利益に変える",
+  "tempo": "反応が速い",
+  "learning_receptivity": "学びを取り込む",
+  "overview": "卓全体を見る",
+  "planning_horizon": "先まで考える",
+  "history_use": "過去の情報を使う",
+  "small_edge_accumulation": "小さな利益を積む",
+  "action_efficiency": "無駄な複雑さを減らす",
+  "interaction_read": "相手との読み合いを見る",
+  "pressure_resistance": "圧力に崩れにくい",
+  "independent_judgment": "自分の根拠で決める",
+  "selective_burst": "勝負所で一気に行く",
+  "pot_size_comfort": "大きなポットを怖がらない",
+  "fun_orientation": "面白さも大事にする",
+  "attack_momentum": "攻めの流れを続ける",
+  "balance_awareness": "偏りすぎを避ける",
+  "retreat_response": "危険なら引き返せる",
+  "improvisation": "その場で組み直せる",
+  "stimulus_orientation": "動きのある展開を好む",
+  "collision_avoidance": "難しい衝突を避ける"
 }
 
 const money = (value) => {
@@ -94,16 +129,70 @@ export async function GET(request) {
       const allowedAnimals = new Set('badger bear bison bull cat chameleon crocodile deer dog dolphin eagle elephant fox giraffe gorilla hedgehog horse hyena leopard lion magpie monkey mountain_goat otter owl penguin rabbit raccoon rhino shark sloth snake squirrel tiger turtle wolf'.split(' '))
       const key = allowedAnimals.has(result.result_type_key) ? result.result_type_key : 'lion'
       const animalUrl = new URL(`/animals/${key}.png`, url.origin).toString()
-      const element = { type: 'div', props: { style: { width: '100%', height: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '65px', background: '#080808', color: '#fff', fontFamily: 'sans-serif', border: '14px solid #b89b5b' }, children: [
-        { type: 'div', props: { style: { display: 'flex', flexDirection: 'column', width: '57%', justifyContent: 'center' }, children: [
-          { type: 'div', props: { style: { display: 'flex', fontSize: 26, color: '#d4b879', letterSpacing: '3px', fontWeight: 800 }, children: 'POKER ID  /  PLAYER TYPE' } },
-          { type: 'div', props: { style: { display: 'flex', fontSize: 31, marginTop: '42px', color: '#d4b879' }, children: 'あなたのポーカータイプは…' } },
-          { type: 'div', props: { style: { display: 'flex', fontSize: 62, fontWeight: 900, marginTop: '15px', lineHeight: 1.25 }, children: result.animal_name_ja } },
-          { type: 'div', props: { style: { display: 'flex', fontSize: 26, marginTop: '25px', lineHeight: 1.4, color: '#e8dcc2' }, children: String(result.catchphrase || '').slice(0, 75) } },
-          { type: 'div', props: { style: { display: 'flex', fontSize: 21, marginTop: '45px', color: '#bca675' }, children: '全50問・36種類  あなたも無料診断！' } },
-        ] } },
-        { type: 'img', props: { src: animalUrl, width: 430, height: 430, style: { objectFit: 'contain' } } },
-      ] } }
+      const scores = { ...(result.trait_scores || {}), ...(result.discriminator_scores || {}) }
+      const topTraits = Object.entries(scores)
+        .filter(([name, score]) => playerTraitLabels[name] && Number.isFinite(Number(score)))
+        .sort((a, b) => Number(b[1]) - Number(a[1]))
+        .slice(0, 3)
+        .map(([name]) => playerTraitLabels[name])
+
+      const textNode = (text, style = {}) => ({
+        type: 'div',
+        props: { style: { display: 'flex', ...style }, children: text },
+      })
+      const element = {
+        type: 'div',
+        props: {
+          style: {
+            width: '100%', height: '100%', display: 'flex', flexDirection: 'column',
+            padding: '34px 48px', background: '#080808', color: '#fff',
+            fontFamily: 'sans-serif', border: '12px solid #b89b5b',
+          },
+          children: [
+            textNode('POKER ID  /  PLAYER TYPE', { fontSize: 24, color: '#d4b879', letterSpacing: '3px', fontWeight: 800 }),
+            {
+              type: 'div',
+              props: {
+                style: { display: 'flex', flexDirection: 'row', flex: 1, alignItems: 'center' },
+                children: [
+                  {
+                    type: 'div',
+                    props: {
+                      style: { display: 'flex', flexDirection: 'column', width: '60%', paddingRight: '15px' },
+                      children: [
+                        textNode('あなたのポーカータイプは…', { fontSize: 26, color: '#d4b879', marginBottom: '8px' }),
+                        textNode(String(result.animal_name_ja || ''), { fontSize: 68, fontWeight: 900, lineHeight: 1.15 }),
+                        textNode(String(result.catchphrase || '').slice(0, 72), { fontSize: 24, color: '#e8dcc2', marginTop: '12px', lineHeight: 1.4 }),
+                        textNode('特に強く出ている3つの傾向', { fontSize: 21, color: '#d4b879', fontWeight: 800, marginTop: '26px', marginBottom: '10px' }),
+                        ...topTraits.map((label, index) =>
+                          textNode(`0${index + 1}   ${label}`, { fontSize: 23, color: '#fff0cc', marginTop: '8px', fontWeight: 700 })
+                        ),
+                      ],
+                    },
+                  },
+                  {
+                    type: 'img',
+                    props: {
+                      src: animalUrl, width: 410, height: 410,
+                      style: { objectFit: 'contain' },
+                    },
+                  },
+                ],
+              },
+            },
+            {
+              type: 'div',
+              props: {
+                style: { display: 'flex', flexDirection: 'row', justifyContent: 'space-between', borderTop: '1px solid #6c532a', paddingTop: '14px' },
+                children: [
+                  textNode('全50問・36種類の動物タイプ', { fontSize: 20, color: '#d4b879' }),
+                  textNode('あなたもPoker IDで無料診断！', { fontSize: 20, color: '#d4b879' }),
+                ],
+              },
+            },
+          ],
+        },
+      }
       return new ImageResponse(element, { width: 1200, height: 630, headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400' } })
     }
 
