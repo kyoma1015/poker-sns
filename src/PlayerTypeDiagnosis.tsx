@@ -766,55 +766,46 @@ function PlayerTypeDiagnosis() {
             )}
 
             {isOwner === true && (
-              <>
-                {!shareEditorOpen ? (
-                  <button className="ptd-primary" type="button" onClick={openShareEditor}>
-                    Poker IDのタイムラインに投稿
+              <div className="ptd-share-area">
+                <section className="ptd-share-panel" aria-label="診断結果をシェア">
+                  <h2 className="ptd-share-heading">診断結果をシェア</h2>
+                  <button className="ptd-share-x" type="button" onClick={shareToX}>
+                    <span aria-hidden="true">𝕏</span> Xでシェア
                   </button>
-                ) : (
-                  <div style={{ marginTop: 20, padding: 18, border: '1px solid #92733a', borderRadius: 16, background: '#12100c', textAlign: 'left' }}>
-                    <div style={{ fontWeight: 800, marginBottom: 12, color: '#e5ca89' }}>投稿にひとこと添える</div>
-                    <textarea aria-label="診断結果の投稿文" value={shareText} onChange={(e) => setShareText(e.target.value)} maxLength={500} rows={5} placeholder="めっちゃ当たってる！みんなは何タイプ？" style={{ width: '100%', boxSizing: 'border-box', padding: 12, borderRadius: 10, border: '1px solid #655332', background: '#080808', color: '#fff', fontSize: 15, lineHeight: 1.6, resize: 'vertical' }} />
-                    <div style={{ color: '#b9a67c', fontSize: 12, textAlign: 'right', marginTop: 6 }}>{shareText.length}/500</div>
-                    <p style={{ fontSize: 12, color: '#b9a67c' }}>診断結果カードは自動で添付されます。</p>
-                    <button className="ptd-primary" type="button" disabled={sharePosting || !shareText.trim()} onClick={() => void shareToTimeline()}>
-                      {sharePosting ? '投稿中...' : 'この内容で投稿する'}
-                    </button>
-                    <button className="ptd-secondary" type="button" disabled={sharePosting} onClick={() => setShareEditorOpen(false)}>キャンセル</button>
-                  </div>
-                )}
-                {shareMessage && <p className="ptd-result-hint" role="status">{shareMessage}</p>}
-              </>
-            )}
+                  <button className="ptd-share-save" type="button" disabled={imageSaving || !detail} onClick={() => void saveShareImage()}>
+                    <span aria-hidden="true">↓</span> {imageSaving ? '画像を作成中...' : '画像を保存'}
+                  </button>
+                  {externalShareError && <p className="ptd-error" role="alert">{externalShareError}</p>}
+                </section>
 
-            {isOwner === true && (
-              <div style={{ marginTop: 20, padding: 18, border: '1px solid #92733a', borderRadius: 16, background: '#12100c' }}>
-                <div style={{ fontWeight: 800, marginBottom: 12, color: '#e5ca89' }}>診断結果をSNSでシェア</div>
-                <button className="ptd-primary" type="button" disabled={imageSaving || !detail} onClick={() => void saveShareImage()}>
-                  {imageSaving ? '画像を作成中...' : '診断結果の画像を保存'}
-                </button>
-                <button className="ptd-secondary" type="button" disabled={imageSaving || !detail} onClick={shareToX}>Xでシェア</button>
-                <p className="ptd-result-hint">対応端末では画像付きの共有画面が開きます。非対応環境では画像を保存してXの投稿画面を開きます。</p>
-                {externalShareError && <p className="ptd-error" role="alert">{externalShareError}</p>}
+                <div className="ptd-share-actions">
+                  {!shareEditorOpen ? (
+                    <button className="ptd-share-action" type="button" onClick={openShareEditor}>
+                      <span>Poker IDのタイムラインに投稿</span><span aria-hidden="true">›</span>
+                    </button>
+                  ) : (
+                    <div className="ptd-share-editor">
+                      <div className="ptd-detail-kicker">投稿にひとこと添える</div>
+                      <textarea aria-label="診断結果の投稿文" value={shareText} onChange={(e) => setShareText(e.target.value)} maxLength={500} rows={5} placeholder="めっちゃ当たってる！みんなは何タイプ？" className="ptd-share-textarea" />
+                      <div className="ptd-share-count">{shareText.length}/500</div>
+                      <p className="ptd-share-note">診断結果カードは自動で添付されます。</p>
+                      <button className="ptd-primary" type="button" disabled={sharePosting || !shareText.trim()} onClick={() => void shareToTimeline()}>
+                        {sharePosting ? '投稿中...' : 'この内容で投稿する'}
+                      </button>
+                      <button className="ptd-secondary" type="button" disabled={sharePosting} onClick={() => setShareEditorOpen(false)}>キャンセル</button>
+                    </div>
+                  )}
+                  {shareMessage && <p className="ptd-result-hint" role="status">{shareMessage}</p>}
+                  <button className="ptd-share-action ptd-share-retry" type="button" onClick={restart}>
+                    <span>もう一度診断する</span><span aria-hidden="true">↻</span>
+                  </button>
+                </div>
               </div>
             )}
 
-            {isOwner === true && (
-              <p className="ptd-result-hint">
-                診断結果はPoker IDに保存されました。
-              </p>
-            )}
-
-            <button
-              className="ptd-primary"
-              onClick={() => isOwner === false ? navigate(-1) : navigate('/profile')}
-            >
-              {isOwner === false ? 'Poker IDに戻る' : 'Poker IDで見る'}
-            </button>
-
-            {isOwner === true && (
-              <button className="ptd-secondary" onClick={restart}>
-                もう一度診断する
+            {isOwner === false && (
+              <button className="ptd-secondary" type="button" onClick={() => navigate(-1)}>
+                Poker IDに戻る
               </button>
             )}
           </section>
