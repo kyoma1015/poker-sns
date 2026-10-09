@@ -5,7 +5,7 @@ type Tool = { icon: string; title: string; description: string; path?: string }
 const available: Tool[] = [
   { icon: '♠', title: 'TDAクイズ', description: 'ルールをクイズで学習', path: '/tda' },
   { icon: '⌕', title: 'TDA検索', description: 'ルール・裁定を調べる', path: '/tda' },
-  { icon: '▥', title: '実戦記録', description: '成績・収支を管理', path: '/profile' },
+  { icon: '▥', title: '実戦記録', description: '成績・収支を管理', path: '/results' },
   { icon: '🐾', title: 'プレイスタイル診断', description: '36種類の動物で分析', path: '/player-type' },
 ]
 

@@ -36,6 +36,7 @@ import PlayerTypeDiagnosis from './PlayerTypeDiagnosis'
 import AdminReports from './AdminReports'
 import Settings from './Settings'
 import PokerTools from './PokerTools'
+import PokerResults from './PokerResults'
 
 function Top() {
   const navigate = useNavigate()
@@ -99,7 +100,7 @@ const menuGroups = [
     ['♠', 'TDAクイズ', '/tda'], ['▤', 'TDA検索', '/tda'],
   ] },
   { title: '実績・診断', links: [
-    ['▥', '実戦記録', '/profile'], ['🏆', 'トーナメント記録', '/profile/results/new'],
+    ['▥', '実戦記録', '/results'], ['🏆', 'トーナメント記録', '/profile/results/new'],
     ['♣', 'リング記録', '/profile/amusement-ring/new'], ['♦', 'キャッシュ記録', '/profile/cash-game/new'],
     ['🐾', '動物タイプ診断', '/player-type'], ['✎', 'プロフィール編集', '/profile/edit'],
   ] },
@@ -178,6 +179,7 @@ function AppLayout() {
 
         <Route path="/timeline" element={<Timeline />} />
         <Route path="/tools" element={<PokerTools />} />
+        <Route path="/results" element={<PokerResults />} />
         <Route path="/admin/reports" element={<AdminReports />} />
 
         <Route path="/post/:id" element={<PostDetail />} />

@@ -1896,7 +1896,7 @@ function Timeline() {
             {[
               { label: 'TDAクイズ', sub: '裁定を学ぶ', icon: '♠', url: '/tda' },
               { label: 'TDA検索', sub: 'ルールを調べる', icon: '⌕', url: '/tda' },
-              { label: '実戦記録', sub: '今日の成績', icon: '▥', url: '/profile' },
+              { label: '実戦記録', sub: '今日の成績', icon: '▥', url: '/results' },
             ].map((tool) => (
               <button key={tool.label} type="button" onClick={() => navigate(tool.url)} style={{ minWidth: 0, padding: '11px 3px 9px', border: '1px solid #2c2c2c', borderRadius: 12, background: '#151515', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
                 <span style={{ fontSize: 21, lineHeight: 1.1 }}>{tool.icon}</span>
