@@ -3999,7 +3999,7 @@ function TDA() {
 
 
 
-          max-width: 760px;
+          max-width: 600px;
 
 
 
