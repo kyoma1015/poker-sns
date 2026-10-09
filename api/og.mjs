@@ -145,27 +145,28 @@ export async function GET(request) {
         props: {
           style: {
             width: '100%', height: '100%', display: 'flex', flexDirection: 'column',
-            padding: '34px 48px', background: '#080808', color: '#fff',
+            padding: '26px 48px 28px', background: '#080808', color: '#fff',
             fontFamily: 'sans-serif', border: '12px solid #b89b5b',
           },
           children: [
-            textNode('POKER ID  /  PLAYER TYPE', { fontSize: 24, color: '#d4b879', letterSpacing: '3px', fontWeight: 800 }),
+            textNode('POKER ID  /  PLAYER TYPE', { fontSize: 21, color: '#d4b879', letterSpacing: '3px', fontWeight: 800 }),
             {
               type: 'div',
               props: {
-                style: { display: 'flex', flexDirection: 'row', flex: 1, alignItems: 'center' },
+                style: { display: 'flex', flexDirection: 'row', flex: 1, minHeight: 0, alignItems: 'center' },
                 children: [
                   {
                     type: 'div',
                     props: {
                       style: { display: 'flex', flexDirection: 'column', width: '60%', paddingRight: '15px' },
                       children: [
-                        textNode('あなたのポーカータイプは…', { fontSize: 26, color: '#d4b879', marginBottom: '8px' }),
-                        textNode(String(result.animal_name_ja || ''), { fontSize: 68, fontWeight: 900, lineHeight: 1.15 }),
-                        textNode(String(result.catchphrase || '').slice(0, 72), { fontSize: 24, color: '#e8dcc2', marginTop: '12px', lineHeight: 1.4 }),
-                        textNode('特に強く出ている3つの傾向', { fontSize: 21, color: '#d4b879', fontWeight: 800, marginTop: '26px', marginBottom: '10px' }),
+                        textNode('あなたのポーカータイプは…', { fontSize: 23, color: '#d4b879', marginBottom: '5px' }),
+                        textNode(String(result.animal_name_ja || ''), { fontSize: 60, fontWeight: 900, lineHeight: 1.15 }),
+                        textNode(String(result.catchphrase || '').slice(0, 72), { fontSize: 21, color: '#e8dcc2', marginTop: '7px', lineHeight: 1.4 }),
+                        textNode('※プレイヤータイプは強さや技術の優劣を示すものではありません。', { fontSize: 16, color: '#c9c0b0', marginTop: '8px', lineHeight: 1.35 }),
+                        textNode('特に強く出ている3つの傾向', { fontSize: 19, color: '#d4b879', fontWeight: 800, marginTop: '15px', marginBottom: '4px' }),
                         ...topTraits.map((label, index) =>
-                          textNode(`0${index + 1}   ${label}`, { fontSize: 23, color: '#fff0cc', marginTop: '8px', fontWeight: 700 })
+                          textNode(`0${index + 1}   ${label}`, { fontSize: 20, color: '#fff0cc', marginTop: '5px', fontWeight: 700 })
                         ),
                       ],
                     },
@@ -173,7 +174,7 @@ export async function GET(request) {
                   {
                     type: 'img',
                     props: {
-                      src: animalUrl, width: 410, height: 410,
+                      src: animalUrl, width: 370, height: 370,
                       style: { objectFit: 'contain' },
                     },
                   },
@@ -183,9 +184,8 @@ export async function GET(request) {
             {
               type: 'div',
               props: {
-                style: { display: 'flex', flexDirection: 'column', borderTop: '1px solid #6c532a', paddingTop: '10px' },
+                style: { display: 'flex', flexDirection: 'column', borderTop: '1px solid #6c532a', paddingTop: '8px', flexShrink: 0 },
                 children: [
-                  textNode('※プレイヤータイプは強さや技術の優劣を示すものではありません。', { fontSize: 17, color: '#e8dcc2', marginBottom: '8px' }),
                   {
                     type: 'div',
                     props: {
