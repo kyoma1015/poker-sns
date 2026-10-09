@@ -58,6 +58,8 @@
           memo: string | null
           is_public: boolean
         }
+        type ProfilePost = { id: string; content: string; created_at: string; post_type?: string; result_type?: string | null }
+        type ProfileComment = { id: string; post_id: string; content: string; created_at: string }
         type PlayerTypeSummary = {
           result_id: string
           result_type_key: string
@@ -112,9 +114,39 @@
           const [amusementRingResults, setAmusementRingResults] =
             useState<AmusementRingResult[]>([])
           const [cashGameResults, setCashGameResults] = useState<CashGameResult[]>([])
-          const [activeTab, setActiveTab] = useState<'poker' | 'records'>('poker')
+          const [activeTab, setActiveTab] = useState<'poker' | 'records' | 'posts'>('poker')
           const [recordTab, setRecordTab] = useState<'tournament' | 'ring' | 'cash'>('tournament')
           const [playerType, setPlayerType] = useState<PlayerTypeSummary | null>(null)
+          const [activityTab, setActivityTab] = useState<'posts' | 'comments'>('posts')
+          const [playerPosts, setPlayerPosts] = useState<ProfilePost[]>([])
+          const [playerComments, setPlayerComments] = useState<ProfileComment[]>([])
+          const [activityLoading, setActivityLoading] = useState(false)
+          const [activityError, setActivityError] = useState('')
+          useEffect(() => {
+            if (activeTab !== 'posts' || !id || blockStatus !== 'none') return
+            let cancelled = false
+            const loadActivity = async () => {
+              setActivityLoading(true)
+              setActivityError('')
+              const [postsResponse, commentsResponse] = await Promise.all([
+                supabase.from('posts').select('id, content, created_at, post_type, result_type').eq('user_id', id).order('created_at', { ascending: false }),
+                supabase.from('post_comments').select('id, post_id, content, created_at').eq('user_id', id).order('created_at', { ascending: false }),
+              ])
+              if (cancelled) return
+              if (postsResponse.error || commentsResponse.error) {
+                setActivityError(postsResponse.error?.message || commentsResponse.error?.message || '取得に失敗しました')
+                setPlayerPosts([])
+                setPlayerComments([])
+              } else {
+                setPlayerPosts((postsResponse.data || []) as ProfilePost[])
+                setPlayerComments((commentsResponse.data || []) as ProfileComment[])
+              }
+              setActivityLoading(false)
+            }
+            void loadActivity()
+            return () => { cancelled = true }
+          }, [activeTab, id, blockStatus])
+
           useEffect(() => {
             const loadProfile = async () => {
               if (!id) return
@@ -812,17 +844,50 @@
                 {[
                   { key: 'poker', label: 'Poker ID' },
                   { key: 'records', label: '記録' },
+                  { key: 'posts', label: '投稿' },
                 ].map((tab) => {
                   const active = activeTab === tab.key
                   return (
-                    <button key={tab.key} onClick={() => setActiveTab(tab.key as 'poker' | 'records')} style={{ position: 'relative', padding: '15px 8px', background: 'transparent', color: active ? '#fff' : '#666', borderRadius: 0, fontSize: '14px', fontWeight: active ? 700 : 600 }}>
+                    <button key={tab.key} onClick={() => setActiveTab(tab.key as 'poker' | 'records' | 'posts')} style={{ position: 'relative', padding: '15px 8px', background: 'transparent', color: active ? '#fff' : '#666', borderRadius: 0, fontSize: '14px', fontWeight: active ? 700 : 600 }}>
                       {tab.label}
                       {active && <span style={{ position: 'absolute', left: '30%', right: '30%', bottom: 0, height: '3px', borderRadius: '999px', background: '#fff' }} />}
                     </button>
                   )
                 })}
-                <button onClick={() => navigate('/timeline')} style={{ padding: '15px 8px', background: 'transparent', color: '#666', borderRadius: 0, fontSize: '14px', fontWeight: 600 }}>投稿</button>
+
               </div>
+              {blockStatus === 'none' && activeTab === 'posts' && (
+                <section style={{ padding: '20px 0 28px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 18 }}>
+                    {(['posts', 'comments'] as const).map(tab => (
+                      <button key={tab} type="button" onClick={() => setActivityTab(tab)} style={{ padding: '12px 8px', background: activityTab === tab ? '#fff' : '#161616', color: activityTab === tab ? '#000' : '#aaa', border: '1px solid #333', borderRadius: 10, fontWeight: 700 }}>
+                        {tab === 'posts' ? `投稿 (${playerPosts.length})` : `コメント (${playerComments.length})`}
+                      </button>
+                    ))}
+                  </div>
+                  {activityLoading ? <p style={{ color: '#888', textAlign: 'center' }}>読み込み中...</p> : activityError ? <p style={{ color: '#ff9999' }}>取得エラー：{activityError}</p> : (
+                    <div style={{ display: 'grid', gap: 12 }}>
+                      {activityTab === 'posts' ? (
+                        playerPosts.length === 0 ? <p style={{ color: '#888', textAlign: 'center' }}>まだ投稿がありません</p> : playerPosts.map(post => (
+                          <button key={post.id} type="button" onClick={() => navigate(`/post/${post.id}`)} style={{ padding: 16, background: '#101010', border: '1px solid #292929', borderRadius: 14, textAlign: 'left', color: '#fff', width: '100%' }}>
+                            <div style={{ fontSize: 11, color: '#888', marginBottom: 10 }}>{new Date(post.created_at).toLocaleString('ja-JP')}{post.post_type === 'result' ? ' ・ 実戦記録' : ''}</div>
+                            <div style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', lineHeight: 1.7, fontSize: 14 }}>{post.content || (post.post_type === 'result' ? '実戦記録の投稿' : '')}</div>
+                            <div style={{ fontSize: 11, color: '#999', marginTop: 12 }}>投稿を開く →</div>
+                          </button>
+                        ))
+                      ) : (
+                        playerComments.length === 0 ? <p style={{ color: '#888', textAlign: 'center' }}>まだコメントがありません</p> : playerComments.map(comment => (
+                          <button key={comment.id} type="button" onClick={() => navigate(`/post/${comment.post_id}`)} style={{ padding: 16, background: '#101010', border: '1px solid #292929', borderRadius: 14, textAlign: 'left', color: '#fff', width: '100%' }}>
+                            <div style={{ fontSize: 11, color: '#888', marginBottom: 10 }}>{new Date(comment.created_at).toLocaleString('ja-JP')}</div>
+                            <div style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', lineHeight: 1.7, fontSize: 14 }}>{comment.content}</div>
+                            <div style={{ fontSize: 11, color: '#999', marginTop: 12 }}>元の投稿を開く →</div>
+                          </button>
+                        ))
+                      )}
+                    </div>
+                  )}
+                </section>
+              )}
               {blockStatus === 'none' && activeTab === 'records' && (
                 <div style={{ margin: '16px 0 2px', padding: '4px', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '4px', background: '#0d0d0d', border: '1px solid #242424', borderRadius: '13px' }}>
                   {[

@@ -87,6 +87,8 @@
         </div>
       )
     }
+    type ProfilePost = { id: string; content: string; created_at: string; post_type?: string; result_type?: string | null }
+    type ProfileComment = { id: string; post_id: string; content: string; created_at: string }
     type PlayerTypeSummary = {
       result_id: string
       result_type_key: string
@@ -123,8 +125,13 @@
       const [cashGameResults, setCashGameResults] =
         useState<CashGameResult[]>([])
       const [cashGraphMode, setCashGraphMode] = useState<'jpy' | 'bb'>('jpy')
-      const [profileTab, setProfileTab] = useState<'pokerId' | 'records'>('pokerId')
+      const [profileTab, setProfileTab] = useState<'pokerId' | 'records' | 'posts'>('pokerId')
       const [recordTab, setRecordTab] = useState<'tournament' | 'amusement' | 'cash'>('tournament')
+      const [activityTab, setActivityTab] = useState<'posts' | 'comments'>('posts')
+      const [myPosts, setMyPosts] = useState<ProfilePost[]>([])
+      const [myComments, setMyComments] = useState<ProfileComment[]>([])
+      const [activityLoading, setActivityLoading] = useState(false)
+      const [activityError, setActivityError] = useState('')
       const [playerType, setPlayerType] = useState<PlayerTypeSummary | null>(null)
       useEffect(() => {
         const loadProfile = async () => {
@@ -317,6 +324,27 @@
         }
         loadProfile()
       }, [navigate])
+      useEffect(() => {
+        if (profileTab !== 'posts' || !profile?.id) return
+        let cancelled = false
+        const loadActivity = async () => {
+          setActivityLoading(true)
+          setActivityError('')
+          const [postsResponse, commentsResponse] = await Promise.all([
+            supabase.from('posts').select('id, content, created_at, post_type, result_type').eq('user_id', profile.id).order('created_at', { ascending: false }),
+            supabase.from('post_comments').select('*').eq('user_id', profile.id).order('created_at', { ascending: false }),
+          ])
+          if (cancelled) return
+          if (postsResponse.error || commentsResponse.error) {
+            setActivityError(postsResponse.error?.message || commentsResponse.error?.message || '取得に失敗しました')
+          }
+          setMyPosts((postsResponse.data || []) as ProfilePost[])
+          setMyComments((commentsResponse.data || []) as ProfileComment[])
+          setActivityLoading(false)
+        }
+        void loadActivity()
+        return () => { cancelled = true }
+      }, [profileTab, profile?.id])
       if (!profile) {
         return (
           <main className="app">
@@ -933,13 +961,14 @@
               {[
                 { key: 'pokerId', label: 'Poker ID' },
                 { key: 'records', label: '記録' },
+                { key: 'posts', label: '投稿' },
               ].map((tab) => {
                 const active = profileTab === tab.key
                 return (
                   <button
                     key={tab.key}
                     type="button"
-                    onClick={() => tab.key === 'records' ? navigate('/results') : setProfileTab('pokerId')}
+                    onClick={() => tab.key === 'records' ? navigate('/results') : setProfileTab(tab.key as 'pokerId' | 'posts')}
                     style={{
                       position: 'relative',
                       padding: '15px 8px',
@@ -967,23 +996,41 @@
                   </button>
                 )
               })}
-              <button
-                type="button"
-                onClick={() => navigate('/timeline')}
-                style={{
-                  position: 'relative',
-                  padding: '15px 8px',
-                  background: 'transparent',
-                  color: '#666',
-                  borderRadius: 0,
-                  fontSize: '14px',
-                  fontWeight: 600,
-                }}
-              >
-                投稿
-              </button>
+
             </div>
             </>)}
+            {!recordsOnly && profileTab === 'posts' && (
+              <section style={{ padding: '20px 0 28px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 18 }}>
+                  {(['posts', 'comments'] as const).map(tab => (
+                    <button key={tab} type="button" onClick={() => setActivityTab(tab)} style={{ padding: '12px 8px', background: activityTab === tab ? '#fff' : '#161616', color: activityTab === tab ? '#000' : '#aaa', border: '1px solid #333', borderRadius: 10, fontWeight: 700 }}>
+                      {tab === 'posts' ? `投稿 (${myPosts.length})` : `コメント (${myComments.length})`}
+                    </button>
+                  ))}
+                </div>
+                {activityLoading ? <p style={{ color: '#888', textAlign: 'center' }}>読み込み中...</p> : activityError ? <p style={{ color: '#ff9999' }}>取得エラー：{activityError}</p> : (
+                  <div style={{ display: 'grid', gap: 12 }}>
+                    {activityTab === 'posts' ? (
+                      myPosts.length === 0 ? <p style={{ color: '#888', textAlign: 'center' }}>まだ投稿がありません</p> : myPosts.map(post => (
+                        <button key={post.id} type="button" onClick={() => navigate(`/post/${post.id}`)} style={{ padding: 16, background: '#101010', border: '1px solid #292929', borderRadius: 14, textAlign: 'left', color: '#fff', width: '100%' }}>
+                          <div style={{ fontSize: 11, color: '#888', marginBottom: 10 }}>{new Date(post.created_at).toLocaleString('ja-JP')}{post.post_type === 'result' ? ' ・ 実戦記録' : ''}</div>
+                          <div style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', lineHeight: 1.7, fontSize: 14 }}>{post.content || (post.post_type === 'result' ? '実戦記録の投稿' : '')}</div>
+                          <div style={{ fontSize: 11, color: '#999', marginTop: 12 }}>投稿を開く →</div>
+                        </button>
+                      ))
+                    ) : (
+                      myComments.length === 0 ? <p style={{ color: '#888', textAlign: 'center' }}>まだコメントがありません</p> : myComments.map(comment => (
+                        <button key={comment.id} type="button" onClick={() => navigate(`/post/${comment.post_id}`)} style={{ padding: 16, background: '#101010', border: '1px solid #292929', borderRadius: 14, textAlign: 'left', color: '#fff', width: '100%' }}>
+                          <div style={{ fontSize: 11, color: '#888', marginBottom: 10 }}>{new Date(comment.created_at).toLocaleString('ja-JP')}</div>
+                          <div style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', lineHeight: 1.7, fontSize: 14 }}>{comment.content}</div>
+                          <div style={{ fontSize: 11, color: '#999', marginTop: 12 }}>元の投稿を開く →</div>
+                        </button>
+                      ))
+                    )}
+                  </div>
+                )}
+              </section>
+            )}
             {recordsOnly && (
               <div
                 style={{
