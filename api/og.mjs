@@ -183,10 +183,19 @@ export async function GET(request) {
             {
               type: 'div',
               props: {
-                style: { display: 'flex', flexDirection: 'row', justifyContent: 'space-between', borderTop: '1px solid #6c532a', paddingTop: '14px' },
+                style: { display: 'flex', flexDirection: 'column', borderTop: '1px solid #6c532a', paddingTop: '10px' },
                 children: [
-                  textNode('全50問・36種類の動物タイプ', { fontSize: 20, color: '#d4b879' }),
-                  textNode('詳しい診断結果はPoker IDで！', { fontSize: 20, color: '#d4b879', fontWeight: 800 }),
+                  textNode('※プレイヤータイプは強さや技術の優劣を示すものではありません。', { fontSize: 17, color: '#e8dcc2', marginBottom: '8px' }),
+                  {
+                    type: 'div',
+                    props: {
+                      style: { display: 'flex', flexDirection: 'row', justifyContent: 'space-between' },
+                      children: [
+                        textNode('全50問・36種類の動物タイプ', { fontSize: 20, color: '#d4b879' }),
+                        textNode('詳しい診断結果はPoker IDで！', { fontSize: 20, color: '#d4b879', fontWeight: 800 }),
+                      ],
+                    },
+                  },
                 ],
               },
             },

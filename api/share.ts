@@ -44,7 +44,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const image = `${origin}/api/og?type=player-type&id=${encodeURIComponent(id)}`
     const destination = `${origin}/player-type?result=${encodeURIComponent(id)}`
     const title = `ポーカータイプ診断：${result.animal_name_ja} | Poker ID`
-    const description = `${result.catchphrase || 'あなたはどのタイプ？'}｜全50問・36種類の動物タイプ`
+    const description = `${result.catchphrase || 'あなたはどのタイプ？'}｜全50問・36種類の動物タイプ。※プレイヤータイプは強さや技術の優劣を示すものではありません。`
     res.setHeader('Content-Type', 'text/html; charset=utf-8')
     res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300')
     return res.status(200).send(`<!doctype html>
