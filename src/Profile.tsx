@@ -97,7 +97,7 @@
     }
 
 
-    function Profile() {
+    function Profile({ recordsOnly = false }: { recordsOnly?: boolean }) {
       const navigate = useNavigate()
       const [profile, setProfile] =
         useState<any>(null)
@@ -561,6 +561,7 @@
               paddingTop: 0,
             }}
           >
+            {!recordsOnly && (<>
             {/* 上部ヘッダー */}
             <header
               style={{
@@ -907,6 +908,18 @@
                 ))}
               </div>
             </section>
+            </>)}
+            {recordsOnly && (
+              <section style={{ padding: '18px 0 10px' }}>
+                <button type="button" onClick={() => navigate('/tools')} style={{ width: 'auto', padding: 0, background: 'transparent', color: '#aaa', fontSize: 13 }}>← ポーカーツールに戻る</button>
+                <h1 style={{ fontSize: 24, margin: '18px 0 8px' }}>実戦記録</h1>
+                <div style={{ background: '#121212', border: '1px solid #303030', borderRadius: 14, padding: 16, lineHeight: 1.7 }}>
+                  <strong>すべてのプレイが、あなたのデータになる。</strong>
+                  <p style={{ color: '#aaa', fontSize: 13, margin: '6px 0 0' }}>勝った日も、負けた日も。結果に関係なく毎回記録することで、収支の推移やプレイ傾向をより正確に分析できます。</p>
+                </div>
+              </section>
+            )}
+            {!recordsOnly && (<>
             {/* プロフィールメニュー */}
             <div
               style={{
@@ -926,7 +939,7 @@
                   <button
                     key={tab.key}
                     type="button"
-                    onClick={() => setProfileTab(tab.key as 'pokerId' | 'records')}
+                    onClick={() => tab.key === 'records' ? navigate('/results') : setProfileTab('pokerId')}
                     style={{
                       position: 'relative',
                       padding: '15px 8px',
@@ -970,7 +983,8 @@
                 投稿
               </button>
             </div>
-            {profileTab === 'records' && (
+            </>)}
+            {recordsOnly && (
               <div
                 style={{
                   margin: '16px 0 4px',
@@ -1010,7 +1024,7 @@
                 })}
               </div>
             )}
-            {profileTab === 'pokerId' && (
+            {!recordsOnly && profileTab === 'pokerId' && (
               <>
             {/* 主なトーナメント実績 */}
           {featuredResults.length > 0 && (
@@ -1756,7 +1770,7 @@
             </section>
               </>
             )}
-            {profileTab === 'records' && recordTab === 'cash' && (
+            {recordsOnly && recordTab === 'cash' && (
               <>
             {/* キャッシュゲーム記録 */}
             <section style={{ marginTop: '10px', padding: '23px 0', borderTop: '1px solid #242424' }}>
@@ -1911,7 +1925,7 @@
             </section>
               </>
             )}
-            {profileTab === 'records' && recordTab === 'amusement' && (
+            {recordsOnly && recordTab === 'amusement' && (
               <>
             {/* アミューズリング記録 */}
             <section style={{ marginTop: '10px', padding: '23px 0', borderTop: '1px solid #242424' }}>
@@ -2021,7 +2035,7 @@
             </section>
               </>
             )}
-            {profileTab === 'records' && recordTab === 'tournament' && (
+            {recordsOnly && recordTab === 'tournament' && (
               <>
             {/* トーナメント記録 */}
             <section
