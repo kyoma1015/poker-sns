@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
@@ -37,6 +37,8 @@ type Post = {
   result_type: 'tournament' | 'amusement' | 'cash' | 'player_type' | null
 
   result_id: string | null
+  image_urls?: string[]
+  style_snapshot?: { count: number; aggression: number; looseness: number; captured_at: string } | null
 
   playerTypeData?: { animal_name_ja: string; catchphrase: string; result_type_key: string } | null
   resultData?: {
@@ -128,10 +130,18 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const [content, setContent] = useState('')
   const [composeOpen, setComposeOpen] = useState(false)
   const [attachmentsOpen, setAttachmentsOpen] = useState(false)
-  const [attachmentScreen, setAttachmentScreen] = useState<'menu' | 'results' | 'tournament' | 'amusement' | 'cash'>('menu')
-  const [selectedResult, setSelectedResult] = useState<{id:string; type:'tournament'|'amusement'|'cash'; label:string}|null>(null)
-  const [availableResults, setAvailableResults] = useState<{id:string; type:'tournament'|'amusement'|'cash'; label:string}[]>([])
+  const [attachmentScreen, setAttachmentScreen] = useState<'menu' | 'results' | 'tournament' | 'amusement' | 'cash' | 'diagnosis'>('menu')
+  const [selectedResult, setSelectedResult] = useState<{id:string; type:'tournament'|'amusement'|'cash'; label:string; playedAt:string; data:any}|null>(null)
+  const [availableResults, setAvailableResults] = useState<{id:string; type:'tournament'|'amusement'|'cash'; label:string; playedAt:string; data:any}[]>([])
   const [resultsLoading, setResultsLoading] = useState(false)
+  const imageInputRef = useRef<HTMLInputElement>(null)
+  const [imageFiles, setImageFiles] = useState<File[]>([])
+  const [imagePreviews, setImagePreviews] = useState<string[]>([])
+  const [selectedDiagnosis, setSelectedDiagnosis] = useState<{ result_id: string; animal_name_ja: string; catchphrase: string; result_type_key: string; completed_at: string } | null>(null)
+  const [diagnoses, setDiagnoses] = useState<{ result_id: string; animal_name_ja: string; catchphrase: string; result_type_key: string; completed_at: string }[]>([])
+  const [styleSnapshot, setStyleSnapshot] = useState<{ count: number; aggression: number; looseness: number; captured_at: string } | null>(null)
+  const [attachmentBusy, setAttachmentBusy] = useState(false)
+  useEffect(() => { const urls = imageFiles.map(file => URL.createObjectURL(file)); setImagePreviews(urls); return () => urls.forEach(url => URL.revokeObjectURL(url)) }, [imageFiles])
 
   const [currentUserId, setCurrentUserId] = useState('')
 
@@ -632,7 +642,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     const lists = await Promise.all(sources.map(async source => {
       const { data, error } = await supabase.from(source.table).select('*').eq('user_id', user.id).order('played_at', { ascending: false }).limit(30)
       if (error) { console.error(error); return [] }
-      return (data || []).map(item => ({ id: String(item.id), type: source.type, label: `${source.label} · ${String(item.tournament_name || item.venue || item.played_at || '記録')}` }))
+      return (data || []).map(item => ({ id: String(item.id), type: source.type, label: `${source.label} · ${String(item.tournament_name || item.venue || '記録')}`, playedAt: String(item.played_at || ''), data: item }))
     }))
     setAvailableResults(lists.flat())
     setResultsLoading(false)
@@ -654,10 +664,14 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     return <div style={{ marginTop: 12, padding: 12, background: '#151515', border: '1px solid #333', borderRadius: 12, maxHeight: 320, overflowY: 'auto' }}>
       {attachmentScreen === 'menu' ? <>
         <div style={{ fontSize: 12, color: '#aaa', marginBottom: 10 }}>添付するものを選択</div>
-        <button type="button" style={optionStyle} onClick={() => setMessage('画像添付は次の実装で対応します。')}>▧　画像を添付 <span style={{ color: '#888', fontSize: 11 }}>（準備中）</span></button>
-        <button type="button" style={optionStyle} onClick={() => setMessage('自己診断の添付は次の実装で対応します。')}>♧　自己診断を添付 <span style={{ color: '#888', fontSize: 11 }}>（準備中）</span></button>
-        <button type="button" style={optionStyle} onClick={() => setMessage('他者評価の添付は次の実装で対応します。評価者3人以上で共有可能にする予定です。')}>♙　他者評価を添付 <span style={{ color: '#888', fontSize: 11 }}>（準備中）</span></button>
+        <button type="button" style={optionStyle} onClick={() => { imageInputRef.current?.click(); setAttachmentsOpen(false) }}>▧　画像を添付（最大4枚・各5MB）</button>
+        <button type="button" style={optionStyle} onClick={() => { void loadDiagnoses() }}>♧　自己診断を添付　›</button>
+        <button type="button" style={optionStyle} onClick={() => { void loadStyleSnapshot() }}>♙　自分への他者評価を添付（3人以上）</button>
         <button type="button" style={optionStyle} onClick={() => setAttachmentScreen('results')}>♠　戦績を添付　›</button>
+      </> : attachmentScreen === 'diagnosis' ? <>
+        {backButton('menu')}
+        <div style={{ fontSize: 12, color: '#aaa', marginBottom: 10 }}>保存済みの自己診断を選択</div>
+        {attachmentBusy ? <p>読み込み中...</p> : diagnoses.length === 0 ? <p style={{ color: '#aaa', fontSize: 12 }}>診断結果がありません。</p> : diagnoses.map(item => <button type="button" key={item.result_id} style={optionStyle} onClick={() => { setSelectedDiagnosis(item); setSelectedResult(null); setAttachmentsOpen(false); setAttachmentScreen('menu') }}>{playerTypeEmoji[item.result_type_key] || '♠'} {item.animal_name_ja} · {item.completed_at?.slice(0,10) || '日付不明'}</button>)}
       </> : attachmentScreen === 'results' ? <>
         {backButton('menu')}
         <div style={{ fontSize: 12, color: '#aaa', margin: '8px 0 10px' }}>戦績の種類を選択</div>
@@ -667,9 +681,40 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       </> : <>
         {backButton('results')}
         <div style={{ fontSize: 12, color: '#aaa', margin: '8px 0 10px' }}>保存済みの{attachmentScreen === 'tournament' ? 'トーナメント' : attachmentScreen === 'amusement' ? 'アミューズリング' : 'キャッシュゲーム'}戦績を選択</div>
-        {resultsLoading ? <p style={{ fontSize: 12 }}>読み込み中...</p> : availableResults.filter(result => result.type === attachmentScreen).length === 0 ? <p style={{ fontSize: 12, color: '#888' }}>この種類の戦績はありません。</p> : availableResults.filter(result => result.type === attachmentScreen).map(result => <button key={result.type + result.id} type="button" style={optionStyle} onClick={() => { setSelectedResult(result); setAttachmentsOpen(false); setAttachmentScreen('menu') }}>{result.label}</button>)}
+        {resultsLoading ? <p style={{ fontSize: 12 }}>読み込み中...</p> : availableResults.filter(result => result.type === attachmentScreen).length === 0 ? <p style={{ fontSize: 12, color: '#888' }}>この種類の戦績はありません。</p> : availableResults.filter(result => result.type === attachmentScreen).map(result => <button key={result.type + result.id} type="button" style={optionStyle} onClick={() => { setSelectedResult(result); setSelectedDiagnosis(null); setAttachmentsOpen(false); setAttachmentScreen('menu') }}><span style={{ display: 'block', fontWeight: 700 }}>{result.label}</span><span style={{ display: 'block', color: '#aaa', fontSize: 12, marginTop: 4 }}>プレイ日：{result.playedAt ? new Date(result.playedAt.slice(0,10) + 'T00:00:00').toLocaleDateString('ja-JP') : '日付不明'}</span></button>)}
       </>}
     </div>
+  }
+
+
+  const loadDiagnoses = async () => {
+    setAttachmentBusy(true)
+    const { data, error } = await supabase.rpc('get_my_latest_player_type_v2')
+    if (error) { setMessage(`診断取得エラー：${error.message}`); setAttachmentBusy(false); return }
+    setDiagnoses((data || []).map((item: any) => ({ result_id: String(item.result_id), animal_name_ja: String(item.animal_name_ja || ''), catchphrase: String(item.catchphrase || ''), result_type_key: String(item.result_type_key || ''), completed_at: String(item.completed_at || '') })))
+    setAttachmentScreen('diagnosis')
+    setAttachmentBusy(false)
+  }
+
+  const loadStyleSnapshot = async () => {
+    setAttachmentBusy(true)
+    const { data, error } = await supabase.rpc('get_my_post_style_snapshot')
+    setAttachmentBusy(false)
+    if (error) { setMessage(`他者評価取得エラー：${error.message}（SQLの適用を確認してください）`); return }
+    const row = Array.isArray(data) ? data[0] : data
+    if (!row || Number(row.count) < 3) { setMessage('他者評価は3人以上集まると添付できます。'); return }
+    setStyleSnapshot({ count: Number(row.count), aggression: Number(row.aggression), looseness: Number(row.looseness), captured_at: new Date().toISOString() })
+    setAttachmentsOpen(false)
+    setMessage('')
+  }
+
+  const chooseImages = (files: FileList | null) => {
+    if (!files) return
+    const selected = Array.from(files)
+    if (selected.some(file => !['image/jpeg','image/png','image/webp'].includes(file.type) || file.size > 5 * 1024 * 1024)) { setMessage('画像はJPEG・PNG・WebP、各5MB以内にしてください。'); return }
+    if (imageFiles.length + selected.length > 4) { setMessage('画像は1投稿につき4枚までです。'); return }
+    setImageFiles(previous => [...previous, ...selected])
+    setMessage('')
   }
 
   const handlePost = async () => {
@@ -678,7 +723,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
       content.trim()
 
-    if (!trimmedContent && !selectedResult) {
+    if (!trimmedContent && !selectedResult && !selectedDiagnosis && !styleSnapshot && imageFiles.length === 0) {
 
       setMessage(
 
@@ -712,6 +757,19 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
     setMessage('投稿中...')
 
+    const uploadedPaths: string[] = []
+    const uploadedUrls: string[] = []
+    for (const file of imageFiles) {
+      const ext = file.type === 'image/png' ? 'png' : file.type === 'image/webp' ? 'webp' : 'jpg'
+      const path = `${user.id}/${crypto.randomUUID()}.${ext}`
+      const { error: uploadError } = await supabase.storage.from('post-images').upload(path, file, { contentType: file.type, upsert: false })
+      if (uploadError) {
+        await Promise.all(uploadedPaths.map(path => supabase.storage.from('post-images').remove([path])))
+        setMessage(`画像アップロード失敗：${uploadError.message}`); setIsPosting(false); return
+      }
+      uploadedPaths.push(path)
+      uploadedUrls.push(supabase.storage.from('post-images').getPublicUrl(path).data.publicUrl)
+    }
     const { error } = await supabase
 
       .from('posts')
@@ -721,12 +779,16 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         user_id: user.id,
 
         content: trimmedContent,
-        ...(selectedResult ? { post_type: 'result', result_type: selectedResult.type, result_id: selectedResult.id } : {}),
+        post_type: selectedResult || selectedDiagnosis ? 'result' : 'normal',
+        result_type: selectedResult?.type || (selectedDiagnosis ? 'player_type' : null),
+        result_id: selectedResult?.id || selectedDiagnosis?.result_id || null,
+        image_urls: uploadedUrls,
+        style_snapshot: styleSnapshot,
 
       })
 
     if (error) {
-
+      if (uploadedPaths.length) await supabase.storage.from('post-images').remove(uploadedPaths)
       console.error(error)
 
       setMessage(
@@ -743,6 +805,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
     setContent('')
     setSelectedResult(null)
+    setSelectedDiagnosis(null)
+    setStyleSnapshot(null)
+    setImageFiles([])
     setComposeOpen(false)
     setAttachmentsOpen(false)
     setAttachmentScreen('menu')
@@ -1933,6 +1998,29 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
 
 
+  const renderStyleSnapshot = (snapshot: { count: number; aggression: number; looseness: number; captured_at: string }) => <div style={{ padding: 16, border: '1px solid #555', borderRadius: 12, margin: '8px 0', background: '#171717' }}><strong>♙ 他者評価 · プレイスタイル</strong><div style={{ fontSize: 13, color: '#bbb', marginTop: 8 }}>匿名評価 {snapshot.count}人の集計（投稿時点）</div><div style={{ marginTop: 8 }}>攻撃性 {snapshot.aggression.toFixed(1)} / 100　·　ルース度 {snapshot.looseness.toFixed(1)} / 100</div></div>
+
+  const renderSelectedResultPreview = () => {
+    if (!selectedResult && !selectedDiagnosis && !styleSnapshot && imageFiles.length === 0) return null
+    const previewPost = {
+      resultData: selectedResult?.type === 'tournament' ? selectedResult?.data : null,
+      amusementResultData: selectedResult?.type === 'amusement' ? selectedResult?.data : null,
+      cashResultData: selectedResult?.type === 'cash' ? selectedResult?.data : null,
+    } as Post
+    return <div style={{ marginTop: 12 }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 7 }}>
+        <span style={{ fontSize: 12, color: '#aaa', fontWeight: 700 }}>添付プレビュー（投稿時の表示）</span>
+        <button type="button" onClick={() => { setSelectedResult(null); setSelectedDiagnosis(null); setStyleSnapshot(null); setImageFiles([]) }} aria-label="添付を解除" style={{ width: 'auto', padding: '4px 9px', background: '#292929', border: '1px solid #444', borderRadius: 8, color: '#ddd', fontSize: 12 }}>× 解除</button>
+      </div>
+      {selectedResult?.type === 'tournament' && renderTournamentResultCard(previewPost)}
+      {selectedResult?.type === 'amusement' && renderAmusementResultCard(previewPost)}
+      {selectedResult?.type === 'cash' && renderCashResultCard(previewPost)}
+      {selectedDiagnosis && <div style={{ border: '1px solid #92733a', borderRadius: 12, padding: 16, color: '#f6e5bf' }}>♧ 自己診断：{playerTypeEmoji[selectedDiagnosis.result_type_key]} {selectedDiagnosis.animal_name_ja}<div style={{ fontSize: 12 }}>{selectedDiagnosis.catchphrase}</div></div>}
+      {styleSnapshot && renderStyleSnapshot(styleSnapshot)}
+      {imagePreviews.length > 0 && <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,minmax(0,1fr))', gap: 8, marginTop: 8 }}>{imagePreviews.map((url, i) => <div key={url} style={{ position: 'relative' }}><img src={url} alt={`添付画像${i+1}`} style={{ width: '100%', maxHeight: 220, objectFit: 'cover', borderRadius: 8 }}/><button type="button" onClick={() => setImageFiles(files => files.filter((_, index) => index !== i))} style={{ position: 'absolute', right: 4, top: 4, width: 'auto', background: '#222', color: '#fff' }}>×</button></div>)}</div>}
+    </div>
+  }
+
   return (
 
     <main className={profileUserId ? undefined : "app"}>
@@ -2056,7 +2144,6 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               <button type="button" onClick={toggleAttachments} style={{ width: 'auto', padding: '6px 9px', border: '1px solid #333', background: '#181818', borderRadius: 9, color: '#ccc', fontSize: 12 }}>＋ 添付 {attachmentsOpen ? '⌃' : '⌄'}</button>
-              {selectedResult && <button type="button" onClick={() => setSelectedResult(null)} style={{ width: 'auto', padding: '6px 8px', color: '#eee', background: '#222', fontSize: 12, borderRadius: 8 }}>✓ {selectedResult.label} ×</button>}
             </div>
             <span
 
@@ -2090,7 +2177,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
                 isPosting ||
 
-                (!content.trim() && !selectedResult)
+                (!content.trim() && !selectedResult && !selectedDiagnosis && !styleSnapshot && imageFiles.length === 0)
 
               }
 
@@ -2130,7 +2217,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
           </div>
 
+          <input ref={imageInputRef} type="file" accept="image/jpeg,image/png,image/webp" multiple hidden onChange={e => { chooseImages(e.target.files); e.target.value = '' }} />
           {attachmentsOpen && renderAttachmentPicker()}
+          {renderSelectedResultPreview()}
         </section>
 
         {/* タイムライン切り替え */}
@@ -2370,10 +2459,10 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           <div role="dialog" aria-modal="true" aria-label="新しい投稿" style={{ width: '100%', maxWidth: 560, background: '#111', border: '1px solid #333', borderRadius: 18, padding: 20, color: '#fff' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}><strong>新しい投稿</strong><button type="button" onClick={() => setComposeOpen(false)} style={{ width: 'auto', background: 'transparent', color: '#ccc', fontSize: 22 }}>×</button></div>
             <textarea autoFocus placeholder="ポーカーについて何を投稿する？" maxLength={500} value={content} onChange={e => setContent(e.target.value)} style={{ width: '100%', minHeight: 180, padding: 8, background: 'transparent', color: '#fff', border: 'none', fontSize: 17, resize: 'vertical' }}/>
-            {selectedResult && <div style={{ marginBottom: 10, fontSize: 12 }}>添付：{selectedResult.label} <button type="button" onClick={() => setSelectedResult(null)} style={{ width: 'auto' }}>×</button></div>}
             <button type="button" onClick={toggleAttachments} style={{ width: 'auto', background: '#242424', color: '#fff', borderRadius: 8, padding: 9 }}>＋ 添付</button>
             {attachmentsOpen && renderAttachmentPicker()}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 18 }}><span style={{ color: '#888', fontSize: 12 }}>{content.length}/500</span><button type="button" disabled={isPosting || (!content.trim() && !selectedResult)} onClick={handlePost} style={{ width: 'auto', borderRadius: 99, background: '#fff', color: '#000', padding: '10px 24px', fontWeight: 800 }}>{isPosting ? '投稿中...' : '投稿する'}</button></div>
+            {renderSelectedResultPreview()}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 18 }}><span style={{ color: '#888', fontSize: 12 }}>{content.length}/500</span><button type="button" disabled={isPosting || (!content.trim() && !selectedResult && !selectedDiagnosis && !styleSnapshot && imageFiles.length === 0)} onClick={handlePost} style={{ width: 'auto', borderRadius: 99, background: '#fff', color: '#000', padding: '10px 24px', fontWeight: 800 }}>{isPosting ? '投稿中...' : '投稿する'}</button></div>
             {message && <div style={{ color: '#ccc', marginTop: 10, fontSize: 12 }}>{message}</div>}
           </div>
         </div>}
@@ -2965,6 +3054,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
                       </button>
                     )}
 
+                    {post.style_snapshot && renderStyleSnapshot(post.style_snapshot)}
+                    {Array.isArray(post.image_urls) && post.image_urls.length > 0 && <div style={{ display: 'grid', gridTemplateColumns: post.image_urls.length > 1 ? 'repeat(2,minmax(0,1fr))' : '1fr', gap: 5, margin: '10px 0 14px' }}>{post.image_urls.map((url, i) => <a key={`${post.id}-${i}`} href={url} target="_blank" rel="noopener noreferrer"><img src={url} alt={`投稿画像${i+1}`} loading="lazy" style={{ width: '100%', maxHeight: 460, objectFit: 'cover', borderRadius: 10 }}/></a>)}</div>}
                     {/* アクション */}
 
                       <div
