@@ -1,3 +1,4 @@
+import Timeline from './Timeline'
         import { useEffect, useState } from 'react'
         import {
           useNavigate,
@@ -868,14 +869,8 @@
                   {activityLoading ? <p style={{ color: '#888', textAlign: 'center' }}>読み込み中...</p> : activityError ? <p style={{ color: '#ff9999' }}>取得エラー：{activityError}</p> : (
                     <div style={{ display: 'grid', gap: 12 }}>
                       {activityTab === 'posts' ? (
-                        playerPosts.length === 0 ? <p style={{ color: '#888', textAlign: 'center' }}>まだ投稿がありません</p> : playerPosts.map(post => (
-                          <button key={post.id} type="button" onClick={() => navigate(`/post/${post.id}`)} style={{ padding: 16, background: '#101010', border: '1px solid #292929', borderRadius: 14, textAlign: 'left', color: '#fff', width: '100%' }}>
-                            <div style={{ fontSize: 11, color: '#888', marginBottom: 10 }}>{new Date(post.created_at).toLocaleString('ja-JP')}{post.post_type === 'result' ? ' ・ 実戦記録' : ''}</div>
-                            <div style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', lineHeight: 1.7, fontSize: 14 }}>{post.content || (post.post_type === 'result' ? '実戦記録の投稿' : '')}</div>
-                            <div style={{ fontSize: 11, color: '#999', marginTop: 12 }}>投稿を開く →</div>
-                          </button>
-                        ))
-                      ) : (
+                      <Timeline profileUserId={id} />
+                    ) : (
                         playerComments.length === 0 ? <p style={{ color: '#888', textAlign: 'center' }}>まだコメントがありません</p> : playerComments.map(comment => (
                           <button key={comment.id} type="button" onClick={() => navigate(`/post/${comment.post_id}`)} style={{ padding: 16, background: '#101010', border: '1px solid #292929', borderRadius: 14, textAlign: 'left', color: '#fff', width: '100%' }}>
                             <div style={{ fontSize: 11, color: '#888', marginBottom: 10 }}>{new Date(comment.created_at).toLocaleString('ja-JP')}</div>

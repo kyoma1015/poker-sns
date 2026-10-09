@@ -113,7 +113,7 @@ type Post = {
 
 type TimelineMode = 'following' | 'all'
 
-function Timeline() {
+function Timeline({ profileUserId }: { profileUserId?: string }) {
 
   const navigate = useNavigate()
   useEffect(() => {
@@ -193,19 +193,8 @@ function Timeline() {
 
     setFollowingIds(loadedFollowingIds)
 
-    const { data: postData, error: postError } =
-
-      await supabase
-
-        .from('posts')
-
-        .select('*')
-
-        .order('created_at', {
-
-          ascending: false,
-
-        })
+    const postQuery = supabase.from('posts').select('*').order('created_at', { ascending: false })
+    const { data: postData, error: postError } = await (profileUserId ? postQuery.eq('user_id', profileUserId) : postQuery)
 
     if (postError) {
 
@@ -612,7 +601,7 @@ function Timeline() {
 
     loadPosts()
 
-  }, [])
+  }, [profileUserId])
 
   const handlePost = async () => {
 
@@ -886,7 +875,7 @@ function Timeline() {
 
   const visiblePosts =
 
-    timelineMode === 'all'
+    profileUserId || timelineMode === 'all'
 
       ? posts
 
@@ -1872,11 +1861,11 @@ function Timeline() {
 
   return (
 
-    <main className="app">
+    <main className={profileUserId ? undefined : "app"}>
 
       <div
 
-        className="card"
+        className={profileUserId ? undefined : "card"}
 
         style={{
 
@@ -1886,7 +1875,7 @@ function Timeline() {
 
       >
 
-        {/* ホームのコンパクトなツール導線。スクロール時は投稿と一緒に隠れる */}
+        {!profileUserId && <>{/* ホームのコンパクトなツール導線。スクロール時は投稿と一緒に隠れる */}
         <section style={{ padding: '12px 0 13px', borderBottom: '1px solid #242424' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 9 }}>
             <strong style={{ fontSize: 13 }}>♠ ポーカーツール</strong>
@@ -2297,6 +2286,7 @@ function Timeline() {
 
         )}
 
+        </>}
         {/* 投稿一覧 */}
 
         <section
