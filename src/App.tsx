@@ -35,6 +35,7 @@ import TDA from './TDA'
 import PlayerTypeDiagnosis from './PlayerTypeDiagnosis'
 import AdminReports from './AdminReports'
 import Settings from './Settings'
+import PokerTools from './PokerTools'
 
 function Top() {
   const navigate = useNavigate()
@@ -94,6 +95,7 @@ const menuGroups = [
     ['♤', 'マイプロフィール', '/profile'], ['＋', '投稿', '/timeline?compose=1'],
   ] },
   { title: 'ポーカー学習', links: [
+    ['▦', 'ポーカーツール一覧', '/tools'],
     ['♠', 'TDAクイズ', '/tda'], ['▤', 'TDA検索', '/tda'],
   ] },
   { title: '実績・診断', links: [
@@ -175,6 +177,7 @@ function AppLayout() {
         <Route path="/home" element={<Navigate to="/timeline" replace />} />
 
         <Route path="/timeline" element={<Timeline />} />
+        <Route path="/tools" element={<PokerTools />} />
         <Route path="/admin/reports" element={<AdminReports />} />
 
         <Route path="/post/:id" element={<PostDetail />} />
