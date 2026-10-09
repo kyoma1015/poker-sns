@@ -164,12 +164,11 @@ function AppLayout() {
     location.pathname === '/' ||
     location.pathname === '/login' ||
     location.pathname === '/signup' ||
-    location.pathname === '/player-type' ||
     location.pathname === '/admin/reports'
 
   return (
     <>
-      {!hideBottomNav && <GlobalHeader />}
+      {!['/', '/login', '/signup', '/admin/reports'].includes(location.pathname) && <GlobalHeader />}
       <Routes>
         <Route path="/" element={<Top />} />
         <Route path="/login" element={<Login />} />
