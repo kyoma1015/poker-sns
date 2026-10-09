@@ -469,6 +469,8 @@ function PlayerTypeDiagnosis() {
               36種類の動物タイプから、最も近いプレイヤータイプを診断します。
             </p>
 
+            <p style={{ color: '#c9b88d', fontSize: 13, lineHeight: 1.7, margin: '16px 0' }}>この診断はプレイヤーの強さや技術の優劣を評価するものではなく、プレイスタイルの特徴や傾向を表すものです。</p>
+
             <div className="ptd-time">
               <strong>全50問</strong>
               <span>精度を重視した固定50問の診断です</span>
@@ -639,9 +641,12 @@ function PlayerTypeDiagnosis() {
     ctx.stroke()
     ctx.fillStyle = '#f1d59a'
     ctx.font = 'bold 28px sans-serif'
-    ctx.fillText('あなたはどのタイプ？', 540, 1393)
+    ctx.fillText('あなたはどのタイプ？', 540, 1380)
     ctx.font = '22px sans-serif'
-    ctx.fillText('全50問・36種類の動物タイプ｜Poker IDで無料診断', 540, 1428)
+    ctx.fillText('全50問・36種類の動物タイプ｜Poker IDで無料診断', 540, 1411)
+    ctx.font = '19px sans-serif'
+    ctx.fillStyle = '#d8c8a4'
+    ctx.fillText('※強さや技術の優劣ではなく、プレイスタイルの傾向を表します。', 540, 1440, 890)
 
     return await new Promise<Blob>((resolve, reject) => {
       canvas.toBlob((value) => value
@@ -701,6 +706,8 @@ function PlayerTypeDiagnosis() {
             <p className="ptd-result-label">{isOwner === false ? "このプレイヤーのタイプ" : "あなたのプレイヤータイプは"}</p>
             <h1>{result.animal_name_ja}</h1>
             <div className="ptd-catchphrase">{result.catchphrase}</div>
+
+            <p style={{ color: '#c9b88d', fontSize: 12, lineHeight: 1.7, margin: '14px 0' }}>この診断はプレイヤーの強さや技術の優劣を評価するものではなく、プレイスタイルの特徴や傾向を表すものです。</p>
 
             <div className="ptd-result-meta">
               <span>{result.core_answer_count}問回答</span>
@@ -769,6 +776,7 @@ function PlayerTypeDiagnosis() {
               <div className="ptd-share-area">
                 <section className="ptd-share-panel" aria-label="診断結果をシェア">
                   <h2 className="ptd-share-heading">診断結果をシェア</h2>
+                  <p style={{ fontSize: 12, color: '#b6a77e', lineHeight: 1.6 }}>※プレイヤータイプは強さや技術の優劣を示すものではありません。</p>
                   <button className="ptd-share-x" type="button" onClick={shareToX}>
                     <span aria-hidden="true">𝕏</span> Xでシェア
                   </button>
@@ -870,6 +878,7 @@ function PlayerTypeDiagnosis() {
 
         <p className="ptd-quiz-foot">
           正解はありません。一番自分に近いものを選んでください。
+          <span style={{ display: 'block', marginTop: 8 }}>※プレイヤータイプは強さや技術の優劣を示すものではありません。</span>
         </p>
       </div>
     </main>

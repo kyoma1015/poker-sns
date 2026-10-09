@@ -2880,6 +2880,7 @@ function Timeline() {
                             ) : (playerTypeEmoji[post.playerTypeData?.result_type_key ?? ''] ?? '♠️')}
                           </div>
                         </div>
+                        <div style={{ marginTop: 12, color: '#b9a781', fontSize: 11, lineHeight: 1.6 }}>※プレイヤータイプは強さや技術の優劣を示すものではありません。</div>
                         <div style={{ marginTop: 14, fontSize: 12, color: '#d4b777' }}>診断結果を見る →</div>
                       </button>
                     )}

@@ -855,6 +855,7 @@
                   <div style={{ marginTop: '5px', color: '#666', fontSize: '12px' }}>
                     50問の診断から見たこのプレイヤーのスタイル
                   </div>
+                  <div style={{ marginTop: 7, color: '#a99a79', fontSize: 11, lineHeight: 1.6 }}>※プレイヤータイプは強さや技術の優劣を示すものではありません。</div>
 
                   <button
                     type="button"
