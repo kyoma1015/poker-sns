@@ -116,6 +116,12 @@ type TimelineMode = 'following' | 'all'
 function Timeline() {
 
   const navigate = useNavigate()
+  useEffect(() => {
+    if (window.location.search.includes('compose=1')) {
+      const timer = window.setTimeout(() => document.getElementById('poker-id-post-composer')?.focus(), 80)
+      return () => window.clearTimeout(timer)
+    }
+  }, [])
 
   const [posts, setPosts] = useState<Post[]>([])
 
@@ -1880,169 +1886,26 @@ function Timeline() {
 
       >
 
-        {/* ヘッダー */}
-
-        <header
-
-          style={{
-
-            position: 'sticky',
-
-            top: 0,
-
-            zIndex: 20,
-
-            margin: '0 -20px',
-
-            padding: '15px 20px 12px',
-
-            background:
-
-              'rgba(0, 0, 0, 0.92)',
-
-            borderBottom:
-
-              '1px solid #242424',
-
-            backdropFilter:
-
-              'blur(14px)',
-
-            WebkitBackdropFilter:
-
-              'blur(14px)',
-
-          }}
-
-        >
-
-          <div
-
-            style={{
-
-              display: 'flex',
-
-              alignItems: 'center',
-
-              justifyContent:
-
-                'space-between',
-
-            }}
-
-          >
-
-            <div
-
-              style={{
-
-                display: 'flex',
-
-                alignItems: 'center',
-
-                gap: '9px',
-
-              }}
-
-            >
-
-              <div
-
-                style={{
-
-                  width: '32px',
-
-                  height: '32px',
-
-                  borderRadius: '9px',
-
-                  background: '#fff',
-
-                  color: '#000',
-
-                  display: 'flex',
-
-                  alignItems: 'center',
-
-                  justifyContent:
-
-                    'center',
-
-                  fontSize: '20px',
-
-                  fontWeight: 900,
-
-                }}
-
-              >
-
-                ♠
-
-              </div>
-
-              <span
-
-                style={{
-
-                  fontSize: '21px',
-
-                  fontWeight: 800,
-
-                  letterSpacing:
-
-                    '-0.7px',
-
-                }}
-
-              >
-
-                Poker ID
-
-              </span>
-
-            </div>
-
-            <button
-
-              onClick={() =>
-
-                navigate('/dm')
-
-              }
-
-              aria-label="メッセージ"
-
-              style={{
-
-                width: '38px',
-
-                height: '38px',
-
-                padding: 0,
-
-                borderRadius: '50%',
-
-                background: '#111',
-
-                color: '#fff',
-
-                border:
-
-                  '1px solid #292929',
-
-                fontSize: '18px',
-
-              }}
-
-            >
-
-              ✉
-
-            </button>
-
+        {/* ホームのコンパクトなツール導線。スクロール時は投稿と一緒に隠れる */}
+        <section style={{ padding: '12px 0 13px', borderBottom: '1px solid #242424' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 9 }}>
+            <strong style={{ fontSize: 13 }}>♠ ポーカーツール</strong>
+            <button type="button" onClick={() => window.dispatchEvent(new Event('poker-id-open-menu'))} style={{ width: 'auto', padding: '2px 0', background: 'transparent', color: '#999', fontSize: 11 }}>すべて見る ›</button>
           </div>
-
-        </header>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 7 }}>
+            {[
+              { label: 'TDAクイズ', sub: '裁定を学ぶ', icon: '♠', url: '/tda' },
+              { label: 'TDA検索', sub: 'ルールを調べる', icon: '⌕', url: '/tda' },
+              { label: '実戦記録', sub: '今日の成績', icon: '▥', url: '/profile' },
+            ].map((tool) => (
+              <button key={tool.label} type="button" onClick={() => navigate(tool.url)} style={{ minWidth: 0, padding: '11px 3px 9px', border: '1px solid #2c2c2c', borderRadius: 12, background: '#151515', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+                <span style={{ fontSize: 21, lineHeight: 1.1 }}>{tool.icon}</span>
+                <span style={{ fontSize: 12, fontWeight: 800, whiteSpace: 'nowrap' }}>{tool.label}</span>
+                <span style={{ fontSize: 10, color: '#999', whiteSpace: 'nowrap' }}>{tool.sub}</span>
+              </button>
+            ))}
+          </div>
+        </section>
 
         {/* タイムライン切り替え */}
 
@@ -2264,6 +2127,7 @@ function Timeline() {
 
           <textarea
 
+            id="poker-id-post-composer"
             placeholder="いま何してる？ ポーカーの話をしよう。"
 
             value={content}

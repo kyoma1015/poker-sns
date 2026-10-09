@@ -60,25 +60,6 @@ function BottomNav() {
       </button>
 
       <button
-        className={`bottom-nav-item ${
-          isActive('/tda') ? 'active' : ''
-        }`}
-        onClick={() => navigate('/tda')}
-      >
-        <span
-          className="bottom-nav-icon"
-          style={{
-            fontSize: '16px',
-            fontWeight: 800,
-            letterSpacing: '-1px',
-          }}
-        >
-          TDA
-        </span>
-        <span>ルール</span>
-      </button>
-
-      <button
         className="bottom-nav-item"
         onClick={() => navigate('/timeline')}
       >

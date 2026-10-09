@@ -87,6 +87,73 @@ function Top() {
   )
 }
 
+const menuGroups = [
+  { title: 'SNS・コミュニティ', links: [
+    ['⌂', 'ホーム', '/timeline'], ['⌕', 'プレイヤー検索', '/search'],
+    ['♡', '通知', '/notifications'], ['✉', 'DM', '/dm'],
+    ['♤', 'マイプロフィール', '/profile'], ['＋', '投稿', '/timeline?compose=1'],
+  ] },
+  { title: 'ポーカー学習', links: [
+    ['♠', 'TDAクイズ', '/tda'], ['▤', 'TDA検索', '/tda'],
+  ] },
+  { title: '実績・診断', links: [
+    ['▥', '実戦記録', '/profile'], ['🏆', 'トーナメント記録', '/profile/results/new'],
+    ['♣', 'リング記録', '/profile/amusement-ring/new'], ['♦', 'キャッシュ記録', '/profile/cash-game/new'],
+    ['🐾', '動物タイプ診断', '/player-type'], ['✎', 'プロフィール編集', '/profile/edit'],
+  ] },
+  { title: 'アカウント', links: [['⚙', '設定', '/settings']] },
+]
+
+function GlobalHeader() {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState('')
+  const [loggingOut, setLoggingOut] = useState(false)
+  const [error, setError] = useState('')
+  useEffect(() => { setOpen(false); setQuery(''); setError('') }, [location.pathname, location.search])
+  useEffect(() => {
+    const show = () => setOpen(true)
+    window.addEventListener('poker-id-open-menu', show)
+    return () => window.removeEventListener('poker-id-open-menu', show)
+  }, [])
+  const go = (url: string) => { setOpen(false); navigate(url) }
+  const logout = async () => {
+    if (!window.confirm('ログアウトしますか？')) return
+    setLoggingOut(true); setError('')
+    const { error: signOutError } = await supabase.auth.signOut()
+    setLoggingOut(false)
+    if (signOutError) { setError(`ログアウトに失敗しました：${signOutError.message}`); return }
+    setOpen(false); navigate('/login', { replace: true })
+  }
+  return (
+    <>
+      <header style={{ position: 'sticky', top: 0, zIndex: 70, background: 'rgba(0,0,0,.96)', borderBottom: '1px solid #242424', backdropFilter: 'blur(12px)' }}>
+        <div style={{ maxWidth: 600, margin: 'auto', padding: '10px 18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <button type="button" onClick={() => go('/timeline')} style={{ width: 'auto', background: 'transparent', color: '#fff', fontWeight: 850, fontSize: 21, padding: 0, display: 'flex', alignItems: 'center', gap: 8 }}><span style={{ background: '#fff', color: '#000', borderRadius: 8, padding: '3px 8px' }}>♠</span> Poker ID</button>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button type="button" aria-label="DM" onClick={() => go('/dm')} style={{ width: 38, height: 38, padding: 0, borderRadius: '50%', background: '#151515', border: '1px solid #303030', color: '#fff', fontSize: 19 }}>✉</button>
+            <button type="button" aria-label="全機能メニュー" aria-expanded={open} onClick={() => setOpen(!open)} style={{ width: 38, height: 38, padding: 0, borderRadius: '50%', background: '#151515', border: '1px solid #303030', color: '#fff', fontSize: 22 }}>{open ? '×' : '☰'}</button>
+          </div>
+        </div>
+      </header>
+      {open && <div role="presentation" onClick={() => setOpen(false)} style={{ position: 'fixed', inset: 0, zIndex: 80, background: 'rgba(0,0,0,.7)' }}>
+        <div role="dialog" aria-label="すべての機能" aria-modal="true" onClick={(e) => e.stopPropagation()} style={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 'min(100%, 390px)', background: '#101010', borderLeft: '1px solid #333', padding: '20px 16px 95px', overflowY: 'auto', color: '#fff', boxSizing: 'border-box' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}><strong style={{ fontSize: 20 }}>すべての機能</strong><button type="button" onClick={() => setOpen(false)} aria-label="閉じる" style={{ width: 36, background: '#222', color: '#fff' }}>×</button></div>
+          <input aria-label="機能を検索" placeholder="機能を検索..." value={query} onChange={e => setQuery(e.target.value)} style={{ width: '100%', boxSizing: 'border-box', padding: 12, background: '#1c1c1c', color: '#fff', border: '1px solid #383838', borderRadius: 10, marginBottom: 16 }} />
+          {menuGroups.map(group => {
+            const links = group.links.filter(link => link[1].toLowerCase().includes(query.trim().toLowerCase()))
+            if (!links.length) return null
+            return <section key={group.title} style={{ marginBottom: 22 }}><div style={{ fontSize: 12, color: '#aaa', marginBottom: 9 }}>{group.title}</div><div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 8 }}>{links.map(([icon, label, url]) => <button type="button" key={label} onClick={() => go(url)} style={{ minWidth: 0, padding: '13px 3px', borderRadius: 11, border: '1px solid #303030', background: '#1b1b1b', color: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 7 }}><span style={{ fontSize: 21 }}>{icon}</span><span style={{ fontSize: 11, fontWeight: 700 }}>{label}</span></button>)}</div></section>
+          })}
+          {'ログアウト'.includes(query.trim()) && <button type="button" disabled={loggingOut} onClick={logout} style={{ width: '100%', padding: 13, background: '#241717', border: '1px solid #643535', color: '#ffcccc', borderRadius: 10 }}>{loggingOut ? 'ログアウト中...' : '⇥ ログアウト'}</button>}
+          {error && <p role="alert" style={{ color: '#ffaaaa', fontSize: 12 }}>{error}</p>}
+        </div>
+      </div>}
+    </>
+  )
+}
+
 function AppLayout() {
   const location = useLocation()
 
@@ -99,6 +166,7 @@ function AppLayout() {
 
   return (
     <>
+      {!hideBottomNav && <GlobalHeader />}
       <Routes>
         <Route path="/" element={<Top />} />
         <Route path="/login" element={<Login />} />
