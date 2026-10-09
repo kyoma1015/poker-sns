@@ -1890,7 +1890,7 @@ function Timeline() {
         <section style={{ padding: '12px 0 13px', borderBottom: '1px solid #242424' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 9 }}>
             <strong style={{ fontSize: 13 }}>♠ ポーカーツール</strong>
-            <button type="button" onClick={() => window.dispatchEvent(new Event('poker-id-open-menu'))} style={{ width: 'auto', padding: '2px 0', background: 'transparent', color: '#999', fontSize: 11 }}>すべて見る ›</button>
+            <button type="button" onClick={() => navigate('/tools')} style={{ width: 'auto', padding: '2px 0', background: 'transparent', color: '#bbb', fontSize: 11 }}>すべて見る ›</button>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 7 }}>
             {[
@@ -1905,6 +1905,9 @@ function Timeline() {
               </button>
             ))}
           </div>
+          <button type="button" onClick={() => navigate('/tools')} style={{ width: '100%', marginTop: 11, padding: '7px 2px 1px', background: 'transparent', color: '#aaa', fontSize: 11, textAlign: 'center', border: 0, lineHeight: 1.5 }}>
+            ✦ ポットオッズ計算など、便利なツールをもっと見る →
+          </button>
         </section>
 
         {/* タイムライン切り替え */}
