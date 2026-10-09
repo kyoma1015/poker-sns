@@ -128,6 +128,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const [content, setContent] = useState('')
   const [composeOpen, setComposeOpen] = useState(false)
   const [attachmentsOpen, setAttachmentsOpen] = useState(false)
+  const [attachmentScreen, setAttachmentScreen] = useState<'menu' | 'results' | 'tournament' | 'amusement' | 'cash'>('menu')
   const [selectedResult, setSelectedResult] = useState<{id:string; type:'tournament'|'amusement'|'cash'; label:string}|null>(null)
   const [availableResults, setAvailableResults] = useState<{id:string; type:'tournament'|'amusement'|'cash'; label:string}[]>([])
   const [resultsLoading, setResultsLoading] = useState(false)
@@ -637,6 +638,40 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     setResultsLoading(false)
   }
 
+  const toggleAttachments = () => {
+    setAttachmentsOpen(open => !open)
+    setAttachmentScreen('menu')
+  }
+
+  const chooseResultCategory = (type: 'tournament' | 'amusement' | 'cash') => {
+    setAttachmentScreen(type)
+    void loadShareableResults()
+  }
+
+  const renderAttachmentPicker = () => {
+    const optionStyle = { display: 'block', width: '100%', padding: '11px 12px', textAlign: 'left' as const, background: '#202020', color: '#eee', borderRadius: 9, marginBottom: 7, fontSize: 13, border: '1px solid #333' }
+    const backButton = (target: 'menu' | 'results') => <button type="button" onClick={() => setAttachmentScreen(target)} style={{ width: 'auto', background: 'transparent', color: '#bbb', padding: '5px 0', fontSize: 12 }}>‹ 戻る</button>
+    return <div style={{ marginTop: 12, padding: 12, background: '#151515', border: '1px solid #333', borderRadius: 12, maxHeight: 320, overflowY: 'auto' }}>
+      {attachmentScreen === 'menu' ? <>
+        <div style={{ fontSize: 12, color: '#aaa', marginBottom: 10 }}>添付するものを選択</div>
+        <button type="button" style={optionStyle} onClick={() => setMessage('画像添付は次の実装で対応します。')}>▧　画像を添付 <span style={{ color: '#888', fontSize: 11 }}>（準備中）</span></button>
+        <button type="button" style={optionStyle} onClick={() => setMessage('自己診断の添付は次の実装で対応します。')}>♧　自己診断を添付 <span style={{ color: '#888', fontSize: 11 }}>（準備中）</span></button>
+        <button type="button" style={optionStyle} onClick={() => setMessage('他者評価の添付は次の実装で対応します。評価者3人以上で共有可能にする予定です。')}>♙　他者評価を添付 <span style={{ color: '#888', fontSize: 11 }}>（準備中）</span></button>
+        <button type="button" style={optionStyle} onClick={() => setAttachmentScreen('results')}>♠　戦績を添付　›</button>
+      </> : attachmentScreen === 'results' ? <>
+        {backButton('menu')}
+        <div style={{ fontSize: 12, color: '#aaa', margin: '8px 0 10px' }}>戦績の種類を選択</div>
+        <button type="button" style={optionStyle} onClick={() => chooseResultCategory('tournament')}>🏆　トーナメント戦績　›</button>
+        <button type="button" style={optionStyle} onClick={() => chooseResultCategory('amusement')}>♠　アミューズリング戦績　›</button>
+        <button type="button" style={optionStyle} onClick={() => chooseResultCategory('cash')}>♦　キャッシュゲーム戦績　›</button>
+      </> : <>
+        {backButton('results')}
+        <div style={{ fontSize: 12, color: '#aaa', margin: '8px 0 10px' }}>保存済みの{attachmentScreen === 'tournament' ? 'トーナメント' : attachmentScreen === 'amusement' ? 'アミューズリング' : 'キャッシュゲーム'}戦績を選択</div>
+        {resultsLoading ? <p style={{ fontSize: 12 }}>読み込み中...</p> : availableResults.filter(result => result.type === attachmentScreen).length === 0 ? <p style={{ fontSize: 12, color: '#888' }}>この種類の戦績はありません。</p> : availableResults.filter(result => result.type === attachmentScreen).map(result => <button key={result.type + result.id} type="button" style={optionStyle} onClick={() => { setSelectedResult(result); setAttachmentsOpen(false); setAttachmentScreen('menu') }}>{result.label}</button>)}
+      </>}
+    </div>
+  }
+
   const handlePost = async () => {
 
     const trimmedContent =
@@ -710,6 +745,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     setSelectedResult(null)
     setComposeOpen(false)
     setAttachmentsOpen(false)
+    setAttachmentScreen('menu')
 
     setMessage('')
 
@@ -2019,7 +2055,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           >
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <button type="button" onClick={() => { setAttachmentsOpen(!attachmentsOpen); if (!attachmentsOpen) void loadShareableResults() }} style={{ width: 'auto', padding: '6px 9px', border: '1px solid #333', background: '#181818', borderRadius: 9, color: '#ccc', fontSize: 12 }}>＋ 添付 {attachmentsOpen ? '⌃' : '⌄'}</button>
+              <button type="button" onClick={toggleAttachments} style={{ width: 'auto', padding: '6px 9px', border: '1px solid #333', background: '#181818', borderRadius: 9, color: '#ccc', fontSize: 12 }}>＋ 添付 {attachmentsOpen ? '⌃' : '⌄'}</button>
               {selectedResult && <button type="button" onClick={() => setSelectedResult(null)} style={{ width: 'auto', padding: '6px 8px', color: '#eee', background: '#222', fontSize: 12, borderRadius: 8 }}>✓ {selectedResult.label} ×</button>}
             </div>
             <span
@@ -2094,11 +2130,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
           </div>
 
-          {attachmentsOpen && <div style={{ marginTop: 12, padding: 12, background: '#151515', border: '1px solid #333', borderRadius: 12 }}>
-            <div style={{ fontSize: 12, color: '#aaa', marginBottom: 9 }}>登録済みの戦績を選択</div>
-            {resultsLoading ? <p>読み込み中...</p> : availableResults.length === 0 ? <p style={{ fontSize: 12, color: '#888' }}>共有できる戦績がありません。</p> : availableResults.map(result => <button key={result.type + result.id} type="button" onClick={() => { setSelectedResult(result); setAttachmentsOpen(false) }} style={{ display: 'block', width: '100%', padding: 10, textAlign: 'left', background: '#202020', color: '#eee', borderRadius: 8, marginBottom: 6, fontSize: 12 }}>{result.label}</button>)}
-            <div style={{ fontSize: 11, color: '#777', marginTop: 8 }}>自己診断・他者評価・画像の添付は次の実装で対応します。</div>
-          </div>}
+          {attachmentsOpen && renderAttachmentPicker()}
         </section>
 
         {/* タイムライン切り替え */}
@@ -2339,11 +2371,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}><strong>新しい投稿</strong><button type="button" onClick={() => setComposeOpen(false)} style={{ width: 'auto', background: 'transparent', color: '#ccc', fontSize: 22 }}>×</button></div>
             <textarea autoFocus placeholder="ポーカーについて何を投稿する？" maxLength={500} value={content} onChange={e => setContent(e.target.value)} style={{ width: '100%', minHeight: 180, padding: 8, background: 'transparent', color: '#fff', border: 'none', fontSize: 17, resize: 'vertical' }}/>
             {selectedResult && <div style={{ marginBottom: 10, fontSize: 12 }}>添付：{selectedResult.label} <button type="button" onClick={() => setSelectedResult(null)} style={{ width: 'auto' }}>×</button></div>}
-            <button type="button" onClick={() => { setAttachmentsOpen(!attachmentsOpen); if (!attachmentsOpen) void loadShareableResults() }} style={{ width: 'auto', background: '#242424', color: '#fff', borderRadius: 8, padding: 9 }}>＋ 添付</button>
-            {attachmentsOpen && <div style={{ maxHeight: 230, overflowY: 'auto', marginTop: 10 }}>
-              {resultsLoading ? '読み込み中...' : availableResults.map(result => <button key={result.type + result.id} type="button" onClick={() => { setSelectedResult(result); setAttachmentsOpen(false) }} style={{ display: 'block', width: '100%', textAlign: 'left', padding: 9, marginBottom: 4, background: '#222', color: '#eee' }}>{result.label}</button>)}
-              <div style={{ color: '#888', fontSize: 12, marginTop: 8 }}>自己診断・他者評価・画像の添付は次の実装で対応します。</div>
-            </div>}
+            <button type="button" onClick={toggleAttachments} style={{ width: 'auto', background: '#242424', color: '#fff', borderRadius: 8, padding: 9 }}>＋ 添付</button>
+            {attachmentsOpen && renderAttachmentPicker()}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 18 }}><span style={{ color: '#888', fontSize: 12 }}>{content.length}/500</span><button type="button" disabled={isPosting || (!content.trim() && !selectedResult)} onClick={handlePost} style={{ width: 'auto', borderRadius: 99, background: '#fff', color: '#000', padding: '10px 24px', fontWeight: 800 }}>{isPosting ? '投稿中...' : '投稿する'}</button></div>
             {message && <div style={{ color: '#ccc', marginTop: 10, fontSize: 12 }}>{message}</div>}
           </div>
