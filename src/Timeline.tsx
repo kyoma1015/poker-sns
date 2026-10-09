@@ -126,6 +126,11 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const [posts, setPosts] = useState<Post[]>([])
 
   const [content, setContent] = useState('')
+  const [composeOpen, setComposeOpen] = useState(false)
+  const [attachmentsOpen, setAttachmentsOpen] = useState(false)
+  const [selectedResult, setSelectedResult] = useState<{id:string; type:'tournament'|'amusement'|'cash'; label:string}|null>(null)
+  const [availableResults, setAvailableResults] = useState<{id:string; type:'tournament'|'amusement'|'cash'; label:string}[]>([])
+  const [resultsLoading, setResultsLoading] = useState(false)
 
   const [currentUserId, setCurrentUserId] = useState('')
 
@@ -603,13 +608,42 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
   }, [profileUserId])
 
+  useEffect(() => {
+    if (profileUserId) return
+    const open = () => setComposeOpen(true)
+    window.addEventListener('poker-id-open-compose', open)
+    if (new URLSearchParams(window.location.search).get('compose') === '1') {
+      setComposeOpen(true)
+      navigate('/timeline', { replace: true })
+    }
+    return () => window.removeEventListener('poker-id-open-compose', open)
+  }, [profileUserId, navigate])
+
+  const loadShareableResults = async () => {
+    setResultsLoading(true)
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) { setResultsLoading(false); return }
+    const sources = [
+      { table: 'poker_results', type: 'tournament' as const, label: 'トーナメント' },
+      { table: 'amusement_ring_results', type: 'amusement' as const, label: 'アミューズリング' },
+      { table: 'cash_game_results', type: 'cash' as const, label: 'キャッシュ' },
+    ]
+    const lists = await Promise.all(sources.map(async source => {
+      const { data, error } = await supabase.from(source.table).select('*').eq('user_id', user.id).order('played_at', { ascending: false }).limit(30)
+      if (error) { console.error(error); return [] }
+      return (data || []).map(item => ({ id: String(item.id), type: source.type, label: `${source.label} · ${String(item.tournament_name || item.venue || item.played_at || '記録')}` }))
+    }))
+    setAvailableResults(lists.flat())
+    setResultsLoading(false)
+  }
+
   const handlePost = async () => {
 
     const trimmedContent =
 
       content.trim()
 
-    if (!trimmedContent) {
+    if (!trimmedContent && !selectedResult) {
 
       setMessage(
 
@@ -652,6 +686,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         user_id: user.id,
 
         content: trimmedContent,
+        ...(selectedResult ? { post_type: 'result', result_type: selectedResult.type, result_id: selectedResult.id } : {}),
 
       })
 
@@ -672,6 +707,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     }
 
     setContent('')
+    setSelectedResult(null)
+    setComposeOpen(false)
+    setAttachmentsOpen(false)
 
     setMessage('')
 
@@ -1899,6 +1937,170 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           </button>
         </section>
 
+        {/* 投稿作成 */}
+
+        <section
+
+          style={{
+
+            margin: '0 -20px',
+
+            padding: '18px 20px',
+
+            borderBottom:
+
+              '8px solid #0b0b0b',
+
+          }}
+
+        >
+
+          <textarea
+
+            id="poker-id-post-composer"
+            placeholder="いま何してる？ ポーカーの話をしよう。"
+
+            value={content}
+
+            onChange={(e) =>
+
+              setContent(
+
+                e.target.value
+
+              )
+
+            }
+
+            maxLength={500}
+
+            style={{
+
+              minHeight: '78px',
+
+              padding: 0,
+
+              background:
+
+                'transparent',
+
+              border: 'none',
+
+              borderRadius: 0,
+
+              fontSize: '16px',
+
+              lineHeight: 1.55,
+
+              resize: 'none',
+
+            }}
+
+          />
+
+          <div
+
+            style={{
+
+              display: 'flex',
+
+              alignItems: 'center',
+
+              justifyContent:
+
+                'space-between',
+
+              gap: '15px',
+
+              marginTop: '10px',
+
+            }}
+
+          >
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <button type="button" onClick={() => { setAttachmentsOpen(!attachmentsOpen); if (!attachmentsOpen) void loadShareableResults() }} style={{ width: 'auto', padding: '6px 9px', border: '1px solid #333', background: '#181818', borderRadius: 9, color: '#ccc', fontSize: 12 }}>＋ 添付 {attachmentsOpen ? '⌃' : '⌄'}</button>
+              {selectedResult && <button type="button" onClick={() => setSelectedResult(null)} style={{ width: 'auto', padding: '6px 8px', color: '#eee', background: '#222', fontSize: 12, borderRadius: 8 }}>✓ {selectedResult.label} ×</button>}
+            </div>
+            <span
+
+              style={{
+
+                color:
+
+                  content.length >
+
+                  450
+
+                    ? '#ddd'
+
+                    : '#666',
+
+                fontSize: '12px',
+
+              }}
+
+            >
+
+              {content.length}/500
+
+            </span>
+
+            <button
+
+              onClick={handlePost}
+
+              disabled={
+
+                isPosting ||
+
+                (!content.trim() && !selectedResult)
+
+              }
+
+              style={{
+
+                width: 'auto',
+
+                minWidth: '86px',
+
+                padding:
+
+                  '9px 18px',
+
+                borderRadius:
+
+                  '999px',
+
+                background: '#fff',
+
+                color: '#000',
+
+                fontSize: '14px',
+
+                fontWeight: 800,
+
+              }}
+
+            >
+
+              {isPosting
+
+                ? '投稿中...'
+
+                : '投稿'}
+
+            </button>
+
+          </div>
+
+          {attachmentsOpen && <div style={{ marginTop: 12, padding: 12, background: '#151515', border: '1px solid #333', borderRadius: 12 }}>
+            <div style={{ fontSize: 12, color: '#aaa', marginBottom: 9 }}>登録済みの戦績を選択</div>
+            {resultsLoading ? <p>読み込み中...</p> : availableResults.length === 0 ? <p style={{ fontSize: 12, color: '#888' }}>共有できる戦績がありません。</p> : availableResults.map(result => <button key={result.type + result.id} type="button" onClick={() => { setSelectedResult(result); setAttachmentsOpen(false) }} style={{ display: 'block', width: '100%', padding: 10, textAlign: 'left', background: '#202020', color: '#eee', borderRadius: 8, marginBottom: 6, fontSize: 12 }}>{result.label}</button>)}
+            <div style={{ fontSize: 11, color: '#777', marginTop: 8 }}>自己診断・他者評価・画像の添付は次の実装で対応します。</div>
+          </div>}
+        </section>
+
         {/* タイムライン切り替え */}
 
         <div
@@ -2059,7 +2261,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
           >
 
-            すべて
+            おすすめ
 
             {timelineMode ===
 
@@ -2099,161 +2301,6 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
         </div>
 
-        {/* 投稿作成 */}
-
-        <section
-
-          style={{
-
-            margin: '0 -20px',
-
-            padding: '18px 20px',
-
-            borderBottom:
-
-              '8px solid #0b0b0b',
-
-          }}
-
-        >
-
-          <textarea
-
-            id="poker-id-post-composer"
-            placeholder="いま何してる？ ポーカーの話をしよう。"
-
-            value={content}
-
-            onChange={(e) =>
-
-              setContent(
-
-                e.target.value
-
-              )
-
-            }
-
-            maxLength={500}
-
-            style={{
-
-              minHeight: '78px',
-
-              padding: 0,
-
-              background:
-
-                'transparent',
-
-              border: 'none',
-
-              borderRadius: 0,
-
-              fontSize: '16px',
-
-              lineHeight: 1.55,
-
-              resize: 'none',
-
-            }}
-
-          />
-
-          <div
-
-            style={{
-
-              display: 'flex',
-
-              alignItems: 'center',
-
-              justifyContent:
-
-                'space-between',
-
-              gap: '15px',
-
-              marginTop: '10px',
-
-            }}
-
-          >
-
-            <span
-
-              style={{
-
-                color:
-
-                  content.length >
-
-                  450
-
-                    ? '#ddd'
-
-                    : '#666',
-
-                fontSize: '12px',
-
-              }}
-
-            >
-
-              {content.length}/500
-
-            </span>
-
-            <button
-
-              onClick={handlePost}
-
-              disabled={
-
-                isPosting ||
-
-                !content.trim()
-
-              }
-
-              style={{
-
-                width: 'auto',
-
-                minWidth: '86px',
-
-                padding:
-
-                  '9px 18px',
-
-                borderRadius:
-
-                  '999px',
-
-                background: '#fff',
-
-                color: '#000',
-
-                fontSize: '14px',
-
-                fontWeight: 800,
-
-              }}
-
-            >
-
-              {isPosting
-
-                ? '投稿中...'
-
-                : '投稿'}
-
-            </button>
-
-          </div>
-
-        </section>
-
         {message && (
 
           <div
@@ -2287,6 +2334,20 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         )}
 
         </>}
+        {!profileUserId && composeOpen && <div role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget) setComposeOpen(false) }} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.8)', zIndex: 9999, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', overflowY: 'auto', padding: '8vh 12px 24px' }}>
+          <div role="dialog" aria-modal="true" aria-label="新しい投稿" style={{ width: '100%', maxWidth: 560, background: '#111', border: '1px solid #333', borderRadius: 18, padding: 20, color: '#fff' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}><strong>新しい投稿</strong><button type="button" onClick={() => setComposeOpen(false)} style={{ width: 'auto', background: 'transparent', color: '#ccc', fontSize: 22 }}>×</button></div>
+            <textarea autoFocus placeholder="ポーカーについて何を投稿する？" maxLength={500} value={content} onChange={e => setContent(e.target.value)} style={{ width: '100%', minHeight: 180, padding: 8, background: 'transparent', color: '#fff', border: 'none', fontSize: 17, resize: 'vertical' }}/>
+            {selectedResult && <div style={{ marginBottom: 10, fontSize: 12 }}>添付：{selectedResult.label} <button type="button" onClick={() => setSelectedResult(null)} style={{ width: 'auto' }}>×</button></div>}
+            <button type="button" onClick={() => { setAttachmentsOpen(!attachmentsOpen); if (!attachmentsOpen) void loadShareableResults() }} style={{ width: 'auto', background: '#242424', color: '#fff', borderRadius: 8, padding: 9 }}>＋ 添付</button>
+            {attachmentsOpen && <div style={{ maxHeight: 230, overflowY: 'auto', marginTop: 10 }}>
+              {resultsLoading ? '読み込み中...' : availableResults.map(result => <button key={result.type + result.id} type="button" onClick={() => { setSelectedResult(result); setAttachmentsOpen(false) }} style={{ display: 'block', width: '100%', textAlign: 'left', padding: 9, marginBottom: 4, background: '#222', color: '#eee' }}>{result.label}</button>)}
+              <div style={{ color: '#888', fontSize: 12, marginTop: 8 }}>自己診断・他者評価・画像の添付は次の実装で対応します。</div>
+            </div>}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 18 }}><span style={{ color: '#888', fontSize: 12 }}>{content.length}/500</span><button type="button" disabled={isPosting || (!content.trim() && !selectedResult)} onClick={handlePost} style={{ width: 'auto', borderRadius: 99, background: '#fff', color: '#000', padding: '10px 24px', fontWeight: 800 }}>{isPosting ? '投稿中...' : '投稿する'}</button></div>
+            {message && <div style={{ color: '#ccc', marginTop: 10, fontSize: 12 }}>{message}</div>}
+          </div>
+        </div>}
         {/* 投稿一覧 */}
 
         <section

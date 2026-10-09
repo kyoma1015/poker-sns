@@ -61,7 +61,7 @@ function BottomNav() {
 
       <button
         className="bottom-nav-item"
-        onClick={() => navigate('/timeline')}
+        onClick={() => { if (location.pathname === '/timeline') window.dispatchEvent(new Event('poker-id-open-compose')); else navigate('/timeline?compose=1') }}
       >
         <span
           className="bottom-nav-icon"
