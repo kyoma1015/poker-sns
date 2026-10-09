@@ -4017,6 +4017,13 @@ function TDA() {
 
         }
 
+        /* Desktop guide lines aligned with the 600px navigation */
+        @media (min-width: 601px) {
+          .tda-container {
+            box-shadow: inset 1px 0 #242424, inset -1px 0 #242424;
+          }
+        }
+
 
 
 
