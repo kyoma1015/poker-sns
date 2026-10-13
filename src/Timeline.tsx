@@ -2092,7 +2092,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           </button>
         </section>
 
-        {/* 投稿作成 */}
+        {/* 投稿作成：既存の入力・添付・送信状態は保持したまま視認性のみ改善 */}
 
         <section
 
@@ -2100,7 +2100,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
             margin: '0 -20px',
 
-            padding: '18px 20px',
+            padding: '18px 20px 20px',
+
+            background: 'linear-gradient(180deg, #161616 0%, #101010 100%)',
 
             borderBottom:
 
@@ -2109,6 +2111,13 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           }}
 
         >
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span aria-hidden="true" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: 9, background: '#292929', color: '#fff', fontSize: 18 }}>＋</span>
+              <span style={{ fontWeight: 800, fontSize: 15, letterSpacing: '0.1px' }}>投稿を作成</span>
+            </div>
+            <span style={{ color: '#888', fontSize: 11 }}>ポーカーの話をシェア</span>
+          </div>
 
           <textarea
 
@@ -2133,15 +2142,16 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
               minHeight: '78px',
 
-              padding: 0,
+              width: '100%',
+              boxSizing: 'border-box',
+              padding: '14px 15px',
 
-              background:
+              background: '#202020',
 
-                'transparent',
+              border: '1px solid #444',
 
-              border: 'none',
-
-              borderRadius: 0,
+              borderRadius: 13,
+              color: '#fff',
 
               fontSize: '16px',
 

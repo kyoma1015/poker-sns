@@ -80,8 +80,17 @@ function BottomNav() {
   }
 
   return (
-    <nav className="bottom-nav">
+    <nav className="bottom-nav" style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(5, minmax(0, 1fr))',
+      width: '100%',
+      maxWidth: '100vw',
+      boxSizing: 'border-box',
+      paddingLeft: 'max(9px, env(safe-area-inset-left))',
+      paddingRight: 'max(9px, env(safe-area-inset-right))',
+    }}>
       <button
+        style={{ minWidth: 0, paddingLeft: 1, paddingRight: 1 }}
         className={`bottom-nav-item ${
           isActive('/timeline') ? 'active' : ''
         }`}
@@ -92,6 +101,7 @@ function BottomNav() {
       </button>
 
       <button
+        style={{ minWidth: 0, paddingLeft: 1, paddingRight: 1 }}
         className={`bottom-nav-item ${
           isActive('/search') ? 'active' : ''
         }`}
@@ -102,6 +112,7 @@ function BottomNav() {
       </button>
 
       <button
+        style={{ minWidth: 0, paddingLeft: 1, paddingRight: 1 }}
         className="bottom-nav-item"
         onClick={() => { if (location.pathname === '/timeline') window.dispatchEvent(new Event('poker-id-open-compose')); else navigate('/timeline?compose=1') }}
       >
@@ -126,6 +137,7 @@ function BottomNav() {
       </button>
 
       <button
+        style={{ minWidth: 0, paddingLeft: 1, paddingRight: 1 }}
         className={`bottom-nav-item ${
           isActive('/notifications') ? 'active' : ''
         }`}
@@ -146,13 +158,14 @@ function BottomNav() {
       </button>
 
       <button
+        style={{ minWidth: 0, paddingLeft: 1, paddingRight: 1 }}
         className={`bottom-nav-item ${
           isActive('/profile') ? 'active' : ''
         }`}
         onClick={() => navigate('/profile')}
       >
         <span className="bottom-nav-icon">♤</span>
-        <span>プロフィール</span>
+        <span style={{ fontSize: 10, letterSpacing: '-0.5px', whiteSpace: 'nowrap' }}>プロフィール</span>
       </button>
     </nav>
   )
