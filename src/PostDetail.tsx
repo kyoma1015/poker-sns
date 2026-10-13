@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { supabase } from './supabase'
 import { usePullToRefresh } from './usePullToRefresh'
+import QuoteSourcePreview, { type QuoteSource } from './QuoteSourcePreview'
 
 
 // ブロックは双方の関係を確認する（自分→相手、相手→自分）。
@@ -31,7 +32,7 @@ type Comment = {
   profile?: Profile
 }
 
-type QuotePreview = { id: string; user_id: string; content: string; profile?: { display_name: string; poker_id: string }; image_urls?: string[] | null }
+type QuotePreview = QuoteSource
 
 type Post = {
   quote_post_id?: string | null
@@ -232,12 +233,30 @@ function PostDetail() {
 
     let quotePreview: QuotePreview | null = null
     if (postData.quote_post_id) {
-      const { data: original, error: originalError } = await supabase.from('posts').select('id,user_id,content,image_urls')
+      const { data: original, error: originalError } = await supabase.from('posts').select('id,user_id,content,image_urls,result_type,result_id,style_snapshot')
         .eq('id', postData.quote_post_id).maybeSingle()
       if (!originalError && original && !blockedUserIds.has(original.user_id)) {
         const { data: originalProfile } = await supabase.from('profiles')
           .select('display_name,poker_id').eq('id', original.user_id).maybeSingle()
-        quotePreview = { ...original, profile: originalProfile || undefined }
+        let resultData: Record<string, unknown> | null = null
+        let playerTypeData: QuoteSource['playerTypeData'] = null
+        if (original.result_id && original.result_type) {
+          const table = original.result_type === 'tournament' ? 'poker_results'
+            : original.result_type === 'amusement' ? 'amusement_ring_results'
+            : original.result_type === 'cash' ? 'cash_game_results' : null
+          if (table) {
+            const { data: originalResult, error: resultError } = await supabase.from(table).select('*').eq('id', original.result_id).maybeSingle()
+            if (!resultError) resultData = originalResult || null
+          }
+          if (original.result_type === 'player_type') {
+            const { data, error: diagnosisError } = await supabase.rpc('get_player_type_v2_result_detail', { p_result_id: original.result_id })
+            if (!diagnosisError) {
+              const row = Array.isArray(data) ? data[0] : data
+              if (row) playerTypeData = { animal_name_ja: String(row.animal_name_ja || ''), catchphrase: String(row.catchphrase || ''), result_type_key: String(row.result_type_key || '') }
+            }
+          }
+        }
+        quotePreview = { ...original, profile: originalProfile || undefined, resultData, playerTypeData }
       }
     }
     setPost({
@@ -637,17 +656,7 @@ function PostDetail() {
                 {post.content}
               </p>
               {post.quote_post_id && (
-                <button type="button" disabled={!post.quotePreview}
-                  onClick={() => post.quotePreview && navigate(`/post/${post.quotePreview.id}`)}
-                  style={{ display: 'block', width: '100%', padding: 12, margin: '10px 0', textAlign: 'left',
-                    color: '#ddd', background: '#171717', border: '1px solid #444', borderRadius: 12 }}>
-                  {post.quotePreview ? <>
-                    <strong>{post.quotePreview.profile?.display_name || 'Player'} </strong>
-                    <span style={{ color: '#999', fontSize: 12 }}>@{post.quotePreview.profile?.poker_id || 'unknown'}</span>
-                    <div style={{ whiteSpace: 'pre-wrap', marginTop: 6, fontSize: 13 }}>{post.quotePreview.content}</div>
-                    {!!post.quotePreview.image_urls?.length && <div style={{ fontSize: 12, color: '#aaa' }}>▧ 画像 {post.quotePreview.image_urls.length}枚</div>}
-                  </> : '元の投稿は表示できません'}
-                </button>
+                <QuoteSourcePreview source={post.quotePreview} onOpen={post.quotePreview ? () => navigate(`/post/${post.quotePreview!.id}`) : undefined} />
               )}
 
               {Array.isArray(post.image_urls) && post.image_urls.length > 0 && (
@@ -1083,12 +1092,12 @@ function PostDetail() {
           <textarea autoFocus maxLength={1000} value={quoteText} onChange={event => setQuoteText(event.target.value)}
             placeholder="この投稿についてコメントを書く..." disabled={quoteBusy}
             style={{ width: '100%', minHeight: 110, boxSizing: 'border-box', padding: 10, color: '#fff', background: '#111' }}/>
-          <div style={{ padding: 10, border: '1px solid #444', borderRadius: 8, color: '#aaa', fontSize: 13, whiteSpace: 'pre-wrap' }}>
-            @{post.profile?.poker_id || 'unknown'}: {post.content}
+          <div style={{ maxHeight: '36vh', overflowY: 'auto' }}>
+            <QuoteSourcePreview compact source={{ ...post, result_type: null }} />
           </div>
           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, marginTop: 12 }}>
-            <button type="button" disabled={quoteBusy} onClick={() => { setQuoteOpen(false); setQuoteText('') }} style={{ width: 'auto' }}>キャンセル</button>
-            <button type="button" disabled={quoteBusy || !quoteText.trim()} onClick={() => void publishQuote()} style={{ width: 'auto' }}>
+            <button type="button" disabled={quoteBusy} onClick={() => { setQuoteOpen(false); setQuoteText('') }} style={{ width: 'auto', minWidth: 106, minHeight: 42, padding: '10px 16px', fontSize: 13, fontWeight: 700, background: '#272727', color: '#efefef', border: '1px solid #515151', borderRadius: 11, cursor: 'pointer' }}>キャンセル</button>
+            <button type="button" disabled={quoteBusy || !quoteText.trim()} onClick={() => void publishQuote()} style={{ width: 'auto', minWidth: 106, minHeight: 42, padding: '10px 16px', fontSize: 13, fontWeight: 750, background: '#323029', color: '#f0d99b', border: '1px solid #726343', borderRadius: 11, cursor: 'pointer' }}>
               {quoteBusy ? '投稿中...' : '投稿する'}</button>
           </div>
         </div>

@@ -4,10 +4,11 @@ import { useNavigate } from 'react-router-dom'
 
 import { supabase } from './supabase'
 import { usePullToRefresh } from './usePullToRefresh'
+import QuoteSourcePreview, { type QuoteSource } from './QuoteSourcePreview'
 
 const playerTypeEmoji: Record<string, string> = {lion:'🦁',tiger:'🐯',leopard:'🐆',bison:'🦬',gorilla:'🦍',rhino:'🦏',shark:'🦈',owl:'🦉',eagle:'🦅',elephant:'🐘',giraffe:'🦒',wolf:'🐺',hyena:'🐾',cat:'🐈',chameleon:'🦎',dolphin:'🐬',fox:'🦊',snake:'🐍',raccoon:'🦝',turtle:'🐢',rabbit:'🐇',crocodile:'🐊',hedgehog:'🦔',deer:'🦌',sloth:'🦥',dog:'🐕',bear:'🐻',bull:'🐄',badger:'🦡',monkey:'🐒',magpie:'🐦‍⬛',penguin:'🐧',horse:'🐎',squirrel:'🐿️',mountain_goat:'🐐',otter:'🦦'}
 
-type QuotePreview = { id: string; user_id: string; content: string; profile?: { display_name: string; poker_id: string }; image_urls?: string[] | null }
+type QuotePreview = QuoteSource
 
 type Post = {
   quote_post_id?: string | null
@@ -642,7 +643,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       const source = item.quote_post_id ? quoteSourceById.get(item.quote_post_id) : null
       return { ...item, quotePreview: source ? { id: source.id, user_id: source.user_id, content: source.content,
         profile: source.profile ? { display_name: source.profile.display_name, poker_id: source.profile.poker_id } : undefined,
-        image_urls: source.image_urls } : null }
+        image_urls: source.image_urls, result_type: source.result_type, resultData: source.resultData || source.amusementResultData || source.cashResultData || null, playerTypeData: source.playerTypeData, style_snapshot: source.style_snapshot } : null }
     })
     const repostCountByPost = new Map<string, number>()
     for (const row of validReposts) repostCountByPost.set(row.post_id, (repostCountByPost.get(row.post_id) || 0) + 1)
@@ -3107,17 +3108,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
                       </div>
 
                       {post.quote_post_id && (
-                        <button type="button" onClick={() => post.quotePreview && navigate(`/post/${post.quotePreview.id}`)}
-                          disabled={!post.quotePreview} style={{ display: 'block', width: '100%', textAlign: 'left',
-                            padding: 12, margin: '4px 0 12px', background: '#181818', border: '1px solid #444',
-                            borderRadius: 12, color: '#ddd', cursor: post.quotePreview ? 'pointer' : 'default' }}>
-                          {post.quotePreview ? <>
-                            <strong style={{ fontSize: 13 }}>{post.quotePreview.profile?.display_name || 'Player'} </strong>
-                            <span style={{ fontSize: 12, color: '#999' }}>@{post.quotePreview.profile?.poker_id || 'unknown'}</span>
-                            <div style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', fontSize: 13, marginTop: 6 }}>{post.quotePreview.content}</div>
-                            {!!post.quotePreview.image_urls?.length && <div style={{ color: '#aaa', marginTop: 6, fontSize: 12 }}>▧ 画像 {post.quotePreview.image_urls.length}枚</div>}
-                          </> : <span style={{ color: '#999', fontSize: 12 }}>元の投稿は表示できません</span>}
-                        </button>
+                        <QuoteSourcePreview source={post.quotePreview} onOpen={post.quotePreview ? () => navigate(`/post/${post.quotePreview!.id}`) : undefined} />
                       )}
                       {post.post_type === 'result' &&
 
@@ -3162,20 +3153,21 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
                     {post.style_snapshot && renderStyleSnapshot(post.style_snapshot)}
                     {Array.isArray(post.image_urls) && post.image_urls.length > 0 && <div style={{ display: 'grid', gridTemplateColumns: post.image_urls.length > 1 ? 'repeat(2,minmax(0,1fr))' : '1fr', gap: 5, margin: '10px 0 14px' }}>{post.image_urls.map((url, i) => <a key={`${post.id}-${i}`} href={url} target="_blank" rel="noopener noreferrer"><img src={url} alt={`投稿画像${i+1}`} loading="lazy" style={{ width: '100%', maxHeight: 460, objectFit: 'cover', borderRadius: 10 }}/></a>)}</div>}
                     {/* アクション */}
-
-                      <div
-
+                      <style>{`
+  .poker-feed-actions > button, .poker-feed-actions > div > button {
+    width:100% !important; min-width:0 !important; box-sizing:border-box;
+    display:flex !important; align-items:center !important; justify-content:center !important;
+    flex-wrap:nowrap !important; white-space:nowrap !important; padding:8px 1px !important;
+    font-size:11px !important; gap:3px !important; line-height:1.3 !important;
+    overflow:visible !important;
+  }
+  .poker-feed-actions > div { min-width:0 !important; }
+  .poker-feed-actions > button > span:first-child { font-size:16px !important; }
+  @media (min-width:440px) { .poker-feed-actions > button, .poker-feed-actions > div > button {font-size:12px !important; gap:5px !important;} }
+`}</style>
+                      <div className="poker-feed-actions"
                         style={{
-
-                          display:
-
-                            'flex',
-
-                          alignItems:
-
-                            'center',
-
-                          gap: '24px',
+                          display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', alignItems: 'center', gap: '3px',
 
                           marginTop:
 
@@ -3507,14 +3499,13 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           <textarea autoFocus value={quoteText} onChange={event => setQuoteText(event.target.value)} maxLength={1000}
             placeholder="この投稿についてコメントを書く..." disabled={quoteBusy}
             style={{ width: '100%', minHeight: 110, padding: 10, boxSizing: 'border-box', color: '#fff', background: '#111', borderRadius: 8 }} />
-          <div style={{ padding: 10, border: '1px solid #444', borderRadius: 8, color: '#aaa', fontSize: 13,
-            whiteSpace: 'pre-wrap', maxHeight: 120, overflowY: 'auto', marginTop: 8 }}>
-            @{quoteTarget.profile?.poker_id || 'unknown'}: {quoteTarget.content}
+          <div style={{ maxHeight: '36vh', overflowY: 'auto', marginTop: 8 }}>
+            <QuoteSourcePreview compact source={{ ...quoteTarget, resultData: quoteTarget.resultData || quoteTarget.amusementResultData || quoteTarget.cashResultData || null }} />
           </div>
           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, marginTop: 12 }}>
-            <button type="button" disabled={quoteBusy} onClick={() => { setQuoteTarget(null); setQuoteText('') }} style={{ width: 'auto' }}>キャンセル</button>
+            <button type="button" disabled={quoteBusy} onClick={() => { setQuoteTarget(null); setQuoteText('') }} style={{ width: 'auto', minWidth: 106, minHeight: 42, padding: '10px 16px', fontSize: 13, fontWeight: 700, background: '#272727', color: '#efefef', border: '1px solid #515151', borderRadius: 11, cursor: 'pointer' }}>キャンセル</button>
             <button type="button" disabled={quoteBusy || !quoteText.trim()} onClick={() => void publishQuote()}
-              style={{ width: 'auto' }}>{quoteBusy ? '投稿中...' : '投稿する'}</button>
+              style={{ width: 'auto', minWidth: 106, minHeight: 42, padding: '10px 16px', fontSize: 13, fontWeight: 750, background: '#323029', color: '#f0d99b', border: '1px solid #726343', borderRadius: 11, cursor: 'pointer' }}>{quoteBusy ? '投稿中...' : '投稿する'}</button>
           </div>
         </div>
       </div>}
