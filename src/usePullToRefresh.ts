@@ -7,7 +7,7 @@ type Options = {
   threshold?: number
 }
 
-/** 画面内スクロールが先頭のときだけ、下方向のスワイプでデータを再取得する。 */
+/** 最上部から下へ引っ張った距離で更新する。スワイプ速度には依存しない。 */
 export function usePullToRefresh<T extends HTMLElement>(
   containerRef: RefObject<T | null>,
   { onRefresh, enabled = true, threshold = 76 }: Options,
@@ -17,33 +17,34 @@ export function usePullToRefresh<T extends HTMLElement>(
   const [refreshError, setRefreshError] = useState('')
   const refreshRef = useRef(onRefresh)
   const busyRef = useRef(false)
-  const startYRef = useRef<number | null>(null)
-  const trackingRef = useRef(false)
   const pullRef = useRef(0)
   refreshRef.current = onRefresh
 
   useEffect(() => {
     const element = containerRef.current
-    if (!element || !enabled) {
-      startYRef.current = null
-      trackingRef.current = false
-      pullRef.current = 0
-      return
-    }
+    if (!element || !enabled) return
+
+    let startY: number | null = null
+    let startX = 0
+    let startTarget: EventTarget | null = null
+    let dragging = false
+    let rejected = false
 
     const reset = () => {
-      startYRef.current = null
-      trackingRef.current = false
+      startY = null
+      startTarget = null
+      dragging = false
+      rejected = false
       pullRef.current = 0
       setPullDistance(0)
     }
 
-    // 入力欄・ボタン・編集領域・モーダルから開始したタッチは扱わない。
-    const isInteractive = (target: EventTarget | null) => {
-      if (!(target instanceof Element)) return true
-      return Boolean(target.closest('input,textarea,select,button,a,[contenteditable="true"],[role="dialog"],[role="alertdialog"]'))
-    }
-    const scrollableAncestorIsScrolled = (target: EventTarget | null) => {
+    const isInteractive = (target: EventTarget | null) =>
+      !(target instanceof Element) || Boolean(
+        target.closest('input,textarea,select,button,a,[contenteditable="true"],[role="dialog"],[role="alertdialog"]'),
+      )
+
+    const hasScrolledInnerContainer = (target: EventTarget | null) => {
       if (!(target instanceof Element)) return false
       let node: Element | null = target
       while (node && node !== element) {
@@ -52,33 +53,44 @@ export function usePullToRefresh<T extends HTMLElement>(
       }
       return false
     }
-    const atTop = () => (window.scrollY <= 2 && !scrollableAncestorIsScrolled(lastTarget))
-    let lastTarget: EventTarget | null = null
+
+    const atTop = () => window.scrollY <= 3 && !hasScrolledInnerContainer(startTarget)
 
     const onStart = (event: TouchEvent) => {
       reset()
-      if (busyRef.current || event.touches.length !== 1 || window.scrollY > 2 || isInteractive(event.target)) return
-      lastTarget = event.target
-      if (scrollableAncestorIsScrolled(event.target)) return
-      startYRef.current = event.touches[0].clientY
+      if (busyRef.current || event.touches.length !== 1 || !atTop() || isInteractive(event.target)) return
+      startTarget = event.target
+      startY = event.touches[0].clientY
+      startX = event.touches[0].clientX
     }
+
     const onMove = (event: TouchEvent) => {
-      if (startYRef.current === null || event.touches.length !== 1) return
-      const delta = event.touches[0].clientY - startYRef.current
-      if (delta <= 0 || !atTop()) {
-        if (trackingRef.current) reset()
+      if (startY === null || rejected || event.touches.length !== 1) return
+      const deltaY = event.touches[0].clientY - startY
+      const deltaX = event.touches[0].clientX - startX
+
+      // 横スワイプや上方向のスクロールでは更新操作を始めない。
+      if (!dragging && (deltaY < -8 || (Math.abs(deltaX) > 12 && Math.abs(deltaX) > Math.abs(deltaY)))) {
+        rejected = true
         return
       }
+      if (deltaY <= 8 || !atTop()) return
+
+      // 最初の8pxだけ遊びを設ける。以降は移動距離で判定し、速度は見ない。
+      dragging = true
       if (event.cancelable) event.preventDefault()
-      trackingRef.current = true
-      const distance = Math.min(115, delta * 0.45)
+      const travel = deltaY - 8
+      // 更新が成立するまでは素直に追従し、成立後は抵抗を加える。
+      const distance = Math.min(140, travel <= threshold ? travel : threshold + (travel - threshold) * 0.35)
       pullRef.current = distance
       setPullDistance(distance)
     }
+
     const onEnd = () => {
-      const shouldRefresh = trackingRef.current && pullRef.current >= threshold && !busyRef.current
+      const shouldRefresh = dragging && pullRef.current >= threshold && !busyRef.current
       reset()
       if (!shouldRefresh) return
+
       busyRef.current = true
       setIsRefreshing(true)
       setRefreshError('')
@@ -93,6 +105,7 @@ export function usePullToRefresh<T extends HTMLElement>(
           setIsRefreshing(false)
         })
     }
+
     element.addEventListener('touchstart', onStart, { passive: true })
     element.addEventListener('touchmove', onMove, { passive: false })
     element.addEventListener('touchend', onEnd, { passive: true })
