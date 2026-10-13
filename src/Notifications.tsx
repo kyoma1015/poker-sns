@@ -34,6 +34,7 @@ function Notifications() {
 
   const [message, setMessage] =
     useState('読み込み中...')
+  const [openedUnreadIds, setOpenedUnreadIds] = useState<string[]>([])
 
   useEffect(() => {
     const loadNotifications = async () => {
@@ -64,6 +65,7 @@ function Notifications() {
 
       if (!data || data.length === 0) {
         setNotifications([])
+        setOpenedUnreadIds([])
         setMessage('')
         return
       }
@@ -80,6 +82,7 @@ function Notifications() {
       const visibleData = data.filter(notification => !blockedUserIds.has(notification.actor_id))
       if (visibleData.length === 0) {
         setNotifications([])
+        setOpenedUnreadIds([])
         setMessage('')
         return
       }
@@ -150,6 +153,8 @@ function Notifications() {
             notification.id
         )
 
+      setOpenedUnreadIds(unreadIds)
+
       if (unreadIds.length > 0) {
         const readAt =
           new Date().toISOString()
@@ -168,6 +173,7 @@ function Notifications() {
             readError
           )
         } else {
+          window.dispatchEvent(new Event('poker-id-notifications-updated'))
           setNotifications(
             (previous) =>
               previous.map(
@@ -664,6 +670,11 @@ function Notifications() {
                       </div>
                     </div>
 
+                    {openedUnreadIds.includes(notification.id) && (
+                      <span style={{ alignSelf: 'center', flexShrink: 0, fontSize: 10, fontWeight: 800, color: '#d4d4ff' }}>
+                        新着
+                      </span>
+                    )}
                     {/* 詳細への矢印 */}
                     <div
                       style={{

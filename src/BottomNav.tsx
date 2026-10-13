@@ -1,8 +1,50 @@
+import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { supabase } from './supabase'
 
 function BottomNav() {
   const navigate = useNavigate()
   const location = useLocation()
+  const [unreadCount, setUnreadCount] = useState(0)
+
+  useEffect(() => {
+    let active = true
+    let busy = false
+    const refreshUnread = async () => {
+      if (busy) return
+      busy = true
+      try {
+        const { data: { user }, error: authError } = await supabase.auth.getUser()
+        if (!active) return
+        if (authError || !user) { setUnreadCount(0); return }
+        const { count, error } = await supabase
+          .from('notifications')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', user.id)
+          .is('read_at', null)
+        if (error) { console.error('通知未読件数取得エラー:', error); return }
+        if (active) setUnreadCount(count ?? 0)
+      } catch (error) {
+        console.error('通知未読件数取得エラー:', error)
+      } finally {
+        busy = false
+      }
+    }
+    const onFocus = () => { void refreshUnread() }
+    const onVisible = () => { if (document.visibilityState === 'visible') void refreshUnread() }
+    window.addEventListener('focus', onFocus)
+    document.addEventListener('visibilitychange', onVisible)
+    window.addEventListener('poker-id-notifications-updated', onFocus)
+    const interval = window.setInterval(() => { if (document.visibilityState === 'visible') void refreshUnread() }, 30000)
+    void refreshUnread()
+    return () => {
+      active = false
+      window.clearInterval(interval)
+      window.removeEventListener('focus', onFocus)
+      document.removeEventListener('visibilitychange', onVisible)
+      window.removeEventListener('poker-id-notifications-updated', onFocus)
+    }
+  }, [location.pathname])
 
   const isActive = (path: string) => {
     if (path === '/timeline') {
@@ -89,7 +131,17 @@ function BottomNav() {
         }`}
         onClick={() => navigate('/notifications')}
       >
-        <span className="bottom-nav-icon">♡</span>
+        <span style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+          <span className="bottom-nav-icon">♡</span>
+          {unreadCount > 0 && (
+            <span aria-label={`未読通知${unreadCount}件`} style={{
+              position: 'absolute', top: -7, right: -16, minWidth: 17, height: 17,
+              padding: '0 4px', boxSizing: 'border-box', borderRadius: 999,
+              background: '#ef4444', color: '#fff', border: '1px solid #111',
+              fontSize: 10, fontWeight: 800, lineHeight: '15px', textAlign: 'center',
+            }}>{unreadCount > 99 ? '99+' : unreadCount}</span>
+          )}
+        </span>
         <span>通知</span>
       </button>
 
