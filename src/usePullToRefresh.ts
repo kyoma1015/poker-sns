@@ -7,7 +7,7 @@ type Options = {
   threshold?: number
 }
 
-/** 最上部から下へ引っ張った距離で更新する。スワイプ速度には依存しない。 */
+/** ページ最上部での下方向ドラッグ距離だけで更新を決める（速度非依存）。 */
 export function usePullToRefresh<T extends HTMLElement>(
   containerRef: RefObject<T | null>,
   { onRefresh, enabled = true, threshold = 76 }: Options,
@@ -21,17 +21,19 @@ export function usePullToRefresh<T extends HTMLElement>(
   refreshRef.current = onRefresh
 
   useEffect(() => {
-    const element = containerRef.current
-    if (!element || !enabled) return
+    const container = containerRef.current
+    if (!container || !enabled) return
 
     let startY: number | null = null
     let startX = 0
     let startTarget: EventTarget | null = null
+    let gestureTopY: number | null = null
     let dragging = false
     let rejected = false
 
     const reset = () => {
       startY = null
+      gestureTopY = null
       startTarget = null
       dragging = false
       rejected = false
@@ -47,41 +49,56 @@ export function usePullToRefresh<T extends HTMLElement>(
     const hasScrolledInnerContainer = (target: EventTarget | null) => {
       if (!(target instanceof Element)) return false
       let node: Element | null = target
-      while (node && node !== element) {
-        if (node.scrollTop > 2 && node.scrollHeight > node.clientHeight + 2) return true
+      while (node && node !== container) {
+        if (node.scrollHeight > node.clientHeight + 2 && node.scrollTop > 2) return true
         node = node.parentElement
       }
       return false
     }
 
-    const atTop = () => window.scrollY <= 3 && !hasScrolledInnerContainer(startTarget)
+    const atTop = () => {
+      const root = document.scrollingElement
+      const pageTop = Math.max(window.scrollY, root?.scrollTop ?? 0)
+      return pageTop <= 4 && !hasScrolledInnerContainer(startTarget)
+    }
 
     const onStart = (event: TouchEvent) => {
       reset()
-      if (busyRef.current || event.touches.length !== 1 || !atTop() || isInteractive(event.target)) return
+      if (busyRef.current || event.touches.length !== 1 || isInteractive(event.target)) return
+      // イベントはdocumentで追跡。上部ヘッダーからのドラッグも途中で失わない。
       startTarget = event.target
       startY = event.touches[0].clientY
       startX = event.touches[0].clientX
+      if (atTop()) gestureTopY = startY
     }
 
     const onMove = (event: TouchEvent) => {
       if (startY === null || rejected || event.touches.length !== 1) return
-      const deltaY = event.touches[0].clientY - startY
+      const fingerY = event.touches[0].clientY
+      const deltaY = fingerY - startY
       const deltaX = event.touches[0].clientX - startX
 
-      // 横スワイプや上方向のスクロールでは更新操作を始めない。
-      if (!dragging && (deltaY < -8 || (Math.abs(deltaX) > 12 && Math.abs(deltaX) > Math.abs(deltaY)))) {
+      if (!dragging && (deltaY < -12 || (Math.abs(deltaX) > 16 && Math.abs(deltaX) > Math.abs(deltaY)))) {
         rejected = true
         return
       }
-      if (deltaY <= 8 || !atTop()) return
 
-      // 最初の8pxだけ遊びを設ける。以降は移動距離で判定し、速度は見ない。
+      // ページがスクロール途中なら、最上部に来るまでは通常スクロールを妨げない。
+      if (!atTop()) {
+        if (dragging) reset()
+        return
+      }
+      // 指を置いた時点で最上部でなくても、最上部へ到達した地点を起点にする。
+      if (gestureTopY === null) gestureTopY = fingerY
+      const distanceMoved = fingerY - gestureTopY
+      if (distanceMoved <= 6) return
+
       dragging = true
+      // ブラウザ標準のバウンス/更新が距離計測を奪わないようにする。
       if (event.cancelable) event.preventDefault()
-      const travel = deltaY - 8
-      // 更新が成立するまでは素直に追従し、成立後は抵抗を加える。
-      const distance = Math.min(140, travel <= threshold ? travel : threshold + (travel - threshold) * 0.35)
+      const travel = distanceMoved - 6
+      // 解除前は指にほぼ1:1で追従。閾値到達後だけ軽い抵抗を付ける。
+      const distance = Math.min(160, travel <= threshold ? travel : threshold + (travel - threshold) * 0.35)
       pullRef.current = distance
       setPullDistance(distance)
     }
@@ -106,15 +123,15 @@ export function usePullToRefresh<T extends HTMLElement>(
         })
     }
 
-    element.addEventListener('touchstart', onStart, { passive: true })
-    element.addEventListener('touchmove', onMove, { passive: false })
-    element.addEventListener('touchend', onEnd, { passive: true })
-    element.addEventListener('touchcancel', reset, { passive: true })
+    document.addEventListener('touchstart', onStart, { passive: true })
+    document.addEventListener('touchmove', onMove, { passive: false })
+    document.addEventListener('touchend', onEnd, { passive: true })
+    document.addEventListener('touchcancel', reset, { passive: true })
     return () => {
-      element.removeEventListener('touchstart', onStart)
-      element.removeEventListener('touchmove', onMove)
-      element.removeEventListener('touchend', onEnd)
-      element.removeEventListener('touchcancel', reset)
+      document.removeEventListener('touchstart', onStart)
+      document.removeEventListener('touchmove', onMove)
+      document.removeEventListener('touchend', onEnd)
+      document.removeEventListener('touchcancel', reset)
     }
   }, [containerRef, enabled, threshold])
 
