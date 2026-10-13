@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
@@ -43,83 +43,114 @@ function PlayerSearch() {
 
 
 
-  const handleSearch = async () => {
-    const trimmedKeyword = keyword.trim()
-    const hasFilter = mainGame || mainPlay || playEnvironment || activityArea
+  const PAGE_SIZE = 30
+  const requestNumber = useRef(0)
+  const loadingRef = useRef(false)
+  const lastCriteria = useRef({ keyword: '', mainGame: '', mainPlay: '', playEnvironment: '', activityArea: '' })
+  const [hasMore, setHasMore] = useState(false)
+  const [currentPage, setCurrentPage] = useState(0)
+  const [isDiscovery, setIsDiscovery] = useState(true)
 
-    if (!trimmedKeyword && !hasFilter) {
-      setPlayers([])
-      setHasSearched(false)
-      setMessage('')
-      return
-    }
+  // 入力が変更された場合、古いリクエスト結果を破棄する。
+  const resetResults = () => {
+    requestNumber.current += 1
+    loadingRef.current = false
+    setIsSearching(false)
+    setPlayers([])
+    setHasMore(false)
+    setCurrentPage(0)
+    setHasSearched(false)
+    setMessage('')
+  }
 
+  type Criteria = typeof lastCriteria.current
+
+  const fetchPlayers = async (criteria: Criteria, page: number, append: boolean) => {
+    if (loadingRef.current) return
+    const requestId = ++requestNumber.current
+    loadingRef.current = true
     setIsSearching(true)
     setMessage('')
-
-    // 双方向ブロックを取得し、検索結果から除外する
-    const { data: { user }, error: authError } = await supabase.auth.getUser()
-    if (authError || !user) {
-      setIsSearching(false)
+    if (!append) {
       setPlayers([])
-      setMessage('ログイン情報を確認できませんでした。再ログインしてください。')
-      return
+      setHasMore(false)
     }
 
-    const { data: blockRows, error: blockError } = await supabase
-      .from('user_blocks')
-      .select('blocker_id, blocked_id')
-      .or(`blocker_id.eq.${user.id},blocked_id.eq.${user.id}`)
+    try {
+      const { data: { user }, error: authError } = await supabase.auth.getUser()
+      if (authError || !user) throw new Error('ログイン情報を確認できませんでした。再ログインしてください。')
 
-    if (blockError) {
-      console.error('ブロック情報取得エラー:', blockError)
-      setIsSearching(false)
-      setHasSearched(true)
-      setPlayers([])
-      setMessage('ブロック情報を取得できませんでした。もう一度お試しください。')
-      return
-    }
+      const { data: blockRows, error: blockError } = await supabase
+        .from('user_blocks')
+        .select('blocker_id, blocked_id')
+        .or(`blocker_id.eq.${user.id},blocked_id.eq.${user.id}`)
+      if (blockError) throw new Error('ブロック情報を取得できませんでした。もう一度お試しください。')
+      const excludedIds = [...new Set([
+        user.id,
+        ...(blockRows || []).map(row => row.blocker_id === user.id ? row.blocked_id : row.blocker_id),
+      ])]
 
-    const blockedIds = [...new Set((blockRows || []).map(row =>
-      row.blocker_id === user.id ? row.blocked_id : row.blocker_id
-    ))]
-
-    let query = supabase
-      .from('profiles')
-      .select(
+      let query = supabase.from('profiles').select(
         'id, display_name, poker_id, avatar_url, main_game, main_play, play_environment, activity_areas, poker_frequency'
       )
+      // PostgREST の or フィルタの構文文字を検索条件に混入させない。
+      const safeKeyword = criteria.keyword.replace(/[%(),.*\\]/g, ' ').trim()
+      if (safeKeyword) {
+        query = query.or(`poker_id.ilike.%${safeKeyword}%,display_name.ilike.%${safeKeyword}%`)
+      }
+      query = query.not('id', 'in', `(${excludedIds.join(',')})`)
+      if (criteria.mainGame) query = query.eq('main_game', criteria.mainGame)
+      if (criteria.mainPlay) query = query.eq('main_play', criteria.mainPlay)
+      if (criteria.playEnvironment) query = query.eq('play_environment', criteria.playEnvironment)
+      if (criteria.activityArea) query = query.contains('activity_areas', [criteria.activityArea])
 
-    if (trimmedKeyword) {
-      query = query.or(
-        `poker_id.ilike.%${trimmedKeyword}%,display_name.ilike.%${trimmedKeyword}%`
-      )
+      const from = page * PAGE_SIZE
+      const { data, error } = await query
+        .order('poker_id', { ascending: true })
+        .order('id', { ascending: true })
+        .range(from, from + PAGE_SIZE)
+      if (error) throw error
+      if (requestId !== requestNumber.current) return
+      const pageData = (data || []) as Player[]
+      setPlayers(previous => append ? [...previous, ...pageData.slice(0, PAGE_SIZE)] : pageData.slice(0, PAGE_SIZE))
+      setHasMore(pageData.length > PAGE_SIZE)
+      setCurrentPage(page)
+      setHasSearched(true)
+      setIsDiscovery(!criteria.keyword.trim() && !criteria.mainGame && !criteria.mainPlay && !criteria.playEnvironment && !criteria.activityArea)
+    } catch (error) {
+      if (requestId !== requestNumber.current) return
+      console.error('プレイヤー検索エラー:', error)
+      if (!append) setPlayers([])
+      setMessage(error instanceof Error && error.message.startsWith('ログイン情報')
+        ? error.message : '検索に失敗しました。もう一度お試しください。')
+      setHasSearched(true)
+    } finally {
+      if (requestId === requestNumber.current) {
+        loadingRef.current = false
+        setIsSearching(false)
+      }
     }
-
-    // 50件制限の前に除外することで、検索結果の件数を確保する
-    if (blockedIds.length > 0) {
-      query = query.not('id', 'in', `(${blockedIds.join(',')})`)
-    }
-
-    if (mainGame) query = query.eq('main_game', mainGame)
-    if (mainPlay) query = query.eq('main_play', mainPlay)
-    if (playEnvironment) query = query.eq('play_environment', playEnvironment)
-    if (activityArea) query = query.contains('activity_areas', [activityArea])
-
-    const { data, error } = await query.limit(50)
-
-    setIsSearching(false)
-    setHasSearched(true)
-
-    if (error) {
-      console.error(error)
-      setPlayers([])
-      setMessage('検索に失敗しました。もう一度お試しください。')
-      return
-    }
-
-    setPlayers(data || [])
   }
+
+  const handleSearch = async () => {
+    const criteria = { keyword: keyword.trim(), mainGame, mainPlay, playEnvironment, activityArea }
+    lastCriteria.current = criteria
+    await fetchPlayers(criteria, 0, false)
+  }
+
+  const handleLoadMore = () => {
+    if (hasMore && !loadingRef.current) void fetchPlayers(lastCriteria.current, currentPage + 1, true)
+  }
+
+  // 初回は何も入力しなくても、公開プロフィールのプレイヤー一覧を表示。
+  useEffect(() => {
+    const criteria = { keyword: '', mainGame: '', mainPlay: '', playEnvironment: '', activityArea: '' }
+    lastCriteria.current = criteria
+    void fetchPlayers(criteria, 0, false)
+    return () => { requestNumber.current += 1; loadingRef.current = false }
+    // マウント時だけ読み込む。以降は検索ボタンから実行する。
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleKeyDown = (
 
@@ -300,11 +331,10 @@ function PlayerSearch() {
 
                 value={keyword}
 
-                onChange={(e) =>
-
+                onChange={(e) => {
                   setKeyword(e.target.value)
-
-                }
+                  resetResults()
+                }}
 
                 onKeyDown={handleKeyDown}
 
@@ -339,6 +369,7 @@ function PlayerSearch() {
                   onClick={() => {
 
                     setKeyword('')
+                    resetResults()
 
                     setPlayers([])
 
@@ -400,7 +431,7 @@ function PlayerSearch() {
 
               onClick={handleSearch}
 
-              disabled={isSearching || (!keyword.trim() && !mainGame && !mainPlay && !playEnvironment && !activityArea)}
+              disabled={isSearching}
 
               style={{
 
@@ -439,7 +470,7 @@ function PlayerSearch() {
       {/* 絞り込み */}
       <section style={{ padding: '14px 0 4px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '8px' }}>
-          <select value={mainGame} onChange={(e) => setMainGame(e.target.value)} style={{ background: '#151515', border: '1px solid #292929', borderRadius: '12px', padding: '11px', color: '#fff', fontSize: '12px' }}>
+          <select value={mainGame} onChange={(e) => { setMainGame(e.target.value); resetResults() }} style={{ background: '#151515', border: '1px solid #292929', borderRadius: '12px', padding: '11px', color: '#fff', fontSize: '12px' }}>
             <option value="">メインゲーム：すべて</option>
             <option value="NLH">NLH</option>
             <option value="PLO">PLO</option>
@@ -447,7 +478,7 @@ function PlayerSearch() {
             <option value="その他">その他</option>
           </select>
 
-          <select value={mainPlay} onChange={(e) => setMainPlay(e.target.value)} style={{ background: '#151515', border: '1px solid #292929', borderRadius: '12px', padding: '11px', color: '#fff', fontSize: '12px' }}>
+          <select value={mainPlay} onChange={(e) => { setMainPlay(e.target.value); resetResults() }} style={{ background: '#151515', border: '1px solid #292929', borderRadius: '12px', padding: '11px', color: '#fff', fontSize: '12px' }}>
             <option value="">メインプレイ：すべて</option>
             <option value="tournament">トーナメント中心</option>
             <option value="ring">リング中心</option>
@@ -455,14 +486,14 @@ function PlayerSearch() {
             <option value="balanced">バランス</option>
           </select>
 
-          <select value={playEnvironment} onChange={(e) => setPlayEnvironment(e.target.value)} style={{ background: '#151515', border: '1px solid #292929', borderRadius: '12px', padding: '11px', color: '#fff', fontSize: '12px' }}>
+          <select value={playEnvironment} onChange={(e) => { setPlayEnvironment(e.target.value); resetResults() }} style={{ background: '#151515', border: '1px solid #292929', borderRadius: '12px', padding: '11px', color: '#fff', fontSize: '12px' }}>
             <option value="">プレイ環境：すべて</option>
             <option value="live">ライブ中心</option>
             <option value="online">オンライン中心</option>
             <option value="both">ライブ・オンライン</option>
           </select>
 
-          <select value={activityArea} onChange={(e) => setActivityArea(e.target.value)} style={{ background: '#151515', border: '1px solid #292929', borderRadius: '12px', padding: '11px', color: '#fff', fontSize: '12px' }}>
+          <select value={activityArea} onChange={(e) => { setActivityArea(e.target.value); resetResults() }} style={{ background: '#151515', border: '1px solid #292929', borderRadius: '12px', padding: '11px', color: '#fff', fontSize: '12px' }}>
             <option value="">活動エリア：すべて</option>
             {prefectures.map((area) => <option key={area} value={area}>{area}</option>)}
           </select>
@@ -475,6 +506,7 @@ function PlayerSearch() {
               setMainPlay('')
               setPlayEnvironment('')
               setActivityArea('')
+              resetResults()
               setPlayers([])
               setHasSearched(false)
               setMessage('')
@@ -745,8 +777,6 @@ function PlayerSearch() {
 
         {hasSearched &&
 
-          !isSearching &&
-
           players.length > 0 && (
 
             <section
@@ -775,7 +805,7 @@ function PlayerSearch() {
 
               >
 
-                検索結果
+                {isDiscovery ? 'プレイヤーを発見' : '検索結果'}
 
                 <span
 
@@ -1048,6 +1078,12 @@ function PlayerSearch() {
 
               )}
 
+              {hasMore && (
+                <button type="button" disabled={isSearching} onClick={handleLoadMore}
+                  style={{ display: 'block', margin: '18px auto 25px', width: 'auto', padding: '12px 24px', background: '#222', color: '#fff', border: '1px solid #444', borderRadius: '999px' }}>
+                  {isSearching ? '読み込み中...' : 'もっと見る'}
+                </button>
+              )}
             </section>
 
           )}
