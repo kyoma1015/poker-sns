@@ -28,6 +28,11 @@ type Post = {
   }
 
   likeCount: number
+  repostCount?: number
+  repostedByMe?: boolean
+  feedKey?: string
+  feedActorId?: string
+  repostedBy?: { display_name: string; poker_id: string }
 
   likedByMe: boolean
 
@@ -128,6 +133,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
   const refreshContainerRef = useRef<HTMLElement>(null)
   const [posts, setPosts] = useState<Post[]>([])
+  const [repostingId, setRepostingId] = useState<string | null>(null)
+  const repostingRef = useRef(false)
 
   const [content, setContent] = useState('')
   const [composeOpen, setComposeOpen] = useState(false)
@@ -215,8 +222,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
     setFollowingIds(loadedFollowingIds)
 
+    // 元投稿とリポストされた投稿の双方を参照できるよう、元投稿はまとめて取得する。
     const postQuery = supabase.from('posts').select('*').order('created_at', { ascending: false })
-    const { data: postData, error: postError } = await (profileUserId ? postQuery.eq('user_id', profileUserId) : postQuery)
+    const { data: postData, error: postError } = await postQuery
 
     if (postError) {
 
@@ -241,6 +249,18 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       return
 
     }
+
+    const { data: repostRows, error: repostError } = await supabase
+      .from('post_reposts').select('post_id,user_id,created_at')
+    if (repostError) { setMessage(`リポストの取得に失敗しました：${repostError.message}`); return }
+    // ブロックした相手・ブロックされた相手のリポストは表示しない。
+    const { data: blockRows, error: blockError } = await supabase.from('user_blocks')
+      .select('blocker_id,blocked_id').or(`blocker_id.eq.${user.id},blocked_id.eq.${user.id}`)
+    if (blockError) { setMessage(`ブロック情報の取得に失敗しました：${blockError.message}`); return }
+    const blockedIds = new Set((blockRows || []).map(row => row.blocker_id === user.id ? row.blocked_id : row.blocker_id))
+    const permittedPosts = postData.filter(row => !blockedIds.has(row.user_id))
+    const permittedIds = new Set(permittedPosts.map(row => row.id))
+    const validReposts = (repostRows || []).filter(row => permittedIds.has(row.post_id) && !blockedIds.has(row.user_id))
 
     const tournamentResultIds = postData
 
@@ -453,11 +473,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
       ...new Set(
 
-        postData.map(
-
-          (post) => post.user_id
-
-        )
+          [...postData.map(post => post.user_id), ...validReposts.map(repost => repost.user_id)]
 
       ),
 
@@ -613,7 +629,23 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
       })
 
-    setPosts(postsWithData)
+    const repostCountByPost = new Map<string, number>()
+    for (const row of validReposts) repostCountByPost.set(row.post_id, (repostCountByPost.get(row.post_id) || 0) + 1)
+    const myReposted = new Set(validReposts.filter(row => row.user_id === user.id).map(row => row.post_id))
+    const originalCards = postsWithData.filter(post => !blockedIds.has(post.user_id)).map(post => ({
+      ...post, feedKey: `post:${post.id}`, feedActorId: post.user_id,
+      repostCount: repostCountByPost.get(post.id) || 0, repostedByMe: myReposted.has(post.id),
+    }))
+    const originalById = new Map(originalCards.map(post => [post.id, post]))
+    const repostCards: Post[] = validReposts.flatMap(row => {
+      const original = originalById.get(row.post_id)
+      const sharer = profiles?.find(profile => profile.id === row.user_id)
+      if (!original || !sharer) return []
+      return [{ ...original, feedKey: `repost:${row.user_id}:${row.post_id}`,
+        feedActorId: row.user_id, created_at: row.created_at,
+        repostedBy: { display_name: sharer.display_name, poker_id: sharer.poker_id } }]
+    })
+    setPosts([...originalCards, ...repostCards].sort((a,b) => Date.parse(b.created_at) - Date.parse(a.created_at)))
 
     setMessage('')
 
@@ -963,6 +995,27 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
   }
 
+  const handleRepost = async (post: Post) => {
+    if (!currentUserId || repostingRef.current || post.user_id === currentUserId) return
+    repostingRef.current = true
+    setRepostingId(post.id)
+    try {
+      const { data: { user }, error: authError } = await supabase.auth.getUser()
+      if (authError || !user || user.id !== currentUserId) throw new Error('ログイン情報を確認できません。')
+      const { error } = post.repostedByMe
+        ? await supabase.from('post_reposts').delete().eq('post_id', post.id).eq('user_id', user.id)
+        : await supabase.from('post_reposts').insert({ post_id: post.id, user_id: user.id })
+      if (error) throw error
+      setMessage('')
+      await loadPosts()
+    } catch (error) {
+      setMessage(`リポスト操作に失敗しました：${error instanceof Error ? error.message : '不明なエラー'}`)
+    } finally {
+      repostingRef.current = false
+      setRepostingId(null)
+    }
+  }
+
   const handleDelete = async () => {
     if (!deleteTargetId || deletingRef.current) return
     deletingRef.current = true
@@ -1025,27 +1078,11 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
   }
 
-  const visiblePosts =
-
-    profileUserId || timelineMode === 'all'
-
-      ? posts
-
-      : posts.filter(
-
-          (post) =>
-
-            post.user_id ===
-
-              currentUserId ||
-
-            followingIds.includes(
-
-              post.user_id
-
-            )
-
-        )
+  const visiblePosts = posts.filter(post => {
+    const actorId = post.feedActorId || post.user_id
+    if (profileUserId) return actorId === profileUserId
+    return timelineMode === 'all' || actorId === currentUserId || followingIds.includes(actorId)
+  })
 
   const formatPostTime = (
 
@@ -2609,7 +2646,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
                 <article
 
-                  key={post.id}
+                  key={post.feedKey || post.id}
 
                   style={{
 
@@ -2624,7 +2661,11 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
                   }}
 
                 >
-
+                  {post.repostedBy && (
+                    <div style={{ color: '#aaa', fontSize: 12, marginBottom: 10, textAlign: 'left' }}>
+                      ↻ {post.repostedBy.display_name} (@{post.repostedBy.poker_id}) がリポスト
+                    </div>
+                  )}
                   <div
 
                     style={{
@@ -2923,7 +2964,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
                         </span>
 
-                        {currentUserId === post.user_id && (
+                        {currentUserId === post.user_id && !post.repostedBy && (
                           <div style={{ position: 'relative', marginLeft: 'auto', flexShrink: 0 }}>
                             <button
                               type="button"
@@ -3298,6 +3339,18 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
                         </button>
 
+                        {currentUserId !== post.user_id && (
+                          <button type="button" disabled={repostingId !== null}
+                            aria-label={post.repostedByMe ? 'リポストを解除' : 'リポスト'}
+                            aria-pressed={post.repostedByMe}
+                            onClick={() => void handleRepost(post)}
+                            style={{ width: 'auto', padding: '5px 0', border: 0, background: 'transparent',
+                              color: post.repostedByMe ? '#8dd5b0' : '#888', display: 'flex',
+                              alignItems: 'center', gap: 5, fontSize: 13 }}>
+                            ↻ {repostingId === post.id ? '処理中' : post.repostedByMe ? 'リポスト済' : 'リポスト'}
+                            {(post.repostCount || 0) > 0 ? ` ${post.repostCount}` : ''}
+                          </button>
+                        )}
                         <button
 
                           onClick={() => {

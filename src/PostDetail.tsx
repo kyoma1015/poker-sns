@@ -49,6 +49,10 @@ function PostDetail() {
   const refreshRootRef = useRef<HTMLElement | null>(null)
 
   const [post, setPost] = useState<Post | null>(null)
+  const [repostCount, setRepostCount] = useState(0)
+  const [repostedByMe, setRepostedByMe] = useState(false)
+  const [reposting, setReposting] = useState(false)
+  const repostingRef = useRef(false)
   const [currentUserId, setCurrentUserId] = useState('')
   const [commentInput, setCommentInput] = useState('')
   const [replyTo, setReplyTo] = useState<{ id: string; name: string } | null>(null)
@@ -235,13 +239,18 @@ function PostDetail() {
       comments: commentsWithProfiles,
     })
 
+    const { data: repostRows, error: repostError } = await supabase.from('post_reposts')
+      .select('user_id').eq('post_id', postData.id)
+    if (repostError) { setMessage(`リポスト取得エラー：${repostError.message}`); return }
+    setRepostCount(repostRows?.length || 0)
+    setRepostedByMe(Boolean(repostRows?.some(row => row.user_id === user.id)))
     setMessage('')
   }
 
   // 下書きや返信先、操作中の状態がある間はPull to Refreshを許可しない。
   // Hook自体の判定に加え、更新処理を開始する直前にも条件を確認する。
   const refreshAllowed = Boolean(post) && !commentInput.trim() && !replyTo &&
-    !submittingComment && commentImageFiles.length === 0 && !deletingCommentId && !expandedImage
+    !submittingComment && !reposting && commentImageFiles.length === 0 && !deletingCommentId && !expandedImage
   const refreshAllowedRef = useRef(refreshAllowed)
   refreshAllowedRef.current = refreshAllowed
   const { pullDistance, isRefreshing, refreshError } = usePullToRefresh(
@@ -327,6 +336,27 @@ function PostDetail() {
 
     setMessage('')
     await loadPost()
+  }
+
+  const handleRepost = async () => {
+    if (!post || !currentUserId || repostingRef.current || post.user_id === currentUserId) return
+    repostingRef.current = true
+    setReposting(true)
+    try {
+      const { data: { user }, error: authError } = await supabase.auth.getUser()
+      if (authError || !user || user.id !== currentUserId) throw new Error('ログイン情報を確認できません。')
+      const { error } = repostedByMe
+        ? await supabase.from('post_reposts').delete().eq('post_id', post.id).eq('user_id', user.id)
+        : await supabase.from('post_reposts').insert({ post_id: post.id, user_id: user.id })
+      if (error) throw error
+      setMessage('')
+      await loadPost(true)
+    } catch (error) {
+      setMessage(`リポスト操作に失敗しました：${error instanceof Error ? error.message : '不明なエラー'}`)
+    } finally {
+      repostingRef.current = false
+      setReposting(false)
+    }
   }
 
   const handleComment = async () => {
@@ -671,6 +701,14 @@ function PostDetail() {
                 >
                   コメント {post.comments.length}
                 </span>
+                {post.user_id !== currentUserId && (
+                  <button type="button" disabled={reposting} onClick={() => void handleRepost()}
+                    aria-label={repostedByMe ? 'リポストを解除' : 'リポスト'} aria-pressed={repostedByMe}
+                    style={{ width: 'auto', padding: '8px 12px', fontSize: 13, borderRadius: 10,
+                      color: repostedByMe ? '#8dd5b0' : '#ddd', background: '#222', border: '1px solid #444' }}>
+                    ↻ {reposting ? '処理中...' : repostedByMe ? 'リポスト済' : 'リポスト'} {repostCount || ''}
+                  </button>
+                )}
               </div>
             </div>
 
