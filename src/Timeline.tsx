@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { supabase } from './supabase'
+import { usePullToRefresh } from './usePullToRefresh'
 
 const playerTypeEmoji: Record<string, string> = {lion:'🦁',tiger:'🐯',leopard:'🐆',bison:'🦬',gorilla:'🦍',rhino:'🦏',shark:'🦈',owl:'🦉',eagle:'🦅',elephant:'🐘',giraffe:'🦒',wolf:'🐺',hyena:'🐾',cat:'🐈',chameleon:'🦎',dolphin:'🐬',fox:'🦊',snake:'🐍',raccoon:'🦝',turtle:'🐢',rabbit:'🐇',crocodile:'🐊',hedgehog:'🦔',deer:'🦌',sloth:'🦥',dog:'🐕',bear:'🐻',bull:'🐄',badger:'🦡',monkey:'🐒',magpie:'🐦‍⬛',penguin:'🐧',horse:'🐎',squirrel:'🐿️',mountain_goat:'🐐',otter:'🦦'}
 
@@ -125,6 +126,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     }
   }, [])
 
+  const refreshContainerRef = useRef<HTMLElement>(null)
   const [posts, setPosts] = useState<Post[]>([])
 
   const [content, setContent] = useState('')
@@ -616,6 +618,11 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     setMessage('')
 
   }
+
+  const { pullDistance, isRefreshing, refreshError } = usePullToRefresh(refreshContainerRef, {
+    onRefresh: loadPosts,
+    enabled: !profileUserId && !composeOpen && !attachmentsOpen && !deleteTargetId && !isPosting && !attachmentBusy,
+  })
 
   useEffect(() => {
 
@@ -2041,7 +2048,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           </div>
         </div>
       )}
-    <main className={profileUserId ? undefined : "app"}>
+    <main ref={refreshContainerRef} className={profileUserId ? undefined : "app"}>
 
       <div
 
@@ -2054,6 +2061,12 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         }}
 
       >
+
+        {!profileUserId && (isRefreshing || pullDistance > 0 || refreshError) && (
+          <div role="status" aria-live="polite" style={{ textAlign: 'center', fontSize: 12, color: refreshError ? '#ff9999' : '#aaa', padding: '9px 4px', minHeight: 20 }}>
+            {refreshError || (isRefreshing ? '更新中...' : pullDistance >= 76 ? '離して更新' : '下に引っ張って更新')}
+          </div>
+        )}
 
         {!profileUserId && <>{/* ホームのコンパクトなツール導線。スクロール時は投稿と一緒に隠れる */}
         <section style={{ padding: '12px 0 13px', borderBottom: '1px solid #242424' }}>
