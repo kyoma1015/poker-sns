@@ -573,7 +573,7 @@ import { usePullToRefresh } from './usePullToRefresh'
             <header
               style={{
                 position: 'sticky',
-                top: 0,
+                top: '60px',
                 zIndex: 20,
                 margin: '0 -20px',
                 padding: '15px 20px',
@@ -929,6 +929,10 @@ import { usePullToRefresh } from './usePullToRefresh'
             {/* プロフィールメニュー */}
             <div
               style={{
+                position: 'sticky',
+                top: '136px',
+                zIndex: 19,
+                background: '#080808',
                 margin: '0 -20px',
                 display: 'grid',
                 gridTemplateColumns: 'repeat(3, 1fr)',
