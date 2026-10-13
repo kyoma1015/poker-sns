@@ -1878,7 +1878,7 @@ function AmusementRingCreate() {
 
 
 
-        `${trimmedVenue}でアミューズリングをプレイ。` +
+        `${trimmedVenue}でリングゲームをプレイ。` +
 
 
 
@@ -2196,7 +2196,7 @@ if (savedSuccessfully && savedResultId) {
 
 
 
-          アミューズリング記録を保存しました。
+          リングゲーム記録を保存しました。
 
 
 
@@ -2632,7 +2632,7 @@ return (
 
 
 
-              アミューズリング記録
+              リングゲーム記録
 
 
 
@@ -7104,7 +7104,7 @@ return (
 
 
 
-          {isSaving ? '保存中...' : 'アミューズリング記録を保存'}
+          {isSaving ? '保存中...' : 'リングゲーム記録を保存'}
 
 
 
