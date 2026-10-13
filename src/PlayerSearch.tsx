@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { supabase } from './supabase'
+import { usePullToRefresh } from './usePullToRefresh'
 
 
 
@@ -23,6 +24,7 @@ type Player = {
 function PlayerSearch() {
 
   const navigate = useNavigate()
+  const refreshRootRef = useRef<HTMLElement | null>(null)
 
 
 
@@ -50,6 +52,14 @@ function PlayerSearch() {
   const [hasMore, setHasMore] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
   const [isDiscovery, setIsDiscovery] = useState(true)
+  // 入力中の検索文字や未確定の絞り込みを勝手に検索へ反映しない。
+  const criteriaUnchanged =
+    keyword.trim() === lastCriteria.current.keyword &&
+    mainGame === lastCriteria.current.mainGame &&
+    mainPlay === lastCriteria.current.mainPlay &&
+    playEnvironment === lastCriteria.current.playEnvironment &&
+    activityArea === lastCriteria.current.activityArea
+  const refreshEnabled = !isSearching && criteriaUnchanged && hasSearched
 
   // 入力が変更された場合、古いリクエスト結果を破棄する。
   const resetResults = () => {
@@ -65,13 +75,13 @@ function PlayerSearch() {
 
   type Criteria = typeof lastCriteria.current
 
-  const fetchPlayers = async (criteria: Criteria, page: number, append: boolean) => {
+  const fetchPlayers = async (criteria: Criteria, page: number, append: boolean, refreshing = false) => {
     if (loadingRef.current) return
     const requestId = ++requestNumber.current
     loadingRef.current = true
     setIsSearching(true)
     setMessage('')
-    if (!append) {
+    if (!append && !refreshing) {
       setPlayers([])
       setHasMore(false)
     }
@@ -120,7 +130,7 @@ function PlayerSearch() {
     } catch (error) {
       if (requestId !== requestNumber.current) return
       console.error('プレイヤー検索エラー:', error)
-      if (!append) setPlayers([])
+      if (!append && !refreshing) setPlayers([])
       setMessage(error instanceof Error && error.message.startsWith('ログイン情報')
         ? error.message : '検索に失敗しました。もう一度お試しください。')
       setHasSearched(true)
@@ -131,6 +141,17 @@ function PlayerSearch() {
       }
     }
   }
+
+  const { pullDistance, isRefreshing, refreshError } = usePullToRefresh(
+    refreshRootRef,
+    {
+      enabled: refreshEnabled,
+      onRefresh: async () => {
+        // 保存済みの検索条件だけを再実行。編集途中の入力は保持。
+        await fetchPlayers(lastCriteria.current, 0, false, true)
+      },
+    },
+  )
 
   const handleSearch = async () => {
     const criteria = { keyword: keyword.trim(), mainGame, mainPlay, playEnvironment, activityArea }
@@ -195,7 +216,7 @@ function PlayerSearch() {
 
   return (
 
-    <main className="app">
+    <main className="app" ref={refreshRootRef}>
 
       <div
 
@@ -467,6 +488,11 @@ function PlayerSearch() {
 
         </header>
 
+      {(pullDistance > 0 || isRefreshing || refreshError) && (
+        <div role="status" aria-live="polite" style={{ textAlign: 'center', padding: '9px 12px', color: '#aaa', fontSize: 12 }}>
+          {refreshError || (isRefreshing ? 'プレイヤーを更新中...' : pullDistance >= 76 ? '指を離すと更新' : '下に引っ張って更新')}
+        </div>
+      )}
       {/* 絞り込み */}
       <section style={{ padding: '14px 0 4px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '8px' }}>

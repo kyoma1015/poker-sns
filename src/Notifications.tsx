@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from './supabase'
+import { usePullToRefresh } from './usePullToRefresh'
 
 
 // ブロックは双方の関係を確認する（自分→相手、相手→自分）。
@@ -28,6 +29,12 @@ type NotificationItem = {
 
 function Notifications() {
   const navigate = useNavigate()
+  const refreshRootRef = useRef<HTMLElement | null>(null)
+  const reloadNotificationsRef = useRef<() => Promise<void>>(async () => {})
+  const { pullDistance, isRefreshing, refreshError } = usePullToRefresh(
+    refreshRootRef,
+    { onRefresh: () => reloadNotificationsRef.current() },
+  )
 
   const [notifications, setNotifications] =
     useState<NotificationItem[]>([])
@@ -193,7 +200,8 @@ function Notifications() {
       }
     }
 
-    loadNotifications()
+    reloadNotificationsRef.current = loadNotifications
+    void loadNotifications()
   }, [navigate])
 
   const getNotificationText = (
@@ -342,7 +350,7 @@ function Notifications() {
   }
 
   return (
-    <main className="app">
+    <main className="app" ref={refreshRootRef}>
       <div
         className="card"
         style={{
@@ -379,6 +387,11 @@ function Notifications() {
           </div>
         </header>
 
+        {(pullDistance > 0 || isRefreshing || refreshError) && (
+          <div role="status" aria-live="polite" style={{ textAlign: 'center', padding: '9px 12px', color: '#aaa', fontSize: 12 }}>
+            {refreshError || (isRefreshing ? '通知を更新中...' : pullDistance >= 76 ? '指を離すと更新' : '下に引っ張って更新')}
+          </div>
+        )}
         {/* 読み込み / エラー */}
         {message && (
           <div

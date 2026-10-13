@@ -1,7 +1,8 @@
 import Timeline from './Timeline'
-    import { useEffect, useState } from 'react'
+    import { useEffect, useRef, useState } from 'react'
     import { useNavigate } from 'react-router-dom'
     import { supabase } from './supabase'
+import { usePullToRefresh } from './usePullToRefresh'
     type PokerResult = {
       id: string
       tournament_name: string
@@ -134,6 +135,16 @@ import Timeline from './Timeline'
       const [activityLoading, setActivityLoading] = useState(false)
       const [activityError, setActivityError] = useState('')
       const [playerType, setPlayerType] = useState<PlayerTypeSummary | null>(null)
+      const refreshRootRef = useRef<HTMLElement | null>(null)
+      const reloadProfileRef = useRef<() => Promise<void>>(async () => {})
+      // 投稿タブは内部の Timeline が既に独立して更新を制御するため競合させない。
+      const { pullDistance, isRefreshing, refreshError } = usePullToRefresh(
+        refreshRootRef,
+        {
+          enabled: !!profile && profileTab !== 'posts',
+          onRefresh: () => reloadProfileRef.current(),
+        },
+      )
       useEffect(() => {
         const loadProfile = async () => {
           const {
@@ -282,7 +293,8 @@ import Timeline from './Timeline'
             setAverageLooseness(summary?.average_looseness == null ? null : Number(summary.average_looseness))
           }
         }
-        loadProfile()
+        reloadProfileRef.current = loadProfile
+        void loadProfile()
       }, [navigate])
       useEffect(() => {
         if (profileTab !== 'posts' || !profile?.id) return
@@ -542,7 +554,7 @@ import Timeline from './Timeline'
         return points
       }, [])
       return (
-        <main className="app">
+        <main className="app" ref={refreshRootRef}>
           <div
             className="card"
             style={{
@@ -550,6 +562,11 @@ import Timeline from './Timeline'
             }}
           >
             {!recordsOnly && (<>
+            {(pullDistance > 0 || isRefreshing || refreshError) && (
+              <div role="status" aria-live="polite" style={{ textAlign: 'center', padding: '9px 12px', color: '#aaa', fontSize: 12 }}>
+                {refreshError || (isRefreshing ? 'プロフィールを更新中...' : pullDistance >= 76 ? '指を離すと更新' : '下に引っ張って更新')}
+              </div>
+            )}
             {/* 上部ヘッダー */}
             <header
               style={{
