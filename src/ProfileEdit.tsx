@@ -37,6 +37,20 @@ function ProfileEdit() {
 
   const navigate = useNavigate()
 
+  // プロフィールから指定された編集項目へ直接移動
+  useEffect(() => {
+    const targetId = window.location.hash.slice(1)
+    if (targetId !== 'poker-meaning' && targetId !== 'my-hand') return
+    const scrollToTarget = () => document.getElementById(targetId)?.scrollIntoView({ block: 'start' })
+    const frame = window.requestAnimationFrame(scrollToTarget)
+    const retry = window.setTimeout(scrollToTarget, 180)
+    return () => {
+      window.cancelAnimationFrame(frame)
+      window.clearTimeout(retry)
+    }
+  }, [])
+
+
 
 
   const [pokerId, setPokerId] = useState('')
@@ -2570,7 +2584,7 @@ function ProfileEdit() {
             <div style={{ color: '#888', fontSize: 11, marginTop: 8 }}>{hobbies.length}/5個</div>
           </div>
 
-          <div style={{ padding: 14, border: '1px solid #333', borderRadius: 12, background: '#111' }}>
+          <div id="poker-meaning" style={{ scrollMarginTop: 24, padding: 14, border: '1px solid #333', borderRadius: 12, background: '#111' }}>
             <div style={{ fontSize: 16, fontWeight: 800 }}>あなたにとってポーカーとは？</div>
             <div style={{ color: '#888', fontSize: 12, margin: '6px 0 12px' }}>Poker IDタブの先頭に大きく表示。登録は任意です。</div>
             <input value={pokerMeaning} maxLength={40} placeholder="例：人生を楽しむ最高のゲーム" onChange={e => setPokerMeaning(e.target.value)} />
@@ -2578,7 +2592,7 @@ function ProfileEdit() {
             <textarea value={pokerMeaningDetail} maxLength={300} placeholder="理由・補足（任意・300文字以内）" onChange={e => setPokerMeaningDetail(e.target.value)} rows={4} />
           </div>
 
-          <div style={{ padding: 14, border: '1px solid #333', borderRadius: 12, background: '#111' }}>
+          <div id="my-hand" style={{ scrollMarginTop: 24, padding: 14, border: '1px solid #333', borderRadius: 12, background: '#111' }}>
             <div style={{ fontSize: 16, fontWeight: 800 }}>マイハンド</div>
             <div style={{ color: '#888', fontSize: 12, margin: '6px 0 12px' }}>好きなカード2枚をスートまで選択。理由は任意です。</div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>

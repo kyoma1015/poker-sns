@@ -1044,7 +1044,7 @@ import { usePullToRefresh } from './usePullToRefresh'
             )}
             {!recordsOnly && profileTab === 'pokerId' && (
               <>
-          <PokerMeaningSection data={profile} own onEdit={() => navigate('/profile/edit')} />
+          <PokerMeaningSection data={profile} own onEdit={() => navigate('/profile/edit#poker-meaning')} />
           {/* プレイヤータイプ診断 */}
           <section
             style={{
@@ -1167,7 +1167,7 @@ import { usePullToRefresh } from './usePullToRefresh'
             )}
           </section>
 
-          <MyHandSection data={profile} own onEdit={() => navigate('/profile/edit')} />
+          <MyHandSection data={profile} own onEdit={() => navigate('/profile/edit#my-hand')} />
           {/* プレイスタイル */}
             <section
               style={{

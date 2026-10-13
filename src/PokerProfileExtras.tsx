@@ -73,6 +73,12 @@ export function PokerMeaningSection({ data, own = false, onEdit }: { data: Poker
       <div style={{ color: '#fff', fontSize: 21, lineHeight: 1.55, fontWeight: 800, overflowWrap: 'anywhere' }}>「{data.poker_meaning}」</div>
       {data.poker_meaning_detail?.trim() && <div style={{ marginTop: 14, color: '#bbb', fontSize: 13, whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', lineHeight: 1.8 }}>{data.poker_meaning_detail}</div>}
     </div> : <button type="button" onClick={onEdit} style={{ marginTop: 12, padding: 15, color: '#ddd', background: '#181818', border: '1px solid #444', borderRadius: 12, width: '100%', textAlign: 'left' }}>あなたのポーカー観を登録する →</button>}
+    {data.poker_meaning?.trim() && own && onEdit && <button type="button" onClick={onEdit} style={{
+      display: 'flex', alignItems: 'center', justifyContent: 'flex-end',
+      width: '100%', marginTop: 13, padding: '8px 0',
+      background: 'transparent', border: 0, color: '#aaa',
+      fontSize: 13, fontWeight: 700, cursor: 'pointer', textAlign: 'right',
+    }}>編集する →</button>}
   </section>
 }
 
@@ -107,5 +113,11 @@ export function MyHandSection({ data, own = false, onEdit }: { data: PokerProfil
       </div>
       {data.my_hand_reason?.trim() && <div style={{ marginTop: 15, fontSize: 13, color: '#ccc', whiteSpace: 'pre-wrap', lineHeight: 1.8, textAlign: 'center', overflowWrap: 'anywhere' }}>{data.my_hand_reason}</div>}
     </div> : <button type="button" onClick={onEdit} style={{ marginTop: 12, padding: 15, color: '#ddd', background: '#181818', border: '1px solid #444', borderRadius: 12, width: '100%', textAlign: 'left' }}>お気に入りのハンドを登録する →</button>}
+    {cards.length === 2 && own && onEdit && <button type="button" onClick={onEdit} style={{
+      display: 'flex', alignItems: 'center', justifyContent: 'flex-end',
+      width: '100%', marginTop: 13, padding: '8px 0',
+      background: 'transparent', border: 0, color: '#aaa',
+      fontSize: 13, fontWeight: 700, cursor: 'pointer', textAlign: 'right',
+    }}>編集する →</button>}
   </section>
 }
