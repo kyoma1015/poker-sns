@@ -37,6 +37,7 @@ import AdminReports from './AdminReports'
 import Settings from './Settings'
 import PokerTools from './PokerTools'
 import PokerResults from './PokerResults'
+import PastTournamentAchievementForm from './PastTournamentAchievementForm'
 
 function Top() {
   const navigate = useNavigate()
@@ -201,6 +202,8 @@ function AppLayout() {
         />
 
         <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/achievements/new" element={<PastTournamentAchievementForm />} />
+        <Route path="/profile/achievements/:id/edit" element={<PastTournamentAchievementForm />} />
         <Route path="/settings" element={<Settings />} />
 
         <Route
