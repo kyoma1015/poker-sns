@@ -312,7 +312,7 @@ function AmusementRingEdit() {
     if (!id || isDeleting) return
 
     const confirmed = window.confirm(
-      'このアミューズリング記録を削除しますか？\nこの操作は取り消せません。'
+      'このリングゲーム記録を削除しますか？\nこの操作は取り消せません。'
     )
 
     if (!confirmed) return
@@ -417,7 +417,7 @@ function AmusementRingEdit() {
 
           <div>
             <div style={{ fontSize: '18px', fontWeight: 800 }}>
-              アミューズリング記録を編集
+              リングゲーム記録を編集
             </div>
 
             <div
