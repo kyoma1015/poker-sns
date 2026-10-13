@@ -25,6 +25,7 @@ type Comment = {
   user_id: string
   content: string
   created_at: string
+  parent_comment_id: string | null
   profile?: Profile
 }
 
@@ -47,6 +48,8 @@ function PostDetail() {
   const [post, setPost] = useState<Post | null>(null)
   const [currentUserId, setCurrentUserId] = useState('')
   const [commentInput, setCommentInput] = useState('')
+  const [replyTo, setReplyTo] = useState<{ id: string; name: string } | null>(null)
+  const [submittingComment, setSubmittingComment] = useState(false)
   const [message, setMessage] = useState('読み込み中...')
   const [expandedImage, setExpandedImage] = useState<string | null>(null)
   const deletingCommentRef = useRef(false)
@@ -278,7 +281,7 @@ function PostDetail() {
   }
 
   const handleComment = async () => {
-    if (!post || !currentUserId) return
+    if (!post || !currentUserId || submittingComment) return
 
     const trimmedComment = commentInput.trim()
 
@@ -287,13 +290,21 @@ function PostDetail() {
       return
     }
 
+    const replyTarget = replyTo ? post.comments.find(c => c.id === replyTo.id) : null
+    if (replyTo && !replyTarget) {
+      setMessage('返信先が見つかりません。再読み込みしてください。')
+      return
+    }
+    setSubmittingComment(true)
     const { error } = await supabase
       .from('post_comments')
       .insert({
         post_id: post.id,
         user_id: currentUserId,
         content: trimmedComment,
+        parent_comment_id: replyTarget ? (replyTarget.parent_comment_id || replyTarget.id) : null,
       })
+    setSubmittingComment(false)
 
     if (error) {
       console.error(error)
@@ -323,6 +334,7 @@ function PostDetail() {
     }
 
     setCommentInput('')
+    setReplyTo(null)
     setMessage('')
     await loadPost()
   }
@@ -574,7 +586,7 @@ function PostDetail() {
             >
               <input
                 type="text"
-                placeholder="コメントを書く..."
+                placeholder={replyTo ? `${replyTo.name}に返信する...` : 'コメントを書く...'}
                 value={commentInput}
                 onChange={(e) =>
                   setCommentInput(e.target.value)
@@ -591,15 +603,22 @@ function PostDetail() {
 
               <button
                 onClick={handleComment}
+                disabled={submittingComment}
                 style={{
                   width: 'auto',
                   padding: '8px 12px',
                   fontSize: '13px',
                 }}
               >
-                送信
+                {submittingComment ? '送信中...' : '送信'}
               </button>
             </div>
+            {replyTo && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, paddingBottom: 12, color: '#aaa', fontSize: 12 }}>
+                <span>{replyTo.name}への返信を作成中</span>
+                <button type="button" onClick={() => setReplyTo(null)} style={{ width: 'auto', padding: '4px 8px', fontSize: 12 }}>解除</button>
+              </div>
+            )}
 
             <div
               style={{
@@ -618,11 +637,25 @@ function PostDetail() {
                   まだコメントはありません
                 </p>
               ) : (
-                post.comments.map((comment) => (
+                [...post.comments]
+                  .sort((a, b) => {
+                    const rootA = a.parent_comment_id || a.id
+                    const rootB = b.parent_comment_id || b.id
+                    const rootCommentA = post.comments.find(c => c.id === rootA) || a
+                    const rootCommentB = post.comments.find(c => c.id === rootB) || b
+                    const rootOrder = new Date(rootCommentA.created_at).getTime() - new Date(rootCommentB.created_at).getTime()
+                    if (rootOrder !== 0) return rootOrder
+                    if (a.parent_comment_id === null && b.parent_comment_id !== null) return -1
+                    if (a.parent_comment_id !== null && b.parent_comment_id === null) return 1
+                    return new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+                  })
+                  .map((comment) => (
                   <div
                     key={comment.id}
                     style={{
                       padding: '16px 0',
+                      paddingLeft: comment.parent_comment_id ? '28px' : 0,
+                      borderLeft: comment.parent_comment_id ? '2px solid #333' : undefined,
                       borderBottom:
                         '1px solid #333',
                     }}
@@ -669,6 +702,11 @@ function PostDetail() {
                       </div>
                     </div>
 
+                    {comment.parent_comment_id && (
+                      <div style={{ marginLeft: 48, marginTop: 8, color: '#999', fontSize: 12 }}>
+                        ↳ {post.comments.find(c => c.id === comment.parent_comment_id)?.profile?.display_name || 'コメント'}への返信
+                      </div>
+                    )}
                     <p
                       style={{
                         whiteSpace: 'pre-wrap',
@@ -698,6 +736,14 @@ function PostDetail() {
                         ).toLocaleString('ja-JP')}
                       </span>
 
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setReplyTo({ id: comment.parent_comment_id || comment.id, name: comment.profile?.display_name || 'プレイヤー' })
+                          setMessage('')
+                        }}
+                        style={{ width: 'auto', padding: '4px 8px', fontSize: '11px' }}
+                      >返信</button>
                       {currentUserId ===
                         comment.user_id && (
                         <button
