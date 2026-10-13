@@ -103,6 +103,52 @@ function FollowList() {
           </div>
         )}
         <h1>フォロー一覧</h1>
+        <div
+          role="tablist"
+          aria-label="フォロー・フォロワー一覧"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+            gap: '4px',
+            marginTop: '18px',
+            padding: '4px',
+            background: '#111',
+            border: '1px solid #2b2b2b',
+            borderRadius: '13px',
+          }}
+        >
+          {([
+            { key: 'following', label: 'フォロー中' },
+            { key: 'followers', label: 'フォロワー' },
+          ] as const).map((tab) => {
+            const active = tab.key === 'following'
+            return (
+              <button
+                key={tab.key}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                onClick={() => {
+                  if (id && !active) navigate(`/player/${id}/${tab.key}`)
+                }}
+                style={{
+                  width: '100%',
+                  minWidth: 0,
+                  padding: '11px 8px',
+                  borderRadius: '10px',
+                  border: active ? '1px solid #454545' : '1px solid transparent',
+                  background: active ? '#292929' : 'transparent',
+                  color: active ? '#fff' : '#929292',
+                  fontSize: '13px',
+                  fontWeight: active ? 800 : 650,
+                  cursor: active ? 'default' : 'pointer',
+                }}
+              >
+                {tab.label}
+              </button>
+            )
+          })}
+        </div>
 
         {loadError && <p style={{ color: '#ff8888' }}>{loadError}</p>}
 
