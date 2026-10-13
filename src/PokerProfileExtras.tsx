@@ -99,8 +99,8 @@ export function MyHandSection({ data, own = false, onEdit }: { data: PokerProfil
           }}>
             <span style={{ fontWeight: 900, fontSize: 27, lineHeight: 1.05, letterSpacing: '-0.6px' }}>{rank}</span>
             <span aria-hidden="true" style={{
-              position: 'absolute', top: '43%', left: '50%', transform: 'translate(-50%, -50%)',
-              fontSize: 56, fontWeight: 700, lineHeight: 1, fontFamily: 'Georgia, serif',
+              position: 'absolute', top: '53%', left: '50%', transform: 'translate(-50%, -50%)',
+              fontSize: 60, fontWeight: 700, lineHeight: 1, fontFamily: 'Georgia, serif',
             }}>{suit}</span>
           </div>
         })}
