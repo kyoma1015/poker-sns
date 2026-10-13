@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { supabase } from './supabase'
 
@@ -49,6 +49,8 @@ function PostDetail() {
   const [commentInput, setCommentInput] = useState('')
   const [message, setMessage] = useState('読み込み中...')
   const [expandedImage, setExpandedImage] = useState<string | null>(null)
+  const deletingCommentRef = useRef(false)
+  const [deletingCommentId, setDeletingCommentId] = useState<string | null>(null)
 
   const loadPost = async () => {
     if (!id) {
@@ -325,24 +327,45 @@ function PostDetail() {
     await loadPost()
   }
 
-  const handleDeleteComment = async (
-    commentId: string
-  ) => {
-    const { error } = await supabase
-      .from('post_comments')
-      .delete()
-      .eq('id', commentId)
-
-    if (error) {
-      console.error(error)
-      setMessage(
-        `コメントを削除できませんでした：${error.message}`
-      )
+  const handleDeleteComment = async (commentId: string) => {
+    if (deletingCommentRef.current || !post) return
+    const target = post.comments.find(comment => comment.id === commentId)
+    if (!target || !currentUserId || target.user_id !== currentUserId) {
+      setMessage('自分のコメントのみ削除できます。')
       return
     }
+    // キャンセルではDBへの通信を一切実行しない。
+    if (!window.confirm('このコメントを削除しますか？この操作は取り消せません。')) return
 
-    setMessage('')
-    await loadPost()
+    deletingCommentRef.current = true
+    setDeletingCommentId(commentId)
+    try {
+      const { data: { user }, error: authError } = await supabase.auth.getUser()
+      if (authError || !user || user.id !== currentUserId || user.id !== target.user_id) {
+        setMessage('ログイン情報を確認できません。再度ログインしてください。')
+        return
+      }
+      const { data: deleted, error } = await supabase
+        .from('post_comments')
+        .delete()
+        .eq('id', commentId)
+        .eq('user_id', user.id)
+        .select('id')
+      if (error) {
+        console.error(error)
+        setMessage(`コメントを削除できませんでした：${error.message}`)
+        return
+      }
+      if (!deleted || deleted.length !== 1) {
+        setMessage('コメントが見つからないか、削除権限がありません。')
+        return
+      }
+      setMessage('')
+      await loadPost()
+    } finally {
+      deletingCommentRef.current = false
+      setDeletingCommentId(null)
+    }
   }
 
   const handleProfileClick = (userId: string) => {
@@ -678,18 +701,16 @@ function PostDetail() {
                       {currentUserId ===
                         comment.user_id && (
                         <button
-                          onClick={() =>
-                            handleDeleteComment(
-                              comment.id
-                            )
-                          }
+                          type="button"
+                          disabled={deletingCommentId !== null}
+                          onClick={() => { void handleDeleteComment(comment.id) }}
                           style={{
                             width: 'auto',
                             padding: '4px 8px',
                             fontSize: '11px',
                           }}
                         >
-                          削除
+                          {deletingCommentId === comment.id ? '削除中...' : '削除'}
                         </button>
                       )}
                     </div>

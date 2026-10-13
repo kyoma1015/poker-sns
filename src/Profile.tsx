@@ -264,63 +264,22 @@ import Timeline from './Timeline'
           setFollowerCount(
             followers || 0
           )
-          const {
-            data: ratings,
-            error: ratingsError,
-          } = await supabase
-            .from(
-              'player_style_ratings'
-            )
-            .select(
-              'aggression, looseness'
-            )
-            .eq(
-              'rated_user_id',
-              user.id
-            )
+          // 匿名評価の生データは評価者本人だけに公開される。
+          // 被評価者の集計は3人以上で値を返すSECURITY DEFINER RPCから取得する。
+          const { data: ratingSummary, error: ratingsError } = await supabase.rpc(
+            'get_player_style_rating_summary',
+            { p_user_id: user.id }
+          )
           if (ratingsError) {
-            console.error(
-              ratingsError
-            )
-            return
-          }
-          if (
-            ratings &&
-            ratings.length > 0
-          ) {
-            const aggressionTotal =
-              ratings.reduce(
-                (total, rating) =>
-                  total +
-                  rating.aggression,
-                0
-              )
-            const loosenessTotal =
-              ratings.reduce(
-                (total, rating) =>
-                  total +
-                  rating.looseness,
-                0
-              )
-            setAverageAggression(
-              Math.round(
-                aggressionTotal /
-                  ratings.length
-              )
-            )
-            setAverageLooseness(
-              Math.round(
-                loosenessTotal /
-                  ratings.length
-              )
-            )
-            setRatingCount(
-              ratings.length
-            )
-          } else {
+            console.error('匿名評価集計エラー:', ratingsError)
+            setRatingCount(0)
             setAverageAggression(null)
             setAverageLooseness(null)
-            setRatingCount(0)
+          } else {
+            const summary = ratingSummary?.[0]
+            setRatingCount(Number(summary?.rating_count ?? 0))
+            setAverageAggression(summary?.average_aggression == null ? null : Number(summary.average_aggression))
+            setAverageLooseness(summary?.average_looseness == null ? null : Number(summary.average_looseness))
           }
         }
         loadProfile()

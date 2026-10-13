@@ -146,6 +146,10 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const [currentUserId, setCurrentUserId] = useState('')
 
   const [message, setMessage] = useState('')
+  const [postMenuId, setPostMenuId] = useState<string | null>(null)
+  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
+  const deletingRef = useRef(false)
 
   const [isPosting, setIsPosting] = useState(false)
 
@@ -952,38 +956,40 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
   }
 
-  const handleDelete = async (
-
-    postId: string
-
-  ) => {
-
-    const { error } = await supabase
-
-      .from('posts')
-
-      .delete()
-
-      .eq('id', postId)
-
-    if (error) {
-
-      console.error(error)
-
-      setMessage(
-
-        `削除できませんでした：${error.message}`
-
-      )
-
-      return
-
+  const handleDelete = async () => {
+    if (!deleteTargetId || deletingRef.current) return
+    deletingRef.current = true
+    setIsDeleting(true)
+    const postId = deleteTargetId
+    try {
+      const { data: { user }, error: authError } = await supabase.auth.getUser()
+      if (authError || !user || !currentUserId || user.id !== currentUserId) {
+        setMessage('ログイン情報を確認できません。再ログインしてお試しください。')
+        return
+      }
+      const target = posts.find(post => post.id === postId)
+      if (!target || target.user_id !== user.id) {
+        setMessage('自分の投稿以外は削除できません。')
+        return
+      }
+      const { error } = await supabase
+        .from('posts')
+        .delete()
+        .eq('id', postId)
+        .eq('user_id', user.id)
+      if (error) {
+        console.error(error)
+        setMessage(`削除できませんでした：${error.message}`)
+        return
+      }
+      setDeleteTargetId(null)
+      setPostMenuId(null)
+      setMessage('')
+      await loadPosts()
+    } finally {
+      deletingRef.current = false
+      setIsDeleting(false)
     }
-
-    setMessage('')
-
-    await loadPosts()
-
   }
 
   const handleProfileClick = (
@@ -2022,7 +2028,19 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   }
 
   return (
-
+    <>
+      {deleteTargetId && (
+        <div role="presentation" style={{ position: 'fixed', inset: 0, zIndex: 1000, background: '#000b', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+          <div role="alertdialog" aria-modal="true" aria-labelledby="post-delete-title" aria-describedby="post-delete-description" style={{ width: '100%', maxWidth: 360, padding: 22, borderRadius: 16, background: '#1a1a1a', border: '1px solid #444', boxShadow: '0 12px 40px #000b' }}>
+            <h3 id="post-delete-title" style={{ margin: '0 0 12px', fontSize: 18 }}>投稿を削除しますか？</h3>
+            <p id="post-delete-description" style={{ color: '#bbb', fontSize: 14, lineHeight: 1.6, margin: '0 0 22px' }}>この操作は取り消せません。</p>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10 }}>
+              <button type="button" disabled={isDeleting} onClick={() => setDeleteTargetId(null)} style={{ width: 'auto', padding: '10px 16px', borderRadius: 10, background: '#333', color: '#fff' }}>キャンセル</button>
+              <button type="button" disabled={isDeleting} onClick={() => void handleDelete()} style={{ width: 'auto', padding: '10px 16px', borderRadius: 10, background: '#b73535', color: '#fff', opacity: isDeleting ? 0.6 : 1 }}>{isDeleting ? '削除中...' : '削除する'}</button>
+            </div>
+          </div>
+        </div>
+      )}
     <main className={profileUserId ? undefined : "app"}>
 
       <div
@@ -2882,70 +2900,47 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
                         </span>
 
-                        {currentUserId ===
-
-                          post.user_id && (
-
-                          <button
-
-                            onClick={() =>
-
-                              handleDelete(
-
-                                post.id
-
-                              )
-
-                            }
-
-                            aria-label="投稿を削除"
-
-                            title="削除"
-
-                            style={{
-
-                              width:
-
-                                '28px',
-
-                              height:
-
-                                '28px',
-
-                              marginLeft:
-
-                                'auto',
-
-                              padding: 0,
-
-                              flexShrink: 0,
-
-                              background:
-
-                                'transparent',
-
-                              color:
-
-                                '#666',
-
-                              borderRadius:
-
-                                '50%',
-
-                              fontSize:
-
-                                '18px',
-
-                              lineHeight: 1,
-
-                            }}
-
-                          >
-
-                            ⋯
-
-                          </button>
-
+                        {currentUserId === post.user_id && (
+                          <div style={{ position: 'relative', marginLeft: 'auto', flexShrink: 0 }}>
+                            <button
+                              type="button"
+                              onClick={(event) => {
+                                event.stopPropagation()
+                                setPostMenuId(openId => openId === post.id ? null : post.id)
+                              }}
+                              aria-label="投稿メニューを開く"
+                              aria-expanded={postMenuId === post.id}
+                              aria-haspopup="menu"
+                              title="投稿メニュー"
+                              style={{ width: 28, height: 28, padding: 0, background: 'transparent', color: '#aaa', borderRadius: '50%', fontSize: 18, lineHeight: 1 }}
+                            >
+                              ⋯
+                            </button>
+                            {postMenuId === post.id && (
+                              <div role="menu" aria-label="投稿の操作" style={{ position: 'absolute', top: 30, right: 0, zIndex: 10, minWidth: 150, padding: 5, background: '#222', border: '1px solid #444', borderRadius: 10, boxShadow: '0 6px 20px #000a' }}>
+                                <button
+                                  type="button"
+                                  role="menuitem"
+                                  onClick={(event) => {
+                                    event.stopPropagation()
+                                    setPostMenuId(null)
+                                    setDeleteTargetId(post.id)
+                                  }}
+                                  style={{ display: 'block', width: '100%', textAlign: 'left', padding: '10px 12px', border: 0, borderRadius: 7, background: 'transparent', color: '#ff9999', fontSize: 13 }}
+                                >
+                                  投稿を削除
+                                </button>
+                                <button
+                                  type="button"
+                                  role="menuitem"
+                                  onClick={(event) => { event.stopPropagation(); setPostMenuId(null) }}
+                                  style={{ display: 'block', width: '100%', textAlign: 'left', padding: '10px 12px', border: 0, borderRadius: 7, background: 'transparent', color: '#ccc', fontSize: 13 }}
+                                >
+                                  閉じる
+                                </button>
+                              </div>
+                            )}
+                          </div>
                         )}
 
                       </div>
@@ -3375,7 +3370,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       </div>
 
     </main>
-
+    </>
   )
 
 }
