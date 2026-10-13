@@ -930,9 +930,10 @@ import { usePullToRefresh } from './usePullToRefresh'
             <div
               style={{
                 position: 'sticky',
-                top: '60px',
+                top: '58px',
                 zIndex: 19,
                 background: '#080808',
+                boxShadow: '0 -4px 0 #080808',
                 margin: '0 -20px',
                 display: 'grid',
                 gridTemplateColumns: 'repeat(3, 1fr)',

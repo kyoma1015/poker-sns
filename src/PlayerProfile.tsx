@@ -855,7 +855,7 @@ import { usePullToRefresh } from './usePullToRefresh'
                   )}
                 </section>
                 {/* メインタブ */}
-              <div style={{ position: 'sticky', top: '60px', zIndex: 19, background: '#080808', margin: '0 -20px', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', borderTop: '1px solid #242424', borderBottom: '1px solid #242424' }}>
+              <div style={{ position: 'sticky', top: '58px', zIndex: 19, background: '#080808', boxShadow: '0 -4px 0 #080808', margin: '0 -20px', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', borderTop: '1px solid #242424', borderBottom: '1px solid #242424' }}>
                 {[
                   { key: 'poker', label: 'Poker ID' },
                   { key: 'records', label: '記録' },
