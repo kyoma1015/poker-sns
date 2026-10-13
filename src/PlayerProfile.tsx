@@ -127,7 +127,7 @@ import { usePullToRefresh } from './usePullToRefresh'
           const [activityLoading, setActivityLoading] = useState(false)
           const [activityError, setActivityError] = useState('')
           const { pullDistance, isRefreshing, refreshError } = usePullToRefresh(refreshRootRef, {
-            enabled: !!id && !blockBusy && !muteBusy && blockStatus === 'none' && activeTab !== 'posts',
+            enabled: !!id && !!profile && !blockBusy && !muteBusy && blockStatus === 'none' && activeTab !== 'posts',
             onRefresh: () => reloadRef.current(),
           })
           useEffect(() => {
