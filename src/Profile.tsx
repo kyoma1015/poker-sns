@@ -1011,14 +1011,16 @@ import { usePullToRefresh } from './usePullToRefresh'
             {recordsOnly && (
               <div
                 style={{
-                  margin: '16px 0 4px',
-                  padding: '4px',
+                  position: 'sticky',
+                  top: '58px',
+                  zIndex: 19,
+                  margin: '16px -20px 4px',
                   display: 'grid',
                   gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-                  gap: '4px',
-                  background: '#0d0d0d',
-                  border: '1px solid #242424',
-                  borderRadius: '14px',
+                  background: '#080808',
+                  boxShadow: '0 -4px 0 #080808',
+                  borderTop: '1px solid #242424',
+                  borderBottom: '1px solid #242424',
                 }}
               >
                 {[
@@ -1033,16 +1035,20 @@ import { usePullToRefresh } from './usePullToRefresh'
                       type="button"
                       onClick={() => setRecordTab(tab.key as 'tournament' | 'amusement' | 'cash')}
                       style={{
-                        padding: '10px 5px',
-                        background: active ? '#fff' : 'transparent',
-                        color: active ? '#000' : '#777',
-                        borderRadius: '10px',
-                        fontSize: '11px',
-                        fontWeight: 800,
+                        position: 'relative',
+                        padding: '15px 4px',
+                        background: 'transparent',
+                        color: active ? '#fff' : '#777',
+                        borderRadius: 0,
+                        fontSize: '12px',
+                        fontWeight: active ? 800 : 600,
                         whiteSpace: 'nowrap',
                       }}
                     >
                       {tab.label}
+                      {active && (
+                        <span style={{ position: 'absolute', left: '30%', right: '30%', bottom: 0, height: '3px', borderRadius: '999px', background: '#fff' }} />
+                      )}
                     </button>
                   )
                 })}

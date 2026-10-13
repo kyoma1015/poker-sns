@@ -2340,6 +2340,16 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
           style={{
 
+            position: 'sticky',
+
+            top: '58px',
+
+            zIndex: 19,
+
+            background: '#080808',
+
+            boxShadow: '0 -4px 0 #080808',
+
             display: 'grid',
 
             gridTemplateColumns:
