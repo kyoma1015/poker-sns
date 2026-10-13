@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { supabase } from './supabase'
+import { usePullToRefresh } from './usePullToRefresh'
 
 
 // ブロックは双方の関係を確認する（自分→相手、相手→自分）。
@@ -44,6 +45,7 @@ type Post = {
 function PostDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const refreshRootRef = useRef<HTMLElement | null>(null)
 
   const [post, setPost] = useState<Post | null>(null)
   const [currentUserId, setCurrentUserId] = useState('')
@@ -55,7 +57,7 @@ function PostDetail() {
   const deletingCommentRef = useRef(false)
   const [deletingCommentId, setDeletingCommentId] = useState<string | null>(null)
 
-  const loadPost = async () => {
+  const loadPost = async (quiet = false) => {
     if (!id) {
       setMessage('投稿が見つかりませんでした。')
       return
@@ -71,8 +73,11 @@ function PostDetail() {
     }
 
     setCurrentUserId(user.id)
-    setPost(null)
-    setMessage('読み込み中...')
+    // 手動更新では投稿を一度消さず、既存の表示・入力状態を維持する。
+    if (!quiet) {
+      setPost(null)
+      setMessage('読み込み中...')
+    }
     let blockedUserIds: Set<string>
     try {
       blockedUserIds = await getBlockedUserIds(user.id)
@@ -206,8 +211,25 @@ function PostDetail() {
     setMessage('')
   }
 
+  // 下書きや返信先、操作中の状態がある間はPull to Refreshを許可しない。
+  // Hook自体の判定に加え、更新処理を開始する直前にも条件を確認する。
+  const refreshAllowed = Boolean(post) && !commentInput.trim() && !replyTo &&
+    !submittingComment && !deletingCommentId && !expandedImage
+  const refreshAllowedRef = useRef(refreshAllowed)
+  refreshAllowedRef.current = refreshAllowed
+  const { pullDistance, isRefreshing, refreshError } = usePullToRefresh(
+    refreshRootRef,
+    {
+      enabled: refreshAllowed,
+      onRefresh: async () => {
+        if (!refreshAllowedRef.current) return
+        await loadPost(true)
+      },
+    },
+  )
+
   useEffect(() => {
-    loadPost()
+    void loadPost()
   }, [id])
 
   const handleLike = async () => {
@@ -431,10 +453,15 @@ function PostDetail() {
   }
 
   return (
-    <main className="app">
+    <main className="app" ref={refreshRootRef}>
       <div className="card">
         <h1 className="logo">Poker ID</h1>
         <p className="subtitle">投稿</p>
+        {(pullDistance > 0 || isRefreshing || refreshError) && (
+          <div role="status" aria-live="polite" style={{ textAlign: 'center', padding: '9px 12px', color: refreshError ? '#ff9999' : '#aaa', fontSize: 12 }}>
+            {refreshError || (isRefreshing ? '投稿を更新中...' : pullDistance >= 76 ? '指を離すと更新' : '下に引っ張って更新')}
+          </div>
+        )}
 
         {message && <p>{message}</p>}
 
