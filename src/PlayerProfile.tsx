@@ -901,7 +901,7 @@ import { usePullToRefresh } from './usePullToRefresh'
                 <div style={{ margin: '16px 0 2px', padding: '4px', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '4px', background: '#0d0d0d', border: '1px solid #242424', borderRadius: '13px' }}>
                   {[
                     { key: 'tournament', label: 'トーナメント' },
-                    { key: 'ring', label: 'アミューズ' },
+                    { key: 'ring', label: 'リングゲーム' },
                     { key: 'cash', label: 'キャッシュ' },
                   ].map((tab) => {
                     const active = recordTab === tab.key
@@ -1586,7 +1586,7 @@ import { usePullToRefresh } from './usePullToRefresh'
               )}
               {activeTab === 'records' && recordTab === 'ring' && (
                 <>
-              {/* アミューズリング記録 */}
+              {/* リングゲーム記録 */}
               {amusementRingResults.length > 0 && (() => {
                 const rows = amusementRingResults.map((result) => {
                   const invested = result.starting_stack + result.additional_stack
@@ -1599,7 +1599,7 @@ import { usePullToRefresh } from './usePullToRefresh'
                 const signed = (value: number) => `${value >= 0 ? '+' : ''}${value.toFixed(1)}`
                 return (
                   <section style={{ marginTop: '10px', padding: '21px 0', borderTop: '1px solid #242424' }}>
-                    <div style={{ fontSize: '17px', fontWeight: 800 }}>アミューズリング記録</div>
+                    <div style={{ fontSize: '17px', fontWeight: 800 }}>リングゲーム記録</div>
                     <div style={{ marginTop: '5px', color: '#666', fontSize: '12px' }}>公開設定されたセッションのみ表示しています</div>
                     <div style={{ marginTop: '14px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                       {rows.map((result) => (
