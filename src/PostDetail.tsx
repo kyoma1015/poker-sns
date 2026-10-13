@@ -27,6 +27,7 @@ type Comment = {
   content: string
   created_at: string
   parent_comment_id: string | null
+  image_urls?: string[] | null
   profile?: Profile
 }
 
@@ -56,6 +57,32 @@ function PostDetail() {
   const [expandedImage, setExpandedImage] = useState<string | null>(null)
   const deletingCommentRef = useRef(false)
   const [deletingCommentId, setDeletingCommentId] = useState<string | null>(null)
+  const commentImageInputRef = useRef<HTMLInputElement | null>(null)
+  const [commentImageFiles, setCommentImageFiles] = useState<File[]>([])
+  const [commentImagePreviews, setCommentImagePreviews] = useState<string[]>([])
+  const MAX_COMMENT_IMAGES = 4
+
+  useEffect(() => {
+    const urls = commentImageFiles.map(file => URL.createObjectURL(file))
+    setCommentImagePreviews(urls)
+    return () => urls.forEach(url => URL.revokeObjectURL(url))
+  }, [commentImageFiles])
+
+  const chooseCommentImages = (files: FileList | null) => {
+    if (!files) return
+    const selected = Array.from(files)
+    if (selected.some(file => !['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 5 * 1024 * 1024)) {
+      setMessage('画像はJPEG・PNG・WebP形式、各5MB以内にしてください。')
+      return
+    }
+    if (selected.length + commentImageFiles.length > MAX_COMMENT_IMAGES) {
+      setMessage('コメントに添付できる画像は最大4枚です。')
+      return
+    }
+    setCommentImageFiles(previous => [...previous, ...selected])
+    setMessage('')
+  }
+
 
   const loadPost = async (quiet = false) => {
     if (!id) {
@@ -214,7 +241,7 @@ function PostDetail() {
   // 下書きや返信先、操作中の状態がある間はPull to Refreshを許可しない。
   // Hook自体の判定に加え、更新処理を開始する直前にも条件を確認する。
   const refreshAllowed = Boolean(post) && !commentInput.trim() && !replyTo &&
-    !submittingComment && !deletingCommentId && !expandedImage
+    !submittingComment && commentImageFiles.length === 0 && !deletingCommentId && !expandedImage
   const refreshAllowedRef = useRef(refreshAllowed)
   refreshAllowedRef.current = refreshAllowed
   const { pullDistance, isRefreshing, refreshError } = usePullToRefresh(
@@ -304,11 +331,10 @@ function PostDetail() {
 
   const handleComment = async () => {
     if (!post || !currentUserId || submittingComment) return
-
     const trimmedComment = commentInput.trim()
-
+    // 既存DBのcontent制約を壊さないよう、画像添付時も本文を必須にする。
     if (!trimmedComment) {
-      setMessage('コメントを入力してください。')
+      setMessage('コメント本文を入力してください（画像だけでは送信できません）。')
       return
     }
 
@@ -317,48 +343,66 @@ function PostDetail() {
       setMessage('返信先が見つかりません。再読み込みしてください。')
       return
     }
+
     setSubmittingComment(true)
-    const { error } = await supabase
-      .from('post_comments')
-      .insert({
-        post_id: post.id,
-        user_id: currentUserId,
-        content: trimmedComment,
-        parent_comment_id: replyTarget ? (replyTarget.parent_comment_id || replyTarget.id) : null,
-      })
-    setSubmittingComment(false)
-
-    if (error) {
-      console.error(error)
-      setMessage(
-        `コメントできませんでした：${error.message}`
-      )
-      return
-    }
-
-    if (post.user_id !== currentUserId) {
-      const { error: notificationError } =
-        await supabase
-          .from('notifications')
-          .insert({
-            user_id: post.user_id,
-            actor_id: currentUserId,
-            type: 'comment',
-            post_id: post.id,
-          })
-
-      if (notificationError) {
-        console.error(
-          'コメント通知作成エラー:',
-          notificationError
-        )
+    const uploadedPaths: string[] = []
+    const uploadedUrls: string[] = []
+    let commentSaved = false
+    const bucket = supabase.storage.from('comment-images')
+    try {
+      const { data: { user }, error: authError } = await supabase.auth.getUser()
+      if (authError || !user || user.id !== currentUserId) {
+        setMessage('ログイン情報を確認できません。再ログインしてください。')
+        return
       }
-    }
 
-    setCommentInput('')
-    setReplyTo(null)
-    setMessage('')
-    await loadPost()
+      // ユーザーID直下に保存。ストレージRLSも同じIDを検証する。
+      for (const file of commentImageFiles) {
+        const extension = file.type === 'image/png' ? 'png' : file.type === 'image/webp' ? 'webp' : 'jpg'
+        const path = `${user.id}/${crypto.randomUUID()}.${extension}`
+        const { error: uploadError } = await bucket.upload(path, file, { contentType: file.type, upsert: false })
+        if (uploadError) throw new Error(`画像アップロード失敗：${uploadError.message}`)
+        uploadedPaths.push(path)
+        uploadedUrls.push(bucket.getPublicUrl(path).data.publicUrl)
+      }
+
+      const { error } = await supabase
+        .from('post_comments')
+        .insert({
+          post_id: post.id,
+          user_id: currentUserId,
+          content: trimmedComment,
+          parent_comment_id: replyTarget ? (replyTarget.parent_comment_id || replyTarget.id) : null,
+          image_urls: uploadedUrls,
+        })
+      if (error) throw new Error(`コメントできませんでした：${error.message}`)
+      commentSaved = true
+
+      // 保存が確定したら初めて入力・画像・返信先をクリアする。
+      setCommentInput('')
+      setCommentImageFiles([])
+      if (commentImageInputRef.current) commentImageInputRef.current.value = ''
+      setReplyTo(null)
+      setMessage('')
+
+      if (post.user_id !== currentUserId) {
+        const { error: notificationError } = await supabase
+          .from('notifications')
+          .insert({ user_id: post.user_id, actor_id: currentUserId, type: 'comment', post_id: post.id })
+        if (notificationError) console.error('コメント通知作成エラー:', notificationError)
+      }
+      await loadPost(true)
+    } catch (error) {
+      console.error('コメント送信エラー:', error)
+      // 失敗時は本文・画像選択・返信先を保持し、今回アップロードした画像だけ掃除する。
+      if (!commentSaved && uploadedPaths.length) {
+        const { error: cleanupError } = await bucket.remove(uploadedPaths)
+        if (cleanupError) console.error('失敗した画像の片付けに失敗:', cleanupError)
+      }
+      setMessage(error instanceof Error ? error.message : 'コメントの送信に失敗しました。')
+    } finally {
+      setSubmittingComment(false)
+    }
   }
 
   const handleDeleteComment = async (commentId: string) => {
@@ -393,6 +437,18 @@ function PostDetail() {
       if (!deleted || deleted.length !== 1) {
         setMessage('コメントが見つからないか、削除権限がありません。')
         return
+      }
+      // コメント削除が確定してから、そのコメント専用の画像だけを削除する。
+      const publicPrefix = supabase.storage.from('comment-images').getPublicUrl('').data.publicUrl
+      const ownFolder = `${user.id}/`
+      const paths = (target.image_urls || []).flatMap(url => {
+        if (!url.startsWith(publicPrefix)) return []
+        const path = url.slice(publicPrefix.length).replace(/^\/+/, '').split('?')[0]
+        return path.startsWith(ownFolder) && !path.includes('..') ? [path] : []
+      })
+      if (paths.length) {
+        const { error: imageDeleteError } = await supabase.storage.from('comment-images').remove(paths)
+        if (imageDeleteError) console.error('コメント画像の削除エラー:', imageDeleteError)
       }
       setMessage('')
       await loadPost()
@@ -627,6 +683,18 @@ function PostDetail() {
               }}
             >
               <input
+                ref={commentImageInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                multiple
+                aria-label="コメントに添付する画像を選択"
+                style={{ display: 'none' }}
+                onChange={event => {
+                  chooseCommentImages(event.target.files)
+                  event.target.value = ''
+                }}
+              />
+              <input
                 type="text"
                 placeholder={replyTo ? `${replyTo.name}に返信する...` : 'コメントを書く...'}
                 value={commentInput}
@@ -643,6 +711,16 @@ function PostDetail() {
                 }}
               />
 
+              <button
+                type="button"
+                aria-label="コメントに画像を添付"
+                title="画像を添付（最大4枚）"
+                disabled={submittingComment || commentImageFiles.length >= MAX_COMMENT_IMAGES}
+                onClick={() => commentImageInputRef.current?.click()}
+                style={{ width: 'auto', flexShrink: 0, minHeight: 40, padding: '8px 10px', background: '#242424', color: '#ddd', border: '1px solid #454545', borderRadius: 10, cursor: 'pointer' }}
+              >
+                ＋画像
+              </button>
               <button
                 type="button"
                 onClick={handleComment}
@@ -666,6 +744,25 @@ function PostDetail() {
                 {submittingComment ? '送信中...' : '送信'}
               </button>
             </div>
+            {commentImagePreviews.length > 0 && (
+              <div style={{ paddingBottom: 12, textAlign: 'left' }}>
+                <div style={{ color: '#aaa', fontSize: 12, marginBottom: 8 }}>添付画像 {commentImagePreviews.length}/4（JPEG・PNG・WebP／各5MB以内）</div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 8 }}>
+                  {commentImagePreviews.map((url, index) => (
+                    <div key={url} style={{ position: 'relative' }}>
+                      <img src={url} alt={`添付予定画像${index + 1}`} style={{ display: 'block', width: '100%', maxHeight: 160, objectFit: 'cover', borderRadius: 8 }} />
+                      <button
+                        type="button"
+                        aria-label={`添付予定画像${index + 1}を解除`}
+                        disabled={submittingComment}
+                        onClick={() => setCommentImageFiles(files => files.filter((_, i) => i !== index))}
+                        style={{ position: 'absolute', top: 4, right: 4, width: 30, height: 30, padding: 0, borderRadius: 20, border: '1px solid #555', background: '#1b1b1b', color: '#fff' }}
+                      >×</button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
             {replyTo && (
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, paddingBottom: 12, color: '#aaa', fontSize: 12 }}>
                 <span>{replyTo.name}への返信を作成中</span>
@@ -769,6 +866,21 @@ function PostDetail() {
                     >
                       {comment.content}
                     </p>
+                    {Array.isArray(comment.image_urls) && comment.image_urls.length > 0 && (
+                      <div style={{ marginLeft: 48, marginBottom: 12, display: 'grid', gridTemplateColumns: comment.image_urls.length === 1 ? '1fr' : 'repeat(2, minmax(0, 1fr))', gap: 6 }}>
+                        {comment.image_urls.map((url, index) => (
+                          <button
+                            key={`${url}-${index}`}
+                            type="button"
+                            aria-label={`コメント画像${index + 1}を拡大`}
+                            onClick={() => setExpandedImage(url)}
+                            style={{ width: '100%', padding: 0, border: 0, borderRadius: 8, overflow: 'hidden', background: '#191919', cursor: 'zoom-in' }}
+                          >
+                            <img src={url} alt={`コメント添付画像${index + 1}`} loading="lazy" style={{ display: 'block', width: '100%', maxHeight: 240, objectFit: 'cover' }} />
+                          </button>
+                        ))}
+                      </div>
+                    )}
 
                     <div
                       style={{
