@@ -5,6 +5,7 @@ import Timeline from './Timeline'
           useParams,
         } from 'react-router-dom'
         import { supabase } from './supabase'
+import { AdditionalProfileTags, PokerMeaningSection, MyHandSection, pokerExperience } from './PokerProfileExtras'
 import { usePullToRefresh } from './usePullToRefresh'
         type PokerResult = {
           id: string
@@ -723,9 +724,7 @@ import { usePullToRefresh } from './usePullToRefresh'
                           color: '#fff',
                         }}
                       >
-                        {profile.poker_years ||
-                          '-'}
-                        年
+                        {pokerExperience(profile)}
                       </strong>
                     </div>
                     <div
@@ -751,6 +750,7 @@ import { usePullToRefresh } from './usePullToRefresh'
                           '-'}
                       </strong>
                     </div>
+                    <AdditionalProfileTags data={profile} />
                     {favoriteVenues.map((venue) => (
                       <div
                         key={venue.id}
@@ -914,6 +914,7 @@ import { usePullToRefresh } from './usePullToRefresh'
               )}
               {blockStatus === 'none' && activeTab === 'poker' && (
                 <>
+              <PokerMeaningSection data={profile} />
               {/* 公開プレイヤータイプ診断 */}
               {playerType && (
                 <section
@@ -1033,6 +1034,7 @@ import { usePullToRefresh } from './usePullToRefresh'
                 </section>
               )}
 
+              <MyHandSection data={profile} />
               {/* プレイスタイル */}
                 <section
                   style={{

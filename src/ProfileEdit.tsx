@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 
 import { supabase } from './supabase'
+import { DECK, HOBBY_PRESETS } from './PokerProfileExtras'
 
 
 
@@ -51,6 +52,15 @@ function ProfileEdit() {
 
 
   const [pokerYears, setPokerYears] = useState('')
+  const [pokerStartYear, setPokerStartYear] = useState('')
+  const [pokerStartMonth, setPokerStartMonth] = useState('')
+  const [hobbies, setHobbies] = useState<string[]>([])
+  const [hobbySearch, setHobbySearch] = useState('')
+  const [customHobby, setCustomHobby] = useState('')
+  const [pokerMeaning, setPokerMeaning] = useState('')
+  const [pokerMeaningDetail, setPokerMeaningDetail] = useState('')
+  const [myHandCards, setMyHandCards] = useState<string[]>([])
+  const [myHandReason, setMyHandReason] = useState('')
 
 
 
@@ -211,6 +221,13 @@ function ProfileEdit() {
 
 
       setPokerYears(data.poker_years?.toString() || '')
+      setPokerStartYear(data.poker_started_year?.toString() || '')
+      setPokerStartMonth(data.poker_started_month?.toString() || '')
+      setHobbies(Array.isArray(data.hobbies) ? data.hobbies : [])
+      setPokerMeaning(data.poker_meaning || '')
+      setPokerMeaningDetail(data.poker_meaning_detail || '')
+      setMyHandCards(Array.isArray(data.my_hand_cards) ? data.my_hand_cards : [])
+      setMyHandReason(data.my_hand_reason || '')
 
 
 
@@ -220,7 +237,7 @@ function ProfileEdit() {
 
 
 
-      setMainPlay(data.main_play || '')
+      setMainPlay(['cash','balanced'].includes(data.main_play) ? 'undecided' : data.main_play || '')
 
 
 
@@ -784,6 +801,20 @@ function ProfileEdit() {
 
 
 
+    const now = new Date()
+    if ((pokerStartYear && !pokerStartMonth) || (!pokerStartYear && pokerStartMonth)) {
+      setMessage('ポーカー開始時期は年と月の両方を選択してください。'); return
+    }
+    if (pokerStartYear && pokerStartMonth && (Number(pokerStartYear) > now.getFullYear() || (Number(pokerStartYear) === now.getFullYear() && Number(pokerStartMonth) > now.getMonth() + 1))) {
+      setMessage('ポーカー開始時期に未来の年月は指定できません。'); return
+    }
+    if (myHandCards.filter(Boolean).length === 1 || (myHandCards.filter(Boolean).length === 2 && myHandCards[0] === myHandCards[1])) {
+      setMessage('マイハンドは異なる2枚を選択するか、未選択にしてください。'); return
+    }
+    if (pokerMeaningDetail.trim() && !pokerMeaning.trim()) {
+      setMessage('補足を登録する場合は「あなたにとってポーカーとは？」も入力してください。'); return
+    }
+    if (hobbies.length > 5) { setMessage('趣味は最大5個です。'); return }
     setIsSaving(true)
 
 
@@ -1026,6 +1057,13 @@ function ProfileEdit() {
 
 
 
+        poker_started_year: pokerStartYear ? Number(pokerStartYear) : null,
+        poker_started_month: pokerStartMonth ? Number(pokerStartMonth) : null,
+        hobbies,
+        poker_meaning: pokerMeaning.trim() || null,
+        poker_meaning_detail: pokerMeaningDetail.trim() || null,
+        my_hand_cards: myHandCards.filter(Boolean),
+        my_hand_reason: myHandReason.trim() || null,
         main_play: mainPlay || null,
 
 
@@ -2074,37 +2112,22 @@ function ProfileEdit() {
 
 
 
-          <input
-
-
-
-            type="number"
-
-
-
-            placeholder="ポーカー歴（年）"
-
-
-
-            value={pokerYears}
-
-
-
-            onChange={(e) =>
-
-
-
-              setPokerYears(e.target.value)
-
-
-
-            }
-
-
-
-          />
-
-
+          <div style={{ padding: 14, background: '#111', border: '1px solid #333', borderRadius: 12 }}>
+            <div style={{ fontWeight: 800, marginBottom: 5 }}>ポーカーを始めた時期</div>
+            <div style={{ color: '#999', fontSize: 12, marginBottom: 11 }}>開始年月からポーカー歴を自動計算します。未登録の場合、以前の登録年数をそのまま表示します。</div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+              <select aria-label="ポーカー開始年" value={pokerStartYear} onChange={e => setPokerStartYear(e.target.value)}>
+                <option value="">開始年</option>
+                {Array.from({ length: new Date().getFullYear() - 1949 }, (_, i) => new Date().getFullYear() - i).map(year => <option key={year} value={year}>{year}年</option>)}
+              </select>
+              <select aria-label="ポーカー開始月" value={pokerStartMonth} onChange={e => setPokerStartMonth(e.target.value)}>
+                <option value="">開始月</option>
+                {Array.from({ length: 12 }, (_, i) => i + 1).map(month => <option key={month} value={month}>{month}月</option>)}
+              </select>
+            </div>
+            {pokerStartYear && pokerStartMonth && <div style={{ marginTop: 9, color: '#aaa', fontSize: 12 }}>開始：{pokerStartYear}年{pokerStartMonth}月（年数は自動更新）</div>}
+            {!pokerStartYear && pokerYears && <div style={{ marginTop: 9, fontSize: 11, color: '#888' }}>以前の登録：{pokerYears}年（開始年月を設定するまで維持）</div>}
+          </div>
 
           <select
 
@@ -2200,7 +2223,7 @@ function ProfileEdit() {
 
             <div style={{ color: '#888', fontSize: '12px', lineHeight: 1.5, marginBottom: '12px' }}>
 
-              普段どんなポーカーを中心にプレイしているか選択してください。
+              両方プレイする方も、どちらかといえば好きな方を選んでください。
 
             </div>
 
@@ -2208,13 +2231,13 @@ function ProfileEdit() {
 
               <option value="">選択しない</option>
 
-              <option value="tournament">トーナメント中心</option>
+              <option value="tournament">トーナメント派</option>
 
-              <option value="ring">リング中心</option>
+              <option value="ring">リング派</option>
 
-              <option value="cash">キャッシュ中心</option>
+              <option value="undecided">決められない</option>
 
-              <option value="balanced">バランス</option>
+
 
             </select>
 
@@ -2524,6 +2547,49 @@ function ProfileEdit() {
 
 
 
+
+          <div style={{ padding: 14, border: '1px solid #333', borderRadius: 12, background: '#111' }}>
+            <div style={{ fontSize: 16, fontWeight: 800 }}>ポーカー以外の趣味</div>
+            <div style={{ color: '#888', fontSize: 12, margin: '6px 0 12px' }}>好きなものを最大5個まで選択。「その他」は自由入力できます。</div>
+            {hobbies.length > 0 && <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7, marginBottom: 12 }}>
+              {hobbies.map(hobby => <button type="button" key={hobby} onClick={() => setHobbies(old => old.filter(x => x !== hobby))} style={{ width: 'auto', padding: '7px 11px', background: '#262626', color: '#fff', border: '1px solid #555', borderRadius: 999, fontSize: 12 }}>{hobby} ×</button>)}
+            </div>}
+            <input type="search" placeholder="趣味を検索" value={hobbySearch} onChange={e => setHobbySearch(e.target.value)} />
+            <div style={{ maxHeight: 240, overflowY: 'auto', margin: '8px 0', padding: 8, display: 'flex', flexWrap: 'wrap', alignContent: 'flex-start', gap: 6, border: '1px solid #292929', borderRadius: 10 }}>
+              {HOBBY_PRESETS.filter(hobby => hobby.includes(hobbySearch.trim())).map(hobby => {
+                const active = hobbies.includes(hobby)
+                return <button key={hobby} type="button" disabled={!active && hobbies.length >= 5} onClick={() => setHobbies(old => active ? old.filter(x => x !== hobby) : [...old, hobby])}
+                  style={{ width: 'auto', padding: '7px 10px', borderRadius: 999, border: `1px solid ${active ? '#eee' : '#444'}`, color: active ? '#111' : '#ddd', background: active ? '#fff' : '#1b1b1b', opacity: !active && hobbies.length >= 5 ? .4 : 1, fontSize: 12 }}>{active ? '✓ ' : '+ '}{hobby}</button>
+              })}
+            </div>
+            <div style={{ fontSize: 12, fontWeight: 700, marginTop: 11 }}>その他の趣味を追加</div>
+            <div style={{ display: 'flex', gap: 8, marginTop: 6 }}>
+              <input value={customHobby} maxLength={20} placeholder="自由入力（20文字以内）" onChange={e => setCustomHobby(e.target.value)} style={{ minWidth: 0, flex: 1 }} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); const v = customHobby.trim(); if (v && hobbies.length < 5 && !hobbies.includes(v)) { setHobbies(old => [...old, v]); setCustomHobby('') } } }} />
+              <button type="button" disabled={!customHobby.trim() || hobbies.length >= 5 || hobbies.includes(customHobby.trim())} onClick={() => { const v = customHobby.trim(); if (v && hobbies.length < 5 && !hobbies.includes(v)) { setHobbies(old => [...old, v]); setCustomHobby('') } }} style={{ width: 'auto', padding: '8px 15px', background: '#292929', color: '#fff', border: '1px solid #555', borderRadius: 9 }}>追加</button>
+            </div>
+            <div style={{ color: '#888', fontSize: 11, marginTop: 8 }}>{hobbies.length}/5個</div>
+          </div>
+
+          <div style={{ padding: 14, border: '1px solid #333', borderRadius: 12, background: '#111' }}>
+            <div style={{ fontSize: 16, fontWeight: 800 }}>あなたにとってポーカーとは？</div>
+            <div style={{ color: '#888', fontSize: 12, margin: '6px 0 12px' }}>Poker IDタブの先頭に大きく表示。登録は任意です。</div>
+            <input value={pokerMeaning} maxLength={40} placeholder="例：人生を楽しむ最高のゲーム" onChange={e => setPokerMeaning(e.target.value)} />
+            <div style={{ color: '#777', fontSize: 11, textAlign: 'right' }}>{pokerMeaning.length}/40文字</div>
+            <textarea value={pokerMeaningDetail} maxLength={300} placeholder="理由・補足（任意・300文字以内）" onChange={e => setPokerMeaningDetail(e.target.value)} rows={4} />
+          </div>
+
+          <div style={{ padding: 14, border: '1px solid #333', borderRadius: 12, background: '#111' }}>
+            <div style={{ fontSize: 16, fontWeight: 800 }}>マイハンド</div>
+            <div style={{ color: '#888', fontSize: 12, margin: '6px 0 12px' }}>好きなカード2枚をスートまで選択。理由は任意です。</div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+              {[0, 1].map(index => <select key={index} aria-label={`マイハンド${index + 1}枚目`} value={myHandCards[index] || ''} onChange={e => setMyHandCards(old => { const next = [old[0] || '', old[1] || '']; next[index] = e.target.value; return next })}>
+                <option value="">{index + 1}枚目を選択</option>
+                {DECK.filter(card => card === myHandCards[index] || card !== myHandCards[1 - index]).map(card => <option key={card} value={card}>{card.replace('T', '10')}</option>)}
+              </select>)}
+            </div>
+            {myHandCards.length > 0 && <button type="button" onClick={() => setMyHandCards([])} style={{ marginTop: 8, width: 'auto', padding: '5px 10px', background: 'transparent', color: '#aaa', border: '1px solid #444', borderRadius: 8 }}>カードを解除</button>}
+            <textarea value={myHandReason} maxLength={200} placeholder="そのハンドが好きな理由（任意・200文字以内）" onChange={e => setMyHandReason(e.target.value)} rows={3} style={{ marginTop: 10 }} />
+          </div>
 
         <div style={{ padding: '14px', border: '1px solid #333', borderRadius: '12px', background: '#111' }}>
 
