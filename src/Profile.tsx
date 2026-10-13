@@ -572,8 +572,8 @@ import { usePullToRefresh } from './usePullToRefresh'
             {/* 上部ヘッダー */}
             <header
               style={{
-                position: 'sticky',
-                top: '60px',
+                position: 'relative',
+                top: 0,
                 zIndex: 20,
                 margin: '0 -20px',
                 padding: '15px 20px',
@@ -930,7 +930,7 @@ import { usePullToRefresh } from './usePullToRefresh'
             <div
               style={{
                 position: 'sticky',
-                top: '136px',
+                top: '60px',
                 zIndex: 19,
                 background: '#080808',
                 margin: '0 -20px',
