@@ -7,7 +7,11 @@ import { usePullToRefresh } from './usePullToRefresh'
 
 const playerTypeEmoji: Record<string, string> = {lion:'🦁',tiger:'🐯',leopard:'🐆',bison:'🦬',gorilla:'🦍',rhino:'🦏',shark:'🦈',owl:'🦉',eagle:'🦅',elephant:'🐘',giraffe:'🦒',wolf:'🐺',hyena:'🐾',cat:'🐈',chameleon:'🦎',dolphin:'🐬',fox:'🦊',snake:'🐍',raccoon:'🦝',turtle:'🐢',rabbit:'🐇',crocodile:'🐊',hedgehog:'🦔',deer:'🦌',sloth:'🦥',dog:'🐕',bear:'🐻',bull:'🐄',badger:'🦡',monkey:'🐒',magpie:'🐦‍⬛',penguin:'🐧',horse:'🐎',squirrel:'🐿️',mountain_goat:'🐐',otter:'🦦'}
 
+type QuotePreview = { id: string; user_id: string; content: string; profile?: { display_name: string; poker_id: string }; image_urls?: string[] | null }
+
 type Post = {
+  quote_post_id?: string | null
+  quotePreview?: QuotePreview | null
 
   id: string
 
@@ -137,6 +141,10 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const repostingRef = useRef(false)
 
   const [content, setContent] = useState('')
+  const [quoteTarget, setQuoteTarget] = useState<Post | null>(null)
+  const [quoteText, setQuoteText] = useState('')
+  const [quoteBusy, setQuoteBusy] = useState(false)
+  const [repostMenuId, setRepostMenuId] = useState<string | null>(null)
   const [composeOpen, setComposeOpen] = useState(false)
   const [attachmentsOpen, setAttachmentsOpen] = useState(false)
   const [attachmentScreen, setAttachmentScreen] = useState<'menu' | 'results' | 'tournament' | 'amusement' | 'cash' | 'diagnosis'>('menu')
@@ -629,10 +637,17 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
       })
 
+    const quoteSourceById = new Map(postsWithData.filter(source => !blockedIds.has(source.user_id)).map(source => [source.id, source]))
+    const postsWithQuotes = postsWithData.map(item => {
+      const source = item.quote_post_id ? quoteSourceById.get(item.quote_post_id) : null
+      return { ...item, quotePreview: source ? { id: source.id, user_id: source.user_id, content: source.content,
+        profile: source.profile ? { display_name: source.profile.display_name, poker_id: source.profile.poker_id } : undefined,
+        image_urls: source.image_urls } : null }
+    })
     const repostCountByPost = new Map<string, number>()
     for (const row of validReposts) repostCountByPost.set(row.post_id, (repostCountByPost.get(row.post_id) || 0) + 1)
     const myReposted = new Set(validReposts.filter(row => row.user_id === user.id).map(row => row.post_id))
-    const originalCards = postsWithData.filter(post => !blockedIds.has(post.user_id)).map(post => ({
+    const originalCards = postsWithQuotes.filter(post => !blockedIds.has(post.user_id)).map(post => ({
       ...post, feedKey: `post:${post.id}`, feedActorId: post.user_id,
       repostCount: repostCountByPost.get(post.id) || 0, repostedByMe: myReposted.has(post.id),
     }))
@@ -995,8 +1010,26 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
   }
 
+  const publishQuote = async () => {
+    if (!quoteTarget || quoteBusy) return
+    const trimmed = quoteText.trim()
+    if (!trimmed) { setMessage('引用コメントを入力してください。'); return }
+    setQuoteBusy(true)
+    try {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user || user.id !== currentUserId) throw new Error('ログインを確認してください。')
+      const { error } = await supabase.from('posts').insert({ user_id: user.id, content: trimmed,
+        post_type: 'normal', result_type: null, result_id: null, quote_post_id: quoteTarget.id })
+      if (error) throw error
+      setQuoteTarget(null); setQuoteText(''); setRepostMenuId(null); setMessage('')
+      await loadPosts()
+    } catch (error) {
+      setMessage(`引用リポストに失敗しました：${error instanceof Error ? error.message : '不明なエラー'}`)
+    } finally { setQuoteBusy(false) }
+  }
+
   const handleRepost = async (post: Post) => {
-    if (!currentUserId || repostingRef.current || post.user_id === currentUserId) return
+    if (!currentUserId || repostingRef.current) return
     repostingRef.current = true
     setRepostingId(post.id)
     try {
@@ -3073,6 +3106,19 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
                       </div>
 
+                      {post.quote_post_id && (
+                        <button type="button" onClick={() => post.quotePreview && navigate(`/post/${post.quotePreview.id}`)}
+                          disabled={!post.quotePreview} style={{ display: 'block', width: '100%', textAlign: 'left',
+                            padding: 12, margin: '4px 0 12px', background: '#181818', border: '1px solid #444',
+                            borderRadius: 12, color: '#ddd', cursor: post.quotePreview ? 'pointer' : 'default' }}>
+                          {post.quotePreview ? <>
+                            <strong style={{ fontSize: 13 }}>{post.quotePreview.profile?.display_name || 'Player'} </strong>
+                            <span style={{ fontSize: 12, color: '#999' }}>@{post.quotePreview.profile?.poker_id || 'unknown'}</span>
+                            <div style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', fontSize: 13, marginTop: 6 }}>{post.quotePreview.content}</div>
+                            {!!post.quotePreview.image_urls?.length && <div style={{ color: '#aaa', marginTop: 6, fontSize: 12 }}>▧ 画像 {post.quotePreview.image_urls.length}枚</div>}
+                          </> : <span style={{ color: '#999', fontSize: 12 }}>元の投稿は表示できません</span>}
+                        </button>
+                      )}
                       {post.post_type === 'result' &&
 
                       post.result_type === 'tournament' &&
@@ -3213,6 +3259,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
                           </span>
 
+                          <span>コメント</span>
                           {post.commentCount >
 
                             0 && (
@@ -3321,6 +3368,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
                           </span>
 
+                          <span>いいね</span>
                           {post.likeCount >
 
                             0 && (
@@ -3339,18 +3387,25 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
                         </button>
 
-                        {currentUserId !== post.user_id && (
+                        <div style={{ position: 'relative', minWidth: 0 }}>
                           <button type="button" disabled={repostingId !== null}
-                            aria-label={post.repostedByMe ? 'リポストを解除' : 'リポスト'}
-                            aria-pressed={post.repostedByMe}
-                            onClick={() => void handleRepost(post)}
+                            aria-label="リポストの選択" aria-expanded={repostMenuId === post.feedKey}
+                            onClick={() => setRepostMenuId(old => old === post.feedKey ? null : (post.feedKey || post.id))}
                             style={{ width: 'auto', padding: '5px 0', border: 0, background: 'transparent',
-                              color: post.repostedByMe ? '#8dd5b0' : '#888', display: 'flex',
-                              alignItems: 'center', gap: 5, fontSize: 13 }}>
-                            ↻ {repostingId === post.id ? '処理中' : post.repostedByMe ? 'リポスト済' : 'リポスト'}
-                            {(post.repostCount || 0) > 0 ? ` ${post.repostCount}` : ''}
+                              color: post.repostedByMe ? '#8dd5b0' : '#888', fontSize: 12, whiteSpace: 'nowrap' }}>
+                            ↻ リポスト {(post.repostCount || 0) > 0 ? post.repostCount : ''}
                           </button>
-                        )}
+                          {repostMenuId === (post.feedKey || post.id) && <div style={{ position: 'absolute', zIndex: 15,
+                            right: 0, bottom: '100%', minWidth: 176, padding: 6, border: '1px solid #555',
+                            borderRadius: 10, background: '#252525', boxShadow: '0 6px 24px #000a' }}>
+                            <button type="button" disabled={repostingId !== null} onClick={() => { setRepostMenuId(null); void handleRepost(post) }}
+                              style={{ width: '100%', textAlign: 'left', padding: 10, background: 'transparent', color: '#eee', fontSize: 13 }}>
+                              ↻ {post.repostedByMe ? 'リポストを解除' : 'リポスト'}</button>
+                            <button type="button" onClick={() => { setQuoteTarget(post); setQuoteText(''); setRepostMenuId(null) }}
+                              style={{ width: '100%', textAlign: 'left', padding: 10, background: 'transparent', color: '#eee', fontSize: 13 }}>
+                              ▤ 引用して投稿</button>
+                          </div>}
+                        </div>
                         <button
 
                           onClick={() => {
@@ -3423,7 +3478,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
                         >
 
-                          ↗
+                          ↗ <span style={{ fontSize: 12 }}>シェア</span>
 
                         </button>
 
@@ -3445,6 +3500,24 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
       </div>
 
+      {quoteTarget && <div role="dialog" aria-modal="true" aria-label="引用リポスト" style={{ position: 'fixed', zIndex: 1000,
+        inset: 0, background: '#000b', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+        <div style={{ width: '100%', maxWidth: 480, padding: 18, background: '#1d1d1d', border: '1px solid #555', borderRadius: 16 }}>
+          <h3 style={{ marginTop: 0 }}>引用して投稿</h3>
+          <textarea autoFocus value={quoteText} onChange={event => setQuoteText(event.target.value)} maxLength={1000}
+            placeholder="この投稿についてコメントを書く..." disabled={quoteBusy}
+            style={{ width: '100%', minHeight: 110, padding: 10, boxSizing: 'border-box', color: '#fff', background: '#111', borderRadius: 8 }} />
+          <div style={{ padding: 10, border: '1px solid #444', borderRadius: 8, color: '#aaa', fontSize: 13,
+            whiteSpace: 'pre-wrap', maxHeight: 120, overflowY: 'auto', marginTop: 8 }}>
+            @{quoteTarget.profile?.poker_id || 'unknown'}: {quoteTarget.content}
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, marginTop: 12 }}>
+            <button type="button" disabled={quoteBusy} onClick={() => { setQuoteTarget(null); setQuoteText('') }} style={{ width: 'auto' }}>キャンセル</button>
+            <button type="button" disabled={quoteBusy || !quoteText.trim()} onClick={() => void publishQuote()}
+              style={{ width: 'auto' }}>{quoteBusy ? '投稿中...' : '投稿する'}</button>
+          </div>
+        </div>
+      </div>}
     </main>
     </>
   )

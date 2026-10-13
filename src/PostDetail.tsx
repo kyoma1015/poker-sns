@@ -31,7 +31,11 @@ type Comment = {
   profile?: Profile
 }
 
+type QuotePreview = { id: string; user_id: string; content: string; profile?: { display_name: string; poker_id: string }; image_urls?: string[] | null }
+
 type Post = {
+  quote_post_id?: string | null
+  quotePreview?: QuotePreview | null
   id: string
   user_id: string
   content: string
@@ -50,6 +54,10 @@ function PostDetail() {
 
   const [post, setPost] = useState<Post | null>(null)
   const [repostCount, setRepostCount] = useState(0)
+  const [repostMenuOpen, setRepostMenuOpen] = useState(false)
+  const [quoteOpen, setQuoteOpen] = useState(false)
+  const [quoteText, setQuoteText] = useState('')
+  const [quoteBusy, setQuoteBusy] = useState(false)
   const [repostedByMe, setRepostedByMe] = useState(false)
   const [reposting, setReposting] = useState(false)
   const repostingRef = useRef(false)
@@ -222,8 +230,19 @@ function PostDetail() {
       }
     })
 
+    let quotePreview: QuotePreview | null = null
+    if (postData.quote_post_id) {
+      const { data: original, error: originalError } = await supabase.from('posts').select('id,user_id,content,image_urls')
+        .eq('id', postData.quote_post_id).maybeSingle()
+      if (!originalError && original && !blockedUserIds.has(original.user_id)) {
+        const { data: originalProfile } = await supabase.from('profiles')
+          .select('display_name,poker_id').eq('id', original.user_id).maybeSingle()
+        quotePreview = { ...original, profile: originalProfile || undefined }
+      }
+    }
     setPost({
       ...postData,
+      quotePreview,
       profile: postProfile
         ? {
             display_name: postProfile.display_name,
@@ -338,8 +357,22 @@ function PostDetail() {
     await loadPost()
   }
 
+  const publishQuote = async () => {
+    if (!post || quoteBusy || !quoteText.trim()) return
+    setQuoteBusy(true)
+    try {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user || user.id !== currentUserId) throw new Error('ログインを確認してください。')
+      const { error } = await supabase.from('posts').insert({ user_id: user.id, content: quoteText.trim(),
+        post_type: 'normal', result_type: null, result_id: null, quote_post_id: post.id })
+      if (error) throw error
+      setQuoteOpen(false); setQuoteText(''); setMessage('引用リポストを投稿しました。')
+    } catch (error) { setMessage(`引用リポストに失敗しました：${error instanceof Error ? error.message : '不明なエラー'}`) }
+    finally { setQuoteBusy(false) }
+  }
+
   const handleRepost = async () => {
-    if (!post || !currentUserId || repostingRef.current || post.user_id === currentUserId) return
+    if (!post || !currentUserId || repostingRef.current) return
     repostingRef.current = true
     setReposting(true)
     try {
@@ -603,6 +636,19 @@ function PostDetail() {
               >
                 {post.content}
               </p>
+              {post.quote_post_id && (
+                <button type="button" disabled={!post.quotePreview}
+                  onClick={() => post.quotePreview && navigate(`/post/${post.quotePreview.id}`)}
+                  style={{ display: 'block', width: '100%', padding: 12, margin: '10px 0', textAlign: 'left',
+                    color: '#ddd', background: '#171717', border: '1px solid #444', borderRadius: 12 }}>
+                  {post.quotePreview ? <>
+                    <strong>{post.quotePreview.profile?.display_name || 'Player'} </strong>
+                    <span style={{ color: '#999', fontSize: 12 }}>@{post.quotePreview.profile?.poker_id || 'unknown'}</span>
+                    <div style={{ whiteSpace: 'pre-wrap', marginTop: 6, fontSize: 13 }}>{post.quotePreview.content}</div>
+                    {!!post.quotePreview.image_urls?.length && <div style={{ fontSize: 12, color: '#aaa' }}>▧ 画像 {post.quotePreview.image_urls.length}枚</div>}
+                  </> : '元の投稿は表示できません'}
+                </button>
+              )}
 
               {Array.isArray(post.image_urls) && post.image_urls.length > 0 && (
                 <div
@@ -689,7 +735,7 @@ function PostDetail() {
                     transition: 'background 150ms ease, border-color 150ms ease',
                   }}
                 >
-                  {post.likedByMe ? '♥' : '♡'}{' '}
+                  {post.likedByMe ? '♥' : '♡'} いいね{' '}
                   {post.likeCount}
                 </button>
 
@@ -701,14 +747,20 @@ function PostDetail() {
                 >
                   コメント {post.comments.length}
                 </span>
-                {post.user_id !== currentUserId && (
-                  <button type="button" disabled={reposting} onClick={() => void handleRepost()}
-                    aria-label={repostedByMe ? 'リポストを解除' : 'リポスト'} aria-pressed={repostedByMe}
-                    style={{ width: 'auto', padding: '8px 12px', fontSize: 13, borderRadius: 10,
-                      color: repostedByMe ? '#8dd5b0' : '#ddd', background: '#222', border: '1px solid #444' }}>
-                    ↻ {reposting ? '処理中...' : repostedByMe ? 'リポスト済' : 'リポスト'} {repostCount || ''}
+                <div style={{ position: 'relative' }}>
+                  <button type="button" disabled={reposting} onClick={() => setRepostMenuOpen(!repostMenuOpen)}
+                    style={{ width: 'auto', padding: '8px 10px', fontSize: 13, background: '#222', color: repostedByMe ? '#8dd5b0' : '#ddd', border: '1px solid #444', borderRadius: 10 }}>
+                    ↻ リポスト {repostCount || ''}
                   </button>
-                )}
+                  {repostMenuOpen && <div style={{ position: 'absolute', zIndex: 15, top: '100%', right: 0,
+                    minWidth: 170, background: '#222', border: '1px solid #555', borderRadius: 10, padding: 6 }}>
+                    <button type="button" disabled={reposting} onClick={() => { setRepostMenuOpen(false); void handleRepost() }}
+                      style={{ display: 'block', width: '100%', fontSize: 13, padding: 10 }}>
+                      {repostedByMe ? 'リポスト解除' : 'リポスト'}</button>
+                    <button type="button" onClick={() => { setRepostMenuOpen(false); setQuoteOpen(true) }}
+                      style={{ display: 'block', width: '100%', fontSize: 13, padding: 10 }}>引用して投稿</button>
+                  </div>}
+                </div>
               </div>
             </div>
 
@@ -1024,6 +1076,23 @@ function PostDetail() {
           タイムラインへ戻る
         </button>
       </div>
+      {quoteOpen && post && <div role="dialog" aria-modal="true" aria-label="引用リポスト" style={{ position: 'fixed', zIndex: 1000,
+        inset: 0, background: '#000b', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+        <div style={{ width: '100%', maxWidth: 480, padding: 18, background: '#1d1d1d', border: '1px solid #555', borderRadius: 16 }}>
+          <h3>引用して投稿</h3>
+          <textarea autoFocus maxLength={1000} value={quoteText} onChange={event => setQuoteText(event.target.value)}
+            placeholder="この投稿についてコメントを書く..." disabled={quoteBusy}
+            style={{ width: '100%', minHeight: 110, boxSizing: 'border-box', padding: 10, color: '#fff', background: '#111' }}/>
+          <div style={{ padding: 10, border: '1px solid #444', borderRadius: 8, color: '#aaa', fontSize: 13, whiteSpace: 'pre-wrap' }}>
+            @{post.profile?.poker_id || 'unknown'}: {post.content}
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, marginTop: 12 }}>
+            <button type="button" disabled={quoteBusy} onClick={() => { setQuoteOpen(false); setQuoteText('') }} style={{ width: 'auto' }}>キャンセル</button>
+            <button type="button" disabled={quoteBusy || !quoteText.trim()} onClick={() => void publishQuote()} style={{ width: 'auto' }}>
+              {quoteBusy ? '投稿中...' : '投稿する'}</button>
+          </div>
+        </div>
+      </div>}
     </main>
   )
 }
