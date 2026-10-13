@@ -30,6 +30,7 @@ export function usePullToRefresh<T extends HTMLElement>(
     let gestureTopY: number | null = null
     let dragging = false
     let rejected = false
+    let locked = false
 
     const reset = () => {
       startY = null
@@ -37,13 +38,14 @@ export function usePullToRefresh<T extends HTMLElement>(
       startTarget = null
       dragging = false
       rejected = false
+      locked = false
       pullRef.current = 0
       setPullDistance(0)
     }
 
     const isInteractive = (target: EventTarget | null) =>
       !(target instanceof Element) || Boolean(
-        target.closest('input,textarea,select,button,a,[contenteditable="true"],[role="dialog"],[role="alertdialog"]'),
+        target.closest('input,textarea,select,[contenteditable="true"],[role="dialog"],[role="alertdialog"]'),
       )
 
     const hasScrolledInnerContainer = (target: EventTarget | null) => {
@@ -64,8 +66,9 @@ export function usePullToRefresh<T extends HTMLElement>(
 
     const onStart = (event: TouchEvent) => {
       reset()
-      if (busyRef.current || event.touches.length !== 1 || isInteractive(event.target)) return
-      // イベントはdocumentで追跡。上部ヘッダーからのドラッグも途中で失わない。
+      if (busyRef.current || event.touches.length !== 1 || isInteractive(event.target) ||
+          !(event.target instanceof Node) || !container.contains(event.target)) return
+      // タッチ開始がホーム画面内のときだけ追跡する。
       startTarget = event.target
       startY = event.touches[0].clientY
       startX = event.touches[0].clientX
@@ -78,25 +81,26 @@ export function usePullToRefresh<T extends HTMLElement>(
       const deltaY = fingerY - startY
       const deltaX = event.touches[0].clientX - startX
 
-      if (!dragging && (deltaY < -12 || (Math.abs(deltaX) > 16 && Math.abs(deltaX) > Math.abs(deltaY)))) {
+      if (!locked && (deltaY < -12 || (Math.abs(deltaX) > 16 && Math.abs(deltaX) > Math.abs(deltaY)))) {
         rejected = true
         return
       }
 
-      // ページがスクロール途中なら、最上部に来るまでは通常スクロールを妨げない。
-      if (!atTop()) {
-        if (dragging) reset()
-        return
+      // 最上部で下方向に動き始めたら即座にタッチを確保する。
+      // ブラウザのバウンスが scrollY を変えても途中解除しない。
+      if (!locked) {
+        if (!atTop()) {
+          gestureTopY = null
+          return
+        }
+        if (gestureTopY === null) gestureTopY = fingerY
+        if (fingerY - gestureTopY <= 2 || !event.cancelable) return
+        locked = true
       }
-      // 指を置いた時点で最上部でなくても、最上部へ到達した地点を起点にする。
-      if (gestureTopY === null) gestureTopY = fingerY
-      const distanceMoved = fingerY - gestureTopY
-      if (distanceMoved <= 6) return
-
       dragging = true
-      // ブラウザ標準のバウンス/更新が距離計測を奪わないようにする。
       if (event.cancelable) event.preventDefault()
-      const travel = distanceMoved - 6
+      const distanceMoved = fingerY - (gestureTopY ?? fingerY)
+      const travel = Math.max(0, distanceMoved)
       // 解除前は指にほぼ1:1で追従。閾値到達後だけ軽い抵抗を付ける。
       const distance = Math.min(160, travel <= threshold ? travel : threshold + (travel - threshold) * 0.35)
       pullRef.current = distance
@@ -123,15 +127,15 @@ export function usePullToRefresh<T extends HTMLElement>(
         })
     }
 
-    document.addEventListener('touchstart', onStart, { passive: true })
-    document.addEventListener('touchmove', onMove, { passive: false })
-    document.addEventListener('touchend', onEnd, { passive: true })
-    document.addEventListener('touchcancel', reset, { passive: true })
+    container.addEventListener('touchstart', onStart, { passive: true })
+    container.addEventListener('touchmove', onMove, { passive: false })
+    container.addEventListener('touchend', onEnd, { passive: true })
+    container.addEventListener('touchcancel', reset, { passive: true })
     return () => {
-      document.removeEventListener('touchstart', onStart)
-      document.removeEventListener('touchmove', onMove)
-      document.removeEventListener('touchend', onEnd)
-      document.removeEventListener('touchcancel', reset)
+      container.removeEventListener('touchstart', onStart)
+      container.removeEventListener('touchmove', onMove)
+      container.removeEventListener('touchend', onEnd)
+      container.removeEventListener('touchcancel', reset)
     }
   }, [containerRef, enabled, threshold])
 
