@@ -2114,7 +2114,7 @@ function ProfileEdit() {
 
           <div style={{ padding: 14, background: '#111', border: '1px solid #333', borderRadius: 12 }}>
             <div style={{ fontWeight: 800, marginBottom: 5 }}>ポーカーを始めた時期</div>
-            <div style={{ color: '#999', fontSize: 12, marginBottom: 11 }}>開始年月からポーカー歴を自動計算します。未登録の場合、以前の登録年数をそのまま表示します。</div>
+            <div style={{ color: '#999', fontSize: 12, marginBottom: 11 }}>正確な年月を覚えていなくても大丈夫です。ポーカーを始めたおおよその年月を選んでください。登録後はポーカー歴が自動更新されます。</div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
               <select aria-label="ポーカー開始年" value={pokerStartYear} onChange={e => setPokerStartYear(e.target.value)}>
                 <option value="">開始年</option>

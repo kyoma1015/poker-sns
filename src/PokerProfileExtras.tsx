@@ -84,9 +84,26 @@ export function MyHandSection({ data, own = false, onEdit }: { data: PokerProfil
     <div style={{ marginTop: 6, fontSize: 11, color: '#777' }}>MY HAND</div>
     {cards.length === 2 ? <div style={{ marginTop: 15, padding: 16, background: '#111', border: '1px solid #303030', borderRadius: 16 }}>
       <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
-        {cards.map(card => <div key={card} style={{ width: 76, height: 106, background: '#fff', borderRadius: 10, color: /[♥♦]/.test(card) ? '#c5253b' : '#161616', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: 10, boxSizing: 'border-box', boxShadow: '0 3px 9px #0008' }}>
-          <span style={{ fontWeight: 900, fontSize: 21 }}>{card}</span><span style={{ fontSize: 38, textAlign: 'center', lineHeight: 1 }}>{card.slice(-1)}</span>
-        </div>)}
+        {cards.map(card => {
+          const suit = card.slice(-1)
+          const rank = card.slice(0, -1)
+          const suitColor: Record<string, string> = {
+            '♠': '#222936', '♥': '#dc354c', '♦': '#2675d9', '♣': '#15955c',
+          }
+          const color = suitColor[suit] || '#222936'
+          return <div key={card} aria-label={`${rank}${suit}`} style={{
+            width: 82, height: 116, background: 'linear-gradient(155deg, #ffffff, #f6f7fa)',
+            border: '1px solid #d8dce4', borderRadius: 12, color,
+            display: 'flex', flexDirection: 'column', position: 'relative',
+            padding: '8px 11px', boxSizing: 'border-box', boxShadow: '0 4px 12px #0007',
+          }}>
+            <span style={{ fontWeight: 900, fontSize: 27, lineHeight: 1.05, letterSpacing: '-0.6px' }}>{rank}</span>
+            <span aria-hidden="true" style={{
+              position: 'absolute', top: '43%', left: '50%', transform: 'translate(-50%, -50%)',
+              fontSize: 56, fontWeight: 700, lineHeight: 1, fontFamily: 'Georgia, serif',
+            }}>{suit}</span>
+          </div>
+        })}
       </div>
       {data.my_hand_reason?.trim() && <div style={{ marginTop: 15, fontSize: 13, color: '#ccc', whiteSpace: 'pre-wrap', lineHeight: 1.8, textAlign: 'center', overflowWrap: 'anywhere' }}>{data.my_hand_reason}</div>}
     </div> : <button type="button" onClick={onEdit} style={{ marginTop: 12, padding: 15, color: '#ddd', background: '#181818', border: '1px solid #444', borderRadius: 12, width: '100%', textAlign: 'left' }}>お気に入りのハンドを登録する →</button>}
