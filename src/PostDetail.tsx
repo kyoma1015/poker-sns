@@ -581,11 +581,26 @@ function PostDetail() {
                 }}
               >
                 <button
+                  type="button"
                   onClick={handleLike}
+                  aria-label={post.likedByMe ? 'いいねを解除' : 'いいねする'}
+                  aria-pressed={post.likedByMe}
                   style={{
                     width: 'auto',
-                    padding: '6px 12px',
+                    minHeight: '38px',
+                    padding: '8px 14px',
                     fontSize: '14px',
+                    fontWeight: 700,
+                    color: post.likedByMe ? '#ff8f9b' : '#d4d4d4',
+                    background: post.likedByMe ? '#2b1b20' : '#1c1c1c',
+                    border: `1px solid ${post.likedByMe ? '#75424c' : '#3a3a3a'}`,
+                    borderRadius: '12px',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '5px',
+                    transition: 'background 150ms ease, border-color 150ms ease',
                   }}
                 >
                   {post.likedByMe ? '♥' : '♡'}{' '}
@@ -629,12 +644,23 @@ function PostDetail() {
               />
 
               <button
+                type="button"
                 onClick={handleComment}
                 disabled={submittingComment}
                 style={{
                   width: 'auto',
-                  padding: '8px 12px',
+                  minWidth: '64px',
+                  minHeight: '40px',
+                  flexShrink: 0,
+                  padding: '9px 14px',
                   fontSize: '13px',
+                  fontWeight: 750,
+                  color: submittingComment ? '#888' : '#f4f4f4',
+                  background: submittingComment ? '#1a1a1a' : '#292929',
+                  border: '1px solid #454545',
+                  borderRadius: '10px',
+                  cursor: submittingComment ? 'wait' : 'pointer',
+                  transition: 'background 150ms ease, border-color 150ms ease',
                 }}
               >
                 {submittingComment ? '送信中...' : '送信'}
