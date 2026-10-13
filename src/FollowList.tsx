@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { supabase } from './supabase'
+import { usePullToRefresh } from './usePullToRefresh'
 
 type UserProfile = {
   id: string
@@ -12,6 +13,11 @@ type UserProfile = {
 function FollowList() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const refreshRootRef = useRef<HTMLElement | null>(null)
+  const reloadRef = useRef<() => Promise<void>>(async () => {})
+  const { pullDistance, isRefreshing, refreshError } = usePullToRefresh(refreshRootRef, {
+    onRefresh: () => reloadRef.current(),
+  })
 
   const [users, setUsers] = useState<UserProfile[]>([])
   const [loadError, setLoadError] = useState('')
@@ -84,12 +90,18 @@ function FollowList() {
       setUsers((profiles || []).filter((profile) => !blockedIds.has(profile.id)))
     }
 
-    loadFollowing()
+    reloadRef.current = loadFollowing
+    void loadFollowing()
   }, [id, navigate])
 
   return (
-    <main className="app">
+    <main className="app" ref={refreshRootRef}>
       <div className="card">
+        {(pullDistance > 0 || isRefreshing || refreshError) && (
+          <div role="status" aria-live="polite" style={{ padding: '9px 12px', textAlign: 'center', color: '#aaa', fontSize: 12 }}>
+            {refreshError || (isRefreshing ? '一覧を更新中...' : pullDistance >= 76 ? '離して更新' : '下に引っ張って更新')}
+          </div>
+        )}
         <h1>フォロー一覧</h1>
 
         {loadError && <p style={{ color: '#ff8888' }}>{loadError}</p>}

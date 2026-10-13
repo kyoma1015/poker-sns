@@ -1,10 +1,11 @@
 import Timeline from './Timeline'
-        import { useEffect, useState } from 'react'
+        import { useEffect, useRef, useState } from 'react'
         import {
           useNavigate,
           useParams,
         } from 'react-router-dom'
         import { supabase } from './supabase'
+import { usePullToRefresh } from './usePullToRefresh'
         type PokerResult = {
           id: string
           tournament_name: string
@@ -83,6 +84,8 @@ import Timeline from './Timeline'
         function PlayerProfile() {
           const { id } = useParams()
           const navigate = useNavigate()
+          const refreshRootRef = useRef<HTMLElement | null>(null)
+          const reloadRef = useRef<() => Promise<void>>(async () => {})
           const [profile, setProfile] =
             useState<any>(null)
           const [isFollowing, setIsFollowing] =
@@ -123,6 +126,10 @@ import Timeline from './Timeline'
           const [playerComments, setPlayerComments] = useState<ProfileComment[]>([])
           const [activityLoading, setActivityLoading] = useState(false)
           const [activityError, setActivityError] = useState('')
+          const { pullDistance, isRefreshing, refreshError } = usePullToRefresh(refreshRootRef, {
+            enabled: !!id && !blockBusy && !muteBusy && blockStatus === 'none' && activeTab !== 'posts',
+            onRefresh: () => reloadRef.current(),
+          })
           useEffect(() => {
             if (activeTab !== 'posts' || !id || blockStatus !== 'none') return
             let cancelled = false
@@ -317,7 +324,8 @@ import Timeline from './Timeline'
                 setCashGameResults(cashResults || [])
               }
             }
-            loadProfile()
+            reloadRef.current = loadProfile
+            void loadProfile()
           }, [id, navigate])
           const handleBlockToggle = async () => {
             if (!id || !currentUserId || blockBusy) return
@@ -422,13 +430,18 @@ import Timeline from './Timeline'
             )
           }
           return (
-            <main className="app">
+            <main className="app" ref={refreshRootRef}>
               <div
                 className="card"
                 style={{
                   paddingTop: 0,
                 }}
               >
+                {(pullDistance > 0 || isRefreshing || refreshError) && (
+          <div role="status" aria-live="polite" style={{ padding: '9px 12px', textAlign: 'center', color: '#aaa', fontSize: 12 }}>
+            {refreshError || (isRefreshing ? 'プロフィールを更新中...' : pullDistance >= 76 ? '離して更新' : '下に引っ張って更新')}
+          </div>
+        )}
                 {/* ヘッダー */}
                 <header
                   style={{

@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from './supabase'
+import { usePullToRefresh } from './usePullToRefresh'
 
 
 // ブロックは双方の関係を確認する（自分→相手、相手→自分）。
@@ -25,6 +26,11 @@ type Conversation = {
 
 function DirectMessages() {
   const navigate = useNavigate()
+  const refreshRootRef = useRef<HTMLElement | null>(null)
+  const reloadRef = useRef<() => Promise<void>>(async () => {})
+  const { pullDistance, isRefreshing, refreshError } = usePullToRefresh(refreshRootRef, {
+    onRefresh: () => reloadRef.current(),
+  })
 
   const [conversations, setConversations] =
     useState<Conversation[]>([])
@@ -201,6 +207,7 @@ function DirectMessages() {
         setMessage('')
       }
 
+      reloadRef.current = loadConversations
       await loadConversations()
 
       channel = supabase
@@ -284,7 +291,7 @@ function DirectMessages() {
   }
 
   return (
-    <main className="app">
+    <main className="app" ref={refreshRootRef}>
       <div
         className="card"
         style={{
@@ -353,6 +360,11 @@ function DirectMessages() {
           </div>
         </header>
 
+        {(pullDistance > 0 || isRefreshing || refreshError) && (
+          <div role="status" aria-live="polite" style={{ padding: '9px 12px', textAlign: 'center', color: '#aaa', fontSize: 12 }}>
+            {refreshError || (isRefreshing ? 'DM一覧を更新中...' : pullDistance >= 76 ? '離して更新' : '下に引っ張って更新')}
+          </div>
+        )}
         {/* 読み込み / エラー */}
         {message && (
           <div
