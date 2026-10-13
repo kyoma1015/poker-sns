@@ -349,7 +349,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
       if (error) {
 
-        console.error('アミューズリング結果取得エラー:', error)
+        console.error('リングゲーム結果取得エラー:', error)
 
       } else {
 
@@ -695,7 +695,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     if (!user) { setResultsLoading(false); return }
     const sources = [
       { table: 'poker_results', type: 'tournament' as const, label: 'トーナメント' },
-      { table: 'amusement_ring_results', type: 'amusement' as const, label: 'アミューズリング' },
+      { table: 'amusement_ring_results', type: 'amusement' as const, label: 'リングゲーム' },
       { table: 'cash_game_results', type: 'cash' as const, label: 'キャッシュ' },
     ]
     const lists = await Promise.all(sources.map(async source => {
@@ -735,11 +735,11 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         {backButton('menu')}
         <div style={{ fontSize: 12, color: '#aaa', margin: '8px 0 10px' }}>戦績の種類を選択</div>
         <button type="button" style={optionStyle} onClick={() => chooseResultCategory('tournament')}>🏆　トーナメント戦績　›</button>
-        <button type="button" style={optionStyle} onClick={() => chooseResultCategory('amusement')}>♠　アミューズリング戦績　›</button>
+        <button type="button" style={optionStyle} onClick={() => chooseResultCategory('amusement')}>♠　リングゲーム戦績　›</button>
         <button type="button" style={optionStyle} onClick={() => chooseResultCategory('cash')}>♦　キャッシュゲーム戦績　›</button>
       </> : <>
         {backButton('results')}
-        <div style={{ fontSize: 12, color: '#aaa', margin: '8px 0 10px' }}>保存済みの{attachmentScreen === 'tournament' ? 'トーナメント' : attachmentScreen === 'amusement' ? 'アミューズリング' : 'キャッシュゲーム'}戦績を選択</div>
+        <div style={{ fontSize: 12, color: '#aaa', margin: '8px 0 10px' }}>保存済みの{attachmentScreen === 'tournament' ? 'トーナメント' : attachmentScreen === 'amusement' ? 'リングゲーム' : 'キャッシュゲーム'}戦績を選択</div>
         {resultsLoading ? <p style={{ fontSize: 12 }}>読み込み中...</p> : availableResults.filter(result => result.type === attachmentScreen).length === 0 ? <p style={{ fontSize: 12, color: '#888' }}>この種類の戦績はありません。</p> : availableResults.filter(result => result.type === attachmentScreen).map(result => <button key={result.type + result.id} type="button" style={optionStyle} onClick={() => { setSelectedResult(result); setSelectedDiagnosis(null); setAttachmentsOpen(false); setAttachmentScreen('menu') }}><span style={{ display: 'block', fontWeight: 700 }}>{result.label}</span><span style={{ display: 'block', color: '#aaa', fontSize: 12, marginTop: 4 }}>プレイ日：{result.playedAt ? new Date(result.playedAt.slice(0,10) + 'T00:00:00').toLocaleDateString('ja-JP') : '日付不明'}</span></button>)}
       </>}
     </div>
@@ -1766,7 +1766,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
             >
 
-              AMUSEMENT RING
+              RING GAME
 
             </div>
 

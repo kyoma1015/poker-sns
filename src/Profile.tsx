@@ -1025,7 +1025,7 @@ import { usePullToRefresh } from './usePullToRefresh'
               >
                 {[
                   { key: 'tournament', label: 'トーナメント' },
-                  { key: 'amusement', label: 'アミューズ' },
+                  { key: 'amusement', label: 'リングゲーム' },
                   { key: 'cash', label: 'キャッシュ' },
                 ].map((tab) => {
                   const active = recordTab === tab.key
@@ -1895,11 +1895,11 @@ import { usePullToRefresh } from './usePullToRefresh'
             )}
             {recordsOnly && recordTab === 'amusement' && (
               <>
-            {/* アミューズリング記録 */}
+            {/* リングゲーム記録 */}
             <section style={{ marginTop: '10px', padding: '23px 0', borderTop: '1px solid #242424' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px' }}>
                 <div>
-                  <div style={{ fontSize: '17px', fontWeight: 800 }}>アミューズリング</div>
+                  <div style={{ fontSize: '17px', fontWeight: 800 }}>リングゲーム</div>
                   <div style={{ marginTop: '5px', color: '#666', fontSize: '12px' }}>BBベースでリングセッションを記録・集計</div>
                 </div>
                 <button
@@ -1911,7 +1911,7 @@ import { usePullToRefresh } from './usePullToRefresh'
               </div>
               {ringSessionCount === 0 ? (
                 <div style={{ marginTop: '16px', padding: '25px 20px', background: '#0d0d0d', border: '1px solid #242424', borderRadius: '16px', textAlign: 'center' }}>
-                  <div style={{ fontSize: '14px', fontWeight: 700 }}>まだアミューズリング記録がありません</div>
+                  <div style={{ fontSize: '14px', fontWeight: 700 }}>まだリングゲーム記録がありません</div>
                   <div style={{ marginTop: '6px', color: '#666', fontSize: '12px', lineHeight: 1.6 }}>セッションを記録すると、BB収支やBB/hなどを自動集計します。</div>
                 </div>
               ) : (
@@ -1958,7 +1958,7 @@ import { usePullToRefresh } from './usePullToRefresh'
                               </div>
                               <button
                                 onClick={() => navigate(`/profile/amusement-ring/${result.id}/edit`)}
-                                aria-label="アミューズリング記録を編集"
+                                aria-label="リングゲーム記録を編集"
                                 style={{
                                   width: '32px',
                                   height: '32px',

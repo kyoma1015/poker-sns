@@ -102,7 +102,7 @@ const menuGroups = [
   ] },
   { title: '実績・診断', links: [
     ['▥', '実戦記録', '/results'], ['🏆', 'トーナメント記録', '/profile/results/new'],
-    ['♣', 'リング記録', '/profile/amusement-ring/new'], ['♦', 'キャッシュ記録', '/profile/cash-game/new'],
+    ['♣', 'リングゲーム記録', '/profile/amusement-ring/new'], ['♦', 'キャッシュ記録', '/profile/cash-game/new'],
     ['🐾', '動物タイプ診断', '/player-type'], ['✎', 'プロフィール編集', '/profile/edit'],
   ] },
   { title: 'アカウント', links: [['⚙', '設定', '/settings']] },

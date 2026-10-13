@@ -22,7 +22,7 @@ export default function QuoteSourcePreview({ source, onOpen, compact = false }: 
   const detailEntries = result && Object.entries(result).filter(([key, value]) =>
     !['id','user_id','created_at','updated_at','image_urls'].includes(key) && value !== null && value !== undefined && value !== ''
   ).slice(0, compact ? 5 : 8)
-  const resultNames: Record<string, string> = { tournament: '🏆 トーナメント戦績', amusement: '♠ アミューズリング戦績', cash: '♦ キャッシュゲーム戦績', player_type: '🃏 プレイヤータイプ診断' }
+  const resultNames: Record<string, string> = { tournament: '🏆 トーナメント戦績', amusement: '♠ リングゲーム戦績', cash: '♦ キャッシュゲーム戦績', player_type: '🃏 プレイヤータイプ診断' }
   const fieldNames: Record<string,string> = { tournament_name:'大会名', rank:'順位', entry_count:'参加人数', is_itm:'入賞', total_entry_fee:'参加費合計', prize_amount:'獲得賞金', venue:'店舗・会場', played_at:'プレイ日', game_type:'ゲーム', small_blind:'SB', big_blind:'BB', starting_stack:'開始スタック', ending_stack:'終了スタック', profit_amount:'収支', profit_jpy:'円換算収支', play_minutes:'プレイ時間', play_type:'プレイ形式' }
   return <div role={onOpen ? 'link' : undefined} tabIndex={onOpen ? 0 : undefined}
     onClick={onOpen} onKeyDown={onOpen ? event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onOpen() } } : undefined}

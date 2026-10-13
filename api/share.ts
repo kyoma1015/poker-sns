@@ -86,8 +86,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     title = `${result.tournament_name} | ${rank}${entries}`
     description = result.is_itm ? 'Tournament Result · ITM' : 'Tournament Result'
   } else if (type === 'amusement') {
-    title = `${result.venue || 'Amusement Poker'} | Poker ID`
-    description = 'Amusement Ring Result'
+    title = `${result.venue || 'Ring Game'} | Poker ID`
+    description = 'Ring Game Result'
   } else {
     title = `${result.venue || result.site || 'Cash Game'} | Poker ID`
     description = 'Cash Game Result'
