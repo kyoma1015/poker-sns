@@ -3157,13 +3157,21 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   .poker-feed-actions > button, .poker-feed-actions > div > button {
     width:100% !important; min-width:0 !important; box-sizing:border-box;
     display:flex !important; align-items:center !important; justify-content:center !important;
-    flex-wrap:nowrap !important; white-space:nowrap !important; padding:8px 1px !important;
-    font-size:11px !important; gap:3px !important; line-height:1.3 !important;
+    flex-wrap:nowrap !important; white-space:nowrap !important;
+    padding:9px 0 !important; font-size:clamp(11px, 3.3vw, 13px) !important;
+    font-weight:500 !important; gap:3px !important; line-height:1.25 !important;
     overflow:visible !important;
   }
   .poker-feed-actions > div { min-width:0 !important; }
-  .poker-feed-actions > button > span:first-child { font-size:16px !important; }
-  @media (min-width:440px) { .poker-feed-actions > button, .poker-feed-actions > div > button {font-size:12px !important; gap:5px !important;} }
+  .poker-feed-actions .poker-action-icon {
+    display:inline-flex; align-items:center; justify-content:center;
+    font-size:clamp(16px, 4.5vw, 18px) !important; line-height:1 !important;
+    flex-shrink:0;
+  }
+  .poker-feed-actions .poker-action-label { font-size:inherit !important; line-height:inherit !important; white-space:nowrap !important; }
+  @media (min-width:440px) {
+    .poker-feed-actions > button, .poker-feed-actions > div > button { font-size:13px !important; gap:5px !important; }
+  }
 `}</style>
                       <div className="poker-feed-actions"
                         style={{
@@ -3233,7 +3241,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
                         >
 
-                          <span
+                          <span className="poker-action-icon"
 
                             style={{
 
@@ -3251,7 +3259,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
                           </span>
 
-                          <span>コメント</span>
+                          <span className="poker-action-label">コメント</span>
                           {post.commentCount >
 
                             0 && (
@@ -3338,7 +3346,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
                         >
 
-                          <span
+                          <span className="poker-action-icon"
 
                             style={{
 
@@ -3360,7 +3368,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
                           </span>
 
-                          <span>いいね</span>
+                          <span className="poker-action-label">いいね</span>
                           {post.likeCount >
 
                             0 && (
@@ -3385,7 +3393,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
                             onClick={() => setRepostMenuId(old => old === post.feedKey ? null : (post.feedKey || post.id))}
                             style={{ width: 'auto', padding: '5px 0', border: 0, background: 'transparent',
                               color: post.repostedByMe ? '#8dd5b0' : '#888', fontSize: 12, whiteSpace: 'nowrap' }}>
-                            ↻ リポスト {(post.repostCount || 0) > 0 ? post.repostCount : ''}
+                            <span className="poker-action-icon">↻</span><span className="poker-action-label">リポスト</span>
+                            {(post.repostCount || 0) > 0 ? post.repostCount : ''}
                           </button>
                           {repostMenuId === (post.feedKey || post.id) && <div style={{ position: 'absolute', zIndex: 15,
                             right: 0, bottom: '100%', minWidth: 176, padding: 6, border: '1px solid #555',
@@ -3462,7 +3471,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
                             fontSize:
 
-                              '19px',
+                              '13px',
 
                             lineHeight: 1,
 
@@ -3470,7 +3479,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
                         >
 
-                          ↗ <span style={{ fontSize: 12 }}>シェア</span>
+                          <span className="poker-action-icon">↗</span><span className="poker-action-label">シェア</span>
 
                         </button>
 
