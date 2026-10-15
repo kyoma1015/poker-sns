@@ -1,5 +1,6 @@
 import Timeline from './Timeline'
 import TournamentAchievementShowcase from './TournamentAchievementShowcase'
+import PokerIdCardEntry from './PokerIdCardEntry'
     import { useEffect, useRef, useState } from 'react'
     import { useNavigate } from 'react-router-dom'
     import { supabase } from './supabase'
@@ -1056,6 +1057,7 @@ import { usePullToRefresh } from './usePullToRefresh'
             )}
             {!recordsOnly && profileTab === 'pokerId' && (
               <>
+              <PokerIdCardEntry userId={profile.id} own />
               <TournamentAchievementShowcase profileId={profile.id} own regularResults={featuredResults} />
           <PokerMeaningSection data={profile} own onEdit={() => navigate('/profile/edit#poker-meaning')} />
           {/* プレイヤータイプ診断 */}
