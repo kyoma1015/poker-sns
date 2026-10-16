@@ -1,5 +1,6 @@
 {
   "rewrites": [
+    { "source": "/share/poker-id/:id", "destination": "/api/share?type=poker-id&id=:id" },
     { "source": "/share/player-type/:id", "destination": "/api/share?type=player-type&id=:id" },
     { "source": "/share/tournament/:id", "destination": "/api/share?type=tournament&id=:id" },
     { "source": "/share/amusement/:id", "destination": "/api/share?type=amusement&id=:id" },

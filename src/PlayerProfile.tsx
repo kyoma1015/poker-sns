@@ -1,3 +1,4 @@
+import PokerIdCardEntry from './PokerIdCardEntry'
 import Timeline from './Timeline'
 import TournamentAchievementShowcase from './TournamentAchievementShowcase'
         import { useEffect, useRef, useState } from 'react'
@@ -915,6 +916,7 @@ import { usePullToRefresh } from './usePullToRefresh'
               )}
               {blockStatus === 'none' && activeTab === 'poker' && (
                 <>
+                <PokerIdCardEntry userId={profile.id} />
                 <TournamentAchievementShowcase profileId={profile.id} own={false} regularResults={pokerResults.filter(result => result.is_featured)} />
               <PokerMeaningSection data={profile} />
               {/* 公開プレイヤータイプ診断 */}
