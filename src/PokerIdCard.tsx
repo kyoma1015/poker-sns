@@ -148,30 +148,24 @@ export default function PokerIdCard() {
     finally { setExporting(false) }
   }
   const openXComposer = async () => {
-    if (!targetId || !isPublic || (own && !ready) || sharingX || exporting) return
+    if (!targetId || !profile || (own && !ready) || sharingX || exporting) return
     setSharingX(true)
     setError('')
     setNotice('')
     try {
-      // X crawlers cannot execute the Canvas renderer. Upload the EXACT same PNG
-      // the owner sees and downloads, then expose it only through a visibility-checked API.
-      if (own) {
-        if (!profile) throw new Error('プロフィールを取得できません')
-        const blob = await renderPokerIdCard({profile,animal,diagnosisDetail,achievements:ordered,theme,userId:targetId})
-        const {error:uploadError} = await supabase.storage.from('poker-id-card-og')
-          .upload(targetId+'/card.png',blob,{upsert:true,contentType:'image/png',cacheControl:'60'})
-        if (uploadError) throw new Error('共有プレビュー画像を保存できません：'+uploadError.message)
-      }
-      const shareUrl = new URL('/share/poker-id/'+encodeURIComponent(targetId),window.location.origin)
-      // Unique links avoid stale Twitter/X link card thumbnails after a new image upload.
-      if (own) shareUrl.searchParams.set('v',String(Date.now()))
+      // X link previews crop portrait images. Share the unaltered PNG as an ordinary
+      // X photo attachment instead; a plain profile link is included separately.
+      const blob = await renderPokerIdCard({profile,animal,diagnosisDetail,achievements:ordered,theme,userId:targetId})
+      savePokerIdImage(blob,profile.poker_id)
       const intent = new URL('https://twitter.com/intent/tweet')
-      intent.searchParams.set('text',(own?'私の':'おすすめの')+'Poker IDカード！ #PokerID #ポーカー')
-      intent.searchParams.set('url',shareUrl.toString())
-      // Same-tab navigation works on iOS even after awaiting Canvas rendering and Storage upload.
+      intent.searchParams.set('text',own
+        ? '私のPoker IDカードを作ってみた！♠️\nポーカー歴・プレイヤータイプ・大会実績が1枚に✨\nあなたも自分のPoker IDカードを作ってみない？\n#PokerID #ポーカー'
+        : 'このPoker IDカードをチェック！♠️\nポーカー歴・プレイヤータイプ・大会実績が1枚に✨\nあなたも自分のカードを作ってみない？\n#PokerID #ポーカー')
+      intent.searchParams.set('url',new URL('/player/'+encodeURIComponent(targetId)+'/card',window.location.origin).toString())
+      // Use same-tab navigation on iOS to avoid popup blockers after generating the PNG.
       window.location.assign(intent.toString())
     } catch(e) {
-      setError('X共有の準備に失敗しました：'+(e instanceof Error?e.message:String(e)))
+      setError('X投稿の準備に失敗しました：'+(e instanceof Error?e.message:String(e)))
       setSharingX(false)
     }
   }
@@ -217,10 +211,14 @@ export default function PokerIdCard() {
     {!own && <p style={{color:'#aaa',fontSize:12,marginTop:16}}>このカードの内容は公開プロフィールに基づいています。</p>}
     <section style={{display:'flex',gap:10,marginTop:20,flexWrap:'wrap'}}>
       <button type="button" disabled={exporting || (own&&!ready)} onClick={()=>void exportImage(false)} style={{padding:'14px 17px',borderRadius:10,background:'#fff',color:'#111',fontWeight:800,opacity:exporting||(own&&!ready)?.5:1}}>{exporting?'画像を作成中…':'PNG画像を保存'}</button>
-      <button type="button" disabled={sharingX||exporting||!isPublic || (own&&!ready)} onClick={()=>void openXComposer()} style={{padding:'14px 17px',borderRadius:10,background:'#222',color:'#fff',border:'1px solid #777',fontWeight:800,opacity:(sharingX||exporting||!isPublic||(own&&!ready))?.5:1}}>{sharingX?'画像を準備中…':'Xに投稿'}</button>
+      <button type="button" disabled={sharingX||exporting||(own&&!ready)} onClick={()=>void openXComposer()} style={{padding:'14px 17px',borderRadius:10,background:'#222',color:'#fff',border:'1px solid #777',fontWeight:800,opacity:(sharingX||exporting||(own&&!ready))?.5:1}}>{sharingX?'PNG保存中…':'PNGを保存してXに投稿'}</button>
       <button type="button" disabled={exporting || (own&&!ready)} onClick={()=>void exportImage(true)} style={{padding:'14px 17px',borderRadius:10,background:'#222',color:'#fff',border:'1px solid #777',fontWeight:800,opacity:exporting||(own&&!ready)?.5:1}}>画像を共有</button>
     </section>
     {own&&!ready&&<p style={{color:'#aaa',fontSize:12}}>必要項目を登録すると保存・共有が利用できます。プレビューとQRコードは先に確認できます。</p>}
-    <p style={{color:'#888',fontSize:11,marginTop:14}}>「Xに投稿」は公開済みカードに使えます。完成した縦長カードのPNGを共有プレビューに登録し、リンク付きのX投稿画面を開きます。X側の表示領域によっては画像の上下が切り取られます。「画像を共有」はスマホの共有メニューを開きます。</p>
+    <div style={{marginTop:10,padding:'12px 14px',borderRadius:10,background:'#1b2430',border:'1px solid #48627c'}}>
+      <strong style={{display:'block',fontSize:13,color:'#dcecff',marginBottom:5}}>X投稿時は、保存されたカード画像を添付してね</strong>
+      <p style={{margin:0,fontSize:12,lineHeight:1.65,color:'#d2deeb'}}>「PNGを保存してXに投稿」を押すと、画像を保存してXの投稿画面を開きます。Xの画像アイコンを押して、保存した <strong>PokerID_{profile.poker_id}.png</strong> を選んで添付してください。iPhoneでは「ファイル」やダウンロードに保存される場合があります。投稿文は自動入力されます。</p>
+    </div>
+    <p style={{color:'#888',fontSize:11,marginTop:12}}>「画像を共有」はiPhoneなどの共有メニューを開きます。URLだけでカード画像を表示する形式ではありません。</p>
   </main>
 }
