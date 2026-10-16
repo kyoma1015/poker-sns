@@ -102,7 +102,7 @@ export async function renderPokerIdCard(data:{
     y+=h+15
   }
   if(animal || p.my_hand_cards?.length===2) {
-    const h=354
+    const h=342
     if(animal){
       roundedRect(ctx,75,y,691,h,16,t.panel)
       txt(ctx,'PLAYER TYPE',95,y+28,18,t.accent,true)
@@ -140,11 +140,11 @@ export async function renderPokerIdCard(data:{
     y+=h+17
   }
   if(a.length){
-    // 4:5 card: the largest achievement section is 285px, ending above the fixed 1170px footer.
+    // Preserve card proportions, with more room for achievement row spacing.
     const rows=Math.min(3,a.length-1)
-    const h=120+rows*55
+    const h=126+rows*61
     if(y+h+12>1155)throw new Error('大会実績がカードのフッターに重なるため画像を生成できません')
-    roundedRect(ctx,75,y,930,h,18,t.panel,t.line)
+    roundedRect(ctx,75,y,930,h,18,t.panel)
 
     const gold='#A37A39'
     const muted='#647080'
@@ -174,25 +174,25 @@ export async function renderPokerIdCard(data:{
     }
 
     a.slice(1,4).forEach((item,i)=>{
-      const top=y+120+i*55
+      const top=y+126+i*61
       ctx.fillStyle=t.line;ctx.fillRect(97,top,884,1)
       // Rank badge emphasizes tournament placing without competing with the featured result.
-      roundedRect(ctx,100,top+8,70,40,9,'#EFE7D9')
+      roundedRect(ctx,100,top+10,70,40,9,t.bg)
       const rank=rankLabel(item.rank)
       ctx.textAlign='center'
       ctx.font='700 19px system-ui, sans-serif'
       ctx.fillStyle=gold
-      ctx.fillText(rank,135,top+34,62)
+      ctx.fillText(rank,135,top+36,62)
       ctx.textAlign='left'
-      txt(ctx,item.title,184,top+24,20,'#26303B',true,505)
+      txt(ctx,item.title,184,top+26,20,'#26303B',true,505)
       const notes=[detail(item),placement(item)].filter(Boolean).join(' · ')
-      if(notes)txt(ctx,notes,184,top+44,15,muted,false,510)
+      if(notes)txt(ctx,notes,184,top+47,15,muted,false,510)
       const value=prize(item)
       if(value){
         ctx.textAlign='right'
         ctx.fillStyle='#8B6B3D'
         ctx.font='700 19px system-ui, sans-serif'
-        ctx.fillText(value,981,top+30,260)
+        ctx.fillText(value,981,top+33,260)
         ctx.textAlign='left'
       }
     })
