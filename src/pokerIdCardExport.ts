@@ -147,11 +147,11 @@ export async function renderPokerIdCard(data:{
     ['AREA',p.activity_areas?.join('・')],['HOBBIES',p.hobbies?.join('・')]
   ]
   const present=stats.filter((x):x is [string,string]=>!!x[1])
-  const rowHeight=65
+  const rowHeight=45
   for(let i=0;i<present.length;i++){
     const col=i%2,row=Math.floor(i/2),x=86+col*472,top=y+row*rowHeight
-    txt(ctx,present[i][0],x,top+19,17,t.accent,true)
-    txt(ctx,present[i][1],x,top+49,23,'#26303B',true,425)
+    txt(ctx,present[i][0],x,top+13,14,t.accent,true)
+    txt(ctx,present[i][1],x,top+36,19,'#26303B',true,425)
   }
   const footerTop=Math.max(y+Math.ceil(present.length/2)*rowHeight+15,1080)
   if(footerTop>1175)throw new Error('カードの情報量が多く、1枚に収まりません。実績名などを短くして再試行してください。')
