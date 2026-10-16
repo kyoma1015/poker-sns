@@ -140,27 +140,61 @@ export async function renderPokerIdCard(data:{
     y+=h+17
   }
   if(a.length){
-    const rows=Math.min(3,a.length-1), h=117+rows*46
-    roundedRect(ctx,75,y,930,h,17,t.panel,t.line)
-    txt(ctx,'★ MAIN ACHIEVEMENT',98,y+27,19,'#96723F',true)
-    wrap(ctx,a[0].title,98,y+60,640,27,'#26303B',1)
-    const placement=(a[0].entryCount && a[0].entryCount>0?a[0].entryCount+'エントリー中 ':'')+rankLabel(a[0].rank)
-    txt(ctx,placement,750,y+60,22,'#96723F',true,230)
-    const prize=(item:CardAchievement)=>{
-      if(item.prizeAmount!=null && item.prizeAmount>0)return 'プライズ相当額 ¥'+item.prizeAmount.toLocaleString('ja-JP')
-      return item.prizeDescription?.trim()||''
+    // 4:5 card: the largest achievement section is 285px, ending above the fixed 1170px footer.
+    const rows=Math.min(3,a.length-1)
+    const h=120+rows*55
+    if(y+h+12>1155)throw new Error('大会実績がカードのフッターに重なるため画像を生成できません')
+    roundedRect(ctx,75,y,930,h,18,t.panel,t.line)
+
+    const gold='#A37A39'
+    const muted='#647080'
+    const main=a[0]
+    const prize=(item:CardAchievement)=>item.prizeAmount!=null&&item.prizeAmount>0
+      ? '¥'+item.prizeAmount.toLocaleString('ja-JP')
+      : (item.prizeDescription?.trim()||'')
+    const detail=(item:CardAchievement)=>[item.year?item.year+'年':null,item.venue].filter(Boolean).join(' · ')
+    const placement=(item:CardAchievement)=>item.entryCount!=null&&item.entryCount>0
+      ? item.entryCount+'エントリー中'
+      : ''
+
+    // Featured result: distinct hierarchy (competition / placing / prize).
+    txt(ctx,'✦ FEATURED ACHIEVEMENT',98,y+26,18,gold,true)
+    txt(ctx,main.title,100,y+63,30,'#26303B',true,650)
+    const mainDetail=[detail(main),placement(main)].filter(Boolean).join(' · ')
+    if(mainDetail)txt(ctx,mainDetail,101,y+87,17,muted,false,645)
+    ctx.textAlign='right'
+    ctx.fillStyle=gold
+    ctx.font=(main.rank===1?'700 39px':'700 32px')+' system-ui, sans-serif'
+    ctx.fillText(rankLabel(main.rank),976,y+63,205)
+    ctx.textAlign='left'
+    const featuredPrize=prize(main)
+    if(featuredPrize){
+      txt(ctx,main.prizeAmount!=null&&main.prizeAmount>0?'プライズ相当額':'獲得内容',101,y+108,15,gold,true)
+      txt(ctx,featuredPrize,261,y+109,21,gold,true,700)
     }
-    const metaText=(item:CardAchievement)=>[item.year?(item.year+'年'):null,item.venue,prize(item)].filter(Boolean).join('  ·  ')
-    const mainMeta=metaText(a[0])
-    if(mainMeta)txt(ctx,mainMeta,100,y+92,18,'#596370',false,872)
+
     a.slice(1,4).forEach((item,i)=>{
-      const ry=y+117+i*46
-      ctx.fillStyle=t.line;ctx.fillRect(100,ry-5,880,1)
-      txt(ctx,item.title,102,ry+15,19,'#35404D',true,645)
-      const placing=(item.entryCount && item.entryCount>0?item.entryCount+'人中 ':'')+rankLabel(item.rank)
-      txt(ctx,placing,774,ry+15,19,'#96723F',true,205)
-      const extra=metaText(item)
-      if(extra)txt(ctx,extra,103,ry+35,15,'#596370',false,862)
+      const top=y+120+i*55
+      ctx.fillStyle=t.line;ctx.fillRect(97,top,884,1)
+      // Rank badge emphasizes tournament placing without competing with the featured result.
+      roundedRect(ctx,100,top+8,70,40,9,'#EFE7D9')
+      const rank=rankLabel(item.rank)
+      ctx.textAlign='center'
+      ctx.font='700 19px system-ui, sans-serif'
+      ctx.fillStyle=gold
+      ctx.fillText(rank,135,top+34,62)
+      ctx.textAlign='left'
+      txt(ctx,item.title,184,top+24,20,'#26303B',true,505)
+      const notes=[detail(item),placement(item)].filter(Boolean).join(' · ')
+      if(notes)txt(ctx,notes,184,top+44,15,muted,false,510)
+      const value=prize(item)
+      if(value){
+        ctx.textAlign='right'
+        ctx.fillStyle='#8B6B3D'
+        ctx.font='700 19px system-ui, sans-serif'
+        ctx.fillText(value,981,top+30,260)
+        ctx.textAlign='left'
+      }
     })
     y+=h+12
   }
