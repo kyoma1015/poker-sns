@@ -8,10 +8,11 @@ type ProfileData = {
   id: string; poker_id: string; display_name: string; avatar_url?: string | null
   poker_started_year?: number | null; poker_started_month?: number | null; poker_years?: number | null
   main_game?: string | null; main_play?: string | null; poker_frequency?: string | null
-  hobbies?: string[] | null; poker_meaning?: string | null; my_hand_cards?: string[] | null
+  hobbies?: string[] | null; poker_meaning?: string | null; poker_meaning_detail?: string | null; my_hand_cards?: string[] | null; my_hand_reason?: string | null
   activity_areas?: string[] | null
 }
-type Animal = { result_type_key: string; animal_name_ja: string; catchphrase: string }
+type Animal = { result_type_key: string; animal_name_ja: string; catchphrase: string; result_id?: string }
+type DiagnosisDetail = { description: string; behavior_text: string; strength_text: string; weakness_text: string; perceived_text: string; best_situation_text: string }
 type Achievement = { id: string; source: 'past' | 'regular'; title: string; rank: number | null; year: string; is_public: boolean }
 type CardConfig = { user_id: string; theme: string; is_public: boolean; updated_at?: string }
 const themes = [
@@ -43,6 +44,7 @@ export default function PokerIdCard() {
   const [viewerId, setViewerId] = useState('')
   const [profile, setProfile] = useState<ProfileData | null>(null)
   const [animal, setAnimal] = useState<Animal | null>(null)
+  const [diagnosisDetail, setDiagnosisDetail] = useState<DiagnosisDetail | null>(null)
   const [achievements, setAchievements] = useState<Achievement[]>([])
   const [highlight, setHighlight] = useState<{ source_type: string; source_id: string } | null>(null)
   const [config, setConfig] = useState<CardConfig | null>(null)
@@ -78,6 +80,12 @@ export default function PokerIdCard() {
       setProfile(p.data as ProfileData)
       const ar = (user?.id === id ? ownAnimal.data : publicAnimal.data) as Animal[] | null
       setAnimal(ar?.[0] ?? null)
+      setDiagnosisDetail(null)
+      const diagnosisId = (ar?.[0] as { result_id?: string } | undefined)?.result_id
+      if (diagnosisId) {
+        const detail = await supabase.rpc('get_player_type_v2_result_detail', { p_result_id: diagnosisId })
+        if (!cancelled && !detail.error) setDiagnosisDetail((detail.data?.[0] ?? null) as DiagnosisDetail | null)
+      }
       const visible = (user?.id === id)
       const a: Achievement[] = [
         ...((past.data ?? []) as {id:string;tournament_name:string;event_year:number;rank:number;is_public:boolean}[]).filter(x=>visible || x.is_public).map(x=>({id:x.id,source:'past' as const,title:x.tournament_name,rank:x.rank,year:String(x.event_year),is_public:x.is_public})),
@@ -110,7 +118,7 @@ export default function PokerIdCard() {
     if (!profile || !targetId || exporting || (own && !ready)) return
     setExporting(true); setError(''); setNotice('')
     try {
-      const blob = await renderPokerIdCard({ profile, animal, achievements: ordered, theme, userId: targetId })
+      const blob = await renderPokerIdCard({ profile, animal, diagnosisDetail, achievements: ordered, theme, userId: targetId })
       if (share) {
         const file = new File([blob], 'PokerID_' + profile.poker_id + '.png', { type: 'image/png' })
         if (navigator.canShare?.({files:[file]}) && navigator.share) {
@@ -160,10 +168,34 @@ export default function PokerIdCard() {
         {profile.avatar_url ? <img src={profile.avatar_url} alt="" style={{width:53,height:53,borderRadius:'50%',objectFit:'cover'}}/> : <div style={{width:53,height:53,borderRadius:'50%',background:theme.line,display:'grid',placeItems:'center',fontSize:25}}>♠</div>}
         <div style={{minWidth:0}}><strong style={{fontSize:'clamp(16px,4vw,25px)',overflowWrap:'anywhere'}}>{profile.display_name}</strong><div style={{fontSize:11,color:theme.accent}}>@{profile.poker_id}</div><div style={{fontSize:10}}>{pokerExperience(profile)} · {MAIN_PLAY_LABELS[profile.main_play||'']||'未登録'}</div></div>
       </div>
-      {!!profile.poker_meaning && <div style={panel(theme.panel)}><div style={{fontSize:9,color:theme.accent,fontWeight:800}}>WHAT IS POKER TO YOU?</div><div style={{fontWeight:750,fontSize:'clamp(12px,2.8vw,16px)',overflowWrap:'anywhere'}}>「{profile.poker_meaning}」</div></div>}
-      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:9}}>
-        {animal && <div style={panel(theme.panel)}><div style={{fontSize:9,color:theme.accent,fontWeight:800}}>PLAYER TYPE</div><div style={{display:'flex',alignItems:'center',gap:5}}><img src={'/animals/'+animal.result_type_key+'.png'} alt="" style={{width:37,height:37,objectFit:'contain'}}/><b style={{fontSize:12}}>{animal.animal_name_ja}</b></div><div style={{fontSize:9,overflowWrap:'anywhere'}}>{animal.catchphrase}</div></div>}
-        {profile.my_hand_cards?.length===2 && <div style={panel(theme.panel)}><div style={{fontSize:9,color:theme.accent,fontWeight:800}}>MY HAND</div><div style={{display:'flex',gap:5,marginTop:9}}>{profile.my_hand_cards.map((card,i)=><div key={i} style={{padding:'7px 5px',background:'#fff',borderRadius:5,fontWeight:900,fontSize:15,color:/[♥♦]/.test(card)?'#c33c5b':'#263447'}}>{card}</div>)}</div></div>}
+      {!!profile.poker_meaning && <div style={{...panel(theme.panel),padding:'10px 12px'}}>
+        <div style={{fontSize:9,color:theme.accent,fontWeight:800}}>WHAT IS POKER TO YOU?</div>
+        <div style={{fontWeight:800,fontSize:'clamp(12px,2.8vw,17px)',overflowWrap:'anywhere'}}>「{profile.poker_meaning}」</div>
+        {!!profile.poker_meaning_detail?.trim() && <div style={{borderTop:'1px solid '+theme.line,marginTop:6,paddingTop:6,fontSize:'clamp(9px,1.85vw,12px)',lineHeight:1.35,whiteSpace:'pre-wrap',overflowWrap:'anywhere',display:'-webkit-box',WebkitLineClamp:4,WebkitBoxOrient:'vertical',overflow:'hidden'}}>{profile.poker_meaning_detail}</div>}
+      </div>}
+      <div style={{display:'grid',gridTemplateColumns:'minmax(0,3fr) minmax(0,1fr)',gap:8,alignItems:'stretch'}}>
+        {animal && <div style={{...panel(theme.panel),padding:'9px',minWidth:0}}>
+          <div style={{fontSize:9,color:theme.accent,fontWeight:800}}>PLAYER TYPE</div>
+          <div style={{display:'flex',alignItems:'center',gap:6}}>
+            <img src={'/animals/'+animal.result_type_key+'.png'} alt="" style={{width:48,height:48,objectFit:'contain',flexShrink:0}}/>
+            <div style={{minWidth:0}}><b style={{fontSize:13}}>{animal.animal_name_ja}</b><div style={{fontSize:9,lineHeight:1.25,overflowWrap:'anywhere'}}>{animal.catchphrase}</div></div>
+          </div>
+          {diagnosisDetail && <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'7px 9px',marginTop:7}}>
+            {([['全体像',diagnosisDetail.description],['行動傾向',diagnosisDetail.behavior_text],['強み',diagnosisDetail.strength_text],['弱み・注意点',diagnosisDetail.weakness_text],['周囲からの印象',diagnosisDetail.perceived_text],['得意な状況',diagnosisDetail.best_situation_text]] as const).map(([label,copy])=><div key={label} style={{minWidth:0,borderTop:'1px solid '+theme.line,paddingTop:4}}>
+              <div style={{fontSize:9,color:theme.accent,fontWeight:800}}>{label}</div>
+              <div style={{fontSize:9,lineHeight:1.28,overflowWrap:'anywhere',display:'-webkit-box',WebkitLineClamp:3,WebkitBoxOrient:'vertical',overflow:'hidden'}}>{copy}</div>
+            </div>)}
+          </div>}
+        </div>}
+        {profile.my_hand_cards?.length===2 && <div style={{...panel(theme.panel),padding:8,minWidth:0}}>
+          <div style={{fontSize:9,color:theme.accent,fontWeight:800}}>MY HAND</div>
+          <div style={{display:'flex',gap:3,marginTop:8,justifyContent:'center'}}>
+            {profile.my_hand_cards.map((card,i)=>{const suit=card.slice(-1),rank=card.slice(0,-1);const color=({'♠':'#222936','♥':'#dc354c','♦':'#2675d9','♣':'#15955c'} as Record<string,string>)[suit]||'#222936';return <div key={i} style={{position:'relative',flex:'1 1 0',minWidth:0,height:66,boxSizing:'border-box',padding:'5px 3px',background:'linear-gradient(155deg,#fff,#f6f7fa)',border:'1px solid #d8dce4',borderRadius:7,color,boxShadow:'0 2px 5px #0002'}}>
+              <div style={{fontWeight:900,fontSize:14}}>{rank}</div><div style={{fontSize:24,fontWeight:700,textAlign:'center',lineHeight:1,fontFamily:'Georgia,serif'}}>{suit}</div>
+            </div>})}
+          </div>
+          {!!profile.my_hand_reason?.trim() && <div style={{marginTop:8,paddingTop:6,borderTop:'1px solid '+theme.line,fontSize:9,lineHeight:1.35,whiteSpace:'pre-wrap',overflowWrap:'anywhere'}}>{profile.my_hand_reason}</div>}
+        </div>}
       </div>
       {main && <div style={{background:theme.panel,border:'1px solid '+theme.line,padding:10,borderRadius:10}}>
         <div style={{fontSize:10,fontWeight:800,color:theme.accent}}>★ MAIN ACHIEVEMENT</div>
