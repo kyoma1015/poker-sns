@@ -76,18 +76,20 @@ export async function renderPokerIdCard(data:{
   ctx.fillStyle=t.line;ctx.fillRect(76,132,928,2)
   if(p.avatar_url)await drawImageUrl(ctx,p.avatar_url,80,158,120,120,'cover')
   else {roundedRect(ctx,80,158,120,120,60,t.line);txt(ctx,'♠',117,236,72,'#26303B')}
-  txt(ctx,p.display_name||'PLAYER',225,207,50,'#26303B',true,535)
-  txt(ctx,'@'+p.poker_id,226,247,25,t.accent,false,535)
-  txt(ctx,pokerExperience(p)+'  ·  '+(MAIN_PLAY_LABELS[p.main_play||'']||'—'),226,284,22,'#45505E',false,535)
+  txt(ctx,p.display_name||'PLAYER',225,207,50,'#26303B',true,295)
+  txt(ctx,'@'+p.poker_id,226,247,25,t.accent,false,295)
+  // Profile attributes share one labeled two-column grid; no ambiguous "5年・リング派" line.
   const meta:[string,string|undefined|null][]=[
+    ['POKER HISTORY',pokerExperience(p)],
     ['MAIN GAME',p.main_game],
+    ['MAIN PLAY',MAIN_PLAY_LABELS[p.main_play||'']],
     ['AREA',p.activity_areas?.join('・')],
     ['FREQUENCY',POKER_FREQUENCIES[p.poker_frequency||'']]
   ]
   meta.filter((item):item is [string,string]=>Boolean(item[1])).forEach(([label,value],i)=>{
-    const yy=168+i*44
-    txt(ctx,label,772,yy,15,t.accent,true)
-    txt(ctx,value,772,yy+23,19,'#26303B',true,225)
+    const col=i%2,row=Math.floor(i/2),xx=527+col*244,yy=166+row*44
+    txt(ctx,label,xx,yy,14,t.accent,true,218)
+    txt(ctx,value,xx,yy+22,18,'#26303B',true,218)
   })
   let y=309
   if(p.poker_meaning?.trim()){
@@ -127,14 +129,14 @@ export async function renderPokerIdCard(data:{
       p.my_hand_cards.forEach((card,i)=>{
         const suit=card.slice(-1),rank=card.slice(0,-1)
         const color=({'♠':'#222936','♥':'#dc354c','♦':'#2675d9','♣':'#15955c'} as Record<string,string>)[suit]||'#222936'
-        const x=790+i*102,top=y+42
+        const x=790+i*102,top=y+108
         roundedRect(ctx,x,top,92,120,12,'#FFFFFF','#D8DCE4')
         txt(ctx,rank,x+10,top+36,35,color,true)
         txt(ctx,suit,x+18,top+97,55,color,true)
       })
       if(p.my_hand_reason?.trim()){
-        ctx.fillStyle=t.line;ctx.fillRect(795,y+181,195,1)
-        wrap(ctx,p.my_hand_reason,796,y+208,189,17,'#45505E',7,19)
+        ctx.fillStyle=t.line;ctx.fillRect(795,y+248,195,1)
+        wrap(ctx,p.my_hand_reason,796,y+273,189,16,'#45505E',2,20)
       }
     }
     y+=h+17
