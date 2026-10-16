@@ -147,7 +147,7 @@ export default function PokerIdCard() {
     finally { setExporting(false) }
   }
   const openXComposer = () => {
-    if (!targetId || (own && !ready)) return
+    if (!targetId || !isPublic || (own && !ready)) return
     const intent = new URL('https://twitter.com/intent/tweet')
     intent.searchParams.set('text',(own?'私の':'おすすめの')+'Poker IDカード！ #PokerID #ポーカー')
     intent.searchParams.set('url',new URL('/share/poker-id/'+encodeURIComponent(targetId),window.location.origin).toString())
@@ -196,10 +196,10 @@ export default function PokerIdCard() {
     {!own && <p style={{color:'#aaa',fontSize:12,marginTop:16}}>このカードの内容は公開プロフィールに基づいています。</p>}
     <section style={{display:'flex',gap:10,marginTop:20,flexWrap:'wrap'}}>
       <button type="button" disabled={exporting || (own&&!ready)} onClick={()=>void exportImage(false)} style={{padding:'14px 17px',borderRadius:10,background:'#fff',color:'#111',fontWeight:800,opacity:exporting||(own&&!ready)?.5:1}}>{exporting?'画像を作成中…':'PNG画像を保存'}</button>
-      <button type="button" disabled={own&&!ready} onClick={openXComposer} style={{padding:'14px 17px',borderRadius:10,background:'#222',color:'#fff',border:'1px solid #777',fontWeight:800,opacity:own&&!ready?.5:1}}>Xに投稿</button>
+      <button type="button" disabled={!isPublic || (own&&!ready)} onClick={openXComposer} style={{padding:'14px 17px',borderRadius:10,background:'#222',color:'#fff',border:'1px solid #777',fontWeight:800,opacity:(!isPublic||(own&&!ready))?.5:1}}>Xに投稿</button>
       <button type="button" disabled={exporting || (own&&!ready)} onClick={()=>void exportImage(true)} style={{padding:'14px 17px',borderRadius:10,background:'#222',color:'#fff',border:'1px solid #777',fontWeight:800,opacity:exporting||(own&&!ready)?.5:1}}>画像を共有</button>
     </section>
     {own&&!ready&&<p style={{color:'#aaa',fontSize:12}}>必要項目を登録すると保存・共有が利用できます。プレビューとQRコードは先に確認できます。</p>}
-    <p style={{color:'#888',fontSize:11,marginTop:14}}>「Xに投稿」は公開カードのURLを含む投稿画面を開きます。カードが公開されていれば、Xで画像付きリンクプレビューが表示されます。画像そのものを投稿する場合は、PNGを保存して添付してください。「画像を共有」はスマホの共有メニューを開きます。</p>
+    <p style={{color:'#888',fontSize:11,marginTop:14}}>「Xに投稿」はカード公開後に使えます。公開カードのURLを含む投稿画面を開きます。カードが公開されていれば、Xで画像付きリンクプレビューが表示されます。画像そのものを投稿する場合は、PNGを保存して添付してください。「画像を共有」はスマホの共有メニューを開きます。</p>
   </main>
 }
