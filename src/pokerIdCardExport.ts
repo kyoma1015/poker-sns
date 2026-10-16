@@ -5,10 +5,11 @@ export type CardProfile = {
   poker_id: string; display_name: string; avatar_url?: string | null
   poker_started_year?: number | null; poker_started_month?: number | null; poker_years?: number | null
   main_game?: string | null; main_play?: string | null; poker_frequency?: string | null
-  hobbies?: string[] | null; poker_meaning?: string | null; my_hand_cards?: string[] | null
+  hobbies?: string[] | null; poker_meaning?: string | null; poker_meaning_detail?: string | null; my_hand_cards?: string[] | null; my_hand_reason?: string | null
   activity_areas?: string[] | null
 }
 export type CardAnimal = { result_type_key: string; animal_name_ja: string; catchphrase: string }
+export type CardDiagnosis = { description: string; behavior_text: string; strength_text: string; weakness_text: string; perceived_text: string; best_situation_text: string }
 export type CardAchievement = { id: string; source: string; title: string; rank: number | null; year: string }
 export type CardTheme = { bg: string; panel: string; line: string; accent: string }
 
@@ -61,10 +62,10 @@ function drawQr(ctx:CanvasRenderingContext2D,url:string,x:number,y:number,size:n
   for(const m of qr.dark)ctx.fillRect(x+(m.x+quiet)*module,y+(m.y+quiet)*module,Math.ceil(module+.1),Math.ceil(module+.1))
 }
 export async function renderPokerIdCard(data:{
-  profile:CardProfile; animal:CardAnimal|null; achievements:CardAchievement[];
+  profile:CardProfile; animal:CardAnimal|null; diagnosisDetail:CardDiagnosis|null; achievements:CardAchievement[];
   theme:CardTheme; userId:string
 }):Promise<Blob>{
-  const {profile:p,animal,achievements:a,theme:t,userId}=data
+  const {profile:p,animal,diagnosisDetail,achievements:a,theme:t,userId}=data
   const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1350
   const ctx=canvas.getContext('2d')
   if(!ctx)throw new Error('このブラウザでは画像を作成できません')
@@ -80,21 +81,53 @@ export async function renderPokerIdCard(data:{
   txt(ctx,pokerExperience(p)+'  ·  '+(MAIN_PLAY_LABELS[p.main_play||'']||'—'),226,284,22,'#45505E',false,700)
   let y=309
   if(p.poker_meaning?.trim()){
-    roundedRect(ctx,75,y,930,106,18,t.panel)
+    const h=p.poker_meaning_detail?.trim()?149:103
+    roundedRect(ctx,75,y,930,h,18,t.panel)
     txt(ctx,'WHAT IS POKER TO YOU?',98,y+29,17,t.accent,true)
-    wrap(ctx,'「'+p.poker_meaning+'」',98,y+70,880,27,'#26303B',2,30)
-    y+=124
-  }
-  if(animal||p.my_hand_cards?.length===2){
-    const w=452
-    if(animal){roundedRect(ctx,75,y,w,144,16,t.panel);txt(ctx,'PLAYER TYPE',95,y+27,18,t.accent,true)
-      await drawImageUrl(ctx,'/animals/'+animal.result_type_key+'.png',100,y+42,92,90,'contain')
-      txt(ctx,animal.animal_name_ja,208,y+77,27,'#26303B',true,300)
-      wrap(ctx,animal.catchphrase,208,y+104,293,16,'#59616F',2,21)
+    wrap(ctx,'「'+p.poker_meaning+'」',98,y+68,870,27,'#26303B',1)
+    if(p.poker_meaning_detail?.trim()){
+      ctx.fillStyle=t.line;ctx.fillRect(100,y+83,880,1)
+      wrap(ctx,p.poker_meaning_detail,101,y+107,868,18,'#596370',2,22)
     }
-    if(p.my_hand_cards?.length===2){roundedRect(ctx,552,y,w,144,16,t.panel);txt(ctx,'MY HAND',575,y+27,18,t.accent,true)
-      p.my_hand_cards.forEach((card,i)=>{roundedRect(ctx,583+i*103,y+46,89,83,9,'#FFFFFF',t.line);txt(ctx,card,599+i*103,y+98,33,/[♥♦]/.test(card)?'#C73153':'#26303B',true)})}
-    y+=163
+    y+=h+15
+  }
+  if(animal || p.my_hand_cards?.length===2) {
+    const h=353
+    if(animal){
+      roundedRect(ctx,75,y,691,h,16,t.panel)
+      txt(ctx,'PLAYER TYPE',95,y+28,18,t.accent,true)
+      await drawImageUrl(ctx,'/animals/'+animal.result_type_key+'.png',97,y+41,95,85,'contain')
+      txt(ctx,animal.animal_name_ja,200,y+80,28,'#26303B',true,530)
+      wrap(ctx,animal.catchphrase,200,y+109,535,17,'#596370',1)
+      const entries:[string,string][] = diagnosisDetail ? [
+        ['全体像',diagnosisDetail.description],['行動傾向',diagnosisDetail.behavior_text],
+        ['強み',diagnosisDetail.strength_text],['弱み・注意点',diagnosisDetail.weakness_text],
+        ['周囲からの印象',diagnosisDetail.perceived_text],['得意な状況',diagnosisDetail.best_situation_text],
+      ] : []
+      for(let i=0;i<entries.length;i++){
+        const col=i%2,row=Math.floor(i/2),x=96+col*337,top=y+139+row*69
+        ctx.fillStyle=t.line;ctx.fillRect(x,top-10,313,1)
+        txt(ctx,entries[i][0],x,top+10,16,t.accent,true)
+        wrap(ctx,entries[i][1],x,top+33,311,15,'#35404D',2,19)
+      }
+    }
+    if(p.my_hand_cards?.length===2){
+      roundedRect(ctx,778,y,227,h,16,t.panel)
+      txt(ctx,'MY HAND',791,y+28,18,t.accent,true)
+      p.my_hand_cards.forEach((card,i)=>{
+        const suit=card.slice(-1),rank=card.slice(0,-1)
+        const color=({'♠':'#222936','♥':'#dc354c','♦':'#2675d9','♣':'#15955c'} as Record<string,string>)[suit]||'#222936'
+        const x=790+i*102,top=y+42
+        roundedRect(ctx,x,top,92,120,12,'#FFFFFF','#D8DCE4')
+        txt(ctx,rank,x+10,top+36,35,color,true)
+        txt(ctx,suit,x+18,top+97,55,color,true)
+      })
+      if(p.my_hand_reason?.trim()){
+        ctx.fillStyle=t.line;ctx.fillRect(795,y+181,195,1)
+        wrap(ctx,p.my_hand_reason,796,y+208,189,17,'#45505E',7,19)
+      }
+    }
+    y+=h+17
   }
   if(a.length){
     const rows=Math.min(3,a.length-1),h=104+rows*39
@@ -126,7 +159,7 @@ export async function renderPokerIdCard(data:{
   ctx.fillStyle=t.line;ctx.fillRect(80,1170,920,2)
   txt(ctx,'♠ POKER ID',85,1247,44,t.accent,true)
   txt(ctx,'CREATE YOUR OWN POKER ID',87,1281,18,t.accent)
-  drawQr(ctx,profileCardUrl(userId),810,1182,150)
+  drawQr(ctx,profileCardUrl(userId),853,1185,120)
   return await new Promise<Blob>((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error('PNGを生成できませんでした')),'image/png'))
 }
 export function savePokerIdImage(blob:Blob, name:string) {
