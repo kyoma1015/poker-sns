@@ -129,7 +129,7 @@ export async function renderPokerIdCard(data:{
       p.my_hand_cards.forEach((card,i)=>{
         const suit=card.slice(-1),rank=card.slice(0,-1)
         const color=({'♠':'#222936','♥':'#dc354c','♦':'#2675d9','♣':'#15955c'} as Record<string,string>)[suit]||'#222936'
-        const x=790+i*102,top=y+108
+        const x=790+i*102,top=y+92
         roundedRect(ctx,x,top,92,120,12,'#FFFFFF','#D8DCE4')
         txt(ctx,rank,x+10,top+36,35,color,true)
         txt(ctx,suit,x+18,top+97,55,color,true)
