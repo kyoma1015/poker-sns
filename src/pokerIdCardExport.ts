@@ -10,7 +10,7 @@ export type CardProfile = {
 }
 export type CardAnimal = { result_type_key: string; animal_name_ja: string; catchphrase: string }
 export type CardDiagnosis = { description: string; behavior_text: string; strength_text: string; weakness_text: string; perceived_text: string; best_situation_text: string }
-export type CardAchievement = { id: string; source: string; title: string; rank: number | null; year: string }
+export type CardAchievement = { id: string; source: string; title: string; rank: number | null; entryCount: number | null; year: string }
 export type CardTheme = { bg: string; panel: string; line: string; accent: string }
 
 export function profileCardUrl(userId: string) {
@@ -92,7 +92,7 @@ export async function renderPokerIdCard(data:{
     y+=h+15
   }
   if(animal || p.my_hand_cards?.length===2) {
-    const h=353
+    const h=310
     if(animal){
       roundedRect(ctx,75,y,691,h,16,t.panel)
       txt(ctx,'PLAYER TYPE',95,y+28,18,t.accent,true)
@@ -105,7 +105,7 @@ export async function renderPokerIdCard(data:{
         ['周囲からの印象',diagnosisDetail.perceived_text],['得意な状況',diagnosisDetail.best_situation_text],
       ] : []
       for(let i=0;i<entries.length;i++){
-        const col=i%2,row=Math.floor(i/2),x=96+col*337,top=y+139+row*69
+        const col=i%2,row=Math.floor(i/2),x=96+col*337,top=y+126+row*58
         ctx.fillStyle=t.line;ctx.fillRect(x,top-10,313,1)
         txt(ctx,entries[i][0],x,top+10,16,t.accent,true)
         wrap(ctx,entries[i][1],x,top+33,311,15,'#35404D',2,19)
@@ -130,15 +130,17 @@ export async function renderPokerIdCard(data:{
     y+=h+17
   }
   if(a.length){
-    const rows=Math.min(3,a.length-1),h=104+rows*39
+    const rows=Math.min(3,a.length-1),h=91+rows*30
     roundedRect(ctx,75,y,930,h,17,t.panel,t.line)
     txt(ctx,'★ MAIN ACHIEVEMENT',98,y+29,19,'#96723F',true)
-    wrap(ctx,a[0].title,98,y+69,745,26,'#26303B',1)
-    txt(ctx,rankLabel(a[0].rank),853,y+69,29,'#96723F',true,135)
+    wrap(ctx,a[0].title,98,y+59,690,25,'#26303B',1)
+    const mainResult = (a[0].entryCount && a[0].entryCount > 0 ? a[0].entryCount+'エントリー中 ' : '')+rankLabel(a[0].rank)
+    txt(ctx,mainResult,785,y+59,21,'#96723F',true,190)
     a.slice(1,4).forEach((item,i)=>{
-      const ry=y+110+i*39;ctx.fillStyle=t.line;ctx.fillRect(100,ry-19,880,1)
-      txt(ctx,item.title,105,ry+7,20,'#35404D',false,690)
-      txt(ctx,rankLabel(item.rank),859,ry+7,20,'#96723F',true,120)
+      const ry=y+94+i*30;ctx.fillStyle=t.line;ctx.fillRect(100,ry-10,880,1)
+      txt(ctx,item.title,105,ry+11,18,'#35404D',false,655)
+      const placing=(item.entryCount && item.entryCount>0 ? item.entryCount+'人中 ' : '')+rankLabel(item.rank)
+      txt(ctx,placing,781,ry+11,17,'#96723F',true,202)
     })
     y+=h+19
   }
@@ -147,7 +149,7 @@ export async function renderPokerIdCard(data:{
     ['AREA',p.activity_areas?.join('・')],['HOBBIES',p.hobbies?.join('・')]
   ]
   const present=stats.filter((x):x is [string,string]=>!!x[1])
-  const rowHeight=45
+  const rowHeight=42
   for(let i=0;i<present.length;i++){
     const col=i%2,row=Math.floor(i/2),x=86+col*472,top=y+row*rowHeight
     txt(ctx,present[i][0],x,top+13,14,t.accent,true)
@@ -155,7 +157,7 @@ export async function renderPokerIdCard(data:{
   }
   const footerTop=Math.max(y+Math.ceil(present.length/2)*rowHeight+15,1080)
   if(footerTop>1175)throw new Error('カードの情報量が多く、1枚に収まりません。実績名などを短くして再試行してください。')
-  ctx.save();ctx.globalAlpha=0.07;txt(ctx,'♠',470,1085,260,t.accent,true);ctx.restore()
+  ctx.save();ctx.globalAlpha=0.065;ctx.textAlign='center';ctx.font='700 240px Georgia, serif';ctx.fillStyle=t.accent;ctx.fillText('♠',540,1020);ctx.restore()
   ctx.fillStyle=t.line;ctx.fillRect(80,1170,920,2)
   txt(ctx,'♠ POKER ID',85,1247,44,t.accent,true)
   txt(ctx,'CREATE YOUR OWN POKER ID',87,1281,18,t.accent)
