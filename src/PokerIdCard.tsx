@@ -138,7 +138,7 @@ export default function PokerIdCard() {
   }
   if (loading) return <main style={{padding:20,color:'#aaa'}}>Poker IDカードを読み込み中...</main>
   if (!profile || !canView) return <main style={{padding:20}}><h2>カードは公開されていません</h2><button onClick={()=>navigate(-1)}>戻る</button></main>
-  return <main style={{maxWidth:600,margin:'0 auto',padding:'20px 16px 80px',color:'#fff'}}>
+  return <main style={{maxWidth:600,margin:'0 auto',padding:'20px 16px 140px',color:'#fff'}}>
     <button type="button" onClick={()=>navigate(-1)} style={{background:'transparent',color:'#aaa',padding:'8px 0'}}>← 戻る</button>
     <h1 style={{fontSize:24,margin:'14px 0'}}>Poker IDカード</h1>
     {error && <p role="alert" style={{color:'#ff9999'}}>{error}</p>}
@@ -173,7 +173,8 @@ export default function PokerIdCard() {
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',columnGap:12,rowGap:5}}>
         {[[ 'MAIN GAME',profile.main_game ],['FREQUENCY',POKER_FREQUENCIES[profile.poker_frequency||'']],['AREA',profile.activity_areas?.join('・')],['HOBBIES',profile.hobbies?.join('・')]].filter(x=>x[1]).map(([label,value])=><div key={label} style={{minWidth:0}}><div style={{fontSize:9,color:theme.accent}}>{label}</div><b style={{fontSize:11,overflowWrap:'anywhere'}}>{value}</b></div>)}
       </div>
-      <div style={{flex:1,minHeight:0,display:'flex',alignItems:'flex-end',justifyContent:'space-between',borderTop:'1px solid '+theme.line,paddingTop:8,marginTop:'auto'}}>
+      <div aria-hidden="true" style={{position:'absolute',left:'50%',top:'70%',transform:'translate(-50%,-50%)',fontSize:'clamp(105px,23vw,220px)',lineHeight:1,color:theme.accent,opacity:0.07,pointerEvents:'none',zIndex:0}}>♠</div>
+      <div style={{flex:1,minHeight:0,display:'flex',alignItems:'flex-end',justifyContent:'space-between',borderTop:'1px solid '+theme.line,paddingTop:8,marginTop:'auto',position:'relative',zIndex:1}}> 
         <div><div style={{fontSize:20,fontWeight:900,opacity:.22}}>♠ POKER ID</div><div style={{fontSize:9,color:theme.accent}}>CREATE YOUR OWN POKER ID</div></div>
         {qr && <svg role="img" aria-label="プロフィール用QRコード" viewBox={`0 0 ${qr.size+8} ${qr.size+8}`} width="88" height="88" style={{background:'#fff',borderRadius:5,padding:5,boxSizing:'border-box',flexShrink:0}} shapeRendering="crispEdges"><rect width={qr.size+8} height={qr.size+8} fill="#fff"/>{qr.dark.map(({x,y})=><rect key={x+'-'+y} x={x+4} y={y+4} width="1" height="1" fill="#111"/>)}</svg>}
       </div>
