@@ -10,7 +10,7 @@ export type CardProfile = {
 }
 export type CardAnimal = { result_type_key: string; animal_name_ja: string; catchphrase: string }
 export type CardDiagnosis = { description: string; behavior_text: string; strength_text: string; weakness_text: string; perceived_text: string; best_situation_text: string }
-export type CardAchievement = { id: string; source: string; title: string; rank: number | null; entryCount: number | null; year: string }
+export type CardAchievement = { id: string; source: string; title: string; rank: number | null; entryCount: number | null; year: string; venue: string | null; prizeAmount: number | null; prizeDescription: string | null }
 export type CardTheme = { bg: string; panel: string; line: string; accent: string }
 
 export function profileCardUrl(userId: string) {
@@ -76,9 +76,19 @@ export async function renderPokerIdCard(data:{
   ctx.fillStyle=t.line;ctx.fillRect(76,132,928,2)
   if(p.avatar_url)await drawImageUrl(ctx,p.avatar_url,80,158,120,120,'cover')
   else {roundedRect(ctx,80,158,120,120,60,t.line);txt(ctx,'♠',117,236,72,'#26303B')}
-  txt(ctx,p.display_name||'PLAYER',225,207,50,'#26303B',true,760)
-  txt(ctx,'@'+p.poker_id,226,247,25,t.accent,false,710)
-  txt(ctx,pokerExperience(p)+'  ·  '+(MAIN_PLAY_LABELS[p.main_play||'']||'—'),226,284,22,'#45505E',false,700)
+  txt(ctx,p.display_name||'PLAYER',225,207,50,'#26303B',true,535)
+  txt(ctx,'@'+p.poker_id,226,247,25,t.accent,false,535)
+  txt(ctx,pokerExperience(p)+'  ·  '+(MAIN_PLAY_LABELS[p.main_play||'']||'—'),226,284,22,'#45505E',false,535)
+  const meta:[string,string|undefined|null][]=[
+    ['MAIN GAME',p.main_game],
+    ['AREA',p.activity_areas?.join('・')],
+    ['FREQUENCY',POKER_FREQUENCIES[p.poker_frequency||'']]
+  ]
+  meta.filter((item):item is [string,string]=>Boolean(item[1])).forEach(([label,value],i)=>{
+    const yy=168+i*44
+    txt(ctx,label,772,yy,15,t.accent,true)
+    txt(ctx,value,772,yy+23,19,'#26303B',true,225)
+  })
   let y=309
   if(p.poker_meaning?.trim()){
     const h=p.poker_meaning_detail?.trim()?149:103
@@ -130,33 +140,31 @@ export async function renderPokerIdCard(data:{
     y+=h+17
   }
   if(a.length){
-    const rows=Math.min(3,a.length-1),h=91+rows*30
+    const rows=Math.min(3,a.length-1), h=117+rows*46
     roundedRect(ctx,75,y,930,h,17,t.panel,t.line)
-    txt(ctx,'★ MAIN ACHIEVEMENT',98,y+29,19,'#96723F',true)
-    wrap(ctx,a[0].title,98,y+59,690,25,'#26303B',1)
-    const mainResult = (a[0].entryCount && a[0].entryCount > 0 ? a[0].entryCount+'エントリー中 ' : '')+rankLabel(a[0].rank)
-    txt(ctx,mainResult,785,y+59,21,'#96723F',true,190)
+    txt(ctx,'★ MAIN ACHIEVEMENT',98,y+27,19,'#96723F',true)
+    wrap(ctx,a[0].title,98,y+60,640,27,'#26303B',1)
+    const placement=(a[0].entryCount && a[0].entryCount>0?a[0].entryCount+'エントリー中 ':'')+rankLabel(a[0].rank)
+    txt(ctx,placement,750,y+60,22,'#96723F',true,230)
+    const prize=(item:CardAchievement)=>{
+      if(item.prizeAmount!=null && item.prizeAmount>0)return 'プライズ相当額 ¥'+item.prizeAmount.toLocaleString('ja-JP')
+      return item.prizeDescription?.trim()||''
+    }
+    const metaText=(item:CardAchievement)=>[item.year?(item.year+'年'):null,item.venue,prize(item)].filter(Boolean).join('  ·  ')
+    const mainMeta=metaText(a[0])
+    if(mainMeta)txt(ctx,mainMeta,100,y+92,18,'#596370',false,872)
     a.slice(1,4).forEach((item,i)=>{
-      const ry=y+94+i*30;ctx.fillStyle=t.line;ctx.fillRect(100,ry-10,880,1)
-      txt(ctx,item.title,105,ry+11,18,'#35404D',false,655)
-      const placing=(item.entryCount && item.entryCount>0 ? item.entryCount+'人中 ' : '')+rankLabel(item.rank)
-      txt(ctx,placing,781,ry+11,17,'#96723F',true,202)
+      const ry=y+117+i*46
+      ctx.fillStyle=t.line;ctx.fillRect(100,ry-5,880,1)
+      txt(ctx,item.title,102,ry+15,19,'#35404D',true,645)
+      const placing=(item.entryCount && item.entryCount>0?item.entryCount+'人中 ':'')+rankLabel(item.rank)
+      txt(ctx,placing,774,ry+15,19,'#96723F',true,205)
+      const extra=metaText(item)
+      if(extra)txt(ctx,extra,103,ry+35,15,'#596370',false,862)
     })
-    y+=h+19
+    y+=h+12
   }
-  const stats:[string,string|undefined|null][]=[
-    ['MAIN GAME',p.main_game],['FREQUENCY',POKER_FREQUENCIES[p.poker_frequency||'']],
-    ['AREA',p.activity_areas?.join('・')],['HOBBIES',p.hobbies?.join('・')]
-  ]
-  const present=stats.filter((x):x is [string,string]=>!!x[1])
-  const rowHeight=42
-  for(let i=0;i<present.length;i++){
-    const col=i%2,row=Math.floor(i/2),x=86+col*472,top=y+row*rowHeight
-    txt(ctx,present[i][0],x,top+13,14,t.accent,true)
-    txt(ctx,present[i][1],x,top+36,19,'#26303B',true,425)
-  }
-  const footerTop=Math.max(y+Math.ceil(present.length/2)*rowHeight+15,1080)
-  if(footerTop>1175)throw new Error('カードの情報量が多く、1枚に収まりません。実績名などを短くして再試行してください。')
+  if(y>1155)throw new Error('大会実績の情報量がカードに収まりません')
   ctx.save();ctx.globalAlpha=0.065;ctx.textAlign='center';ctx.font='700 240px Georgia, serif';ctx.fillStyle=t.accent;ctx.fillText('♠',540,1020);ctx.restore()
   ctx.fillStyle=t.line;ctx.fillRect(80,1170,920,2)
   txt(ctx,'♠ POKER ID',85,1247,44,t.accent,true)
