@@ -216,7 +216,7 @@ export default function PokerIdCard() {
     </section>
     {own&&!ready&&<p style={{color:'#aaa',fontSize:12}}>必要項目を登録すると保存・共有が利用できます。プレビューとQRコードは先に確認できます。</p>}
     <div style={{marginTop:10,padding:'12px 14px',borderRadius:10,background:'#1b2430',border:'1px solid #48627c'}}>
-      <strong style={{display:'block',fontSize:13,color:'#dcecff',marginBottom:5}}>X投稿時は、保存されたカード画像を添付してね</strong>
+      <strong style={{display:'block',fontSize:13,color:'#dcecff',marginBottom:5}}>Xへの投稿時は、保存したカード画像を添付してください</strong>
       <p style={{margin:0,fontSize:12,lineHeight:1.65,color:'#d2deeb'}}>「PNGを保存してXに投稿」を押すと、画像を保存してXの投稿画面を開きます。Xの画像アイコンを押して、保存した <strong>PokerID_{profile.poker_id}.png</strong> を選んで添付してください。iPhoneでは「ファイル」やダウンロードに保存される場合があります。投稿文は自動入力されます。</p>
     </div>
     <p style={{color:'#888',fontSize:11,marginTop:12}}>「画像を共有」はiPhoneなどの共有メニューを開きます。URLだけでカード画像を表示する形式ではありません。</p>
