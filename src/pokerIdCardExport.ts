@@ -74,8 +74,16 @@ export async function renderPokerIdCard(data:{
   txt(ctx,'♠ POKER ID',76,111,44,'#26303B',true)
   txt(ctx,'PLAYER PROFILE',769,107,22,t.accent,true)
   ctx.fillStyle=t.line;ctx.fillRect(76,132,928,2)
-  if(p.avatar_url)await drawImageUrl(ctx,p.avatar_url,80,158,120,120,'cover')
-  else {roundedRect(ctx,80,158,120,120,60,t.line);txt(ctx,'♠',117,236,72,'#26303B')}
+  // Match the site's circular avatar and clip wide/tall source photos before cover-cropping.
+  const avatarX=80,avatarY=158,avatarSize=120
+  ctx.save()
+  ctx.beginPath()
+  ctx.arc(avatarX+avatarSize/2,avatarY+avatarSize/2,avatarSize/2,0,Math.PI*2)
+  ctx.clip()
+  ctx.fillStyle=t.line;ctx.fillRect(avatarX,avatarY,avatarSize,avatarSize)
+  if(p.avatar_url)await drawImageUrl(ctx,p.avatar_url,avatarX,avatarY,avatarSize,avatarSize,'cover')
+  else txt(ctx,'♠',117,236,72,'#26303B')
+  ctx.restore()
   txt(ctx,p.display_name||'PLAYER',225,207,50,'#26303B',true,295)
   txt(ctx,'@'+p.poker_id,226,247,25,t.accent,false,295)
   // Profile attributes share one labeled two-column grid; no ambiguous "5年・リング派" line.
