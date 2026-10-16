@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { supabase } from './supabase'
-import { profileCardUrl, renderPokerIdCard, savePokerIdImage } from './pokerIdCardExport'
+import { renderPokerIdCard, savePokerIdImage } from './pokerIdCardExport'
 
 type ProfileData = {
   id: string; poker_id: string; display_name: string; avatar_url?: string | null
@@ -150,7 +150,7 @@ export default function PokerIdCard() {
     if (!targetId || (own && !ready)) return
     const intent = new URL('https://twitter.com/intent/tweet')
     intent.searchParams.set('text',(own?'私の':'おすすめの')+'Poker IDカード！ #PokerID #ポーカー')
-    intent.searchParams.set('url',profileCardUrl(targetId))
+    intent.searchParams.set('url',new URL('/share/poker-id/'+encodeURIComponent(targetId),window.location.origin).toString())
     // Open synchronously from the user's tap; awaiting image generation can trigger popup blocking on iOS.
     window.location.assign(intent.toString())
   }
@@ -200,6 +200,6 @@ export default function PokerIdCard() {
       <button type="button" disabled={exporting || (own&&!ready)} onClick={()=>void exportImage(true)} style={{padding:'14px 17px',borderRadius:10,background:'#222',color:'#fff',border:'1px solid #777',fontWeight:800,opacity:exporting||(own&&!ready)?.5:1}}>画像を共有</button>
     </section>
     {own&&!ready&&<p style={{color:'#aaa',fontSize:12}}>必要項目を登録すると保存・共有が利用できます。プレビューとQRコードは先に確認できます。</p>}
-    <p style={{color:'#888',fontSize:11,marginTop:14}}>「Xに投稿」は投稿文とカードURLを開きます。画像も投稿する場合は、先に「PNG画像を保存」してXで添付してください。「画像を共有」はスマホの共有メニューを開きます。</p>
+    <p style={{color:'#888',fontSize:11,marginTop:14}}>「Xに投稿」は公開カードのURLを含む投稿画面を開きます。カードが公開されていれば、Xで画像付きリンクプレビューが表示されます。画像そのものを投稿する場合は、PNGを保存して添付してください。「画像を共有」はスマホの共有メニューを開きます。</p>
   </main>
 }
