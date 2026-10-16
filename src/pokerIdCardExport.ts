@@ -92,7 +92,7 @@ export async function renderPokerIdCard(data:{
     y+=h+15
   }
   if(animal || p.my_hand_cards?.length===2) {
-    const h=310
+    const h=354
     if(animal){
       roundedRect(ctx,75,y,691,h,16,t.panel)
       txt(ctx,'PLAYER TYPE',95,y+28,18,t.accent,true)
@@ -105,7 +105,7 @@ export async function renderPokerIdCard(data:{
         ['周囲からの印象',diagnosisDetail.perceived_text],['得意な状況',diagnosisDetail.best_situation_text],
       ] : []
       for(let i=0;i<entries.length;i++){
-        const col=i%2,row=Math.floor(i/2),x=96+col*337,top=y+126+row*58
+        const col=i%2,row=Math.floor(i/2),x=96+col*337,top=y+136+row*68
         ctx.fillStyle=t.line;ctx.fillRect(x,top-10,313,1)
         txt(ctx,entries[i][0],x,top+10,16,t.accent,true)
         wrap(ctx,entries[i][1],x,top+33,311,15,'#35404D',2,19)
