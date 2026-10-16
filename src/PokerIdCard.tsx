@@ -12,7 +12,7 @@ type ProfileData = {
 }
 type Animal = { result_type_key: string; animal_name_ja: string; catchphrase: string; result_id?: string }
 type DiagnosisDetail = { description: string; behavior_text: string; strength_text: string; weakness_text: string; perceived_text: string; best_situation_text: string }
-type Achievement = { id: string; source: 'past' | 'regular'; title: string; rank: number | null; entryCount: number | null; year: string; is_public: boolean }
+type Achievement = { id: string; source: 'past' | 'regular'; title: string; rank: number | null; entryCount: number | null; year: string; venue: string | null; prizeAmount: number | null; prizeDescription: string | null; is_public: boolean }
 type CardConfig = { user_id: string; theme: string; is_public: boolean; updated_at?: string }
 const themes = [
   { key: 'classic', label: 'Classic', bg: '#E8EAED', panel: '#F8F9FA', line: '#B3BAC5', accent: '#626A75' },
@@ -30,7 +30,6 @@ const required: { key: string; label: string; check: (p: ProfileData, a: Animal 
   { key: 'game', label: 'メイン種目', check: p => !!p.main_game, link: '/profile/edit' },
   { key: 'play', label: 'メインプレイ', check: p => !!p.main_play, link: '/profile/edit' },
   { key: 'frequency', label: 'ポーカー頻度', check: p => !!p.poker_frequency, link: '/profile/edit' },
-  { key: 'hobbies', label: 'ポーカー以外の趣味', check: p => !!p.hobbies?.length, link: '/profile/edit' },
   { key: 'meaning', label: 'あなたにとってポーカーとは？', check: p => !!p.poker_meaning?.trim(), link: '/profile/edit#poker-meaning' },
   { key: 'hand', label: 'マイハンド', check: p => p.my_hand_cards?.length === 2, link: '/profile/edit#my-hand' },
   { key: 'animal', label: 'プレイヤータイプ診断', check: (_p, a) => !!a, link: '/player-type' },
@@ -69,8 +68,8 @@ export default function PokerIdCard() {
         supabase.from('profiles').select('*').eq('id', id).maybeSingle(),
         supabase.rpc('get_public_latest_player_type_v2', { p_user_id: id }),
         user?.id === id ? supabase.rpc('get_my_latest_player_type_v2') : Promise.resolve({ data: null, error: null }),
-        supabase.from('poker_past_achievements').select('id,tournament_name,event_year,rank,entry_count,is_public').eq('user_id', id),
-        supabase.from('poker_results').select('id,tournament_name,played_at,rank,entry_count,rank_unknown,is_featured,is_public').eq('user_id', id).eq('is_featured', true),
+        supabase.from('poker_past_achievements').select('id,tournament_name,event_year,rank,entry_count,venue,prize_amount,prize_description,is_public').eq('user_id', id),
+        supabase.from('poker_results').select('id,tournament_name,played_at,rank,entry_count,venue,prize_amount,prize_description,rank_unknown,is_featured,is_public').eq('user_id', id).eq('is_featured', true),
         supabase.from('poker_achievement_highlights').select('source_type,source_id').eq('user_id', id).maybeSingle(),
         supabase.from('poker_id_cards').select('*').eq('user_id', id).maybeSingle(),
       ])
@@ -87,8 +86,8 @@ export default function PokerIdCard() {
       }
       const visible = (user?.id === id)
       const a: Achievement[] = [
-        ...((past.data ?? []) as {id:string;tournament_name:string;event_year:number;rank:number;entry_count:number|null;is_public:boolean}[]).filter(x=>visible || x.is_public).map(x=>({id:x.id,source:'past' as const,title:x.tournament_name,rank:x.rank,entryCount:x.entry_count,year:String(x.event_year),is_public:x.is_public})),
-        ...((regular.data ?? []) as {id:string;tournament_name:string;played_at:string;rank:number|null;entry_count:number|null;rank_unknown:boolean;is_public:boolean}[]).filter(x=>x.is_public).map(x=>({id:x.id,source:'regular' as const,title:x.tournament_name,rank:x.rank_unknown?null:x.rank,entryCount:x.entry_count,year:(x.played_at||'').slice(0,4),is_public:x.is_public}))
+        ...((past.data ?? []) as {id:string;tournament_name:string;event_year:number;rank:number;entry_count:number|null;venue:string|null;prize_amount:number|null;prize_description:string|null;is_public:boolean}[]).filter(x=>visible || x.is_public).map(x=>({id:x.id,source:'past' as const,title:x.tournament_name,rank:x.rank,entryCount:x.entry_count,venue:x.venue,prizeAmount:x.prize_amount==null?null:Number(x.prize_amount),prizeDescription:x.prize_description,year:String(x.event_year),is_public:x.is_public})),
+        ...((regular.data ?? []) as {id:string;tournament_name:string;played_at:string;rank:number|null;entry_count:number|null;venue:string|null;prize_amount:number|null;prize_description:string|null;rank_unknown:boolean;is_public:boolean}[]).filter(x=>x.is_public).map(x=>({id:x.id,source:'regular' as const,title:x.tournament_name,rank:x.rank_unknown?null:x.rank,entryCount:x.entry_count,venue:x.venue,prizeAmount:x.prize_amount==null?null:Number(x.prize_amount),prizeDescription:x.prize_description,year:(x.played_at||'').slice(0,4),is_public:x.is_public}))
       ]
       setAchievements(a.filter(x=>x.is_public))
       setHighlight(hi.data ?? null)
@@ -171,7 +170,7 @@ export default function PokerIdCard() {
       <div style={{height:7,background:'#333',borderRadius:8,margin:'13px 0 18px',overflow:'hidden'}}><div style={{background:'#f2d3e1',width:(count/required.length*100)+'%',height:'100%'}} /></div>
       {!ready && <p style={{fontSize:12,color:'#aaa'}}>未登録項目をタップして登録すると、カードを公開できます。プレビューはいつでも確認できます。</p>}
       <div style={{display:'grid',gap:6}}>{checks.map(item=><button type="button" key={item.key} onClick={()=>!item.done&&navigate(item.link)} disabled={item.done} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'9px 10px',background:'#1f1f1f',border:'1px solid #303030',color:item.done?'#9ea7a0':'#fff',textAlign:'left',borderRadius:8}}><span>{item.done?'✓':'○'} {item.label}</span>{!item.done&&<span style={{fontSize:12}}>登録する ›</span>}</button>)}</div>
-      <p style={{color:'#999',fontSize:11,marginBottom:0}}>プロフィール画像・活動エリア・大会実績は任意です。</p>
+      <p style={{color:'#999',fontSize:11,marginBottom:0}}>プロフィール画像・活動エリア・大会実績・趣味は任意です。</p>
     </section>}
     {own && <section style={{marginBottom:18}}>
       <h2 style={{fontSize:15,marginBottom:12}}>カードカラー</h2>
