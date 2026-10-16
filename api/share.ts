@@ -46,7 +46,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const profile = (await profileResponse.json())[0]
       if (!profile) return res.status(404).send('Player not found')
       const canonical = `${origin}/share/poker-id/${encodeURIComponent(id)}`
-      const image = `${origin}/api/og?type=poker-id&id=${encodeURIComponent(id)}`
+      const image = `${origin}/api/poker-id-image?id=${encodeURIComponent(id)}&v=${encodeURIComponent(String(req.query.v ?? '1'))}`
       const destination = `${origin}/player/${encodeURIComponent(id)}/card`
       const title = `${profile.display_name || profile.poker_id || 'プレイヤー'}のPoker IDカード`
       const description = 'プレイヤータイプ・ポーカー歴・メイン種目・大会実績を1枚に。Poker IDでプロフィールを見る'
