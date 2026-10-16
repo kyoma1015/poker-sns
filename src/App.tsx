@@ -38,6 +38,7 @@ import Settings from './Settings'
 import PokerTools from './PokerTools'
 import PokerResults from './PokerResults'
 import PastTournamentAchievementForm from './PastTournamentAchievementForm'
+import PokerIdCard from './PokerIdCard'
 
 function Top() {
   const navigate = useNavigate()
@@ -202,6 +203,8 @@ function AppLayout() {
         />
 
         <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/card" element={<PokerIdCard />} />
+        <Route path="/player/:userId/card" element={<PokerIdCard />} />
         <Route path="/profile/achievements/new" element={<PastTournamentAchievementForm />} />
         <Route path="/profile/achievements/:id/edit" element={<PastTournamentAchievementForm />} />
         <Route path="/settings" element={<Settings />} />

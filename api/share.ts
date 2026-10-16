@@ -25,13 +25,48 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const id = String(req.query.id ?? '')
   const origin = `https://${req.headers.host}`
 
-  if (!['tournament', 'amusement', 'cash', 'player-type'].includes(type) || !id) {
+  if (!['tournament', 'amusement', 'cash', 'player-type', 'poker-id'].includes(type) || !id) {
     return res.status(400).send('Invalid share URL')
   }
 
   const supabaseUrl = process.env.VITE_SUPABASE_URL
   const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY
   if (!supabaseUrl || !supabaseKey) return res.status(500).send('Missing Supabase environment variables')
+
+  if (type === 'poker-id') {
+    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+    if (!serviceKey) return res.status(500).send('Missing share configuration')
+    const headers = { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` }
+    try {
+      const cardResponse = await fetch(`${supabaseUrl}/rest/v1/poker_id_cards?user_id=eq.${encodeURIComponent(id)}&is_public=eq.true&select=user_id`, { headers })
+      if (!cardResponse.ok) throw new Error('Public card lookup failed')
+      if (!(await cardResponse.json()).length) return res.status(404).send('Card not public')
+      const profileResponse = await fetch(`${supabaseUrl}/rest/v1/profiles?id=eq.${encodeURIComponent(id)}&select=display_name,poker_id`, { headers })
+      if (!profileResponse.ok) throw new Error('Profile lookup failed')
+      const profile = (await profileResponse.json())[0]
+      if (!profile) return res.status(404).send('Player not found')
+      const canonical = `${origin}/share/poker-id/${encodeURIComponent(id)}${req.query.v ? '?v='+encodeURIComponent(String(req.query.v)) : ''}`
+      const image = `${origin}/api/poker-id-image?id=${encodeURIComponent(id)}&v=${encodeURIComponent(String(req.query.v ?? '1'))}`
+      const destination = `${origin}/player/${encodeURIComponent(id)}/card`
+      const title = `${profile.display_name || profile.poker_id || 'プレイヤー'}のPoker IDカード`
+      const description = 'プレイヤータイプ・ポーカー歴・メイン種目・大会実績を1枚に。Poker IDでプロフィールを見る'
+      res.setHeader('Content-Type', 'text/html; charset=utf-8')
+      res.setHeader('Cache-Control', 'public, s-maxage=60')
+      return res.status(200).send(`<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${esc(title)}</title><meta name="description" content="${esc(description)}">
+<link rel="canonical" href="${esc(canonical)}">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Poker ID">
+<meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}">
+<meta property="og:url" content="${esc(canonical)}"><meta property="og:image" content="${esc(image)}">
+<meta property="og:image:width" content="1080"><meta property="og:image:height" content="1350">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(title)}">
+<meta name="twitter:description" content="${esc(description)}"><meta name="twitter:image" content="${esc(image)}">
+</head><body style="background:#080808;color:white;font-family:system-ui,sans-serif;padding:40px;text-align:center">
+<h1>${esc(title)}</h1><a href="${esc(destination)}">Poker IDで見る</a>
+<script>location.replace(${JSON.stringify(destination)})</script></body></html>`)
+    } catch(error) { console.error(error); return res.status(500).send('Failed to load card') }
+  }
 
   if (type === 'player-type') {
     const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
