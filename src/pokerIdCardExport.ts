@@ -122,6 +122,7 @@ export async function renderPokerIdCard(data:{
   }
   const footerTop=Math.max(y+Math.ceil(present.length/2)*rowHeight+15,1080)
   if(footerTop>1175)throw new Error('カードの情報量が多く、1枚に収まりません。実績名などを短くして再試行してください。')
+  ctx.save();ctx.globalAlpha=0.07;txt(ctx,'♠',470,1085,260,t.accent,true);ctx.restore()
   ctx.fillStyle=t.line;ctx.fillRect(80,1170,920,2)
   txt(ctx,'♠ POKER ID',85,1247,44,t.accent,true)
   txt(ctx,'CREATE YOUR OWN POKER ID',87,1281,18,t.accent)
