@@ -45,7 +45,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (!profileResponse.ok) throw new Error('Profile lookup failed')
       const profile = (await profileResponse.json())[0]
       if (!profile) return res.status(404).send('Player not found')
-      const canonical = `${origin}/share/poker-id/${encodeURIComponent(id)}`
+      const canonical = `${origin}/share/poker-id/${encodeURIComponent(id)}${req.query.v ? '?v='+encodeURIComponent(String(req.query.v)) : ''}`
       const image = `${origin}/api/poker-id-image?id=${encodeURIComponent(id)}&v=${encodeURIComponent(String(req.query.v ?? '1'))}`
       const destination = `${origin}/player/${encodeURIComponent(id)}/card`
       const title = `${profile.display_name || profile.poker_id || 'プレイヤー'}のPoker IDカード`
@@ -59,7 +59,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 <meta property="og:type" content="website"><meta property="og:site_name" content="Poker ID">
 <meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${esc(canonical)}"><meta property="og:image" content="${esc(image)}">
-<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:width" content="1080"><meta property="og:image:height" content="1350">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(description)}"><meta name="twitter:image" content="${esc(image)}">
 </head><body style="background:#080808;color:white;font-family:system-ui,sans-serif;padding:40px;text-align:center">
