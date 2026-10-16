@@ -121,6 +121,72 @@ export async function GET(request) {
       return new Response('Result ID is missing', { status: 400 })
     }
 
+    if (type === 'poker-id') {
+      const key = process.env.SUPABASE_SERVICE_ROLE_KEY
+      if (!key) return new Response('Missing share configuration', { status: 500 })
+      const headers = { apikey: key, Authorization: `Bearer ${key}` }
+      const lookup = async (table, filters, fields) => {
+        const endpoint = `${supabaseUrl}/rest/v1/${table}?${filters}&select=${fields}`
+        const response = await fetch(endpoint, { headers })
+        if (!response.ok) throw new Error(`${table} lookup failed: ${response.status}`)
+        return response.json()
+      }
+      const cards = await lookup('poker_id_cards', `user_id=eq.${encodeURIComponent(id)}&is_public=eq.true`, 'theme')
+      if (!cards.length) return new Response('Card not public', { status: 404 })
+      const profiles = await lookup('profiles', `id=eq.${encodeURIComponent(id)}`, 'poker_id,display_name,main_game,main_play,poker_years')
+      const profile = profiles[0]
+      if (!profile) return new Response('Player not found', { status: 404 })
+      const past = await lookup('poker_past_achievements', `user_id=eq.${encodeURIComponent(id)}&is_public=eq.true&order=rank.asc&limit=1`, 'tournament_name,rank,entry_count')
+      const results = past.length ? past : await lookup('poker_results', `user_id=eq.${encodeURIComponent(id)}&is_public=eq.true&is_featured=eq.true&order=rank.asc&limit=1`, 'tournament_name,rank,entry_count')
+      const ach = results[0]
+      const colors = {
+        classic: ['#E8EAED','#657183'], ice: ['#DBEDF9','#5381A4'],
+        navy: ['#DDE4F0','#556F91'], mint: ['#D9F2E9','#458979'],
+        sage: ['#E3ECD9','#6A8862'], lavender: ['#EBE1F8','#876FA2'],
+        blossom: ['#F9E2EB','#A96D84'], cream: ['#FFF0CE','#9B7D48']
+      }
+      const [bg, accent] = colors[cards[0].theme] || colors.classic
+      const node = (text, style = {}) => ({ type:'div', props:{ style:{display:'flex', ...style}, children:String(text||'') } })
+      const label = (name,value) => ({
+        type:'div', props:{style:{display:'flex',flexDirection:'column',marginRight:26,marginBottom:22},children:[
+          node(name,{fontSize:17,color:accent,fontWeight:800}),
+          node(value||'—',{fontSize:24,color:'#273441',fontWeight:700})
+        ]}
+      })
+      const rank = ach?.rank === 1 ? '優勝' : ach?.rank ? `${ach.rank}位` : '大会実績'
+      const element = { type:'div', props:{
+        style:{display:'flex',flexDirection:'column',width:'100%',height:'100%',padding:'38px 54px',background:bg,fontFamily:'sans-serif',color:'#26313c',border:`8px solid ${accent}33`},
+        children:[
+          {type:'div',props:{style:{display:'flex',justifyContent:'space-between',alignItems:'center',borderBottom:`2px solid ${accent}55`,paddingBottom:18},children:[
+            node('♠ POKER ID',{fontSize:44,fontWeight:900}),
+            node('PLAYER CARD',{fontSize:23,fontWeight:800,color:accent})
+          ]}},
+          {type:'div',props:{style:{display:'flex',flexDirection:'row',flex:1,paddingTop:24},children:[
+            {type:'div',props:{style:{display:'flex',flexDirection:'column',width:'59%',paddingRight:25},children:[
+              node((profile.display_name||profile.poker_id||'PLAYER').slice(0,20),{fontSize:58,fontWeight:900,marginBottom:3}),
+              node('@'+(profile.poker_id||''),{fontSize:26,color:accent,marginBottom:29}),
+              {type:'div',props:{style:{display:'flex',flexWrap:'wrap'},children:[
+                label('MAIN GAME',profile.main_game),
+                label('MAIN PLAY',profile.main_play),
+                label('POKER HISTORY',profile.poker_years ? profile.poker_years+'年' : '—')
+              ]}}
+            ]}},
+            {type:'div',props:{style:{display:'flex',flexDirection:'column',width:'41%',background:'#FFFFFFBB',borderRadius:20,padding:'22px 25px',justifyContent:'center'},children:[
+              node('★ FEATURED ACHIEVEMENT',{fontSize:19,fontWeight:800,color:'#a17b3a',marginBottom:21}),
+              node(ach?.tournament_name?.slice(0,22)||'POKER ID PLAYER',{fontSize:30,fontWeight:800,marginBottom:20}),
+              node(rank,{fontSize:53,fontWeight:900,color:'#a17b3a',marginBottom:8}),
+              node(ach?.entry_count ? ach.entry_count+'エントリー' : 'プロフィールをチェック',{fontSize:21,color:'#637082'})
+            ]}}
+          ]}},
+          {type:'div',props:{style:{display:'flex',justifyContent:'space-between',paddingTop:16,borderTop:`2px solid ${accent}55`},children:[
+            node('YOUR POKER ID, ONE CARD.',{fontSize:18,fontWeight:700,color:accent}),
+            node('POKER ID',{fontSize:18,fontWeight:800,color:accent})
+          ]}}
+        ]
+      }}
+      return new ImageResponse(element, {width:1200,height:630,headers:{'Cache-Control':'public, s-maxage=60'}})
+    }
+
     if (type === 'player-type') {
       const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
       if (!serviceKey) return new Response('SUPABASE_SERVICE_ROLE_KEY is missing', { status: 500 })
