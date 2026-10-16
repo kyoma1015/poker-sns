@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, type CSSProperties } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { supabase } from './supabase'
 import { pokerExperience, MAIN_PLAY_LABELS, POKER_FREQUENCIES } from './PokerProfileExtras'
+import { createQrSvgData, profileCardUrl, renderPokerIdCard, savePokerIdImage } from './pokerIdCardExport'
 
 type ProfileData = {
   id: string; poker_id: string; display_name: string; avatar_url?: string | null
@@ -48,6 +49,7 @@ export default function PokerIdCard() {
   const [themeKey, setThemeKey] = useState('classic')
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const [exporting, setExporting] = useState(false)
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('')
   const own = !userId || (!!viewerId && userId === viewerId)
@@ -103,6 +105,29 @@ export default function PokerIdCard() {
   const others = ordered.slice(1,4)
   const isPublic = !!config?.is_public
   const canView = own || isPublic
+  const qr = useMemo(() => targetId ? createQrSvgData(profileCardUrl(targetId)) : null, [targetId])
+  const exportImage = async (share: boolean) => {
+    if (!profile || !targetId || exporting || (own && !ready)) return
+    setExporting(true); setError(''); setNotice('')
+    try {
+      const blob = await renderPokerIdCard({ profile, animal, achievements: ordered, theme, userId: targetId })
+      if (share) {
+        const file = new File([blob], 'PokerID_' + profile.poker_id + '.png', { type: 'image/png' })
+        if (navigator.canShare?.({files:[file]}) && navigator.share) {
+          try { await navigator.share({ files:[file], title:'Poker IDカード', text:'私のPoker IDカード！ #PokerID #ポーカー' }) }
+          catch (e) { if ((e as Error).name !== 'AbortError') throw e }
+        } else {
+          savePokerIdImage(blob,profile.poker_id)
+          const intent = new URL('https://twitter.com/intent/tweet')
+          intent.searchParams.set('text','私のPoker IDカード！ #PokerID #ポーカー')
+          intent.searchParams.set('url',profileCardUrl(targetId))
+          window.open(intent.toString(),'_blank','noopener,noreferrer')
+          setNotice('画像を保存しました。Xの投稿画面で保存した画像を添付してください。')
+        }
+      } else { savePokerIdImage(blob,profile.poker_id); setNotice('カード画像を保存しました') }
+    } catch (e) { setError('カード画像の作成・共有に失敗しました：'+(e instanceof Error?e.message:String(e))) }
+    finally { setExporting(false) }
+  }
   const saveConfig = async (next: {theme:string;is_public:boolean}) => {
     if (!own || !viewerId || saving) return
     setSaving(true);setError('');setNotice('')
@@ -150,7 +175,7 @@ export default function PokerIdCard() {
       </div>
       <div style={{flex:1,minHeight:0,display:'flex',alignItems:'flex-end',justifyContent:'space-between',borderTop:'1px solid '+theme.line,paddingTop:8,marginTop:'auto'}}>
         <div><div style={{fontSize:20,fontWeight:900,opacity:.22}}>♠ POKER ID</div><div style={{fontSize:9,color:theme.accent}}>CREATE YOUR OWN POKER ID</div></div>
-        <div style={{background:'#fff',padding:7,borderRadius:5,fontSize:10,color:'#333',textAlign:'center'}}>QRコード<br/>共有機能で追加</div>
+        {qr && <svg role="img" aria-label="プロフィール用QRコード" viewBox={`0 0 ${qr.size+8} ${qr.size+8}`} width="88" height="88" style={{background:'#fff',borderRadius:5,padding:5,boxSizing:'border-box',flexShrink:0}} shapeRendering="crispEdges"><rect width={qr.size+8} height={qr.size+8} fill="#fff"/>{qr.dark.map(({x,y})=><rect key={x+'-'+y} x={x+4} y={y+4} width="1" height="1" fill="#111"/>)}</svg>}
       </div>
     </section>
     {own && <section style={{marginTop:18,background:'#141414',border:'1px solid #333',borderRadius:14,padding:16}}>
@@ -164,6 +189,11 @@ export default function PokerIdCard() {
       <p style={{fontSize:12,color:'#999'}}>現在の状態：{isPublic?'公開中':'非公開'}</p>
     </section>}
     {!own && <p style={{color:'#aaa',fontSize:12,marginTop:16}}>このカードの内容は公開プロフィールに基づいています。</p>}
-    <p style={{color:'#888',fontSize:11,marginTop:18}}>画像保存・QRコード・SNS共有は次の実装段階で追加します。</p>
+    <section style={{display:'flex',gap:10,marginTop:20,flexWrap:'wrap'}}>
+      <button type="button" disabled={exporting || (own&&!ready)} onClick={()=>void exportImage(false)} style={{padding:'14px 17px',borderRadius:10,background:'#fff',color:'#111',fontWeight:800,opacity:exporting||(own&&!ready)?.5:1}}>{exporting?'画像を作成中…':'PNG画像を保存'}</button>
+      <button type="button" disabled={exporting || (own&&!ready)} onClick={()=>void exportImage(true)} style={{padding:'14px 17px',borderRadius:10,background:'#222',color:'#fff',border:'1px solid #777',fontWeight:800,opacity:exporting||(own&&!ready)?.5:1}}>X・SNSに共有</button>
+    </section>
+    {own&&!ready&&<p style={{color:'#aaa',fontSize:12}}>必要項目を登録すると保存・共有が利用できます。プレビューとQRコードは先に確認できます。</p>}
+    <p style={{color:'#888',fontSize:11,marginTop:14}}>スマホの共有先が画像を受け取れない場合は、PNG保存後にXの投稿画面を開きます。</p>
   </main>
 }
