@@ -56,7 +56,7 @@ function rankLabel(rank:number|null) {return rank==null?'順位未登録':rank==
 function drawQr(ctx:CanvasRenderingContext2D,url:string,x:number,y:number,size:number) {
   const qr=createQrSvgData(url), quiet=4
   roundedRect(ctx,x,y,size,size,9,'#FFFFFF')
-  const module=size/(qr.getModuleCount()+quiet*2)
+  const module=size/(qr.size+quiet*2)
   ctx.fillStyle='#111111'
   for(const m of qr.dark)ctx.fillRect(x+(m.x+quiet)*module,y+(m.y+quiet)*module,Math.ceil(module+.1),Math.ceil(module+.1))
 }
