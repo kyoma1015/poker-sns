@@ -21,3 +21,6 @@ create policy "poker_id_cards_update" on public.poker_id_cards
   for update to authenticated using (auth.uid() = user_id)
   with check (auth.uid() = user_id);
 -- No delete policy required. Existing profile, results and diagnosis RLS stay untouched.
+
+-- SQL migrations run by the API may not inherit standard default grants.
+grant select, insert, update on table public.poker_id_cards to authenticated;
