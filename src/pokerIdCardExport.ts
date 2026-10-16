@@ -1,0 +1,134 @@
+import { qrcodegen } from './qrcodegen'
+import { pokerExperience, MAIN_PLAY_LABELS, POKER_FREQUENCIES } from './PokerProfileExtras'
+
+export type CardProfile = {
+  poker_id: string; display_name: string; avatar_url?: string | null
+  poker_started_year?: number | null; poker_started_month?: number | null; poker_years?: number | null
+  main_game?: string | null; main_play?: string | null; poker_frequency?: string | null
+  hobbies?: string[] | null; poker_meaning?: string | null; my_hand_cards?: string[] | null
+  activity_areas?: string[] | null
+}
+export type CardAnimal = { result_type_key: string; animal_name_ja: string; catchphrase: string }
+export type CardAchievement = { id: string; source: string; title: string; rank: number | null; year: string }
+export type CardTheme = { bg: string; panel: string; line: string; accent: string }
+
+export function profileCardUrl(userId: string) {
+  return new URL('/player/' + encodeURIComponent(userId), window.location.origin).toString()
+}
+export function createQrSvgData(url: string): { size: number; dark: { x: number; y: number }[] } {
+  const qr = qrcodegen.QrCode.encodeText(url, qrcodegen.QrCode.Ecc.MEDIUM)
+  const dark: { x: number; y: number }[] = []
+  for (let y = 0; y < qr.size; y++) for (let x = 0; x < qr.size; x++)
+    if (qr.getModule(x,y)) dark.push({x,y})
+  return { size: qr.size, dark }
+}
+function roundedRect(ctx: CanvasRenderingContext2D, x:number,y:number,w:number,h:number,r:number,fill:string,stroke?:string) {
+  ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fillStyle=fill;ctx.fill()
+  if(stroke){ctx.lineWidth=2;ctx.strokeStyle=stroke;ctx.stroke()}
+}
+function txt(ctx: CanvasRenderingContext2D,text:string,x:number,y:number,size:number,color:string,bold=false,maxWidth?:number) {
+  ctx.fillStyle=color;ctx.font=`${bold?'700':'400'} ${size}px system-ui, sans-serif`;ctx.textAlign='left'
+  if(maxWidth)ctx.fillText(text,x,y,maxWidth);else ctx.fillText(text,x,y)
+}
+function wrap(ctx: CanvasRenderingContext2D,value:string,x:number,y:number,width:number,size:number,color:string,maxLines=2,lineHeight=size*1.35) {
+  ctx.font=`700 ${size}px system-ui,sans-serif`
+  const chars=Array.from(value), lines:string[]=[]
+  let line=''
+  for(const c of chars){if(ctx.measureText(line+c).width>width&&line){lines.push(line);line=c}else line+=c}
+  if(line)lines.push(line)
+  const actual=lines.slice(0,maxLines)
+  actual.forEach((v,i)=>txt(ctx,i===maxLines-1&&lines.length>maxLines?v.slice(0,-1)+'…':v,x,y+i*lineHeight,size,color,true,width))
+  return actual.length*lineHeight
+}
+async function drawImageUrl(ctx:CanvasRenderingContext2D,url:string,x:number,y:number,w:number,h:number,mode:'cover'|'contain') {
+  const image = new Image()
+  image.crossOrigin='anonymous'
+  image.src=url
+  try { await new Promise<void>((ok,fail)=>{image.onload=()=>ok();image.onerror=()=>fail(new Error('image'))})
+    const ratio=mode==='cover'?Math.max(w/image.width,h/image.height):Math.min(w/image.width,h/image.height)
+    const nw=image.width*ratio,nh=image.height*ratio
+    ctx.drawImage(image,x+(w-nw)/2,y+(h-nh)/2,nw,nh)
+  } catch { /* Cross-origin avatars may not allow canvas export. Omit them safely. */ }
+}
+function rankLabel(rank:number|null) {return rank==null?'順位未登録':rank===1?'優勝':rank+'位'}
+function drawQr(ctx:CanvasRenderingContext2D,url:string,x:number,y:number,size:number) {
+  const qr=createQrSvgData(url), quiet=4
+  roundedRect(ctx,x,y,size,size,9,'#FFFFFF')
+  const module=size/(qr.size+quiet*2)
+  ctx.fillStyle='#111111'
+  for(const m of qr.dark)ctx.fillRect(x+(m.x+quiet)*module,y+(m.y+quiet)*module,Math.ceil(module+.1),Math.ceil(module+.1))
+}
+export async function renderPokerIdCard(data:{
+  profile:CardProfile; animal:CardAnimal|null; achievements:CardAchievement[];
+  theme:CardTheme; userId:string
+}):Promise<Blob>{
+  const {profile:p,animal,achievements:a,theme:t,userId}=data
+  const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1350
+  const ctx=canvas.getContext('2d')
+  if(!ctx)throw new Error('このブラウザでは画像を作成できません')
+  ctx.fillStyle=t.bg;ctx.fillRect(0,0,1080,1350)
+  ctx.strokeStyle=t.line;ctx.lineWidth=3;ctx.strokeRect(35,35,1010,1280)
+  txt(ctx,'♠ POKER ID',76,111,44,'#26303B',true)
+  txt(ctx,'PLAYER PROFILE',769,107,22,t.accent,true)
+  ctx.fillStyle=t.line;ctx.fillRect(76,132,928,2)
+  if(p.avatar_url)await drawImageUrl(ctx,p.avatar_url,80,158,120,120,'cover')
+  else {roundedRect(ctx,80,158,120,120,60,t.line);txt(ctx,'♠',117,236,72,'#26303B')}
+  txt(ctx,p.display_name||'PLAYER',225,207,50,'#26303B',true,760)
+  txt(ctx,'@'+p.poker_id,226,247,25,t.accent,false,710)
+  txt(ctx,pokerExperience(p)+'  ·  '+(MAIN_PLAY_LABELS[p.main_play||'']||'—'),226,284,22,'#45505E',false,700)
+  let y=309
+  if(p.poker_meaning?.trim()){
+    roundedRect(ctx,75,y,930,106,18,t.panel)
+    txt(ctx,'WHAT IS POKER TO YOU?',98,y+29,17,t.accent,true)
+    wrap(ctx,'「'+p.poker_meaning+'」',98,y+70,880,27,'#26303B',2,30)
+    y+=124
+  }
+  if(animal||p.my_hand_cards?.length===2){
+    const w=452
+    if(animal){roundedRect(ctx,75,y,w,144,16,t.panel);txt(ctx,'PLAYER TYPE',95,y+27,18,t.accent,true)
+      await drawImageUrl(ctx,'/animals/'+animal.result_type_key+'.png',100,y+42,92,90,'contain')
+      txt(ctx,animal.animal_name_ja,208,y+77,27,'#26303B',true,300)
+      wrap(ctx,animal.catchphrase,208,y+104,293,16,'#59616F',2,21)
+    }
+    if(p.my_hand_cards?.length===2){roundedRect(ctx,552,y,w,144,16,t.panel);txt(ctx,'MY HAND',575,y+27,18,t.accent,true)
+      p.my_hand_cards.forEach((card,i)=>{roundedRect(ctx,583+i*103,y+46,89,83,9,'#FFFFFF',t.line);txt(ctx,card,599+i*103,y+98,33,/[♥♦]/.test(card)?'#C73153':'#26303B',true)})}
+    y+=163
+  }
+  if(a.length){
+    const rows=Math.min(3,a.length-1),h=104+rows*39
+    roundedRect(ctx,75,y,930,h,17,t.panel,t.line)
+    txt(ctx,'★ MAIN ACHIEVEMENT',98,y+29,19,'#96723F',true)
+    wrap(ctx,a[0].title,98,y+69,745,26,'#26303B',1)
+    txt(ctx,rankLabel(a[0].rank),853,y+69,29,'#96723F',true,135)
+    a.slice(1,4).forEach((item,i)=>{
+      const ry=y+110+i*39;ctx.fillStyle=t.line;ctx.fillRect(100,ry-19,880,1)
+      txt(ctx,item.title,105,ry+7,20,'#35404D',false,690)
+      txt(ctx,rankLabel(item.rank),859,ry+7,20,'#96723F',true,120)
+    })
+    y+=h+19
+  }
+  const stats:[string,string|undefined|null][]=[
+    ['MAIN GAME',p.main_game],['FREQUENCY',POKER_FREQUENCIES[p.poker_frequency||'']],
+    ['AREA',p.activity_areas?.join('・')],['HOBBIES',p.hobbies?.join('・')]
+  ]
+  const present=stats.filter((x):x is [string,string]=>!!x[1])
+  const rowHeight=65
+  for(let i=0;i<present.length;i++){
+    const col=i%2,row=Math.floor(i/2),x=86+col*472,top=y+row*rowHeight
+    txt(ctx,present[i][0],x,top+19,17,t.accent,true)
+    txt(ctx,present[i][1],x,top+49,23,'#26303B',true,425)
+  }
+  const footerTop=Math.max(y+Math.ceil(present.length/2)*rowHeight+15,1080)
+  if(footerTop>1175)throw new Error('カードの情報量が多く、1枚に収まりません。実績名などを短くして再試行してください。')
+  ctx.fillStyle=t.line;ctx.fillRect(80,1170,920,2)
+  txt(ctx,'♠ POKER ID',85,1247,44,t.accent,true)
+  txt(ctx,'CREATE YOUR OWN POKER ID',87,1281,18,t.accent)
+  drawQr(ctx,profileCardUrl(userId),810,1182,150)
+  return await new Promise<Blob>((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error('PNGを生成できませんでした')),'image/png'))
+}
+export function savePokerIdImage(blob:Blob, name:string) {
+  const url=URL.createObjectURL(blob),link=document.createElement('a')
+  link.href=url;link.download=`PokerID_${name.replace(/[^a-zA-Z0-9_-]/g,'_')}.png`
+  document.body.appendChild(link);link.click();link.remove()
+  window.setTimeout(()=>URL.revokeObjectURL(url),30000)
+}
