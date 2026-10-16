@@ -1,4 +1,4 @@
-import { qrcodegen } from './qrcodegen'
+import { qrcode } from './qrGenerator'
 import { pokerExperience, MAIN_PLAY_LABELS, POKER_FREQUENCIES } from './PokerProfileExtras'
 
 export type CardProfile = {
@@ -16,11 +16,13 @@ export function profileCardUrl(userId: string) {
   return new URL('/player/' + encodeURIComponent(userId), window.location.origin).toString()
 }
 export function createQrSvgData(url: string): { size: number; dark: { x: number; y: number }[] } {
-  const qr = qrcodegen.QrCode.encodeText(url, qrcodegen.QrCode.Ecc.MEDIUM)
+  const qr = qrcode(0, 'M')
+  qr.addData(url)
+  qr.make()
   const dark: { x: number; y: number }[] = []
-  for (let y = 0; y < qr.size; y++) for (let x = 0; x < qr.size; x++)
-    if (qr.getModule(x,y)) dark.push({x,y})
-  return { size: qr.size, dark }
+  for (let y = 0; y < qr.getModuleCount(); y++) for (let x = 0; x < qr.getModuleCount(); x++)
+    if (qr.isDark(y,x)) dark.push({x,y})
+  return { size: qr.getModuleCount(), dark }
 }
 function roundedRect(ctx: CanvasRenderingContext2D, x:number,y:number,w:number,h:number,r:number,fill:string,stroke?:string) {
   ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fillStyle=fill;ctx.fill()
@@ -54,7 +56,7 @@ function rankLabel(rank:number|null) {return rank==null?'順位未登録':rank==
 function drawQr(ctx:CanvasRenderingContext2D,url:string,x:number,y:number,size:number) {
   const qr=createQrSvgData(url), quiet=4
   roundedRect(ctx,x,y,size,size,9,'#FFFFFF')
-  const module=size/(qr.size+quiet*2)
+  const module=size/(qr.getModuleCount()+quiet*2)
   ctx.fillStyle='#111111'
   for(const m of qr.dark)ctx.fillRect(x+(m.x+quiet)*module,y+(m.y+quiet)*module,Math.ceil(module+.1),Math.ceil(module+.1))
 }
