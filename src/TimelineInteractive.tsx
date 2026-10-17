@@ -7,7 +7,7 @@ export type InteractiveItem = {
   options: string[]
   closes_at: string | null
 }
-export type InteractiveResult = { post_id: string; total_votes: number; vote_counts: Record<string,number>; answers: {answer:string;created_at:string}[]; my_option_index: number | null; has_responded: boolean }
+export type InteractiveResult = { post_id: string; total_votes: number; vote_counts: Record<string,number>; answers: {answer:string}[]; my_option_index: number | null; has_responded: boolean }
 
 export function InteractiveComposer({ onCreated }: { onCreated: () => Promise<void> }) {
   const [kind, setKind] = useState<'poll'|'question'>('poll')
@@ -84,7 +84,7 @@ export function InteractiveCard({item,result,onUpdated}:{item:InteractiveItem;re
       {!mine&&!closed&&<button type="button" disabled={choice===null||busy} onClick={submit} style={{width:'auto',padding:'8px 18px',borderRadius:20}}>投票する</button>}
       {mine&&<p style={{fontSize:12,color:'#aaa'}}>投票済み（変更不可）</p>}
     </>:<>
-      <div style={{marginTop:12,display:'grid',gap:8}}>{(result?.answers ?? []).map((r,i)=><p key={`${r.created_at}-${i}`} style={{background:'#222',padding:10,borderRadius:8,margin:0,overflowWrap:'anywhere'}}><span style={{color:'#aaa',fontSize:11}}>回答 {i+1}</span>　{r.answer}</p>)}</div>
+      <div style={{marginTop:12,display:'grid',gap:8}}>{(result?.answers ?? []).map((r,i)=><p key={i} style={{background:'#222',padding:10,borderRadius:8,margin:0,overflowWrap:'anywhere'}}><span style={{color:'#aaa',fontSize:11}}>回答 {i+1}</span>　{r.answer}</p>)}</div>
       <p style={{fontSize:12,color:'#aaa'}}>{result?.answers?.length ?? 0}件の回答</p>
       {!mine&&<><textarea aria-label="質問への回答" value={answer} onChange={e=>setAnswer(e.target.value)} maxLength={500} placeholder="回答を入力…" style={{width:'100%',boxSizing:'border-box',background:'#222',color:'#fff',border:'1px solid #444',borderRadius:8,padding:10}}/><button type="button" disabled={!answer.trim()||busy} onClick={submit} style={{width:'auto',padding:'8px 18px',borderRadius:20}}>回答する</button></>}
       {mine&&<p style={{fontSize:12,color:'#aaa'}}>回答済み（変更不可）</p>}
