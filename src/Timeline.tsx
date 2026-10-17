@@ -812,7 +812,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     <div style={{marginTop:10,display:'grid',gap:8}}>
       {pollOptions.map((value,index)=><input key={index} aria-label={`選択肢${index+1}`} placeholder={`選択肢${index+1}`} maxLength={80} value={value} onChange={e=>setPollOptions(prev=>prev.map((v,i)=>i===index?e.target.value:v))} style={{width:'100%',boxSizing:'border-box',padding:10,borderRadius:8,border:'1px solid #444',background:'#202020',color:'#fff'}}/>)}
       <div style={{display:'flex',gap:8,alignItems:'center',flexWrap:'wrap'}}>
-        {pollOptions.length<4&&<button type="button" onClick={()=>setPollOptions(prev=>[...prev,''])} style={{width:'auto'}}>＋ 選択肢</button>}
+        {pollOptions.length<4&&<button type="button" onClick={()=>setPollOptions(prev=>[...prev,''])} style={{width:'auto',padding:'7px 10px',border:'1px solid #444',background:'#181818',borderRadius:9,color:'#ddd',fontSize:12}}>＋ 選択肢</button>}
         {pollOptions.length>2&&<button type="button" onClick={()=>setPollOptions(prev=>prev.slice(0,-1))} style={{width:'auto'}}>− 削除</button>}
         <label style={{fontSize:12,color:'#ccc'}}>投票期限 <select value={pollHours} onChange={e=>setPollHours(Number(e.target.value))} style={{background:'#222',color:'#fff',padding:7}}>{[1,6,24,72,168].map(h=><option key={h} value={h}>{h<24?`${h}時間`:`${h/24}日`}</option>)}</select></label>
       </div>
