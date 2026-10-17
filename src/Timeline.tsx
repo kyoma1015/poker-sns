@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { supabase } from './supabase'
 import { usePullToRefresh } from './usePullToRefresh'
 import QuoteSourcePreview, { type QuoteSource } from './QuoteSourcePreview'
-import { InteractiveComposer, InteractiveCard, type InteractiveItem, type InteractiveResult } from './TimelineInteractive'
+import { InteractiveCard, type InteractiveItem, type InteractiveResult } from './TimelineInteractive'
 
 const playerTypeEmoji: Record<string, string> = {lion:'🦁',tiger:'🐯',leopard:'🐆',bison:'🦬',gorilla:'🦍',rhino:'🦏',shark:'🦈',owl:'🦉',eagle:'🦅',elephant:'🐘',giraffe:'🦒',wolf:'🐺',hyena:'🐾',cat:'🐈',chameleon:'🦎',dolphin:'🐬',fox:'🦊',snake:'🐍',raccoon:'🦝',turtle:'🐢',rabbit:'🐇',crocodile:'🐊',hedgehog:'🦔',deer:'🦌',sloth:'🦥',dog:'🐕',bear:'🐻',bull:'🐄',badger:'🦡',monkey:'🐒',magpie:'🐦‍⬛',penguin:'🐧',horse:'🐎',squirrel:'🐿️',mountain_goat:'🐐',otter:'🦦'}
 
@@ -150,6 +150,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const [quoteBusy, setQuoteBusy] = useState(false)
   const [repostMenuId, setRepostMenuId] = useState<string | null>(null)
   const [composeOpen, setComposeOpen] = useState(false)
+  const [interactiveMode, setInteractiveMode] = useState<'normal'|'poll'|'question'>('normal')
+  const [pollOptions, setPollOptions] = useState(['',''])
+  const [pollHours, setPollHours] = useState(24)
   const [attachmentsOpen, setAttachmentsOpen] = useState(false)
   const [attachmentScreen, setAttachmentScreen] = useState<'menu' | 'results' | 'tournament' | 'amusement' | 'cash' | 'diagnosis'>('menu')
   const [selectedResult, setSelectedResult] = useState<{id:string; type:'tournament'|'amusement'|'cash'; label:string; playedAt:string; data:any}|null>(null)
@@ -788,7 +791,62 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     setMessage('')
   }
 
+  const choosePostMode = (mode: 'normal'|'poll'|'question') => {
+    if (mode !== 'normal' && (imageFiles.length || selectedResult || selectedDiagnosis || styleSnapshot)) {
+      setMessage('添付を外してからアンケート・質問箱に切り替えてください。')
+      return
+    }
+    setInteractiveMode(current => current === mode ? 'normal' : mode)
+    setAttachmentsOpen(false)
+    setMessage('')
+  }
+
+  const renderPostModeButtons = () => (
+    <div style={{display:'flex',alignItems:'center',gap:6,flexWrap:'wrap'}}>
+      <button type="button" disabled={interactiveMode !== 'normal'} onClick={toggleAttachments} style={{width:'auto',padding:'7px 9px',border:'1px solid #333',background:'#181818',borderRadius:9,color:'#ddd',fontSize:12}}>＋ 添付</button>
+      {(['poll','question'] as const).map(mode=><button key={mode} type="button" onClick={()=>choosePostMode(mode)} aria-pressed={interactiveMode===mode} style={{width:'auto',padding:'7px 9px',border:'1px solid '+(interactiveMode===mode?'#ddd':'#333'),background:interactiveMode===mode?'#393939':'#181818',borderRadius:9,color:'#ddd',fontSize:12}}>{mode==='poll'?'📊 アンケート':'💬 質問箱'}</button>)}
+    </div>
+  )
+
+  const renderInteractiveFields = () => interactiveMode==='poll' ? (
+    <div style={{marginTop:10,display:'grid',gap:8}}>
+      {pollOptions.map((value,index)=><input key={index} aria-label={`選択肢${index+1}`} placeholder={`選択肢${index+1}`} maxLength={80} value={value} onChange={e=>setPollOptions(prev=>prev.map((v,i)=>i===index?e.target.value:v))} style={{width:'100%',boxSizing:'border-box',padding:10,borderRadius:8,border:'1px solid #444',background:'#202020',color:'#fff'}}/>)}
+      <div style={{display:'flex',gap:8,alignItems:'center',flexWrap:'wrap'}}>
+        {pollOptions.length<4&&<button type="button" onClick={()=>setPollOptions(prev=>[...prev,''])} style={{width:'auto'}}>＋ 選択肢</button>}
+        {pollOptions.length>2&&<button type="button" onClick={()=>setPollOptions(prev=>prev.slice(0,-1))} style={{width:'auto'}}>− 削除</button>}
+        <label style={{fontSize:12,color:'#ccc'}}>投票期限 <select value={pollHours} onChange={e=>setPollHours(Number(e.target.value))} style={{background:'#222',color:'#fff',padding:7}}>{[1,6,24,72,168].map(h=><option key={h} value={h}>{h<24?`${h}時間`:`${h/24}日`}</option>)}</select></label>
+      </div>
+    </div>
+  ) : interactiveMode==='question' ? <p style={{fontSize:12,color:'#aaa',marginTop:10}}>匿名で回答を募集します。回答は1人1回です。</p> : null
+
+  const canSubmitPost = Boolean(content.trim() || (interactiveMode==='normal' && (selectedResult || selectedDiagnosis || styleSnapshot || imageFiles.length)))
+    && (interactiveMode!=='poll'||(pollOptions.every(o=>o.trim()) && new Set(pollOptions.map(o=>o.trim().toLowerCase())).size===pollOptions.length))
+
   const handlePost = async () => {
+    if (interactiveMode !== 'normal') {
+      if (isPosting) return
+      if (!canSubmitPost) { setMessage('投稿内容と選択肢を確認してください。'); return }
+      setIsPosting(true)
+      setMessage('')
+      try {
+        const { error } = await supabase.rpc('create_interactive_post', {
+          p_content: content.trim(), p_kind: interactiveMode,
+          p_options: interactiveMode==='poll'?pollOptions.map(o=>o.trim()):null,
+          p_hours:pollHours,
+        })
+        if (error) throw error
+        setContent('')
+        setInteractiveMode('normal')
+        setPollOptions(['',''])
+        setPollHours(24)
+        setComposeOpen(false)
+        await loadPosts()
+      } catch (error) {
+        setMessage(`投稿できませんでした：${error instanceof Error?error.message:'不明なエラー'}`)
+      } finally { setIsPosting(false) }
+      return
+    }
+
 
     const trimmedContent =
 
@@ -875,6 +933,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     }
 
     setContent('')
+    setInteractiveMode('normal')
     setSelectedResult(null)
     setSelectedDiagnosis(null)
     setStyleSnapshot(null)
@@ -2266,9 +2325,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
           >
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <button type="button" onClick={toggleAttachments} style={{ width: 'auto', padding: '6px 9px', border: '1px solid #333', background: '#181818', borderRadius: 9, color: '#ccc', fontSize: 12 }}>＋ 添付 {attachmentsOpen ? '⌃' : '⌄'}</button>
-            </div>
+            <div>{renderPostModeButtons()}</div>
             <span
 
               style={{
@@ -2341,6 +2398,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
           </div>
 
+          {renderInteractiveFields()}
           <input ref={imageInputRef} type="file" accept="image/jpeg,image/png,image/webp" multiple hidden onChange={e => { chooseImages(e.target.files); e.target.value = '' }} />
           {attachmentsOpen && renderAttachmentPicker()}
           {renderSelectedResultPreview()}
@@ -2593,14 +2651,14 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           <div role="dialog" aria-modal="true" aria-label="新しい投稿" style={{ width: '100%', maxWidth: 560, background: '#111', border: '1px solid #333', borderRadius: 18, padding: 20, color: '#fff' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}><strong>新しい投稿</strong><button type="button" onClick={() => setComposeOpen(false)} style={{ width: 'auto', background: 'transparent', color: '#ccc', fontSize: 22 }}>×</button></div>
             <textarea autoFocus placeholder="ポーカーについて何を投稿する？" maxLength={500} value={content} onChange={e => setContent(e.target.value)} style={{ width: '100%', minHeight: 180, padding: 8, background: 'transparent', color: '#fff', border: 'none', fontSize: 17, resize: 'vertical' }}/>
-            <button type="button" onClick={toggleAttachments} style={{ width: 'auto', background: '#242424', color: '#fff', borderRadius: 8, padding: 9 }}>＋ 添付</button>
+            {renderPostModeButtons()}
+            {renderInteractiveFields()}
             {attachmentsOpen && renderAttachmentPicker()}
             {renderSelectedResultPreview()}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 18 }}><span style={{ color: '#888', fontSize: 12 }}>{content.length}/500</span><button type="button" disabled={isPosting || (!content.trim() && !selectedResult && !selectedDiagnosis && !styleSnapshot && imageFiles.length === 0)} onClick={handlePost} style={{ width: 'auto', borderRadius: 99, background: '#fff', color: '#000', padding: '10px 24px', fontWeight: 800 }}>{isPosting ? '投稿中...' : '投稿する'}</button></div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 18 }}><span style={{ color: '#888', fontSize: 12 }}>{content.length}/500</span><button type="button" disabled={isPosting || !canSubmitPost} onClick={handlePost} style={{ width: 'auto', borderRadius: 99, background: '#fff', color: '#000', padding: '10px 24px', fontWeight: 800 }}>{isPosting ? '投稿中...' : '投稿する'}</button></div>
             {message && <div style={{ color: '#ccc', marginTop: 10, fontSize: 12 }}>{message}</div>}
           </div>
         </div>}
-        {!profileUserId && <InteractiveComposer onCreated={loadPosts} />}
         {/* 投稿一覧 */}
 
         <section
