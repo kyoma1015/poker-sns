@@ -806,7 +806,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const renderPostModeButtons = () => (
     <div style={{display:'flex',alignItems:'center',gap:4,flexWrap:'nowrap',whiteSpace:'nowrap'}}>
       <button type="button" disabled={interactiveMode !== 'normal'} onClick={toggleAttachments} style={{width:'auto',padding:'6px 6px',border:'1px solid #333',background:'#181818',borderRadius:9,color:'#ddd',fontSize:11}}>＋ 添付</button>
-      {(['poll','question'] as const).map(mode=><button key={mode} type="button" onClick={()=>choosePostMode(mode)} aria-pressed={interactiveMode===mode} style={{width:'auto',padding:'6px 6px',border:'1px solid '+(interactiveMode===mode?'#ddd':'#333'),background:interactiveMode===mode?'#393939':'#181818',borderRadius:9,color:'#ddd',fontSize:11}}>{mode==='poll'?'📊 アンケート':'💬 質問箱'}</button>)}
+      {(['poll'] as const).map(mode=><button key={mode} type="button" onClick={()=>choosePostMode(mode)} aria-pressed={interactiveMode===mode} style={{width:'auto',padding:'6px 6px',border:'1px solid '+(interactiveMode===mode?'#ddd':'#333'),background:interactiveMode===mode?'#393939':'#181818',borderRadius:9,color:'#ddd',fontSize:11}}>{mode==='poll'?'📊 アンケート':'💬 質問箱'}</button>)}
     </div>
   )
 
