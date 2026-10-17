@@ -255,6 +255,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     if (!postData || postData.length === 0) {
 
       setPosts([])
+      setInteractiveItems({})
+      setInteractiveResults({})
 
       setMessage('')
 
