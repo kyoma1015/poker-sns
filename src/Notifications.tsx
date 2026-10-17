@@ -207,6 +207,7 @@ function Notifications() {
   const getNotificationText = (
     notification: NotificationItem
   ) => {
+    if (notification.type === 'poll_closed') return 'アンケートが終了しました。結果を確認して、引用リポストでみんなにシェアしよう！'
     if (
       notification.type ===
       'follow'
@@ -233,6 +234,7 @@ function Notifications() {
   const getNotificationIcon = (
     notification: NotificationItem
   ) => {
+    if (notification.type === 'poll_closed') return '📊'
     if (
       notification.type ===
       'follow'
@@ -324,7 +326,7 @@ function Notifications() {
       (notification.type ===
         'like' ||
         notification.type ===
-          'comment') &&
+          'comment' || notification.type === 'poll_closed') &&
       notification.post_id
     ) {
       navigate(
