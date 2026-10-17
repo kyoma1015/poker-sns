@@ -81,7 +81,7 @@ export function InteractiveCard({item,result,onUpdated,isOwner=false,ownerName='
         const count=result?.vote_counts?.[String(i)] ?? 0
         const show=mine||closed||isOwner
         const pct=result?.total_votes?Math.round(count/result.total_votes*100):0
-        return <button key={i} type="button" disabled={busy||(item.is_anonymous&&(mine||closed))} onClick={()=>{if(!item.is_anonymous&&(isOwner||mine||closed)){setVoterOption(i)}else if(!mine&&!closed&&!isOwner){setChoice(i)}}} style={{position:'relative',overflow:'hidden',textAlign:'left',borderRadius:9,padding:12,color:'#fff',border:`1px solid ${choice===i||(mine && result?.my_option_index===i)?'#8b9bad':'#444'}`,background:'#222'}}>
+        return <button key={i} type="button" disabled={busy||(item.is_anonymous&&(mine||closed))||(!isOwner&&!mine&&closed)} onClick={()=>{if(!item.is_anonymous&&(isOwner||mine)){setVoterOption(i)}else if(!mine&&!closed){setChoice(i)}}} style={{position:'relative',overflow:'hidden',textAlign:'left',borderRadius:9,padding:12,color:'#fff',border:`1px solid ${choice===i||(mine && result?.my_option_index===i)?'#8b9bad':'#444'}`,background:'#222'}}>
           {show&&<span style={{position:'absolute',inset:0,right:`${100-pct}%`,background:'#405367',transition:'right 240ms ease-out',pointerEvents:'none'}}/>}
           <span style={{position:'relative',zIndex:1,display:'flex',alignItems:'center',justifyContent:'space-between',gap:12,textShadow:'0 1px 2px #151515'}}><span>{option}</span>{show&&<strong style={{whiteSpace:'nowrap',fontVariantNumeric:'tabular-nums'}}>{pct}%</strong>}</span>
         </button>
