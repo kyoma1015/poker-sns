@@ -25,7 +25,7 @@ export function InteractiveComposer({ onCreated }: { onCreated: () => Promise<vo
     try {
       const { error: failure } = await supabase.rpc('create_interactive_post_v4', {
         p_content: content.trim(), p_kind: kind,
-        p_options: kind === 'poll' ? options.map(s => s.trim()) : null,
+        p_options: options.map(s => s.trim()),
         p_hours: hours,
         p_is_anonymous: pollAnonymous,
         p_question_policy: null,
@@ -39,8 +39,8 @@ export function InteractiveComposer({ onCreated }: { onCreated: () => Promise<vo
   const inputStyle = { width:'100%', boxSizing:'border-box' as const, padding:10, borderRadius:8, background:'#202020', color:'#fff', border:'1px solid #444' }
   return <section style={{padding:16,border:'1px solid #333',borderRadius:12,marginBottom:16,color:'#fff'}}>
     <div style={{fontSize:14,fontWeight:700,marginBottom:12}}>📊 アンケートを作成</div>
-    <textarea aria-label="質問内容" value={content} onChange={e=>setContent(e.target.value)} maxLength={500} placeholder={kind==='poll'?'みんなに聞きたいことは？':'みんなから回答を募集する質問は？'} style={{...inputStyle,minHeight:72}} />
-    {kind==='poll' && <>
+    <textarea aria-label="質問内容" value={content} onChange={e=>setContent(e.target.value)} maxLength={500} placeholder="みんなに聞きたいことは？" style={{...inputStyle,minHeight:72}} />
+    {<>
       <div style={{display:'grid',gap:8,marginTop:10}}>{options.map((v,i)=><input key={i} aria-label={`選択肢${i+1}`} maxLength={80} placeholder={`選択肢${i+1}`} value={v} onChange={e=>setOptions(a=>a.map((s,j)=>j===i?e.target.value:s))} style={inputStyle}/>)}</div>
       <div style={{display:'flex',gap:8,alignItems:'center',marginTop:10}}>
         {options.length<4 && <button type="button" onClick={()=>setOptions(a=>[...a,''])} style={{width:'auto',background:'#30343b',color:'#eee',border:'1px solid #555',borderRadius:8,padding:'7px 12px'}}>＋ 選択肢</button>}
@@ -51,7 +51,7 @@ export function InteractiveComposer({ onCreated }: { onCreated: () => Promise<vo
     </>}
     <p style={{fontSize:12,color:'#aaa'}}>投票は1人1回。{pollAnonymous?'投票者のPoker IDは公開されません。':'投票者の名前・Poker IDと投票先が公開されます。'} 投稿後の投票方式は変更できません。</p>
     {error && <p role="alert" style={{color:'#ff9999'}}>{error}</p>}
-    <button type="button" onClick={submit} disabled={busy||!content.trim()||(kind==='poll'&&options.some(o=>!o.trim()))} style={{width:'auto',borderRadius:24,background:'#343b45',color:'#fff',border:'1px solid #69717d',padding:'10px 20px',fontWeight:700}}>{busy?'投稿中…':kind==='poll'?'アンケートを投稿':'質問を投稿'}</button>
+    <button type="button" onClick={submit} disabled={busy||!content.trim()||options.some(o=>!o.trim())} style={{width:'auto',borderRadius:24,background:'#343b45',color:'#fff',border:'1px solid #69717d',padding:'10px 20px',fontWeight:700}}>{busy?'投稿中…':'アンケートを投稿'}</button>
   </section>
 }
 
