@@ -98,12 +98,14 @@ export function InteractiveCard({item,result,onUpdated,isOwner=false,ownerName='
   </div>
 }
 
-type ThreadMessage={id:string;post_id:string;parent_id:string|null;content:string;is_anonymous:boolean;display_name:string|null;poker_id:string|null;created_at:string;is_owner:boolean}
+type ThreadMessage={id:string;post_id:string;parent_id:string|null;content:string;is_anonymous:boolean;display_name:string|null;poker_id:string|null;created_at:string;is_owner:boolean;is_mine:boolean;edited_at:string|null}
 function QuestionThread({postId,policy,onUpdated,isOwner,ownerName}:{postId:string;policy:string;onUpdated:()=>Promise<void>;isOwner:boolean;ownerName:string}) {
  const [messages,setMessages]=useState<ThreadMessage[]>([])
  const [text,setText]=useState('')
  const [anonymous,setAnonymous]=useState(true)
  const [replyTo,setReplyTo]=useState<string|null>(null)
+ const [editingId,setEditingId]=useState<string|null>(null)
+ const [editText,setEditText]=useState('')
  const [expanded,setExpanded]=useState(false)
  const [visibleCount,setVisibleCount]=useState(10)
  const [filter,setFilter]=useState<'new'|'unanswered'|'answered'>('new')
@@ -112,6 +114,7 @@ function QuestionThread({postId,policy,onUpdated,isOwner,ownerName}:{postId:stri
  const refresh=async()=>{const {data,error}=await supabase.rpc('get_question_thread_messages',{p_post_ids:[postId]});if(error)throw error;setMessages((data??[]) as ThreadMessage[])}
  useEffect(()=>{void refresh().catch(e=>setError(e instanceof Error?e.message:'質問の取得に失敗しました'))},[postId])
  const submit=async()=>{if(busy||!text.trim())return;setBusy(true);setError('');try{const {error:e}=await supabase.rpc('add_question_thread_message',{p_post_id:postId,p_content:text.trim(),p_parent_id:replyTo,p_is_anonymous:anonymous});if(e)throw e;setText('');setReplyTo(null);await refresh();await onUpdated()}catch(e){setError(e instanceof Error?e.message:'送信に失敗しました')}finally{setBusy(false)}}
+ const manage=async(id:string,action:'edit'|'delete',content?:string)=>{if(busy)return;if(action==='delete'&&!window.confirm('削除しますか？質問を削除すると返信も削除されます。'))return;setBusy(true);setError('');try{const {error:e}=await supabase.rpc('manage_question_thread_message',{p_message_id:id,p_action:action,p_content:content??null});if(e)throw e;setEditingId(null);if(replyTo===id)setReplyTo(null);await refresh();await onUpdated()}catch(e){setError(e instanceof Error?e.message:'操作に失敗しました')}finally{setBusy(false)}}
  const roots=messages.filter(m=>!m.parent_id)
  const children=(id:string)=>messages.filter(m=>m.parent_id===id)
  const answered=(m:ThreadMessage)=>children(m.id).some(r=>r.is_owner)
