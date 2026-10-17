@@ -1177,15 +1177,24 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       setPostMenuId(null)
       let imageWarning = ''
       if (ownImagePaths.length > 0) {
-        try {
-          const { error: imageError } = await supabase.storage.from('post-images').remove([...new Set(ownImagePaths)])
-          if (imageError) {
-            console.error('投稿画像の削除に失敗:', imageError)
-            imageWarning = '投稿は削除しましたが、添付画像の削除に失敗しました。'
+        // DB削除の成功後にのみStorageを操作する。失敗時は短時間で最大3回再試行。
+        // StorageとPostgres間の原子的トランザクションはないため、完全保証は別途サーバー側の再試行キューが必要。
+        const uniquePaths = [...new Set(ownImagePaths)]
+        let cleanupSucceeded = false
+        for (let attempt = 1; attempt <= 3; attempt += 1) {
+          try {
+            const { error: imageError } = await supabase.storage.from('post-images').remove(uniquePaths)
+            if (!imageError) {
+              cleanupSucceeded = true
+              break
+            }
+            console.error(`投稿画像の削除に失敗 (${attempt}/3):`, imageError)
+          } catch (imageError) {
+            console.error(`投稿画像の削除に失敗 (${attempt}/3):`, imageError)
           }
-        } catch (imageError) {
-          console.error('投稿画像の削除に失敗:', imageError)
-          imageWarning = '投稿は削除しましたが、添付画像の削除に失敗しました。'
+        }
+        if (!cleanupSucceeded) {
+          imageWarning = '投稿は削除しましたが、添付画像の削除に失敗しました。管理者にお問い合わせください。'
         }
       }
       try {
