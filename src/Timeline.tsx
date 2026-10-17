@@ -2716,7 +2716,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
                   }}
 
                 >
-                  {interactiveItems[post.id] && <InteractiveCard item={interactiveItems[post.id]} responses={interactiveResponses.filter(r=>r.post_id===post.id)} currentUserId={currentUserId} onUpdated={loadPosts} />}
+                  
                   {post.repostedBy && (
                     <div style={{ color: '#aaa', fontSize: 12, marginBottom: 10, textAlign: 'left' }}>
                       ↻ {post.repostedBy.display_name} (@{post.repostedBy.poker_id}) がリポスト
@@ -3129,6 +3129,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
                       </div>
 
+                      {interactiveItems[post.id] && <InteractiveCard item={interactiveItems[post.id]} responses={interactiveResponses.filter(r=>r.post_id===post.id)} currentUserId={currentUserId} onUpdated={loadPosts} />}
                       {post.quote_post_id && (
                         <QuoteSourcePreview source={post.quotePreview} onOpen={post.quotePreview ? () => navigate(`/post/${post.quotePreview!.id}`) : undefined} />
                       )}
