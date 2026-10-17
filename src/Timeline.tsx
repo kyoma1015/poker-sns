@@ -802,9 +802,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   }
 
   const renderPostModeButtons = () => (
-    <div style={{display:'flex',alignItems:'center',gap:6,flexWrap:'wrap'}}>
-      <button type="button" disabled={interactiveMode !== 'normal'} onClick={toggleAttachments} style={{width:'auto',padding:'7px 9px',border:'1px solid #333',background:'#181818',borderRadius:9,color:'#ddd',fontSize:12}}>＋ 添付</button>
-      {(['poll','question'] as const).map(mode=><button key={mode} type="button" onClick={()=>choosePostMode(mode)} aria-pressed={interactiveMode===mode} style={{width:'auto',padding:'7px 9px',border:'1px solid '+(interactiveMode===mode?'#ddd':'#333'),background:interactiveMode===mode?'#393939':'#181818',borderRadius:9,color:'#ddd',fontSize:12}}>{mode==='poll'?'📊 アンケート':'💬 質問箱'}</button>)}
+    <div style={{display:'flex',alignItems:'center',gap:4,flexWrap:'nowrap',whiteSpace:'nowrap'}}>
+      <button type="button" disabled={interactiveMode !== 'normal'} onClick={toggleAttachments} style={{width:'auto',padding:'6px 6px',border:'1px solid #333',background:'#181818',borderRadius:9,color:'#ddd',fontSize:11}}>＋ 添付</button>
+      {(['poll','question'] as const).map(mode=><button key={mode} type="button" onClick={()=>choosePostMode(mode)} aria-pressed={interactiveMode===mode} style={{width:'auto',padding:'6px 6px',border:'1px solid '+(interactiveMode===mode?'#ddd':'#333'),background:interactiveMode===mode?'#393939':'#181818',borderRadius:9,color:'#ddd',fontSize:11}}>{mode==='poll'?'📊 アンケート':'💬 質問箱'}</button>)}
     </div>
   )
 
@@ -2317,7 +2317,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
                 'space-between',
 
-              gap: '15px',
+              gap: '5px',
 
               marginTop: '10px',
 
@@ -2325,7 +2325,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
           >
 
-            <div>{renderPostModeButtons()}</div>
+            <div style={{flexShrink:0}}>{renderPostModeButtons()}</div>
             <span
 
               style={{
@@ -2366,11 +2366,11 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
                 width: 'auto',
 
-                minWidth: '86px',
+                minWidth: '58px',
 
                 padding:
 
-                  '9px 18px',
+                  '8px 10px',
 
                 borderRadius:
 
