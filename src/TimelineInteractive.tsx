@@ -61,8 +61,6 @@ export function InteractiveComposer({ onCreated }: { onCreated: () => Promise<vo
 
 export function InteractiveCard({item,result,onUpdated}:{item:InteractiveItem;result:InteractiveResult|undefined;onUpdated:()=>Promise<void>}) {
   const [choice,setChoice]=useState<number|null>(null)
-  const [answer,setAnswer]=useState('')
-  const [respondAnonymously,setRespondAnonymously]=useState(true)
   const [busy,setBusy]=useState(false)
   const [error,setError]=useState('')
   const mine=result?.has_responded ?? false
@@ -72,7 +70,7 @@ export function InteractiveCard({item,result,onUpdated}:{item:InteractiveItem;re
     if(busy||mine) return
     setBusy(true);setError('')
     try {
-      const {error:failure}=await supabase.rpc('submit_interactive_response_v2',{p_post_id:item.post_id,p_option_index:item.kind==='poll'?choice:null,p_answer:item.kind==='question'?answer.trim():null,p_is_anonymous:respondAnonymously})
+      const {error:failure}=await supabase.rpc('submit_interactive_response_v2',{p_post_id:item.post_id,p_option_index:item.kind==='poll'?choice:null,p_answer:null,p_is_anonymous:true})
       if(failure) throw failure
       await onUpdated()
     } catch(e){setError(e instanceof Error?e.message:'回答に失敗しました')}
