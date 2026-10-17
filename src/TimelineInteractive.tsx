@@ -7,7 +7,7 @@ export type InteractiveItem = {
   options: string[]
   closes_at: string | null
 }
-export type InteractiveResponse = { post_id: string; user_id: string; option_index: number | null; answer: string | null; created_at: string }
+export type InteractiveResult = { post_id: string; total_votes: number; vote_counts: Record<string,number>; answers: {answer:string;created_at:string}[]; my_option_index: number | null; has_responded: boolean }
 
 export function InteractiveComposer({ onCreated }: { onCreated: () => Promise<void> }) {
   const [kind, setKind] = useState<'poll'|'question'>('poll')
@@ -51,12 +51,12 @@ export function InteractiveComposer({ onCreated }: { onCreated: () => Promise<vo
   </section>
 }
 
-export function InteractiveCard({item,responses,currentUserId,onUpdated}:{item:InteractiveItem;responses:InteractiveResponse[];currentUserId:string|null;onUpdated:()=>Promise<void>}) {
+export function InteractiveCard({item,responses,currentUserId,onUpdated}:{item:InteractiveItem;result:InteractiveResult|undefined;onUpdated:()=>Promise<void>}) {
   const [choice,setChoice]=useState<number|null>(null)
   const [answer,setAnswer]=useState('')
   const [busy,setBusy]=useState(false)
   const [error,setError]=useState('')
-  const mine=responses.find(r=>r.user_id===currentUserId)
+  const mine=result?.has_responded ?? false
   const closed=item.kind==='poll'&&!!item.closes_at&&Date.parse(item.closes_at)<=Date.now()
   const submit=async()=>{
     if(busy||mine) return
@@ -72,20 +72,20 @@ export function InteractiveCard({item,responses,currentUserId,onUpdated}:{item:I
     <strong style={{fontSize:13}}>{item.kind==='poll'?'📊 アンケート':'💬 質問箱'}</strong>
     {item.kind==='poll'?<>
       <div style={{display:'grid',gap:8,marginTop:12}}>{item.options.map((option,i)=>{
-        const count=responses.filter(r=>r.option_index===i).length
-        const show=!!mine||closed
-        const pct=responses.length?Math.round(count/responses.length*100):0
-        return <button key={i} type="button" disabled={!!mine||closed||busy} onClick={()=>setChoice(i)} style={{position:'relative',overflow:'hidden',textAlign:'left',borderRadius:9,padding:12,color:'#fff',border:`1px solid ${choice===i||mine?.option_index===i?'#fff':'#444'}`,background:'#222'}}>
+        const count=result?.vote_counts?.[String(i)] ?? 0
+        const show=mine||closed
+        const pct=result?.total_votes?Math.round(count/result.total_votes*100):0
+        return <button key={i} type="button" disabled={mine||closed||busy} onClick={()=>setChoice(i)} style={{position:'relative',overflow:'hidden',textAlign:'left',borderRadius:9,padding:12,color:'#fff',border:`1px solid ${choice===i||(mine && result?.my_option_index===i)?'#fff':'#444'}`,background:'#222'}}>
           {show&&<span style={{position:'absolute',inset:0,right:`${100-pct}%`,background:'#414141'}}/>}
           <span style={{position:'relative'}}>{option}{show?` — ${pct}%`:''}</span>
         </button>
       })}</div>
-      <p style={{fontSize:12,color:'#aaa'}}>{responses.length}票 · {closed?'終了':`締切 ${new Date(item.closes_at!).toLocaleString('ja-JP')}`}</p>
+      <p style={{fontSize:12,color:'#aaa'}}>{result?.total_votes ?? 0}票 · {closed?'終了':`締切 ${new Date(item.closes_at!).toLocaleString('ja-JP')}`}</p>
       {!mine&&!closed&&<button type="button" disabled={choice===null||busy} onClick={submit} style={{width:'auto',padding:'8px 18px',borderRadius:20}}>投票する</button>}
       {mine&&<p style={{fontSize:12,color:'#aaa'}}>投票済み（変更不可）</p>}
     </>:<>
-      <div style={{marginTop:12,display:'grid',gap:8}}>{responses.map((r,i)=><p key={r.user_id} style={{background:'#222',padding:10,borderRadius:8,margin:0,overflowWrap:'anywhere'}}><span style={{color:'#aaa',fontSize:11}}>回答 {i+1}</span>　{r.answer}</p>)}</div>
-      <p style={{fontSize:12,color:'#aaa'}}>{responses.length}件の回答</p>
+      <div style={{marginTop:12,display:'grid',gap:8}}>{(result?.answers ?? []).map((r,i)=><p key={`${r.created_at}-${i}`} style={{background:'#222',padding:10,borderRadius:8,margin:0,overflowWrap:'anywhere'}}><span style={{color:'#aaa',fontSize:11}}>回答 {i+1}</span>　{r.answer}</p>)}</div>
+      <p style={{fontSize:12,color:'#aaa'}}>{result?.answers?.length ?? 0}件の回答</p>
       {!mine&&<><textarea aria-label="質問への回答" value={answer} onChange={e=>setAnswer(e.target.value)} maxLength={500} placeholder="回答を入力…" style={{width:'100%',boxSizing:'border-box',background:'#222',color:'#fff',border:'1px solid #444',borderRadius:8,padding:10}}/><button type="button" disabled={!answer.trim()||busy} onClick={submit} style={{width:'auto',padding:'8px 18px',borderRadius:20}}>回答する</button></>}
       {mine&&<p style={{fontSize:12,color:'#aaa'}}>回答済み（変更不可）</p>}
     </>}
