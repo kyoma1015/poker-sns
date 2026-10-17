@@ -25,7 +25,14 @@ export default function PublicShare() {
       }
       if (kind === 'player-type') {
         // 公開用RPCで is_public=true を検証し、個別回答は公開しない。
-        const { data, error } = await supabase.rpc('get_public_player_type_result', { p_user_id: id })
+        // 新形式はユーザーID。旧形式は診断結果IDなので、公開レコードから所有者を特定する。
+        // RLSで許可されないレコードは読み取らず、非公開扱いとする。
+        let publicUserId = id
+        const { data: legacy } = await supabase.from('player_type_diagnosis_results')
+          .select('user_id').eq('id', id).eq('is_public', true).maybeSingle()
+        if (!active) return
+        if (legacy?.user_id) publicUserId = legacy.user_id
+        const { data, error } = await supabase.rpc('get_public_player_type_result', { p_user_id: publicUserId })
         if (!active) return
         if (error) { setStatus('error'); return }
         const record = (data || [])[0]
