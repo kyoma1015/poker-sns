@@ -1175,18 +1175,25 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       }
       setDeleteTargetId(null)
       setPostMenuId(null)
+      let imageWarning = ''
       if (ownImagePaths.length > 0) {
-        const { error: imageError } = await supabase.storage.from('post-images').remove([...new Set(ownImagePaths)])
-        if (imageError) {
+        try {
+          const { error: imageError } = await supabase.storage.from('post-images').remove([...new Set(ownImagePaths)])
+          if (imageError) {
+            console.error('投稿画像の削除に失敗:', imageError)
+            imageWarning = '投稿は削除しましたが、添付画像の削除に失敗しました。'
+          }
+        } catch (imageError) {
           console.error('投稿画像の削除に失敗:', imageError)
-          setMessage('投稿は削除しましたが、添付画像の削除に失敗しました。')
-        } else {
-          setMessage('')
+          imageWarning = '投稿は削除しましたが、添付画像の削除に失敗しました。'
         }
-      } else {
-        setMessage('')
       }
-      await loadPosts()
+      try {
+        await loadPosts()
+      } finally {
+        // loadPosts がメッセージを初期化しても、画像削除の失敗を最後に表示する。
+        if (imageWarning) setMessage(imageWarning)
+      }
     } finally {
       deletingRef.current = false
       setIsDeleting(false)
