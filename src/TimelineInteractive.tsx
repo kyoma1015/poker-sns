@@ -16,7 +16,7 @@ export function InteractiveComposer({ onCreated }: { onCreated: () => Promise<vo
   const [content, setContent] = useState('')
   const [options, setOptions] = useState(['',''])
   const [hours, setHours] = useState(24)
-  const [pollAnonymous, setPollAnonymous] = useState(true)
+  const [pollAnonymous, setPollAnonymous] = useState(false)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const submit = async () => {
@@ -47,7 +47,7 @@ export function InteractiveComposer({ onCreated }: { onCreated: () => Promise<vo
         {options.length>2 && <button type="button" onClick={()=>setOptions(a=>a.slice(0,-1))} style={{width:'auto',background:'#30343b',color:'#eee',border:'1px solid #555',borderRadius:8,padding:'7px 12px'}}>− 削除</button>}
         <label style={{fontSize:13}}>投票期限 <select value={hours} onChange={e=>setHours(Number(e.target.value))} style={{background:'#222',color:'#fff',padding:6}}>{[1,6,24,72,168].map(h=><option key={h} value={h}>{h<24?`${h}時間`:`${h/24}日`}</option>)}</select></label>
       </div>
-      <div style={{display:'flex',gap:8,marginTop:10}}>{([{anonymous:true,label:'匿名投票'},{anonymous:false,label:'記名投票'}] as const).map(mode=><button key={mode.label} type="button" aria-pressed={pollAnonymous===mode.anonymous} onClick={()=>setPollAnonymous(mode.anonymous)} style={{width:'auto',background:pollAnonymous===mode.anonymous?'#393939':'#181818',color:'#eee',border:'1px solid '+(pollAnonymous===mode.anonymous?'#ddd':'#444'),padding:'8px 12px',borderRadius:9}}>{mode.label}</button>)}</div>
+      <div style={{display:'flex',gap:8,marginTop:10}}>{([{anonymous:false,label:'記名投票'},{anonymous:true,label:'匿名投票'}] as const).map(mode=><button key={mode.label} type="button" aria-pressed={pollAnonymous===mode.anonymous} onClick={()=>setPollAnonymous(mode.anonymous)} style={{width:'auto',background:pollAnonymous===mode.anonymous?'#393939':'#181818',color:'#eee',border:'1px solid '+(pollAnonymous===mode.anonymous?'#ddd':'#444'),padding:'8px 12px',borderRadius:9}}>{mode.label}</button>)}</div>
     </>}
     <p style={{fontSize:12,color:'#aaa'}}>投票は1人1回。{pollAnonymous?'投票者のPoker IDは公開されません。':'投票者の名前・Poker IDと投票先が公開されます。'} 投稿後の投票方式は変更できません。</p>
     {error && <p role="alert" style={{color:'#ff9999'}}>{error}</p>}
@@ -59,6 +59,7 @@ export function InteractiveCard({item,result,onUpdated,isOwner=false,ownerName='
   const [choice,setChoice]=useState<number|null>(null)
   const [busy,setBusy]=useState(false)
   const [error,setError]=useState('')
+  const [voterOption,setVoterOption]=useState<number|null>(null)
   const mine=result?.has_responded ?? false
   const questionPolicy=item.question_response_policy??(item.is_anonymous?'anonymous_only':'named_only')
   const closed=item.kind==='poll'&&!!item.closes_at&&Date.parse(item.closes_at)<=Date.now()
@@ -78,17 +79,17 @@ export function InteractiveCard({item,result,onUpdated,isOwner=false,ownerName='
     {item.kind==='poll'?<>
       <div style={{display:'grid',gap:8,marginTop:12}}>{item.options.map((option,i)=>{
         const count=result?.vote_counts?.[String(i)] ?? 0
-        const show=mine||closed
+        const show=mine||closed||isOwner
         const pct=result?.total_votes?Math.round(count/result.total_votes*100):0
-        return <button key={i} type="button" disabled={mine||closed||busy} onClick={()=>setChoice(i)} style={{position:'relative',overflow:'hidden',textAlign:'left',borderRadius:9,padding:12,color:'#fff',border:`1px solid ${choice===i||(mine && result?.my_option_index===i)?'#8b9bad':'#444'}`,background:'#222'}}>
+        return <button key={i} type="button" disabled={busy||(item.is_anonymous&&(mine||closed))} onClick={()=>{if(!item.is_anonymous&&(isOwner||mine||closed)){setVoterOption(i)}else if(!mine&&!closed&&!isOwner){setChoice(i)}}} style={{position:'relative',overflow:'hidden',textAlign:'left',borderRadius:9,padding:12,color:'#fff',border:`1px solid ${choice===i||(mine && result?.my_option_index===i)?'#8b9bad':'#444'}`,background:'#222'}}>
           {show&&<span style={{position:'absolute',inset:0,right:`${100-pct}%`,background:'#405367',transition:'right 240ms ease-out',pointerEvents:'none'}}/>}
           <span style={{position:'relative',zIndex:1,display:'flex',alignItems:'center',justifyContent:'space-between',gap:12,textShadow:'0 1px 2px #151515'}}><span>{option}</span>{show&&<strong style={{whiteSpace:'nowrap',fontVariantNumeric:'tabular-nums'}}>{pct}%</strong>}</span>
         </button>
       })}</div>
-      {!item.is_anonymous&&(result?.voters?.length??0)>0&&<div style={{display:'grid',gap:6,marginTop:10}}>{item.options.map((option,i)=>{const voters=(result?.voters??[]).filter(v=>v.option_index===i);return voters.length>0?<div key={i} style={{background:'#1b1b1b',padding:10,borderRadius:8}}><strong style={{fontSize:12}}>{option}</strong><div style={{display:'flex',gap:8,flexWrap:'wrap',marginTop:6}}>{voters.map((v,j)=><span key={j} style={{fontSize:12,color:'#ddd'}}>{v.display_name||v.poker_id||'ユーザー'}{v.poker_id?' (@'+v.poker_id+')':''}</span>)}</div></div>:null})}</div>}
+      {voterOption!==null&&!item.is_anonymous&&<div role="dialog" aria-modal="true" aria-label="投票者一覧" style={{position:'fixed',inset:0,zIndex:10000,background:'rgba(0,0,0,.78)',display:'flex',alignItems:'center',justifyContent:'center',padding:16}} onClick={()=>setVoterOption(null)}><div onClick={e=>e.stopPropagation()} style={{background:'#20242b',color:'#fff',border:'1px solid #505b68',borderRadius:14,padding:18,width:'min(100%,460px)',maxHeight:'80vh',overflowY:'auto'}}><div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:12,marginBottom:12}}><strong>{item.options[voterOption]} を選んだ人（{result?.vote_counts?.[String(voterOption)]??0}票）</strong><button type="button" onClick={()=>setVoterOption(null)} style={{width:'auto',background:'#343b45',color:'#fff',border:'1px solid #667085',borderRadius:8,padding:'6px 12px'}}>閉じる</button></div>{(result?.voters??[]).filter(v=>v.option_index===voterOption).map((v,j)=><div key={j} style={{padding:'10px 2px',borderBottom:'1px solid #373d46'}}><strong>{v.display_name||v.poker_id||'ユーザー'}</strong>{v.poker_id&&<span style={{fontSize:12,color:'#aab5c2'}}> @{v.poker_id}</span>}</div>)}{!(result?.voters??[]).some(v=>v.option_index===voterOption)&&<p style={{fontSize:13,color:'#aaa'}}>まだ投票者はいません。</p>}</div></div>}
       <p style={{fontSize:12,color:'#aaa'}}>{result?.total_votes ?? 0}票 · {closed?'終了':`締切 ${new Date(item.closes_at!).toLocaleString('ja-JP')}`}</p>
-      {!mine&&!closed&&<button type="button" disabled={choice===null||busy} onClick={submit} style={{width:'auto',padding:'8px 18px',borderRadius:20,background:'#303b49',color:'#eee',border:'1px solid #64748b'}}>投票する</button>}
-      {mine&&<p style={{fontSize:12,color:'#aaa'}}>投票済み（変更不可）</p>}
+      {!mine&&!closed&&!isOwner&&<button type="button" disabled={choice===null||busy} onClick={submit} style={{width:'auto',padding:'8px 18px',borderRadius:20,background:'#303b49',color:'#eee',border:'1px solid #64748b'}}>投票する</button>}
+      {mine&&<p style={{fontSize:12,color:'#aaa'}}>投票済み（変更不可）{!item.is_anonymous?' · 選択肢を押すと投票者一覧を表示':''}</p>}
     </>:<QuestionThread postId={item.post_id} policy={questionPolicy} onUpdated={onUpdated} isOwner={isOwner} ownerName={ownerName}/> }
     {error&&<p role="alert" style={{color:'#ff9999'}}>{error}</p>}
   </div>
