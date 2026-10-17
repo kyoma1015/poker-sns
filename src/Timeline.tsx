@@ -3190,7 +3190,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
                       </div>
 
-                      {interactiveItems[post.id] && <InteractiveCard item={interactiveItems[post.id]} result={interactiveResults[post.id]} onUpdated={loadPosts} />}
+                      {interactiveItems[post.id] && <InteractiveCard item={interactiveItems[post.id]} result={interactiveResults[post.id]} onUpdated={loadPosts} isOwner={post.user_id===currentUserId} ownerName={post.profile?.display_name||post.profile?.poker_id||'募集者'} />}
                       {post.quote_post_id && (
                         <QuoteSourcePreview source={post.quotePreview} onOpen={post.quotePreview ? () => navigate(`/post/${post.quotePreview!.id}`) : undefined} />
                       )}
