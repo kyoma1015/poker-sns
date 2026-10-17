@@ -1,15 +1,25 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-async function getPublicPlayerTypeResult(supabaseUrl: string, serviceKey: string, id: string) {
-  const headers = { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` }
-  const response = await fetch(`${supabaseUrl}/rest/v1/player_type_diagnosis_results?id=eq.${encodeURIComponent(id)}&is_public=eq.true&select=id,result_type_key,version_id`, { headers })
-  if (!response.ok) throw new Error(`Result lookup failed: ${response.status}`)
-  const result = (await response.json())[0]
-  if (!result) return null
-  const defResponse = await fetch(`${supabaseUrl}/rest/v1/player_type_definitions?type_key=eq.${encodeURIComponent(result.result_type_key)}&select=animal_name_ja,catchphrase`, { headers })
-  if (!defResponse.ok) throw new Error(`Definition lookup failed: ${defResponse.status}`)
-  const definition = (await defResponse.json())[0]
-  return definition ? { ...result, ...definition } : null
+
+// Public RPCs enforce is_public=true server-side and never expose private answers.
+async function getPublicPlayerTypeResult(supabaseUrl: string, anonKey: string, id: string) {
+  const headers = { apikey: anonKey, Authorization: `Bearer ${anonKey}`, 'Content-Type': 'application/json' }
+  for (const [functionName, argument] of [
+    ['get_public_player_type_result_by_id', 'p_result_id'],
+    ['get_public_player_type_result', 'p_user_id'],
+  ] as const) {
+    const response = await fetch(`${supabaseUrl}/rest/v1/rpc/${functionName}`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ [argument]: id }),
+    })
+    if (!response.ok) throw new Error(`Public diagnosis lookup failed: ${response.status}`)
+    const result = (await response.json())?.[0]
+    if (result) return result
+  }
+  return null
 }
+
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 
 
 const esc = (value: unknown) =>
@@ -20,18 +30,32 @@ const esc = (value: unknown) =>
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#039;')
 
+const sendShareNotice = (res: VercelResponse, status: number, message: string) => {
+  res.setHeader('Content-Type', 'text/html; charset=utf-8')
+  res.setHeader('Cache-Control', 'no-store')
+  return res.status(status).send(`<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Poker ID｜公開シェア</title></head>
+<body style="margin:0;background:#080808;color:#f6f6f6;font-family:system-ui,sans-serif;padding:24px">
+<main style="max-width:540px;margin:50px auto;padding:24px;border:1px solid #383838;border-radius:16px">
+<p style="color:#bbb">♠ Poker ID · 公開シェア</p><h1 style="font-size:24px">共有ページ</h1>
+<p role="status">${esc(message)}</p>
+<a href="/timeline" style="display:inline-block;margin-top:16px;padding:12px 16px;background:#fff;color:#111;border-radius:9px;text-decoration:none;font-weight:700">Poker IDを見る →</a>
+</main></body></html>`)
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const type = String(req.query.type ?? '')
   const id = String(req.query.id ?? '')
   const origin = `https://${req.headers.host}`
 
   if (!['tournament', 'amusement', 'cash', 'player-type', 'poker-id'].includes(type) || !id) {
-    return res.status(400).send('Invalid share URL')
+    return sendShareNotice(res, 400, '共有URLが正しくありません。')
   }
 
   const supabaseUrl = process.env.VITE_SUPABASE_URL
   const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY
-  if (!supabaseUrl || !supabaseKey) return res.status(500).send('Missing Supabase environment variables')
+  if (!supabaseUrl || !supabaseKey) return sendShareNotice(res, 503, '現在、共有ページを表示できません。時間をおいて再度お試しください。')
 
   if (type === 'poker-id') {
     const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -69,32 +93,39 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   if (type === 'player-type') {
-    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
-    if (!serviceKey) return res.status(500).send('SUPABASE_SERVICE_ROLE_KEY is missing')
+    if (!UUID_PATTERN.test(id)) return sendShareNotice(res, 404, 'この記録は非公開、削除済み、または存在しません。')
     let result
-    try { result = await getPublicPlayerTypeResult(supabaseUrl, serviceKey, id) }
-    catch (error) { console.error(error); return res.status(500).send('Failed to load diagnosis') }
-    if (!result) return res.status(404).send('Public diagnosis not found')
+    try { result = await getPublicPlayerTypeResult(supabaseUrl, supabaseKey, id) }
+    catch (error) {
+      console.error('公開診断結果の取得に失敗:', error)
+      return sendShareNotice(res, 503, '記録の取得に失敗しました。時間をおいて再度お試しください。')
+    }
+    if (!result) return sendShareNotice(res, 404, 'この記録は非公開、削除済み、または存在しません。')
     const canonical = `${origin}/share/player-type/${encodeURIComponent(id)}`
-    const image = `${origin}/api/og?type=player-type&id=${encodeURIComponent(id)}`
-    const destination = `${origin}/player-type?result=${encodeURIComponent(id)}`
-    const title = `ポーカータイプ診断：${result.animal_name_ja} | Poker ID`
+    const title = `ポーカータイプ診断：${result.animal_name_ja || '動物タイプ'} | Poker ID`
     const description = `${result.catchphrase || 'あなたはどのタイプ？'}｜全50問・36種類の動物タイプ。※プレイヤータイプは強さや技術の優劣を示すものではありません。`
     res.setHeader('Content-Type', 'text/html; charset=utf-8')
-    res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300')
+    // Visibility can change at any time. Avoid keeping publicly cached results after privacy changes.
+    res.setHeader('Cache-Control', 'no-store')
     return res.status(200).send(`<!doctype html>
 <html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(title)}</title><meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${esc(canonical)}">
 <meta property="og:type" content="website"><meta property="og:site_name" content="Poker ID">
 <meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}">
-<meta property="og:url" content="${esc(canonical)}"><meta property="og:image" content="${esc(image)}">
-<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(title)}">
-<meta name="twitter:description" content="${esc(description)}"><meta name="twitter:image" content="${esc(image)}">
-</head><body style="background:#080808;color:#fff;text-align:center;font-family:system-ui,sans-serif;padding:40px">
-<h1>Poker ID</h1><p>${esc(title)}</p><a href="${esc(destination)}" style="color:#d4b879">診断結果を見る</a>
-<script>location.replace(${JSON.stringify(destination)})</script></body></html>`)
+<meta property="og:url" content="${esc(canonical)}">
+<meta name="twitter:card" content="summary"><meta name="twitter:title" content="${esc(title)}">
+<meta name="twitter:description" content="${esc(description)}">
+</head><body style="margin:0;background:#080808;color:#fff;font-family:system-ui,sans-serif;padding:24px">
+<main style="max-width:540px;margin:50px auto;padding:24px;border:1px solid #383838;border-radius:16px">
+<p style="color:#bbb">♠ Poker ID · 公開シェア</p>
+<h1 style="font-size:25px;overflow-wrap:anywhere">${esc(result.animal_name_ja || '動物タイプ診断')}</h1>
+<p>${esc(result.catchphrase || '')}</p>
+${result.description ? `<section><h2 style="font-size:16px">特徴</h2><p style="white-space:pre-wrap;overflow-wrap:anywhere">${esc(result.description)}</p></section>` : ''}
+${result.strength_text ? `<section><h2 style="font-size:16px">強み</h2><p style="white-space:pre-wrap;overflow-wrap:anywhere">${esc(result.strength_text)}</p></section>` : ''}
+${result.weakness_text ? `<section><h2 style="font-size:16px">注意点</h2><p style="white-space:pre-wrap;overflow-wrap:anywhere">${esc(result.weakness_text)}</p></section>` : ''}
+<a href="/timeline" style="display:inline-block;margin-top:16px;padding:12px 16px;background:#fff;color:#111;border-radius:9px;text-decoration:none;font-weight:700">Poker IDを見る →</a>
+</main></body></html>`)
   }
 
   const tables: Record<string, string> = {
@@ -108,10 +139,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     { headers: { apikey: supabaseKey, Authorization: `Bearer ${supabaseKey}` } }
   )
 
-  if (!response.ok) return res.status(404).send('Result not found')
+  if (!response.ok) return sendShareNotice(res, 503, '記録の取得に失敗しました。時間をおいて再度お試しください。')
   const rows = await response.json()
   const result = rows?.[0]
-  if (!result) return res.status(404).send('Result not found or private')
+  if (!result) return sendShareNotice(res, 404, 'この記録は非公開、削除済み、または存在しません。')
 
   let title = 'Poker ID Result'
   let description = 'Poker IDでポーカー戦績をチェック'
