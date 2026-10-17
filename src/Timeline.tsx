@@ -153,6 +153,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const [interactiveMode, setInteractiveMode] = useState<'normal'|'poll'|'question'>('normal')
   const [pollOptions, setPollOptions] = useState(['',''])
   const [pollHours, setPollHours] = useState(24)
+  const [questionAnonymous, setQuestionAnonymous] = useState(true)
   const [attachmentsOpen, setAttachmentsOpen] = useState(false)
   const [attachmentScreen, setAttachmentScreen] = useState<'menu' | 'results' | 'tournament' | 'amusement' | 'cash' | 'diagnosis'>('menu')
   const [selectedResult, setSelectedResult] = useState<{id:string; type:'tournament'|'amusement'|'cash'; label:string; playedAt:string; data:any}|null>(null)
@@ -270,7 +271,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     const postIdsForInteractive = postData.map(row => row.id)
     const { data: interactiveRows, error: interactiveError } = await supabase.from('post_interactive').select('*').in('post_id',postIdsForInteractive)
     if (interactiveError) { setMessage(`アンケート情報の取得に失敗しました：${interactiveError.message}`); return }
-    const { data: responseRows, error: responseError } = await supabase.rpc('get_interactive_results', { p_post_ids: postIdsForInteractive })
+    const { data: responseRows, error: responseError } = await supabase.rpc('get_interactive_results_v2', { p_post_ids: postIdsForInteractive })
     if (responseError) { setMessage(`回答情報の取得に失敗しました：${responseError.message}`); return }
     setInteractiveItems(Object.fromEntries((interactiveRows||[]).map(row=>[row.post_id,row as InteractiveItem])))
     setInteractiveResults(Object.fromEntries(((responseRows||[]) as InteractiveResult[]).map(row=>[row.post_id,row])))
@@ -817,7 +818,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         <label style={{fontSize:12,color:'#ccc'}}>投票期限 <select value={pollHours} onChange={e=>setPollHours(Number(e.target.value))} style={{background:'#222',color:'#fff',padding:7}}>{[1,6,24,72,168].map(h=><option key={h} value={h}>{h<24?`${h}時間`:`${h/24}日`}</option>)}</select></label>
       </div>
     </div>
-  ) : interactiveMode==='question' ? <p style={{fontSize:12,color:'#aaa',marginTop:10}}>匿名で回答を募集します。回答は1人1回です。</p> : null
+  ) : interactiveMode==='question' ? <div style={{marginTop:10,display:'grid',gap:8}}><label style={{fontSize:12,color:'#ccc'}}>回答方式</label><div style={{display:'flex',gap:8}}>{([{anonymous:true,label:'匿名で回答'},{anonymous:false,label:'名前を表示'}] as const).map(mode=><button key={mode.label} type="button" aria-pressed={questionAnonymous===mode.anonymous} onClick={()=>setQuestionAnonymous(mode.anonymous)} style={{width:'auto',padding:'8px 12px',borderRadius:9,border:'1px solid '+(questionAnonymous===mode.anonymous?'#ddd':'#444'),background:questionAnonymous===mode.anonymous?'#383838':'#181818',color:'#eee',fontSize:12}}>{mode.label}</button>)}</div><p style={{fontSize:12,color:'#aaa',margin:0}}>{questionAnonymous?'回答者の名前は表示されません。':'回答者の表示名・Poker IDが公開されます。'} 回答は1人1回。投稿後の変更はできません。</p></div> : null
 
   const canSubmitPost = Boolean(content.trim() || (interactiveMode==='normal' && (selectedResult || selectedDiagnosis || styleSnapshot || imageFiles.length)))
     && (interactiveMode!=='poll'||(pollOptions.every(o=>o.trim()) && new Set(pollOptions.map(o=>o.trim().toLowerCase())).size===pollOptions.length))
@@ -829,16 +830,18 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       setIsPosting(true)
       setMessage('')
       try {
-        const { error } = await supabase.rpc('create_interactive_post', {
+        const { error } = await supabase.rpc('create_interactive_post_v2', {
           p_content: content.trim(), p_kind: interactiveMode,
           p_options: interactiveMode==='poll'?pollOptions.map(o=>o.trim()):null,
           p_hours:pollHours,
+          p_is_anonymous: questionAnonymous,
         })
         if (error) throw error
         setContent('')
         setInteractiveMode('normal')
         setPollOptions(['',''])
         setPollHours(24)
+        setQuestionAnonymous(true)
         setComposeOpen(false)
         await loadPosts()
       } catch (error) {
