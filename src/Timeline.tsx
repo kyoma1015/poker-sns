@@ -153,7 +153,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const [interactiveMode, setInteractiveMode] = useState<'normal'|'poll'|'question'>('normal')
   const [pollOptions, setPollOptions] = useState(['',''])
   const [pollHours, setPollHours] = useState(24)
-  const [questionAnonymous, setQuestionAnonymous] = useState(true)
+  const [questionPolicy, setQuestionPolicy] = useState<'named_only'|'respondent_choice'>('respondent_choice')
   const [pollAnonymous, setPollAnonymous] = useState(true)
   const [attachmentsOpen, setAttachmentsOpen] = useState(false)
   const [attachmentScreen, setAttachmentScreen] = useState<'menu' | 'results' | 'tournament' | 'amusement' | 'cash' | 'diagnosis'>('menu')
@@ -272,7 +272,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     const postIdsForInteractive = postData.map(row => row.id)
     const { data: interactiveRows, error: interactiveError } = await supabase.from('post_interactive').select('*').in('post_id',postIdsForInteractive)
     if (interactiveError) { setMessage(`アンケート情報の取得に失敗しました：${interactiveError.message}`); return }
-    const { data: responseRows, error: responseError } = await supabase.rpc('get_interactive_results_v3', { p_post_ids: postIdsForInteractive })
+    const { data: responseRows, error: responseError } = await supabase.rpc('get_interactive_results_v4', { p_post_ids: postIdsForInteractive })
     if (responseError) { setMessage(`回答情報の取得に失敗しました：${responseError.message}`); return }
     setInteractiveItems(Object.fromEntries((interactiveRows||[]).map(row=>[row.post_id,row as InteractiveItem])))
     setInteractiveResults(Object.fromEntries(((responseRows||[]) as InteractiveResult[]).map(row=>[row.post_id,row])))
@@ -820,7 +820,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       </div>
       <div style={{display:'grid',gap:8}}><label style={{fontSize:12,color:'#ccc'}}>投票方式</label><div style={{display:'flex',gap:8}}>{([{anonymous:true,label:'匿名投票'},{anonymous:false,label:'記名投票'}] as const).map(mode=><button key={mode.label} type="button" aria-pressed={pollAnonymous===mode.anonymous} onClick={()=>setPollAnonymous(mode.anonymous)} style={{width:'auto',padding:'8px 12px',borderRadius:9,border:'1px solid '+(pollAnonymous===mode.anonymous?'#ddd':'#444'),background:pollAnonymous===mode.anonymous?'#383838':'#181818',color:'#eee',fontSize:12}}>{mode.label}</button>)}</div><p style={{fontSize:12,color:'#aaa',margin:0}}>{pollAnonymous?'投票者と投票先は公開されません。':'投票者の名前・Poker IDと投票先が公開されます。'} 投稿後の変更はできません。</p></div>
     </div>
-  ) : interactiveMode==='question' ? <div style={{marginTop:10,display:'grid',gap:8}}><label style={{fontSize:12,color:'#ccc'}}>回答方式</label><div style={{display:'flex',gap:8}}>{([{anonymous:true,label:'匿名で回答'},{anonymous:false,label:'名前を表示'}] as const).map(mode=><button key={mode.label} type="button" aria-pressed={questionAnonymous===mode.anonymous} onClick={()=>setQuestionAnonymous(mode.anonymous)} style={{width:'auto',padding:'8px 12px',borderRadius:9,border:'1px solid '+(questionAnonymous===mode.anonymous?'#ddd':'#444'),background:questionAnonymous===mode.anonymous?'#383838':'#181818',color:'#eee',fontSize:12}}>{mode.label}</button>)}</div><p style={{fontSize:12,color:'#aaa',margin:0}}>{questionAnonymous?'回答者の名前は表示されません。':'回答者の表示名・Poker IDが公開されます。'} 回答は1人1回。投稿後の変更はできません。</p></div> : null
+  ) : interactiveMode==='question' ? <div style={{marginTop:10,display:'grid',gap:8}}><label style={{fontSize:12,color:'#ccc'}}>回答方式</label><div style={{display:'flex',gap:8}}>{([{policy:'named_only',label:'記名回答のみ'},{policy:'respondent_choice',label:'回答者が選択'}] as const).map(mode=><button key={mode.policy} type="button" aria-pressed={questionPolicy===mode.policy} onClick={()=>setQuestionPolicy(mode.policy)} style={{width:'auto',padding:'8px 12px',borderRadius:9,border:'1px solid '+(questionPolicy===mode.policy?'#ddd':'#444'),background:questionPolicy===mode.policy?'#383838':'#181818',color:'#eee',fontSize:12}}>{mode.label}</button>)}</div><p style={{fontSize:12,color:'#aaa',margin:0}}>{questionPolicy==='named_only'?'回答者全員の表示名・Poker IDが公開されます。':'回答者が匿名・記名を選択できます（初期値は匿名）。'} 投稿後の変更はできません。</p></div> : null
 
   const canSubmitPost = Boolean(content.trim() || (interactiveMode==='normal' && (selectedResult || selectedDiagnosis || styleSnapshot || imageFiles.length)))
     && (interactiveMode!=='poll'||(pollOptions.every(o=>o.trim()) && new Set(pollOptions.map(o=>o.trim().toLowerCase())).size===pollOptions.length))
@@ -832,18 +832,19 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       setIsPosting(true)
       setMessage('')
       try {
-        const { error } = await supabase.rpc('create_interactive_post_v3', {
+        const { error } = await supabase.rpc('create_interactive_post_v4', {
           p_content: content.trim(), p_kind: interactiveMode,
           p_options: interactiveMode==='poll'?pollOptions.map(o=>o.trim()):null,
           p_hours:pollHours,
-          p_is_anonymous: interactiveMode==='poll'?pollAnonymous:questionAnonymous,
+          p_is_anonymous: pollAnonymous,
+          p_question_policy: interactiveMode==='question'?questionPolicy:null,
         })
         if (error) throw error
         setContent('')
         setInteractiveMode('normal')
         setPollOptions(['',''])
         setPollHours(24)
-        setQuestionAnonymous(true)
+        setQuestionPolicy('respondent_choice')
         setPollAnonymous(true)
         setComposeOpen(false)
         await loadPosts()
