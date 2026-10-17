@@ -1149,6 +1149,20 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         setMessage('自分の投稿以外は削除できません。')
         return
       }
+      // 投稿者本人のStorage領域にある添付画像だけを削除対象にする。
+      const ownImagePaths = (target.image_urls || []).flatMap(url => {
+        try {
+          const parsed = new URL(url)
+          const storageOrigin = new URL(import.meta.env.VITE_SUPABASE_URL).origin
+          const prefix = '/storage/v1/object/public/post-images/'
+          if (parsed.origin !== storageOrigin || !parsed.pathname.startsWith(prefix)) return []
+          const path = decodeURIComponent(parsed.pathname.slice(prefix.length))
+          if (!path.startsWith(user.id + '/') || path.includes('..')) return []
+          return [path]
+        } catch {
+          return []
+        }
+      })
       const { error } = await supabase
         .from('posts')
         .delete()
@@ -1161,7 +1175,17 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       }
       setDeleteTargetId(null)
       setPostMenuId(null)
-      setMessage('')
+      if (ownImagePaths.length > 0) {
+        const { error: imageError } = await supabase.storage.from('post-images').remove([...new Set(ownImagePaths)])
+        if (imageError) {
+          console.error('投稿画像の削除に失敗:', imageError)
+          setMessage('投稿は削除しましたが、添付画像の削除に失敗しました。')
+        } else {
+          setMessage('')
+        }
+      } else {
+        setMessage('')
+      }
       await loadPosts()
     } finally {
       deletingRef.current = false
