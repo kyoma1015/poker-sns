@@ -2325,7 +2325,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
           >
 
-            <div style={{flexShrink:0}}>{renderPostModeButtons()}</div>
+            <div style={{minWidth:0,flex:'1 1 auto',overflowX:'auto'}}>{renderPostModeButtons()}</div>
             <span
 
               style={{
