@@ -680,12 +680,14 @@ function PlayerTypeDiagnosis() {
     }
   }
 
-  function shareToX() {
+  async function shareToX() {
     if (!result) return
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) { setExternalShareError('共有にはログインが必要です。'); return }
     const message = `Poker IDのプレイヤータイプ診断は「${result.animal_name_ja}」！\n${result.catchphrase}\n\nあなたは何タイプ？ #PokerID #ポーカー`
     const intent = new URL('https://twitter.com/intent/tweet')
     intent.searchParams.set('text', message)
-    intent.searchParams.set('url', `https://poker-sns-vert.vercel.app/share/player-type/${encodeURIComponent(result.result_id)}`)
+    intent.searchParams.set('url', `https://poker-sns-vert.vercel.app/share/player-type/${encodeURIComponent(user.id)}`)
     window.open(intent.toString(), '_blank', 'noopener,noreferrer')
   }
 
