@@ -25,17 +25,17 @@ export default function PublicShare() {
       }
       if (kind === 'player-type') {
         // 公開用RPCで is_public=true を検証し、個別回答は公開しない。
-        // 新形式はユーザーID。旧形式は診断結果IDなので、公開レコードから所有者を特定する。
-        // RLSで許可されないレコードは読み取らず、非公開扱いとする。
-        let publicUserId = id
-        const { data: legacy } = await supabase.from('player_type_diagnosis_results')
-          .select('user_id').eq('id', id).eq('is_public', true).maybeSingle()
+        // 旧形式は診断結果ID、新形式はユーザーID。公開専用RPCのみを使用する。
+        const { data: byResult, error: byResultError } = await supabase.rpc('get_public_player_type_result_by_id', { p_result_id: id })
         if (!active) return
-        if (legacy?.user_id) publicUserId = legacy.user_id
-        const { data, error } = await supabase.rpc('get_public_player_type_result', { p_user_id: publicUserId })
-        if (!active) return
-        if (error) { setStatus('error'); return }
-        const record = (data || [])[0]
+        if (byResultError) { setStatus('error'); return }
+        let record = (byResult || [])[0]
+        if (!record) {
+          const { data: byUser, error: byUserError } = await supabase.rpc('get_public_player_type_result', { p_user_id: id })
+          if (!active) return
+          if (byUserError) { setStatus('error'); return }
+          record = (byUser || [])[0]
+        }
         if (!record) { setStatus('missing'); return }
         setShare({
           title: record.animal_name_ja || '動物タイプ診断',
