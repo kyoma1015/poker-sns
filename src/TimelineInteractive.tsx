@@ -95,7 +95,7 @@ export function InteractiveCard({item,result,onUpdated}:{item:InteractiveItem;re
       <p style={{fontSize:12,color:'#aaa'}}>{result?.total_votes ?? 0}票 · {closed?'終了':`締切 ${new Date(item.closes_at!).toLocaleString('ja-JP')}`}</p>
       {!mine&&!closed&&<button type="button" disabled={choice===null||busy} onClick={submit} style={{width:'auto',padding:'8px 18px',borderRadius:20}}>投票する</button>}
       {mine&&<p style={{fontSize:12,color:'#aaa'}}>投票済み（変更不可）</p>}
-    </>:<QuestionThread postId={item.post_id} policy={questionPolicy} onUpdated={onUpdated}/>>}
+    </>:<QuestionThread postId={item.post_id} policy={questionPolicy} onUpdated={onUpdated}/> }
     {error&&<p role="alert" style={{color:'#ff9999'}}>{error}</p>}
   </div>
 }
