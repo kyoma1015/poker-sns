@@ -154,7 +154,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const [pollOptions, setPollOptions] = useState(['',''])
   const [pollHours, setPollHours] = useState(24)
   const [questionPolicy, setQuestionPolicy] = useState<'named_only'|'respondent_choice'>('respondent_choice')
-  const [pollAnonymous, setPollAnonymous] = useState(true)
+  const [pollAnonymous, setPollAnonymous] = useState(false)
   const [attachmentsOpen, setAttachmentsOpen] = useState(false)
   const [attachmentScreen, setAttachmentScreen] = useState<'menu' | 'results' | 'tournament' | 'amusement' | 'cash' | 'diagnosis'>('menu')
   const [selectedResult, setSelectedResult] = useState<{id:string; type:'tournament'|'amusement'|'cash'; label:string; playedAt:string; data:any}|null>(null)
@@ -818,7 +818,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         {pollOptions.length>2&&<button type="button" onClick={()=>setPollOptions(prev=>prev.slice(0,-1))} style={{width:'auto'}}>− 削除</button>}
         <label style={{fontSize:12,color:'#ccc'}}>投票期限 <select value={pollHours} onChange={e=>setPollHours(Number(e.target.value))} style={{background:'#222',color:'#fff',padding:7}}>{[1,6,24,72,168].map(h=><option key={h} value={h}>{h<24?`${h}時間`:`${h/24}日`}</option>)}</select></label>
       </div>
-      <div style={{display:'grid',gap:8}}><label style={{fontSize:12,color:'#ccc'}}>投票方式</label><div style={{display:'flex',gap:8}}>{([{anonymous:true,label:'匿名投票'},{anonymous:false,label:'記名投票'}] as const).map(mode=><button key={mode.label} type="button" aria-pressed={pollAnonymous===mode.anonymous} onClick={()=>setPollAnonymous(mode.anonymous)} style={{width:'auto',padding:'8px 12px',borderRadius:9,border:'1px solid '+(pollAnonymous===mode.anonymous?'#ddd':'#444'),background:pollAnonymous===mode.anonymous?'#383838':'#181818',color:'#eee',fontSize:12}}>{mode.label}</button>)}</div><p style={{fontSize:12,color:'#aaa',margin:0}}>{pollAnonymous?'投票者と投票先は公開されません。':'投票者の名前・Poker IDと投票先が公開されます。'} 投稿後の変更はできません。</p></div>
+      <div style={{display:'grid',gap:8}}><label style={{fontSize:12,color:'#ccc'}}>投票方式</label><div style={{display:'flex',gap:8}}>{([{anonymous:false,label:'記名投票'},{anonymous:true,label:'匿名投票'}] as const).map(mode=><button key={mode.label} type="button" aria-pressed={pollAnonymous===mode.anonymous} onClick={()=>setPollAnonymous(mode.anonymous)} style={{width:'auto',padding:'8px 12px',borderRadius:9,border:'1px solid '+(pollAnonymous===mode.anonymous?'#ddd':'#444'),background:pollAnonymous===mode.anonymous?'#383838':'#181818',color:'#eee',fontSize:12}}>{mode.label}</button>)}</div><p style={{fontSize:12,color:'#aaa',margin:0}}>{pollAnonymous?'投票者と投票先は公開されません。':'投票者の名前・Poker IDと投票先が公開されます。'} 投稿後の変更はできません。</p></div>
     </div>
   ) : interactiveMode==='question' ? <div style={{marginTop:10,display:'grid',gap:8}}><label style={{fontSize:12,color:'#ccc'}}>回答方式</label><div style={{display:'flex',gap:8}}>{([{policy:'named_only',label:'記名回答のみ'},{policy:'respondent_choice',label:'回答者が選択'}] as const).map(mode=><button key={mode.policy} type="button" aria-pressed={questionPolicy===mode.policy} onClick={()=>setQuestionPolicy(mode.policy)} style={{width:'auto',padding:'8px 12px',borderRadius:9,border:'1px solid '+(questionPolicy===mode.policy?'#ddd':'#444'),background:questionPolicy===mode.policy?'#383838':'#181818',color:'#eee',fontSize:12}}>{mode.label}</button>)}</div><p style={{fontSize:12,color:'#aaa',margin:0}}>{questionPolicy==='named_only'?'回答者全員の表示名・Poker IDが公開されます。':'回答者が匿名・記名を選択できます（初期値は匿名）。'} 投稿後の変更はできません。</p></div> : null
 
@@ -845,7 +845,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         setPollOptions(['',''])
         setPollHours(24)
         setQuestionPolicy('respondent_choice')
-        setPollAnonymous(true)
+        setPollAnonymous(false)
         setComposeOpen(false)
         await loadPosts()
       } catch (error) {
