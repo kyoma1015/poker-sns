@@ -721,7 +721,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       { table: 'cash_game_results', type: 'cash' as const, label: 'キャッシュ' },
     ]
     const lists = await Promise.all(sources.map(async source => {
-      const { data, error } = await supabase.from(source.table).select('*').eq('user_id', user.id).order('played_at', { ascending: false }).limit(30)
+      const { data, error } = await supabase.from(source.table).select('*').eq('user_id', user.id).eq('is_public', true).order('played_at', { ascending: false }).limit(30)
       if (error) { console.error(error); return [] }
       return (data || []).map(item => ({ id: String(item.id), type: source.type, label: `${source.label} · ${String(item.tournament_name || item.venue || '記録')}`, playedAt: String(item.played_at || ''), data: item }))
     }))
