@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { supabase } from './supabase'
 import { usePullToRefresh } from './usePullToRefresh'
 import QuoteSourcePreview, { type QuoteSource } from './QuoteSourcePreview'
-import { InteractiveComposer, InteractiveCard, type InteractiveItem, type InteractiveResponse } from './TimelineInteractive'
+import { InteractiveComposer, InteractiveCard, type InteractiveItem, type InteractiveResult } from './TimelineInteractive'
 
 const playerTypeEmoji: Record<string, string> = {lion:'🦁',tiger:'🐯',leopard:'🐆',bison:'🦬',gorilla:'🦍',rhino:'🦏',shark:'🦈',owl:'🦉',eagle:'🦅',elephant:'🐘',giraffe:'🦒',wolf:'🐺',hyena:'🐾',cat:'🐈',chameleon:'🦎',dolphin:'🐬',fox:'🦊',snake:'🐍',raccoon:'🦝',turtle:'🐢',rabbit:'🐇',crocodile:'🐊',hedgehog:'🦔',deer:'🦌',sloth:'🦥',dog:'🐕',bear:'🐻',bull:'🐄',badger:'🦡',monkey:'🐒',magpie:'🐦‍⬛',penguin:'🐧',horse:'🐎',squirrel:'🐿️',mountain_goat:'🐐',otter:'🦦'}
 
@@ -140,7 +140,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const refreshContainerRef = useRef<HTMLElement>(null)
   const [posts, setPosts] = useState<Post[]>([])
   const [interactiveItems, setInteractiveItems] = useState<Record<string, InteractiveItem>>({})
-  const [interactiveResponses, setInteractiveResponses] = useState<InteractiveResponse[]>([])
+  const [interactiveResults, setInteractiveResults] = useState<Record<string, InteractiveResult>>({})
   const [repostingId, setRepostingId] = useState<string | null>(null)
   const repostingRef = useRef(false)
 
@@ -265,10 +265,10 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     const postIdsForInteractive = postData.map(row => row.id)
     const { data: interactiveRows, error: interactiveError } = await supabase.from('post_interactive').select('*').in('post_id',postIdsForInteractive)
     if (interactiveError) { setMessage(`アンケート情報の取得に失敗しました：${interactiveError.message}`); return }
-    const { data: responseRows, error: responseError } = await supabase.from('post_interactive_responses').select('post_id,user_id,option_index,answer,created_at').in('post_id',postIdsForInteractive)
+    const { data: responseRows, error: responseError } = await supabase.rpc('get_interactive_results', { p_post_ids: postIdsForInteractive })
     if (responseError) { setMessage(`回答情報の取得に失敗しました：${responseError.message}`); return }
     setInteractiveItems(Object.fromEntries((interactiveRows||[]).map(row=>[row.post_id,row as InteractiveItem])))
-    setInteractiveResponses((responseRows||[]) as InteractiveResponse[])
+    setInteractiveResults(Object.fromEntries(((responseRows||[]) as InteractiveResult[]).map(row=>[row.post_id,row])))
     const { data: repostRows, error: repostError } = await supabase
       .from('post_reposts').select('post_id,user_id,created_at')
     if (repostError) { setMessage(`リポストの取得に失敗しました：${repostError.message}`); return }
@@ -3129,7 +3129,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
                       </div>
 
-                      {interactiveItems[post.id] && <InteractiveCard item={interactiveItems[post.id]} responses={interactiveResponses.filter(r=>r.post_id===post.id)} currentUserId={currentUserId} onUpdated={loadPosts} />}
+                      {interactiveItems[post.id] && <InteractiveCard item={interactiveItems[post.id]} result={interactiveResults[post.id]} onUpdated={loadPosts} />}
                       {post.quote_post_id && (
                         <QuoteSourcePreview source={post.quotePreview} onOpen={post.quotePreview ? () => navigate(`/post/${post.quotePreview!.id}`) : undefined} />
                       )}
