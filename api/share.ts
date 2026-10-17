@@ -128,6 +128,8 @@ ${result.weakness_text ? `<section><h2 style="font-size:16px">注意点</h2><p s
 </main></body></html>`)
   }
 
+  if (!UUID_PATTERN.test(id)) return sendShareNotice(res, 404, 'この記録は非公開、削除済み、または存在しません。')
+
   const tables: Record<string, string> = {
     tournament: 'poker_results',
     amusement: 'amusement_ring_results',
