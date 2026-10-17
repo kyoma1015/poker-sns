@@ -40,7 +40,7 @@ export function InteractiveComposer({ onCreated }: { onCreated: () => Promise<vo
   const inputStyle = { width:'100%', boxSizing:'border-box' as const, padding:10, borderRadius:8, background:'#202020', color:'#fff', border:'1px solid #444' }
   return <section style={{padding:16,border:'1px solid #333',borderRadius:12,marginBottom:16,color:'#fff'}}>
     <div style={{display:'flex',gap:8,marginBottom:12}}>
-      {(['poll','question'] as const).map(k=><button key={k} type="button" onClick={()=>setKind(k)} style={{width:'auto',background:kind===k?'#fff':'#292929',color:kind===k?'#111':'#fff',padding:'8px 14px',borderRadius:9}}>{k==='poll'?'📊 アンケート':'💬 質問箱'}</button>)}
+      {(['poll','question'] as const).map(k=><button key={k} type="button" onClick={()=>setKind(k)} style={{width:'auto',background:kind===k?'#414751':'#292929',color:'#eee',border:'1px solid #555',padding:'8px 14px',borderRadius:9}}>{k==='poll'?'📊 アンケート':'💬 質問箱'}</button>)}
     </div>
     <textarea aria-label="質問内容" value={content} onChange={e=>setContent(e.target.value)} maxLength={500} placeholder={kind==='poll'?'みんなに聞きたいことは？':'みんなから回答を募集する質問は？'} style={{...inputStyle,minHeight:72}} />
     {kind==='poll' && <>
@@ -55,11 +55,11 @@ export function InteractiveComposer({ onCreated }: { onCreated: () => Promise<vo
     {kind==='question'&&<div style={{display:'flex',gap:8,marginTop:10}}>{([{policy:'named_only',label:'記名回答のみ'},{policy:'respondent_choice',label:'回答者が選択'}] as const).map(mode=><button key={mode.policy} type="button" aria-pressed={questionPolicy===mode.policy} onClick={()=>setQuestionPolicy(mode.policy)} style={{width:'auto',background:questionPolicy===mode.policy?'#393939':'#181818',color:'#eee',border:'1px solid '+(questionPolicy===mode.policy?'#ddd':'#444'),padding:'8px 12px',borderRadius:9}}>{mode.label}</button>)}</div>}
     <p style={{fontSize:12,color:'#aaa'}}>投票・回答は1人1回。{kind==='poll'?(pollAnonymous?'投票者のPoker IDは公開されません。':'投票者の名前・Poker IDと投票先が公開されます。'):questionPolicy==='named_only'?'記名回答のみです。回答者のプロフィール情報が公開されます。':'回答者が匿名・記名を選択できます。'} 投稿後の回答方式は変更できません。</p>
     {error && <p role="alert" style={{color:'#ff9999'}}>{error}</p>}
-    <button type="button" onClick={submit} disabled={busy||!content.trim()||(kind==='poll'&&options.some(o=>!o.trim()))} style={{width:'auto',borderRadius:24,background:'#fff',color:'#111',padding:'10px 20px',fontWeight:700}}>{busy?'投稿中…':kind==='poll'?'アンケートを投稿':'質問を投稿'}</button>
+    <button type="button" onClick={submit} disabled={busy||!content.trim()||(kind==='poll'&&options.some(o=>!o.trim()))} style={{width:'auto',borderRadius:24,background:'#343b45',color:'#fff',border:'1px solid #69717d',padding:'10px 20px',fontWeight:700}}>{busy?'投稿中…':kind==='poll'?'アンケートを投稿':'質問を投稿'}</button>
   </section>
 }
 
-export function InteractiveCard({item,result,onUpdated}:{item:InteractiveItem;result:InteractiveResult|undefined;onUpdated:()=>Promise<void>}) {
+export function InteractiveCard({item,result,onUpdated,isOwner=false,ownerName='募集者'}:{item:InteractiveItem;result:InteractiveResult|undefined;onUpdated:()=>Promise<void>;isOwner?:boolean;ownerName?:string}) {
   const [choice,setChoice]=useState<number|null>(null)
   const [busy,setBusy]=useState(false)
   const [error,setError]=useState('')
@@ -93,13 +93,13 @@ export function InteractiveCard({item,result,onUpdated}:{item:InteractiveItem;re
       <p style={{fontSize:12,color:'#aaa'}}>{result?.total_votes ?? 0}票 · {closed?'終了':`締切 ${new Date(item.closes_at!).toLocaleString('ja-JP')}`}</p>
       {!mine&&!closed&&<button type="button" disabled={choice===null||busy} onClick={submit} style={{width:'auto',padding:'8px 18px',borderRadius:20}}>投票する</button>}
       {mine&&<p style={{fontSize:12,color:'#aaa'}}>投票済み（変更不可）</p>}
-    </>:<QuestionThread postId={item.post_id} policy={questionPolicy} onUpdated={onUpdated}/> }
+    </>:<QuestionThread postId={item.post_id} policy={questionPolicy} onUpdated={onUpdated} isOwner={isOwner} ownerName={ownerName}/> }
     {error&&<p role="alert" style={{color:'#ff9999'}}>{error}</p>}
   </div>
 }
 
 type ThreadMessage={id:string;post_id:string;parent_id:string|null;content:string;is_anonymous:boolean;display_name:string|null;poker_id:string|null;created_at:string;is_owner:boolean}
-function QuestionThread({postId,policy,onUpdated}:{postId:string;policy:string;onUpdated:()=>Promise<void>}) {
+function QuestionThread({postId,policy,onUpdated,isOwner,ownerName}:{postId:string;policy:string;onUpdated:()=>Promise<void>;isOwner:boolean;ownerName:string}) {
  const [messages,setMessages]=useState<ThreadMessage[]>([])
  const [text,setText]=useState('')
  const [anonymous,setAnonymous]=useState(true)
@@ -117,24 +117,27 @@ function QuestionThread({postId,policy,onUpdated}:{postId:string;policy:string;o
  const answered=(m:ThreadMessage)=>children(m.id).some(r=>r.is_owner)
  const sorted=[...roots].filter(m=>!expanded||filter==='new'||(filter==='answered'?answered(m):!answered(m))).sort((a,b)=>filter==='unanswered'?(Number(answered(a))-Number(answered(b))||Date.parse(b.created_at)-Date.parse(a.created_at)):Date.parse(b.created_at)-Date.parse(a.created_at))
  const visible=expanded?sorted.slice(0,visibleCount):sorted.slice(0,2)
+ const selected=roots.find(m=>m.id===replyTo)
+ const selectReply=(m:ThreadMessage)=>{setReplyTo(m.id);setText('');setAnonymous(m.is_anonymous)}
  return <div style={{display:'grid',gap:10,marginTop:12}}>
- <p style={{fontSize:12,color:'#aaa',margin:0}}>{roots.length}件の質問 · 回答済み {roots.filter(answered).length}件 · 何回でも質問できます</p>
+ <p style={{fontSize:12,color:'#aaa',margin:0}}>{roots.length}件の質問 · 回答済み {roots.filter(answered).length}件 · {isOwner?'質問を選んで回答できます':'何回でも質問できます'}</p>
  {expanded&&<div style={{display:'flex',gap:6,flexWrap:'wrap'}}>{([{value:'new',label:'新着順'},{value:'unanswered',label:'未回答'},{value:'answered',label:'回答済み'}] as const).map(f=><button type="button" key={f.value} onClick={()=>{setFilter(f.value);setVisibleCount(10)}} style={{width:'auto',fontSize:12,padding:'6px 10px',background:filter===f.value?'#555':'#222',color:'#fff',borderRadius:8}}>{f.label}</button>)}</div>}
- {visible.map(m=>{const replies=children(m.id);const hasOwnerReply=replies.some(r=>r.is_owner);return <div key={m.id} style={{padding:12,borderRadius:10,background:'#222',overflowWrap:'anywhere'}}>
+ {visible.map(m=>{const replies=children(m.id);const hasOwnerReply=replies.some(r=>r.is_owner);return <div key={m.id} style={{padding:12,borderRadius:10,background:replyTo===m.id?'#30343b':'#222',border:replyTo===m.id?'1px solid #9ca3af':'1px solid #393939',overflowWrap:'anywhere'}}>
  <div style={{display:'flex',gap:8,alignItems:'center',flexWrap:'wrap'}}><strong style={{fontSize:12}}>{m.is_anonymous?'匿名の質問者':m.display_name||m.poker_id||'ユーザー'}</strong>{!m.is_anonymous&&m.poker_id&&<span style={{fontSize:11,color:'#aaa'}}>@{m.poker_id}</span>}<span style={{fontSize:11,color:hasOwnerReply?'#b7e6bb':'#aaa'}}>{hasOwnerReply?'✓ 回答済み':'未回答'}</span></div>
  <p style={{whiteSpace:'pre-wrap',margin:'8px 0'}}>{m.content}</p>
  {(expanded?replies:replies.slice(-1)).map(r=><div key={r.id} style={{borderLeft:'2px solid #666',padding:'7px 10px',marginTop:8,background:'#292929',borderRadius:5}}><strong style={{fontSize:12}}>{r.is_owner?'募集者':r.is_anonymous?'匿名の質問者':r.display_name||r.poker_id||'ユーザー'}</strong>{!r.is_anonymous&&r.poker_id&&<span style={{fontSize:11,color:'#aaa'}}> @{r.poker_id}</span>}<p style={{margin:'5px 0',whiteSpace:'pre-wrap'}}>{r.content}</p></div>)}
- <button type="button" onClick={()=>{setReplyTo(m.id);setText('');setAnonymous(m.is_anonymous)}} style={{width:'auto',fontSize:12,marginTop:8,padding:'6px 12px',borderRadius:8}}>返信する</button>
+ <button type="button" onClick={()=>selectReply(m)} style={{width:'auto',fontSize:12,marginTop:8,padding:'6px 12px',borderRadius:8,background:replyTo===m.id?'#414751':'#292929',color:'#eee',border:'1px solid #555'}}>{replyTo===m.id?'✓ 選択中':isOwner?'この質問に回答':'返信する'}</button>
  </div>})}
  {roots.length>2&&<button type="button" onClick={()=>{setExpanded(!expanded);setVisibleCount(10);setFilter('new')}} style={{width:'100%',padding:10,borderRadius:8,background:'#292929',color:'#fff'}}>{expanded?'閉じる':`すべての質問を見る（${roots.length}件）`}</button>}
  {expanded&&sorted.length>visibleCount&&<button type="button" onClick={()=>setVisibleCount(n=>n+10)} style={{width:'100%',padding:9}}>さらに10件表示</button>}
  <div style={{padding:10,border:'1px solid #444',borderRadius:9}}>
- <strong style={{fontSize:12}}>{replyTo?'質問に返信':'質問を送る'}</strong>
+ <strong style={{fontSize:13}}>{replyTo?isOwner?'質問への回答を入力':'質問に返信':isOwner?'回答する質問を選択してください':`${ownerName}さんに質問する`}</strong>
+ {selected&&<div style={{marginTop:9,padding:10,borderLeft:'3px solid #9ca3af',background:'#272727',borderRadius:5}}><div style={{fontSize:11,color:'#bbb',marginBottom:5}}>返信先：{selected.is_anonymous?'匿名の質問者':selected.display_name||selected.poker_id||'質問者'}</div><div style={{fontSize:13,whiteSpace:'pre-wrap',overflowWrap:'anywhere'}}>{selected.content}</div></div>}
  {replyTo&&<button type="button" onClick={()=>{setReplyTo(null);setText('')}} style={{width:'auto',marginLeft:8,fontSize:12}}>返信をやめる</button>}
- <textarea aria-label={replyTo?'質問への返信':'質問を入力'} value={text} maxLength={500} onChange={e=>setText(e.target.value)} placeholder={replyTo?'返信を入力…':'質問を入力…'} style={{display:'block',boxSizing:'border-box',width:'100%',marginTop:8,padding:10,background:'#171717',color:'#fff',border:'1px solid #555',borderRadius:8}}/>
- {!replyTo&&policy==='respondent_choice'&&<div style={{display:'flex',gap:8,marginTop:8}}>{([{value:true,label:'匿名で質問'},{value:false,label:'記名で質問'}] as const).map(x=><button key={x.label} type="button" aria-pressed={anonymous===x.value} onClick={()=>setAnonymous(x.value)} style={{width:'auto',padding:'7px 12px',borderRadius:8,background:anonymous===x.value?'#555':'#222',color:'#fff'}}>{x.label}</button>)}</div>}
+ {(!isOwner||replyTo)&&<><textarea aria-label={replyTo?'質問への返信':'質問を入力'} value={text} maxLength={500} onChange={e=>setText(e.target.value)} placeholder={replyTo?'返信を入力…':'質問を入力…'} style={{display:'block',boxSizing:'border-box',width:'100%',marginTop:8,padding:10,background:'#171717',color:'#fff',border:'1px solid #555',borderRadius:8}}/>
+ {!replyTo&&policy==='respondent_choice'&&<div style={{display:'flex',gap:8,marginTop:8}}>{([{value:true,label:'匿名で質問'},{value:false,label:'記名で質問'}] as const).map(x=><button key={x.label} type="button" aria-pressed={anonymous===x.value} onClick={()=>setAnonymous(x.value)} style={{width:'auto',padding:'7px 12px',borderRadius:8,background:anonymous===x.value?'#414751':'#292929',color:'#eee',border:'1px solid #555'}}>{x.label}</button>)}</div>}
  <p style={{fontSize:11,color:'#aaa'}}>{replyTo?'返信先の匿名性は維持されます。':policy==='named_only'?'名前とPoker IDが公開されます。':policy==='anonymous_only'||anonymous?'名前とPoker IDは公開されません。':'名前とPoker IDが公開されます。'} 送信後は変更できません。</p>
- <button type="button" disabled={busy||!text.trim()} onClick={submit} style={{width:'auto',padding:'8px 18px',borderRadius:18}}>{busy?'送信中…':replyTo?'返信する':'質問する'}</button>
+ <button type="button" disabled={busy||!text.trim()} onClick={submit} style={{width:'auto',padding:'8px 18px',borderRadius:18}}>{busy?'送信中…':replyTo?isOwner?'回答を送信':'返信する':'質問する'}</button></>}
  </div>
  {error&&<p role="alert" style={{color:'#ff9999'}}>{error}</p>}
  </div>
