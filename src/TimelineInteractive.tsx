@@ -106,6 +106,9 @@ function QuestionThread({postId,policy,onUpdated}:{postId:string;policy:string;o
  const [text,setText]=useState('')
  const [anonymous,setAnonymous]=useState(true)
  const [replyTo,setReplyTo]=useState<string|null>(null)
+ const [expanded,setExpanded]=useState(false)
+ const [visibleCount,setVisibleCount]=useState(10)
+ const [filter,setFilter]=useState<'new'|'unanswered'|'answered'>('new')
  const [busy,setBusy]=useState(false)
  const [error,setError]=useState('')
  const refresh=async()=>{const {data,error}=await supabase.rpc('get_question_thread_messages',{p_post_ids:[postId]});if(error)throw error;setMessages((data??[]) as ThreadMessage[])}
@@ -113,14 +116,20 @@ function QuestionThread({postId,policy,onUpdated}:{postId:string;policy:string;o
  const submit=async()=>{if(busy||!text.trim())return;setBusy(true);setError('');try{const {error:e}=await supabase.rpc('add_question_thread_message',{p_post_id:postId,p_content:text.trim(),p_parent_id:replyTo,p_is_anonymous:anonymous});if(e)throw e;setText('');setReplyTo(null);await refresh();await onUpdated()}catch(e){setError(e instanceof Error?e.message:'送信に失敗しました')}finally{setBusy(false)}}
  const roots=messages.filter(m=>!m.parent_id)
  const children=(id:string)=>messages.filter(m=>m.parent_id===id)
+ const answered=(m:ThreadMessage)=>children(m.id).some(r=>r.is_owner)
+ const sorted=[...roots].filter(m=>!expanded||filter==='new'||(filter==='answered'?answered(m):!answered(m))).sort((a,b)=>filter==='unanswered'?(Number(answered(a))-Number(answered(b))||Date.parse(b.created_at)-Date.parse(a.created_at)):Date.parse(b.created_at)-Date.parse(a.created_at))
+ const visible=expanded?sorted.slice(0,visibleCount):sorted.slice(0,2)
  return <div style={{display:'grid',gap:10,marginTop:12}}>
- <p style={{fontSize:12,color:'#aaa',margin:0}}>{roots.length}件の質問 · 何回でも質問できます</p>
- {roots.map(m=>{const replies=children(m.id);const hasOwnerReply=replies.some(r=>r.is_owner);return <div key={m.id} style={{padding:12,borderRadius:10,background:'#222',overflowWrap:'anywhere'}}>
+ <p style={{fontSize:12,color:'#aaa',margin:0}}>{roots.length}件の質問 · 回答済み {roots.filter(answered).length}件 · 何回でも質問できます</p>
+ {expanded&&<div style={{display:'flex',gap:6,flexWrap:'wrap'}}>{([{value:'new',label:'新着順'},{value:'unanswered',label:'未回答'},{value:'answered',label:'回答済み'}] as const).map(f=><button type="button" key={f.value} onClick={()=>{setFilter(f.value);setVisibleCount(10)}} style={{width:'auto',fontSize:12,padding:'6px 10px',background:filter===f.value?'#555':'#222',color:'#fff',borderRadius:8}}>{f.label}</button>)}</div>}
+ {visible.map(m=>{const replies=children(m.id);const hasOwnerReply=replies.some(r=>r.is_owner);return <div key={m.id} style={{padding:12,borderRadius:10,background:'#222',overflowWrap:'anywhere'}}>
  <div style={{display:'flex',gap:8,alignItems:'center',flexWrap:'wrap'}}><strong style={{fontSize:12}}>{m.is_anonymous?'匿名の質問者':m.display_name||m.poker_id||'ユーザー'}</strong>{!m.is_anonymous&&m.poker_id&&<span style={{fontSize:11,color:'#aaa'}}>@{m.poker_id}</span>}<span style={{fontSize:11,color:hasOwnerReply?'#b7e6bb':'#aaa'}}>{hasOwnerReply?'✓ 回答済み':'未回答'}</span></div>
  <p style={{whiteSpace:'pre-wrap',margin:'8px 0'}}>{m.content}</p>
- {replies.map(r=><div key={r.id} style={{borderLeft:'2px solid #666',padding:'7px 10px',marginTop:8,background:'#292929',borderRadius:5}}><strong style={{fontSize:12}}>{r.is_owner?'募集者':r.is_anonymous?'匿名の質問者':r.display_name||r.poker_id||'ユーザー'}</strong>{!r.is_anonymous&&r.poker_id&&<span style={{fontSize:11,color:'#aaa'}}> @{r.poker_id}</span>}<p style={{margin:'5px 0',whiteSpace:'pre-wrap'}}>{r.content}</p></div>)}
+ {(expanded?replies:replies.slice(-1)).map(r=><div key={r.id} style={{borderLeft:'2px solid #666',padding:'7px 10px',marginTop:8,background:'#292929',borderRadius:5}}><strong style={{fontSize:12}}>{r.is_owner?'募集者':r.is_anonymous?'匿名の質問者':r.display_name||r.poker_id||'ユーザー'}</strong>{!r.is_anonymous&&r.poker_id&&<span style={{fontSize:11,color:'#aaa'}}> @{r.poker_id}</span>}<p style={{margin:'5px 0',whiteSpace:'pre-wrap'}}>{r.content}</p></div>)}
  <button type="button" onClick={()=>{setReplyTo(m.id);setText('');setAnonymous(m.is_anonymous)}} style={{width:'auto',fontSize:12,marginTop:8,padding:'6px 12px',borderRadius:8}}>返信する</button>
  </div>})}
+ {roots.length>2&&<button type="button" onClick={()=>{setExpanded(!expanded);setVisibleCount(10);setFilter('new')}} style={{width:'100%',padding:10,borderRadius:8,background:'#292929',color:'#fff'}}>{expanded?'閉じる':`すべての質問を見る（${roots.length}件）`}</button>}
+ {expanded&&sorted.length>visibleCount&&<button type="button" onClick={()=>setVisibleCount(n=>n+10)} style={{width:'100%',padding:9}}>さらに10件表示</button>}
  <div style={{padding:10,border:'1px solid #444',borderRadius:9}}>
  <strong style={{fontSize:12}}>{replyTo?'質問に返信':'質問を送る'}</strong>
  {replyTo&&<button type="button" onClick={()=>{setReplyTo(null);setText('')}} style={{width:'auto',marginLeft:8,fontSize:12}}>返信をやめる</button>}
