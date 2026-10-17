@@ -51,7 +51,7 @@ export function InteractiveComposer({ onCreated }: { onCreated: () => Promise<vo
   </section>
 }
 
-export function InteractiveCard({item,responses,currentUserId,onUpdated}:{item:InteractiveItem;result:InteractiveResult|undefined;onUpdated:()=>Promise<void>}) {
+export function InteractiveCard({item,result,onUpdated}:{item:InteractiveItem;result:InteractiveResult|undefined;onUpdated:()=>Promise<void>}) {
   const [choice,setChoice]=useState<number|null>(null)
   const [answer,setAnswer]=useState('')
   const [busy,setBusy]=useState(false)
