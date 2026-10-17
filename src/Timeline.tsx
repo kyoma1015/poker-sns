@@ -284,9 +284,14 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       .select('blocker_id,blocked_id').or(`blocker_id.eq.${user.id},blocked_id.eq.${user.id}`)
     if (blockError) { setMessage(`ブロック情報の取得に失敗しました：${blockError.message}`); return }
     const blockedIds = new Set((blockRows || []).map(row => row.blocker_id === user.id ? row.blocked_id : row.blocker_id))
-    const permittedPosts = postData.filter(row => !blockedIds.has(row.user_id))
+    // ミュートはタイムライン表示だけに適用し、フォローやDMの関係は変更しない。
+    const { data: muteRows, error: muteError } = await supabase.from('user_mutes')
+      .select('muted_id').eq('muter_id', user.id)
+    if (muteError) { setMessage(`ミュート情報の取得に失敗しました：${muteError.message}`); return }
+    const hiddenIds = new Set([...blockedIds, ...(muteRows || []).map(row => row.muted_id)])
+    const permittedPosts = postData.filter(row => !hiddenIds.has(row.user_id))
     const permittedIds = new Set(permittedPosts.map(row => row.id))
-    const validReposts = (repostRows || []).filter(row => permittedIds.has(row.post_id) && !blockedIds.has(row.user_id))
+    const validReposts = (repostRows || []).filter(row => permittedIds.has(row.post_id) && !hiddenIds.has(row.user_id))
 
     const tournamentResultIds = postData
 
