@@ -39,6 +39,7 @@ import PokerTools from './PokerTools'
 import PokerResults from './PokerResults'
 import PastTournamentAchievementForm from './PastTournamentAchievementForm'
 import PokerIdCard from './PokerIdCard'
+import PublicShare from './PublicShare'
 
 function Top() {
   const navigate = useNavigate()
@@ -184,6 +185,7 @@ function AppLayout() {
         <Route path="/admin/reports" element={<AdminReports />} />
 
         <Route path="/post/:id" element={<PostDetail />} />
+        <Route path="/share/:kind/:id" element={<PublicShare />} />
 
         <Route path="/dm" element={<DirectMessages />} />
 
