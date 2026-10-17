@@ -2354,13 +2354,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
               onClick={handlePost}
 
-              disabled={
-
-                isPosting ||
-
-                (!content.trim() && !selectedResult && !selectedDiagnosis && !styleSnapshot && imageFiles.length === 0)
-
-              }
+              disabled={isPosting || !canSubmitPost}
 
               style={{
 
