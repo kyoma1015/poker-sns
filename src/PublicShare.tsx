@@ -22,11 +22,7 @@ export default function PublicShare() {
       }
       if (kind === 'player-type') {
         // SECURITY DEFINER RPC applies is_public=true before returning a public diagnosis.
-        const { data, error } = await supabase.from('player_type_diagnosis_results')
-          .select('user_id').eq('id', id).eq('is_public', true).maybeSingle()
-        if (!active) return
-        if (error || !data) { setState('missing'); return }
-        const { data: result, error: rpcError } = await supabase.rpc('get_public_player_type_result', { p_user_id: data.user_id })
+        const { data: result, error: rpcError } = await supabase.rpc('get_public_player_type_result', { p_user_id: id })
         if (!active) return
         const record = (result || [])[0]
         if (rpcError || !record) { setState('missing'); return }
