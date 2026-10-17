@@ -7,15 +7,16 @@ export type InteractiveItem = {
   options: string[]
   closes_at: string | null
   is_anonymous: boolean
+  question_response_policy?: 'anonymous_only'|'named_only'|'respondent_choice'|null
 }
-export type InteractiveResult = { post_id: string; total_votes: number; vote_counts: Record<string,number>; answers: {answer:string;poker_id?:string;display_name?:string;avatar_url?:string}[]; my_option_index: number | null; has_responded: boolean; voters: {option_index:number;poker_id?:string;display_name?:string;avatar_url?:string}[] }
+export type InteractiveResult = { post_id: string; total_votes: number; vote_counts: Record<string,number>; answers: {answer:string;is_anonymous?:boolean;poker_id?:string;display_name?:string;avatar_url?:string}[]; my_option_index: number | null; has_responded: boolean; voters: {option_index:number;poker_id?:string;display_name?:string;avatar_url?:string}[] }
 
 export function InteractiveComposer({ onCreated }: { onCreated: () => Promise<void> }) {
   const [kind, setKind] = useState<'poll'|'question'>('poll')
   const [content, setContent] = useState('')
   const [options, setOptions] = useState(['',''])
   const [hours, setHours] = useState(24)
-  const [questionAnonymous, setQuestionAnonymous] = useState(true)
+  const [questionPolicy, setQuestionPolicy] = useState<'named_only'|'respondent_choice'>('respondent_choice')
   const [pollAnonymous, setPollAnonymous] = useState(true)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
@@ -23,11 +24,12 @@ export function InteractiveComposer({ onCreated }: { onCreated: () => Promise<vo
     if (busy) return
     setBusy(true); setError('')
     try {
-      const { error: failure } = await supabase.rpc('create_interactive_post_v3', {
+      const { error: failure } = await supabase.rpc('create_interactive_post_v4', {
         p_content: content.trim(), p_kind: kind,
         p_options: kind === 'poll' ? options.map(s => s.trim()) : null,
         p_hours: hours,
-        p_is_anonymous: kind==='poll'?pollAnonymous:questionAnonymous,
+        p_is_anonymous: pollAnonymous,
+        p_question_policy: kind==='question'?questionPolicy:null,
       })
       if (failure) throw failure
       setContent(''); setOptions(['',''])
@@ -50,8 +52,8 @@ export function InteractiveComposer({ onCreated }: { onCreated: () => Promise<vo
       </div>
       <div style={{display:'flex',gap:8,marginTop:10}}>{([{anonymous:true,label:'匿名投票'},{anonymous:false,label:'記名投票'}] as const).map(mode=><button key={mode.label} type="button" aria-pressed={pollAnonymous===mode.anonymous} onClick={()=>setPollAnonymous(mode.anonymous)} style={{width:'auto',background:pollAnonymous===mode.anonymous?'#393939':'#181818',color:'#eee',border:'1px solid '+(pollAnonymous===mode.anonymous?'#ddd':'#444'),padding:'8px 12px',borderRadius:9}}>{mode.label}</button>)}</div>
     </>}
-    {kind==='question'&&<div style={{display:'flex',gap:8,marginTop:10}}>{([{anonymous:true,label:'匿名で回答'},{anonymous:false,label:'名前を表示'}] as const).map(mode=><button key={mode.label} type="button" aria-pressed={questionAnonymous===mode.anonymous} onClick={()=>setQuestionAnonymous(mode.anonymous)} style={{width:'auto',background:questionAnonymous===mode.anonymous?'#393939':'#181818',color:'#eee',border:'1px solid '+(questionAnonymous===mode.anonymous?'#ddd':'#444'),padding:'8px 12px',borderRadius:9}}>{mode.label}</button>)}</div>}
-    <p style={{fontSize:12,color:'#aaa'}}>投票・回答は1人1回。{kind==='poll'?(pollAnonymous?'投票者のPoker IDは公開されません。':'投票者の名前・Poker IDと投票先が公開されます。'):questionAnonymous?'回答者の名前は公開されません。':'回答者のプロフィール情報が公開されます。'} 投稿後の回答方式は変更できません。</p>
+    {kind==='question'&&<div style={{display:'flex',gap:8,marginTop:10}}>{([{policy:'named_only',label:'記名回答のみ'},{policy:'respondent_choice',label:'回答者が選択'}] as const).map(mode=><button key={mode.policy} type="button" aria-pressed={questionPolicy===mode.policy} onClick={()=>setQuestionPolicy(mode.policy)} style={{width:'auto',background:questionPolicy===mode.policy?'#393939':'#181818',color:'#eee',border:'1px solid '+(questionPolicy===mode.policy?'#ddd':'#444'),padding:'8px 12px',borderRadius:9}}>{mode.label}</button>)}</div>}
+    <p style={{fontSize:12,color:'#aaa'}}>投票・回答は1人1回。{kind==='poll'?(pollAnonymous?'投票者のPoker IDは公開されません。':'投票者の名前・Poker IDと投票先が公開されます。'):questionPolicy==='named_only'?'記名回答のみです。回答者のプロフィール情報が公開されます。':'回答者が匿名・記名を選択できます。'} 投稿後の回答方式は変更できません。</p>
     {error && <p role="alert" style={{color:'#ff9999'}}>{error}</p>}
     <button type="button" onClick={submit} disabled={busy||!content.trim()||(kind==='poll'&&options.some(o=>!o.trim()))} style={{width:'auto',borderRadius:24,background:'#fff',color:'#111',padding:'10px 20px',fontWeight:700}}>{busy?'投稿中…':kind==='poll'?'アンケートを投稿':'質問を投稿'}</button>
   </section>
@@ -60,23 +62,25 @@ export function InteractiveComposer({ onCreated }: { onCreated: () => Promise<vo
 export function InteractiveCard({item,result,onUpdated}:{item:InteractiveItem;result:InteractiveResult|undefined;onUpdated:()=>Promise<void>}) {
   const [choice,setChoice]=useState<number|null>(null)
   const [answer,setAnswer]=useState('')
+  const [respondAnonymously,setRespondAnonymously]=useState(true)
   const [busy,setBusy]=useState(false)
   const [error,setError]=useState('')
   const mine=result?.has_responded ?? false
+  const questionPolicy=item.question_response_policy??(item.is_anonymous?'anonymous_only':'named_only')
   const closed=item.kind==='poll'&&!!item.closes_at&&Date.parse(item.closes_at)<=Date.now()
   const submit=async()=>{
     if(busy||mine) return
     setBusy(true);setError('')
     try {
-      const {error:failure}=await supabase.rpc('submit_interactive_response',{p_post_id:item.post_id,p_option_index:item.kind==='poll'?choice:null,p_answer:item.kind==='question'?answer.trim():null})
+      const {error:failure}=await supabase.rpc('submit_interactive_response_v2',{p_post_id:item.post_id,p_option_index:item.kind==='poll'?choice:null,p_answer:item.kind==='question'?answer.trim():null,p_is_anonymous:respondAnonymously})
       if(failure) throw failure
       await onUpdated()
     } catch(e){setError(e instanceof Error?e.message:'回答に失敗しました')}
     finally{setBusy(false)}
   }
   return <div style={{margin:'12px 0',padding:14,border:'1px solid #383838',borderRadius:12,color:'#eee'}}>
-    <strong style={{fontSize:13}}>{item.kind==='poll'?`📊 アンケート（${item.is_anonymous?'匿名':'記名'}）`:`💬 質問箱（${item.is_anonymous?'匿名':'記名'}）`}</strong>
-    <p style={{fontSize:12,color:item.is_anonymous?'#aaa':'#f0ce88',margin:'8px 0'}}>{item.is_anonymous?'回答者の名前は公開されません。':item.kind==='poll'?'投票すると、あなたの名前・Poker IDと投票先が全員に公開されます。':'回答すると、あなたの名前・Poker IDが全員に公開されます。'}</p>
+    <strong style={{fontSize:13}}>{item.kind==='poll'?`📊 アンケート（${item.is_anonymous?'匿名':'記名'}）`:`💬 質問箱（${questionPolicy==='respondent_choice'?'匿名・記名を選択':questionPolicy==='named_only'?'記名回答のみ':'匿名回答のみ'}）`}</strong>
+    <p style={{fontSize:12,color:item.is_anonymous?'#aaa':'#f0ce88',margin:'8px 0'}}>{item.kind==='poll'?(item.is_anonymous?'投票者の名前は公開されません。':'投票すると、あなたの名前・Poker IDと投票先が全員に公開されます。'):questionPolicy==='respondent_choice'?'回答時に匿名・記名を選択できます。':questionPolicy==='named_only'?'回答すると、あなたの名前・Poker IDが全員に公開されます。':'回答者の名前は公開されません。'}</p>
     {item.kind==='poll'?<>
       <div style={{display:'grid',gap:8,marginTop:12}}>{item.options.map((option,i)=>{
         const count=result?.vote_counts?.[String(i)] ?? 0
@@ -92,9 +96,9 @@ export function InteractiveCard({item,result,onUpdated}:{item:InteractiveItem;re
       {!mine&&!closed&&<button type="button" disabled={choice===null||busy} onClick={submit} style={{width:'auto',padding:'8px 18px',borderRadius:20}}>投票する</button>}
       {mine&&<p style={{fontSize:12,color:'#aaa'}}>投票済み（変更不可）</p>}
     </>:<>
-      <div style={{marginTop:12,display:'grid',gap:8}}>{(result?.answers ?? []).map((r,i)=><p key={i} style={{background:'#222',padding:10,borderRadius:8,margin:0,overflowWrap:'anywhere'}}><span style={{color:'#aaa',fontSize:11}}>{item.is_anonymous?'匿名回答':r.display_name||r.poker_id||'ユーザー'} {!item.is_anonymous&&r.poker_id?'(@'+r.poker_id+')':''}</span>　{r.answer}</p>)}</div>
+      <div style={{marginTop:12,display:'grid',gap:8}}>{(result?.answers ?? []).map((r,i)=><p key={i} style={{background:'#222',padding:10,borderRadius:8,margin:0,overflowWrap:'anywhere'}}><span style={{color:'#aaa',fontSize:11}}>{r.is_anonymous??item.is_anonymous?'匿名回答':r.display_name||r.poker_id||'ユーザー'} {!(r.is_anonymous??item.is_anonymous)&&r.poker_id?'(@'+r.poker_id+')':''}</span>　{r.answer}</p>)}</div>
       <p style={{fontSize:12,color:'#aaa'}}>{result?.answers?.length ?? 0}件の回答</p>
-      {!mine&&<><textarea aria-label="質問への回答" value={answer} onChange={e=>setAnswer(e.target.value)} maxLength={500} placeholder={item.is_anonymous?"匿名で回答を入力…":"名前を公開して回答を入力…"} style={{width:'100%',boxSizing:'border-box',background:'#222',color:'#fff',border:'1px solid #444',borderRadius:8,padding:10}}/><button type="button" disabled={!answer.trim()||busy} onClick={submit} style={{width:'auto',padding:'8px 18px',borderRadius:20}}>回答する</button></>}
+      {!mine&&<><textarea aria-label="質問への回答" value={answer} onChange={e=>setAnswer(e.target.value)} maxLength={500} placeholder={questionPolicy==='named_only'?"名前を公開して回答を入力…":"回答を入力…"} style={{width:'100%',boxSizing:'border-box',background:'#222',color:'#fff',border:'1px solid #444',borderRadius:8,padding:10}}/>{questionPolicy==='respondent_choice'&&<div style={{display:'flex',gap:8,margin:'8px 0'}}>{([{anonymous:true,label:'匿名で回答'},{anonymous:false,label:'記名で回答'}] as const).map(mode=><button key={mode.label} type="button" aria-pressed={respondAnonymously===mode.anonymous} onClick={()=>setRespondAnonymously(mode.anonymous)} style={{width:'auto',padding:'8px 12px',background:respondAnonymously===mode.anonymous?'#444':'#222',color:'#fff',border:'1px solid '+(respondAnonymously===mode.anonymous?'#ddd':'#555'),borderRadius:8}}>{mode.label}</button>)}</div>}{questionPolicy==='respondent_choice'&&<p style={{fontSize:12,color:'#aaa'}}>{respondAnonymously?'あなたの名前・Poker IDは公開されません。':'あなたの名前・Poker IDが全員に公開されます。'}</p>}<button type="button" disabled={!answer.trim()||busy} onClick={submit} style={{width:'auto',padding:'8px 18px',borderRadius:20}}>回答する</button></>}
       {mine&&<p style={{fontSize:12,color:'#aaa'}}>回答済み（変更不可）</p>}
     </>}
     {error&&<p role="alert" style={{color:'#ff9999'}}>{error}</p>}
