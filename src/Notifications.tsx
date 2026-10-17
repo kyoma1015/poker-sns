@@ -521,7 +521,7 @@ function Notifications() {
                     </div>
 
                     {/* アバター */}
-                    <div
+                    {notification.type !== 'poll_closed' && <div
                       onClick={(
                         event
                       ) =>
@@ -583,7 +583,7 @@ function Notifications() {
                           ♠
                         </div>
                       )}
-                    </div>
+                    </div>}
 
                     {/* 通知本文 */}
                     <div
@@ -603,7 +603,7 @@ function Notifications() {
                             '#dedede',
                         }}
                       >
-                        <button
+                        {notification.type !== 'poll_closed' && <button
                           onClick={(
                             event
                           ) =>
@@ -634,7 +634,7 @@ function Notifications() {
                           {
                             notification.actorName
                           }
-                        </button>
+                        </button>}
 
                         {getNotificationText(
                           notification
@@ -655,28 +655,7 @@ function Notifications() {
                             '12px',
                         }}
                       >
-                        <span
-                          onClick={(
-                            event
-                          ) =>
-                            handleActorClick(
-                              event,
-                              notification.actor_id
-                            )
-                          }
-                          style={{
-                            cursor:
-                              'pointer',
-                          }}
-                        >
-                          @
-                          {
-                            notification.actorPokerId
-                          }
-                        </span>
-
-                        <span>·</span>
-
+                        {notification.type !== 'poll_closed' && <><span onClick={(event)=>handleActorClick(event,notification.actor_id)} style={{cursor:'pointer'}}>@{notification.actorPokerId}</span><span>·</span></>}
                         <span>
                           {formatNotificationTime(
                             notification.created_at
