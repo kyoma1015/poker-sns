@@ -1,70 +1,19 @@
 import { ImageResponse } from '@vercel/og'
-async function getPlayerTypeResult(supabaseUrl, serviceKey, id) {
-  const headers = { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` }
-  const resultsResponse = await fetch(
-    `${supabaseUrl}/rest/v1/player_type_diagnosis_results?id=eq.${encodeURIComponent(id)}&is_public=eq.true&select=id,result_type_key,trait_scores,discriminator_scores`,
-    { headers },
-  )
-  if (!resultsResponse.ok) {
-    const errorBody = (await resultsResponse.text()).slice(0, 1200)
-    console.error('Player type result lookup failed', { status: resultsResponse.status, body: errorBody })
-    throw new Error(`Result lookup failed: ${resultsResponse.status}. Check Vercel logs.`)
+// The public RPCs enforce visibility and return only safe descriptive fields.
+async function getPlayerTypeResult(supabaseUrl, anonKey, id) {
+  const headers = { apikey: anonKey, Authorization: `Bearer ${anonKey}`, 'Content-Type': 'application/json' }
+  for (const [name, field] of [
+    ['get_public_player_type_result_by_id', 'p_result_id'],
+    ['get_public_player_type_result', 'p_user_id'],
+  ]) {
+    const response = await fetch(`${supabaseUrl}/rest/v1/rpc/${name}`, {
+      method: 'POST', headers, body: JSON.stringify({ [field]: id }), cache: 'no-store',
+    })
+    if (!response.ok) throw new Error(`Public diagnosis lookup failed: ${response.status}`)
+    const record = (await response.json())?.[0]
+    if (record) return record
   }
-  const result = (await resultsResponse.json())[0]
-  if (!result) return null
-
-  // 公開済み結果は過去の診断バージョンでも表示できるようにする。
-  // version_key の固定値による追加フィルタは行わない。
-  const definitionsResponse = await fetch(
-    `${supabaseUrl}/rest/v1/player_type_definitions?type_key=eq.${encodeURIComponent(result.result_type_key)}&select=animal_name_ja,catchphrase`,
-    { headers },
-  )
-  if (!definitionsResponse.ok) {
-    const errorBody = (await definitionsResponse.text()).slice(0, 1200)
-    console.error('Player type definition lookup failed', { status: definitionsResponse.status, body: errorBody })
-    throw new Error(`Definition lookup failed: ${definitionsResponse.status}. Check Vercel logs.`)
-  }
-  const definition = (await definitionsResponse.json())[0]
-  if (!definition) {
-    console.error('Player type definition missing', { type_key: result.result_type_key })
-    throw new Error(`Definition not found for animal type: ${result.result_type_key}`)
-  }
-  return { ...result, ...definition }
-}
-
-const playerTraitLabels = {
-  "initiative": "自分から動く",
-  "risk_tolerance": "リスクを取れる",
-  "patience": "待てる",
-  "analytical": "理屈から組み立てる",
-  "player_read": "相手を見る",
-  "adaptability": "戦い方を変えられる",
-  "deception": "イメージを利用する",
-  "value_directness": "取れる時に取り切る",
-  "threat_sensitivity": "危険信号を拾う",
-  "novelty": "新しい選択を試す",
-  "stability": "基準がぶれにくい",
-  "confidence": "判断を信じられる",
-  "exploit": "弱点を利益に変える",
-  "tempo": "反応が速い",
-  "learning_receptivity": "学びを取り込む",
-  "overview": "卓全体を見る",
-  "planning_horizon": "先まで考える",
-  "history_use": "過去の情報を使う",
-  "small_edge_accumulation": "小さな利益を積む",
-  "action_efficiency": "無駄な複雑さを減らす",
-  "interaction_read": "相手との読み合いを見る",
-  "pressure_resistance": "圧力に崩れにくい",
-  "independent_judgment": "自分の根拠で決める",
-  "selective_burst": "勝負所で一気に行く",
-  "pot_size_comfort": "大きなポットを怖がらない",
-  "fun_orientation": "面白さも大事にする",
-  "attack_momentum": "攻めの流れを続ける",
-  "balance_awareness": "偏りすぎを避ける",
-  "retreat_response": "危険なら引き返せる",
-  "improvisation": "その場で組み直せる",
-  "stimulus_orientation": "動きのある展開を好む",
-  "collision_avoidance": "難しい衝突を避ける"
+  return null
 }
 
 const money = (value) => {
@@ -135,85 +84,25 @@ export async function GET(request) {
     }
 
     if (type === 'poker-id') {
-      const key = process.env.SUPABASE_SERVICE_ROLE_KEY
-      if (!key) return errorResponse(503, '画像を表示できません。時間をおいて再度お試しください。')
-      const headers = { apikey: key, Authorization: `Bearer ${key}` }
-      const lookup = async (table, filters, fields) => {
-        const endpoint = `${supabaseUrl}/rest/v1/${table}?${filters}&select=${fields}`
-        const response = await fetch(endpoint, { headers })
-        if (!response.ok) throw new Error(`${table} lookup failed: ${response.status}`)
-        return response.json()
-      }
-      const cards = await lookup('poker_id_cards', `user_id=eq.${encodeURIComponent(id)}&is_public=eq.true`, 'theme')
-      if (!cards.length) return errorResponse(404, '画像は非公開、削除済み、または存在しません。')
-      const profiles = await lookup('profiles', `id=eq.${encodeURIComponent(id)}`, 'poker_id,display_name,main_game,main_play,poker_years')
-      const profile = profiles[0]
-      if (!profile) return errorResponse(404, '画像は非公開、削除済み、または存在しません。')
-      const past = await lookup('poker_past_achievements', `user_id=eq.${encodeURIComponent(id)}&is_public=eq.true&order=rank.asc&limit=1`, 'tournament_name,rank,entry_count')
-      const results = past.length ? past : await lookup('poker_results', `user_id=eq.${encodeURIComponent(id)}&is_public=eq.true&is_featured=eq.true&order=rank.asc&limit=1`, 'tournament_name,rank,entry_count')
-      const ach = results[0]
-      const colors = {
-        classic: ['#E8EAED','#657183'], ice: ['#DBEDF9','#5381A4'],
-        navy: ['#DDE4F0','#556F91'], mint: ['#D9F2E9','#458979'],
-        sage: ['#E3ECD9','#6A8862'], lavender: ['#EBE1F8','#876FA2'],
-        blossom: ['#F9E2EB','#A96D84'], cream: ['#FFF0CE','#9B7D48']
-      }
-      const [bg, accent] = colors[cards[0].theme] || colors.classic
-      const node = (text, style = {}) => ({ type:'div', props:{ style:{display:'flex', ...style}, children:String(text||'') } })
-      const label = (name,value) => ({
-        type:'div', props:{style:{display:'flex',flexDirection:'column',marginRight:26,marginBottom:22},children:[
-          node(name,{fontSize:17,color:accent,fontWeight:800}),
-          node(value||'—',{fontSize:24,color:'#273441',fontWeight:700})
-        ]}
+      // Legacy OG URL delegates public visibility and image retrieval to the
+      // current image endpoint. Never access private card data in this route.
+      const imageUrl = new URL('/api/poker-id-image', url.origin)
+      imageUrl.searchParams.set('id', id)
+      return new Response(null, {
+        status: 307,
+        headers: { Location: imageUrl.toString(), 'Cache-Control': 'no-store' },
       })
-      const rank = ach?.rank === 1 ? '優勝' : ach?.rank ? `${ach.rank}位` : '大会実績'
-      const element = { type:'div', props:{
-        style:{display:'flex',flexDirection:'column',width:'100%',height:'100%',padding:'38px 54px',background:bg,fontFamily:'sans-serif',color:'#26313c',border:`8px solid ${accent}33`},
-        children:[
-          {type:'div',props:{style:{display:'flex',justifyContent:'space-between',alignItems:'center',borderBottom:`2px solid ${accent}55`,paddingBottom:18},children:[
-            node('♠ POKER ID',{fontSize:44,fontWeight:900}),
-            node('PLAYER CARD',{fontSize:23,fontWeight:800,color:accent})
-          ]}},
-          {type:'div',props:{style:{display:'flex',flexDirection:'row',flex:1,paddingTop:24},children:[
-            {type:'div',props:{style:{display:'flex',flexDirection:'column',width:'59%',paddingRight:25},children:[
-              node((profile.display_name||profile.poker_id||'PLAYER').slice(0,20),{fontSize:58,fontWeight:900,marginBottom:3}),
-              node('@'+(profile.poker_id||''),{fontSize:26,color:accent,marginBottom:29}),
-              {type:'div',props:{style:{display:'flex',flexWrap:'wrap'},children:[
-                label('MAIN GAME',profile.main_game),
-                label('MAIN PLAY',profile.main_play),
-                label('POKER HISTORY',profile.poker_years ? profile.poker_years+'年' : '—')
-              ]}}
-            ]}},
-            {type:'div',props:{style:{display:'flex',flexDirection:'column',width:'41%',background:'#FFFFFFBB',borderRadius:20,padding:'22px 25px',justifyContent:'center'},children:[
-              node('★ FEATURED ACHIEVEMENT',{fontSize:19,fontWeight:800,color:'#a17b3a',marginBottom:21}),
-              node(ach?.tournament_name?.slice(0,22)||'POKER ID PLAYER',{fontSize:30,fontWeight:800,marginBottom:20}),
-              node(rank,{fontSize:53,fontWeight:900,color:'#a17b3a',marginBottom:8}),
-              node(ach?.entry_count ? ach.entry_count+'エントリー' : 'プロフィールをチェック',{fontSize:21,color:'#637082'})
-            ]}}
-          ]}},
-          {type:'div',props:{style:{display:'flex',justifyContent:'space-between',paddingTop:16,borderTop:`2px solid ${accent}55`},children:[
-            node('YOUR POKER ID, ONE CARD.',{fontSize:18,fontWeight:700,color:accent}),
-            node('POKER ID',{fontSize:18,fontWeight:800,color:accent})
-          ]}}
-        ]
-      }}
-      return new ImageResponse(element, {width:1200,height:630,headers:{'Cache-Control':'no-store'}})
     }
 
     if (type === 'player-type') {
-      const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
-      if (!serviceKey) return errorResponse(503, '画像を表示できません。時間をおいて再度お試しください。')
-      const result = await getPlayerTypeResult(supabaseUrl, serviceKey, id)
+      const result = await getPlayerTypeResult(supabaseUrl, supabaseKey, id)
       if (!result) return errorResponse(404, '画像は非公開、削除済み、または存在しません。')
       const allowedAnimals = new Set('badger bear bison bull cat chameleon crocodile deer dog dolphin eagle elephant fox giraffe gorilla hedgehog horse hyena leopard lion magpie monkey mountain_goat otter owl penguin rabbit raccoon rhino shark sloth snake squirrel tiger turtle wolf'.split(' '))
       const key = allowedAnimals.has(result.result_type_key) ? result.result_type_key : 'lion'
       const animalUrl = new URL(`/animals/${key}.png`, url.origin).toString()
-      const scores = { ...(result.trait_scores || {}), ...(result.discriminator_scores || {}) }
-      const topTraits = Object.entries(scores)
-        .filter(([name, score]) => playerTraitLabels[name] && Number.isFinite(Number(score)))
-        .sort((a, b) => Number(b[1]) - Number(a[1]))
-        .slice(0, 3)
-        .map(([name]) => playerTraitLabels[name])
+      // Individual trait scores are deliberately excluded from the public RPC.
+      // Display the published type description instead of fabricating a top-3 ranking.
+      const publicDescription = String(result.description || result.behavior_text || '').slice(0, 110)
 
       const textNode = (text, style = {}) => ({
         type: 'div',
@@ -243,10 +132,10 @@ export async function GET(request) {
                         textNode(String(result.animal_name_ja || ''), { fontSize: 60, fontWeight: 900, lineHeight: 1.15 }),
                         textNode(String(result.catchphrase || '').slice(0, 72), { fontSize: 21, color: '#e8dcc2', marginTop: '7px', lineHeight: 1.4 }),
                         textNode('※プレイヤータイプは強さや技術の優劣を示すものではありません。', { fontSize: 16, color: '#c9c0b0', marginTop: '8px', lineHeight: 1.35 }),
-                        textNode('特に強く出ている3つの傾向', { fontSize: 19, color: '#d4b879', fontWeight: 800, marginTop: '15px', marginBottom: '4px' }),
-                        ...topTraits.map((label, index) =>
-                          textNode(`0${index + 1}   ${label}`, { fontSize: 20, color: '#fff0cc', marginTop: '5px', fontWeight: 700 })
-                        ),
+                        ...(publicDescription ? [
+                          textNode('このタイプの特徴', { fontSize: 19, color: '#d4b879', fontWeight: 800, marginTop: '15px', marginBottom: '4px' }),
+                          textNode(publicDescription, { fontSize: 19, color: '#fff0cc', marginTop: '5px', lineHeight: 1.4 }),
+                        ] : []),
                       ],
                     },
                   },
