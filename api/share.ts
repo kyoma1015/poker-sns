@@ -59,23 +59,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (type === 'poker-id') {
     const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
-    if (!serviceKey) return res.status(500).send('Missing share configuration')
+    if (!UUID_PATTERN.test(id)) return sendShareNotice(res, 404, 'このカードは非公開、削除済み、または存在しません。')
+    if (!serviceKey) return sendShareNotice(res, 503, '現在、カード共有を表示できません。時間をおいて再度お試しください。')
     const headers = { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` }
     try {
       const cardResponse = await fetch(`${supabaseUrl}/rest/v1/poker_id_cards?user_id=eq.${encodeURIComponent(id)}&is_public=eq.true&select=user_id`, { headers })
       if (!cardResponse.ok) throw new Error('Public card lookup failed')
-      if (!(await cardResponse.json()).length) return res.status(404).send('Card not public')
+      if (!(await cardResponse.json()).length) return sendShareNotice(res, 404, 'このカードは非公開、削除済み、または存在しません。')
       const profileResponse = await fetch(`${supabaseUrl}/rest/v1/profiles?id=eq.${encodeURIComponent(id)}&select=display_name,poker_id`, { headers })
       if (!profileResponse.ok) throw new Error('Profile lookup failed')
       const profile = (await profileResponse.json())[0]
-      if (!profile) return res.status(404).send('Player not found')
+      if (!profile) return sendShareNotice(res, 404, 'このカードは非公開、削除済み、または存在しません。')
       const canonical = `${origin}/share/poker-id/${encodeURIComponent(id)}${req.query.v ? '?v='+encodeURIComponent(String(req.query.v)) : ''}`
       const image = `${origin}/api/poker-id-image?id=${encodeURIComponent(id)}&v=${encodeURIComponent(String(req.query.v ?? '1'))}`
       const destination = `${origin}/player/${encodeURIComponent(id)}/card`
       const title = `${profile.display_name || profile.poker_id || 'プレイヤー'}のPoker IDカード`
       const description = 'プレイヤータイプ・ポーカー歴・メイン種目・大会実績を1枚に。Poker IDでプロフィールを見る'
       res.setHeader('Content-Type', 'text/html; charset=utf-8')
-      res.setHeader('Cache-Control', 'public, s-maxage=60')
+      res.setHeader('Cache-Control', 'no-store')
       return res.status(200).send(`<!doctype html>
 <html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(title)}</title><meta name="description" content="${esc(description)}">
@@ -89,7 +90,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 </head><body style="background:#080808;color:white;font-family:system-ui,sans-serif;padding:40px;text-align:center">
 <h1>${esc(title)}</h1><a href="${esc(destination)}">Poker IDで見る</a>
 <script>location.replace(${JSON.stringify(destination)})</script></body></html>`)
-    } catch(error) { console.error(error); return res.status(500).send('Failed to load card') }
+    } catch(error) { console.error(error); return sendShareNotice(res, 503, 'カード情報の取得に失敗しました。時間をおいて再度お試しください。') }
   }
 
   if (type === 'player-type') {
