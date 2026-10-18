@@ -58,17 +58,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!supabaseUrl || !supabaseKey) return sendShareNotice(res, 503, '現在、共有ページを表示できません。時間をおいて再度お試しください。')
 
   if (type === 'poker-id') {
-    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
     if (!UUID_PATTERN.test(id)) return sendShareNotice(res, 404, 'このカードは非公開、削除済み、または存在しません。')
-    if (!serviceKey) return sendShareNotice(res, 503, '現在、カード共有を表示できません。時間をおいて再度お試しください。')
-    const headers = { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` }
     try {
-      const cardResponse = await fetch(`${supabaseUrl}/rest/v1/poker_id_cards?user_id=eq.${encodeURIComponent(id)}&is_public=eq.true&select=user_id`, { headers })
-      if (!cardResponse.ok) throw new Error('Public card lookup failed')
-      if (!(await cardResponse.json()).length) return sendShareNotice(res, 404, 'このカードは非公開、削除済み、または存在しません。')
-      const profileResponse = await fetch(`${supabaseUrl}/rest/v1/profiles?id=eq.${encodeURIComponent(id)}&select=display_name,poker_id`, { headers })
-      if (!profileResponse.ok) throw new Error('Profile lookup failed')
-      const profile = (await profileResponse.json())[0]
+      // Public RPC returns only the approved card metadata and enforces is_public.
+      const rpcResponse = await fetch(`${supabaseUrl}/rest/v1/rpc/get_public_poker_id_card`, {
+        method: 'POST',
+        headers: { apikey: supabaseKey, Authorization: `Bearer ${supabaseKey}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ p_user_id: id }),
+        cache: 'no-store',
+      })
+      if (!rpcResponse.ok) throw new Error(`Public card lookup failed: ${rpcResponse.status}`)
+      const profile = (await rpcResponse.json())?.[0]
       if (!profile) return sendShareNotice(res, 404, 'このカードは非公開、削除済み、または存在しません。')
       const canonical = `${origin}/share/poker-id/${encodeURIComponent(id)}${req.query.v ? '?v='+encodeURIComponent(String(req.query.v)) : ''}`
       const image = `${origin}/api/poker-id-image?id=${encodeURIComponent(id)}&v=${encodeURIComponent(String(req.query.v ?? '1'))}`
@@ -87,10 +87,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 <meta property="og:image:width" content="1080"><meta property="og:image:height" content="1350">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(description)}"><meta name="twitter:image" content="${esc(image)}">
-</head><body style="background:#080808;color:white;font-family:system-ui,sans-serif;padding:40px;text-align:center">
-<h1>${esc(title)}</h1><a href="${esc(destination)}">Poker IDで見る</a>
-<script>location.replace(${JSON.stringify(destination)})</script></body></html>`)
-    } catch(error) { console.error(error); return sendShareNotice(res, 503, 'カード情報の取得に失敗しました。時間をおいて再度お試しください。') }
+</head><body style="margin:0;background:#080808;color:#fff;font-family:system-ui,sans-serif;padding:24px">
+<main style="max-width:540px;margin:50px auto;padding:24px;border:1px solid #383838;border-radius:16px">
+<p style="color:#bbb">♠ Poker ID · 公開シェア</p>
+<h1 style="font-size:24px;overflow-wrap:anywhere">${esc(title)}</h1>
+<p>${esc(description)}</p>
+<img src="${esc(image)}" alt="Poker IDカード" width="540" height="675" style="width:100%;height:auto;border-radius:12px">
+<a href="${esc(destination)}" style="display:inline-block;margin-top:16px;padding:12px 16px;background:#fff;color:#111;border-radius:9px;text-decoration:none;font-weight:700">Poker IDで見る →</a>
+</main></body></html>`)
+    } catch(error) {
+      console.error('Public card share failed', error)
+      return sendShareNotice(res, 503, 'カード情報の取得に失敗しました。時間をおいて再度お試しください。')
+    }
   }
 
   if (type === 'player-type') {
