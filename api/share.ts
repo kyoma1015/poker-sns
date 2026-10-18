@@ -166,7 +166,8 @@ ${result.weakness_text ? `<section><h2 style="font-size:16px">注意点</h2><p s
   const destination = result.user_id ? `${origin}/player/${encodeURIComponent(result.user_id)}` : `${origin}/timeline`
 
   res.setHeader('Content-Type', 'text/html; charset=utf-8')
-  res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300')
+  // Public results can be made private at any time; do not cache their shared HTML.
+  res.setHeader('Cache-Control', 'no-store')
   return res.status(200).send(`<!doctype html>
 <html lang="ja">
 <head>
