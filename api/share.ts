@@ -165,6 +165,57 @@ ${result.weakness_text ? `<section><h2 style="font-size:16px">注意点</h2><p s
   const image = `${origin}/api/og?type=${encodeURIComponent(type)}&id=${encodeURIComponent(id)}`
   const destination = result.user_id ? `${origin}/player/${encodeURIComponent(result.user_id)}` : `${origin}/timeline`
 
+  // Share URL stays open: show the published result itself, not an automatic profile redirect.
+  const formatValue = (value: unknown) =>
+    value === null || value === undefined || value === '' ? '' : String(value)
+  const dateValue = (value: unknown) => {
+    const raw = formatValue(value)
+    return /^\\d{4}-\\d{2}-\\d{2}/.test(raw) ? raw.slice(0, 10).replaceAll('-', '/') : raw
+  }
+  const numberValue = (value: unknown) => {
+    if (value === null || value === undefined || value === '') return ''
+    const amount = Number(value)
+    return Number.isFinite(amount) ? amount.toLocaleString('ja-JP') : String(value)
+  }
+  const details: { label: string; value: string }[] = []
+  const addDetail = (label: string, value: string) => {
+    if (value) details.push({ label, value })
+  }
+  addDetail('プレイ日', dateValue(result.played_at))
+  if (type === 'tournament') {
+    addDetail('大会名', formatValue(result.tournament_name))
+    addDetail('開催場所', formatValue(result.venue))
+    addDetail('ゲーム', formatValue(result.game_type))
+    addDetail('順位', result.rank_unknown || !result.rank ? '順位不明' : `${numberValue(result.rank)}位`)
+    addDetail('参加人数', result.entry_count == null ? '' : `${numberValue(result.entry_count)}人`)
+    addDetail('賞金', result.prize_amount == null ? '' : numberValue(result.prize_amount))
+    addDetail('賞金・入賞内容', formatValue(result.prize_description))
+  } else if (type === 'amusement') {
+    addDetail('店舗', formatValue(result.venue))
+    addDetail('ゲーム', formatValue(result.game_type))
+    addDetail('ブラインド', result.small_blind != null && result.big_blind != null
+      ? `${numberValue(result.small_blind)} / ${numberValue(result.big_blind)}` : '')
+    const startStack = Number(result.starting_stack)
+    const endStack = Number(result.ending_stack)
+    const extraStack = Number(result.additional_stack || 0)
+    addDetail('スタック増減', result.starting_stack != null && result.ending_stack != null &&
+      Number.isFinite(startStack - endStack - extraStack)
+      ? numberValue(endStack - startStack - extraStack) : '')
+    addDetail('プレイ時間', result.play_minutes == null ? '' : `${numberValue(result.play_minutes)}分`)
+  } else {
+    addDetail('店舗・サイト', formatValue(result.venue || result.site))
+    addDetail('ゲーム', formatValue(result.game_type))
+    addDetail('ブラインド', result.small_blind != null && result.big_blind != null
+      ? `${numberValue(result.small_blind)} / ${numberValue(result.big_blind)}` : '')
+    addDetail('収支', result.profit_amount == null ? '' : `${numberValue(result.profit_amount)} ${formatValue(result.currency)}`.trim())
+    addDetail('プレイ時間', result.play_minutes == null ? '' : `${numberValue(result.play_minutes)}分`)
+  }
+  const detailHtml = details.map(({ label, value }) =>
+    `<div style="background:#202020;border-radius:12px;padding:12px 14px">
+<dt style="font-size:12px;color:#b8b8b8;margin-bottom:5px">${esc(label)}</dt>
+<dd style="margin:0;white-space:pre-wrap;overflow-wrap:anywhere">${esc(value)}</dd></div>`
+  ).join('')
+
   res.setHeader('Content-Type', 'text/html; charset=utf-8')
   // Public results can be made private at any time; do not cache their shared HTML.
   res.setHeader('Cache-Control', 'no-store')
@@ -190,12 +241,15 @@ ${result.weakness_text ? `<section><h2 style="font-size:16px">注意点</h2><p s
 <meta name="twitter:image" content="${esc(image)}">
 </head>
 <body style="margin:0;background:#050505;color:#fff;font-family:system-ui,sans-serif">
-<main style="max-width:680px;margin:80px auto;padding:24px;text-align:center">
-<h1>Poker ID</h1>
-<p>${esc(title)}</p>
-<a href="${esc(destination)}" style="color:#fff">Poker IDで見る</a>
+<main style="max-width:540px;margin:32px auto;padding:16px">
+<section style="padding:22px;border:1px solid #393939;border-radius:16px">
+<p style="font-size:13px;color:#b8b8b8">♠ Poker ID · 公開シェア</p>
+<h1 style="font-size:25px;overflow-wrap:anywhere">${esc(title)}</h1>
+<dl style="display:grid;gap:12px;margin:22px 0">${detailHtml}</dl>
+<a href="${esc(destination)}" style="display:inline-block;background:#f1f1f1;color:#151515;padding:12px 16px;border-radius:10px;text-decoration:none;font-weight:700">投稿者のプロフィールを見る →</a>
+<a href="/timeline" style="display:block;margin-top:16px;color:#ddd">Poker IDへ戻る</a>
+</section>
 </main>
-<script>location.replace(${JSON.stringify(destination)})</script>
 </body>
 </html>`)
 }
