@@ -100,30 +100,43 @@ const ordinal = (rank) => {
   return `${n}TH`
 }
 
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+const errorResponse = (status, message) => new Response(message, {
+  status,
+  headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' },
+})
+
 export async function GET(request) {
   try {
     const url = new URL(request.url)
     const type = url.searchParams.get('type') || ''
     const id = url.searchParams.get('id') || ''
 
+    if (!['cash', 'amusement', 'tournament', 'player-type', 'poker-id'].includes(type)) {
+      return errorResponse(400, '共有種別が正しくありません。')
+    }
+    if (!UUID_PATTERN.test(id)) {
+      return errorResponse(400, '共有IDが正しくありません。')
+    }
+
     const supabaseUrl = process.env.VITE_SUPABASE_URL
     const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY
 
     if (!supabaseUrl) {
-      return new Response('VITE_SUPABASE_URL is missing', { status: 500 })
+      return errorResponse(503, '画像を表示できません。時間をおいて再度お試しください。')
     }
 
     if (!supabaseKey) {
-      return new Response('VITE_SUPABASE_ANON_KEY is missing', { status: 500 })
+      return errorResponse(503, '画像を表示できません。時間をおいて再度お試しください。')
     }
 
     if (!id) {
-      return new Response('Result ID is missing', { status: 400 })
+      return errorResponse(400, '共有IDが正しくありません。')
     }
 
     if (type === 'poker-id') {
       const key = process.env.SUPABASE_SERVICE_ROLE_KEY
-      if (!key) return new Response('Missing share configuration', { status: 500 })
+      if (!key) return errorResponse(503, '画像を表示できません。時間をおいて再度お試しください。')
       const headers = { apikey: key, Authorization: `Bearer ${key}` }
       const lookup = async (table, filters, fields) => {
         const endpoint = `${supabaseUrl}/rest/v1/${table}?${filters}&select=${fields}`
@@ -132,10 +145,10 @@ export async function GET(request) {
         return response.json()
       }
       const cards = await lookup('poker_id_cards', `user_id=eq.${encodeURIComponent(id)}&is_public=eq.true`, 'theme')
-      if (!cards.length) return new Response('Card not public', { status: 404 })
+      if (!cards.length) return errorResponse(404, '画像は非公開、削除済み、または存在しません。')
       const profiles = await lookup('profiles', `id=eq.${encodeURIComponent(id)}`, 'poker_id,display_name,main_game,main_play,poker_years')
       const profile = profiles[0]
-      if (!profile) return new Response('Player not found', { status: 404 })
+      if (!profile) return errorResponse(404, '画像は非公開、削除済み、または存在しません。')
       const past = await lookup('poker_past_achievements', `user_id=eq.${encodeURIComponent(id)}&is_public=eq.true&order=rank.asc&limit=1`, 'tournament_name,rank,entry_count')
       const results = past.length ? past : await lookup('poker_results', `user_id=eq.${encodeURIComponent(id)}&is_public=eq.true&is_featured=eq.true&order=rank.asc&limit=1`, 'tournament_name,rank,entry_count')
       const ach = results[0]
@@ -184,14 +197,14 @@ export async function GET(request) {
           ]}}
         ]
       }}
-      return new ImageResponse(element, {width:1200,height:630,headers:{'Cache-Control':'public, s-maxage=60'}})
+      return new ImageResponse(element, {width:1200,height:630,headers:{'Cache-Control':'no-store'}})
     }
 
     if (type === 'player-type') {
       const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
-      if (!serviceKey) return new Response('SUPABASE_SERVICE_ROLE_KEY is missing', { status: 500 })
+      if (!serviceKey) return errorResponse(503, '画像を表示できません。時間をおいて再度お試しください。')
       const result = await getPlayerTypeResult(supabaseUrl, serviceKey, id)
-      if (!result) return new Response('Public diagnosis not found', { status: 404 })
+      if (!result) return errorResponse(404, '画像は非公開、削除済み、または存在しません。')
       const allowedAnimals = new Set('badger bear bison bull cat chameleon crocodile deer dog dolphin eagle elephant fox giraffe gorilla hedgehog horse hyena leopard lion magpie monkey mountain_goat otter owl penguin rabbit raccoon rhino shark sloth snake squirrel tiger turtle wolf'.split(' '))
       const key = allowedAnimals.has(result.result_type_key) ? result.result_type_key : 'lion'
       const animalUrl = new URL(`/animals/${key}.png`, url.origin).toString()
@@ -268,7 +281,7 @@ export async function GET(request) {
           ],
         },
       }
-      return new ImageResponse(element, { width: 1200, height: 630, headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400' } })
+      return new ImageResponse(element, { width: 1200, height: 630, headers: { 'Cache-Control': 'no-store' } })
     }
 
     const tables = {
@@ -280,7 +293,7 @@ export async function GET(request) {
     const table = tables[type]
 
     if (!table) {
-      return new Response('Invalid result type', { status: 400 })
+      return errorResponse(400, '共有種別が正しくありません。')
     }
 
     const dbResponse = await fetch(
@@ -294,18 +307,15 @@ export async function GET(request) {
     )
 
     if (!dbResponse.ok) {
-      const body = await dbResponse.text()
-      return new Response(
-        `Supabase error ${dbResponse.status}\n${body}`,
-        { status: 500 },
-      )
+      console.error('OG public result lookup failed', { type, status: dbResponse.status })
+      return errorResponse(503, '画像の取得に失敗しました。時間をおいて再度お試しください。')
     }
 
     const rows = await dbResponse.json()
     const r = rows?.[0]
 
     if (!r) {
-      return new Response('Result not found or private', { status: 404 })
+      return errorResponse(404, '画像は非公開、削除済み、または存在しません。')
     }
 
     let eyebrow = 'POKER RESULT'
@@ -746,20 +756,11 @@ export async function GET(request) {
       width: 1200,
       height: 630,
       headers: {
-        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+        'Cache-Control': 'no-store',
       },
     })
   } catch (error) {
-    const message =
-      error instanceof Error
-        ? error.stack || error.message
-        : String(error)
-
-    return new Response(`OG ERROR\n\n${message}`, {
-      status: 500,
-      headers: {
-        'Content-Type': 'text/plain; charset=utf-8',
-      },
-    })
+    console.error('OG generation failed', error)
+    return errorResponse(503, '画像の生成に失敗しました。時間をおいて再度お試しください。')
   }
 }
