@@ -1,4 +1,6 @@
 import { ImageResponse } from '@vercel/og'
+import { readFile } from 'node:fs/promises'
+import { join } from 'node:path'
 // The public RPCs enforce visibility and return only safe descriptive fields.
 async function getPlayerTypeResult(supabaseUrl, anonKey, id) {
   const headers = { apikey: anonKey, Authorization: `Bearer ${anonKey}`, 'Content-Type': 'application/json' }
@@ -99,7 +101,10 @@ export async function GET(request) {
       if (!result) return errorResponse(404, '画像は非公開、削除済み、または存在しません。')
       const allowedAnimals = new Set('badger bear bison bull cat chameleon crocodile deer dog dolphin eagle elephant fox giraffe gorilla hedgehog horse hyena leopard lion magpie monkey mountain_goat otter owl penguin rabbit raccoon rhino shark sloth snake squirrel tiger turtle wolf'.split(' '))
       const key = allowedAnimals.has(result.result_type_key) ? result.result_type_key : 'lion'
-      const animalUrl = new URL(`/animals/${key}.png`, url.origin).toString()
+      // Read the packaged PNG directly; preview deployment authentication can block
+      // a server-side HTTP fetch of /animals/*.png on the same hostname.
+      const animalBytes = await readFile(join(process.cwd(), 'public', 'animals', `${key}.png`))
+      const animalUrl = `data:image/png;base64,${animalBytes.toString('base64')}`
       // Individual trait scores are deliberately excluded from the public RPC.
       // Display the published type description instead of fabricating a top-3 ranking.
       const publicDescription = String(result.description || result.behavior_text || '').slice(0, 110)
