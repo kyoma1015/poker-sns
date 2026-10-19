@@ -128,11 +128,55 @@ const traitCopy: Record<string, { label: string; text: string }> = {
   collision_avoidance: { label: '難しい衝突を避ける', text: '利益がありそうでも、後で大きく難しい衝突になりやすいなら最初から見送る傾向があります。' },
 }
 
+// Positive score caps calculated from the audited 50-question / 222-option scoring table.
+// These must be recalibrated together with any future question/scoring migration.
+const traitPositiveCaps: Record<string, number> = {
+  "initiative": 19,
+  "risk_tolerance": 4,
+  "patience": 23,
+  "analytical": 26,
+  "player_read": 14,
+  "adaptability": 28,
+  "deception": 10,
+  "value_directness": 10,
+  "threat_sensitivity": 20,
+  "novelty": 16,
+  "stability": 28,
+  "confidence": 11,
+  "exploit": 48,
+  "tempo": 12,
+  "learning_receptivity": 7,
+  "overview": 14,
+  "planning_horizon": 12,
+  "history_use": 25,
+  "small_edge_accumulation": 11,
+  "action_efficiency": 20,
+  "interaction_read": 25,
+  "pressure_resistance": 10,
+  "independent_judgment": 8,
+  "selective_burst": 9,
+  "pot_size_comfort": 9,
+  "fun_orientation": 27,
+  "attack_momentum": 15,
+  "balance_awareness": 19,
+  "retreat_response": 9,
+  "improvisation": 8,
+  "stimulus_orientation": 6,
+  "collision_avoidance": 7
+}
+
+function normalizedPositiveTrait(detail: ResultDetail, key: string): number {
+  const all = { ...detail.trait_scores, ...detail.discriminator_scores }
+  const cap = traitPositiveCaps[key]
+  const raw = Number(all[key] ?? 0)
+  return cap > 0 && Number.isFinite(raw) ? Math.max(0, raw) / cap : 0
+}
+
 function topPersonalTraits(detail: ResultDetail) {
   const all = { ...detail.trait_scores, ...detail.discriminator_scores }
   return Object.entries(all)
-    .filter(([key, value]) => traitCopy[key] && Number.isFinite(Number(value)))
-    .sort((a, b) => Number(b[1]) - Number(a[1]))
+    .filter(([key, value]) => traitCopy[key] && Number.isFinite(Number(value)) && normalizedPositiveTrait(detail, key) >= 0.25)
+    .sort((a, b) => normalizedPositiveTrait(detail, b[0]) - normalizedPositiveTrait(detail, a[0]))
     .slice(0, 3)
     .map(([key]) => ({ key, ...traitCopy[key] }))
 }
@@ -140,23 +184,24 @@ function topPersonalTraits(detail: ResultDetail) {
 function personalAdvice(detail: ResultDetail) {
   const s = { ...detail.trait_scores, ...detail.discriminator_scores }
   const value = (key: string) => Number(s[key] ?? 0)
+  const strong = (key: string) => normalizedPositiveTrait(detail, key) >= 0.4
 
-  if (value('initiative') > 0 && value('confidence') > 0 && value('threat_sensitivity') <= 0) {
+  if (strong('initiative') && strong('confidence') && value('threat_sensitivity') <= 0) {
     return '自分から動ける強みはそのままに、途中で前提が崩れたサインだけは意識して拾うと、攻撃性がさらに安定します。'
   }
-  if (value('exploit') > 0 && value('adaptability') > 0) {
+  if (strong('exploit') && strong('adaptability')) {
     return '相手に合わせて変えられるのが武器です。少ないサンプルだけで調整しすぎていないかを途中で確認すると、その強みをより活かせます。'
   }
-  if (value('analytical') > 0 && value('action_efficiency') < 0) {
+  if (strong('analytical') && value('action_efficiency') < 0) {
     return '深く考えられるのが武器です。薄い場面まで複雑にしすぎない基準を持つと、思考力を重要な局面へ集中できます。'
   }
-  if (value('fun_orientation') > 0 && value('risk_tolerance') > 0) {
+  if (strong('fun_orientation') && strong('risk_tolerance')) {
     return '面白い展開へ踏み込めるのが持ち味です。「面白い」と「利益がある」を一度だけ切り分ける癖をつけると、楽しさを残したままリークを抑えられます。'
   }
-  if (value('attack_momentum') > 0 && value('adaptability') <= 0) {
+  if (strong('attack_momentum') && value('adaptability') <= 0) {
     return '攻めを継続できるのが武器です。相手やボードの変化で攻撃理由が消えたときだけ、流れをリセットできるとさらに強くなります。'
   }
-  if (value('patience') > 0 && value('selective_burst') > 0) {
+  if (strong('patience') && strong('selective_burst')) {
     return '待てることと勝負所で踏み込めることの両方が武器です。待つこと自体が目的になっていないかだけ確認すると、取り逃しを減らせます。'
   }
   return 'このタイプの持ち味を消して平均型になる必要はありません。自分の強い判断軸を残しながら、外れたときに修正できる余地だけ持っておくのが相性の良い伸ばし方です。'
@@ -165,6 +210,7 @@ function personalAdvice(detail: ResultDetail) {
 function PlayerTypeDiagnosis() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
+  const activeResultId = searchParams.get('result')
   const clickLock = useRef(false)
 
   const [screen, setScreen] = useState<'intro' | 'quiz' | 'result'>('intro')
@@ -193,12 +239,14 @@ function PlayerTypeDiagnosis() {
     setLoadingQuestions(true)
     setError('')
 
+    // Ensure auth bootstrap has had a chance to complete before the RPC.
+    await supabase.auth.getSession()
     const { data, error: rpcError } = await supabase.rpc(
       'get_player_type_v2_questions',
     )
 
     if (rpcError) {
-      setError(`質問を読み込めませんでした：${rpcError.message}`)
+      setError('質問を読み込めませんでした。通信状況やログイン状態を確認して、再試行してください。')
       setLoadingQuestions(false)
       return
     }
@@ -262,6 +310,7 @@ function PlayerTypeDiagnosis() {
   function startDiagnosis() {
     if (questions.length !== QUESTION_COUNT) return
 
+    if (activeResultId) navigate('/player-type', { replace: true })
     setScreen('quiz')
     setCurrentIndex(0)
     setAnswerIds([])
@@ -335,6 +384,8 @@ function PlayerTypeDiagnosis() {
 
     setAnswerIds(finalAnswers)
     setResult(saved)
+    // New diagnosis results have distinct IDs: URL must identify the newly saved result.
+    navigate(`/player-type?result=${encodeURIComponent(saved.result_id)}`, { replace: true })
     setIsOwner(true)
     setScreen('result')
     void loadResultDetail(saved.result_id)
@@ -418,10 +469,9 @@ function PlayerTypeDiagnosis() {
   }
 
   useEffect(() => {
-    const savedResultId = searchParams.get('result')
-    if (!savedResultId) return
-    void loadSavedResult(savedResultId)
-  }, [searchParams])
+    if (!activeResultId || activeResultId === result?.result_id) return
+    void loadSavedResult(activeResultId)
+  }, [activeResultId, result?.result_id])
 
   useEffect(() => {
     if (screen !== 'result' || !result?.result_id || detail || detailLoading) return
@@ -437,6 +487,10 @@ function PlayerTypeDiagnosis() {
         </div>
       </main>
     )
+  }
+
+  if (activeResultId && screen === 'intro' && !error) {
+    return <main className="ptd-page"><div className="ptd-shell ptd-center"><div className="ptd-spinner" /><p>保存済みの結果を読み込んでいます...</p></div></main>
   }
 
   if (screen === 'intro') {
@@ -482,7 +536,7 @@ function PlayerTypeDiagnosis() {
               <span>✓ 全50問</span>
             </div>
 
-            {error && <div className="ptd-error">{error}</div>}
+            {error && <><div className="ptd-error">{error}</div><button type="button" className="ptd-secondary" disabled={loadingQuestions} onClick={() => void loadQuestions()}>質問を再読み込み</button></>}
 
             <button
               className="ptd-primary"
