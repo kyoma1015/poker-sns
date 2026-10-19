@@ -128,11 +128,29 @@ const traitCopy: Record<string, { label: string; text: string }> = {
   collision_avoidance: { label: '難しい衝突を避ける', text: '利益がありそうでも、後で大きく難しい衝突になりやすいなら最初から見送る傾向があります。' },
 }
 
+// Positive score ceilings from the audited 50-question option bank.
+// Compare tendencies on the same relative scale, not by raw point totals.
+const traitPositiveMax: Record<string, number> = {
+  initiative: 19, risk_tolerance: 4, patience: 23, analytical: 26,
+  player_read: 14, adaptability: 28, deception: 10, value_directness: 10,
+  threat_sensitivity: 20, novelty: 16, stability: 28, confidence: 11,
+  exploit: 48, tempo: 12, learning_receptivity: 7, overview: 14,
+  planning_horizon: 12, history_use: 25, small_edge_accumulation: 11,
+  action_efficiency: 20, interaction_read: 25, pressure_resistance: 10,
+  independent_judgment: 8, selective_burst: 9, pot_size_comfort: 9,
+  fun_orientation: 27, attack_momentum: 15, balance_awareness: 19,
+  retreat_response: 9, improvisation: 8, stimulus_orientation: 6,
+  collision_avoidance: 7,
+}
+function relativePositiveScore(key: string, score: number): number {
+  return score / (traitPositiveMax[key] || 1)
+}
+
 function topPersonalTraits(detail: ResultDetail) {
   const all = { ...detail.trait_scores, ...detail.discriminator_scores }
   return Object.entries(all)
-    .filter(([key, value]) => traitCopy[key] && Number.isFinite(Number(value)))
-    .sort((a, b) => Number(b[1]) - Number(a[1]))
+    .filter(([key, value]) => traitCopy[key] && Number.isFinite(Number(value)) && Number(value) > 0)
+    .sort((a, b) => relativePositiveScore(b[0], Number(b[1])) - relativePositiveScore(a[0], Number(a[1])))
     .slice(0, 3)
     .map(([key]) => ({ key, ...traitCopy[key] }))
 }
@@ -141,7 +159,7 @@ function personalAdvice(detail: ResultDetail) {
   const s = { ...detail.trait_scores, ...detail.discriminator_scores }
   const value = (key: string) => Number(s[key] ?? 0)
 
-  if (value('initiative') > 0 && value('confidence') > 0 && value('threat_sensitivity') <= 0) {
+  if (relativePositiveScore('initiative', value('initiative')) >= 0.45 && relativePositiveScore('confidence', value('confidence')) >= 0.3 && value('threat_sensitivity') <= 0 && value('attack_momentum') > 0) {
     return '自分から動ける強みはそのままに、途中で前提が崩れたサインだけは意識して拾うと、攻撃性がさらに安定します。'
   }
   if (value('exploit') > 0 && value('adaptability') > 0) {
@@ -261,6 +279,8 @@ function PlayerTypeDiagnosis() {
 
   function startDiagnosis() {
     if (questions.length !== QUESTION_COUNT) return
+    // A restarted diagnosis must not retain the previous result's deep link.
+    if (searchParams.has('result')) navigate('/player-type', { replace: true })
 
     setScreen('quiz')
     setCurrentIndex(0)
@@ -335,6 +355,8 @@ function PlayerTypeDiagnosis() {
 
     setAnswerIds(finalAnswers)
     setResult(saved)
+    // Persist the newly created result ID in the browser URL (refresh/share/back).
+    navigate(`/player-type?result=${encodeURIComponent(saved.result_id)}`, { replace: true })
     setIsOwner(true)
     setScreen('result')
     void loadResultDetail(saved.result_id)
@@ -419,9 +441,9 @@ function PlayerTypeDiagnosis() {
 
   useEffect(() => {
     const savedResultId = searchParams.get('result')
-    if (!savedResultId) return
+    if (!savedResultId || savedResultId === result?.result_id) return
     void loadSavedResult(savedResultId)
-  }, [searchParams])
+  }, [searchParams, result?.result_id])
 
   useEffect(() => {
     if (screen !== 'result' || !result?.result_id || detail || detailLoading) return
@@ -482,7 +504,8 @@ function PlayerTypeDiagnosis() {
               <span>✓ 全50問</span>
             </div>
 
-            {error && <div className="ptd-error">{error}</div>}
+            {error && <div className="ptd-error">質問の取得に失敗しました。通信状況やログイン状態を確認し、再試行してください。</div>}
+            {error && <button className="ptd-secondary" type="button" onClick={() => void loadQuestions()}>質問を再読み込み</button>}
 
             <button
               className="ptd-primary"
