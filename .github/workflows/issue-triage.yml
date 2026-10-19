@@ -1,0 +1,53 @@
+name: Poker ID Issue Triage
+on:
+  issues:
+    types: [opened, edited, reopened]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: poker-id-issue-triage-${{ github.event.issue.number || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  classify:
+    if: github.event_name == 'issues' && github.event.issue.pull_request == null
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Classify issue by explicit line prefix
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const match = /^\[(A|B|C|D)\]\s+\S/i.exec(issue.title || '');
+            if (!match) {
+              core.info('Issue has no A/B/C/D prefix; skipping without modification.');
+              return;
+            }
+            const line = match[1].toUpperCase();
+            const labels = {
+              A: 'line:A-audit',
+              B: 'line:B-tda',
+              C: 'line:C-gto',
+              D: 'line:D-player-type',
+            };
+            const managed = Object.values(labels);
+            const existing = (issue.labels || []).map(x => typeof x === 'string' ? x : x.name);
+            const toRemove = existing.filter(x => managed.includes(x) && x !== labels[line]);
+            for (const name of toRemove) {
+              await github.rest.issues.removeLabel({
+                ...context.repo, issue_number: issue.number, name,
+              }).catch(error => {
+                if (error.status !== 404) throw error;
+              });
+            }
+            if (!existing.includes(labels[line])) {
+              await github.rest.issues.addLabels({
+                ...context.repo, issue_number: issue.number, labels: [labels[line]],
+              });
+            }
+            core.notice('Assigned development line: ' + line);
