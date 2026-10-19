@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { createVerifiedNotification } from './createVerifiedNotification'
 import { useNavigate, useParams } from 'react-router-dom'
 import { supabase } from './supabase'
 import { usePullToRefresh } from './usePullToRefresh'
@@ -340,15 +341,7 @@ function PostDetail() {
       }
 
       if (post.user_id !== currentUserId) {
-        const { error: notificationError } =
-          await supabase
-            .from('notifications')
-            .insert({
-              user_id: post.user_id,
-              actor_id: currentUserId,
-              type: 'like',
-              post_id: post.id,
-            })
+        const notificationError = await createVerifiedNotification('like', post.id)
 
         /*
           23505 は、
@@ -468,9 +461,7 @@ function PostDetail() {
       setMessage('')
 
       if (post.user_id !== currentUserId) {
-        const { error: notificationError } = await supabase
-          .from('notifications')
-          .insert({ user_id: post.user_id, actor_id: currentUserId, type: 'comment', post_id: post.id })
+        const notificationError = await createVerifiedNotification('comment', savedComment.id)
         if (notificationError) console.error('コメント通知作成エラー:', notificationError)
       }
       await loadPost(true)
