@@ -1039,13 +1039,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
       ) {
 
-        const {
-
-          error:
-
-            notificationError,
-
-        } = await createVerifiedNotification('like', post.id)
+        const notificationError = await createVerifiedNotification('like', post.id)
 
         if (
 
