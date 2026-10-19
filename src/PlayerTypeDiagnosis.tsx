@@ -207,6 +207,27 @@ function personalAdvice(detail: ResultDetail) {
   return 'このタイプの持ち味を消して平均型になる必要はありません。自分の強い判断軸を残しながら、外れたときに修正できる余地だけ持っておくのが相性の良い伸ばし方です。'
 }
 
+// The quiz describes behavioral tendencies, not demonstrated poker skill.
+function avoidSkillGuarantees(detail: ResultDetail): ResultDetail {
+  const corrections: Array<[string, string]> = [
+    ['大きなミスをしてくれない', '判断基準を変えにくい'],
+    ['確実に取り切る', '有利だと判断した場面で利益を狙う'],
+    ['判断品質を落とさない', '自分の判断基準を維持しようとする'],
+  ]
+  const rewrite = (value: string): string => corrections.reduce(
+    (text, [before, after]) => text.replaceAll(before, after), value,
+  )
+  return {
+    ...detail,
+    description: rewrite(detail.description),
+    behavior_text: rewrite(detail.behavior_text),
+    strength_text: rewrite(detail.strength_text),
+    weakness_text: rewrite(detail.weakness_text),
+    perceived_text: rewrite(detail.perceived_text),
+    best_situation_text: rewrite(detail.best_situation_text),
+  }
+}
+
 function PlayerTypeDiagnosis() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
@@ -440,7 +461,7 @@ function PlayerTypeDiagnosis() {
       is_public: row.is_public,
       completed_at: row.completed_at,
     })
-    setDetail(row)
+    setDetail(avoidSkillGuarantees(row))
     setScreen('result')
     setDetailLoading(false)
   }
@@ -460,7 +481,7 @@ function PlayerTypeDiagnosis() {
     }
 
     const row = (data?.[0] ?? null) as ResultDetail | null
-    setDetail(row)
+    setDetail(row ? avoidSkillGuarantees(row) : null)
     setDetailLoading(false)
   }
 
