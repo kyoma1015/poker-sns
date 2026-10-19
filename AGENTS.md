@@ -34,6 +34,7 @@ Build and maintain Poker ID, a Japanese poker community and learning platform. F
 - If risk/credentials/permissions are unclear: STOP, mark BLOCKED and request owner decision.
 
 ## Task completion format
+- Mandatory: read and follow `docs/handoff/CODEX_REPORTING_RULE.md`. Deliver the final completion report as exactly one Markdown fenced code block, self-contained for one-tap Copy. This applies to blocked/read-only tasks too.
 - Status: PASS / CONDITIONAL PASS / FAIL / BLOCKED.
 - Files changed + commit SHA + draft PR URL.
 - Tests: exact commands and outcomes.
