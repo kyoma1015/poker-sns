@@ -1,0 +1,4093 @@
+diff --git a/src/App.tsx b/src/App.tsx
+--- a/src/App.tsx
++++ b/src/App.tsx
+@@ -159,123 +159,200 @@
+   )
+ }
+ 
+-function AppLayout() {
+-  const location = useLocation()
+-
+-  const hideBottomNav =
+-    location.pathname === '/' ||
+-    location.pathname === '/login' ||
+-    location.pathname === '/signup' ||
+-    location.pathname === '/admin/reports'
+-
+-  return (
+-    <>
+-      {!['/', '/login', '/signup', '/admin/reports'].includes(location.pathname) && <GlobalHeader />}
+-      <Routes>
+-        <Route path="/" element={<Top />} />
+-        <Route path="/login" element={<Login />} />
+-        <Route path="/signup" element={<Signup />} />
+-
+-        <Route path="/home" element={<Navigate to="/timeline" replace />} />
+-
+-        <Route path="/timeline" element={<Timeline />} />
+-        <Route path="/tools" element={<PokerTools />} />
+-        <Route path="/results" element={<PokerResults />} />
+-        <Route path="/admin/reports" element={<AdminReports />} />
+-
+-        <Route path="/post/:id" element={<PostDetail />} />
+-
+-        <Route path="/dm" element={<DirectMessages />} />
+-
+-        <Route
+-          path="/dm/:userId"
+-          element={<DirectMessageChat />}
+-        />
+-
+-        <Route
+-          path="/notifications"
+-          element={<Notifications />}
+-        />
+-
+-        <Route
+-          path="/profile/edit"
+-          element={<ProfileEdit />}
+-        />
+-
+-        <Route path="/profile" element={<Profile />} />
+-        <Route path="/profile/card" element={<PokerIdCard />} />
+-        <Route path="/player/:userId/card" element={<PokerIdCard />} />
+-        <Route path="/profile/achievements/new" element={<PastTournamentAchievementForm />} />
+-        <Route path="/profile/achievements/:id/edit" element={<PastTournamentAchievementForm />} />
+-        <Route path="/settings" element={<Settings />} />
+-
+-        <Route
+-          path="/profile/results/new"
+-          element={<PokerResultCreate />}
+-        />
+-
+-        <Route
+-          path="/profile/results/:id/edit"
+-          element={<PokerResultEdit />}
+-        />
+-
+-        <Route
+-          path="/profile/amusement-ring/new"
+-          element={<AmusementRingCreate />}
+-        />
+-
+-        <Route
+-          path="/profile/amusement-ring/:id/edit"
+-          element={<AmusementRingEdit />}
+-        />
+-
+-        <Route
+-          path="/profile/cash-game/new"
+-          element={<CashGameCreate />}
+-        />
+-
+-        <Route
+-          path="/profile/cash-game/:id/edit"
+-          element={<CashGameEdit />}
+-        />
+-
+-        <Route
+-          path="/player/:id"
+-          element={<PlayerProfile />}
+-        />
+-
+-        <Route
+-          path="/search"
+-          element={<PlayerSearch />}
+-        />
+-
+-        <Route
+-          path="/player/:id/following"
+-          element={<FollowList />}
+-        />
+-
+-        <Route
+-          path="/player/:id/followers"
+-          element={<FollowerList />}
+-        />
+-
+-        <Route
+-          path="/player/:id/rate"
+-          element={<StyleRating />}
+-        />
+-
+-        <Route
+-          path="/tda"
+-          element={<TDA />}
+-        />
+-
+-        <Route
+-          path="/player-type"
+-          element={<PlayerTypeDiagnosis />}
+-        />
+-      </Routes>
+-
+-      {!hideBottomNav && <BottomNav />}
++function ClientUpdateNotice() {
++  const [updateAvailable, setUpdateAvailable] = useState(false)
++
++  useEffect(() => {
++    // Read the raw attribute: DOMParser documents can have an about:blank base URL.
++    const activeBundle = document.querySelector<HTMLScriptElement>('script[type="module"][src*="/assets/"]')?.getAttribute('src')
++    if (!activeBundle) return
++    const activePath = new URL(activeBundle, window.location.origin).pathname
++
++    let mounted = true
++    let inFlight = false
++    const checkVersion = async () => {
++      if (!mounted || inFlight || document.visibilityState === 'hidden') return
++      inFlight = true
++      try {
++        const response = await fetch('/?poker_id_update_check=1', {
++          cache: 'no-store',
++          headers: { Accept: 'text/html' },
++        })
++        if (!response.ok || !response.headers.get('content-type')?.includes('text/html')) return
++        const html = await response.text()
++        const documentSnapshot = new DOMParser().parseFromString(html, 'text/html')
++        const latestBundle = documentSnapshot.querySelector<HTMLScriptElement>('script[type="module"][src*="/assets/"]')?.getAttribute('src')
++        if (!latestBundle) return
++        const latestPath = new URL(latestBundle, window.location.origin).pathname
++        if (mounted && latestPath.startsWith('/assets/') && latestPath !== activePath) {
++          setUpdateAvailable(true)
++        }
++      } catch {
++        // Offline / protected previews must not interfere with the app.
++      } finally {
++        inFlight = false
++      }
++    }
++
++    const interval = window.setInterval(() => { void checkVersion() }, 5 * 60 * 1000)
++    const onVisible = () => { if (document.visibilityState === 'visible') void checkVersion() }
++    document.addEventListener('visibilitychange', onVisible)
++    // Give the initial page render time to settle before checking the release.
++    void checkVersion()
++
++    return () => {
++      mounted = false
++      window.clearInterval(interval)
++      document.removeEventListener('visibilitychange', onVisible)
++    }
++  }, [])
++
++  if (!updateAvailable) return null
++
++  return (
++    <div role="status" aria-live="polite" style={{
++      position: 'fixed', bottom: 78, left: '50%', transform: 'translateX(-50%)',
++      zIndex: 110, width: 'calc(100% - 24px)', maxWidth: 440,
++      background: '#181818', border: '1px solid #666', borderRadius: 12,
++      boxSizing: 'border-box', padding: 14, color: '#fff',
++      boxShadow: '0 8px 32px rgba(0,0,0,.55)',
++    }}>
++      <div style={{ fontWeight: 800, fontSize: 14 }}>Poker IDの新しいバージョンがあります</div>
++      <div style={{ fontSize: 12, color: '#ccc', marginTop: 5 }}>
++        入力中の内容を保存してから更新してください。更新すると未保存の入力内容は失われます。
++      </div>
++      <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
++        <button type="button" onClick={() => window.location.reload()} style={{
++          flex: 1, background: '#fff', color: '#111', border: 0,
++          borderRadius: 8, padding: '10px 12px', fontWeight: 800,
++        }}>更新する</button>
++        <button type="button" onClick={() => setUpdateAvailable(false)} style={{
++          flex: 1, background: '#292929', color: '#fff', border: '1px solid #555',
++          borderRadius: 8, padding: '10px 12px',
++        }}>あとで</button>
++      </div>
++    </div>
++  )
++}
++
++function AppLayout() {
++  const location = useLocation()
++
++  const hideBottomNav =
++    location.pathname === '/' ||
++    location.pathname === '/login' ||
++    location.pathname === '/signup' ||
++    location.pathname === '/admin/reports'
++
++  return (
++    <>
++      {!['/', '/login', '/signup', '/admin/reports'].includes(location.pathname) && <GlobalHeader />}
++      <Routes>
++        <Route path="/" element={<Top />} />
++        <Route path="/login" element={<Login />} />
++        <Route path="/signup" element={<Signup />} />
++
++        <Route path="/home" element={<Navigate to="/timeline" replace />} />
++
++        <Route path="/timeline" element={<Timeline />} />
++        <Route path="/tools" element={<PokerTools />} />
++        <Route path="/results" element={<PokerResults />} />
++        <Route path="/admin/reports" element={<AdminReports />} />
++
++        <Route path="/post/:id" element={<PostDetail />} />
++
++        <Route path="/dm" element={<DirectMessages />} />
++
++        <Route
++          path="/dm/:userId"
++          element={<DirectMessageChat />}
++        />
++
++        <Route
++          path="/notifications"
++          element={<Notifications />}
++        />
++
++        <Route
++          path="/profile/edit"
++          element={<ProfileEdit />}
++        />
++
++        <Route path="/profile" element={<Profile />} />
++        <Route path="/profile/card" element={<PokerIdCard />} />
++        <Route path="/player/:userId/card" element={<PokerIdCard />} />
++        <Route path="/profile/achievements/new" element={<PastTournamentAchievementForm />} />
++        <Route path="/profile/achievements/:id/edit" element={<PastTournamentAchievementForm />} />
++        <Route path="/settings" element={<Settings />} />
++
++        <Route
++          path="/profile/results/new"
++          element={<PokerResultCreate />}
++        />
++
++        <Route
++          path="/profile/results/:id/edit"
++          element={<PokerResultEdit />}
++        />
++
++        <Route
++          path="/profile/amusement-ring/new"
++          element={<AmusementRingCreate />}
++        />
++
++        <Route
++          path="/profile/amusement-ring/:id/edit"
++          element={<AmusementRingEdit />}
++        />
++
++        <Route
++          path="/profile/cash-game/new"
++          element={<CashGameCreate />}
++        />
++
++        <Route
++          path="/profile/cash-game/:id/edit"
++          element={<CashGameEdit />}
++        />
++
++        <Route
++          path="/player/:id"
++          element={<PlayerProfile />}
++        />
++
++        <Route
++          path="/search"
++          element={<PlayerSearch />}
++        />
++
++        <Route
++          path="/player/:id/following"
++          element={<FollowList />}
++        />
++
++        <Route
++          path="/player/:id/followers"
++          element={<FollowerList />}
++        />
++
++        <Route
++          path="/player/:id/rate"
++          element={<StyleRating />}
++        />
++
++        <Route
++          path="/tda"
++          element={<TDA />}
++        />
++
++        <Route
++          path="/player-type"
++          element={<PlayerTypeDiagnosis />}
++        />
++      </Routes>
++
++      {!hideBottomNav && <BottomNav />}
++      <ClientUpdateNotice />
+     </>
+   )
+ }
+
+diff --git a/src/Timeline.tsx b/src/Timeline.tsx
+--- a/src/Timeline.tsx
++++ b/src/Timeline.tsx
+@@ -1,985 +1,962 @@
+ import { useEffect, useRef, useState } from 'react'
+-
+-import { useNavigate } from 'react-router-dom'
+-
+-import { supabase } from './supabase'
+-import { usePullToRefresh } from './usePullToRefresh'
+-import QuoteSourcePreview, { type QuoteSource } from './QuoteSourcePreview'
+-
+-const playerTypeEmoji: Record<string, string> = {lion:'🦁',tiger:'🐯',leopard:'🐆',bison:'🦬',gorilla:'🦍',rhino:'🦏',shark:'🦈',owl:'🦉',eagle:'🦅',elephant:'🐘',giraffe:'🦒',wolf:'🐺',hyena:'🐾',cat:'🐈',chameleon:'🦎',dolphin:'🐬',fox:'🦊',snake:'🐍',raccoon:'🦝',turtle:'🐢',rabbit:'🐇',crocodile:'🐊',hedgehog:'🦔',deer:'🦌',sloth:'🦥',dog:'🐕',bear:'🐻',bull:'🐄',badger:'🦡',monkey:'🐒',magpie:'🐦‍⬛',penguin:'🐧',horse:'🐎',squirrel:'🐿️',mountain_goat:'🐐',otter:'🦦'}
+-
+-type QuotePreview = QuoteSource
+-
+-type Post = {
+-  quote_post_id?: string | null
+-  quotePreview?: QuotePreview | null
+-
+-  id: string
+-
+-  user_id: string
+-
+-  content: string
+-
+-  created_at: string
+-
+-  profile?: {
+-
+-    display_name: string
+-
+-    poker_id: string
+-
+-    avatar_url: string | null
+-
+-  }
+-
+-  likeCount: number
+-  repostCount?: number
+-  repostedByMe?: boolean
+-  feedKey?: string
+-  feedActorId?: string
+-  repostedBy?: { display_name: string; poker_id: string }
+-
+-  likedByMe: boolean
+-
+-  commentCount: number
+-
+-  post_type: 'normal' | 'result'
+-
+-  result_type: 'tournament' | 'amusement' | 'cash' | 'player_type' | null
+-
+-  result_id: string | null
+-  image_urls?: string[]
+-  style_snapshot?: { count: number; aggression: number; looseness: number; captured_at: string } | null
+-
+-  playerTypeData?: { animal_name_ja: string; catchphrase: string; result_type_key: string } | null
+-  resultData?: {
+-
+-    tournament_name: string
+-
+-    rank: number | null
+-
+-    rank_unknown: boolean
+-
+-    entry_count: number | null
+-
+-    is_itm: boolean
+-
+-    total_entry_fee: number | null
+-
+-    prize_amount: number
+-
+-    venue: string | null
+-
+-    played_at: string
+-
+-  } | null
+-
+-  amusementResultData?: {
+-
+-    venue: string
+-
+-    game_type: string
+-
+-    small_blind: number
+-
+-    big_blind: number
+-
+-    starting_stack: number
+-
+-    additional_stack: number
+-
+-    ending_stack: number
+-
+-    play_minutes: number
+-
+-    played_at: string
+-
+-  } | null
+-
+-  cashResultData?: {
+-
+-    played_at: string
+-
+-    play_type: 'live' | 'online'
+-
+-    record_type: 'session' | 'daily'
+-
+-    venue: string
+-
+-    game_type: string
+-
+-    small_blind: number
+-
+-    big_blind: number
+-
+-    currency: string
+-
+-    profit_amount: number
+-
+-    profit_jpy: number
+-
+-    play_minutes: number
+-
+-  } | null
+-
+-}
+-
+-type TimelineMode = 'following' | 'all'
+-
+-function Timeline({ profileUserId }: { profileUserId?: string }) {
+-
+-  const navigate = useNavigate()
+-  useEffect(() => {
+-    if (window.location.search.includes('compose=1')) {
+-      const timer = window.setTimeout(() => document.getElementById('poker-id-post-composer')?.focus(), 80)
+-      return () => window.clearTimeout(timer)
+-    }
+-  }, [])
+-
+-  const refreshContainerRef = useRef<HTMLElement>(null)
+-  const [posts, setPosts] = useState<Post[]>([])
+-  const [repostingId, setRepostingId] = useState<string | null>(null)
+-  const repostingRef = useRef(false)
+-
+-  const [content, setContent] = useState('')
+-  const [quoteTarget, setQuoteTarget] = useState<Post | null>(null)
+-  const [quoteText, setQuoteText] = useState('')
+-  const [quoteBusy, setQuoteBusy] = useState(false)
+-  const [repostMenuId, setRepostMenuId] = useState<string | null>(null)
+-  const [composeOpen, setComposeOpen] = useState(false)
+-  const [attachmentsOpen, setAttachmentsOpen] = useState(false)
+-  const [attachmentScreen, setAttachmentScreen] = useState<'menu' | 'results' | 'tournament' | 'amusement' | 'cash' | 'diagnosis'>('menu')
+-  const [selectedResult, setSelectedResult] = useState<{id:string; type:'tournament'|'amusement'|'cash'; label:string; playedAt:string; data:any}|null>(null)
+-  const [availableResults, setAvailableResults] = useState<{id:string; type:'tournament'|'amusement'|'cash'; label:string; playedAt:string; data:any}[]>([])
+-  const [resultsLoading, setResultsLoading] = useState(false)
+-  const imageInputRef = useRef<HTMLInputElement>(null)
+-  const [imageFiles, setImageFiles] = useState<File[]>([])
+-  const [imagePreviews, setImagePreviews] = useState<string[]>([])
+-  const [selectedDiagnosis, setSelectedDiagnosis] = useState<{ result_id: string; animal_name_ja: string; catchphrase: string; result_type_key: string; completed_at: string } | null>(null)
+-  const [diagnoses, setDiagnoses] = useState<{ result_id: string; animal_name_ja: string; catchphrase: string; result_type_key: string; completed_at: string }[]>([])
+-  const [styleSnapshot, setStyleSnapshot] = useState<{ count: number; aggression: number; looseness: number; captured_at: string } | null>(null)
+-  const [attachmentBusy, setAttachmentBusy] = useState(false)
+-  useEffect(() => { const urls = imageFiles.map(file => URL.createObjectURL(file)); setImagePreviews(urls); return () => urls.forEach(url => URL.revokeObjectURL(url)) }, [imageFiles])
+-
+-  const [currentUserId, setCurrentUserId] = useState('')
+-
+-  const [message, setMessage] = useState('')
+-  const [postMenuId, setPostMenuId] = useState<string | null>(null)
+-  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
+-  const [isDeleting, setIsDeleting] = useState(false)
+-  const deletingRef = useRef(false)
+-
+-  const [isPosting, setIsPosting] = useState(false)
+-
+-  const [timelineMode, setTimelineMode] =
+-
+-    useState<TimelineMode>('following')
+-
+-  const [followingIds, setFollowingIds] =
+-
+-    useState<string[]>([])
+-
+-  const loadPosts = async () => {
+-
+-    const {
+-
+-      data: { user },
+-
+-    } = await supabase.auth.getUser()
+-
+-    if (!user) {
+-
+-      navigate('/login')
+-
+-      return
+-
+-    }
+-
+-    setCurrentUserId(user.id)
+-
+-    const { data: followData, error: followError } =
+-
+-      await supabase
+-
+-        .from('follows')
+-
+-        .select('following_id')
+-
+-        .eq('follower_id', user.id)
+-
+-    if (followError) {
+-
+-      console.error(followError)
+-
+-      setMessage(
+-
+-        `フォロー情報の取得に失敗しました：${followError.message}`
+-
+-      )
+-
+-      return
+-
+-    }
+-
+-    const loadedFollowingIds =
+-
+-      followData?.map(
+-
+-        (follow) => follow.following_id
+-
+-      ) || []
+-
+-    setFollowingIds(loadedFollowingIds)
+-
+-    // 元投稿とリポストされた投稿の双方を参照できるよう、元投稿はまとめて取得する。
+-    const postQuery = supabase.from('posts').select('*').order('created_at', { ascending: false })
+-    const { data: postData, error: postError } = await postQuery
+-
+-    if (postError) {
+-
+-      console.error(postError)
+-
+-      setMessage(
+-
+-        `投稿の取得に失敗しました：${postError.message}`
+-
+-      )
+-
+-      return
+-
+-    }
+-
+-    if (!postData || postData.length === 0) {
+-
+-      setPosts([])
+-
+-      setMessage('')
+-
+-      return
+-
+-    }
+-
+-    const { data: repostRows, error: repostError } = await supabase
+-      .from('post_reposts').select('post_id,user_id,created_at')
+-    if (repostError) { setMessage(`リポストの取得に失敗しました：${repostError.message}`); return }
+-    // ブロックした相手・ブロックされた相手のリポストは表示しない。
+-    const { data: blockRows, error: blockError } = await supabase.from('user_blocks')
+-      .select('blocker_id,blocked_id').or(`blocker_id.eq.${user.id},blocked_id.eq.${user.id}`)
+-    if (blockError) { setMessage(`ブロック情報の取得に失敗しました：${blockError.message}`); return }
+-    const blockedIds = new Set((blockRows || []).map(row => row.blocker_id === user.id ? row.blocked_id : row.blocker_id))
+-    const permittedPosts = postData.filter(row => !blockedIds.has(row.user_id))
+-    const permittedIds = new Set(permittedPosts.map(row => row.id))
+-    const validReposts = (repostRows || []).filter(row => permittedIds.has(row.post_id) && !blockedIds.has(row.user_id))
+-
+-    const tournamentResultIds = postData
+-
+-      .filter(
+-
+-        (post) =>
+-
+-          post.post_type === 'result' &&
+-
+-          post.result_type === 'tournament' &&
+-
+-          post.result_id
+-
+-      )
+-
+-      .map((post) => post.result_id as string)
+-
+-    let tournamentResults: any[] = []
+-
+-    if (tournamentResultIds.length > 0) {
+-
+-      const { data, error } = await supabase
+-
+-        .from('poker_results')
+-
+-        .select(
+-
+-          'id, tournament_name, rank, rank_unknown, entry_count, is_itm, total_entry_fee, prize_amount, venue, played_at'
+-
+-        )
+-
+-        .in('id', tournamentResultIds)
+-
+-      if (error) {
+-
+-        console.error('トーナメント結果取得エラー:', error)
+-
+-      } else {
+-
+-        tournamentResults = data || []
+-
+-      }
+-
+-    }
+-
+-    const amusementResultIds = postData
+-
+-      .filter(
+-
+-        (post) =>
+-
+-          post.post_type === 'result' &&
+-
+-          post.result_type === 'amusement' &&
+-
+-          post.result_id
+-
+-      )
+-
+-      .map((post) => post.result_id as string)
+-
+-    let amusementResults: any[] = []
+-
+-    if (amusementResultIds.length > 0) {
+-
+-      const { data, error } = await supabase
+-
+-        .from('amusement_ring_results')
+-
+-        .select(
+-
+-          'id, venue, game_type, small_blind, big_blind, starting_stack, additional_stack, ending_stack, play_minutes, played_at'
+-
+-        )
+-
+-        .in('id', amusementResultIds)
+-
+-      if (error) {
+-
+-        console.error('リングゲーム結果取得エラー:', error)
+-
+-      } else {
+-
+-        amusementResults = data || []
+-
+-      }
+-
+-    }
+-
+-  const cashResultIds = postData
+-
+-    .filter(
+-
+-      (post) =>
+-
+-        post.post_type === 'result' &&
+-
+-        post.result_type === 'cash' &&
+-
+-        post.result_id
+-
+-    )
+-
+-    .map((post) => post.result_id as string)
+-
+-  let cashResults: any[] = []
+-
+-  if (cashResultIds.length > 0) {
+-
+-    const { data, error } = await supabase
+-
+-      .from('cash_game_results')
+-
+-      .select(
+-
+-        'id, played_at, play_type, record_type, venue, game_type, small_blind, big_blind, currency, profit_amount, profit_jpy, play_minutes'
+-
+-      )
+-
+-      .in('id', cashResultIds)
+-
+-    if (error) {
+-
+-      console.error('キャッシュゲーム結果取得エラー:', error)
+-
+-    } else {
+-
+-      cashResults = data || []
+-
+-    }
+-
+-  }
+-
+-
+-
+-    const playerTypeResultIds = [...new Set(postData
+-      .filter((post) => post.post_type === 'result' && post.result_type === 'player_type' && post.result_id)
+-      .map((post) => post.result_id as string))]
+-    const playerTypeResults = new Map<string, { animal_name_ja: string; catchphrase: string; result_type_key: string }>()
+-    await Promise.all(playerTypeResultIds.map(async (resultId) => {
+-      const { data, error } = await supabase.rpc('get_player_type_v2_result_detail', { p_result_id: resultId })
+-      if (error) { console.error('プレイヤータイプ取得エラー:', error); return }
+-      const row = Array.isArray(data) ? data[0] : data
+-      if (row) playerTypeResults.set(resultId, {
+-        animal_name_ja: String(row.animal_name_ja || ''),
+-        catchphrase: String(row.catchphrase || ''),
+-        result_type_key: String(row.result_type_key || ''),
+-      })
+-    }))
+-
+-    const postIds = postData.map(
+-
+-      (post) => post.id
+-
+-    )
+-
+-    const { data: likes, error: likesError } =
+-
+-      await supabase
+-
+-        .from('post_likes')
+-
+-        .select('post_id, user_id')
+-
+-        .in('post_id', postIds)
+-
+-    if (likesError) {
+-
+-      console.error(likesError)
+-
+-      setMessage(
+-
+-        `いいね情報の取得に失敗しました：${likesError.message}`
+-
+-      )
+-
+-      return
+-
+-    }
+-
+-    const {
+-
+-      data: comments,
+-
+-      error: commentsError,
+-
+-    } = await supabase
+-
+-      .from('post_comments')
+-
+-      .select('post_id')
+-
+-      .in('post_id', postIds)
+-
+-    if (commentsError) {
+-
+-      console.error(commentsError)
+-
+-      setMessage(
+-
+-        `コメント情報の取得に失敗しました：${commentsError.message}`
+-
+-      )
+-
+-      return
+-
+-    }
+-
+-    const postUserIds = [
+-
+-      ...new Set(
+-
+-          [...postData.map(post => post.user_id), ...validReposts.map(repost => repost.user_id)]
+-
+-      ),
+-
+-    ]
+-
+-    const {
+-
+-      data: profiles,
+-
+-      error: profileError,
+-
+-    } = await supabase
+-
+-      .from('profiles')
+-
+-      .select(
+-
+-        'id, display_name, poker_id, avatar_url'
+-
+-      )
+-
+-      .in('id', postUserIds)
+-
+-    if (profileError) {
+-
+-      console.error(profileError)
+-
+-      setMessage(
+-
+-        `プロフィールの取得に失敗しました：${profileError.message}`
+-
+-      )
+-
+-      return
+-
+-    }
+-
+-    const postsWithData: Post[] =
+-
+-      postData.map((post) => {
+-
+-        const profile = profiles?.find(
+-
+-          (item) =>
+-
+-            item.id === post.user_id
+-
+-        )
+-
+-        const postLikes =
+-
+-          likes?.filter(
+-
+-            (like) =>
+-
+-              like.post_id === post.id
+-
+-          ) || []
+-
+-        const commentCount =
+-
+-          comments?.filter(
+-
+-            (comment) =>
+-
+-              comment.post_id === post.id
+-
+-          ).length || 0
+-
+-        return {
+-
+-          ...post,
+-
+-          profile: profile
+-
+-            ? {
+-
+-                display_name:
+-
+-                  profile.display_name,
+-
+-                poker_id:
+-
+-                  profile.poker_id,
+-
+-                avatar_url:
+-
+-                  profile.avatar_url,
+-
+-              }
+-
+-            : undefined,
+-
+-          likeCount: postLikes.length,
+-
+-          likedByMe: postLikes.some(
+-
+-            (like) =>
+-
+-              like.user_id === user.id
+-
+-          ),
+-
+-          commentCount,
+-
+-          playerTypeData: post.result_type === 'player_type' && post.result_id
+-            ? playerTypeResults.get(post.result_id) || null : null,
+-          resultData:
+-
+-            post.post_type === 'result' &&
+-
+-            post.result_type === 'tournament' &&
+-
+-            post.result_id
+-
+-              ? tournamentResults.find(
+-
+-                  (result) => result.id === post.result_id
+-
+-                ) || null
+-
+-              : null,
+-
+-          amusementResultData:
+-
+-            post.post_type === 'result' &&
+-
+-            post.result_type === 'amusement' &&
+-
+-            post.result_id
+-
+-              ? amusementResults.find(
+-
+-                  (result) => result.id === post.result_id
+-
+-                ) || null
+-
+-              : null,
+-
+-        cashResultData:
+-
+-          post.post_type === 'result' &&
+-
+-          post.result_type === 'cash' &&
+-
+-          post.result_id
+-
+-            ? cashResults.find((result) => result.id === post.result_id) || null
+-
+-            : null,
+-
+-        }
+-
+-      })
+-
+-    const quoteSourceById = new Map(postsWithData.filter(source => !blockedIds.has(source.user_id)).map(source => [source.id, source]))
+-    const postsWithQuotes = postsWithData.map(item => {
+-      const source = item.quote_post_id ? quoteSourceById.get(item.quote_post_id) : null
+-      return { ...item, quotePreview: source ? { id: source.id, user_id: source.user_id, content: source.content,
+-        profile: source.profile ? { display_name: source.profile.display_name, poker_id: source.profile.poker_id } : undefined,
+-        image_urls: source.image_urls, result_type: source.result_type, resultData: source.resultData || source.amusementResultData || source.cashResultData || null, playerTypeData: source.playerTypeData, style_snapshot: source.style_snapshot } : null }
+-    })
+-    const repostCountByPost = new Map<string, number>()
+-    for (const row of validReposts) repostCountByPost.set(row.post_id, (repostCountByPost.get(row.post_id) || 0) + 1)
+-    const myReposted = new Set(validReposts.filter(row => row.user_id === user.id).map(row => row.post_id))
+-    const originalCards = postsWithQuotes.filter(post => !blockedIds.has(post.user_id)).map(post => ({
+-      ...post, feedKey: `post:${post.id}`, feedActorId: post.user_id,
+-      repostCount: repostCountByPost.get(post.id) || 0, repostedByMe: myReposted.has(post.id),
+-    }))
+-    const originalById = new Map(originalCards.map(post => [post.id, post]))
+-    const repostCards: Post[] = validReposts.flatMap(row => {
+-      const original = originalById.get(row.post_id)
+-      const sharer = profiles?.find(profile => profile.id === row.user_id)
+-      if (!original || !sharer) return []
+-      return [{ ...original, feedKey: `repost:${row.user_id}:${row.post_id}`,
+-        feedActorId: row.user_id, created_at: row.created_at,
+-        repostedBy: { display_name: sharer.display_name, poker_id: sharer.poker_id } }]
+-    })
+-    setPosts([...originalCards, ...repostCards].sort((a,b) => Date.parse(b.created_at) - Date.parse(a.created_at)))
+-
+-    setMessage('')
+-
+-  }
+-
+-  const { pullDistance, isRefreshing, refreshError } = usePullToRefresh(refreshContainerRef, {
+-    onRefresh: loadPosts,
+-    enabled: !profileUserId && !composeOpen && !attachmentsOpen && !deleteTargetId && !isPosting && !attachmentBusy,
+-  })
+-
+-  useEffect(() => {
+-
+-    loadPosts()
+-
+-  }, [profileUserId])
+-
+-  useEffect(() => {
+-    if (profileUserId) return
+-    const open = () => setComposeOpen(true)
+-    window.addEventListener('poker-id-open-compose', open)
+-    if (new URLSearchParams(window.location.search).get('compose') === '1') {
+-      setComposeOpen(true)
+-      navigate('/timeline', { replace: true })
+-    }
+-    return () => window.removeEventListener('poker-id-open-compose', open)
+-  }, [profileUserId, navigate])
+-
+-  const loadShareableResults = async () => {
+-    setResultsLoading(true)
+-    const { data: { user } } = await supabase.auth.getUser()
+-    if (!user) { setResultsLoading(false); return }
+-    const sources = [
+-      { table: 'poker_results', type: 'tournament' as const, label: 'トーナメント' },
+-      { table: 'amusement_ring_results', type: 'amusement' as const, label: 'リングゲーム' },
+-      { table: 'cash_game_results', type: 'cash' as const, label: 'キャッシュ' },
+-    ]
+-    const lists = await Promise.all(sources.map(async source => {
+-      const { data, error } = await supabase.from(source.table).select('*').eq('user_id', user.id).order('played_at', { ascending: false }).limit(30)
+-      if (error) { console.error(error); return [] }
+-      return (data || []).map(item => ({ id: String(item.id), type: source.type, label: `${source.label} · ${String(item.tournament_name || item.venue || '記録')}`, playedAt: String(item.played_at || ''), data: item }))
+-    }))
+-    setAvailableResults(lists.flat())
+-    setResultsLoading(false)
+-  }
+-
+-  const toggleAttachments = () => {
+-    setAttachmentsOpen(open => !open)
+-    setAttachmentScreen('menu')
+-  }
+-
+-  const chooseResultCategory = (type: 'tournament' | 'amusement' | 'cash') => {
+-    setAttachmentScreen(type)
+-    void loadShareableResults()
+-  }
+-
+-  const renderAttachmentPicker = () => {
+-    const optionStyle = { display: 'block', width: '100%', padding: '11px 12px', textAlign: 'left' as const, background: '#202020', color: '#eee', borderRadius: 9, marginBottom: 7, fontSize: 13, border: '1px solid #333' }
+-    const backButton = (target: 'menu' | 'results') => <button type="button" onClick={() => setAttachmentScreen(target)} style={{ width: 'auto', background: 'transparent', color: '#bbb', padding: '5px 0', fontSize: 12 }}>‹ 戻る</button>
+-    return <div style={{ marginTop: 12, padding: 12, background: '#151515', border: '1px solid #333', borderRadius: 12, maxHeight: 320, overflowY: 'auto' }}>
+-      {attachmentScreen === 'menu' ? <>
+-        <div style={{ fontSize: 12, color: '#aaa', marginBottom: 10 }}>添付するものを選択</div>
+-        <button type="button" style={optionStyle} onClick={() => { imageInputRef.current?.click(); setAttachmentsOpen(false) }}>▧　画像を添付（最大4枚・各5MB）</button>
+-        <button type="button" style={optionStyle} onClick={() => { void loadDiagnoses() }}>♧　自己診断を添付　›</button>
+-        <button type="button" style={optionStyle} onClick={() => { void loadStyleSnapshot() }}>♙　自分への他者評価を添付（3人以上）</button>
+-        <button type="button" style={optionStyle} onClick={() => setAttachmentScreen('results')}>♠　戦績を添付　›</button>
+-      </> : attachmentScreen === 'diagnosis' ? <>
+-        {backButton('menu')}
+-        <div style={{ fontSize: 12, color: '#aaa', marginBottom: 10 }}>保存済みの自己診断を選択</div>
+-        {attachmentBusy ? <p>読み込み中...</p> : diagnoses.length === 0 ? <p style={{ color: '#aaa', fontSize: 12 }}>診断結果がありません。</p> : diagnoses.map(item => <button type="button" key={item.result_id} style={optionStyle} onClick={() => { setSelectedDiagnosis(item); setSelectedResult(null); setAttachmentsOpen(false); setAttachmentScreen('menu') }}>{playerTypeEmoji[item.result_type_key] || '♠'} {item.animal_name_ja} · {item.completed_at?.slice(0,10) || '日付不明'}</button>)}
+-      </> : attachmentScreen === 'results' ? <>
+-        {backButton('menu')}
+-        <div style={{ fontSize: 12, color: '#aaa', margin: '8px 0 10px' }}>戦績の種類を選択</div>
+-        <button type="button" style={optionStyle} onClick={() => chooseResultCategory('tournament')}>🏆　トーナメント戦績　›</button>
+-        <button type="button" style={optionStyle} onClick={() => chooseResultCategory('amusement')}>♠　リングゲーム戦績　›</button>
+-        <button type="button" style={optionStyle} onClick={() => chooseResultCategory('cash')}>♦　キャッシュゲーム戦績　›</button>
+-      </> : <>
+-        {backButton('results')}
+-        <div style={{ fontSize: 12, color: '#aaa', margin: '8px 0 10px' }}>保存済みの{attachmentScreen === 'tournament' ? 'トーナメント' : attachmentScreen === 'amusement' ? 'リングゲーム' : 'キャッシュゲーム'}戦績を選択</div>
+-        {resultsLoading ? <p style={{ fontSize: 12 }}>読み込み中...</p> : availableResults.filter(result => result.type === attachmentScreen).length === 0 ? <p style={{ fontSize: 12, color: '#888' }}>この種類の戦績はありません。</p> : availableResults.filter(result => result.type === attachmentScreen).map(result => <button key={result.type + result.id} type="button" style={optionStyle} onClick={() => { setSelectedResult(result); setSelectedDiagnosis(null); setAttachmentsOpen(false); setAttachmentScreen('menu') }}><span style={{ display: 'block', fontWeight: 700 }}>{result.label}</span><span style={{ display: 'block', color: '#aaa', fontSize: 12, marginTop: 4 }}>プレイ日：{result.playedAt ? new Date(result.playedAt.slice(0,10) + 'T00:00:00').toLocaleDateString('ja-JP') : '日付不明'}</span></button>)}
+-      </>}
+-    </div>
+-  }
+-
+-
+-  const loadDiagnoses = async () => {
+-    setAttachmentBusy(true)
+-    const { data, error } = await supabase.rpc('get_my_latest_player_type_v2')
+-    if (error) { setMessage(`診断取得エラー：${error.message}`); setAttachmentBusy(false); return }
+-    setDiagnoses((data || []).map((item: any) => ({ result_id: String(item.result_id), animal_name_ja: String(item.animal_name_ja || ''), catchphrase: String(item.catchphrase || ''), result_type_key: String(item.result_type_key || ''), completed_at: String(item.completed_at || '') })))
+-    setAttachmentScreen('diagnosis')
+-    setAttachmentBusy(false)
+-  }
+-
+-  const loadStyleSnapshot = async () => {
+-    setAttachmentBusy(true)
+-    const { data, error } = await supabase.rpc('get_my_post_style_snapshot')
+-    setAttachmentBusy(false)
+-    if (error) { setMessage(`他者評価取得エラー：${error.message}（SQLの適用を確認してください）`); return }
+-    const row = Array.isArray(data) ? data[0] : data
+-    if (!row || Number(row.count) < 3) { setMessage('他者評価は3人以上集まると添付できます。'); return }
+-    setStyleSnapshot({ count: Number(row.count), aggression: Number(row.aggression), looseness: Number(row.looseness), captured_at: new Date().toISOString() })
+-    setAttachmentsOpen(false)
+-    setMessage('')
+-  }
+-
+-  const chooseImages = (files: FileList | null) => {
+-    if (!files) return
+-    const selected = Array.from(files)
+-    if (selected.some(file => !['image/jpeg','image/png','image/webp'].includes(file.type) || file.size > 5 * 1024 * 1024)) { setMessage('画像はJPEG・PNG・WebP、各5MB以内にしてください。'); return }
+-    if (imageFiles.length + selected.length > 4) { setMessage('画像は1投稿につき4枚までです。'); return }
+-    setImageFiles(previous => [...previous, ...selected])
+-    setMessage('')
+-  }
+-
+-  const handlePost = async () => {
+-
+-    const trimmedContent =
+-
+-      content.trim()
+-
+-    if (!trimmedContent && !selectedResult && !selectedDiagnosis && !styleSnapshot && imageFiles.length === 0) {
+-
+-      setMessage(
+-
+-        '投稿内容を入力してください。'
+-
+-      )
+-
+-      return
+-
+-    }
+-
+-    const {
+-
+-      data: { user },
+-
+-    } = await supabase.auth.getUser()
+-
+-    if (!user) {
+-
+-      setMessage(
+-
+-        'ログイン情報が確認できませんでした。'
+-
+-      )
+-
+-      return
+-
+-    }
+-
+-    setIsPosting(true)
+-
+-    setMessage('投稿中...')
+-
+-    const uploadedPaths: string[] = []
+-    const uploadedUrls: string[] = []
+-    for (const file of imageFiles) {
+-      const ext = file.type === 'image/png' ? 'png' : file.type === 'image/webp' ? 'webp' : 'jpg'
+-      const path = `${user.id}/${crypto.randomUUID()}.${ext}`
+-      const { error: uploadError } = await supabase.storage.from('post-images').upload(path, file, { contentType: file.type, upsert: false })
+-      if (uploadError) {
+-        await Promise.all(uploadedPaths.map(path => supabase.storage.from('post-images').remove([path])))
+-        setMessage(`画像アップロード失敗：${uploadError.message}`); setIsPosting(false); return
+-      }
+-      uploadedPaths.push(path)
+-      uploadedUrls.push(supabase.storage.from('post-images').getPublicUrl(path).data.publicUrl)
+-    }
+-    const { error } = await supabase
+-
+-      .from('posts')
+-
+-      .insert({
+-
+-        user_id: user.id,
+-
+-        content: trimmedContent,
+-        post_type: selectedResult || selectedDiagnosis ? 'result' : 'normal',
+-        result_type: selectedResult?.type || (selectedDiagnosis ? 'player_type' : null),
+-        result_id: selectedResult?.id || selectedDiagnosis?.result_id || null,
+-        image_urls: uploadedUrls,
+-        style_snapshot: styleSnapshot,
+-
+-      })
+-
+-    if (error) {
+-      if (uploadedPaths.length) await supabase.storage.from('post-images').remove(uploadedPaths)
+-      console.error(error)
+-
+-      setMessage(
+-
+-        `投稿できませんでした：${error.message}`
+-
+-      )
+-
+-      setIsPosting(false)
+-
+-      return
+-
+-    }
+-
+-    setContent('')
+-    setSelectedResult(null)
+-    setSelectedDiagnosis(null)
+-    setStyleSnapshot(null)
+-    setImageFiles([])
+-    setComposeOpen(false)
+-    setAttachmentsOpen(false)
+-    setAttachmentScreen('menu')
+-
+-    setMessage('')
+-
+-    setIsPosting(false)
+-
+-    await loadPosts()
+-
+-  }
+-
+-  const handleLike = async (
+-
+-    post: Post
+-
+-  ) => {
+-
+-    if (!currentUserId) return
+-
+-    if (post.likedByMe) {
+-
+-      const { error } = await supabase
+-
+-        .from('post_likes')
+-
+-        .delete()
+-
+-        .eq('post_id', post.id)
+-
+-        .eq(
+-
+-          'user_id',
+-
+-          currentUserId
+-
+-        )
+-
+-      if (error) {
+-
+-        console.error(error)
+-
+-        setMessage(
+-
+-          `いいねを解除できませんでした：${error.message}`
+-
+-        )
+-
+-        return
+-
+-      }
+-
+-    } else {
+-
+-      const { error } = await supabase
+-
+-        .from('post_likes')
+-
+-        .insert({
+-
+-          post_id: post.id,
+-
+-          user_id: currentUserId,
+-
+-        })
+-
+-      if (error) {
+-
+-        console.error(error)
+-
+-        setMessage(
+-
+-          `いいねできませんでした：${error.message}`
+-
+-        )
+-
+-        return
+-
+-      }
+-
+-      if (
+-
+-        post.user_id !==
+-
+-        currentUserId
+-
+-      ) {
+-
+-        const {
+-
+-          error:
+-
+-            notificationError,
+-
+-        } = await supabase
+-
+-          .from('notifications')
+-
+-          .insert({
+-
+-            user_id:
+-
+-              post.user_id,
+-
+-            actor_id:
+-
+-              currentUserId,
+-
+-            type: 'like',
+-
+-            post_id: post.id,
+-
+-          })
++import { createVerifiedNotification } from './createVerifiedNotification'
++
++import { useNavigate } from 'react-router-dom'
++
++import { supabase } from './supabase'
++import { usePullToRefresh } from './usePullToRefresh'
++import QuoteSourcePreview, { type QuoteSource } from './QuoteSourcePreview'
++
++const playerTypeEmoji: Record<string, string> = {lion:'🦁',tiger:'🐯',leopard:'🐆',bison:'🦬',gorilla:'🦍',rhino:'🦏',shark:'🦈',owl:'🦉',eagle:'🦅',elephant:'🐘',giraffe:'🦒',wolf:'🐺',hyena:'🐾',cat:'🐈',chameleon:'🦎',dolphin:'🐬',fox:'🦊',snake:'🐍',raccoon:'🦝',turtle:'🐢',rabbit:'🐇',crocodile:'🐊',hedgehog:'🦔',deer:'🦌',sloth:'🦥',dog:'🐕',bear:'🐻',bull:'🐄',badger:'🦡',monkey:'🐒',magpie:'🐦‍⬛',penguin:'🐧',horse:'🐎',squirrel:'🐿️',mountain_goat:'🐐',otter:'🦦'}
++
++type QuotePreview = QuoteSource
++
++type Post = {
++  quote_post_id?: string | null
++  quotePreview?: QuotePreview | null
++
++  id: string
++
++  user_id: string
++
++  content: string
++
++  created_at: string
++
++  profile?: {
++
++    display_name: string
++
++    poker_id: string
++
++    avatar_url: string | null
++
++  }
++
++  likeCount: number
++  repostCount?: number
++  repostedByMe?: boolean
++  feedKey?: string
++  feedActorId?: string
++  repostedBy?: { display_name: string; poker_id: string }
++
++  likedByMe: boolean
++
++  commentCount: number
++
++  post_type: 'normal' | 'result'
++
++  result_type: 'tournament' | 'amusement' | 'cash' | 'player_type' | null
++
++  result_id: string | null
++  image_urls?: string[]
++  style_snapshot?: { count: number; aggression: number; looseness: number; captured_at: string } | null
++
++  playerTypeData?: { animal_name_ja: string; catchphrase: string; result_type_key: string } | null
++  resultData?: {
++
++    tournament_name: string
++
++    rank: number | null
++
++    rank_unknown: boolean
++
++    entry_count: number | null
++
++    is_itm: boolean
++
++    total_entry_fee: number | null
++
++    prize_amount: number
++
++    venue: string | null
++
++    played_at: string
++
++  } | null
++
++  amusementResultData?: {
++
++    venue: string
++
++    game_type: string
++
++    small_blind: number
++
++    big_blind: number
++
++    starting_stack: number
++
++    additional_stack: number
++
++    ending_stack: number
++
++    play_minutes: number
++
++    played_at: string
++
++  } | null
++
++  cashResultData?: {
++
++    played_at: string
++
++    play_type: 'live' | 'online'
++
++    record_type: 'session' | 'daily'
++
++    venue: string
++
++    game_type: string
++
++    small_blind: number
++
++    big_blind: number
++
++    currency: string
++
++    profit_amount: number
++
++    profit_jpy: number
++
++    play_minutes: number
++
++  } | null
++
++}
++
++type TimelineMode = 'following' | 'all'
++
++function Timeline({ profileUserId }: { profileUserId?: string }) {
++
++  const navigate = useNavigate()
++  useEffect(() => {
++    if (window.location.search.includes('compose=1')) {
++      const timer = window.setTimeout(() => document.getElementById('poker-id-post-composer')?.focus(), 80)
++      return () => window.clearTimeout(timer)
++    }
++  }, [])
++
++  const refreshContainerRef = useRef<HTMLElement>(null)
++  const [posts, setPosts] = useState<Post[]>([])
++  const [repostingId, setRepostingId] = useState<string | null>(null)
++  const repostingRef = useRef(false)
++
++  const [content, setContent] = useState('')
++  const [quoteTarget, setQuoteTarget] = useState<Post | null>(null)
++  const [quoteText, setQuoteText] = useState('')
++  const [quoteBusy, setQuoteBusy] = useState(false)
++  const [repostMenuId, setRepostMenuId] = useState<string | null>(null)
++  const [composeOpen, setComposeOpen] = useState(false)
++  const [attachmentsOpen, setAttachmentsOpen] = useState(false)
++  const [attachmentScreen, setAttachmentScreen] = useState<'menu' | 'results' | 'tournament' | 'amusement' | 'cash' | 'diagnosis'>('menu')
++  const [selectedResult, setSelectedResult] = useState<{id:string; type:'tournament'|'amusement'|'cash'; label:string; playedAt:string; data:any}|null>(null)
++  const [availableResults, setAvailableResults] = useState<{id:string; type:'tournament'|'amusement'|'cash'; label:string; playedAt:string; data:any}[]>([])
++  const [resultsLoading, setResultsLoading] = useState(false)
++  const imageInputRef = useRef<HTMLInputElement>(null)
++  const [imageFiles, setImageFiles] = useState<File[]>([])
++  const [imagePreviews, setImagePreviews] = useState<string[]>([])
++  const [selectedDiagnosis, setSelectedDiagnosis] = useState<{ result_id: string; animal_name_ja: string; catchphrase: string; result_type_key: string; completed_at: string } | null>(null)
++  const [diagnoses, setDiagnoses] = useState<{ result_id: string; animal_name_ja: string; catchphrase: string; result_type_key: string; completed_at: string }[]>([])
++  const [styleSnapshot, setStyleSnapshot] = useState<{ count: number; aggression: number; looseness: number; captured_at: string } | null>(null)
++  const [attachmentBusy, setAttachmentBusy] = useState(false)
++  useEffect(() => { const urls = imageFiles.map(file => URL.createObjectURL(file)); setImagePreviews(urls); return () => urls.forEach(url => URL.revokeObjectURL(url)) }, [imageFiles])
++
++  const [currentUserId, setCurrentUserId] = useState('')
++
++  const [message, setMessage] = useState('')
++  const [postMenuId, setPostMenuId] = useState<string | null>(null)
++  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
++  const [isDeleting, setIsDeleting] = useState(false)
++  const deletingRef = useRef(false)
++
++  const [isPosting, setIsPosting] = useState(false)
++
++  const [timelineMode, setTimelineMode] =
++
++    useState<TimelineMode>('following')
++
++  const [followingIds, setFollowingIds] =
++
++    useState<string[]>([])
++
++  const loadPosts = async () => {
++
++    const {
++
++      data: { user },
++
++    } = await supabase.auth.getUser()
++
++    if (!user) {
++
++      navigate('/login')
++
++      return
++
++    }
++
++    setCurrentUserId(user.id)
++
++    const { data: followData, error: followError } =
++
++      await supabase
++
++        .from('follows')
++
++        .select('following_id')
++
++        .eq('follower_id', user.id)
++
++    if (followError) {
++
++      console.error(followError)
++
++      setMessage(
++
++        `フォロー情報の取得に失敗しました：${followError.message}`
++
++      )
++
++      return
++
++    }
++
++    const loadedFollowingIds =
++
++      followData?.map(
++
++        (follow) => follow.following_id
++
++      ) || []
++
++    setFollowingIds(loadedFollowingIds)
++
++    // 元投稿とリポストされた投稿の双方を参照できるよう、元投稿はまとめて取得する。
++    const postQuery = supabase.from('posts').select('*').order('created_at', { ascending: false })
++    const { data: postData, error: postError } = await postQuery
++
++    if (postError) {
++
++      console.error(postError)
++
++      setMessage(
++
++        `投稿の取得に失敗しました：${postError.message}`
++
++      )
++
++      return
++
++    }
++
++    if (!postData || postData.length === 0) {
++
++      setPosts([])
++
++      setMessage('')
++
++      return
++
++    }
++
++    const { data: repostRows, error: repostError } = await supabase
++      .from('post_reposts').select('post_id,user_id,created_at')
++    if (repostError) { setMessage(`リポストの取得に失敗しました：${repostError.message}`); return }
++    // ブロックした相手・ブロックされた相手のリポストは表示しない。
++    const { data: blockRows, error: blockError } = await supabase.from('user_blocks')
++      .select('blocker_id,blocked_id').or(`blocker_id.eq.${user.id},blocked_id.eq.${user.id}`)
++    if (blockError) { setMessage(`ブロック情報の取得に失敗しました：${blockError.message}`); return }
++    const blockedIds = new Set((blockRows || []).map(row => row.blocker_id === user.id ? row.blocked_id : row.blocker_id))
++    const permittedPosts = postData.filter(row => !blockedIds.has(row.user_id))
++    const permittedIds = new Set(permittedPosts.map(row => row.id))
++    const validReposts = (repostRows || []).filter(row => permittedIds.has(row.post_id) && !blockedIds.has(row.user_id))
++
++    const tournamentResultIds = postData
++
++      .filter(
++
++        (post) =>
++
++          post.post_type === 'result' &&
++
++          post.result_type === 'tournament' &&
++
++          post.result_id
++
++      )
++
++      .map((post) => post.result_id as string)
++
++    let tournamentResults: any[] = []
++
++    if (tournamentResultIds.length > 0) {
++
++      const { data, error } = await supabase
++
++        .from('poker_results')
++
++        .select(
++
++          'id, tournament_name, rank, rank_unknown, entry_count, is_itm, total_entry_fee, prize_amount, venue, played_at'
++
++        )
++
++        .in('id', tournamentResultIds)
++
++      if (error) {
++
++        console.error('トーナメント結果取得エラー:', error)
++
++      } else {
++
++        tournamentResults = data || []
++
++      }
++
++    }
++
++    const amusementResultIds = postData
++
++      .filter(
++
++        (post) =>
++
++          post.post_type === 'result' &&
++
++          post.result_type === 'amusement' &&
++
++          post.result_id
++
++      )
++
++      .map((post) => post.result_id as string)
++
++    let amusementResults: any[] = []
++
++    if (amusementResultIds.length > 0) {
++
++      const { data, error } = await supabase
++
++        .from('amusement_ring_results')
++
++        .select(
++
++          'id, venue, game_type, small_blind, big_blind, starting_stack, additional_stack, ending_stack, play_minutes, played_at'
++
++        )
++
++        .in('id', amusementResultIds)
++
++      if (error) {
++
++        console.error('リングゲーム結果取得エラー:', error)
++
++      } else {
++
++        amusementResults = data || []
++
++      }
++
++    }
++
++  const cashResultIds = postData
++
++    .filter(
++
++      (post) =>
++
++        post.post_type === 'result' &&
++
++        post.result_type === 'cash' &&
++
++        post.result_id
++
++    )
++
++    .map((post) => post.result_id as string)
++
++  let cashResults: any[] = []
++
++  if (cashResultIds.length > 0) {
++
++    const { data, error } = await supabase
++
++      .from('cash_game_results')
++
++      .select(
++
++        'id, played_at, play_type, record_type, venue, game_type, small_blind, big_blind, currency, profit_amount, profit_jpy, play_minutes'
++
++      )
++
++      .in('id', cashResultIds)
++
++    if (error) {
++
++      console.error('キャッシュゲーム結果取得エラー:', error)
++
++    } else {
++
++      cashResults = data || []
++
++    }
++
++  }
++
++
++
++    const playerTypeResultIds = [...new Set(postData
++      .filter((post) => post.post_type === 'result' && post.result_type === 'player_type' && post.result_id)
++      .map((post) => post.result_id as string))]
++    const playerTypeResults = new Map<string, { animal_name_ja: string; catchphrase: string; result_type_key: string }>()
++    await Promise.all(playerTypeResultIds.map(async (resultId) => {
++      const { data, error } = await supabase.rpc('get_player_type_v2_result_detail', { p_result_id: resultId })
++      if (error) { console.error('プレイヤータイプ取得エラー:', error); return }
++      const row = Array.isArray(data) ? data[0] : data
++      if (row) playerTypeResults.set(resultId, {
++        animal_name_ja: String(row.animal_name_ja || ''),
++        catchphrase: String(row.catchphrase || ''),
++        result_type_key: String(row.result_type_key || ''),
++      })
++    }))
++
++    const postIds = postData.map(
++
++      (post) => post.id
++
++    )
++
++    const { data: likes, error: likesError } =
++
++      await supabase
++
++        .from('post_likes')
++
++        .select('post_id, user_id')
++
++        .in('post_id', postIds)
++
++    if (likesError) {
++
++      console.error(likesError)
++
++      setMessage(
++
++        `いいね情報の取得に失敗しました：${likesError.message}`
++
++      )
++
++      return
++
++    }
++
++    const {
++
++      data: comments,
++
++      error: commentsError,
++
++    } = await supabase
++
++      .from('post_comments')
++
++      .select('post_id')
++
++      .in('post_id', postIds)
++
++    if (commentsError) {
++
++      console.error(commentsError)
++
++      setMessage(
++
++        `コメント情報の取得に失敗しました：${commentsError.message}`
++
++      )
++
++      return
++
++    }
++
++    const postUserIds = [
++
++      ...new Set(
++
++          [...postData.map(post => post.user_id), ...validReposts.map(repost => repost.user_id)]
++
++      ),
++
++    ]
++
++    const {
++
++      data: profiles,
++
++      error: profileError,
++
++    } = await supabase
++
++      .from('profiles')
++
++      .select(
++
++        'id, display_name, poker_id, avatar_url'
++
++      )
++
++      .in('id', postUserIds)
++
++    if (profileError) {
++
++      console.error(profileError)
++
++      setMessage(
++
++        `プロフィールの取得に失敗しました：${profileError.message}`
++
++      )
++
++      return
++
++    }
++
++    const postsWithData: Post[] =
++
++      postData.map((post) => {
++
++        const profile = profiles?.find(
++
++          (item) =>
++
++            item.id === post.user_id
++
++        )
++
++        const postLikes =
++
++          likes?.filter(
++
++            (like) =>
++
++              like.post_id === post.id
++
++          ) || []
++
++        const commentCount =
++
++          comments?.filter(
++
++            (comment) =>
++
++              comment.post_id === post.id
++
++          ).length || 0
++
++        return {
++
++          ...post,
++
++          profile: profile
++
++            ? {
++
++                display_name:
++
++                  profile.display_name,
++
++                poker_id:
++
++                  profile.poker_id,
++
++                avatar_url:
++
++                  profile.avatar_url,
++
++              }
++
++            : undefined,
++
++          likeCount: postLikes.length,
++
++          likedByMe: postLikes.some(
++
++            (like) =>
++
++              like.user_id === user.id
++
++          ),
++
++          commentCount,
++
++          playerTypeData: post.result_type === 'player_type' && post.result_id
++            ? playerTypeResults.get(post.result_id) || null : null,
++          resultData:
++
++            post.post_type === 'result' &&
++
++            post.result_type === 'tournament' &&
++
++            post.result_id
++
++              ? tournamentResults.find(
++
++                  (result) => result.id === post.result_id
++
++                ) || null
++
++              : null,
++
++          amusementResultData:
++
++            post.post_type === 'result' &&
++
++            post.result_type === 'amusement' &&
++
++            post.result_id
++
++              ? amusementResults.find(
++
++                  (result) => result.id === post.result_id
++
++                ) || null
++
++              : null,
++
++        cashResultData:
++
++          post.post_type === 'result' &&
++
++          post.result_type === 'cash' &&
++
++          post.result_id
++
++            ? cashResults.find((result) => result.id === post.result_id) || null
++
++            : null,
++
++        }
++
++      })
++
++    const quoteSourceById = new Map(postsWithData.filter(source => !blockedIds.has(source.user_id)).map(source => [source.id, source]))
++    const postsWithQuotes = postsWithData.map(item => {
++      const source = item.quote_post_id ? quoteSourceById.get(item.quote_post_id) : null
++      return { ...item, quotePreview: source ? { id: source.id, user_id: source.user_id, content: source.content,
++        profile: source.profile ? { display_name: source.profile.display_name, poker_id: source.profile.poker_id } : undefined,
++        image_urls: source.image_urls, result_type: source.result_type, resultData: source.resultData || source.amusementResultData || source.cashResultData || null, playerTypeData: source.playerTypeData, style_snapshot: source.style_snapshot } : null }
++    })
++    const repostCountByPost = new Map<string, number>()
++    for (const row of validReposts) repostCountByPost.set(row.post_id, (repostCountByPost.get(row.post_id) || 0) + 1)
++    const myReposted = new Set(validReposts.filter(row => row.user_id === user.id).map(row => row.post_id))
++    const originalCards = postsWithQuotes.filter(post => !blockedIds.has(post.user_id)).map(post => ({
++      ...post, feedKey: `post:${post.id}`, feedActorId: post.user_id,
++      repostCount: repostCountByPost.get(post.id) || 0, repostedByMe: myReposted.has(post.id),
++    }))
++    const originalById = new Map(originalCards.map(post => [post.id, post]))
++    const repostCards: Post[] = validReposts.flatMap(row => {
++      const original = originalById.get(row.post_id)
++      const sharer = profiles?.find(profile => profile.id === row.user_id)
++      if (!original || !sharer) return []
++      return [{ ...original, feedKey: `repost:${row.user_id}:${row.post_id}`,
++        feedActorId: row.user_id, created_at: row.created_at,
++        repostedBy: { display_name: sharer.display_name, poker_id: sharer.poker_id } }]
++    })
++    setPosts([...originalCards, ...repostCards].sort((a,b) => Date.parse(b.created_at) - Date.parse(a.created_at)))
++
++    setMessage('')
++
++  }
++
++  const { pullDistance, isRefreshing, refreshError } = usePullToRefresh(refreshContainerRef, {
++    onRefresh: loadPosts,
++    enabled: !profileUserId && !composeOpen && !attachmentsOpen && !deleteTargetId && !isPosting && !attachmentBusy,
++  })
++
++  useEffect(() => {
++
++    loadPosts()
++
++  }, [profileUserId])
++
++  useEffect(() => {
++    if (profileUserId) return
++    const open = () => setComposeOpen(true)
++    window.addEventListener('poker-id-open-compose', open)
++    if (new URLSearchParams(window.location.search).get('compose') === '1') {
++      setComposeOpen(true)
++      navigate('/timeline', { replace: true })
++    }
++    return () => window.removeEventListener('poker-id-open-compose', open)
++  }, [profileUserId, navigate])
++
++  const loadShareableResults = async () => {
++    setResultsLoading(true)
++    const { data: { user } } = await supabase.auth.getUser()
++    if (!user) { setResultsLoading(false); return }
++    const sources = [
++      { table: 'poker_results', type: 'tournament' as const, label: 'トーナメント' },
++      { table: 'amusement_ring_results', type: 'amusement' as const, label: 'リングゲーム' },
++      { table: 'cash_game_results', type: 'cash' as const, label: 'キャッシュ' },
++    ]
++    const lists = await Promise.all(sources.map(async source => {
++      const { data, error } = await supabase.from(source.table).select('*').eq('user_id', user.id).order('played_at', { ascending: false }).limit(30)
++      if (error) { console.error(error); return [] }
++      return (data || []).map(item => ({ id: String(item.id), type: source.type, label: `${source.label} · ${String(item.tournament_name || item.venue || '記録')}`, playedAt: String(item.played_at || ''), data: item }))
++    }))
++    setAvailableResults(lists.flat())
++    setResultsLoading(false)
++  }
++
++  const toggleAttachments = () => {
++    setAttachmentsOpen(open => !open)
++    setAttachmentScreen('menu')
++  }
++
++  const chooseResultCategory = (type: 'tournament' | 'amusement' | 'cash') => {
++    setAttachmentScreen(type)
++    void loadShareableResults()
++  }
++
++  const renderAttachmentPicker = () => {
++    const optionStyle = { display: 'block', width: '100%', padding: '11px 12px', textAlign: 'left' as const, background: '#202020', color: '#eee', borderRadius: 9, marginBottom: 7, fontSize: 13, border: '1px solid #333' }
++    const backButton = (target: 'menu' | 'results') => <button type="button" onClick={() => setAttachmentScreen(target)} style={{ width: 'auto', background: 'transparent', color: '#bbb', padding: '5px 0', fontSize: 12 }}>‹ 戻る</button>
++    return <div style={{ marginTop: 12, padding: 12, background: '#151515', border: '1px solid #333', borderRadius: 12, maxHeight: 320, overflowY: 'auto' }}>
++      {attachmentScreen === 'menu' ? <>
++        <div style={{ fontSize: 12, color: '#aaa', marginBottom: 10 }}>添付するものを選択</div>
++        <button type="button" style={optionStyle} onClick={() => { imageInputRef.current?.click(); setAttachmentsOpen(false) }}>▧　画像を添付（最大4枚・各5MB）</button>
++        <button type="button" style={optionStyle} onClick={() => { void loadDiagnoses() }}>♧　自己診断を添付　›</button>
++        <button type="button" style={optionStyle} onClick={() => { void loadStyleSnapshot() }}>♙　自分への他者評価を添付（3人以上）</button>
++        <button type="button" style={optionStyle} onClick={() => setAttachmentScreen('results')}>♠　戦績を添付　›</button>
++      </> : attachmentScreen === 'diagnosis' ? <>
++        {backButton('menu')}
++        <div style={{ fontSize: 12, color: '#aaa', marginBottom: 10 }}>保存済みの自己診断を選択</div>
++        {attachmentBusy ? <p>読み込み中...</p> : diagnoses.length === 0 ? <p style={{ color: '#aaa', fontSize: 12 }}>診断結果がありません。</p> : diagnoses.map(item => <button type="button" key={item.result_id} style={optionStyle} onClick={() => { setSelectedDiagnosis(item); setSelectedResult(null); setAttachmentsOpen(false); setAttachmentScreen('menu') }}>{playerTypeEmoji[item.result_type_key] || '♠'} {item.animal_name_ja} · {item.completed_at?.slice(0,10) || '日付不明'}</button>)}
++      </> : attachmentScreen === 'results' ? <>
++        {backButton('menu')}
++        <div style={{ fontSize: 12, color: '#aaa', margin: '8px 0 10px' }}>戦績の種類を選択</div>
++        <button type="button" style={optionStyle} onClick={() => chooseResultCategory('tournament')}>🏆　トーナメント戦績　›</button>
++        <button type="button" style={optionStyle} onClick={() => chooseResultCategory('amusement')}>♠　リングゲーム戦績　›</button>
++        <button type="button" style={optionStyle} onClick={() => chooseResultCategory('cash')}>♦　キャッシュゲーム戦績　›</button>
++      </> : <>
++        {backButton('results')}
++        <div style={{ fontSize: 12, color: '#aaa', margin: '8px 0 10px' }}>保存済みの{attachmentScreen === 'tournament' ? 'トーナメント' : attachmentScreen === 'amusement' ? 'リングゲーム' : 'キャッシュゲーム'}戦績を選択</div>
++        {resultsLoading ? <p style={{ fontSize: 12 }}>読み込み中...</p> : availableResults.filter(result => result.type === attachmentScreen).length === 0 ? <p style={{ fontSize: 12, color: '#888' }}>この種類の戦績はありません。</p> : availableResults.filter(result => result.type === attachmentScreen).map(result => <button key={result.type + result.id} type="button" style={optionStyle} onClick={() => { setSelectedResult(result); setSelectedDiagnosis(null); setAttachmentsOpen(false); setAttachmentScreen('menu') }}><span style={{ display: 'block', fontWeight: 700 }}>{result.label}</span><span style={{ display: 'block', color: '#aaa', fontSize: 12, marginTop: 4 }}>プレイ日：{result.playedAt ? new Date(result.playedAt.slice(0,10) + 'T00:00:00').toLocaleDateString('ja-JP') : '日付不明'}</span></button>)}
++      </>}
++    </div>
++  }
++
++
++  const loadDiagnoses = async () => {
++    setAttachmentBusy(true)
++    const { data, error } = await supabase.rpc('get_my_latest_player_type_v2')
++    if (error) { setMessage(`診断取得エラー：${error.message}`); setAttachmentBusy(false); return }
++    setDiagnoses((data || []).map((item: any) => ({ result_id: String(item.result_id), animal_name_ja: String(item.animal_name_ja || ''), catchphrase: String(item.catchphrase || ''), result_type_key: String(item.result_type_key || ''), completed_at: String(item.completed_at || '') })))
++    setAttachmentScreen('diagnosis')
++    setAttachmentBusy(false)
++  }
++
++  const loadStyleSnapshot = async () => {
++    setAttachmentBusy(true)
++    const { data, error } = await supabase.rpc('get_my_post_style_snapshot')
++    setAttachmentBusy(false)
++    if (error) { setMessage(`他者評価取得エラー：${error.message}（SQLの適用を確認してください）`); return }
++    const row = Array.isArray(data) ? data[0] : data
++    if (!row || Number(row.count) < 3) { setMessage('他者評価は3人以上集まると添付できます。'); return }
++    setStyleSnapshot({ count: Number(row.count), aggression: Number(row.aggression), looseness: Number(row.looseness), captured_at: new Date().toISOString() })
++    setAttachmentsOpen(false)
++    setMessage('')
++  }
++
++  const chooseImages = (files: FileList | null) => {
++    if (!files) return
++    const selected = Array.from(files)
++    if (selected.some(file => !['image/jpeg','image/png','image/webp'].includes(file.type) || file.size > 5 * 1024 * 1024)) { setMessage('画像はJPEG・PNG・WebP、各5MB以内にしてください。'); return }
++    if (imageFiles.length + selected.length > 4) { setMessage('画像は1投稿につき4枚までです。'); return }
++    setImageFiles(previous => [...previous, ...selected])
++    setMessage('')
++  }
++
++  const handlePost = async () => {
++
++    const trimmedContent =
++
++      content.trim()
++
++    if (!trimmedContent && !selectedResult && !selectedDiagnosis && !styleSnapshot && imageFiles.length === 0) {
++
++      setMessage(
++
++        '投稿内容を入力してください。'
++
++      )
++
++      return
++
++    }
++
++    const {
++
++      data: { user },
++
++    } = await supabase.auth.getUser()
++
++    if (!user) {
++
++      setMessage(
++
++        'ログイン情報が確認できませんでした。'
++
++      )
++
++      return
++
++    }
++
++    setIsPosting(true)
++
++    setMessage('投稿中...')
++
++    const uploadedPaths: string[] = []
++    const uploadedUrls: string[] = []
++    for (const file of imageFiles) {
++      const ext = file.type === 'image/png' ? 'png' : file.type === 'image/webp' ? 'webp' : 'jpg'
++      const path = `${user.id}/${crypto.randomUUID()}.${ext}`
++      const { error: uploadError } = await supabase.storage.from('post-images').upload(path, file, { contentType: file.type, upsert: false })
++      if (uploadError) {
++        await Promise.all(uploadedPaths.map(path => supabase.storage.from('post-images').remove([path])))
++        setMessage(`画像アップロード失敗：${uploadError.message}`); setIsPosting(false); return
++      }
++      uploadedPaths.push(path)
++      uploadedUrls.push(supabase.storage.from('post-images').getPublicUrl(path).data.publicUrl)
++    }
++    const { error } = await supabase
++
++      .from('posts')
++
++      .insert({
++
++        user_id: user.id,
++
++        content: trimmedContent,
++        post_type: selectedResult || selectedDiagnosis ? 'result' : 'normal',
++        result_type: selectedResult?.type || (selectedDiagnosis ? 'player_type' : null),
++        result_id: selectedResult?.id || selectedDiagnosis?.result_id || null,
++        image_urls: uploadedUrls,
++        style_snapshot: styleSnapshot,
++
++      })
++
++    if (error) {
++      if (uploadedPaths.length) await supabase.storage.from('post-images').remove(uploadedPaths)
++      console.error(error)
++
++      setMessage(
++
++        `投稿できませんでした：${error.message}`
++
++      )
++
++      setIsPosting(false)
++
++      return
++
++    }
++
++    setContent('')
++    setSelectedResult(null)
++    setSelectedDiagnosis(null)
++    setStyleSnapshot(null)
++    setImageFiles([])
++    setComposeOpen(false)
++    setAttachmentsOpen(false)
++    setAttachmentScreen('menu')
++
++    setMessage('')
++
++    setIsPosting(false)
++
++    await loadPosts()
++
++  }
++
++  const handleLike = async (
++
++    post: Post
++
++  ) => {
++
++    if (!currentUserId) return
++
++    if (post.likedByMe) {
++
++      const { error } = await supabase
++
++        .from('post_likes')
++
++        .delete()
++
++        .eq('post_id', post.id)
++
++        .eq(
++
++          'user_id',
++
++          currentUserId
++
++        )
++
++      if (error) {
++
++        console.error(error)
++
++        setMessage(
++
++          `いいねを解除できませんでした：${error.message}`
++
++        )
++
++        return
++
++      }
++
++    } else {
++
++      const { error } = await supabase
++
++        .from('post_likes')
++
++        .insert({
++
++          post_id: post.id,
++
++          user_id: currentUserId,
++
++        })
++
++      if (error) {
++
++        console.error(error)
++
++        setMessage(
++
++          `いいねできませんでした：${error.message}`
++
++        )
++
++        return
++
++      }
++
++      if (
++
++        post.user_id !==
++
++        currentUserId
++
++      ) {
++
++        const notificationError = await createVerifiedNotification('like', post.id)
+ 
+         if (
+ 
+
+diff --git a/src/PostDetail.tsx b/src/PostDetail.tsx
+--- a/src/PostDetail.tsx
++++ b/src/PostDetail.tsx
+@@ -1,476 +1,467 @@
+ import { useEffect, useRef, useState } from 'react'
+-import { useNavigate, useParams } from 'react-router-dom'
+-import { supabase } from './supabase'
+-import { usePullToRefresh } from './usePullToRefresh'
+-import QuoteSourcePreview, { type QuoteSource } from './QuoteSourcePreview'
+-
+-
+-// ブロックは双方の関係を確認する（自分→相手、相手→自分）。
+-async function getBlockedUserIds(userId: string): Promise<Set<string>> {
+-  const { data, error } = await supabase
+-    .from('user_blocks')
+-    .select('blocker_id, blocked_id')
+-    .or(`blocker_id.eq.${userId},blocked_id.eq.${userId}`)
+-  if (error) throw error
+-  return new Set((data || []).map(row => row.blocker_id === userId ? row.blocked_id : row.blocker_id))
+-}
+-
+-type Profile = {
+-  display_name: string
+-  poker_id: string
+-  avatar_url: string | null
+-}
+-
+-type Comment = {
+-  id: string
+-  post_id: string
+-  user_id: string
+-  content: string
+-  created_at: string
+-  parent_comment_id: string | null
+-  image_urls?: string[] | null
+-  profile?: Profile
+-}
+-
+-type QuotePreview = QuoteSource
+-
+-type Post = {
+-  quote_post_id?: string | null
+-  quotePreview?: QuotePreview | null
+-  id: string
+-  user_id: string
+-  content: string
+-  created_at: string
+-  profile?: Profile
+-  likeCount: number
+-  likedByMe: boolean
+-  comments: Comment[]
+-  image_urls?: string[] | null
+-}
+-
+-function PostDetail() {
+-  const { id } = useParams()
+-  const navigate = useNavigate()
+-  const refreshRootRef = useRef<HTMLElement | null>(null)
+-
+-  const [post, setPost] = useState<Post | null>(null)
+-  const [repostCount, setRepostCount] = useState(0)
+-  const [repostMenuOpen, setRepostMenuOpen] = useState(false)
+-  const [quoteOpen, setQuoteOpen] = useState(false)
+-  const [quoteText, setQuoteText] = useState('')
+-  const [quoteBusy, setQuoteBusy] = useState(false)
+-  const [repostedByMe, setRepostedByMe] = useState(false)
+-  const [reposting, setReposting] = useState(false)
+-  const repostingRef = useRef(false)
+-  const [currentUserId, setCurrentUserId] = useState('')
+-  const [commentInput, setCommentInput] = useState('')
+-  const [replyTo, setReplyTo] = useState<{ id: string; name: string } | null>(null)
+-  const [submittingComment, setSubmittingComment] = useState(false)
+-  const [message, setMessage] = useState('読み込み中...')
+-  const [expandedImage, setExpandedImage] = useState<string | null>(null)
+-  const deletingCommentRef = useRef(false)
+-  const [deletingCommentId, setDeletingCommentId] = useState<string | null>(null)
+-  const commentImageInputRef = useRef<HTMLInputElement | null>(null)
+-  const [commentImageFiles, setCommentImageFiles] = useState<File[]>([])
+-  const [commentImagePreviews, setCommentImagePreviews] = useState<string[]>([])
+-  const MAX_COMMENT_IMAGES = 4
+-
+-  useEffect(() => {
+-    const urls = commentImageFiles.map(file => URL.createObjectURL(file))
+-    setCommentImagePreviews(urls)
+-    return () => urls.forEach(url => URL.revokeObjectURL(url))
+-  }, [commentImageFiles])
+-
+-  const chooseCommentImages = (files: FileList | null) => {
+-    if (!files) return
+-    const selected = Array.from(files)
+-    if (selected.some(file => !['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 5 * 1024 * 1024)) {
+-      setMessage('画像はJPEG・PNG・WebP形式、各5MB以内にしてください。')
+-      return
+-    }
+-    if (selected.length + commentImageFiles.length > MAX_COMMENT_IMAGES) {
+-      setMessage('コメントに添付できる画像は最大4枚です。')
+-      return
+-    }
+-    setCommentImageFiles(previous => [...previous, ...selected])
+-    setMessage('')
+-  }
+-
+-
+-  const loadPost = async (quiet = false) => {
+-    if (!id) {
+-      setMessage('投稿が見つかりませんでした。')
+-      return
+-    }
+-
+-    const {
+-      data: { user },
+-    } = await supabase.auth.getUser()
+-
+-    if (!user) {
+-      navigate('/login')
+-      return
+-    }
+-
+-    setCurrentUserId(user.id)
+-    // 手動更新では投稿を一度消さず、既存の表示・入力状態を維持する。
+-    if (!quiet) {
+-      setPost(null)
+-      setMessage('読み込み中...')
+-    }
+-    let blockedUserIds: Set<string>
+-    try {
+-      blockedUserIds = await getBlockedUserIds(user.id)
+-    } catch (blockError) {
+-      console.error('ブロック情報取得エラー:', blockError)
+-      setMessage('ブロック情報を取得できませんでした。再読み込みしてください。')
+-      return
+-    }
+-
+-    const { data: postData, error } = await supabase
+-      .from('posts')
+-      .select('*')
+-      .eq('id', id)
+-      .maybeSingle()
+-
+-    if (error) {
+-      console.error(error)
+-      setMessage(
+-        `投稿の取得に失敗しました：${error.message}`
+-      )
+-      return
+-    }
+-
+-    if (!postData) {
+-      setPost(null)
+-      setMessage('投稿が見つかりませんでした。')
+-      return
+-    }
+-
+-    if (blockedUserIds.has(postData.user_id)) {
+-      setPost(null)
+-      setMessage('この投稿は表示できません。')
+-      return
+-    }
+-
+-    const { data: likes, error: likesError } =
+-      await supabase
+-        .from('post_likes')
+-        .select('user_id')
+-        .eq('post_id', id)
+-
+-    if (likesError) {
+-      console.error(likesError)
+-      setMessage(
+-        `いいね情報の取得に失敗しました：${likesError.message}`
+-      )
+-      return
+-    }
+-
+-    const { data: comments, error: commentsError } =
+-      await supabase
+-        .from('post_comments')
+-        .select('*')
+-        .eq('post_id', id)
+-        .order('created_at', { ascending: true })
+-
+-    if (commentsError) {
+-      console.error(commentsError)
+-      setMessage(
+-        `コメントの取得に失敗しました：${commentsError.message}`
+-      )
+-      return
+-    }
+-
+-    const profileUserIds = [
+-      ...new Set([
+-        postData.user_id,
+-        ...(comments || []).map(
+-          (comment) => comment.user_id
+-        ),
+-      ]),
+-    ]
+-
+-    const { data: profiles, error: profileError } =
+-      await supabase
+-        .from('profiles')
+-        .select(
+-          'id, display_name, poker_id, avatar_url'
+-        )
+-        .in('id', profileUserIds)
+-
+-    if (profileError) {
+-      console.error(profileError)
+-      setMessage(
+-        `プロフィールの取得に失敗しました：${profileError.message}`
+-      )
+-      return
+-    }
+-
+-    const postProfile = profiles?.find(
+-      (profile) => profile.id === postData.user_id
+-    )
+-
+-    const commentsWithProfiles: Comment[] = (
+-      (comments || []).filter(comment => !blockedUserIds.has(comment.user_id))
+-    ).map((comment) => {
+-      const commentProfile = profiles?.find(
+-        (profile) => profile.id === comment.user_id
+-      )
+-
+-      return {
+-        ...comment,
+-        profile: commentProfile
+-          ? {
+-              display_name:
+-                commentProfile.display_name,
+-              poker_id: commentProfile.poker_id,
+-              avatar_url: commentProfile.avatar_url,
+-            }
+-          : undefined,
+-      }
+-    })
+-
+-    let quotePreview: QuotePreview | null = null
+-    if (postData.quote_post_id) {
+-      const { data: original, error: originalError } = await supabase.from('posts').select('id,user_id,content,image_urls,result_type,result_id,style_snapshot')
+-        .eq('id', postData.quote_post_id).maybeSingle()
+-      if (!originalError && original && !blockedUserIds.has(original.user_id)) {
+-        const { data: originalProfile } = await supabase.from('profiles')
+-          .select('display_name,poker_id').eq('id', original.user_id).maybeSingle()
+-        let resultData: Record<string, unknown> | null = null
+-        let playerTypeData: QuoteSource['playerTypeData'] = null
+-        if (original.result_id && original.result_type) {
+-          const table = original.result_type === 'tournament' ? 'poker_results'
+-            : original.result_type === 'amusement' ? 'amusement_ring_results'
+-            : original.result_type === 'cash' ? 'cash_game_results' : null
+-          if (table) {
+-            const { data: originalResult, error: resultError } = await supabase.from(table).select('*').eq('id', original.result_id).maybeSingle()
+-            if (!resultError) resultData = originalResult || null
+-          }
+-          if (original.result_type === 'player_type') {
+-            const { data, error: diagnosisError } = await supabase.rpc('get_player_type_v2_result_detail', { p_result_id: original.result_id })
+-            if (!diagnosisError) {
+-              const row = Array.isArray(data) ? data[0] : data
+-              if (row) playerTypeData = { animal_name_ja: String(row.animal_name_ja || ''), catchphrase: String(row.catchphrase || ''), result_type_key: String(row.result_type_key || '') }
+-            }
+-          }
+-        }
+-        quotePreview = { ...original, profile: originalProfile || undefined, resultData, playerTypeData }
+-      }
+-    }
+-    setPost({
+-      ...postData,
+-      quotePreview,
+-      profile: postProfile
+-        ? {
+-            display_name: postProfile.display_name,
+-            poker_id: postProfile.poker_id,
+-            avatar_url: postProfile.avatar_url,
+-          }
+-        : undefined,
+-      likeCount: likes?.length || 0,
+-      likedByMe:
+-        likes?.some(
+-          (like) => like.user_id === user.id
+-        ) || false,
+-      comments: commentsWithProfiles,
+-    })
+-
+-    const { data: repostRows, error: repostError } = await supabase.from('post_reposts')
+-      .select('user_id').eq('post_id', postData.id)
+-    if (repostError) { setMessage(`リポスト取得エラー：${repostError.message}`); return }
+-    setRepostCount(repostRows?.length || 0)
+-    setRepostedByMe(Boolean(repostRows?.some(row => row.user_id === user.id)))
+-    setMessage('')
+-  }
+-
+-  // 下書きや返信先、操作中の状態がある間はPull to Refreshを許可しない。
+-  // Hook自体の判定に加え、更新処理を開始する直前にも条件を確認する。
+-  const refreshAllowed = Boolean(post) && !commentInput.trim() && !replyTo &&
+-    !submittingComment && !reposting && commentImageFiles.length === 0 && !deletingCommentId && !expandedImage
+-  const refreshAllowedRef = useRef(refreshAllowed)
+-  refreshAllowedRef.current = refreshAllowed
+-  const { pullDistance, isRefreshing, refreshError } = usePullToRefresh(
+-    refreshRootRef,
+-    {
+-      enabled: refreshAllowed,
+-      onRefresh: async () => {
+-        if (!refreshAllowedRef.current) return
+-        await loadPost(true)
+-      },
+-    },
+-  )
+-
+-  useEffect(() => {
+-    void loadPost()
+-  }, [id])
+-
+-  const handleLike = async () => {
+-    if (!post || !currentUserId) return
+-
+-    if (post.likedByMe) {
+-      const { error } = await supabase
+-        .from('post_likes')
+-        .delete()
+-        .eq('post_id', post.id)
+-        .eq('user_id', currentUserId)
+-
+-      if (error) {
+-        console.error(error)
+-        setMessage(
+-          `いいねを解除できませんでした：${error.message}`
+-        )
+-        return
+-      }
+-    } else {
+-      const { error } = await supabase
+-        .from('post_likes')
+-        .insert({
+-          post_id: post.id,
+-          user_id: currentUserId,
+-        })
+-
+-      if (error) {
+-        console.error(error)
+-        setMessage(
+-          `いいねできませんでした：${error.message}`
+-        )
+-        return
+-      }
+-
+-      if (post.user_id !== currentUserId) {
+-        const { error: notificationError } =
+-          await supabase
+-            .from('notifications')
+-            .insert({
+-              user_id: post.user_id,
+-              actor_id: currentUserId,
+-              type: 'like',
+-              post_id: post.id,
+-            })
+-
+-        /*
+-          23505 は、
+-          同じユーザーから同じ投稿への
+-          いいね通知がすでに存在している場合の
+-          DB側の重複エラー。
+-
+-          いいね解除後の再いいねでは
+-          通知を増やさないため、
+-          このエラーだけ正常動作として無視する。
+-        */
+-        if (
+-          notificationError &&
+-          notificationError.code !== '23505'
+-        ) {
+-          console.error(
+-            'いいね通知作成エラー:',
+-            notificationError
+-          )
+-        }
+-      }
+-    }
+-
+-    setMessage('')
+-    await loadPost()
+-  }
+-
+-  const publishQuote = async () => {
+-    if (!post || quoteBusy || !quoteText.trim()) return
+-    setQuoteBusy(true)
+-    try {
+-      const { data: { user } } = await supabase.auth.getUser()
+-      if (!user || user.id !== currentUserId) throw new Error('ログインを確認してください。')
+-      const { error } = await supabase.from('posts').insert({ user_id: user.id, content: quoteText.trim(),
+-        post_type: 'normal', result_type: null, result_id: null, quote_post_id: post.id })
+-      if (error) throw error
+-      setQuoteOpen(false); setQuoteText(''); setMessage('引用リポストを投稿しました。')
+-    } catch (error) { setMessage(`引用リポストに失敗しました：${error instanceof Error ? error.message : '不明なエラー'}`) }
+-    finally { setQuoteBusy(false) }
+-  }
+-
+-  const handleRepost = async () => {
+-    if (!post || !currentUserId || repostingRef.current) return
+-    repostingRef.current = true
+-    setReposting(true)
+-    try {
+-      const { data: { user }, error: authError } = await supabase.auth.getUser()
+-      if (authError || !user || user.id !== currentUserId) throw new Error('ログイン情報を確認できません。')
+-      const { error } = repostedByMe
+-        ? await supabase.from('post_reposts').delete().eq('post_id', post.id).eq('user_id', user.id)
+-        : await supabase.from('post_reposts').insert({ post_id: post.id, user_id: user.id })
+-      if (error) throw error
+-      setMessage('')
+-      await loadPost(true)
+-    } catch (error) {
+-      setMessage(`リポスト操作に失敗しました：${error instanceof Error ? error.message : '不明なエラー'}`)
+-    } finally {
+-      repostingRef.current = false
+-      setReposting(false)
+-    }
+-  }
+-
+-  const handleComment = async () => {
+-    if (!post || !currentUserId || submittingComment) return
+-    const trimmedComment = commentInput.trim()
+-    // 既存DBのcontent制約を壊さないよう、画像添付時も本文を必須にする。
+-    if (!trimmedComment) {
+-      setMessage('コメント本文を入力してください（画像だけでは送信できません）。')
+-      return
+-    }
+-
+-    const replyTarget = replyTo ? post.comments.find(c => c.id === replyTo.id) : null
+-    if (replyTo && !replyTarget) {
+-      setMessage('返信先が見つかりません。再読み込みしてください。')
+-      return
+-    }
+-
+-    setSubmittingComment(true)
+-    const uploadedPaths: string[] = []
+-    const uploadedUrls: string[] = []
+-    let commentSaved = false
+-    const bucket = supabase.storage.from('comment-images')
+-    try {
+-      const { data: { user }, error: authError } = await supabase.auth.getUser()
+-      if (authError || !user || user.id !== currentUserId) {
+-        setMessage('ログイン情報を確認できません。再ログインしてください。')
+-        return
+-      }
+-
+-      // ユーザーID直下に保存。ストレージRLSも同じIDを検証する。
+-      for (const file of commentImageFiles) {
+-        const extension = file.type === 'image/png' ? 'png' : file.type === 'image/webp' ? 'webp' : 'jpg'
+-        const path = `${user.id}/${crypto.randomUUID()}.${extension}`
+-        const { error: uploadError } = await bucket.upload(path, file, { contentType: file.type, upsert: false })
+-        if (uploadError) throw new Error(`画像アップロード失敗：${uploadError.message}`)
+-        uploadedPaths.push(path)
+-        uploadedUrls.push(bucket.getPublicUrl(path).data.publicUrl)
+-      }
+-
+-      const { error } = await supabase
+-        .from('post_comments')
+-        .insert({
+-          post_id: post.id,
+-          user_id: currentUserId,
+-          content: trimmedComment,
+-          parent_comment_id: replyTarget ? (replyTarget.parent_comment_id || replyTarget.id) : null,
+-          image_urls: uploadedUrls,
+-        })
+-      if (error) throw new Error(`コメントできませんでした：${error.message}`)
+-      commentSaved = true
+-
+-      // 保存が確定したら初めて入力・画像・返信先をクリアする。
+-      setCommentInput('')
+-      setCommentImageFiles([])
+-      if (commentImageInputRef.current) commentImageInputRef.current.value = ''
+-      setReplyTo(null)
+-      setMessage('')
+-
+-      if (post.user_id !== currentUserId) {
+-        const { error: notificationError } = await supabase
+-          .from('notifications')
+-          .insert({ user_id: post.user_id, actor_id: currentUserId, type: 'comment', post_id: post.id })
++import { createVerifiedNotification } from './createVerifiedNotification'
++import { useNavigate, useParams } from 'react-router-dom'
++import { supabase } from './supabase'
++import { usePullToRefresh } from './usePullToRefresh'
++import QuoteSourcePreview, { type QuoteSource } from './QuoteSourcePreview'
++
++
++// ブロックは双方の関係を確認する（自分→相手、相手→自分）。
++async function getBlockedUserIds(userId: string): Promise<Set<string>> {
++  const { data, error } = await supabase
++    .from('user_blocks')
++    .select('blocker_id, blocked_id')
++    .or(`blocker_id.eq.${userId},blocked_id.eq.${userId}`)
++  if (error) throw error
++  return new Set((data || []).map(row => row.blocker_id === userId ? row.blocked_id : row.blocker_id))
++}
++
++type Profile = {
++  display_name: string
++  poker_id: string
++  avatar_url: string | null
++}
++
++type Comment = {
++  id: string
++  post_id: string
++  user_id: string
++  content: string
++  created_at: string
++  parent_comment_id: string | null
++  image_urls?: string[] | null
++  profile?: Profile
++}
++
++type QuotePreview = QuoteSource
++
++type Post = {
++  quote_post_id?: string | null
++  quotePreview?: QuotePreview | null
++  id: string
++  user_id: string
++  content: string
++  created_at: string
++  profile?: Profile
++  likeCount: number
++  likedByMe: boolean
++  comments: Comment[]
++  image_urls?: string[] | null
++}
++
++function PostDetail() {
++  const { id } = useParams()
++  const navigate = useNavigate()
++  const refreshRootRef = useRef<HTMLElement | null>(null)
++
++  const [post, setPost] = useState<Post | null>(null)
++  const [repostCount, setRepostCount] = useState(0)
++  const [repostMenuOpen, setRepostMenuOpen] = useState(false)
++  const [quoteOpen, setQuoteOpen] = useState(false)
++  const [quoteText, setQuoteText] = useState('')
++  const [quoteBusy, setQuoteBusy] = useState(false)
++  const [repostedByMe, setRepostedByMe] = useState(false)
++  const [reposting, setReposting] = useState(false)
++  const repostingRef = useRef(false)
++  const [currentUserId, setCurrentUserId] = useState('')
++  const [commentInput, setCommentInput] = useState('')
++  const [replyTo, setReplyTo] = useState<{ id: string; name: string } | null>(null)
++  const [submittingComment, setSubmittingComment] = useState(false)
++  const [message, setMessage] = useState('読み込み中...')
++  const [expandedImage, setExpandedImage] = useState<string | null>(null)
++  const deletingCommentRef = useRef(false)
++  const [deletingCommentId, setDeletingCommentId] = useState<string | null>(null)
++  const commentImageInputRef = useRef<HTMLInputElement | null>(null)
++  const [commentImageFiles, setCommentImageFiles] = useState<File[]>([])
++  const [commentImagePreviews, setCommentImagePreviews] = useState<string[]>([])
++  const MAX_COMMENT_IMAGES = 4
++
++  useEffect(() => {
++    const urls = commentImageFiles.map(file => URL.createObjectURL(file))
++    setCommentImagePreviews(urls)
++    return () => urls.forEach(url => URL.revokeObjectURL(url))
++  }, [commentImageFiles])
++
++  const chooseCommentImages = (files: FileList | null) => {
++    if (!files) return
++    const selected = Array.from(files)
++    if (selected.some(file => !['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 5 * 1024 * 1024)) {
++      setMessage('画像はJPEG・PNG・WebP形式、各5MB以内にしてください。')
++      return
++    }
++    if (selected.length + commentImageFiles.length > MAX_COMMENT_IMAGES) {
++      setMessage('コメントに添付できる画像は最大4枚です。')
++      return
++    }
++    setCommentImageFiles(previous => [...previous, ...selected])
++    setMessage('')
++  }
++
++
++  const loadPost = async (quiet = false) => {
++    if (!id) {
++      setMessage('投稿が見つかりませんでした。')
++      return
++    }
++
++    const {
++      data: { user },
++    } = await supabase.auth.getUser()
++
++    if (!user) {
++      navigate('/login')
++      return
++    }
++
++    setCurrentUserId(user.id)
++    // 手動更新では投稿を一度消さず、既存の表示・入力状態を維持する。
++    if (!quiet) {
++      setPost(null)
++      setMessage('読み込み中...')
++    }
++    let blockedUserIds: Set<string>
++    try {
++      blockedUserIds = await getBlockedUserIds(user.id)
++    } catch (blockError) {
++      console.error('ブロック情報取得エラー:', blockError)
++      setMessage('ブロック情報を取得できませんでした。再読み込みしてください。')
++      return
++    }
++
++    const { data: postData, error } = await supabase
++      .from('posts')
++      .select('*')
++      .eq('id', id)
++      .maybeSingle()
++
++    if (error) {
++      console.error(error)
++      setMessage(
++        `投稿の取得に失敗しました：${error.message}`
++      )
++      return
++    }
++
++    if (!postData) {
++      setPost(null)
++      setMessage('投稿が見つかりませんでした。')
++      return
++    }
++
++    if (blockedUserIds.has(postData.user_id)) {
++      setPost(null)
++      setMessage('この投稿は表示できません。')
++      return
++    }
++
++    const { data: likes, error: likesError } =
++      await supabase
++        .from('post_likes')
++        .select('user_id')
++        .eq('post_id', id)
++
++    if (likesError) {
++      console.error(likesError)
++      setMessage(
++        `いいね情報の取得に失敗しました：${likesError.message}`
++      )
++      return
++    }
++
++    const { data: comments, error: commentsError } =
++      await supabase
++        .from('post_comments')
++        .select('*')
++        .eq('post_id', id)
++        .order('created_at', { ascending: true })
++
++    if (commentsError) {
++      console.error(commentsError)
++      setMessage(
++        `コメントの取得に失敗しました：${commentsError.message}`
++      )
++      return
++    }
++
++    const profileUserIds = [
++      ...new Set([
++        postData.user_id,
++        ...(comments || []).map(
++          (comment) => comment.user_id
++        ),
++      ]),
++    ]
++
++    const { data: profiles, error: profileError } =
++      await supabase
++        .from('profiles')
++        .select(
++          'id, display_name, poker_id, avatar_url'
++        )
++        .in('id', profileUserIds)
++
++    if (profileError) {
++      console.error(profileError)
++      setMessage(
++        `プロフィールの取得に失敗しました：${profileError.message}`
++      )
++      return
++    }
++
++    const postProfile = profiles?.find(
++      (profile) => profile.id === postData.user_id
++    )
++
++    const commentsWithProfiles: Comment[] = (
++      (comments || []).filter(comment => !blockedUserIds.has(comment.user_id))
++    ).map((comment) => {
++      const commentProfile = profiles?.find(
++        (profile) => profile.id === comment.user_id
++      )
++
++      return {
++        ...comment,
++        profile: commentProfile
++          ? {
++              display_name:
++                commentProfile.display_name,
++              poker_id: commentProfile.poker_id,
++              avatar_url: commentProfile.avatar_url,
++            }
++          : undefined,
++      }
++    })
++
++    let quotePreview: QuotePreview | null = null
++    if (postData.quote_post_id) {
++      const { data: original, error: originalError } = await supabase.from('posts').select('id,user_id,content,image_urls,result_type,result_id,style_snapshot')
++        .eq('id', postData.quote_post_id).maybeSingle()
++      if (!originalError && original && !blockedUserIds.has(original.user_id)) {
++        const { data: originalProfile } = await supabase.from('profiles')
++          .select('display_name,poker_id').eq('id', original.user_id).maybeSingle()
++        let resultData: Record<string, unknown> | null = null
++        let playerTypeData: QuoteSource['playerTypeData'] = null
++        if (original.result_id && original.result_type) {
++          const table = original.result_type === 'tournament' ? 'poker_results'
++            : original.result_type === 'amusement' ? 'amusement_ring_results'
++            : original.result_type === 'cash' ? 'cash_game_results' : null
++          if (table) {
++            const { data: originalResult, error: resultError } = await supabase.from(table).select('*').eq('id', original.result_id).maybeSingle()
++            if (!resultError) resultData = originalResult || null
++          }
++          if (original.result_type === 'player_type') {
++            const { data, error: diagnosisError } = await supabase.rpc('get_player_type_v2_result_detail', { p_result_id: original.result_id })
++            if (!diagnosisError) {
++              const row = Array.isArray(data) ? data[0] : data
++              if (row) playerTypeData = { animal_name_ja: String(row.animal_name_ja || ''), catchphrase: String(row.catchphrase || ''), result_type_key: String(row.result_type_key || '') }
++            }
++          }
++        }
++        quotePreview = { ...original, profile: originalProfile || undefined, resultData, playerTypeData }
++      }
++    }
++    setPost({
++      ...postData,
++      quotePreview,
++      profile: postProfile
++        ? {
++            display_name: postProfile.display_name,
++            poker_id: postProfile.poker_id,
++            avatar_url: postProfile.avatar_url,
++          }
++        : undefined,
++      likeCount: likes?.length || 0,
++      likedByMe:
++        likes?.some(
++          (like) => like.user_id === user.id
++        ) || false,
++      comments: commentsWithProfiles,
++    })
++
++    const { data: repostRows, error: repostError } = await supabase.from('post_reposts')
++      .select('user_id').eq('post_id', postData.id)
++    if (repostError) { setMessage(`リポスト取得エラー：${repostError.message}`); return }
++    setRepostCount(repostRows?.length || 0)
++    setRepostedByMe(Boolean(repostRows?.some(row => row.user_id === user.id)))
++    setMessage('')
++  }
++
++  // 下書きや返信先、操作中の状態がある間はPull to Refreshを許可しない。
++  // Hook自体の判定に加え、更新処理を開始する直前にも条件を確認する。
++  const refreshAllowed = Boolean(post) && !commentInput.trim() && !replyTo &&
++    !submittingComment && !reposting && commentImageFiles.length === 0 && !deletingCommentId && !expandedImage
++  const refreshAllowedRef = useRef(refreshAllowed)
++  refreshAllowedRef.current = refreshAllowed
++  const { pullDistance, isRefreshing, refreshError } = usePullToRefresh(
++    refreshRootRef,
++    {
++      enabled: refreshAllowed,
++      onRefresh: async () => {
++        if (!refreshAllowedRef.current) return
++        await loadPost(true)
++      },
++    },
++  )
++
++  useEffect(() => {
++    void loadPost()
++  }, [id])
++
++  const handleLike = async () => {
++    if (!post || !currentUserId) return
++
++    if (post.likedByMe) {
++      const { error } = await supabase
++        .from('post_likes')
++        .delete()
++        .eq('post_id', post.id)
++        .eq('user_id', currentUserId)
++
++      if (error) {
++        console.error(error)
++        setMessage(
++          `いいねを解除できませんでした：${error.message}`
++        )
++        return
++      }
++    } else {
++      const { error } = await supabase
++        .from('post_likes')
++        .insert({
++          post_id: post.id,
++          user_id: currentUserId,
++        })
++
++      if (error) {
++        console.error(error)
++        setMessage(
++          `いいねできませんでした：${error.message}`
++        )
++        return
++      }
++
++      if (post.user_id !== currentUserId) {
++        const notificationError = await createVerifiedNotification('like', post.id)
++
++        /*
++          23505 は、
++          同じユーザーから同じ投稿への
++          いいね通知がすでに存在している場合の
++          DB側の重複エラー。
++
++          いいね解除後の再いいねでは
++          通知を増やさないため、
++          このエラーだけ正常動作として無視する。
++        */
++        if (
++          notificationError &&
++          notificationError.code !== '23505'
++        ) {
++          console.error(
++            'いいね通知作成エラー:',
++            notificationError
++          )
++        }
++      }
++    }
++
++    setMessage('')
++    await loadPost()
++  }
++
++  const publishQuote = async () => {
++    if (!post || quoteBusy || !quoteText.trim()) return
++    setQuoteBusy(true)
++    try {
++      const { data: { user } } = await supabase.auth.getUser()
++      if (!user || user.id !== currentUserId) throw new Error('ログインを確認してください。')
++      const { error } = await supabase.from('posts').insert({ user_id: user.id, content: quoteText.trim(),
++        post_type: 'normal', result_type: null, result_id: null, quote_post_id: post.id })
++      if (error) throw error
++      setQuoteOpen(false); setQuoteText(''); setMessage('引用リポストを投稿しました。')
++    } catch (error) { setMessage(`引用リポストに失敗しました：${error instanceof Error ? error.message : '不明なエラー'}`) }
++    finally { setQuoteBusy(false) }
++  }
++
++  const handleRepost = async () => {
++    if (!post || !currentUserId || repostingRef.current) return
++    repostingRef.current = true
++    setReposting(true)
++    try {
++      const { data: { user }, error: authError } = await supabase.auth.getUser()
++      if (authError || !user || user.id !== currentUserId) throw new Error('ログイン情報を確認できません。')
++      const { error } = repostedByMe
++        ? await supabase.from('post_reposts').delete().eq('post_id', post.id).eq('user_id', user.id)
++        : await supabase.from('post_reposts').insert({ post_id: post.id, user_id: user.id })
++      if (error) throw error
++      setMessage('')
++      await loadPost(true)
++    } catch (error) {
++      setMessage(`リポスト操作に失敗しました：${error instanceof Error ? error.message : '不明なエラー'}`)
++    } finally {
++      repostingRef.current = false
++      setReposting(false)
++    }
++  }
++
++  const handleComment = async () => {
++    if (!post || !currentUserId || submittingComment) return
++    const trimmedComment = commentInput.trim()
++    // 既存DBのcontent制約を壊さないよう、画像添付時も本文を必須にする。
++    if (!trimmedComment) {
++      setMessage('コメント本文を入力してください（画像だけでは送信できません）。')
++      return
++    }
++
++    const replyTarget = replyTo ? post.comments.find(c => c.id === replyTo.id) : null
++    if (replyTo && !replyTarget) {
++      setMessage('返信先が見つかりません。再読み込みしてください。')
++      return
++    }
++
++    setSubmittingComment(true)
++    const uploadedPaths: string[] = []
++    const uploadedUrls: string[] = []
++    let commentSaved = false
++    const bucket = supabase.storage.from('comment-images')
++    try {
++      const { data: { user }, error: authError } = await supabase.auth.getUser()
++      if (authError || !user || user.id !== currentUserId) {
++        setMessage('ログイン情報を確認できません。再ログインしてください。')
++        return
++      }
++
++      // ユーザーID直下に保存。ストレージRLSも同じIDを検証する。
++      for (const file of commentImageFiles) {
++        const extension = file.type === 'image/png' ? 'png' : file.type === 'image/webp' ? 'webp' : 'jpg'
++        const path = `${user.id}/${crypto.randomUUID()}.${extension}`
++        const { error: uploadError } = await bucket.upload(path, file, { contentType: file.type, upsert: false })
++        if (uploadError) throw new Error(`画像アップロード失敗：${uploadError.message}`)
++        uploadedPaths.push(path)
++        uploadedUrls.push(bucket.getPublicUrl(path).data.publicUrl)
++      }
++
++      const { error } = await supabase
++        .from('post_comments')
++        .insert({
++          post_id: post.id,
++          user_id: currentUserId,
++          content: trimmedComment,
++          parent_comment_id: replyTarget ? (replyTarget.parent_comment_id || replyTarget.id) : null,
++          image_urls: uploadedUrls,
++        })
++      if (error) throw new Error(`コメントできませんでした：${error.message}`)
++      commentSaved = true
++
++      // 保存が確定したら初めて入力・画像・返信先をクリアする。
++      setCommentInput('')
++      setCommentImageFiles([])
++      if (commentImageInputRef.current) commentImageInputRef.current.value = ''
++      setReplyTo(null)
++      setMessage('')
++
++      if (post.user_id !== currentUserId) {
++        const notificationError = await createVerifiedNotification('comment', savedComment.id)
+         if (notificationError) console.error('コメント通知作成エラー:', notificationError)
+       }
+       await loadPost(true)
+
+diff --git a/src/PlayerProfile.tsx b/src/PlayerProfile.tsx
+--- a/src/PlayerProfile.tsx
++++ b/src/PlayerProfile.tsx
+@@ -1,389 +1,381 @@
+ import PokerIdCardEntry from './PokerIdCardEntry'
+-import Timeline from './Timeline'
+-import TournamentAchievementShowcase from './TournamentAchievementShowcase'
+-        import { useEffect, useRef, useState } from 'react'
+-        import {
+-          useNavigate,
+-          useParams,
+-        } from 'react-router-dom'
+-        import { supabase } from './supabase'
+-import { AdditionalProfileTags, PokerMeaningSection, MyHandSection, pokerExperience } from './PokerProfileExtras'
+-import { usePullToRefresh } from './usePullToRefresh'
+-        type PokerResult = {
+-          id: string
+-          tournament_name: string
+-          played_at: string
+-          rank: number | null
+-          entry_count: number | null
+-          prize_amount: number | null
+-          venue: string | null
+-          is_itm: boolean
+-          entry_fee: number | null
+-          bullets: number
+-          total_entry_fee: number | null
+-          entry_timing: string | null
+-          rank_unknown: boolean
+-          is_featured: boolean
+-          entry_bb: number | null
+-          game_type: string | null
+-          prize_description: string | null
+-          memo: string | null
+-          is_public: boolean
+-        }
+-        type AmusementRingResult = {
+-          id: string
+-          played_at: string
+-          venue: string
+-          game_type: string
+-          small_blind: number
+-          big_blind: number
+-          starting_stack: number
+-          additional_stack: number
+-          ending_stack: number
+-          play_minutes: number
+-          memo: string | null
+-          is_public: boolean
+-        }
+-        type CashGameResult = {
+-          id: string
+-          played_at: string
+-          play_type: 'live' | 'online'
+-          record_type: 'session' | 'daily'
+-          venue: string
+-          game_type: string
+-          small_blind: number
+-          big_blind: number
+-          currency: string
+-          buy_in_amount: number | null
+-          cash_out_amount: number | null
+-          profit_amount: number
+-          exchange_rate_to_jpy: number
+-          profit_jpy: number
+-          play_minutes: number
+-          memo: string | null
+-          is_public: boolean
+-        }
+-        type ProfilePost = { id: string; content: string; created_at: string; post_type?: string; result_type?: string | null }
+-        type ProfileComment = { id: string; post_id: string; content: string; created_at: string }
+-        type PlayerTypeSummary = {
+-          result_id: string
+-          result_type_key: string
+-          animal_name_ja: string
+-          catchphrase: string
+-          completed_at: string
+-        }
+-
+-        const playerTypeEmoji: Record<string, string> = {
+-          lion: '🦁', tiger: '🐯', leopard: '🐆', bison: '🦬', gorilla: '🦍',
+-          rhino: '🦏', shark: '🦈', owl: '🦉', eagle: '🦅', elephant: '🐘',
+-          giraffe: '🦒', wolf: '🐺', hyena: '🐾', cat: '🐈', chameleon: '🦎',
+-          dolphin: '🐬', fox: '🦊', snake: '🐍', raccoon: '🦝', turtle: '🐢',
+-          rabbit: '🐇', crocodile: '🐊', hedgehog: '🦔', deer: '🦌', sloth: '🦥',
+-          dog: '🐕', bear: '🐻', bull: '🐄', badger: '🦡', monkey: '🐒',
+-          magpie: '🐦‍⬛', penguin: '🐧', horse: '🐎', squirrel: '🐿️',
+-          mountain_goat: '🐐', otter: '🦦',
+-        }
+-
+-        function PlayerProfile() {
+-          const { id } = useParams()
+-          const navigate = useNavigate()
+-          const refreshRootRef = useRef<HTMLElement | null>(null)
+-          const reloadRef = useRef<() => Promise<void>>(async () => {})
+-          const [profile, setProfile] =
+-            useState<any>(null)
+-          const [isFollowing, setIsFollowing] =
+-            useState(false)
+-          const [currentUserId, setCurrentUserId] =
+-            useState('')
+-          const [blockStatus, setBlockStatus] = useState<'loading' | 'none' | 'blocked' | 'blockedBy'>('loading')
+-          const [blockBusy, setBlockBusy] = useState(false)
+-          const [blockError, setBlockError] = useState('')
+-          const [isMuted, setIsMuted] = useState(false)
+-          const [muteBusy, setMuteBusy] = useState(false)
+-          const [muteError, setMuteError] = useState('')
+-          const [favoriteVenues, setFavoriteVenues] = useState<{ id: string; name: string }[]>([])
+-          const [followingCount, setFollowingCount] =
+-            useState(0)
+-          const [followerCount, setFollowerCount] =
+-            useState(0)
+-          const [
+-            averageAggression,
+-            setAverageAggression,
+-          ] = useState<number | null>(null)
+-          const [
+-            averageLooseness,
+-            setAverageLooseness,
+-          ] = useState<number | null>(null)
+-          const [ratingCount, setRatingCount] =
+-            useState(0)
+-          const [pokerResults, setPokerResults] =
+-            useState<PokerResult[]>([])
+-          const [amusementRingResults, setAmusementRingResults] =
+-            useState<AmusementRingResult[]>([])
+-          const [cashGameResults, setCashGameResults] = useState<CashGameResult[]>([])
+-          const [activeTab, setActiveTab] = useState<'poker' | 'records' | 'posts'>('poker')
+-          const [recordTab, setRecordTab] = useState<'tournament' | 'ring' | 'cash'>('tournament')
+-          const [playerType, setPlayerType] = useState<PlayerTypeSummary | null>(null)
+-          const [activityTab, setActivityTab] = useState<'posts' | 'comments'>('posts')
+-          const [playerPosts, setPlayerPosts] = useState<ProfilePost[]>([])
+-          const [playerComments, setPlayerComments] = useState<ProfileComment[]>([])
+-          const [activityLoading, setActivityLoading] = useState(false)
+-          const [activityError, setActivityError] = useState('')
+-          const { pullDistance, isRefreshing, refreshError } = usePullToRefresh(refreshRootRef, {
+-            enabled: !!id && !!profile && !blockBusy && !muteBusy && blockStatus === 'none' && activeTab !== 'posts',
+-            onRefresh: () => reloadRef.current(),
+-          })
+-          useEffect(() => {
+-            if (activeTab !== 'posts' || !id || blockStatus !== 'none') return
+-            let cancelled = false
+-            const loadActivity = async () => {
+-              setActivityLoading(true)
+-              setActivityError('')
+-              const [postsResponse, commentsResponse] = await Promise.all([
+-                supabase.from('posts').select('id, content, created_at, post_type, result_type').eq('user_id', id).order('created_at', { ascending: false }),
+-                supabase.from('post_comments').select('id, post_id, content, created_at').eq('user_id', id).order('created_at', { ascending: false }),
+-              ])
+-              if (cancelled) return
+-              if (postsResponse.error || commentsResponse.error) {
+-                setActivityError(postsResponse.error?.message || commentsResponse.error?.message || '取得に失敗しました')
+-                setPlayerPosts([])
+-                setPlayerComments([])
+-              } else {
+-                setPlayerPosts((postsResponse.data || []) as ProfilePost[])
+-                setPlayerComments((commentsResponse.data || []) as ProfileComment[])
+-              }
+-              setActivityLoading(false)
+-            }
+-            void loadActivity()
+-            return () => { cancelled = true }
+-          }, [activeTab, id, blockStatus])
+-
+-          useEffect(() => {
+-            const loadProfile = async () => {
+-              if (!id) return
+-              const {
+-                data: { user },
+-              } = await supabase.auth.getUser()
+-              if (!user) {
+-                navigate('/login')
+-                return
+-              }
+-              setCurrentUserId(user.id)
+-              const { data: muteRow, error: muteLoadError } = await supabase
+-                .from('user_mutes').select('muted_id')
+-                .eq('muter_id', user.id).eq('muted_id', id).maybeSingle()
+-              if (muteLoadError) setMuteError('ミュート状態を取得できませんでした。')
+-              else { setIsMuted(!!muteRow); setMuteError('') }
+-              const { data: blockRows, error: blockLoadError } = await supabase.from('user_blocks')
+-                .select('blocker_id, blocked_id')
+-                .or(`and(blocker_id.eq.${user.id},blocked_id.eq.${id}),and(blocker_id.eq.${id},blocked_id.eq.${user.id})`)
+-              if (blockLoadError) { setBlockError('ブロック状態の取得に失敗しました。'); setBlockStatus('loading'); return }
+-              const mine = (blockRows || []).some(row => row.blocker_id === user.id)
+-              const theirs = (blockRows || []).some(row => row.blocker_id === id)
+-              setBlockStatus(mine ? 'blocked' : theirs ? 'blockedBy' : 'none')
+-              if (mine || theirs) {
+-                const { data: minimalProfile } = await supabase.from('profiles').select('id, display_name, poker_id').eq('id', id).maybeSingle()
+-                setProfile(minimalProfile || { id, display_name: 'ユーザー', poker_id: '' })
+-                return
+-              }
+-              if (user.id === id) {
+-                navigate('/profile')
+-                return
+-              }
+-              const { data, error } =
+-                await supabase
+-                  .from('profiles')
+-                  .select('*')
+-                  .eq('id', id)
+-                  .single()
+-              if (error) {
+-                console.error(error)
+-                return
+-              }
+-              setProfile(data)
+-
+-              const { data: playerTypeRows, error: playerTypeError } = await supabase.rpc(
+-                'get_public_latest_player_type_v2',
+-                { p_user_id: id },
+-              )
+-              if (playerTypeError) {
+-                console.error('公開プレイヤータイプ取得エラー:', playerTypeError)
+-              } else {
+-                setPlayerType((playerTypeRows?.[0] ?? null) as PlayerTypeSummary | null)
+-              }
+-
+-              const { data: favoriteVenueLinks, error: favoriteVenueError } = await supabase
+-                .from('user_favorite_venues')
+-                .select('venue_id')
+-                .eq('user_id', id)
+-
+-              if (favoriteVenueError) {
+-                console.error('よく行く店舗取得エラー:', favoriteVenueError)
+-              } else {
+-                const venueIds = (favoriteVenueLinks || []).map((item) => item.venue_id)
+-                if (venueIds.length > 0) {
+-                  const { data: venueRows, error: venueRowsError } = await supabase
+-                    .from('poker_venues')
+-                    .select('id, name')
+-                    .in('id', venueIds)
+-                    .order('name', { ascending: true })
+-
+-                  if (venueRowsError) {
+-                    console.error('店舗情報取得エラー:', venueRowsError)
+-                  } else {
+-                    setFavoriteVenues(venueRows || [])
+-                  }
+-                } else {
+-                  setFavoriteVenues([])
+-                }
+-              }
+-
+-              const {
+-                data: results,
+-                error: resultsError,
+-              } = await supabase
+-                .from('poker_results')
+-                .select(
+-                  'id, tournament_name, played_at, rank, entry_count, prize_amount, memo, is_public, venue, is_itm, entry_fee, bullets, total_entry_fee, entry_timing, rank_unknown, is_featured, entry_bb, game_type, prize_description, created_at'
+-                )
+-                .eq('user_id', id)
+-                .eq('is_public', true)
+-                .order('played_at', {
+-                  ascending: false,
+-                })
+-                .order('created_at', {
+-                  ascending: false,
+-                })
+-              if (resultsError) {
+-                console.error(resultsError)
+-              } else {
+-                setPokerResults(results || [])
+-              }
+-              const { data: ringResults, error: ringResultsError } = await supabase
+-                .from('amusement_ring_results')
+-                .select('id, played_at, venue, game_type, small_blind, big_blind, starting_stack, additional_stack, ending_stack, play_minutes, memo, is_public, created_at')
+-                .eq('user_id', id)
+-                .eq('is_public', true)
+-                .order('played_at', { ascending: false })
+-                .order('created_at', { ascending: false })
+-              if (ringResultsError) {
+-                console.error(ringResultsError)
+-              } else {
+-                setAmusementRingResults(ringResults || [])
+-              }
+-              const { count: following } =
+-                await supabase
+-                  .from('follows')
+-                  .select('*', {
+-                    count: 'exact',
+-                    head: true,
+-                  })
+-                  .eq('follower_id', id)
+-              setFollowingCount(following || 0)
+-              const { count: followers } =
+-                await supabase
+-                  .from('follows')
+-                  .select('*', {
+-                    count: 'exact',
+-                    head: true,
+-                  })
+-                  .eq('following_id', id)
+-              setFollowerCount(followers || 0)
+-              const { data: ratingSummary, error: ratingsError } = await supabase.rpc(
+-                'get_player_style_rating_summary',
+-                { p_user_id: id }
+-              )
+-              if (ratingsError) {
+-                console.error('匿名評価集計エラー:', ratingsError)
+-                setAverageAggression(null)
+-                setAverageLooseness(null)
+-                setRatingCount(0)
+-              } else {
+-                const summary = ratingSummary?.[0]
+-                setRatingCount(Number(summary?.rating_count ?? 0))
+-                setAverageAggression(summary?.average_aggression == null ? null : Number(summary.average_aggression))
+-                setAverageLooseness(summary?.average_looseness == null ? null : Number(summary.average_looseness))
+-              }
+-              const { data: followData } =
+-                await supabase
+-                  .from('follows')
+-                  .select('id')
+-                  .eq('follower_id', user.id)
+-                  .eq('following_id', id)
+-                  .maybeSingle()
+-              setIsFollowing(!!followData)
+-              const { data: cashResults, error: cashResultsError } = await supabase
+-                .from('cash_game_results')
+-                .select(
+-                  'id, played_at, play_type, record_type, venue, game_type, small_blind, big_blind, currency, buy_in_amount, cash_out_amount, profit_amount, exchange_rate_to_jpy, profit_jpy, play_minutes, memo, is_public, created_at'
+-                )
+-                .eq('user_id', id)
+-                .eq('is_public', true)
+-                .order('played_at', { ascending: false })
+-                .order('created_at', { ascending: false })
+-              if (cashResultsError) {
+-                console.error(cashResultsError)
+-              } else {
+-                setCashGameResults(cashResults || [])
+-              }
+-            }
+-            reloadRef.current = loadProfile
+-            void loadProfile()
+-          }, [id, navigate])
+-          const handleBlockToggle = async () => {
+-            if (!id || !currentUserId || blockBusy) return
+-            const willBlock = blockStatus !== 'blocked'
+-            if (willBlock && !window.confirm('このユーザーをブロックしますか？相互のフォローが解除され、DMできなくなります。')) return
+-            setBlockBusy(true)
+-            setBlockError('')
+-            const query = supabase.from('user_blocks')
+-            const { error } = willBlock
+-              ? await query.insert({ blocker_id: currentUserId, blocked_id: id })
+-              : await query.delete().eq('blocker_id', currentUserId).eq('blocked_id', id)
+-            if (error) { setBlockError(error.message) }
+-            else {
+-              setBlockStatus(willBlock ? 'blocked' : 'none')
+-              if (willBlock) { setIsFollowing(false); setFollowerCount(count => Math.max(0, count - (isFollowing ? 1 : 0))) }
+-              else { window.location.reload() }
+-            }
+-            setBlockBusy(false)
+-          }
+-          const handleMuteToggle = async () => {
+-            if (!id || !currentUserId || muteBusy || blockStatus !== 'none' || muteError) return
+-            setMuteBusy(true)
+-            const { error } = isMuted
+-              ? await supabase.from('user_mutes').delete().eq('muter_id', currentUserId).eq('muted_id', id)
+-              : await supabase.from('user_mutes').insert({ muter_id: currentUserId, muted_id: id })
+-            if (error) setMuteError(`ミュート操作に失敗しました：${error.message}`)
+-            else setIsMuted(!isMuted)
+-            setMuteBusy(false)
+-          }
+-          const handleFollow = async () => {
+-            if (blockStatus !== 'none') return
+-            const {
+-              data: { user },
+-            } = await supabase.auth.getUser()
+-            if (!user || !id) return
+-            const { error } = await supabase
+-              .from('follows')
+-              .insert({
+-                follower_id: user.id,
+-                following_id: id,
+-              })
+-            if (error) {
+-              console.error(error)
+-              return
+-            }
+-            const {
+-              error: notificationError,
+-            } = await supabase
+-              .from('notifications')
+-              .insert({
+-                user_id: id,
+-                actor_id: user.id,
+-                type: 'follow',
+-                post_id: null,
+-              })
++import { createVerifiedNotification } from './createVerifiedNotification'
++import Timeline from './Timeline'
++import TournamentAchievementShowcase from './TournamentAchievementShowcase'
++        import { useEffect, useRef, useState } from 'react'
++        import {
++          useNavigate,
++          useParams,
++        } from 'react-router-dom'
++        import { supabase } from './supabase'
++import { AdditionalProfileTags, PokerMeaningSection, MyHandSection, pokerExperience } from './PokerProfileExtras'
++import { usePullToRefresh } from './usePullToRefresh'
++        type PokerResult = {
++          id: string
++          tournament_name: string
++          played_at: string
++          rank: number | null
++          entry_count: number | null
++          prize_amount: number | null
++          venue: string | null
++          is_itm: boolean
++          entry_fee: number | null
++          bullets: number
++          total_entry_fee: number | null
++          entry_timing: string | null
++          rank_unknown: boolean
++          is_featured: boolean
++          entry_bb: number | null
++          game_type: string | null
++          prize_description: string | null
++          memo: string | null
++          is_public: boolean
++        }
++        type AmusementRingResult = {
++          id: string
++          played_at: string
++          venue: string
++          game_type: string
++          small_blind: number
++          big_blind: number
++          starting_stack: number
++          additional_stack: number
++          ending_stack: number
++          play_minutes: number
++          memo: string | null
++          is_public: boolean
++        }
++        type CashGameResult = {
++          id: string
++          played_at: string
++          play_type: 'live' | 'online'
++          record_type: 'session' | 'daily'
++          venue: string
++          game_type: string
++          small_blind: number
++          big_blind: number
++          currency: string
++          buy_in_amount: number | null
++          cash_out_amount: number | null
++          profit_amount: number
++          exchange_rate_to_jpy: number
++          profit_jpy: number
++          play_minutes: number
++          memo: string | null
++          is_public: boolean
++        }
++        type ProfilePost = { id: string; content: string; created_at: string; post_type?: string; result_type?: string | null }
++        type ProfileComment = { id: string; post_id: string; content: string; created_at: string }
++        type PlayerTypeSummary = {
++          result_id: string
++          result_type_key: string
++          animal_name_ja: string
++          catchphrase: string
++          completed_at: string
++        }
++
++        const playerTypeEmoji: Record<string, string> = {
++          lion: '🦁', tiger: '🐯', leopard: '🐆', bison: '🦬', gorilla: '🦍',
++          rhino: '🦏', shark: '🦈', owl: '🦉', eagle: '🦅', elephant: '🐘',
++          giraffe: '🦒', wolf: '🐺', hyena: '🐾', cat: '🐈', chameleon: '🦎',
++          dolphin: '🐬', fox: '🦊', snake: '🐍', raccoon: '🦝', turtle: '🐢',
++          rabbit: '🐇', crocodile: '🐊', hedgehog: '🦔', deer: '🦌', sloth: '🦥',
++          dog: '🐕', bear: '🐻', bull: '🐄', badger: '🦡', monkey: '🐒',
++          magpie: '🐦‍⬛', penguin: '🐧', horse: '🐎', squirrel: '🐿️',
++          mountain_goat: '🐐', otter: '🦦',
++        }
++
++        function PlayerProfile() {
++          const { id } = useParams()
++          const navigate = useNavigate()
++          const refreshRootRef = useRef<HTMLElement | null>(null)
++          const reloadRef = useRef<() => Promise<void>>(async () => {})
++          const [profile, setProfile] =
++            useState<any>(null)
++          const [isFollowing, setIsFollowing] =
++            useState(false)
++          const [currentUserId, setCurrentUserId] =
++            useState('')
++          const [blockStatus, setBlockStatus] = useState<'loading' | 'none' | 'blocked' | 'blockedBy'>('loading')
++          const [blockBusy, setBlockBusy] = useState(false)
++          const [blockError, setBlockError] = useState('')
++          const [isMuted, setIsMuted] = useState(false)
++          const [muteBusy, setMuteBusy] = useState(false)
++          const [muteError, setMuteError] = useState('')
++          const [favoriteVenues, setFavoriteVenues] = useState<{ id: string; name: string }[]>([])
++          const [followingCount, setFollowingCount] =
++            useState(0)
++          const [followerCount, setFollowerCount] =
++            useState(0)
++          const [
++            averageAggression,
++            setAverageAggression,
++          ] = useState<number | null>(null)
++          const [
++            averageLooseness,
++            setAverageLooseness,
++          ] = useState<number | null>(null)
++          const [ratingCount, setRatingCount] =
++            useState(0)
++          const [pokerResults, setPokerResults] =
++            useState<PokerResult[]>([])
++          const [amusementRingResults, setAmusementRingResults] =
++            useState<AmusementRingResult[]>([])
++          const [cashGameResults, setCashGameResults] = useState<CashGameResult[]>([])
++          const [activeTab, setActiveTab] = useState<'poker' | 'records' | 'posts'>('poker')
++          const [recordTab, setRecordTab] = useState<'tournament' | 'ring' | 'cash'>('tournament')
++          const [playerType, setPlayerType] = useState<PlayerTypeSummary | null>(null)
++          const [activityTab, setActivityTab] = useState<'posts' | 'comments'>('posts')
++          const [playerPosts, setPlayerPosts] = useState<ProfilePost[]>([])
++          const [playerComments, setPlayerComments] = useState<ProfileComment[]>([])
++          const [activityLoading, setActivityLoading] = useState(false)
++          const [activityError, setActivityError] = useState('')
++          const { pullDistance, isRefreshing, refreshError } = usePullToRefresh(refreshRootRef, {
++            enabled: !!id && !!profile && !blockBusy && !muteBusy && blockStatus === 'none' && activeTab !== 'posts',
++            onRefresh: () => reloadRef.current(),
++          })
++          useEffect(() => {
++            if (activeTab !== 'posts' || !id || blockStatus !== 'none') return
++            let cancelled = false
++            const loadActivity = async () => {
++              setActivityLoading(true)
++              setActivityError('')
++              const [postsResponse, commentsResponse] = await Promise.all([
++                supabase.from('posts').select('id, content, created_at, post_type, result_type').eq('user_id', id).order('created_at', { ascending: false }),
++                supabase.from('post_comments').select('id, post_id, content, created_at').eq('user_id', id).order('created_at', { ascending: false }),
++              ])
++              if (cancelled) return
++              if (postsResponse.error || commentsResponse.error) {
++                setActivityError(postsResponse.error?.message || commentsResponse.error?.message || '取得に失敗しました')
++                setPlayerPosts([])
++                setPlayerComments([])
++              } else {
++                setPlayerPosts((postsResponse.data || []) as ProfilePost[])
++                setPlayerComments((commentsResponse.data || []) as ProfileComment[])
++              }
++              setActivityLoading(false)
++            }
++            void loadActivity()
++            return () => { cancelled = true }
++          }, [activeTab, id, blockStatus])
++
++          useEffect(() => {
++            const loadProfile = async () => {
++              if (!id) return
++              const {
++                data: { user },
++              } = await supabase.auth.getUser()
++              if (!user) {
++                navigate('/login')
++                return
++              }
++              setCurrentUserId(user.id)
++              const { data: muteRow, error: muteLoadError } = await supabase
++                .from('user_mutes').select('muted_id')
++                .eq('muter_id', user.id).eq('muted_id', id).maybeSingle()
++              if (muteLoadError) setMuteError('ミュート状態を取得できませんでした。')
++              else { setIsMuted(!!muteRow); setMuteError('') }
++              const { data: blockRows, error: blockLoadError } = await supabase.from('user_blocks')
++                .select('blocker_id, blocked_id')
++                .or(`and(blocker_id.eq.${user.id},blocked_id.eq.${id}),and(blocker_id.eq.${id},blocked_id.eq.${user.id})`)
++              if (blockLoadError) { setBlockError('ブロック状態の取得に失敗しました。'); setBlockStatus('loading'); return }
++              const mine = (blockRows || []).some(row => row.blocker_id === user.id)
++              const theirs = (blockRows || []).some(row => row.blocker_id === id)
++              setBlockStatus(mine ? 'blocked' : theirs ? 'blockedBy' : 'none')
++              if (mine || theirs) {
++                const { data: minimalProfile } = await supabase.from('profiles').select('id, display_name, poker_id').eq('id', id).maybeSingle()
++                setProfile(minimalProfile || { id, display_name: 'ユーザー', poker_id: '' })
++                return
++              }
++              if (user.id === id) {
++                navigate('/profile')
++                return
++              }
++              const { data, error } =
++                await supabase
++                  .from('profiles')
++                  .select('*')
++                  .eq('id', id)
++                  .single()
++              if (error) {
++                console.error(error)
++                return
++              }
++              setProfile(data)
++
++              const { data: playerTypeRows, error: playerTypeError } = await supabase.rpc(
++                'get_public_latest_player_type_v2',
++                { p_user_id: id },
++              )
++              if (playerTypeError) {
++                console.error('公開プレイヤータイプ取得エラー:', playerTypeError)
++              } else {
++                setPlayerType((playerTypeRows?.[0] ?? null) as PlayerTypeSummary | null)
++              }
++
++              const { data: favoriteVenueLinks, error: favoriteVenueError } = await supabase
++                .from('user_favorite_venues')
++                .select('venue_id')
++                .eq('user_id', id)
++
++              if (favoriteVenueError) {
++                console.error('よく行く店舗取得エラー:', favoriteVenueError)
++              } else {
++                const venueIds = (favoriteVenueLinks || []).map((item) => item.venue_id)
++                if (venueIds.length > 0) {
++                  const { data: venueRows, error: venueRowsError } = await supabase
++                    .from('poker_venues')
++                    .select('id, name')
++                    .in('id', venueIds)
++                    .order('name', { ascending: true })
++
++                  if (venueRowsError) {
++                    console.error('店舗情報取得エラー:', venueRowsError)
++                  } else {
++                    setFavoriteVenues(venueRows || [])
++                  }
++                } else {
++                  setFavoriteVenues([])
++                }
++              }
++
++              const {
++                data: results,
++                error: resultsError,
++              } = await supabase
++                .from('poker_results')
++                .select(
++                  'id, tournament_name, played_at, rank, entry_count, prize_amount, memo, is_public, venue, is_itm, entry_fee, bullets, total_entry_fee, entry_timing, rank_unknown, is_featured, entry_bb, game_type, prize_description, created_at'
++                )
++                .eq('user_id', id)
++                .eq('is_public', true)
++                .order('played_at', {
++                  ascending: false,
++                })
++                .order('created_at', {
++                  ascending: false,
++                })
++              if (resultsError) {
++                console.error(resultsError)
++              } else {
++                setPokerResults(results || [])
++              }
++              const { data: ringResults, error: ringResultsError } = await supabase
++                .from('amusement_ring_results')
++                .select('id, played_at, venue, game_type, small_blind, big_blind, starting_stack, additional_stack, ending_stack, play_minutes, memo, is_public, created_at')
++                .eq('user_id', id)
++                .eq('is_public', true)
++                .order('played_at', { ascending: false })
++                .order('created_at', { ascending: false })
++              if (ringResultsError) {
++                console.error(ringResultsError)
++              } else {
++                setAmusementRingResults(ringResults || [])
++              }
++              const { count: following } =
++                await supabase
++                  .from('follows')
++                  .select('*', {
++                    count: 'exact',
++                    head: true,
++                  })
++                  .eq('follower_id', id)
++              setFollowingCount(following || 0)
++              const { count: followers } =
++                await supabase
++                  .from('follows')
++                  .select('*', {
++                    count: 'exact',
++                    head: true,
++                  })
++                  .eq('following_id', id)
++              setFollowerCount(followers || 0)
++              const { data: ratingSummary, error: ratingsError } = await supabase.rpc(
++                'get_player_style_rating_summary',
++                { p_user_id: id }
++              )
++              if (ratingsError) {
++                console.error('匿名評価集計エラー:', ratingsError)
++                setAverageAggression(null)
++                setAverageLooseness(null)
++                setRatingCount(0)
++              } else {
++                const summary = ratingSummary?.[0]
++                setRatingCount(Number(summary?.rating_count ?? 0))
++                setAverageAggression(summary?.average_aggression == null ? null : Number(summary.average_aggression))
++                setAverageLooseness(summary?.average_looseness == null ? null : Number(summary.average_looseness))
++              }
++              const { data: followData } =
++                await supabase
++                  .from('follows')
++                  .select('id')
++                  .eq('follower_id', user.id)
++                  .eq('following_id', id)
++                  .maybeSingle()
++              setIsFollowing(!!followData)
++              const { data: cashResults, error: cashResultsError } = await supabase
++                .from('cash_game_results')
++                .select(
++                  'id, played_at, play_type, record_type, venue, game_type, small_blind, big_blind, currency, buy_in_amount, cash_out_amount, profit_amount, exchange_rate_to_jpy, profit_jpy, play_minutes, memo, is_public, created_at'
++                )
++                .eq('user_id', id)
++                .eq('is_public', true)
++                .order('played_at', { ascending: false })
++                .order('created_at', { ascending: false })
++              if (cashResultsError) {
++                console.error(cashResultsError)
++              } else {
++                setCashGameResults(cashResults || [])
++              }
++            }
++            reloadRef.current = loadProfile
++            void loadProfile()
++          }, [id, navigate])
++          const handleBlockToggle = async () => {
++            if (!id || !currentUserId || blockBusy) return
++            const willBlock = blockStatus !== 'blocked'
++            if (willBlock && !window.confirm('このユーザーをブロックしますか？相互のフォローが解除され、DMできなくなります。')) return
++            setBlockBusy(true)
++            setBlockError('')
++            const query = supabase.from('user_blocks')
++            const { error } = willBlock
++              ? await query.insert({ blocker_id: currentUserId, blocked_id: id })
++              : await query.delete().eq('blocker_id', currentUserId).eq('blocked_id', id)
++            if (error) { setBlockError(error.message) }
++            else {
++              setBlockStatus(willBlock ? 'blocked' : 'none')
++              if (willBlock) { setIsFollowing(false); setFollowerCount(count => Math.max(0, count - (isFollowing ? 1 : 0))) }
++              else { window.location.reload() }
++            }
++            setBlockBusy(false)
++          }
++          const handleMuteToggle = async () => {
++            if (!id || !currentUserId || muteBusy || blockStatus !== 'none' || muteError) return
++            setMuteBusy(true)
++            const { error } = isMuted
++              ? await supabase.from('user_mutes').delete().eq('muter_id', currentUserId).eq('muted_id', id)
++              : await supabase.from('user_mutes').insert({ muter_id: currentUserId, muted_id: id })
++            if (error) setMuteError(`ミュート操作に失敗しました：${error.message}`)
++            else setIsMuted(!isMuted)
++            setMuteBusy(false)
++          }
++          const handleFollow = async () => {
++            if (blockStatus !== 'none') return
++            const {
++              data: { user },
++            } = await supabase.auth.getUser()
++            if (!user || !id) return
++            const { error } = await supabase
++              .from('follows')
++              .insert({
++                follower_id: user.id,
++                following_id: id,
++              })
++            if (error) {
++              console.error(error)
++              return
++            }
++            const notificationError = await createVerifiedNotification('follow', id)
+             if (notificationError) {
+               console.error(
+                 '通知作成エラー:',
+
+diff --git a/src/createVerifiedNotification.ts b/src/createVerifiedNotification.ts
+new file mode 100644
+--- /dev/null
++++ b/src/createVerifiedNotification.ts
+@@ -0,0 +1,103 @@
++import { supabase } from './supabase'
++
++type NotificationType = 'like' | 'comment' | 'follow'
++
++type RpcError = {
++  code?: string
++  message?: string
++  status?: number
++}
++
++const MAX_ATTEMPTS = 3
++const ATTEMPT_TIMEOUT_MS = 4500
++const TOTAL_TIMEOUT_MS = 15000
++
++// PostgREST returns the HTTP status beside "error", not inside it.
++// Authorization and validation failures must never be retried.
++function isTransientNotificationError(error: RpcError): boolean {
++  if (error.status === 401 || error.status === 403) return false
++  if (error.code === '42501' || error.code === '22023') return false
++
++  if (typeof error.status === 'number') {
++    if (error.status === 429 || error.status >= 500) return true
++    if (error.status >= 400) return false
++  }
++
++  const code = error.code ?? ''
++  if (code.startsWith('08') || code === '57014' ||
++      code === 'PGRST000' || code === 'PGRST001' || code === 'PGRST002') {
++    return true
++  }
++
++  return /(?:failed to fetch|networkerror|network request failed|fetch failed|timeout|timed out)/i
++    .test(error.message ?? '')
++}
++
++function normalizeThrownError(error: unknown): RpcError {
++  if (error instanceof Error) {
++    const extended = error as Error & { code?: string; status?: number }
++    return { message: extended.message, code: extended.code, status: extended.status }
++  }
++  return { message: String(error) }
++}
++
++// Each attempt has a hard deadline. Three attempts plus the two delays
++// fit within the total budget, even when every request hangs.
++export async function createVerifiedNotification(
++  eventType: NotificationType,
++  eventId: string,
++): Promise<RpcError | null> {
++  const deadline = Date.now() + TOTAL_TIMEOUT_MS
++
++  for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
++    const remaining = deadline - Date.now()
++    if (remaining <= 0) {
++      return { message: '通知の送信がタイムアウトしました' }
++    }
++
++    const controller = new AbortController()
++    const timeoutFailure: RpcError = {
++      message: '通知RPCがタイムアウトしました',
++      code: 'NOTIFICATION_TIMEOUT',
++    }
++    let timer: ReturnType<typeof setTimeout> | undefined
++
++    // Promise.race guarantees a deadline even if a transport ignores abort.
++    // The in-flight request is also aborted; event_key makes retry idempotent.
++    const request = (async (): Promise<RpcError | null> => {
++      try {
++        const { error, status } = await supabase
++          .rpc('create_verified_notification', {
++            p_event_type: eventType,
++            p_event_id: eventId,
++          })
++          .abortSignal(controller.signal)
++        return error
++          ? { code: error.code, message: error.message, status }
++          : null
++      } catch (error) {
++        return normalizeThrownError(error)
++      }
++    })()
++
++    const timeout = new Promise<RpcError>(resolve => {
++      timer = setTimeout(() => {
++        controller.abort()
++        resolve(timeoutFailure)
++      }, Math.min(ATTEMPT_TIMEOUT_MS, remaining))
++    })
++
++    const failure = await Promise.race([request, timeout])
++    if (timer !== undefined) clearTimeout(timer)
++    if (failure === null) return null
++
++    if (attempt === MAX_ATTEMPTS - 1) return failure
++    if (failure.code !== 'NOTIFICATION_TIMEOUT' && !isTransientNotificationError(failure)) return failure
++
++    const delay = Math.min(300 * (2 ** attempt), Math.max(0, deadline - Date.now()))
++    if (delay <= 0) return failure
++    await new Promise<void>(resolve => setTimeout(resolve, delay))
++  }
++
++  return { message: '通知の送信結果を確認できませんでした' }
++}
