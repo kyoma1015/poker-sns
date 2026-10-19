@@ -1,3 +1,4 @@
+import { createVerifiedNotification } from './createVerifiedNotification'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { supabase } from './supabase'
@@ -353,7 +354,7 @@ function PostDetail() {
 
       if (post.user_id !== currentUserId) {
         const { error: notificationError } =
-          await supabase.rpc('create_verified_notification', { p_event_type: 'like', p_event_id: post.id })
+          await createVerifiedNotification('like', post.id)
 
         /*
           23505 は、
@@ -475,7 +476,7 @@ function PostDetail() {
       setMessage('')
 
       if (post.user_id !== currentUserId) {
-        const { error: notificationError } = await supabase.rpc('create_verified_notification', { p_event_type: 'comment', p_event_id: savedComment.id })
+        const { error: notificationError } = await createVerifiedNotification('comment', savedComment.id)
         if (notificationError) console.error('コメント通知作成エラー:', notificationError)
       }
       await loadPost(true)
