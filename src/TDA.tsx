@@ -3541,7 +3541,7 @@ function TDA() {
               <div className="tda-error" role="alert">
                 <span>{quizError}</span>
                 {quizAuthRequired && (
-                  <button type="button" onClick={() => navigate('/login')}>
+                  <button type="button" className="tda-quiz-login-button" onClick={() => navigate('/login')}>
                     ログインする
                   </button>
                 )}
@@ -5619,6 +5619,31 @@ function TDA() {
 
 
 
+
+        .tda-quiz-login-button {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          margin: 10px 0 0;
+          border: 1px solid #3b424b;
+          border-radius: 10px;
+          background: #191d22;
+          color: #e4e7eb;
+          padding: 10px 16px;
+          font: inherit;
+          font-size: 12px;
+          font-weight: 800;
+          cursor: pointer;
+        }
+
+        .tda-quiz-login-button:hover {
+          background: #252b32;
+        }
+
+        .tda-quiz-login-button:focus-visible {
+          outline: 2px solid #91bca1;
+          outline-offset: 2px;
+        }
 
         .tda-error {
 
