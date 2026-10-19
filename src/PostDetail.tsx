@@ -441,7 +441,7 @@ function PostDetail() {
         uploadedUrls.push(bucket.getPublicUrl(path).data.publicUrl)
       }
 
-      const { error } = await supabase
+      const { data: savedComment, error } = await supabase
         .from('post_comments')
         .insert({
           post_id: post.id,
@@ -450,6 +450,8 @@ function PostDetail() {
           parent_comment_id: replyTarget ? (replyTarget.parent_comment_id || replyTarget.id) : null,
           image_urls: uploadedUrls,
         })
+        .select('id')
+        .single()
       if (error) throw new Error(`コメントできませんでした：${error.message}`)
       commentSaved = true
 
