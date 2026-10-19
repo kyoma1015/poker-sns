@@ -160,6 +160,81 @@ function GlobalHeader() {
   )
 }
 
+// Detect a newly published frontend without reloading unsaved form data.
+// Existing tabs opened before this feature ships cannot be notified retroactively.
+function ClientUpdateNotice() {
+  const [updateAvailable, setUpdateAvailable] = useState(false)
+
+  useEffect(() => {
+    const activeBundle = document.querySelector<HTMLScriptElement>('script[type="module"][src*="/assets/"]')?.src
+    if (!activeBundle) return
+
+    let mounted = true
+    let inFlight = false
+    const checkVersion = async () => {
+      if (!mounted || inFlight || document.visibilityState === 'hidden') return
+      inFlight = true
+      try {
+        const response = await fetch('/?poker_id_update_check=1', {
+          cache: 'no-store',
+          headers: { Accept: 'text/html' },
+        })
+        if (!response.ok || !response.headers.get('content-type')?.includes('text/html')) return
+        const html = await response.text()
+        const documentSnapshot = new DOMParser().parseFromString(html, 'text/html')
+        const latestBundle = documentSnapshot.querySelector<HTMLScriptElement>('script[type="module"][src*="/assets/"]')?.src
+        if (mounted && latestBundle &&
+            new URL(latestBundle, window.location.origin).href !== activeBundle) {
+          setUpdateAvailable(true)
+        }
+      } catch {
+        // Offline / protected previews must not interfere with the app.
+      } finally {
+        inFlight = false
+      }
+    }
+
+    const interval = window.setInterval(() => { void checkVersion() }, 5 * 60 * 1000)
+    const onVisible = () => { if (document.visibilityState === 'visible') void checkVersion() }
+    document.addEventListener('visibilitychange', onVisible)
+    // Give the initial page render time to settle before checking the release.
+    void checkVersion()
+
+    return () => {
+      mounted = false
+      window.clearInterval(interval)
+      document.removeEventListener('visibilitychange', onVisible)
+    }
+  }, [])
+
+  if (!updateAvailable) return null
+
+  return (
+    <div role="status" aria-live="polite" style={{
+      position: 'fixed', bottom: 78, left: '50%', transform: 'translateX(-50%)',
+      zIndex: 110, width: 'calc(100% - 24px)', maxWidth: 440,
+      background: '#181818', border: '1px solid #666', borderRadius: 12,
+      boxSizing: 'border-box', padding: 14, color: '#fff',
+      boxShadow: '0 8px 32px rgba(0,0,0,.55)',
+    }}>
+      <div style={{ fontWeight: 800, fontSize: 14 }}>Poker IDの新しいバージョンがあります</div>
+      <div style={{ fontSize: 12, color: '#ccc', marginTop: 5 }}>
+        入力中の内容を保存してから更新してください。更新すると未保存の入力内容は失われます。
+      </div>
+      <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
+        <button type="button" onClick={() => window.location.reload()} style={{
+          flex: 1, background: '#fff', color: '#111', border: 0,
+          borderRadius: 8, padding: '10px 12px', fontWeight: 800,
+        }}>更新する</button>
+        <button type="button" onClick={() => setUpdateAvailable(false)} style={{
+          flex: 1, background: '#292929', color: '#fff', border: '1px solid #555',
+          borderRadius: 8, padding: '10px 12px',
+        }}>あとで</button>
+      </div>
+    </div>
+  )
+}
+
 function AppLayout() {
   const location = useLocation()
 
