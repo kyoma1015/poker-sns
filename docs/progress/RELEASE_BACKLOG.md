@@ -1,30 +1,33 @@
 # Poker ID｜本番反映待ち・リリース台帳
 
-更新日：2026-10-20
+更新日：2026-10-20（Codex読み取り専用監査結果を反映）
 管理場所：専用基盤ブランチ `chore/autonomous-dev-foundation-20261020` のみ。本番ブランチには未反映。
 
 ## 判定方法
-- **差分あり**：GitHub `main...対象ブランチ` 比較で独自コミット・変更ファイルあり。
+- **差分あり**：GitHub `main...対象ブランチ` 比較で独自コミット・変更ファイルあり。ただし統合済みPRのコミット履歴やcherry-pick等でもaheadが残るため、**本番未統合の証明ではない**。PR状態・tree一致・main実装を優先する。
 - **QA未確認**：テスト完了を証明する最新のテストログ、対象コミット、プレビューと環境の一致を未確認。実装失敗とは限らない。
 - **本番反映済みの一部あり**：mainに関連ファイルがある。全機能が本番で利用可能とは断定しない。
 - 本台帳では **QA合格・即マージ可能** と認定できた機能はゼロ。これはQAが必ず失敗という意味ではない。
+- 2026-10-20 Codex監査によると PR #1/#3/#6/#7 は **mainマージ済み**。ただし本番配信・実機QA・DB状況は未確認。監査報告に記載された統合SHAとGit tree一致を根拠とし、デプロイ検証とは区別する。
 - VercelのデプロイがREADYでも、mainとの同一性・DB移行・実機QA合格を証明しない。
 
-## 機能別バックログ（2026-10-20 GitHub比較）
+## 機能別バックログ（2026-10-20 Codex追加監査で訂正）
 
-| 優先 | 機能 | ブランチ | mainとの差分 | QA / 本番判定 | 次の確認 |
+| 優先 | 機能 | ブランチ・PR | main統合 | QA / 本番判定 | 次の確認 |
 | --- | --- | --- | --- | --- | --- |
-| P0 | F03通知・セキュリティ／共有機能等 | `fix/p0-security-audit-20261018` | ahead 89 / behind 2; 20変更ファイル | 大規模未統合・QA判定未照合 | 独立した部分統合案と本番影響、DB変更を確認 |
-| P0 | F03選択的統合テスト | `test/f03-isolated-integration-20261020` | ahead 5 / behind 0; 5変更ファイル | テストブランチ、リリース確定ではない | テスト記録とCIを確認し、先行5コミットの内容を監査 |
-| P1 | アンケート・質問箱 | `feature/timeline-polls-questions-20261017` | ahead 48 / behind 2; 8変更ファイル | 未統合・QA合格未確認 | 投票/質問/匿名性/締切通知/SQLの安全性と実機QA |
-| P1 | TDAログイン案内 | `fix/tda-quiz-login-guidance-20261019` | ahead 2 / behind 2; `src/TDA.tsx` | 未統合・QA合格未確認 | 2修正ブランチを比較し一貫したログイン導線を検証 |
-| P1 | TDAログインボタン配色 | `fix/tda-login-button-dark-20261019` | ahead 1 / behind 1; `src/TDA.tsx` | 未統合・QA合格未確認 | 案内変更との重複・回帰テスト |
-| P1 | プレイヤー診断・QA | `fix/player-type-qa-phase1-20261019` | ahead 3 / behind 2; 5変更ファイル | 未統合・QA合格未確認 | 50問・36動物・保存/結果/表示の独立QA |
-| P1 | プレイヤー診断・監査 | `fix/player-type-audit-phase1-20261019` | ahead 2 / behind 2; `src/PlayerTypeDiagnosis.tsx` | 未統合・QA合格未確認 | QAブランチとの相互差分解消 |
-| P2 | Poker IDカード・QR等 | `feature/poker-id-card` | ahead 36 / behind 4; 12変更ファイル | mainにもカード関連コードあり、追加差分は未統合 | 現本番のカードとの機能差分・QA照合 |
-| P2 | カード縦型OG画像 | `feature/og-vertical-card` | ahead 44 / behind 4; 14変更ファイル | mainにもカード関連コードあり、追加差分は未統合 | OG/QR/画像エンドポイント・Storage SQL・画像のQA |
-| P2 | リングゲーム名称変更 | `rename-amusement-to-ring-game` | ahead 8 / behind 5; 8変更ファイル | 未統合・QA合格未確認 | 表示名統一と記録/編集/共有への影響 |
-| 基盤 | 自律開発・進捗・CI | `chore/autonomous-dev-foundation-20261020` | ドラフトPR #8 | main未統合、初期CI合格、後続変更は別途確認 | 変更を限定してレビュー、承認後に導入 |
+| P0 | F03通知・セキュリティ等 | `fix/p0-security-audit-20261018` | 未統合、大規模差分（main比ahead 89 / behind 2） | 旧QAにFAILあり、最新修正後の解消証拠は未確認 | 安全な選択統合・再試験・DB権限確認 |
+| P0 | F03選択的統合テスト | `test/f03-isolated-integration-20261020`, HEAD `cb31df80…` | 未統合（main比ahead **6** / behind 0） | 分離候補、機能QA・テストログ未確認 | 6コミット・5ファイルの内容と外部通信なしテスト |
+| P1 | アンケート・質問箱 | `feature/timeline-polls-questions-20261017`, PR [#4](https://github.com/kyoma1015/poker-sns/pull/4) | **未統合、draft** | 匿名性・権限・締切通知・本番SQLの適用状況が未確認 | 実機QAとRLS/RPC/SQL計画 |
+| P1 | プレイヤー診断・QA | `fix/player-type-qa-phase1-20261019`, HEAD `d494b05…` | 未統合 | 旧QA BLOCKED。36動物・保存/公開/画像の最新実機QA未確認 | 未完了QAの移管と実施 |
+| P1 | プレイヤー診断・監査 | `fix/player-type-audit-phase1-20261019`, PR [#5](https://github.com/kyoma1015/poker-sns/pull/5) | **未統合、draft** | ビルド・実機QA未実施とのPR記録 | QAブランチとの競合、設問・助言妥当性 |
+| 既統合/QA待ち | TDAログイン案内 | PR [#6](https://github.com/kyoma1015/poker-sns/pull/6), `fix/tda-quiz-login-guidance-20261019` | **マージ済み**（Codex監査） | 問題品質・ログイン実機回帰QAは未確認 | 対象コミット・本番配信・UI/認証動作 |
+| 既統合/QA待ち | TDAボタン配色 | PR [#7](https://github.com/kyoma1015/poker-sns/pull/7), `fix/tda-login-button-dark-20261019` | **マージ済み**（Codex監査、tree一致） | 本番表示・hover/focus回帰QA未確認 | 実機確認 |
+| 既統合/QA待ち | カード公開・縦型OG | PR [#3](https://github.com/kyoma1015/poker-sns/pull/3), `feature/og-vertical-card` | **マージ済み**、統合SHA `7bc1df9…`（Codex監査、tree一致） | Storage/DBと非公開時の他者閲覧QA未確認 | 本番でのアクセス制御・生成・保存・共有QA |
+| 残存旧PR | Poker IDカード試作 | PR [#2](https://github.com/kyoma1015/poker-sns/pull/2), `feature/poker-id-card` | PRはdraftのまま。**カード機能の後続版はmainに統合済み** | 古い差分を未リリース新機能として計上しない | PR #3との差分整理と旧PRの扱い |
+| 既統合/QA待ち | リングゲーム名称変更 | PR [#1](https://github.com/kyoma1015/poker-sns/pull/1), `rename-amusement-to-ring-game` | **マージ済み**、統合SHA `c3fe008…`（Codex監査、tree一致） | 作成/編集/共有の実機QA未確認 | 本番動作確認 |
+| 基盤 | 自律開発・進捗・CI | PR [#8](https://github.com/kyoma1015/poker-sns/pull/8), `chore/autonomous-dev-foundation-20261020` | **未統合、draft** | `7cb7bc3…`でnpm ci / build / lint成功、ビルド・lint・npm監査警告あり | オーナーレビューと継続的自動実行の設計 |
+
+**注記：** main統合済みでもVercel本番配信済み・DBマイグレーション適用済み・機能QA PASSとは断定しない。Codex調査基準 main SHA `f8890b6ec11d30676c55dc7dc8801f1da8549d28`。
 
 ## 主要な競合リスク
 1. `src/Timeline.tsx`：アンケート、F03、リング名称変更。
@@ -43,11 +46,11 @@
 - 開発ブランチに残っていても他コミットで実質取り込み済みの差分（cherry-pick）の確認
 
 ## 次の作業キュー
-1. F03部分統合テストのCI、差分内容、セキュリティ影響を独立確認。安全性が最優先。
+1. F03部分統合テスト（ahead 6）のCI、差分内容、セキュリティ影響を独立確認。安全性が最優先。
 2. アンケート・質問箱のQA証拠、SQL適用状況、締切通知を照合する。QA不足ならQA用タスクを作る。
-3. TDAの2ブランチを一つの修正候補にまとめて回帰QA。
+3. TDAのPR #6/#7はmain統合済み。二重取り込みはせず本番配信・回帰QAを確認。
 4. 診断の2ブランチを比較し、既存BLOCKED項目の消化。
-5. カード系・リング名称変更の重複部分を調査。
+5. カードPR #3・名称変更PR #1はmain統合済み。未確認QAを進め、旧カードPR #2は差分整理。
 6. 各候補を `実装中 / QA中 / QA合格・承認待ち / 本番反映済み・確認済み` の状態で更新する。
 
 ## リリースゲート
