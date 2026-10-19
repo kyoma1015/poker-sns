@@ -376,14 +376,7 @@ import { usePullToRefresh } from './usePullToRefresh'
             }
             const {
               error: notificationError,
-            } = await supabase
-              .from('notifications')
-              .insert({
-                user_id: id,
-                actor_id: user.id,
-                type: 'follow',
-                post_id: null,
-              })
+            } = await supabase.rpc('create_verified_notification', { p_event_type: 'follow', p_event_id: id })
             if (notificationError) {
               console.error(
                 '通知作成エラー:',
