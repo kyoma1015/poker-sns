@@ -1,0 +1,36 @@
+name: Poker ID development task
+description: A tracked implementation or QA task for one development line
+title: "[A/B/C/D] "
+body:
+  - type: dropdown
+    id: line
+    attributes:
+      label: Development line
+      options:
+        - A - App audit / security
+        - B - TDA quiz
+        - C - GTO engine
+        - D - Player type diagnosis
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and reproduction
+      description: Link to relevant commit, PR, logs, screenshots or source rules. Never include secrets or user data.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Observable conditions and required automated or manual QA
+    validations:
+      required: true
+  - type: textarea
+    id: boundaries
+    attributes:
+      label: Scope and safety boundaries
+      value: "Working branch only. No production database writes, main merge, production deploy, destructive changes or new spending without owner approval."
+    validations:
+      required: true
