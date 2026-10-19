@@ -1,3 +1,4 @@
+import { createVerifiedNotification } from './createVerifiedNotification'
 import PokerIdCardEntry from './PokerIdCardEntry'
 import Timeline from './Timeline'
 import TournamentAchievementShowcase from './TournamentAchievementShowcase'
@@ -376,7 +377,7 @@ import { usePullToRefresh } from './usePullToRefresh'
             }
             const {
               error: notificationError,
-            } = await supabase.rpc('create_verified_notification', { p_event_type: 'follow', p_event_id: id })
+            } = await createVerifiedNotification('follow', id)
             if (notificationError) {
               console.error(
                 '通知作成エラー:',
