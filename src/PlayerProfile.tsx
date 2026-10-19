@@ -375,9 +375,7 @@ import { usePullToRefresh } from './usePullToRefresh'
               console.error(error)
               return
             }
-            const {
-              error: notificationError,
-            } = await createVerifiedNotification('follow', id)
+            const notificationError = await createVerifiedNotification('follow', id)
             if (notificationError) {
               console.error(
                 '通知作成エラー:',
