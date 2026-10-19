@@ -56,35 +56,43 @@ export async function createVerifiedNotification(
     }
 
     const controller = new AbortController()
-    let timedOut = false
-    const timer = setTimeout(() => {
-      timedOut = true
-      controller.abort()
-    }, Math.min(ATTEMPT_TIMEOUT_MS, remaining))
-
-    let failure: RpcError
-    try {
-      const { error, status } = await supabase
-        .rpc('create_verified_notification', {
-          p_event_type: eventType,
-          p_event_id: eventId,
-        })
-        .abortSignal(controller.signal)
-
-      if (!error && !timedOut) return null
-      failure = timedOut
-        ? { message: '通知RPCがタイムアウトしました', code: 'NOTIFICATION_TIMEOUT' }
-        : { code: error?.code, message: error?.message, status }
-    } catch (error) {
-      failure = timedOut
-        ? { message: '通知RPCがタイムアウトしました', code: 'NOTIFICATION_TIMEOUT' }
-        : normalizeThrownError(error)
-    } finally {
-      clearTimeout(timer)
+    const timeoutFailure: RpcError = {
+      message: '通知RPCがタイムアウトしました',
+      code: 'NOTIFICATION_TIMEOUT',
     }
+    let timer: ReturnType<typeof setTimeout> | undefined
+
+    // Promise.race guarantees a deadline even if a transport ignores abort.
+    // The in-flight request is also aborted; event_key makes retry idempotent.
+    const request = (async (): Promise<RpcError | null> => {
+      try {
+        const { error, status } = await supabase
+          .rpc('create_verified_notification', {
+            p_event_type: eventType,
+            p_event_id: eventId,
+          })
+          .abortSignal(controller.signal)
+        return error
+          ? { code: error.code, message: error.message, status }
+          : null
+      } catch (error) {
+        return normalizeThrownError(error)
+      }
+    })()
+
+    const timeout = new Promise<RpcError>(resolve => {
+      timer = setTimeout(() => {
+        controller.abort()
+        resolve(timeoutFailure)
+      }, Math.min(ATTEMPT_TIMEOUT_MS, remaining))
+    })
+
+    const failure = await Promise.race([request, timeout])
+    if (timer !== undefined) clearTimeout(timer)
+    if (failure === null) return null
 
     if (attempt === MAX_ATTEMPTS - 1) return failure
-    if (!timedOut && !isTransientNotificationError(failure)) return failure
+    if (failure.code !== 'NOTIFICATION_TIMEOUT' && !isTransientNotificationError(failure)) return failure
 
     const delay = Math.min(300 * (2 ** attempt), Math.max(0, deadline - Date.now()))
     if (delay <= 0) return failure
