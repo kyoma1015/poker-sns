@@ -1,3 +1,4 @@
+import { createVerifiedNotification } from './createVerifiedNotification'
 import { useEffect, useRef, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
@@ -1044,7 +1045,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
             notificationError,
 
-        } = await supabase.rpc('create_verified_notification', { p_event_type: 'like', p_event_id: post.id })
+        } = await createVerifiedNotification('like', post.id)
 
         if (
 
