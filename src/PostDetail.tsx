@@ -353,14 +353,7 @@ function PostDetail() {
 
       if (post.user_id !== currentUserId) {
         const { error: notificationError } =
-          await supabase
-            .from('notifications')
-            .insert({
-              user_id: post.user_id,
-              actor_id: currentUserId,
-              type: 'like',
-              post_id: post.id,
-            })
+          await supabase.rpc('create_verified_notification', { p_event_type: 'like', p_event_id: post.id })
 
         /*
           23505 は、
@@ -460,7 +453,7 @@ function PostDetail() {
         uploadedUrls.push(bucket.getPublicUrl(path).data.publicUrl)
       }
 
-      const { error } = await supabase
+      const { data: savedComment, error } = await supabase
         .from('post_comments')
         .insert({
           post_id: post.id,
@@ -469,7 +462,9 @@ function PostDetail() {
           parent_comment_id: replyTarget ? (replyTarget.parent_comment_id || replyTarget.id) : null,
           image_urls: uploadedUrls,
         })
-      if (error) throw new Error(`コメントできませんでした：${error.message}`)
+        .select('id')
+        .single()
+      if (error || !savedComment) throw new Error(`コメントできませんでした：${error?.message ?? '保存結果がありません'}`)
       commentSaved = true
 
       // 保存が確定したら初めて入力・画像・返信先をクリアする。
@@ -480,9 +475,7 @@ function PostDetail() {
       setMessage('')
 
       if (post.user_id !== currentUserId) {
-        const { error: notificationError } = await supabase
-          .from('notifications')
-          .insert({ user_id: post.user_id, actor_id: currentUserId, type: 'comment', post_id: post.id })
+        const { error: notificationError } = await supabase.rpc('create_verified_notification', { p_event_type: 'comment', p_event_id: savedComment.id })
         if (notificationError) console.error('コメント通知作成エラー:', notificationError)
       }
       await loadPost(true)
