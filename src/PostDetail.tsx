@@ -353,8 +353,7 @@ function PostDetail() {
       }
 
       if (post.user_id !== currentUserId) {
-        const { error: notificationError } =
-          await createVerifiedNotification('like', post.id)
+        const notificationError = await createVerifiedNotification('like', post.id)
 
         /*
           23505 は、
@@ -476,7 +475,7 @@ function PostDetail() {
       setMessage('')
 
       if (post.user_id !== currentUserId) {
-        const { error: notificationError } = await createVerifiedNotification('comment', savedComment.id)
+        const notificationError = await createVerifiedNotification('comment', savedComment.id)
         if (notificationError) console.error('コメント通知作成エラー:', notificationError)
       }
       await loadPost(true)
