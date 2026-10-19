@@ -353,6 +353,7 @@ function AppLayout() {
       </Routes>
 
       {!hideBottomNav && <BottomNav />}
+      <ClientUpdateNotice />
     </>
   )
 }
