@@ -30,3 +30,11 @@
 
 ## 自動化の限界
 このファイルとGitHub ActionsのCIはAI開発エージェントの自動起動を意味しない。継続的なIssue処理には別途実行環境、権限、起動トリガー、費用管理の構築が必要。
+
+## 2026-10-20 GitHubブランチ比較（読み取り確認）
+- A: `fix/p0-security-audit-20261018` は main から diverged。ahead 84 / behind 2。幅広いファイルを変更し診断にも影響。
+- B: `fix/tda-login-button-dark-20261019` (ahead 1 / behind 1)、`fix/tda-quiz-login-guidance-20261019` (ahead 2 / behind 2)。両方が `src/TDA.tsx` に変更あり。
+- C: 今回の既知ブランチ比較ではGTO専用ブランチ未確認。独立成果物の所在確認が必要。
+- D: `fix/player-type-qa-phase1-20261019` と `fix/player-type-audit-phase1-20261019` は共に ahead 2 / behind 2。両方が `src/PlayerTypeDiagnosis.tsx` を変更。
+- 上記はGitHub差分の確認であり、本番反映や実機QA合格を示すものではない。
+- 複数ラインで同一ファイルを扱うときは統合ブランチで競合解消と回帰検証が必須。
