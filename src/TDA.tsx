@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -281,6 +282,7 @@ const quickSearches = [
 
 
 function TDA() {
+  const navigate = useNavigate()
 
 
 
@@ -375,6 +377,7 @@ function TDA() {
   const [quizLoading, setQuizLoading] = useState(false)
 
   const [quizError, setQuizError] = useState('')
+  const [quizAuthRequired, setQuizAuthRequired] = useState(false)
 
   const [quizStarted, setQuizStarted] = useState(false)
 
@@ -432,6 +435,32 @@ function TDA() {
 
 
 
+  // 問題の閲覧は公開されているが、回答の保存にはログインが必要。
+  // RPCの権限は変更せず、回答できない状態を開始前に案内する。
+  const ensureQuizAuthenticated = async (): Promise<boolean> => {
+    const { data: sessionData, error: sessionError } = await supabase.auth.getSession()
+    if (sessionError) {
+      console.error('TDA quiz session check failed:', sessionError)
+      setQuizAuthRequired(false)
+      setQuizError('ログイン状態を確認できませんでした。通信状況を確認して再度お試しください。')
+      return false
+    }
+    if (!sessionData.session) {
+      setQuizAuthRequired(true)
+      setQuizError('回答を記録するにはログインしてください。')
+      return false
+    }
+    const { data, error } = await supabase.auth.getUser()
+    if (error || !data.user) {
+      if (error) console.error('TDA quiz user check failed:', error)
+      setQuizAuthRequired(true)
+      setQuizError('ログインの有効期限が切れた可能性があります。再度ログインしてください。')
+      return false
+    }
+    setQuizAuthRequired(false)
+    return true
+  }
+
   const startQuiz = async () => {
 
     if (quizLoading) return
@@ -441,6 +470,11 @@ function TDA() {
     setQuizLoading(true)
 
     setQuizError('')
+    setQuizAuthRequired(false)
+    if (!(await ensureQuizAuthenticated())) {
+      setQuizLoading(false)
+      return
+    }
 
     setQuizFinished(false)
 
@@ -517,6 +551,11 @@ function TDA() {
 
     setQuizLoading(true)
     setQuizError('')
+    setQuizAuthRequired(false)
+    if (!(await ensureQuizAuthenticated())) {
+      setQuizLoading(false)
+      return
+    }
     setQuizFinished(false)
     setQuizStarted(false)
     setQuizQuestions([])
@@ -556,6 +595,11 @@ function TDA() {
 
     setQuizLoading(true)
     setQuizError('')
+    setQuizAuthRequired(false)
+    if (!(await ensureQuizAuthenticated())) {
+      setQuizLoading(false)
+      return
+    }
     setQuizFinished(false)
     setQuizStarted(false)
     setQuizQuestions([])
@@ -600,6 +644,12 @@ function TDA() {
     setQuizSelectedOption(optionId)
     setQuizAnswerLoading(true)
     setQuizError('')
+    setQuizAuthRequired(false)
+    if (!(await ensureQuizAuthenticated())) {
+      setQuizSelectedOption(null)
+      setQuizAnswerLoading(false)
+      return
+    }
 
     const { data: submitData, error: submitError } = await supabase.rpc(
       'submit_tda_quiz_answer',
@@ -612,7 +662,12 @@ function TDA() {
     if (submitError) {
       console.error(submitError)
       setQuizSelectedOption(null)
-      setQuizError('回答の保存・判定に失敗しました。')
+      const needsLogin = submitError.code === '42501' ||
+        /authentication required|permission denied for function/i.test(submitError.message)
+      setQuizAuthRequired(needsLogin)
+      setQuizError(needsLogin
+        ? '回答を記録するにはログインしてください。'
+        : '回答の保存・判定に失敗しました。')
       setQuizAnswerLoading(false)
       return
     }
@@ -3483,7 +3538,14 @@ function TDA() {
 
             {!quizLoading && quizError && (
 
-              <div className="tda-error">{quizError}</div>
+              <div className="tda-error" role="alert">
+                <span>{quizError}</span>
+                {quizAuthRequired && (
+                  <button type="button" onClick={() => navigate('/login')}>
+                    ログインする
+                  </button>
+                )}
+              </div>
 
             )}
 
