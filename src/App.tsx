@@ -166,8 +166,10 @@ function ClientUpdateNotice() {
   const [updateAvailable, setUpdateAvailable] = useState(false)
 
   useEffect(() => {
-    const activeBundle = document.querySelector<HTMLScriptElement>('script[type="module"][src*="/assets/"]')?.src
+    // Read the raw attribute: DOMParser documents can have an about:blank base URL.
+    const activeBundle = document.querySelector<HTMLScriptElement>('script[type="module"][src*="/assets/"]')?.getAttribute('src')
     if (!activeBundle) return
+    const activePath = new URL(activeBundle, window.location.origin).pathname
 
     let mounted = true
     let inFlight = false
@@ -182,9 +184,10 @@ function ClientUpdateNotice() {
         if (!response.ok || !response.headers.get('content-type')?.includes('text/html')) return
         const html = await response.text()
         const documentSnapshot = new DOMParser().parseFromString(html, 'text/html')
-        const latestBundle = documentSnapshot.querySelector<HTMLScriptElement>('script[type="module"][src*="/assets/"]')?.src
-        if (mounted && latestBundle &&
-            new URL(latestBundle, window.location.origin).href !== activeBundle) {
+        const latestBundle = documentSnapshot.querySelector<HTMLScriptElement>('script[type="module"][src*="/assets/"]')?.getAttribute('src')
+        if (!latestBundle) return
+        const latestPath = new URL(latestBundle, window.location.origin).pathname
+        if (mounted && latestPath.startsWith('/assets/') && latestPath !== activePath) {
           setUpdateAvailable(true)
         }
       } catch {
