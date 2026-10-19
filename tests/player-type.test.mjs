@@ -27,8 +27,18 @@ test('normalization compares proportions rather than raw totals', () => {
 test('one incidental selective-burst point must not assert attacking ability', () => {
   const weak = fixture.personas[0]
   assert.equal(weak.raw.selective_burst, 1)
-  assert.match(personalAdvice(detail(weak.raw)), /危険や難しい衝突/)
+  assert.match(personalAdvice(detail(weak.raw)), /危険のサインや難しい衝突/)
   assert.doesNotMatch(personalAdvice(detail(weak.raw)), /武器|踏み込める|攻めを続ける回答/)
+})
+
+test('noticing danger must not imply that a calling station folds', () => {
+  const caller = fixture.personas.find(p => p.name === 'コーリングステーション')
+  assert.ok(caller)
+  assert.equal(caller.raw.threat_sensitivity, 9)
+  assert.equal(caller.raw.collision_avoidance, -3)
+  const advice = personalAdvice(detail(caller.raw))
+  assert.match(advice, /参加を続ける場合も降りる場合も/)
+  assert.doesNotMatch(advice, /避ける回答|降りる前に/)
 })
 
 test('attack wording needs both initiative and sustained attack at the threshold', () => {
