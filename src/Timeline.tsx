@@ -1044,25 +1044,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
             notificationError,
 
-        } = await supabase
-
-          .from('notifications')
-
-          .insert({
-
-            user_id:
-
-              post.user_id,
-
-            actor_id:
-
-              currentUserId,
-
-            type: 'like',
-
-            post_id: post.id,
-
-          })
+        } = await supabase.rpc('create_verified_notification', { p_event_type: 'like', p_event_id: post.id })
 
         if (
 
