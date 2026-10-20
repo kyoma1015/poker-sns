@@ -1,5 +1,5 @@
 # B Issue22 — offline audit CLI boundary fix
-Date: 2026-10-20 JST. Status: CONDITIONAL PASS; no publication or deployment.
+Executed: 2026-10-21 08:03 JST (2026-10-20 23:03 UTC). Status: CONDITIONAL PASS; no publication or deployment.
 Base PR14: 4e16f7a7b567237d2735f1392906a6b1de2b7c23.
 Branch: codex/b-issue22-audit-20261020. Existing PR14/19 read before work: neither already fixes the boundary.
 
