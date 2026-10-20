@@ -55,3 +55,32 @@ Hand169 component validates all 1326 distinct combinations, 13 pairs/78 suited/7
 Existing backend regressions 34 PASS; app regressions 89 PASS; npm ci/build/lint PASS with existing warnings. Browser/UI source was unchanged. Evidence and exact run commands under docs/qa/gto-active-20261020/ and gto/README.md. Dedicated PR CI runs the native reconstruction; it is a finite verifier, not a permanent worker.
 
 Remaining: genuine vendor 1,588-file bundle, G11 expected data/settings, exact target stack/bet configurations, historical checkpoint and ABI checks, settlement/parity/convergence/representative benchmarks. No original ZIP bytes/checkpoint appeared in current handoff Git tree. No canonical solver selected, no old checkpoint opened, no production/main/DB operations. Next tasks: expected-value settlement fixtures, checkpoint format/compatibility inventory on copies, and connecting verified 169 export to actual native row output without inventing EV.
+
+## Issue22 — hand-derived settlement milestone (2026-10-20)
+Base PR20 / 8faea88802d0d34ae3e0319399e7f55ba71a9fcd. Branch codex/c-issue22-settlement-20261020.
+Added 17 hand-derived **synthetic** expected-result fixtures for ante/blind priority,
+short BB, stack basis, no-flop-no-drop, refunds, side pots, fold eligibility, odd
+chips, ante rake exclusion, rake caps and rounding. They are not recovered G11
+reference outputs or approved production house profiles.
+Pure Python runner SHA-verifies the original transferred Rules.py before temporary
+import. Test-only C++ bridge SHA-verifies and exposes the same unchanged embedded
+Ledger header used by all three solver variants. At each legal action/street the
+suite compares Python/native state and legal sets; both final results must match
+explicit expected chip values, then full settlement parity and conservation.
+Local: 17 Python expected-value cases PASS; 17 native/reference parity cases PASS.
+`python -B -m unittest discover -s gto/tests -v`: 38 PASS (20 added tests including
+17 fixtures and 3 malformed-fixture guards, previous 18 retained). npm ci/build/lint
+and app89 regression PASS; no UI source changed. Reused the explicitly reconstructed
+PR20 dependency directory for the local bridge; CI reconstructs afresh.
+Evidence: docs/qa/gto-settlement-20261020/; commands and scope in gto/README.md.
+Native CI now includes this bridge/suite; PR targets the PR20 branch.
+
+Known unresolved rule edge reproduced in both kernels: with ante_first, a BB stack
+fully consumed by dead ante and unmatched blind refund, positive_live eligibility
+has no eligible seat. Python raises 'dead pool has no eligible player'; native
+raises 'empty dead eligibility'. Marked BLOCKED_RULE_POLICY, not fixed by guessing
+house rules. Existing all_live profile passes an explicit separate fixture.
+No original source, historical checkpoint, main, DB, production or billing changes.
+Original G11 baseline/vendor/target20 stack/bet configurations remain unconfirmed.
+Next bounded descriptor: gto/tasks/rank7-next.json, independent hand-derived
+seven-card category/tiebreak validation. No continuous worker is implied by this PR.

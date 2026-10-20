@@ -1,7 +1,7 @@
 name: Codex lane checks
 on:
   pull_request:
-    branches: [main, codex/integration-poll-only-20261020]
+    branches: [main, codex/integration-poll-only-20261020, codex/c-gto-active-milestones-20261020]
   workflow_dispatch:
 permissions:
   contents: read

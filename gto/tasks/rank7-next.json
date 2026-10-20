@@ -1,0 +1,31 @@
+{
+  "task_id": "C-RANK7-SYNTHETIC-01",
+  "title": "Add independent hand-derived seven-card rank and tiebreak fixtures",
+  "base_branch": "codex/c-issue22-settlement-20261020",
+  "allowed_paths": [
+    "gto/fixtures/rank7-v1.json",
+    "gto/native/settlement.py",
+    "gto/tests/test_rank7.py",
+    "gto/README.md",
+    "docs/progress/C_GTO.md",
+    "docs/qa/gto-rank7-20261020/**"
+  ],
+  "test_commands": [
+    "python -B -m unittest discover -s gto/tests -v",
+    "python -B gto/native/build_reconstructed.py --work-root /tmp/pokerid-rank7-fresh",
+    "python -B gto/native/settlement.py --native-root /tmp/pokerid-rank7-fresh"
+  ],
+  "acceptance": [
+    "Hand-derive expected rank tuples for all nine categories, wheel, board-playing ties and kicker ordering",
+    "Compare exact preserved Python rank7 and native probe rank7 to explicit expectations",
+    "Reject duplicate/out-of-range cards before native calls",
+    "Preserve original transferred source; mark all fixtures synthetic, not G11 baseline",
+    "Record test evidence and create a Draft PR; no production release"
+  ],
+  "known_issues": [
+    "Preserved native checkpoint load_binary still ignores SHA trailer; use verified-snapshot wrapper for any checkpoint tests",
+    "Original G11 baseline, vendor manifest, target twenty stack conditions and historical checkpoint remain unavailable",
+    "Positive-live dead-ante eligibility can yield no eligible player after full uncalled refund; house-rule decision unresolved, do not change policy in this task"
+  ],
+  "prohibited": ["main_merge", "production_deploy", "database_access", "paid_services", "historical_checkpoint_writes", "handoff_source_modification"]
+}

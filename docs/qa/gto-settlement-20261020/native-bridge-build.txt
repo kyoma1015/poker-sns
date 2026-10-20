@@ -1,0 +1,5 @@
+In file included from /workspace/work/issue22-c/gto/native/settlement_probe.cc:3:
+/workspace/work/gto-native-final-20261020/g12_next/g11_rules_embed.h:19:8: warning: ‘pokerid7rules::Ledger’ declared with greater visibility than the type of its field ‘pokerid7rules::Ledger::input_stacks’ [-Wattributes]
+   19 | struct Ledger {
+      |        ^~~~~~
+/workspace/work/gto-native-final-20261020/g12_next/g11_rules_embed.h:19:8: warning: ‘pokerid7rules::Ledger’ declared with greater visibility than the type of its field ‘pokerid7rules::Ledger::input_rules’ [-Wattributes]
