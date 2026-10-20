@@ -1,0 +1,180 @@
+✔ notification entry points use verified events and the saved comment ID (2.61165ms)
+✔ successful verified event returns null once (3.421695ms)
+✔ authorization/validation 401/unauthorized is never retried (0.92577ms)
+✔ authorization/validation 403/denied is never retried (0.862615ms)
+✔ authorization/validation 400/22023 is never retried (0.993573ms)
+✔ authorization/validation 200/42501 is never retried (1.085641ms)
+✔ HTTP 429 retries with the same event and recovers (1.46824ms)
+✔ HTTP 500 retries with the same event and recovers (1.000944ms)
+✔ HTTP 503 retries with the same event and recovers (1.284663ms)
+✔ network failure is retried at most three times (2.095609ms)
+✔ transport ignoring abort still finishes and aborts each of three attempts (4.364961ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 67.46873
+✔ named poll request matches the disclosed named mode (2.092394ms)
+✔ anonymous poll remains anonymous (0.203498ms)
+✔ invalid option null cannot produce a request (0.316849ms)
+✔ invalid option -1 cannot produce a request (0.097707ms)
+✔ invalid option 2 cannot produce a request (0.080131ms)
+✔ invalid option 0.5 cannot produce a request (0.131759ms)
+✔ invalid option NaN cannot produce a request (0.136747ms)
+✔ a previously rendered open card cannot vote at or after the deadline (0.20521ms)
+✔ missing or invalid deadline fails closed (0.377271ms)
+✔ question boxes cannot use the poll write contract (0.293203ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13.93815
+✔ all 32 positive ceilings equal the sum of per-question attainable maxima (3.351578ms)
+✔ negative, zero, unknown and nonfinite values do not become top tendencies (0.723645ms)
+✔ normalization compares proportions rather than raw totals (0.273614ms)
+✔ one incidental selective-burst point must not assert attacking ability (0.328006ms)
+✔ noticing danger must not imply that a calling station folds (0.365673ms)
+✔ attack wording needs both initiative and sustained attack at the threshold (0.163457ms)
+✔ fixed persona replay (not live): 超弱気な初心者 (4.228276ms)
+✔ fixed persona replay (not live): 超タイトな初心者 (0.815453ms)
+✔ fixed persona replay (not live): タイト・パッシブ (0.769293ms)
+✔ fixed persona replay (not live): タイト・アグレッシブ (1.187236ms)
+✔ fixed persona replay (not live): ルース・パッシブ (0.56854ms)
+✔ fixed persona replay (not live): ルース・アグレッシブ (0.499285ms)
+✔ fixed persona replay (not live): コーリングステーション (0.558996ms)
+✔ fixed persona replay (not live): マニアック (0.480127ms)
+✔ fixed persona replay (not live): 超慎重な上級者 (0.530893ms)
+✔ fixed persona replay (not live): 熟練したLAG (0.512114ms)
+✔ fixed persona replay (not live): 熟練したTAG (0.794551ms)
+✔ fixed persona replay (not live): ブラフ嫌い (0.319784ms)
+✔ fixed persona replay (not live): ブラフ多用型 (0.274645ms)
+✔ fixed persona replay (not live): ギャンブラー (0.313605ms)
+✔ fixed persona replay (not live): リスク回避型 (0.180564ms)
+✔ fixed persona replay (not live): バランス型 (0.255817ms)
+✔ fixed persona replay (not live): 相手依存型 (0.363119ms)
+✔ fixed persona replay (not live): 感情的なティルト型 (0.212001ms)
+✔ fixed persona replay (not live): トーナメント生存重視型 (0.430751ms)
+✔ fixed persona replay (not live): トーナメント攻撃型 (0.270319ms)
+✔ fixed persona replay (not live): キャッシュゲーム堅実派 (0.170748ms)
+✔ fixed persona replay (not live): 初心者の無謀型 (0.204709ms)
+✔ fixed persona replay (not live): 上級者の柔軟型 (0.197759ms)
+✔ fixed persona replay (not live): フィット・オア・フォールド型 (0.290589ms)
+✔ fixed persona replay (not live): バリュー重視型 (0.176487ms)
+✔ fixed persona replay (not live): トラップ好き (0.200433ms)
+✔ fixed persona replay (not live): プリフロップ超ルース型 (0.497472ms)
+✔ fixed persona replay (not live): ポストフロップ消極型 (0.225131ms)
+✔ fixed persona replay (not live): 勝負好きだがブラフしない型 (0.332192ms)
+✔ fixed persona replay (not live): 理論重視の冷静型 (0.40285ms)
+✔ question bank validation rejects incomplete or contradictory data (1.666431ms)
+✔ a late result cannot win after a new request, restart or unmount (0.199802ms)
+✔ audit wording corrections apply only to the displayed copy, without mutating saved data (0.327245ms)
+✔ wording correction leaves unrelated copy unchanged (0.177489ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 34.650886
+✔ stale or forged question mode is rejected before RPC (1.460969ms)
+✔ stale or forged normal mode is rejected before RPC (0.138229ms)
+✔ stale or forged  mode is rejected before RPC (0.083877ms)
+✔ stale or forged QUESTION mode is rejected before RPC (0.120041ms)
+✔ 2 poll choices and privacy mode produce poll-only contract (0.808293ms)
+✔ 3 poll choices and privacy mode produce poll-only contract (0.161554ms)
+✔ 4 poll choices and privacy mode produce poll-only contract (0.224369ms)
+✔ invalid poll parameters [["A"],24] fail closed (0.179792ms)
+✔ invalid poll parameters [["A","B","C","D","E"],24] fail closed (1.074685ms)
+✔ invalid poll parameters [["A"," a "],24] fail closed (0.279182ms)
+✔ invalid poll parameters [["","B"],24] fail closed (0.121204ms)
+✔ invalid poll parameters [["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx","B"],24] fail closed (0.133772ms)
+✔ invalid poll parameters [["A","B"],0] fail closed (0.065379ms)
+✔ invalid poll parameters [["A","B"],null] fail closed (3.338719ms)
+✔ empty and overlong content fail closed (0.203557ms)
+✔ anonymous presentation drops identities even in unexpected server payload without mutating it (0.267494ms)
+✔ both composers use guarded creation; public card cannot mount historical question thread (1.261558ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18.495022
+✔ malformed JSON never echoes payload fragments or parser details (2.108579ms)
+✔ malformed JSON never echoes payload fragments or parser details (0.305492ms)
+✔ malformed JSON never echoes payload fragments or parser details (0.136697ms)
+✔ read failures do not reveal paths or untrusted error text (0.173793ms)
+✔ invalid question shape has a stable failure code without raw data (0.517864ms)
+✔ invalid arguments fail before reading ([]) (0.256227ms)
+✔ invalid arguments fail before reading ([""]) (0.173853ms)
+✔ invalid arguments fail before reading (["export.json","1","ignored-before"]) (0.162145ms)
+✔ invalid arguments fail before reading (["export.json","0"]) (0.251681ms)
+✔ invalid arguments fail before reading (["export.json","-1"]) (0.24443ms)
+✔ invalid arguments fail before reading (["export.json","1.5"]) (0.14572ms)
+✔ invalid arguments fail before reading (["export.json","1e3"]) (0.14516ms)
+✔ invalid arguments fail before reading (["export.json","01"]) (0.121173ms)
+✔ invalid arguments fail before reading (["export.json","NaN"]) (0.091688ms)
+✔ invalid arguments fail before reading (["export.json","9007199254740992"]) (0.110136ms)
+✔ invalid arguments fail before reading (["export.json","999999999999999999999999999999999999999999999999999999999999999999999999999999999999) (0.09258ms)
+✔ valid report and count mismatch preserve the non-publication contract (4.043655ms)
+✔ safe integer upper boundary is accepted as a count, without rounding (0.227434ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18.724199
+✔ guest cannot start and does not make a user lookup (1.222489ms)
+✔ valid session and verified user can answer (0.616503ms)
+✔ user lookup transport error {"status":0} keeps retry guidance (0.36394ms)
+✔ user lookup transport error {"status":503} keeps retry guidance (0.109165ms)
+✔ user lookup transport error {"name":"AuthRetryableFetchError"} keeps retry guidance (0.103126ms)
+✔ expired authentication {"status":401} asks for login (0.12554ms)
+✔ expired authentication {"code":"session_not_found"} asks for login (0.107462ms)
+✔ expired authentication {"name":"AuthSessionMissingError"} asks for login (0.075814ms)
+✔ session transport error does not claim expiry (0.138429ms)
+✔ thrown transport error does not escape the UI action (1.2501ms)
+✔ missing verified user asks for login (0.194384ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11.208553
+✔ question validation sorts a copy without changing option identity or original input (2.375332ms)
+✔ malformed null fails closed (0.441618ms)
+✔ malformed object fails closed (0.119972ms)
+✔ malformed no options fails closed (0.084568ms)
+✔ malformed one option fails closed (0.29093ms)
+✔ malformed empty text fails closed (0.150037ms)
+✔ malformed missing metadata fails closed (0.116045ms)
+✔ malformed duplicate question ID fails closed (0.859931ms)
+✔ malformed duplicate option ID fails closed (0.156636ms)
+✔ malformed duplicate option order fails closed (0.175856ms)
+✔ malformed fractional order fails closed (0.179691ms)
+✔ malformed empty option text fails closed (0.160743ms)
+✔ malformed negative order fails closed (0.062134ms)
+✔ rejected and synchronous transport failures become recoverable errors without retries (0.295778ms)
+✔ successful save data and RPC permission errors are preserved without reinterpretation (0.225511ms)
+✔ offline audit flags normalized question and option duplicate candidates only (0.7076ms)
+✔ audit report flags missing expected count and never claims publication approval (0.463401ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14.990532
