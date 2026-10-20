@@ -17,7 +17,7 @@ A/B/C/D are being developed concurrently by separate agents/branches during the 
 - Notifications are limited to GitHub's existing failed-check UI; no external messages sent.
 
 ## Reproduce
-`python -B tests/automation/test_development_queue.py` — 12 safety tests.
+`python -B tests/automation/test_development_queue.py` — 15 safety tests.
 `python -B scripts/run_queue_validation.py --state /tmp/pokerid-queue-new.sqlite --output /tmp/pokerid-queue-evidence` — at most four validations, with logs and JSON report.
 `python -B scripts/development_queue.py --state /tmp/pokerid-queue-new.sqlite --lane C` — prints next task descriptors only.
 Run again with the same state: completed validations are not rerun. Development descriptors stay queued until a real code worker completes and supplies independently reviewed commit/CI/QA evidence.
@@ -34,3 +34,8 @@ Vercel lists the poker-sns project, but scoped project read/deployment-list call
 A connected automation was created successfully after a successful GitHub read: interval6h, count28, enabled=true. No existing duplicate was present. The service chose the user's timezone automatically; no workspace-timezone substitution was used.
 Actual execution is NOT verified: next_run_time and last_run_time were null on creation. Immediate run verification returned404 NOT_FOUND / Action not found before invocation. Do not report this as a running development worker. No repeated retry or new paid service was used.
 The saved prompt bounds work to four small tasks and30min/run, suppresses unchanged notifications, requires GitHub overlap/lease checking, and prohibits production/merge/DB/expense actions while capabilities remain unresolved. If execution/lock/test capabilities are unavailable it must remain read-only and record BLOCKED. The finite schedule does not auto-extend after28 runs.
+
+## Advancing the development queue
+The coordinator may call record_implementation with an externally witnessed full commit, repository PR URL and CI run URL. This records implemented, never released. The automatic validation runner cannot invoke it and does not mark development done. Evidence syntax validation is not remote CI verification; the coordinator must independently read GitHub first.
+The plan excludes implemented tasks and reveals dependent next tasks only when prerequisites are implemented/succeeded. Missing/cyclic dependencies fail closed. Persisted task specs cannot change under an existing immutable ID.
+The CI state is ephemeral; leases/retry counts are not a deployed cross-run distributed lock. A future code worker needs a durable shared store before unattended writes are enabled. The reservation prompt remains read-only if that prerequisite is absent.

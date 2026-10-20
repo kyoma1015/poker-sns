@@ -5,6 +5,7 @@ A successful validation run is NOT completion of a development task.
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 import sqlite3
 import time
@@ -39,6 +40,22 @@ def validate_manifest(manifest):
             raise ValueError('acceptance criteria required')
         if 'command' in task or 'shell' in task:
             raise ValueError('queue data cannot supply executable commands')
+    for task in tasks:
+        dependencies = task.get('depends_on', [])
+        if not isinstance(dependencies, list) or any(dep not in ids or dep == task['id'] for dep in dependencies):
+            raise ValueError('invalid dependencies')
+    graph = {task['id']: task.get('depends_on', []) for task in tasks}
+    def visit(task_id, active, done):
+        if task_id in active:
+            raise ValueError('cyclic dependency')
+        if task_id in done:
+            return
+        for dependency in graph[task_id]:
+            visit(dependency, active | {task_id}, done)
+        done.add(task_id)
+    done = set()
+    for task_id in graph:
+        visit(task_id, set(), done)
     return manifest
 
 
@@ -118,6 +135,28 @@ class Queue:
             self.db.execute('ROLLBACK')
             raise
 
+    def record_implementation(self, task_id, commit, pr, ci):
+        # A coordinator records externally witnessed evidence. This is never
+        # called by the automatic validation runner and never marks a release.
+        if not re.fullmatch(r'[0-9a-f]{40}', commit or ''):
+            raise ValueError('full immutable commit required')
+        if not re.fullmatch(r'https://github\.com/kyoma1015/poker-sns/pull/[1-9][0-9]*', pr or ''):
+            raise ValueError('repository PR evidence required')
+        if not re.fullmatch(r'https://github\.com/kyoma1015/poker-sns/actions/runs/[1-9][0-9]*', ci or ''):
+            raise ValueError('repository CI evidence required')
+        evidence = json.dumps({'commit': commit, 'pr': pr, 'ci': ci, 'release': 'not_claimed'})
+        cursor = self.db.execute("UPDATE tasks SET status='implemented',evidence=? WHERE id=? AND kind='development' AND status='queued'", (evidence, task_id))
+        if cursor.rowcount != 1:
+            raise ValueError('only queued development tasks can be recorded')
+
+    def next_tasks(self, lane):
+        if lane not in LANES:
+            raise ValueError('invalid lane')
+        states = {row['id']: row['status'] for row in self.report()['tasks']}
+        return [task for task in self.manifest['tasks'] if task['lane'] == lane
+                and states[task['id']] == 'queued'
+                and all(states[dep] in ('implemented', 'succeeded') for dep in task.get('depends_on', []))]
+
     def report(self):
         rows = self.db.execute('SELECT id,lane,kind,status,attempts,evidence FROM tasks ORDER BY rowid').fetchall()
         return {'mode': 'validation_only', 'autonomous_development_running': False,
@@ -129,13 +168,20 @@ def main():
     parser.add_argument('--manifest', type=Path, default=Path('.github/queues/development.json'))
     parser.add_argument('--state', type=Path, required=True, help='ephemeral local SQLite; never a production connection')
     parser.add_argument('--lane', choices=LANES)
+    parser.add_argument('--record')
+    parser.add_argument('--commit')
+    parser.add_argument('--pr')
+    parser.add_argument('--ci')
     args = parser.parse_args()
     manifest = json.loads(args.manifest.read_text())
     queue = Queue(args.state, manifest)
     try:
-        if args.lane:
+        if args.record:
+            queue.record_implementation(args.record, args.commit, args.pr, args.ci)
+            print(json.dumps(queue.report(), ensure_ascii=False))
+        elif args.lane:
             # Output a plan only; no task command or code-writing worker is invoked.
-            plan = [t for t in manifest['tasks'] if t['lane'] == args.lane]
+            plan = queue.next_tasks(args.lane)
             print(json.dumps({'lane': args.lane, 'execution': 'plan_only', 'code_worker_configured': False,
                               'max_tasks_per_run': manifest['max_tasks_per_run'], 'next_tasks': plan}, ensure_ascii=False))
         else:

@@ -112,6 +112,34 @@ class QueueTests(unittest.TestCase):
         finally:
             second.close()
 
+    def test_record_implementation_advances_to_dependent_task(self):
+        changed = manifest()
+        changed['tasks'].append({'id': 'A-next', 'lane': 'A', 'kind': 'development', 'acceptance': 'next validation', 'depends_on': ['A-dependency-ui-20261020']})
+        second = module.Queue(self.path, changed)
+        try:
+            self.assertNotIn('A-next', [t['id'] for t in second.next_tasks('A')])
+            second.record_implementation('A-dependency-ui-20261020', 'a' * 40, 'https://github.com/kyoma1015/poker-sns/pull/17', 'https://github.com/kyoma1015/poker-sns/actions/runs/1')
+            tasks = [t['id'] for t in second.next_tasks('A')]
+            self.assertIn('A-next', tasks)
+            self.assertNotIn('A-dependency-ui-20261020', tasks)
+        finally:
+            second.close()
+
+    def test_record_requires_full_commit_pr_and_ci_evidence(self):
+        for commit, pr, ci in [('short', 'https://github.com/kyoma1015/poker-sns/pull/17', 'https://github.com/kyoma1015/poker-sns/actions/runs/1'), ('a' * 40, 'https://other/repo/pull/17', 'https://github.com/kyoma1015/poker-sns/actions/runs/1'), ('a' * 40, 'https://github.com/kyoma1015/poker-sns/pull/17', '')]:
+            with self.assertRaises(ValueError):
+                self.q.record_implementation('A-dependency-ui-20261020', commit, pr, ci)
+        with self.assertRaises(ValueError):
+            self.q.record_implementation('A-queue-validation-20261020', 'a' * 40, 'https://github.com/kyoma1015/poker-sns/pull/17', 'https://github.com/kyoma1015/poker-sns/actions/runs/1')
+
+    def test_rejects_dependency_cycles_and_missing_ids(self):
+        for target in ['missing', 'B-question-quality-20261020']:
+            changed = manifest()
+            changed['tasks'][0]['depends_on'] = [target]
+            changed['tasks'][1]['depends_on'] = [changed['tasks'][0]['id']]
+            with self.assertRaises(ValueError):
+                module.validate_manifest(changed)
+
     def test_invalid_lane_rejected(self):
         with self.assertRaises(ValueError):
             self.q.claim('production', 100)

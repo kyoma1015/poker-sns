@@ -48,7 +48,7 @@
       "kind": "validation",
       "status": "succeeded",
       "attempts": 1,
-      "evidence": "/workspace/work/continuous-control-evidence-final/A-validation.log"
+      "evidence": "/workspace/work/continuous-control-evidence-v2/A-validation.log"
     },
     {
       "id": "B-queue-validation-20261020",
@@ -56,7 +56,7 @@
       "kind": "validation",
       "status": "succeeded",
       "attempts": 1,
-      "evidence": "/workspace/work/continuous-control-evidence-final/B-validation.log"
+      "evidence": "/workspace/work/continuous-control-evidence-v2/B-validation.log"
     },
     {
       "id": "C-queue-validation-20261020",
@@ -64,7 +64,7 @@
       "kind": "validation",
       "status": "succeeded",
       "attempts": 1,
-      "evidence": "/workspace/work/continuous-control-evidence-final/C-validation.log"
+      "evidence": "/workspace/work/continuous-control-evidence-v2/C-validation.log"
     },
     {
       "id": "D-queue-validation-20261020",
@@ -72,7 +72,39 @@
       "kind": "validation",
       "status": "succeeded",
       "attempts": 1,
-      "evidence": "/workspace/work/continuous-control-evidence-final/D-validation.log"
+      "evidence": "/workspace/work/continuous-control-evidence-v2/D-validation.log"
+    },
+    {
+      "id": "A-isolated-notification-20261020",
+      "lane": "A",
+      "kind": "development",
+      "status": "queued",
+      "attempts": 0,
+      "evidence": null
+    },
+    {
+      "id": "B-official-corpus-20261020",
+      "lane": "B",
+      "kind": "development",
+      "status": "queued",
+      "attempts": 0,
+      "evidence": null
+    },
+    {
+      "id": "C-scope-benchmarks-20261020",
+      "lane": "C",
+      "kind": "development",
+      "status": "queued",
+      "attempts": 0,
+      "evidence": null
+    },
+    {
+      "id": "D-semantic-result-fixtures-20261020",
+      "lane": "D",
+      "kind": "development",
+      "status": "queued",
+      "attempts": 0,
+      "evidence": null
     }
   ],
   "this_run": [
