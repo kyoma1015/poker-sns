@@ -1,0 +1,15 @@
+100644 blob f15f05f23f9c24e9edd0bd5f694c8631d4338293     781	handoff/gto/build_original/g12_p1_cache/build.sh
+100644 blob 0eabebb5d0be6555be0adb47368399c7716e6595    1339	handoff/gto/check_vendor_bundle.py
+100644 blob aded33bc80b58db68947c8f871f50747bc0cf16a    5116	handoff/gto/compressed/g11_rules_embed.h.zlib.b64
+100644 blob 6618b86326200e07a9ae3c710fe865bed7e043e8   11212	handoff/gto/compressed/g12_next_solver_disk.cc.zlib.b64
+100644 blob 94d9f5f0061e7722ef5e9cd12fb25039da5464d0   12128	handoff/gto/compressed/g12_p1_cache_solver_disk.cc.zlib.b64
+100644 blob 4a6647a751b66fef25edc55f5065335b3568f60e    3436	handoff/gto/compressed/g12_p1_packed_live_backend.py.zlib.b64
+100644 blob 96a36d80cedac851c3ded3cb9cba4980398850b0   11484	handoff/gto/compressed/g12_p1_packed_solver_disk.cc.zlib.b64
+100644 blob fdb6c7ec20f4d77a9169c4aa4a97ae5399679b84    4528	handoff/gto/compressed/pokerid_rules.py.zlib.b64
+100644 blob 45109e06d1840c5ee10d226bc72a51b10eebbd65    3913	handoff/gto/g12_next/g11_native_state.h
+100644 blob 091c4f1c9dd2c0aea28a2649d007559d0fe27a5a    1608	handoff/gto/g12_next/g12_full52_native_smoke.py
+100644 blob 44b3d71fc56f4c135da73b16b7c26924a51b4a83    1120	handoff/gto/g12_next/g12_numeric.h
+100644 blob 4de827c5464923e7a6e8fa942aad65ac5875f5f1    6236	handoff/gto/g12_next/g12_p1_live_backend.py
+100644 blob c1f3bf93e9d9dffd56feabae2e465be7ac04ac58    2055	handoff/gto/g12_next/g12_p1_live_backend_tests.py
+100644 blob 2e06f2587c64eb0cfa404ff68daef9885c09f656    2183	handoff/gto/g12_next/verify_resume.py
+100644 blob 46ebf87e3f98a29d994070e62ea0086e38e5595e    1338	handoff/gto/verify_native_solvers.py

@@ -1,7 +1,7 @@
 # C | GTO handoff closure and remaining gates
 Date: 2026-10-20 JST
 Source: chore/codex-handoff-artifacts-20261020 @ 8509484bf9186534ca10694eb62aba7075395aee.
-Status: CONDITIONAL PASS for Python/source inspection; native build and historical resume BLOCKED.
+Status: latest active milestone below supersedes the initial handoff-only state: reconstructed native build PASS; original G11 parity/historical resume BLOCKED.
 
 ## Received actual sources, durable location and re-access
 All transferred bytes are preserved under handoff/gto/ on this integration branch. Clone/fetch this branch, then run the commands below. The handoff branch remains unchanged. Original seven ZIPs and vendored ZIP are NOT proved received by a hash ledger.
@@ -39,3 +39,19 @@ Safe now: source comparison, strict hash checks, temporary SQLite Python tests. 
 These C-lane blockers do not prevent A/B/D/SNS branch development.
 
 Existing Next backend unit suite: `python -B handoff/gto/g12_next/g12_p1_live_backend_tests.py` — 9 PASS using temporary SQLite only (docs/qa/integration-20261020/gto-next.log). Added to CI. Packed25 + Next9 = 34 Python backend tests; this is not native solver/G11-parity coverage.
+
+## Active milestone update — 2026-10-20
+Base PR13: 3ca87764e988cac588fef915d48823702a1a3326. Work branch: codex/c-gto-active-milestones-20261020.
+New policy source handoff ae22acd1ba5d167f1d7111069966dda672260129: GTO_ACTIVE_CONTINUOUS_DEVELOPMENT_20261020.md. The old no-build statement above described missing *original* dependency closure during handoff; owner now permits pinned isolated reconstruction. Original source/dependency/checkpoint provenance is not retroactively marked recovered.
+
+Milestone 1 completed: pinned pybind11 2.13.6 wheel and Abseil 20240116.2 source (SHA-256 checked), reproducible isolated build tool, separate Next/Cache/Packed copied sources/directories/import processes. All 3 unmodified C++ sources build with original -O2/-std=c++20/-fno-fast-math/-ffp-contract=off/-fPIC/-shared options. Python 3.12.14 cpython-312-x86_64-linux-gnu; Debian GCC 14.2.0; long_double_digits=64. This is a reconstructed environment, NOT original G11 vendor/ABI restoration. See gto/README.md and docs/qa/gto-active-20261020/native-manifest.json.
+Each variant passes extended-reach cancellation (0.5^1100), invalid operand/legacy-mode rejection, finite normalized toy policies, 200 synthetic matching-pennies iterations, temporary SQLite reopen/resume and memory/disk checkpoint byte equality. All three produce the same synthetic checkpoint SHA b38355859e67d65e2b50fdf057153c0e1ba6237cdab6d8355617298878d685db on this environment. This is not G11 parity or an optimal strategy proof.
+Additional bounded native-poker smoke: each variant passes 320 one-iteration cases across 2–9 players, 20 synthetic equal-stack values 2..40BB, cash rake 1/10 + BB ante and MTT chipEV/no-rake + BB ante. Total 960. Owner's exact 20 stack conditions/bet-size fixtures and expected settlement results remain UNKNOWN; this synthetic coverage does not replace them.
+
+Milestone 2 completed: checkpoint integrity boundary and 169-class export validation.
+Actual issue reproduced: preserved native load_binary accepts a modified checksum trailer. Original C++ source is retained; new load_verified_checkpoint streams to a private temporary snapshot, verifies SHA/magic/contract/bounded header, then delegates full row/mode validation. New consumers must use this wrapper. Raw save_binary emits a checksum-free payload; no historical format migration is inferred.
+Hand169 component validates all 1326 distinct combinations, 13 pairs/78 suited/78 offsuit classes, reach-weighted strategy/EV, missing coverage, duplicate/invalid cards/probabilities/weights, and explicit unknown/zero-reach output. It produces no solver frequencies/EV itself.
+`python -B -m unittest discover -s gto/tests -v`: 18 PASS (checkpoint 8 + hand169 10).
+Existing backend regressions 34 PASS; app regressions 89 PASS; npm ci/build/lint PASS with existing warnings. Browser/UI source was unchanged. Evidence and exact run commands under docs/qa/gto-active-20261020/ and gto/README.md. Dedicated PR CI runs the native reconstruction; it is a finite verifier, not a permanent worker.
+
+Remaining: genuine vendor 1,588-file bundle, G11 expected data/settings, exact target stack/bet configurations, historical checkpoint and ABI checks, settlement/parity/convergence/representative benchmarks. No original ZIP bytes/checkpoint appeared in current handoff Git tree. No canonical solver selected, no old checkpoint opened, no production/main/DB operations. Next tasks: expected-value settlement fixtures, checkpoint format/compatibility inventory on copies, and connecting verified 169 export to actual native row output without inventing EV.
