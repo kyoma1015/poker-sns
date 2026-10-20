@@ -1,3 +1,4 @@
+import { checkQuizAuthentication } from './tdaQuizAuth'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -438,27 +439,10 @@ function TDA() {
   // 問題の閲覧は公開されているが、回答の保存にはログインが必要。
   // RPCの権限は変更せず、回答できない状態を開始前に案内する。
   const ensureQuizAuthenticated = async (): Promise<boolean> => {
-    const { data: sessionData, error: sessionError } = await supabase.auth.getSession()
-    if (sessionError) {
-      console.error('TDA quiz session check failed:', sessionError)
-      setQuizAuthRequired(false)
-      setQuizError('ログイン状態を確認できませんでした。通信状況を確認して再度お試しください。')
-      return false
-    }
-    if (!sessionData.session) {
-      setQuizAuthRequired(true)
-      setQuizError('回答を記録するにはログインしてください。')
-      return false
-    }
-    const { data, error } = await supabase.auth.getUser()
-    if (error || !data.user) {
-      if (error) console.error('TDA quiz user check failed:', error)
-      setQuizAuthRequired(true)
-      setQuizError('ログインの有効期限が切れた可能性があります。再度ログインしてください。')
-      return false
-    }
-    setQuizAuthRequired(false)
-    return true
+    const result = await checkQuizAuthentication(supabase.auth)
+    setQuizAuthRequired(!result.ok && result.requiresLogin)
+    if (!result.ok) setQuizError(result.message)
+    return result.ok
   }
 
   const startQuiz = async () => {
