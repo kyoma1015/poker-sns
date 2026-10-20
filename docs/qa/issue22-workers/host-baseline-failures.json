@@ -1,0 +1,26 @@
+[
+  {
+    "lane": "A",
+    "baseline_exit": 1,
+    "output": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Missing expected exception: malformed option count must fail closed\n    at file:///workspace/work/issue22-input-a/tests/worker-acceptance.test.mjs:6:60\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: undefined,\n  expected: undefined,\n  operator: 'throws',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n",
+    "input_sha": "56f8a36f4c894b96c2eb2c4375263ccdaf0c8a00"
+  },
+  {
+    "lane": "B",
+    "baseline_exit": 1,
+    "output": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: empty offline audit must not pass\n+ actual - expected\n\n+ 'STRUCTURE_PASS'\n- 'REVIEW_REQUIRED'\n\n    at file:///workspace/work/issue22-input-b/tests/worker-acceptance.test.mjs:5:8\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: 'STRUCTURE_PASS',\n  expected: 'REVIEW_REQUIRED',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n",
+    "input_sha": "77b41f7f1f655c5b3367ab595022e970ef37fc61"
+  },
+  {
+    "lane": "C",
+    "baseline_exit": 1,
+    "output": "test_finite_sum_overflow_is_validation_error (test_mass.WorkerMassAcceptance.test_finite_sum_overflow_is_validation_error) ... ERROR\ntest_normal_weighted_output_is_preserved (test_mass.WorkerMassAcceptance.test_normal_weighted_output_is_preserved) ... ok\n\n======================================================================\nERROR: test_finite_sum_overflow_is_validation_error (test_mass.WorkerMassAcceptance.test_finite_sum_overflow_is_validation_error)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/work/issue22-input-c/tests/worker_acceptance/test_mass.py\", line 9, in test_finite_sum_overflow_is_validation_error\n    aggregate(rows,1,require_complete=False)\n  File \"/workspace/work/issue22-input-c/gto/hand169.py\", line 52, in aggregate\n    mass = math.fsum(row[0] for row in rows)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nOverflowError: intermediate overflow in fsum\n\n----------------------------------------------------------------------\nRan 2 tests in 0.001s\n\nFAILED (errors=1)\n",
+    "input_sha": "44d46db7989a02ce28dba58bea6f30172c525dfc"
+  },
+  {
+    "lane": "D",
+    "baseline_exit": 1,
+    "output": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: invalid persona answer count/letter must fail\n+ actual - expected\n\n+ 'CONDITIONAL PASS'\n- 'FAIL'\n\n    at file:///workspace/work/issue22-input-d/tests/worker-acceptance.test.mjs:10:9\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: 'CONDITIONAL PASS',\n  expected: 'FAIL',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n",
+    "input_sha": "a7895875ba0c8de10c30823ea22ce4cb5f5351a1"
+  }
+]

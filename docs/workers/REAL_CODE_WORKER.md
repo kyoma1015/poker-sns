@@ -1,6 +1,6 @@
 # Issue #22 — finite real-code worker adapter
 
-Status: **adapter implemented, real model execution BLOCKED in this managed runtime**.
+Status: **four real host-session implementations verified; nested CLI remains BLOCKED; no persistent daemon**.
 This is a new implementation on top of PR #16, not a claim that unattended development is running.
 
 ## What is implemented
@@ -40,7 +40,7 @@ There is no API/token spend limit claim: this adapter refuses API-key billing an
 - CLI0.159.2 exec help inspected; no bypass flags used.
 - Root coordinator's actual CLI startup attempts failed before model execution with `failed to initialize in-process app-server client: Read-only file system (os error 30)`. An allowed log/sqlite-directory override did not fix it. The managed CODEX_HOME was not changed/copied and sandbox was not bypassed.
 - A separate sandbox-help call also returned `app-server socket directory must be a user-owned directory with mode0700`. No repeated attempt to bypass the runtime was made.
-- Therefore actual model-generated implementation, autonomous Draft PR creation, four real AI worker starts and unattended continuation remain **BLOCKED/NOT VERIFIED**.
+- Therefore nested-CLI model-generated implementation and standalone publisher/daemon activation remained **BLOCKED/NOT VERIFIED** at that observation. The later approved host-session milestone below is separate and does not erase the CLI failure.
 - `python -B tests/automation/test_code_worker.py`:22 tests, including four concurrent test-fixture code writers with real Git worktrees, acceptance tests and commits. They are explicitly `test_fixture`/real_ai_implementation=false; this is not evidence of real Codex model execution.
 - Existing `tests/automation/test_development_queue.py`:15 regressions retained. CI executes both suites without model credentials.
 
@@ -59,3 +59,19 @@ Prepare example: `python -B scripts/host_session_worker.py prepare --manifest /r
 Finish example: `python -B scripts/host_session_worker.py finish --task-id TASK --state /durable/worker.sqlite --prepared /coordinator/TASK-lease.json --receipt /coordinator/TASK-agent-receipt.json --output /coordinator/TASK-result.json`.
 
 The receipt requires matching `task_id`, `dispatch_source="collaboration"`, `completed=true`, and actual `agent_id` such as `/root/lane_b`. This backend is usable only during a legitimate active host session. It does not provide a persistent scheduler or prove future scheduled sessions have shell/agent/lease capabilities.
+
+## Actual host-session activation milestone
+The trusted root coordinator completed a finite four-lane run using this exact lifecycle. This is real project source modification by formal collaboration agents, not the fixture executor:
+
+| Lane | Real defect fixed | Actual agent | Controller-created commit | Draft PR |
+|---|---|---|---|---|
+| A | Reject malformed poll option counts before vote RPC | /root/host_a | 9bf10fc8de11fd6644876c50439b3e5fc1ffa24d | #27 |
+| B | Empty offline question export is REVIEW_REQUIRED | /root/lane_b | a36c7853ca745b40d9607d096b8a2f72c5f5712d | #28 |
+| C | Finite mass sum overflow becomes validation ValueError | /root/lane_c | 89fd492422497714d1665a9523e97ad4ba3ebee2 | #29 |
+| D | Reject malformed persona answer count/letters in offline audit | /root/lane_d | 6e72672fe1b9e51feb6c5b398dd9d757da83e110 | #30 |
+
+All four immutable acceptance suites failed before source editing. The actual agents changed only reviewed source paths. The controller independently reran five acceptance cases (A1/B1/C2/D1), rechecked source/acceptance hashes and created four commits. Reclaiming the same task IDs returned none for all four tasks, proving no duplicate execution in the retained shared state.
+
+Public evidence is in docs/qa/issue22-workers/host-session-results.json, host-baseline-failures.json, host-session-manifest.json and completed-no-replay.json. Lease tokens, private prepared receipts and SQLite databases were deliberately not copied. The result records publication=not_attempted because that controller stage does not use a GitHub credential; the root coordinator subsequently pushed and created the four Draft PRs using its existing approved GitHub tools. This is evidence for formal host dispatch/source/test/commit and root publication, not evidence that the optional standalone publisher authenticated successfully.
+
+No main merge, production deployment, Supabase call, old checkpoint write, auth copy or new paid service was performed. The CLI EROFS blocker still applies. A single finite host run is not a persistent daemon or proof that the next unattended scheduled session has runtime/collaboration/lease capabilities; that future run must check its capabilities and shared state again.
