@@ -1,3 +1,4 @@
+import { sharePost } from './sharePost'
 import { createPollRequest, pollDisplayResult } from './interactiveRequests'
 import { useEffect, useRef, useState } from 'react'
 import { createVerifiedNotification } from './createVerifiedNotification'
@@ -3465,42 +3466,19 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
                         </div>
                         <button
 
-                          onClick={() => {
-
-                            if (
-
-                              navigator
-
-                                .share
-
-                            ) {
-
-                              navigator
-
-                                .share({
-
-                                  title:
-
-                                    'Poker ID',
-
-                                  text:
-
-                                    post.content,
-
-                                  url: `${window.location.origin}/post/${post.id}`,
-
-                                })
-
-                            } else {
-
-                              navigator.clipboard?.writeText(
-
-                                `${window.location.origin}/post/${post.id}`
-
-                              )
-
+                          onClick={async () => {
+                            try {
+                              const outcome = await sharePost({
+                                title: 'Poker ID', text: post.content,
+                                url: `${window.location.origin}/post/${post.id}`,
+                              }, {
+                                share: navigator.share?.bind(navigator),
+                                clipboard: navigator.clipboard,
+                              })
+                              if (outcome === 'copied') setMessage('投稿のリンクをコピーしました。')
+                            } catch (error) {
+                              setMessage(error instanceof Error ? error.message : '共有に失敗しました。')
                             }
-
                           }}
 
                           aria-label="シェア"
