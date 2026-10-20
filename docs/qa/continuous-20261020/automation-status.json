@@ -1,0 +1,12 @@
+{
+  "created_successfully": true,
+  "enabled": true,
+  "interval_hours": 6,
+  "occurrence_limit": 28,
+  "next_run_time_at_creation": null,
+  "last_run_time_at_creation": null,
+  "immediate_run_verification": "BLOCKED: 404 NOT_FOUND, Action not found before invocation",
+  "autonomous_code_execution_verified": false,
+  "new_paid_services": false,
+  "note": "Reservation is not evidence of code-worker execution. GitHub CI rehearsal is separate."
+}

@@ -1,0 +1,20 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+1 !== 0
+
+    at file:///workspace/work/continuous-d/tests/browser/diagnosis.mjs:33:12
+    at async check (file:///workspace/work/continuous-d/tests/browser/diagnosis.mjs:24:39)
+    at async file:///workspace/work/continuous-d/tests/browser/diagnosis.mjs:26:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
