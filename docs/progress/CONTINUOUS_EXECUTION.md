@@ -29,3 +29,8 @@ PR #13 remains unmerged because isolation/privacy/release gates remain unresolve
 
 ## Production access observation
 Vercel lists the poker-sns project, but scoped project read/deployment-list calls return403 for the project's owning team. The listing alone does not establish deployment permission. No Vercel CLI fallback is installed in this environment. No production deployment is claimed. No production DB was accessed.
+
+## Bounded ChatGPT restart reservation (separate from GitHub scheduler)
+A connected automation was created successfully after a successful GitHub read: interval6h, count28, enabled=true. No existing duplicate was present. The service chose the user's timezone automatically; no workspace-timezone substitution was used.
+Actual execution is NOT verified: next_run_time and last_run_time were null on creation. Immediate run verification returned404 NOT_FOUND / Action not found before invocation. Do not report this as a running development worker. No repeated retry or new paid service was used.
+The saved prompt bounds work to four small tasks and30min/run, suppresses unchanged notifications, requires GitHub overlap/lease checking, and prohibits production/merge/DB/expense actions while capabilities remain unresolved. If execution/lock/test capabilities are unavailable it must remain read-only and record BLOCKED. The finite schedule does not auto-extend after28 runs.
