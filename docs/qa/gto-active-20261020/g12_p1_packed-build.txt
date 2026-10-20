@@ -1,0 +1,14 @@
+In file included from /workspace/work/gto-native-final-20261020/g12_p1_packed/g11_native_state.h:3,
+                 from /workspace/work/gto-native-final-20261020/g12_p1_packed/g12_solver_disk.cc:20:
+/workspace/work/gto-native-final-20261020/g12_p1_packed/g11_rules_embed.h:19:8: warning: ‘pokerid7rules::Ledger’ declared with greater visibility than the type of its field ‘pokerid7rules::Ledger::input_stacks’ [-Wattributes]
+   19 | struct Ledger {
+      |        ^~~~~~
+/workspace/work/gto-native-final-20261020/g12_p1_packed/g11_rules_embed.h:19:8: warning: ‘pokerid7rules::Ledger’ declared with greater visibility than the type of its field ‘pokerid7rules::Ledger::input_rules’ [-Wattributes]
+/workspace/work/gto-native-final-20261020/g12_p1_packed/g11_native_state.h:7:8: warning: ‘pokerid11state::Spec’ declared with greater visibility than the type of its field ‘pokerid11state::Spec::stacks’ [-Wattributes]
+    7 | struct Spec {
+      |        ^~~~
+/workspace/work/gto-native-final-20261020/g12_p1_packed/g11_native_state.h:7:8: warning: ‘pokerid11state::Spec’ declared with greater visibility than the type of its field ‘pokerid11state::Spec::rules’ [-Wattributes]
+/workspace/work/gto-native-final-20261020/g12_p1_packed/g12_solver_disk.cc:56:7: warning: ‘pokerid11::Solver’ declared with greater visibility than the type of its field ‘pokerid11::Solver::game’ [-Wattributes]
+   56 | class Solver {
+      |       ^~~~~~
+/workspace/work/gto-native-final-20261020/g12_p1_packed/g12_solver_disk.cc:56:7: warning: ‘pokerid11::Solver’ declared with greater visibility than the type of its field ‘pokerid11::Solver::disk_backend’ [-Wattributes]
