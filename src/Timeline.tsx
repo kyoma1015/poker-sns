@@ -1,3 +1,4 @@
+import { createPollRequest, pollDisplayResult } from './interactiveRequests'
 import { useEffect, useRef, useState } from 'react'
 import { createVerifiedNotification } from './createVerifiedNotification'
 
@@ -151,10 +152,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const [quoteBusy, setQuoteBusy] = useState(false)
   const [repostMenuId, setRepostMenuId] = useState<string | null>(null)
   const [composeOpen, setComposeOpen] = useState(false)
-  const [interactiveMode, setInteractiveMode] = useState<'normal'|'poll'|'question'>('normal')
+  const [interactiveMode, setInteractiveMode] = useState<'normal'|'poll'>('normal')
   const [pollOptions, setPollOptions] = useState(['',''])
   const [pollHours, setPollHours] = useState(24)
-  const [questionPolicy, setQuestionPolicy] = useState<'named_only'|'respondent_choice'>('respondent_choice')
   const [pollAnonymous, setPollAnonymous] = useState(false)
   const [attachmentsOpen, setAttachmentsOpen] = useState(false)
   const [attachmentScreen, setAttachmentScreen] = useState<'menu' | 'results' | 'tournament' | 'amusement' | 'cash' | 'diagnosis'>('menu')
@@ -273,10 +273,11 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     const postIdsForInteractive = postData.map(row => row.id)
     const { data: interactiveRows, error: interactiveError } = await supabase.from('post_interactive').select('*').in('post_id',postIdsForInteractive)
     if (interactiveError) { setMessage(`アンケート情報の取得に失敗しました：${interactiveError.message}`); return }
-    const { data: responseRows, error: responseError } = await supabase.rpc('get_interactive_results_v4', { p_post_ids: postIdsForInteractive })
+    const visibleInteractiveIds = postIdsForInteractive.filter(id => !(interactiveRows || []).some(row => row.post_id === id && row.kind === 'question'))
+    const { data: responseRows, error: responseError } = await supabase.rpc('get_interactive_results_v4', { p_post_ids: visibleInteractiveIds })
     if (responseError) { setMessage(`回答情報の取得に失敗しました：${responseError.message}`); return }
     setInteractiveItems(Object.fromEntries((interactiveRows||[]).map(row=>[row.post_id,row as InteractiveItem])))
-    setInteractiveResults(Object.fromEntries(((responseRows||[]) as InteractiveResult[]).map(row=>[row.post_id,row])))
+    setInteractiveResults(Object.fromEntries(((responseRows||[]) as InteractiveResult[]).map(row=>[row.post_id,pollDisplayResult((interactiveRows || []).find(item => item.post_id === row.post_id)?.is_anonymous !== false,row)])))
     const { data: repostRows, error: repostError } = await supabase
       .from('post_reposts').select('post_id,user_id,created_at')
     if (repostError) { setMessage(`リポストの取得に失敗しました：${repostError.message}`); return }
@@ -285,7 +286,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       .select('blocker_id,blocked_id').or(`blocker_id.eq.${user.id},blocked_id.eq.${user.id}`)
     if (blockError) { setMessage(`ブロック情報の取得に失敗しました：${blockError.message}`); return }
     const blockedIds = new Set((blockRows || []).map(row => row.blocker_id === user.id ? row.blocked_id : row.blocker_id))
-    const permittedPosts = postData.filter(row => !blockedIds.has(row.user_id))
+    const permittedPosts = postData.filter(row => !blockedIds.has(row.user_id) && visibleInteractiveIds.includes(row.id))
     const permittedIds = new Set(permittedPosts.map(row => row.id))
     const validReposts = (repostRows || []).filter(row => permittedIds.has(row.post_id) && !blockedIds.has(row.user_id))
 
@@ -794,9 +795,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     setMessage('')
   }
 
-  const choosePostMode = (mode: 'normal'|'poll'|'question') => {
+  const choosePostMode = (mode: 'normal'|'poll') => {
     if (mode !== 'normal' && (imageFiles.length || selectedResult || selectedDiagnosis || styleSnapshot)) {
-      setMessage('添付を外してからアンケート・質問箱に切り替えてください。')
+      setMessage('添付を外してからアンケートに切り替えてください。')
       return
     }
     setInteractiveMode(current => current === mode ? 'normal' : mode)
@@ -807,7 +808,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const renderPostModeButtons = () => (
     <div style={{display:'flex',alignItems:'center',gap:4,flexWrap:'nowrap',whiteSpace:'nowrap'}}>
       <button type="button" disabled={interactiveMode !== 'normal'} onClick={toggleAttachments} style={{width:'auto',padding:'6px 6px',border:'1px solid #333',background:'#181818',borderRadius:9,color:'#ddd',fontSize:11}}>＋ 添付</button>
-      {(['poll'] as const).map(mode=><button key={mode} type="button" onClick={()=>choosePostMode(mode)} aria-pressed={interactiveMode===mode} style={{width:'auto',padding:'6px 6px',border:'1px solid '+(interactiveMode===mode?'#ddd':'#333'),background:interactiveMode===mode?'#393939':'#181818',borderRadius:9,color:'#ddd',fontSize:11}}>{mode==='poll'?'📊 アンケート':'💬 質問箱'}</button>)}
+      {(['poll'] as const).map(mode=><button key={mode} type="button" onClick={()=>choosePostMode(mode)} aria-pressed={interactiveMode===mode} style={{width:'auto',padding:'6px 6px',border:'1px solid '+(interactiveMode===mode?'#ddd':'#333'),background:interactiveMode===mode?'#393939':'#181818',borderRadius:9,color:'#ddd',fontSize:11}}>📊 アンケート</button>)}
     </div>
   )
 
@@ -821,7 +822,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       </div>
       <div style={{display:'grid',gap:8}}><label style={{fontSize:12,color:'#ccc'}}>投票方式</label><div style={{display:'flex',gap:8}}>{([{anonymous:false,label:'記名投票'},{anonymous:true,label:'匿名投票'}] as const).map(mode=><button key={mode.label} type="button" aria-pressed={pollAnonymous===mode.anonymous} onClick={()=>setPollAnonymous(mode.anonymous)} style={{width:'auto',padding:'8px 12px',borderRadius:9,border:'1px solid '+(pollAnonymous===mode.anonymous?'#ddd':'#444'),background:pollAnonymous===mode.anonymous?'#383838':'#181818',color:'#eee',fontSize:12}}>{mode.label}</button>)}</div><p style={{fontSize:12,color:'#aaa',margin:0}}>{pollAnonymous?'投票者と投票先は公開されません。':'投票者の名前・Poker IDと投票先が公開されます。'} 投稿後の変更はできません。</p></div>
     </div>
-  ) : interactiveMode==='question' ? <div style={{marginTop:10,display:'grid',gap:8}}><label style={{fontSize:12,color:'#ccc'}}>回答方式</label><div style={{display:'flex',gap:8}}>{([{policy:'named_only',label:'記名回答のみ'},{policy:'respondent_choice',label:'回答者が選択'}] as const).map(mode=><button key={mode.policy} type="button" aria-pressed={questionPolicy===mode.policy} onClick={()=>setQuestionPolicy(mode.policy)} style={{width:'auto',padding:'8px 12px',borderRadius:9,border:'1px solid '+(questionPolicy===mode.policy?'#ddd':'#444'),background:questionPolicy===mode.policy?'#383838':'#181818',color:'#eee',fontSize:12}}>{mode.label}</button>)}</div><p style={{fontSize:12,color:'#aaa',margin:0}}>{questionPolicy==='named_only'?'回答者全員の表示名・Poker IDが公開されます。':'回答者が匿名・記名を選択できます（初期値は匿名）。'} 投稿後の変更はできません。</p></div> : null
+  ) : null
 
   const canSubmitPost = Boolean(content.trim() || (interactiveMode==='normal' && (selectedResult || selectedDiagnosis || styleSnapshot || imageFiles.length)))
     && (interactiveMode!=='poll'||(pollOptions.every(o=>o.trim()) && new Set(pollOptions.map(o=>o.trim().toLowerCase())).size===pollOptions.length))
@@ -833,19 +834,13 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       setIsPosting(true)
       setMessage('')
       try {
-        const { error } = await supabase.rpc('create_interactive_post_v4', {
-          p_content: content.trim(), p_kind: interactiveMode,
-          p_options: interactiveMode==='poll'?pollOptions.map(o=>o.trim()):null,
-          p_hours:pollHours,
-          p_is_anonymous: pollAnonymous,
-          p_question_policy: interactiveMode==='question'?questionPolicy:null,
-        })
+        const request = createPollRequest(interactiveMode, content, pollOptions, pollHours, pollAnonymous)
+        const { error } = await supabase.rpc('create_interactive_post_v4', request)
         if (error) throw error
         setContent('')
         setInteractiveMode('normal')
         setPollOptions(['',''])
         setPollHours(24)
-        setQuestionPolicy('respondent_choice')
         setPollAnonymous(false)
         setComposeOpen(false)
         await loadPosts()

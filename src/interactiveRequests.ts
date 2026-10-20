@@ -23,3 +23,22 @@ export function pollVoteRequest(item: Poll, choice: number | null, now = Date.no
     p_is_anonymous: item.is_anonymous,
   }
 }
+
+// Reject stale/forged question mode at the RPC boundary, not just in the UI.
+export function createPollRequest(mode: string, content: string, options: string[], hours: number, anonymous: boolean) {
+  if (mode !== 'poll') throw new Error('作成できるのはアンケートのみです。')
+  const normalized = options.map(option => option.trim())
+  if (!content.trim() || content.trim().length > 500 || normalized.length < 2 || normalized.length > 4 ||
+      normalized.some(option => !option || option.length > 80) ||
+      new Set(normalized.map(option => option.toLowerCase())).size !== normalized.length ||
+      ![1, 6, 24, 72, 168].includes(hours) || typeof anonymous !== 'boolean') {
+    throw new Error('アンケートの内容・選択肢・期限を確認してください。')
+  }
+  return { p_content: content.trim(), p_kind: 'poll' as const, p_options: normalized,
+    p_hours: hours, p_is_anonymous: anonymous, p_question_policy: null }
+}
+
+// Defense in depth only. Server-side RPC/RLS anonymity still needs isolated DB QA.
+export function pollDisplayResult<T extends { voters: unknown[]; answers: unknown[] }>(anonymous: boolean, result: T): T {
+  return anonymous ? { ...result, voters: [], answers: [] } : result
+}

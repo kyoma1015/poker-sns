@@ -12,3 +12,6 @@ Dependency install/build/lint blocked locally by the same unavailable registry p
 No scoring/animal definition SQL or L01 application. L01 current production state UNKNOWN; no DB read/write performed.
 Remaining: current-SHA browser QA, PNG comparisons, result navigation/latency/failure recovery, classification semantic mismatches. PR #5 and A's diagnosis changes must not be blindly merged on top.
 
+
+## Integrated verification update (2026-10-20)
+Integrated in B → D → A → SNS order. Local network permission resolved the previous registry blocker. npm ci, full unit regression, build and lint now run successfully on the integrated source; see INTEGRATION_VERIFICATION_20261020.md and docs/qa/integration-20261020/. Earlier blocked statements above describe the previous lane task. No production DB verification or release approval is implied.

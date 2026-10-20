@@ -1,4 +1,4 @@
-import { pollVoteRequest } from './interactiveRequests'
+import { createPollRequest, pollDisplayResult, pollVoteRequest } from './interactiveRequests'
 import { useEffect, useState } from 'react'
 import { supabase } from './supabase'
 
@@ -24,13 +24,8 @@ export function InteractiveComposer({ onCreated }: { onCreated: () => Promise<vo
     if (busy) return
     setBusy(true); setError('')
     try {
-      const { error: failure } = await supabase.rpc('create_interactive_post_v4', {
-        p_content: content.trim(), p_kind: kind,
-        p_options: options.map(s => s.trim()),
-        p_hours: hours,
-        p_is_anonymous: pollAnonymous,
-        p_question_policy: null,
-      })
+      const request = createPollRequest(kind, content, options, hours, pollAnonymous)
+      const { error: failure } = await supabase.rpc('create_interactive_post_v4', request)
       if (failure) throw failure
       setContent(''); setOptions(['',''])
       await onCreated()
@@ -56,13 +51,13 @@ export function InteractiveComposer({ onCreated }: { onCreated: () => Promise<vo
   </section>
 }
 
-export function InteractiveCard({item,result,onUpdated,isOwner=false,ownerName='募集者'}:{item:InteractiveItem;result:InteractiveResult|undefined;onUpdated:()=>Promise<void>;isOwner?:boolean;ownerName?:string}) {
+export function InteractiveCard({item,result,onUpdated,isOwner=false,ownerName: _ownerName='募集者'}:{item:InteractiveItem;result:InteractiveResult|undefined;onUpdated:()=>Promise<void>;isOwner?:boolean;ownerName?:string}) {
   const [choice,setChoice]=useState<number|null>(null)
   const [busy,setBusy]=useState(false)
   const [error,setError]=useState('')
   const [voterOption,setVoterOption]=useState<number|null>(null)
   const mine=result?.has_responded ?? false
-  const questionPolicy=item.question_response_policy??(item.is_anonymous?'anonymous_only':'named_only')
+
   const closed=item.kind==='poll'&&!!item.closes_at&&Date.parse(item.closes_at)<=Date.now()
   const submit=async()=>{
     if(busy||mine||closed||choice===null) return
@@ -74,10 +69,13 @@ export function InteractiveCard({item,result,onUpdated,isOwner=false,ownerName='
     } catch(e){setError(e instanceof Error?e.message:'回答に失敗しました')}
     finally{setBusy(false)}
   }
+  // Historical question code/data is retained, but never mounted publicly.
+  if (item.kind !== 'poll') return null
+  if (result) result = pollDisplayResult(item.is_anonymous, result)
   return <div style={{margin:'12px 0',padding:14,border:'1px solid #383838',borderRadius:12,color:'#eee'}}>
-    <strong style={{fontSize:13}}>{item.kind==='poll'?`📊 アンケート（${item.is_anonymous?'匿名':'記名'}）`:`💬 質問箱（${questionPolicy==='respondent_choice'?'匿名・記名を選択':questionPolicy==='named_only'?'記名回答のみ':'匿名回答のみ'}）`}</strong>
-    <p style={{fontSize:12,color:item.is_anonymous?'#aaa':'#f0ce88',margin:'8px 0'}}>{item.kind==='poll'?(item.is_anonymous?'投票者の名前は公開されません。':'投票すると、あなたの名前・Poker IDと投票先が全員に公開されます。'):questionPolicy==='respondent_choice'?'回答時に匿名・記名を選択できます。':questionPolicy==='named_only'?'回答すると、あなたの名前・Poker IDが全員に公開されます。':'回答者の名前は公開されません。'}</p>
-    {item.kind==='poll'?<>
+    <strong style={{fontSize:13}}>{`📊 アンケート（${item.is_anonymous?'匿名':'記名'}）`}</strong>
+    <p style={{fontSize:12,color:item.is_anonymous?'#aaa':'#f0ce88',margin:'8px 0'}}>{item.is_anonymous?'投票者の名前は公開されません。':'投票すると、あなたの名前・Poker IDと投票先が全員に公開されます。'}</p>
+    <>
       <div style={{display:'grid',gap:8,marginTop:12}}>{item.options.map((option,i)=>{
         const count=result?.vote_counts?.[String(i)] ?? 0
         const show=mine||closed||isOwner
@@ -92,13 +90,13 @@ export function InteractiveCard({item,result,onUpdated,isOwner=false,ownerName='
       {!mine&&!closed&&<button type="button" disabled={choice===null||busy} onClick={submit} style={{width:'auto',padding:'8px 18px',borderRadius:20,background:'#303b49',color:'#eee',border:'1px solid #64748b'}}>投票する</button>}
       {isOwner&&!item.is_anonymous&&<div style={{marginTop:8,display:'flex',flexDirection:'column',alignItems:'flex-start',gap:6}}><button type="button" onClick={()=>setVoterOption(0)} style={{width:'auto',background:'#303b49',color:'#fff',border:'1px solid #64748b',borderRadius:9,padding:'8px 14px'}}>回答者一覧を見る</button><span style={{fontSize:12,color:'#aaa'}}>投稿主も投票できます。投票後は選択肢を押すと回答者一覧が開きます。</span></div>}
       {mine&&<p style={{fontSize:12,color:'#aaa'}}>投票済み（変更不可）{!item.is_anonymous?' · 選択肢を押すと投票者一覧を表示':''}</p>}
-    </>:<QuestionThread postId={item.post_id} policy={questionPolicy} onUpdated={onUpdated} isOwner={isOwner} ownerName={ownerName}/> }
+    </>
     {error&&<p role="alert" style={{color:'#ff9999'}}>{error}</p>}
   </div>
 }
 
 type ThreadMessage={id:string;post_id:string;parent_id:string|null;content:string;is_anonymous:boolean;display_name:string|null;poker_id:string|null;created_at:string;is_owner:boolean;is_mine:boolean;edited_at:string|null}
-function QuestionThread({postId,policy,onUpdated,isOwner,ownerName}:{postId:string;policy:string;onUpdated:()=>Promise<void>;isOwner:boolean;ownerName:string}) {
+export function QuestionThread({postId,policy,onUpdated,isOwner,ownerName}:{postId:string;policy:string;onUpdated:()=>Promise<void>;isOwner:boolean;ownerName:string}) {
  const [messages,setMessages]=useState<ThreadMessage[]>([])
  const [text,setText]=useState('')
  const [anonymous,setAnonymous]=useState(true)

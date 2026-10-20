@@ -24,6 +24,14 @@ jobs:
           for test_file in tests/*.test.mjs; do
             node "$test_file"
           done
+      - name: GTO source hashes and temporary SQLite regression
+        run: |
+          python handoff/gto/verify_native_solvers.py
+          python handoff/gto/tests/run_backend_tests.py
       - run: npm run build
       - run: npm run lint
+      - name: Browser QA with in-memory transport (no DB)
+        env:
+          CHROMIUM_PATH: /usr/bin/google-chrome
+        run: node tests/browser/poll-only.mjs
 
