@@ -31,3 +31,10 @@ Evidence: docs/qa/d-continuous-20261020/. CI additionally runs the audit and mob
 
 Release gate: Draft on top of PR #13. No main merge/deploy/DB/SQL/paid service operations performed. This D patch cannot make PR #13 release-ready; inherited notification/poll DB gates and dependency security issues remain. A main-based selective D release would require the prior D phase-one dependencies and independent QA, not a whole-PR13 merge.
 Next: obtain the authoritative classifier definition and reviewed 36-animal labels for a semantic confusion audit; run isolated DB tests for saved/public/private result visibility and real auth sharing, plus Safari/PNG text visual comparison. Continue safe independent work without changing classification scoring by guess.
+
+## Issue22 follow-up — offline score-row integrity
+Base PR #18 @ 9051047cfe30bb2a38bb80c8985c0e7ad16e470c; branch codex/d-issue22-audit-20261020.
+Reproduced a small real defect: appending an identical option score row to a temporary copy of the fixture still returned CONDITIONAL PASS/exit0. The audit built a Map first, silently losing duplicate evidence. The offline audit now checks duplicate and orphan option score IDs before aggregation and returns FAIL for either. Added an importable pure audit entry point so malformed copies can be tested without modifying the stored fixture.
+Tests: new 5 regression cases (equal duplicates, corrupt overwritten duplicates, orphan rows, missing-score preservation, unchanged fixture/nonmutation), all unit96 PASS, npm ci/build/lint PASS. Ordinary historical fixture remains CONDITIONAL PASS with semantic classifier accuracy UNKNOWN. No application TSX, scores, classifier thresholds, SQL, DB or production changes.
+Evidence: docs/qa/d-issue22-20261020/, acceptance: D_ISSUE22_ACCEPTANCE_20261020.md. CI target filter additionally supports the parent D branch for the stacked Draft PR.
+Next bounded worker candidate: validate persona answer completeness and valid A–Z choice mapping in the offline audit only; empty persona answers currently remain CONDITIONAL PASS (next-worker-reproduction.json). Do not infer classification correctness or rewrite any fixture data.
