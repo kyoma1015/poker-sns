@@ -1,0 +1,28 @@
+name: TDA isolated release checks
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: tda-isolated-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: node tests/tda-quiz-data.test.mjs
+      - run: npm run build
+      - run: npm run lint
+      - name: TDA mobile browser QA (synthetic transport only)
+        env:
+          CHROMIUM_PATH: /usr/bin/google-chrome
+        run: node tests/browser/tda-quiz.mjs
