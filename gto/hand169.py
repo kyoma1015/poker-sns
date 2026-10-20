@@ -49,7 +49,10 @@ def aggregate(records, action_count, *, require_complete=True):
     if require_complete and len(seen) != 1326: raise ValueError('incomplete concrete hand coverage')
     output = {}
     for label, rows in buckets.items():
-        mass = math.fsum(row[0] for row in rows)
+        try:
+            mass = math.fsum(row[0] for row in rows)
+        except OverflowError as error:
+            raise ValueError('reach mass overflow') from error
         if not math.isfinite(mass): raise ValueError('reach mass overflow')
         # Divide weights before multiplying to avoid finite-input overflow.
         policy = [math.fsum((w / mass) * f[action] for w, f, _ in rows) for action in range(action_count)] if mass else None
