@@ -19,6 +19,8 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
+      - name: Production dependency security gate
+        run: npm audit --omit=dev --audit-level=high
       - name: Offline regression tests (no Supabase credentials)
         run: |
           for test_file in tests/*.test.mjs; do
