@@ -36,5 +36,7 @@ jobs:
       - name: Browser QA with in-memory transport (no DB)
         env:
           CHROMIUM_PATH: /usr/bin/google-chrome
-        run: node tests/browser/poll-only.mjs
+        run: |
+          node tests/browser/poll-only.mjs
+          node tests/browser/tda-quiz.mjs
 

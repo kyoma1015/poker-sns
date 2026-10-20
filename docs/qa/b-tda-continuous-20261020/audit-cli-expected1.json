@@ -1,0 +1,10 @@
+{
+  "question_count": 1,
+  "duplicateQuestionCandidates": [],
+  "duplicateOptionCandidates": [],
+  "official_rule_accuracy": "UNVERIFIED",
+  "expected_count": 1,
+  "count_matches": true,
+  "verdict": "STRUCTURE_PASS",
+  "publication_approved": false
+}
