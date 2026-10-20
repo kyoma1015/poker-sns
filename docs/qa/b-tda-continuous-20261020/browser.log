@@ -1,0 +1,10 @@
+4:54:08 AM [vite] (client) [console.error] { message: "通信状況を確認して再度お試しください。" }
+PASS normal fetch recovers after a thrown transport error
+4:54:09 AM [vite] (client) [console.error] { message: "通信状況を確認して再度お試しください。" }
+PASS hard fetch recovers after a thrown transport error
+4:54:09 AM [vite] (client) [console.error] { message: "通信状況を確認して再度お試しください。" }
+PASS wrong fetch recovers after a thrown transport error
+PASS malformed options fail closed without a render crash
+4:54:10 AM [vite] (client) [console.error] { message: "通信状況を確認して再度お試しください。" }
+PASS saved answer survives optional explanation transport failure without duplicate writes
+{"verdict":"PASS","tests":5,"results":["normal fetch recovers after a thrown transport error","hard fetch recovers after a thrown transport error","wrong fetch recovers after a thrown transport error","malformed options fail closed without a render crash","saved answer survives optional explanation transport failure without duplicate writes"],"browser":"154.0.8037.57","transport":"in-memory mock; all questions synthetic; external requests blocked; no DB"}

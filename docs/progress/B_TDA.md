@@ -13,3 +13,9 @@ Remaining: authenticated/expired-session browser QA and independent official-rul
 
 ## Integrated verification update (2026-10-20)
 Integrated in B → D → A → SNS order. Local network permission resolved the previous registry blocker. npm ci, full unit regression, build and lint now run successfully on the integrated source; see INTEGRATION_VERIFICATION_20261020.md and docs/qa/integration-20261020/. Earlier blocked statements above describe the previous lane task. No production DB verification or release approval is implied.
+
+## Continuous batch B (2026-10-20)
+Branch codex/b-tda-quality-continuous-20261020, based on integrated PR13 SHA3ca87764e988cac588fef915d48823702a1a3326.
+Implemented structural question validation, caught filter/fetch/answer/detail transport exceptions with no automatic answer retry, and offline count/duplicate-candidate audit CLI. The optional explanation request cannot discard an already saved answer on a thrown exception.
+Added17 unit tests (full106 PASS) and real Chromium mocked mobile390x844 QA5 PASS. npm ci/build/lint PASS (48 existing lint warnings). Evidence/commands: docs/qa/b-tda-continuous-20261020/RESULT.md and logs.
+Published350/official逐条/answer correctness remain UNKNOWN: no complete export or official source bundle was received and no live DB access was made. CLI never authorizes publication. No question content, SQL, permissions, main or production modified.
