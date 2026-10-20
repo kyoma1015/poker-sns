@@ -1,0 +1,38 @@
+name: Codex lane checks
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: codex-lane-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - name: Offline regression tests (no Supabase credentials)
+        run: |
+          for test_file in tests/*.test.mjs; do
+            node "$test_file"
+          done
+      - name: GTO source hashes and temporary SQLite regression
+        run: |
+          python handoff/gto/verify_native_solvers.py
+          python handoff/gto/tests/run_backend_tests.py
+          python -B handoff/gto/g12_next/g12_p1_live_backend_tests.py
+      - run: npm run build
+      - run: npm run lint
+      - name: Browser QA with in-memory transport (no DB)
+        env:
+          CHROMIUM_PATH: /usr/bin/google-chrome
+        run: node tests/browser/poll-only.mjs
+
