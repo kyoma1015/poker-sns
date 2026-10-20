@@ -1,0 +1,156 @@
+✔ notification entry points use verified events and the saved comment ID (2.182449ms)
+✔ successful verified event returns null once (2.788666ms)
+✔ authorization/validation 401/unauthorized is never retried (0.793689ms)
+✔ authorization/validation 403/denied is never retried (0.724125ms)
+✔ authorization/validation 400/22023 is never retried (0.698196ms)
+✔ authorization/validation 200/42501 is never retried (0.651445ms)
+✔ HTTP 429 retries with the same event and recovers (1.207596ms)
+✔ HTTP 500 retries with the same event and recovers (0.691084ms)
+✔ HTTP 503 retries with the same event and recovers (0.910227ms)
+✔ network failure is retried at most three times (1.432676ms)
+✔ transport ignoring abort still finishes and aborts each of three attempts (3.739333ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 53.640832
+✔ patched HTTP transport supports Vercel Headers and request with no external network (5.409057ms)
+✔ patched fetch decodes JSON under the locked API (5.447936ms)
+✔ OpenAI SDK response API still consumes a supplied mocked fetch without paid calls (7.404473ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 34.334585
+✔ named poll request matches the disclosed named mode (1.448289ms)
+✔ anonymous poll remains anonymous (0.35084ms)
+✔ invalid option null cannot produce a request (0.266664ms)
+✔ invalid option -1 cannot produce a request (0.098528ms)
+✔ invalid option 2 cannot produce a request (0.078058ms)
+✔ invalid option 0.5 cannot produce a request (0.072089ms)
+✔ invalid option NaN cannot produce a request (0.058028ms)
+✔ a previously rendered open card cannot vote at or after the deadline (0.122345ms)
+✔ missing or invalid deadline fails closed (0.229377ms)
+✔ question boxes cannot use the poll write contract (0.242066ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10.724312
+✔ all 32 positive ceilings equal the sum of per-question attainable maxima (2.96361ms)
+✔ negative, zero, unknown and nonfinite values do not become top tendencies (0.623703ms)
+✔ normalization compares proportions rather than raw totals (0.224049ms)
+✔ one incidental selective-burst point must not assert attacking ability (0.308336ms)
+✔ noticing danger must not imply that a calling station folds (0.286123ms)
+✔ attack wording needs both initiative and sustained attack at the threshold (0.161404ms)
+✔ fixed persona replay (not live): 超弱気な初心者 (0.821001ms)
+✔ fixed persona replay (not live): 超タイトな初心者 (0.550001ms)
+✔ fixed persona replay (not live): タイト・パッシブ (0.498694ms)
+✔ fixed persona replay (not live): タイト・アグレッシブ (1.329059ms)
+✔ fixed persona replay (not live): ルース・パッシブ (0.395878ms)
+✔ fixed persona replay (not live): ルース・アグレッシブ (0.314185ms)
+✔ fixed persona replay (not live): コーリングステーション (0.490182ms)
+✔ fixed persona replay (not live): マニアック (0.362708ms)
+✔ fixed persona replay (not live): 超慎重な上級者 (0.465164ms)
+✔ fixed persona replay (not live): 熟練したLAG (0.622712ms)
+✔ fixed persona replay (not live): 熟練したTAG (0.84681ms)
+✔ fixed persona replay (not live): ブラフ嫌い (0.254655ms)
+✔ fixed persona replay (not live): ブラフ多用型 (0.181064ms)
+✔ fixed persona replay (not live): ギャンブラー (0.213643ms)
+✔ fixed persona replay (not live): リスク回避型 (0.210338ms)
+✔ fixed persona replay (not live): バランス型 (0.381276ms)
+✔ fixed persona replay (not live): 相手依存型 (0.361597ms)
+✔ fixed persona replay (not live): 感情的なティルト型 (0.195546ms)
+✔ fixed persona replay (not live): トーナメント生存重視型 (0.497963ms)
+✔ fixed persona replay (not live): トーナメント攻撃型 (0.230599ms)
+✔ fixed persona replay (not live): キャッシュゲーム堅実派 (0.167934ms)
+✔ fixed persona replay (not live): 初心者の無謀型 (0.199802ms)
+✔ fixed persona replay (not live): 上級者の柔軟型 (0.168314ms)
+✔ fixed persona replay (not live): フィット・オア・フォールド型 (0.15848ms)
+✔ fixed persona replay (not live): バリュー重視型 (0.239823ms)
+✔ fixed persona replay (not live): トラップ好き (0.169396ms)
+✔ fixed persona replay (not live): プリフロップ超ルース型 (0.524463ms)
+✔ fixed persona replay (not live): ポストフロップ消極型 (0.2321ms)
+✔ fixed persona replay (not live): 勝負好きだがブラフしない型 (0.378712ms)
+✔ fixed persona replay (not live): 理論重視の冷静型 (0.40352ms)
+✔ question bank validation rejects incomplete or contradictory data (2.184863ms)
+✔ a late result cannot win after a new request, restart or unmount (0.110708ms)
+✔ audit wording corrections apply only to the displayed copy, without mutating saved data (0.219903ms)
+✔ wording correction leaves unrelated copy unchanged (0.095174ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 28.323128
+✔ stale or forged question mode is rejected before RPC (1.141736ms)
+✔ stale or forged normal mode is rejected before RPC (0.104397ms)
+✔ stale or forged  mode is rejected before RPC (0.070066ms)
+✔ stale or forged QUESTION mode is rejected before RPC (0.064698ms)
+✔ 2 poll choices and privacy mode produce poll-only contract (0.818838ms)
+✔ 3 poll choices and privacy mode produce poll-only contract (0.135395ms)
+✔ 4 poll choices and privacy mode produce poll-only contract (0.140002ms)
+✔ invalid poll parameters [["A"],24] fail closed (0.1451ms)
+✔ invalid poll parameters [["A","B","C","D","E"],24] fail closed (0.10583ms)
+✔ invalid poll parameters [["A"," a "],24] fail closed (1.256229ms)
+✔ invalid poll parameters [["","B"],24] fail closed (0.116236ms)
+✔ invalid poll parameters [["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx","B"],24] fail closed (0.094293ms)
+✔ invalid poll parameters [["A","B"],0] fail closed (0.057407ms)
+✔ invalid poll parameters [["A","B"],null] fail closed (0.048584ms)
+✔ empty and overlong content fail closed (0.116967ms)
+✔ anonymous presentation drops identities even in unexpected server payload without mutating it (0.238591ms)
+✔ both composers use guarded creation; public card cannot mount historical question thread (1.062587ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12.5884
+✔ native share is awaited with the complete payload (1.128917ms)
+✔ native cancellation stays silent and never writes clipboard (0.411331ms)
+✔ native failure falls back to the canonical post link only (0.23785ms)
+✔ desktop clipboard copy is awaited (0.150949ms)
+✔ clipboard rejection becomes actionable guidance (0.497693ms)
+✔ missing APIs fail explicitly instead of reporting copy success (0.136456ms)
+✔ native success never also copies (0.245531ms)
+✔ Timeline consumes share outcome and catches rejected operation (0.715933ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11.156466
+✔ guest cannot start and does not make a user lookup (1.194125ms)
+✔ valid session and verified user can answer (0.646367ms)
+✔ user lookup transport error {"status":0} keeps retry guidance (0.307234ms)
+✔ user lookup transport error {"status":503} keeps retry guidance (0.11853ms)
+✔ user lookup transport error {"name":"AuthRetryableFetchError"} keeps retry guidance (0.13261ms)
+✔ expired authentication {"status":401} asks for login (0.141664ms)
+✔ expired authentication {"code":"session_not_found"} asks for login (0.151249ms)
+✔ expired authentication {"name":"AuthSessionMissingError"} asks for login (0.092009ms)
+✔ session transport error does not claim expiry (0.230399ms)
+✔ thrown transport error does not escape the UI action (0.301856ms)
+✔ missing verified user asks for login (1.064409ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16.584062
