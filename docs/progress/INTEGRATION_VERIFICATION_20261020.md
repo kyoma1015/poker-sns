@@ -32,7 +32,9 @@ Timelineのモードをnormal/pollに限定。両composerで共通createPollRequ
 - `python handoff/gto/verify_native_solvers.py`: 3ソルバーの実バイト・サイズ・SHA PASS。
 - `python handoff/gto/tests/run_backend_tests.py`: ヘッダー/ルール/packed backendの3ハッシュと一時SQLite25件PASS。元build.shも781 bytes/SHA一致。詳細C_GTO.md。
 - `npm audit --omit=dev --json --cache /workspace/work/npm-cache`: 検出によりexit 1。production分類の既存high 2（undici/@fastify/busboy）、critical 0。audit-production.json参照。今回のplaywright追加前からロックされている依存。到達可能性と修正の互換性は未監査、リリース前に対応が必要。
-- GitHub CIは同じunit/Python/build/lint/browserを実行。最新のCI結果は統合PRに追記する。
+- GitHub CIは同じunit/Python/build/lint/browserを実行。統合HEAD bd3996304c1de26b0026ebacf3cb4f31a723286bで全工程SUCCESS: https://github.com/kyoma1015/poker-sns/actions/runs/39370713447 。続く証拠追記コミットのCIも統合PRで確認する。
+
+追加の既存Next Python backend回帰: `python -B handoff/gto/g12_next/g12_p1_live_backend_tests.py` は一時SQLiteのみで9 PASS（gto-next.log）。CIにも追加。GTOのbackend回帰合計は34件で、native solverのテスト件数とは区別する。
 
 ## 隔離DB・未完了QA
 隔離DB未構成のためBLOCKED。本番DBには接続しなかった。
@@ -44,7 +46,7 @@ TDA: 公式問題原文と公開問題の全件照合は未確認。過去SQLを
 ## 旧PRの整理
 #4は旧poll/question混合候補。poll-onlyの#12と本統合PRが後継で、質問箱作成経路を採用しない。
 #5の表示上の保証表現修正は#10のavoidSkillGuaranteesで取り込み済み。古い25%ランキング閾値は新QAのfixtureと矛盾するため再導入しない。
-#4/#5は後継統合PRを作成してからsupersededとしてcloseする。ブランチ/履歴/原本は削除しない。#9–#12は系列別のレビュー履歴として維持し、本統合PRと重複マージしない。
+#4/#5は後継統合Draft PR #13作成後にsupersededとしてclose済み。ブランチ/履歴/原本は削除しない。#9–#12は系列別のレビュー履歴として維持し、本統合PRと重複マージしない。
 
 ## 引き継ぎ終了と通常開発
 A/B/D/SNSは本ブランチ、MASTER.md、各系列進捗、保存済みテストを起点に開発を継続できる。旧チャットを毎回確認する作業は不要。ただし未転送の原ZIPや旧チャット原本を廃棄してよいという判定ではない。

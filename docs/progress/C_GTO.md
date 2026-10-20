@@ -37,3 +37,5 @@ Do not build until dependency closure is present. No dependency installation/nat
 G11 baseline expected outputs, original run settings/seeds, parity logs and matching complete checkpoint (including metadata/RNG) remain unavailable/UNKNOWN. No assertion of G12 resume readiness.
 Safe now: source comparison, strict hash checks, temporary SQLite Python tests. After vendor receipt: isolated separate native builds/import/numeric-environment tests. Only after baseline/checkpoint validation: G11 parity and historical resume tests on copies.
 These C-lane blockers do not prevent A/B/D/SNS branch development.
+
+Existing Next backend unit suite: `python -B handoff/gto/g12_next/g12_p1_live_backend_tests.py` — 9 PASS using temporary SQLite only (docs/qa/integration-20261020/gto-next.log). Added to CI. Packed25 + Next9 = 34 Python backend tests; this is not native solver/G11-parity coverage.
