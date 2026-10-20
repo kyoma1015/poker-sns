@@ -207,6 +207,7 @@ function Notifications() {
   const getNotificationText = (
     notification: NotificationItem
   ) => {
+    if (notification.type === 'poll_closed') return 'アンケートが終了しました。結果を確認して、引用リポストでみんなにシェアしよう！'
     if (
       notification.type ===
       'follow'
@@ -233,6 +234,7 @@ function Notifications() {
   const getNotificationIcon = (
     notification: NotificationItem
   ) => {
+    if (notification.type === 'poll_closed') return '📊'
     if (
       notification.type ===
       'follow'
@@ -324,7 +326,7 @@ function Notifications() {
       (notification.type ===
         'like' ||
         notification.type ===
-          'comment') &&
+          'comment' || notification.type === 'poll_closed') &&
       notification.post_id
     ) {
       navigate(
@@ -519,7 +521,7 @@ function Notifications() {
                     </div>
 
                     {/* アバター */}
-                    <div
+                    {notification.type !== 'poll_closed' && <div
                       onClick={(
                         event
                       ) =>
@@ -581,7 +583,7 @@ function Notifications() {
                           ♠
                         </div>
                       )}
-                    </div>
+                    </div>}
 
                     {/* 通知本文 */}
                     <div
@@ -601,7 +603,7 @@ function Notifications() {
                             '#dedede',
                         }}
                       >
-                        <button
+                        {notification.type !== 'poll_closed' && <button
                           onClick={(
                             event
                           ) =>
@@ -632,7 +634,7 @@ function Notifications() {
                           {
                             notification.actorName
                           }
-                        </button>
+                        </button>}
 
                         {getNotificationText(
                           notification
@@ -653,28 +655,7 @@ function Notifications() {
                             '12px',
                         }}
                       >
-                        <span
-                          onClick={(
-                            event
-                          ) =>
-                            handleActorClick(
-                              event,
-                              notification.actor_id
-                            )
-                          }
-                          style={{
-                            cursor:
-                              'pointer',
-                          }}
-                        >
-                          @
-                          {
-                            notification.actorPokerId
-                          }
-                        </span>
-
-                        <span>·</span>
-
+                        {notification.type !== 'poll_closed' && <><span onClick={(event)=>handleActorClick(event,notification.actor_id)} style={{cursor:'pointer'}}>@{notification.actorPokerId}</span><span>·</span></>}
                         <span>
                           {formatNotificationTime(
                             notification.created_at

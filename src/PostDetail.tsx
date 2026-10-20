@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { supabase } from './supabase'
 import { usePullToRefresh } from './usePullToRefresh'
 import QuoteSourcePreview, { type QuoteSource } from './QuoteSourcePreview'
+import { InteractiveCard, type InteractiveItem, type InteractiveResult } from './TimelineInteractive'
 
 
 // ブロックは双方の関係を確認する（自分→相手、相手→自分）。
@@ -54,6 +55,8 @@ function PostDetail() {
   const refreshRootRef = useRef<HTMLElement | null>(null)
 
   const [post, setPost] = useState<Post | null>(null)
+  const [interactiveItem, setInteractiveItem] = useState<InteractiveItem | null>(null)
+  const [interactiveResult, setInteractiveResult] = useState<InteractiveResult | undefined>(undefined)
   const [repostCount, setRepostCount] = useState(0)
   const [repostMenuOpen, setRepostMenuOpen] = useState(false)
   const [quoteOpen, setQuoteOpen] = useState(false)
@@ -152,6 +155,15 @@ function PostDetail() {
       setMessage('この投稿は表示できません。')
       return
     }
+
+    const { data: interactiveRow, error: interactiveError } = await supabase.from('post_interactive').select('*').eq('post_id', id).maybeSingle()
+    if (interactiveError) { setMessage(`アンケート情報の取得に失敗しました：${interactiveError.message}`); return }
+    setInteractiveItem(interactiveRow as InteractiveItem | null)
+    if (interactiveRow) {
+      const { data: interactiveRows, error: resultError } = await supabase.rpc('get_interactive_results_v4', { p_post_ids: [id] })
+      if (resultError) { setMessage(`投票結果の取得に失敗しました：${resultError.message}`); return }
+      setInteractiveResult(((interactiveRows || []) as InteractiveResult[])[0])
+    } else setInteractiveResult(undefined)
 
     const { data: likes, error: likesError } =
       await supabase
@@ -655,6 +667,7 @@ function PostDetail() {
               >
                 {post.content}
               </p>
+              {interactiveItem && <InteractiveCard item={interactiveItem} result={interactiveResult} isOwner={post.user_id === currentUserId} ownerName={post.profile?.display_name || post.profile?.poker_id || '募集者'} onUpdated={async () => { await loadPost(true) }} />}
               {post.quote_post_id && (
                 <QuoteSourcePreview source={post.quotePreview} onOpen={post.quotePreview ? () => navigate(`/post/${post.quotePreview!.id}`) : undefined} />
               )}
