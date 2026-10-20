@@ -17,7 +17,7 @@ try {
   await server.listen()
   const base = `http://127.0.0.1:${server.httpServer.address().port}`
   browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium', headless: true, args: ['--no-sandbox'] })
-  const page = await browser.newPage()
+  const page = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true })
   const errors = []
   page.on('pageerror', error => errors.push(error.message))
   await page.route('**/*', route => route.request().url().startsWith(base + '/') ? route.continue() : route.abort())
