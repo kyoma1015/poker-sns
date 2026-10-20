@@ -1,0 +1,1 @@
+{"verdict":"FAIL","reason":"INVALID_JSON","official_rule_accuracy":"UNVERIFIED","publication_approved":false}
