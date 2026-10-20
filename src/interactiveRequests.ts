@@ -8,7 +8,8 @@ type Poll = {
 
 // Revalidate at click time: a card can remain open past its closing time.
 export function pollVoteRequest(item: Poll, choice: number | null, now = Date.now()) {
-  if (item.kind !== 'poll' || !Number.isInteger(choice) || choice === null ||
+  if (item.kind !== 'poll' || item.options.length < 2 || item.options.length > 4 ||
+      !Number.isInteger(choice) || choice === null ||
       choice < 0 || choice >= item.options.length) {
     throw new Error('投票する選択肢を選び直してください。')
   }

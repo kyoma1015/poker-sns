@@ -118,3 +118,7 @@ grant execute on function public.get_interactive_results(uuid[]) to authenticate
 insert into public.posts(id,user_id,content,post_type) values('20000000-0000-0000-0000-000000000001','10000000-0000-0000-0000-000000000001','historical question fixture','normal');
 insert into public.post_interactive(post_id,kind,options) values('20000000-0000-0000-0000-000000000001','question','[]');
 insert into public.post_interactive_responses(post_id,user_id,answer) values('20000000-0000-0000-0000-000000000001','10000000-0000-0000-0000-000000000002','historical answer fixture');
+
+-- Simulate a permissive OR policy left by an old deployment. The restrictive
+-- candidate must defeat it for every actor, not just rely on own-row filtering.
+create policy legacy_response_read_fixture on public.post_interactive_responses for select to authenticated using(true);

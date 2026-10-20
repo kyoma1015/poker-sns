@@ -3,6 +3,8 @@ services:
   db:
     image: supabase/postgres:17.6.1.136
     container_name: pokerid-poll-qa-db
+    labels:
+      pokerid.qa.run-id: ${POLL_QA_RUN_ID:?run via run_isolated.sh}
     ports: ["127.0.0.1:55432:5432"]
     environment:
       POSTGRES_HOST: /var/run/postgresql
@@ -23,6 +25,8 @@ services:
   rest:
     image: postgrest/postgrest:v14.18
     container_name: pokerid-poll-qa-rest
+    labels:
+      pokerid.qa.run-id: ${POLL_QA_RUN_ID:?run via run_isolated.sh}
     depends_on:
       db:
         condition: service_healthy

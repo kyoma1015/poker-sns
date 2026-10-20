@@ -107,7 +107,12 @@ def main():
             assert any(v.get('poker_id')=='fixture_voter' for v in value['voters']), value
             return {'named_voters_visible':True,'total_votes':value['total_votes']}
         record('named_display_'+label, 'Named voters visible as disclosed', named_read)
-    record('legacy_results_safe', 'Old results RPC does not expose identifiers', lambda: {'response': require_ok(rpc('get_interactive_results', {'p_post_ids':[anonymous]}, OBSERVER))})
+    def legacy_results():
+        value=require_ok(rpc('get_interactive_results',{'p_post_ids':[anonymous]},OBSERVER))
+        encoded=json.dumps(value)
+        assert VOTER not in encoded and 'fixture_voter' not in encoded and 'created_at' not in encoded
+        return {'response':value}
+    record('legacy_results_safe','Old results RPC does not expose identifiers',legacy_results)
     legacy = create(True, function='create_interactive_post')
     def legacy_privacy():
         value=require_ok(api('/post_interactive?post_id=eq.'+legacy+'&select=is_anonymous'))[0]['is_anonymous']

@@ -12,6 +12,7 @@ begin
  or to_regclass('public.post_interactive') is null or to_regclass('public.post_interactive_responses') is null then
    raise exception 'Poll prerequisites missing; do not reconstruct production from historical SQL alone';
  end if;
+ if not (select relrowsecurity from pg_class where oid='public.notifications'::regclass) then raise exception 'Notification RLS must be reviewed before this candidate'; end if;
  if exists (select 1 from pg_proc p join pg_namespace n on n.oid=p.pronamespace
    where n.nspname='public' and p.proname like 'create_interactive_post%'
    and (p.proname || ':' || oidvectortypes(p.proargtypes)) not in
@@ -27,6 +28,13 @@ begin
   raise exception 'Unknown historical read/write RPC: privacy catalog review required';
  end if;
 end $$;
+-- Never infer the mode of existing poll rows from a missing historical column.
+do $$begin
+ if not exists(select 1 from information_schema.columns where table_schema='public' and table_name='post_interactive' and column_name='is_anonymous')
+ and exists(select 1 from public.post_interactive where kind='poll') then
+  raise exception 'Existing polls have unknown historical privacy: catalog/owner mapping required';
+ end if;
+end$$;
 alter table public.post_interactive add column if not exists is_anonymous boolean not null default true;
 do $$begin
  if exists(select 1 from public.post_interactive where is_anonymous is null) then raise exception 'Unknown NULL privacy mode: owner review required'; end if;
@@ -45,10 +53,10 @@ create policy poll_metadata_visibility_v1 on public.post_interactive as restrict
    (b.blocker_id=p.user_id and b.blocked_id=(select auth.uid())) or
    (b.blocked_id=p.user_id and b.blocker_id=(select auth.uid())) where p.id=post_id));
 -- Prevent ANY permissive policy (including an old own-row policy) from exposing
--- poll identity/timestamp columns through direct REST. Question data is retained.
+-- identity/timestamp columns through direct REST. Historical data is retained internally.
 drop policy if exists poll_raw_identity_guard_v1 on public.post_interactive_responses;
 create policy poll_raw_identity_guard_v1 on public.post_interactive_responses as restrictive for select to authenticated
- using (exists (select 1 from public.post_interactive i where i.post_id=post_interactive_responses.post_id and i.kind='question'));
+ using (false);
 
 create schema if not exists poll_private;
 revoke all on schema poll_private from public, anon, authenticated;
