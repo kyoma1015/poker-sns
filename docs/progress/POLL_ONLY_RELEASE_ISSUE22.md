@@ -1,0 +1,26 @@
+# Issue 22 | Poll-only independent release candidate
+2026-10-20. Development: CONDITIONAL PASS. Production release: BLOCKED pending real isolated DB CI, production schema parity review and deployment access.
+
+## Baseline and scope
+Main f8890b6ec11d30676c55dc7dc8801f1da8549d28. Select only poll UI/notifications/requests/tests from PR12/13 (66cb278a2e4d53c1afa0fa13bb880eadc2a032ec), and dependency security from independent PR15 (4931675e8763fc4dddb27c11236975a4a5604471). No wholesale PR13/21 merge, F03/D/TDA/GTO application change. Preserve historical question rows/code; question creation is forbidden at UI and every recognized legacy RPC.
+
+## SQL provenance and missing history
+Latest feature branch fa90c3320094d8def6e0e4a1248171837f1ba366 and audit branch 1d8a7f0ce175ccd2ba91b4276b9cd2e318004078 contain only four historical interactive SQL files. Those do not define the UI v4 creation/read or v2 response APIs, privacy column, question-thread and close scheduler. They are NOT the complete production schema.
+The four files are combined, unchanged except a clearly marked synthetic question seed, into tests/polls/legacy_schema_fixture.sql. This is ONLY a test reconstruction over synthetic app tables, not a deployment plan.
+
+## Review candidates and apply order
+1. Obtain an authorized schema/grant/function/policy/cron inventory and backup in a real isolated/staging copy. sql/poll_only/preflight_readonly.sql supplies catalog checks without fetching user rows. This task does not connect to production.
+2. Review forward_candidate.sql against that inventory. Required app tables must already exist. Unknown legacy creation signatures/read/write versions, NULL privacy modes, incompatible return types or additional NOT NULL columns must fail/review, not be silently overwritten. Existing privacy flags are retained; when the column is absent all old polls default to anonymous conservatively. New UI explicitly supplies named/anonymous mode.
+3. Apply forward_candidate.sql transactionally in isolation. It defines validated poll-only RPCs and safe legacy wrappers, protects poll raw identities with restrictive RLS, preserves legacy notification INSERT grants, blocks poll_closed spoofing through restrictive INSERT policy and trigger, and adds private atomic close receipts. No historical row is deleted. Existing non-poll notification behavior remains outside this feature's security scope.
+4. Review all existing close cron jobs. schedule_candidate.sql refuses to install alongside an unknown interactive job; owner then explicitly installs the pg_cron task. Authenticated/anon cannot call system close APIs.
+5. Run every isolated REST/SQL/browser/CI acceptance case. Only after matching real schema parity and explicit production SQL authorization may an operator consider applying the reviewed SQL. This candidate is not a Supabase CLI-generated migration: CLI could not start in this environment, so normal migration history generation/list/advisors is still a separate required gate.
+
+## Fail-closed rollback
+sql/poll_only/disable_candidate.sql unschedules the feature and revokes feature API execution. It retains all posts, votes, historical questions, close receipts and privacy/forgery guards. It deliberately does NOT restore unsafe legacy question creation or anonymous-identity access, and it is NOT a full schema restoration. Roll back the UI separately. A full schema/ACL restoration needs an owner-reviewed backup and privacy assessment; do not drop the new data to simplify rollback.
+
+## Actual environment and evidence
+Local Docker daemon health succeeded (28.4, vfs, no initial containers). Official current Supabase compose pins supabase/postgres:17.6.1.136 and PostgREST14.18. The Supabase pull failed with no space while vfs expanded layers; no storage driver change or original deletion was made. A 15.8 manifest has 48 layers whose cumulative compressed-size lower bound alone is 26.89GB, above available22GB. Local DB execution is therefore BLOCKED; it is not called PASS.
+The CI harness uses the official Supabase Postgres17 image, actual auth.uid and pg_cron, plus real PostgREST14.18 on loopback-only ports. GoTrue is absent: three locally signed fixture JWTs validate database/REST authorization, not Supabase Auth login/refresh flows. Synthetic app table reconstruction is not production parity. CI logs/results must establish whether actual DB tests ran.
+Supabase changelog host returned network403. Official GitHub RLS docs were read. Latest CLI failed EROFS creating /home/agent/.supabase; automatic approval review rejected trying another CLI version as a repeat of the permission failure. That retry was not executed or bypassed.
+Local client acceptance: 27 unit cases, production audit, build/lint and mobile390x844 mock browser5; exact outcomes and logs are under docs/qa/issue22-polls-20261020. The database harness covers three-actor privacy, raw reads, legacy clients, invalid settings, block visibility, direct/definer notification forgery, old INSERT grant preservation, close RPC denial, simultaneous workers, failed close rollback, actual cron, read_at update and feature-disable data retention.
+No main merge, production deployment, production SQL/DB connection, real user accounts or paid services used. Vercel403 must not be bypassed.

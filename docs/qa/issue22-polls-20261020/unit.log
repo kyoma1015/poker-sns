@@ -1,0 +1,43 @@
+✔ named poll request matches the disclosed named mode (1.722555ms)
+✔ anonymous poll remains anonymous (0.141444ms)
+✔ invalid option null cannot produce a request (0.213803ms)
+✔ invalid option -1 cannot produce a request (0.120272ms)
+✔ invalid option 2 cannot produce a request (0.08571ms)
+✔ invalid option 0.5 cannot produce a request (0.081954ms)
+✔ invalid option NaN cannot produce a request (0.062184ms)
+✔ a previously rendered open card cannot vote at or after the deadline (0.156617ms)
+✔ missing or invalid deadline fails closed (0.68121ms)
+✔ question boxes cannot use the poll write contract (0.36383ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12.947107
+✔ stale or forged question mode is rejected before RPC (1.14315ms)
+✔ stale or forged normal mode is rejected before RPC (0.103467ms)
+✔ stale or forged  mode is rejected before RPC (0.072901ms)
+✔ stale or forged QUESTION mode is rejected before RPC (0.095765ms)
+✔ 2 poll choices and privacy mode produce poll-only contract (0.772749ms)
+✔ 3 poll choices and privacy mode produce poll-only contract (0.108805ms)
+✔ 4 poll choices and privacy mode produce poll-only contract (0.232672ms)
+✔ invalid poll parameters [["A"],24] fail closed (0.18527ms)
+✔ invalid poll parameters [["A","B","C","D","E"],24] fail closed (1.345886ms)
+✔ invalid poll parameters [["A"," a "],24] fail closed (0.192371ms)
+✔ invalid poll parameters [["","B"],24] fail closed (0.163878ms)
+✔ invalid poll parameters [["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx","B"],24] fail closed (0.096025ms)
+✔ invalid poll parameters [["A","B"],0] fail closed (0.23787ms)
+✔ invalid poll parameters [["A","B"],null] fail closed (0.065189ms)
+✔ empty and overlong content fail closed (0.122926ms)
+✔ anonymous presentation drops identities even in unexpected server payload without mutating it (0.256538ms)
+✔ both composers use guarded creation; public card cannot mount historical question thread (1.24892ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13.624452

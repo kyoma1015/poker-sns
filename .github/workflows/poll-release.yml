@@ -1,0 +1,45 @@
+name: Poll-only isolated release QA
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: poll-release-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm audit --omit=dev --audit-level=high
+      - name: Client regression
+        run: |
+          for test_file in tests/*.test.mjs; do node "$test_file"; done
+      - run: npm run build
+      - run: npm run lint
+      - name: Mobile browser QA (mock transport)
+        env:
+          CHROMIUM_PATH: /usr/bin/google-chrome
+        run: node tests/browser/poll-only.mjs
+      - name: Real isolated Supabase Postgres and PostgREST QA
+        run: tests/polls/run_isolated.sh
+      - name: Database acceptance evidence
+        if: always()
+        run: |
+          if [ -f docs/qa/issue22-polls-20261020/database-results.json ]; then
+            cat docs/qa/issue22-polls-20261020/database-results.json
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: poll-only-isolated-evidence
+          path: docs/qa/issue22-polls-20261020/
+          retention-days: 7
