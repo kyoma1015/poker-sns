@@ -42,6 +42,7 @@ export function parseQuestions(data: unknown): Question[] {
 export class LatestRequest {
   private generation = 0
   start() { return ++this.generation }
+  capture() { return this.generation }
   isCurrent(generation: number) { return generation === this.generation }
   invalidate() { ++this.generation }
 }

@@ -1,3 +1,4 @@
+import { animalEmoji } from './playerTypeAnimals'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { supabase } from './supabase'
@@ -32,44 +33,7 @@ type ResultDetail = SavedResult & {
 
 const QUESTION_COUNT = 50
 
-const animalEmoji: Record<string, string> = {
-  lion: '🦁',
-  tiger: '🐯',
-  leopard: '🐆',
-  bison: '🦬',
-  gorilla: '🦍',
-  rhino: '🦏',
-  shark: '🦈',
-  owl: '🦉',
-  eagle: '🦅',
-  elephant: '🐘',
-  giraffe: '🦒',
-  wolf: '🐺',
-  hyena: '🐾',
-  cat: '🐈',
-  chameleon: '🦎',
-  dolphin: '🐬',
-  fox: '🦊',
-  snake: '🐍',
-  raccoon: '🦝',
-  turtle: '🐢',
-  rabbit: '🐇',
-  crocodile: '🐊',
-  hedgehog: '🦔',
-  deer: '🦌',
-  sloth: '🦥',
-  dog: '🐕',
-  bear: '🐻',
-  bull: '🐄',
-  badger: '🦡',
-  monkey: '🐒',
-  magpie: '🐦‍⬛',
-  penguin: '🐧',
-  horse: '🐎',
-  squirrel: '🐿️',
-  mountain_goat: '🐐',
-  otter: '🦦',
-}
+
 
 
 
@@ -149,6 +113,8 @@ function PlayerTypeDiagnosis() {
     resultRequest.current.invalidate()
     activeResultId.current = null
     setShareEditorOpen(false)
+    setSharePosting(false)
+    setImageSaving(false)
     setShareMessage('')
     setExternalShareError('')
     setIsOwner(null)
@@ -195,18 +161,22 @@ function PlayerTypeDiagnosis() {
     }
 
     setLoading(true)
+    const request = resultRequest.current.start()
 
     try {
-      await saveResult(nextAnswers)
+      await saveResult(nextAnswers, request)
     } catch {
+      if (!resultRequest.current.isCurrent(request)) return
       setError('結果を保存できませんでした。通信状況を確認して、最後の回答をもう一度選んでください。')
     } finally {
-      setLoading(false)
-      clickLock.current = false
+      if (resultRequest.current.isCurrent(request)) {
+        setLoading(false)
+        clickLock.current = false
+      }
     }
   }
 
-  async function saveResult(finalAnswers: string[]) {
+  async function saveResult(finalAnswers: string[], request: number) {
     if (finalAnswers.length !== QUESTION_COUNT) {
       setError(
         `回答数が正しくありません（${finalAnswers.length}/${QUESTION_COUNT}）`,
@@ -214,7 +184,6 @@ function PlayerTypeDiagnosis() {
       return
     }
 
-    const request = resultRequest.current.start()
     const { data, error: saveError } = await supabase.rpc(
       'complete_player_type_v2_diagnosis',
       {
@@ -241,6 +210,8 @@ function PlayerTypeDiagnosis() {
     }
 
     setAnswerIds(finalAnswers)
+    setLoading(false)
+    clickLock.current = false
     setResult(saved)
     // Persist the newly created result ID in the browser URL (refresh/share/back).
     navigate(`/player-type?result=${encodeURIComponent(saved.result_id)}`, { replace: true })
@@ -252,6 +223,13 @@ function PlayerTypeDiagnosis() {
   async function loadSavedResult(resultId: string) {
     const request = resultRequest.current.start()
     activeResultId.current = resultId
+    // Share drafts and async outcomes belong to this result only.
+    setShareEditorOpen(false)
+    setShareText('')
+    setShareMessage('')
+    setSharePosting(false)
+    setExternalShareError('')
+    setImageSaving(false)
     setLoadingQuestions(false)
     setError('')
     setResult(null)
@@ -399,10 +377,12 @@ function PlayerTypeDiagnosis() {
 
   async function shareToTimeline() {
     if (!result || isOwner !== true || sharePosting || !shareText.trim() || shareText.length > 500) return
+    const request = resultRequest.current.capture()
     setSharePosting(true)
     setShareMessage('')
     try {
       const { data: { user }, error: authError } = await supabase.auth.getUser()
+      if (!resultRequest.current.isCurrent(request)) return
       if (authError || !user) throw new Error('ログイン情報を確認できませんでした')
       const { error: postError } = await supabase.from('posts').insert({
         user_id: user.id,
@@ -411,13 +391,15 @@ function PlayerTypeDiagnosis() {
         result_id: result.result_id,
         content: shareText.trim(),
       })
+      if (!resultRequest.current.isCurrent(request)) return
       if (postError) throw postError
       setShareMessage('タイムラインに投稿しました。')
       setShareEditorOpen(false)
     } catch (e) {
+      if (!resultRequest.current.isCurrent(request)) return
       setShareMessage(`投稿に失敗しました：${e instanceof Error ? e.message : String(e)}`)
     } finally {
-      setSharePosting(false)
+      if (resultRequest.current.isCurrent(request)) setSharePosting(false)
     }
   }
 
@@ -558,14 +540,18 @@ function PlayerTypeDiagnosis() {
 
   async function saveShareImage() {
     if (!result || imageSaving) return
+    const request = resultRequest.current.capture()
     setImageSaving(true)
     setExternalShareError('')
     try {
-      downloadShareImage(await createShareImage())
+      const image = await createShareImage()
+      if (!resultRequest.current.isCurrent(request)) return
+      downloadShareImage(image)
     } catch (e) {
+      if (!resultRequest.current.isCurrent(request)) return
       setExternalShareError(`画像の保存に失敗しました：${e instanceof Error ? e.message : String(e)}`)
     } finally {
-      setImageSaving(false)
+      if (resultRequest.current.isCurrent(request)) setImageSaving(false)
     }
   }
 

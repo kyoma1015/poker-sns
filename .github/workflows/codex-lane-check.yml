@@ -31,6 +31,8 @@ jobs:
           python handoff/gto/verify_native_solvers.py
           python handoff/gto/tests/run_backend_tests.py
           python -B handoff/gto/g12_next/g12_p1_live_backend_tests.py
+      - name: Offline diagnosis inventory and scoring-fixture audit
+        run: node scripts/audit-player-type.mjs
       - run: npm run build
       - run: npm run lint
       - name: Browser QA with in-memory transport (no DB)
@@ -39,4 +41,5 @@ jobs:
         run: |
           node tests/browser/poll-only.mjs
           node tests/browser/tda-quiz.mjs
+          node tests/browser/diagnosis.mjs
 
