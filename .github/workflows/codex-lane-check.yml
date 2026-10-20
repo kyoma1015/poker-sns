@@ -1,7 +1,7 @@
 name: Codex lane checks
 on:
   pull_request:
-    branches: [main]
+    branches: [main, codex/integration-poll-only-20261020]
   workflow_dispatch:
 permissions:
   contents: read
@@ -34,5 +34,7 @@ jobs:
       - name: Browser QA with in-memory transport (no DB)
         env:
           CHROMIUM_PATH: /usr/bin/google-chrome
-        run: node tests/browser/poll-only.mjs
+        run: |
+          node tests/browser/poll-only.mjs
+          node tests/browser/tda-quiz.mjs
 
