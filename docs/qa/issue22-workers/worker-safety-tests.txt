@@ -2,6 +2,7 @@ test_acceptance_cannot_mutate_source_then_commit_untested_bytes (__main__.CodeWo
 test_acceptance_tamper_fails (__main__.CodeWorkerTests.test_acceptance_tamper_fails) ... ok
 test_api_billing_attestation_rejected_without_running_cli (__main__.CodeWorkerTests.test_api_billing_attestation_rejected_without_running_cli) ... ok
 test_changed_task_cannot_reuse_immutable_id (__main__.CodeWorkerTests.test_changed_task_cannot_reuse_immutable_id) ... ok
+test_completed_lane_can_claim_the_next_reviewed_task (__main__.CodeWorkerTests.test_completed_lane_can_claim_the_next_reviewed_task) ... ok
 test_existing_worktree_is_preserved (__main__.CodeWorkerTests.test_existing_worktree_is_preserved) ... ok
 test_expired_lease_blocks_and_never_stolen (__main__.CodeWorkerTests.test_expired_lease_blocks_and_never_stolen) ... ok
 test_failed_acceptance_cannot_commit (__main__.CodeWorkerTests.test_failed_acceptance_cannot_commit) ... ok
@@ -21,6 +22,6 @@ test_wrong_or_replayed_lease_cannot_finish (__main__.CodeWorkerTests.test_wrong_
 test_zero_test_acceptance_does_not_pass (__main__.CodeWorkerTests.test_zero_test_acceptance_does_not_pass) ... ok
 
 ----------------------------------------------------------------------
-Ran 21 tests in 0.875s
+Ran 22 tests in 0.899s
 
 OK

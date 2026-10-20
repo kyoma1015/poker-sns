@@ -103,6 +103,18 @@ class CodeWorkerTests(unittest.TestCase):
         finally:
             leases.close()
 
+    def test_completed_lane_can_claim_the_next_reviewed_task(self):
+        leases = worker.Leases(self.state)
+        try:
+            first = self.task()
+            token = leases.claim(first, now=100)
+            leases.finish(first['id'], token, 'implemented', {'fixture_only': True}, now=101)
+            second = self.task(); second['id'] = 'next-reviewed-A'; second['branch'] = 'codex/next-reviewed-A'
+            self.assertIsNotNone(leases.claim(second, now=102))
+            self.assertEqual([row['status'] for row in leases.report()], ['implemented', 'running'])
+        finally:
+            leases.close()
+
     def test_changed_task_cannot_reuse_immutable_id(self):
         leases = worker.Leases(self.state)
         try:
