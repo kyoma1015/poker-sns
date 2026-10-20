@@ -75,3 +75,14 @@ All four immutable acceptance suites failed before source editing. The actual ag
 Public evidence is in docs/qa/issue22-workers/host-session-results.json, host-baseline-failures.json, host-session-manifest.json and completed-no-replay.json. Lease tokens, private prepared receipts and SQLite databases were deliberately not copied. The result records publication=not_attempted because that controller stage does not use a GitHub credential; the root coordinator subsequently pushed and created the four Draft PRs using its existing approved GitHub tools. This is evidence for formal host dispatch/source/test/commit and root publication, not evidence that the optional standalone publisher authenticated successfully.
 
 No main merge, production deployment, Supabase call, old checkpoint write, auth copy or new paid service was performed. The CLI EROFS blocker still applies. A single finite host run is not a persistent daemon or proof that the next unattended scheduled session has runtime/collaboration/lease capabilities; that future run must check its capabilities and shared state again.
+
+### GitHub CI and finite scheduler connection
+Root-created Draft PRs also passed their immutable-acceptance CI at their published commit:
+- A #27: https://github.com/kyoma1015/poker-sns/actions/runs/39513425434
+- B #28: https://github.com/kyoma1015/poker-sns/actions/runs/39513431818
+- C #29: https://github.com/kyoma1015/poker-sns/actions/runs/39513440363
+- D #30: https://github.com/kyoma1015/poker-sns/actions/runs/39513447188
+
+The root coordinator updated the existing finite restart reservation prompt to use the approved host prepare → formal dispatch → finish lifecycle when available. The existing six-hour interval and occurrence limit28 were not expanded or auto-renewed. The update API succeeded, but the next scheduled cold start through actual code completion has **not** been witnessed. The previous managed-runtime CLI failure remains recorded, rather than being hidden by host success.
+
+The retained coordinator lease state is `/workspace/work/issue22-host-controller/leases.sqlite`. Its database and private receipts/tokens were not published. A subsequent session must verify state continuity and absence of conflicting work; missing/unavailable state forces read-only behavior. A path in documentation does not guarantee storage durability across instance replacement.

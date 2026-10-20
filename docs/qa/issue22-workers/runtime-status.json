@@ -21,8 +21,10 @@
   "real_host_session_source_commits": 4,
   "controller_acceptance_tests_passed": 5,
   "same_tasks_reclaimed": 0,
-  "host_session_is_finite_active_run": true,
   "cli_backend_status": "BLOCKED before model start; EROFS unchanged",
   "publisher_adapter_end_to_end": "NOT VERIFIED; root used approved GitHub tools after controller commits",
-  "cli_backend_real_ai_tasks_started_successfully": 0
+  "cli_backend_real_ai_tasks_started_successfully": 0,
+  "host_session_run_completed": true,
+  "host_session_pr_ci_success": 4,
+  "future_scheduled_cold_start_to_implementation_verified": false
 }
