@@ -1,0 +1,6897 @@
+{
+  "environment": "RECONSTRUCTED, NOT original G11 vendor/ABI validation",
+  "pins": {
+    "pybind11-2.13.6-py3-none-any.whl": {
+      "url": "https://files.pythonhosted.org/packages/13/2f/0f24b288e2ce56f51c920137620b4434a38fd80583dbbe24fc2a1656c388/pybind11-2.13.6-py3-none-any.whl",
+      "sha256": "237c41e29157b962835d356b370ededd57594a26d5894a795960f0047cb5caf5"
+    },
+    "abseil-20240116.2.tar.gz": {
+      "url": "https://codeload.github.com/abseil/abseil-cpp/tar.gz/refs/tags/20240116.2",
+      "sha256": "733726b8c3a6d39a4120d7e45ea8b41a434cdacde401cba500f14236c49b39dc"
+    }
+  },
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "flags": [
+    "-O2",
+    "-std=c++20",
+    "-fno-fast-math",
+    "-ffp-contract=off",
+    "-fPIC",
+    "-shared"
+  ],
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "abi": "cpython-312-x86_64-linux-gnu",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+  "variants": {
+    "g12_next": {
+      "source_sha256": "57a03f3cc6fafb0bbf5d1f333b18188b35720a69693519b5e955a8656507c09a",
+      "source_bytes": 31431,
+      "build_command": [
+        "c++",
+        "-O2",
+        "-std=c++20",
+        "-fno-fast-math",
+        "-ffp-contract=off",
+        "-fPIC",
+        "-shared",
+        "/workspace/work/gto-native-final-20261020/g12_next/g12_solver_disk.cc",
+        "/workspace/work/gto-native-final-20261020/dependencies/abseil-cpp-20240116.2/absl/random/discrete_distribution.cc",
+        "-I/workspace/work/gto-native-final-20261020/dependencies/pybind11/pybind11/include",
+        "-I/workspace/work/gto-native-final-20261020/g12_next/patched",
+        "-I/workspace/work/gto-native-final-20261020/dependencies/abseil-cpp-20240116.2",
+        "-I/opt/codex/runtimes/codex-primary-runtime/dependencies/python/include/python3.12",
+        "-o",
+        "/workspace/work/gto-native-final-20261020/g12_next/pokerid_g12.cpython-312-x86_64-linux-gnu.so"
+      ],
+      "build_returncode": 0,
+      "smoke_returncode": 0,
+      "smoke": {
+        "status": "PASS",
+        "fixture": "synthetic matching pennies, NOT full poker/G11 reference",
+        "iterations": 200,
+        "infosets": 2,
+        "seconds": 0.001874483999927179,
+        "iterations_per_second": 106696.02941810638,
+        "checkpoint_sha256": "b38355859e67d65e2b50fdf057153c0e1ba6237cdab6d8355617298878d685db",
+        "long_double_digits": 64,
+        "python": "3.12.14",
+        "native_module": "/workspace/work/gto-native-final-20261020/g12_next/pokerid_g12.cpython-312-x86_64-linux-gnu.so",
+        "digest_trailer_native_check": false,
+        "verified_snapshot_rejects_corruption": true,
+        "temporary_disk_resume_byte_equal": true,
+        "historical_checkpoint_used": false,
+        "native_poker_matrix": {
+          "status": "PASS",
+          "case_count": 320,
+          "seconds": 0.15257324899994273,
+          "note": "20 synthetic equal-stack sizes 2..40bb, NOT recovered owner/G11 stack fixtures; one-iteration smoke only",
+          "bb_ante": true,
+          "cash_rake": "1/10",
+          "mtt_rake": 0,
+          "cases": [
+            {
+              "players": 2,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 2
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 2
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 4
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 4
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 4
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 4
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 9
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 9
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 9
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 9
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 13
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 13
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 15
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 15
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 21
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 21
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 20
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 20
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 22
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 22
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 35
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 35
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 33
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 33
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 48
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 48
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 53
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 53
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 53
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 53
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 71
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 71
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 59
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 59
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 62
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 62
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 67
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 67
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 79
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 79
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 66
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 66
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 66
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 66
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 67
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 67
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 69
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 69
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 69
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 69
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 69
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 69
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 77
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 77
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 98
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 98
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 98
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 98
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 98
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 98
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 97
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 97
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 97
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 97
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 95
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 95
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 95
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 95
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 90
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 90
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 99
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 99
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 100
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 100
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            }
+          ]
+        }
+      }
+    },
+    "g12_p1_cache": {
+      "source_sha256": "3ae79dfef498306b87bfc536be919d8a54b58313b8f9647b86793d7840e1d90a",
+      "source_bytes": 34044,
+      "build_command": [
+        "c++",
+        "-O2",
+        "-std=c++20",
+        "-fno-fast-math",
+        "-ffp-contract=off",
+        "-fPIC",
+        "-shared",
+        "/workspace/work/gto-native-final-20261020/g12_p1_cache/g12_solver_disk.cc",
+        "/workspace/work/gto-native-final-20261020/dependencies/abseil-cpp-20240116.2/absl/random/discrete_distribution.cc",
+        "-I/workspace/work/gto-native-final-20261020/dependencies/pybind11/pybind11/include",
+        "-I/workspace/work/gto-native-final-20261020/g12_p1_cache/patched",
+        "-I/workspace/work/gto-native-final-20261020/dependencies/abseil-cpp-20240116.2",
+        "-I/opt/codex/runtimes/codex-primary-runtime/dependencies/python/include/python3.12",
+        "-o",
+        "/workspace/work/gto-native-final-20261020/g12_p1_cache/pokerid_g12.cpython-312-x86_64-linux-gnu.so"
+      ],
+      "build_returncode": 0,
+      "smoke_returncode": 0,
+      "smoke": {
+        "status": "PASS",
+        "fixture": "synthetic matching pennies, NOT full poker/G11 reference",
+        "iterations": 200,
+        "infosets": 2,
+        "seconds": 0.0018423150004309718,
+        "iterations_per_second": 108559.06832068028,
+        "checkpoint_sha256": "b38355859e67d65e2b50fdf057153c0e1ba6237cdab6d8355617298878d685db",
+        "long_double_digits": 64,
+        "python": "3.12.14",
+        "native_module": "/workspace/work/gto-native-final-20261020/g12_p1_cache/pokerid_g12.cpython-312-x86_64-linux-gnu.so",
+        "digest_trailer_native_check": false,
+        "verified_snapshot_rejects_corruption": true,
+        "temporary_disk_resume_byte_equal": true,
+        "historical_checkpoint_used": false,
+        "native_poker_matrix": {
+          "status": "PASS",
+          "case_count": 320,
+          "seconds": 0.146667768000043,
+          "note": "20 synthetic equal-stack sizes 2..40bb, NOT recovered owner/G11 stack fixtures; one-iteration smoke only",
+          "bb_ante": true,
+          "cash_rake": "1/10",
+          "mtt_rake": 0,
+          "cases": [
+            {
+              "players": 2,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 2
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 2
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 4
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 4
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 4
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 4
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 9
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 9
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 9
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 9
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 13
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 13
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 15
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 15
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 21
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 21
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 20
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 20
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 22
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 22
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 35
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 35
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 33
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 33
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 48
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 48
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 53
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 53
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 53
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 53
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 71
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 71
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 59
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 59
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 62
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 62
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 67
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 67
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 79
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 79
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 66
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 66
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 66
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 66
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 67
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 67
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 69
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 69
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 69
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 69
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 69
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 69
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 77
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 77
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 98
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 98
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 98
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 98
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 98
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 98
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 97
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 97
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 97
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 97
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 95
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 95
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 95
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 95
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 90
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 90
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 99
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 99
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 100
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 100
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            }
+          ]
+        }
+      }
+    },
+    "g12_p1_packed": {
+      "source_sha256": "f3b31a0703d130372e84b53ee7b05ab37b7a40fcf3856f6be5b45b7dfedfdb0b",
+      "source_bytes": 32084,
+      "build_command": [
+        "c++",
+        "-O2",
+        "-std=c++20",
+        "-fno-fast-math",
+        "-ffp-contract=off",
+        "-fPIC",
+        "-shared",
+        "/workspace/work/gto-native-final-20261020/g12_p1_packed/g12_solver_disk.cc",
+        "/workspace/work/gto-native-final-20261020/dependencies/abseil-cpp-20240116.2/absl/random/discrete_distribution.cc",
+        "-I/workspace/work/gto-native-final-20261020/dependencies/pybind11/pybind11/include",
+        "-I/workspace/work/gto-native-final-20261020/g12_p1_packed/patched",
+        "-I/workspace/work/gto-native-final-20261020/dependencies/abseil-cpp-20240116.2",
+        "-I/opt/codex/runtimes/codex-primary-runtime/dependencies/python/include/python3.12",
+        "-o",
+        "/workspace/work/gto-native-final-20261020/g12_p1_packed/pokerid_g12.cpython-312-x86_64-linux-gnu.so"
+      ],
+      "build_returncode": 0,
+      "smoke_returncode": 0,
+      "smoke": {
+        "status": "PASS",
+        "fixture": "synthetic matching pennies, NOT full poker/G11 reference",
+        "iterations": 200,
+        "infosets": 2,
+        "seconds": 0.0017834119998951792,
+        "iterations_per_second": 112144.58577813489,
+        "checkpoint_sha256": "b38355859e67d65e2b50fdf057153c0e1ba6237cdab6d8355617298878d685db",
+        "long_double_digits": 64,
+        "python": "3.12.14",
+        "native_module": "/workspace/work/gto-native-final-20261020/g12_p1_packed/pokerid_g12.cpython-312-x86_64-linux-gnu.so",
+        "digest_trailer_native_check": false,
+        "verified_snapshot_rejects_corruption": true,
+        "temporary_disk_resume_byte_equal": true,
+        "historical_checkpoint_used": false,
+        "native_poker_matrix": {
+          "status": "PASS",
+          "case_count": 320,
+          "seconds": 0.14154225299989776,
+          "note": "20 synthetic equal-stack sizes 2..40bb, NOT recovered owner/G11 stack fixtures; one-iteration smoke only",
+          "bb_ante": true,
+          "cash_rake": "1/10",
+          "mtt_rake": 0,
+          "cases": [
+            {
+              "players": 2,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 2
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 2
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 4
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 4
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 4
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 4
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 9
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 9
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 9
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 9
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 11
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 2,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 7
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 13
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 13
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 15
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 15
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 17
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 3,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 16
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 21
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 21
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 20
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 20
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 19
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 23
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 4,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 24
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 22
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 22
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 34
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 35
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 35
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 5,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 37
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 33
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 33
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 48
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 48
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 53
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 53
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 53
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 53
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 6,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 51
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 71
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 71
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 59
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 59
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 62
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 62
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 67
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 67
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 79
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 79
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 66
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 66
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 66
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 66
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 68
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 67
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 67
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 69
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 69
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 69
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 69
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 69
+            },
+            {
+              "players": 7,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 69
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 77
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 77
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 98
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 98
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 98
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 98
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 98
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 98
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 97
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 97
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 97
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 97
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 95
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 95
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 95
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 95
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 96
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 8,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 94
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 2,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 90
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 2,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 90
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 4,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 99
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 4,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 99
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 6,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 100
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 6,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 100
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 8,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 8,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 10,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 10,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 12,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 12,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 14,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 14,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 16,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 16,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 18,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 18,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 20,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 20,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 22,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 22,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 24,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 24,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 26,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 26,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 28,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 28,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 30,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 30,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 32,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 32,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 34,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 34,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 36,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 36,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 38,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 38,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 40,
+              "format": "cash",
+              "iteration": 1,
+              "infosets": 104
+            },
+            {
+              "players": 9,
+              "synthetic_stack_bb": 40,
+              "format": "mtt_chip_ev",
+              "iteration": 1,
+              "infosets": 104
+            }
+          ]
+        }
+      }
+    }
+  }
+}

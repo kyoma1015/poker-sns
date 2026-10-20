@@ -1,0 +1,3 @@
+{"variant": "g12_next", "build_returncode": 0, "smoke_returncode": 0, "checkpoint_sha256": "b38355859e67d65e2b50fdf057153c0e1ba6237cdab6d8355617298878d685db", "native_poker_cases": 320}
+{"variant": "g12_p1_cache", "build_returncode": 0, "smoke_returncode": 0, "checkpoint_sha256": "b38355859e67d65e2b50fdf057153c0e1ba6237cdab6d8355617298878d685db", "native_poker_cases": 320}
+{"variant": "g12_p1_packed", "build_returncode": 0, "smoke_returncode": 0, "checkpoint_sha256": "b38355859e67d65e2b50fdf057153c0e1ba6237cdab6d8355617298878d685db", "native_poker_cases": 320}
