@@ -1,0 +1,43 @@
+name: Bounded four-lane queue verification
+on:
+  pull_request:
+    branches: [main, codex/integration-poll-only-20261020]
+  workflow_dispatch:
+  schedule:
+    - cron: '17 3 * * 1-5'
+permissions:
+  contents: read
+concurrency:
+  group: queue-verification-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+jobs:
+  validate:
+    # Recurrence requires explicit activation after default-branch installation.
+    # This flag does not configure a Codex/code-writing worker.
+    if: github.event_name != 'schedule' || vars.POKERID_VALIDATION_SCHEDULE_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        lane: [A, B, C, D]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Bounded queue verification and next-task plan
+        env:
+          LANE: ${{ matrix.lane }}
+        run: |
+          python -B scripts/run_queue_validation.py --state "$RUNNER_TEMP/queue.sqlite" --output "$RUNNER_TEMP/evidence" --lane "$LANE"
+          python -B scripts/development_queue.py --state "$RUNNER_TEMP/queue.sqlite" --lane "$LANE" > "$RUNNER_TEMP/evidence/next-task-plan.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: queue-evidence-${{ matrix.lane }}
+          path: ${{ runner.temp }}/evidence/
+          retention-days: 7

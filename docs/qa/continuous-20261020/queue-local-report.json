@@ -1,0 +1,101 @@
+{
+  "mode": "validation_only",
+  "autonomous_development_running": false,
+  "tasks": [
+    {
+      "id": "A-dependency-ui-20261020",
+      "lane": "A",
+      "kind": "development",
+      "status": "queued",
+      "attempts": 0,
+      "evidence": null
+    },
+    {
+      "id": "B-question-quality-20261020",
+      "lane": "B",
+      "kind": "development",
+      "status": "queued",
+      "attempts": 0,
+      "evidence": null
+    },
+    {
+      "id": "C-native-reconstruction-20261020",
+      "lane": "C",
+      "kind": "development",
+      "status": "queued",
+      "attempts": 0,
+      "evidence": null
+    },
+    {
+      "id": "C-independent-validation-20261020",
+      "lane": "C",
+      "kind": "development",
+      "status": "queued",
+      "attempts": 0,
+      "evidence": null
+    },
+    {
+      "id": "D-mobile-result-20261020",
+      "lane": "D",
+      "kind": "development",
+      "status": "queued",
+      "attempts": 0,
+      "evidence": null
+    },
+    {
+      "id": "A-queue-validation-20261020",
+      "lane": "A",
+      "kind": "validation",
+      "status": "succeeded",
+      "attempts": 1,
+      "evidence": "/workspace/work/continuous-control-evidence-final/A-validation.log"
+    },
+    {
+      "id": "B-queue-validation-20261020",
+      "lane": "B",
+      "kind": "validation",
+      "status": "succeeded",
+      "attempts": 1,
+      "evidence": "/workspace/work/continuous-control-evidence-final/B-validation.log"
+    },
+    {
+      "id": "C-queue-validation-20261020",
+      "lane": "C",
+      "kind": "validation",
+      "status": "succeeded",
+      "attempts": 1,
+      "evidence": "/workspace/work/continuous-control-evidence-final/C-validation.log"
+    },
+    {
+      "id": "D-queue-validation-20261020",
+      "lane": "D",
+      "kind": "validation",
+      "status": "succeeded",
+      "attempts": 1,
+      "evidence": "/workspace/work/continuous-control-evidence-final/D-validation.log"
+    }
+  ],
+  "this_run": [
+    {
+      "lane": "A",
+      "task": "A-queue-validation-20261020",
+      "status": "succeeded"
+    },
+    {
+      "lane": "B",
+      "task": "B-queue-validation-20261020",
+      "status": "succeeded"
+    },
+    {
+      "lane": "C",
+      "task": "C-queue-validation-20261020",
+      "status": "succeeded"
+    },
+    {
+      "lane": "D",
+      "task": "D-queue-validation-20261020",
+      "status": "succeeded"
+    }
+  ],
+  "recurring_scheduler_verified": false
+}

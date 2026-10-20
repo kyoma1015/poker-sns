@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "mode": "validation_only",
+  "code_worker_configured": false,
+  "max_tasks_per_run": 4,
+  "max_attempts": 3,
+  "lease_seconds": 600,
+  "tasks": [
+    {"id":"A-dependency-ui-20261020","lane":"A","kind":"development","acceptance":"Audit high dependencies and share UX fixed, regression/browser/build/lint evidence; separate release gates."},
+    {"id":"B-question-quality-20261020","lane":"B","kind":"development","acceptance":"Strict question/duplicate audit and recoverable quiz UI tested; missing official corpus stays unverified."},
+    {"id":"C-native-reconstruction-20261020","lane":"C","kind":"development","acceptance":"Separate variants build/import/numeric or logged blocker, original bytes preserved and dependency provenance pinned."},
+    {"id":"C-independent-validation-20261020","lane":"C","kind":"development","acceptance":"Checkpoint/169-hand validation developed and tested without claiming historical resume."},
+    {"id":"D-mobile-result-20261020","lane":"D","kind":"development","acceptance":"Real diagnosis display bug fixed with mobile mock browser QA; no unapproved scoring changes."},
+    {"id":"A-queue-validation-20261020","lane":"A","kind":"validation","acceptance":"Queue safety tests and lane plan artifact pass."},
+    {"id":"B-queue-validation-20261020","lane":"B","kind":"validation","acceptance":"Queue safety tests and lane plan artifact pass."},
+    {"id":"C-queue-validation-20261020","lane":"C","kind":"validation","acceptance":"Queue safety tests and lane plan artifact pass."},
+    {"id":"D-queue-validation-20261020","lane":"D","kind":"validation","acceptance":"Queue safety tests and lane plan artifact pass."}
+  ]
+}
