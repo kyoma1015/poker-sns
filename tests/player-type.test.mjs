@@ -1,6 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { readFileSync } from 'node:fs'
+import { readFileSync, readdirSync } from 'node:fs'
+import { animalEmoji } from '../src/playerTypeAnimals.ts'
 import { topPersonalTraits, personalAdvice, traitPositiveMax, relativePositiveScore, avoidSkillGuarantees } from '../src/playerTypePresentation.ts'
 import { parseQuestions, LatestRequest } from '../src/playerTypeQuestions.ts'
 
@@ -103,4 +104,25 @@ test('audit wording corrections apply only to the displayed copy, without mutati
 test('wording correction leaves unrelated copy unchanged', () => {
   const d = { description: '', behavior_text: '回答傾向', strength_text: '観察', weakness_text: '', perceived_text: '', best_situation_text: '' }
   assert.deepEqual(avoidSkillGuarantees(d), d)
+})
+
+
+test('result action snapshots do not invalidate each other, but navigation invalidates all old actions', () => {
+  const gate = new LatestRequest()
+  const result = gate.start()
+  const share = gate.capture()
+  const image = gate.capture()
+  assert.equal(result, share)
+  assert.equal(gate.isCurrent(image), true)
+  gate.invalidate()
+  assert.equal(gate.isCurrent(share), false)
+  assert.equal(gate.isCurrent(image), false)
+})
+
+
+test('all 36 configured animal display keys have exactly one matching PNG asset', () => {
+  const assets = readdirSync(new URL('../public/animals/', import.meta.url)).filter(name => name.endsWith('.png')).map(name => name.slice(0, -4)).sort()
+  assert.equal(Object.keys(animalEmoji).length, 36)
+  assert.deepEqual(Object.keys(animalEmoji).sort(), assets)
+  assert.ok(Object.values(animalEmoji).every(emoji => typeof emoji === 'string' && emoji.length > 0))
 })

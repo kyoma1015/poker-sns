@@ -1,0 +1,7 @@
+PASS result switch resets old animal caption and share editor
+PASS late share completion cannot add success message on a different result
+PASS non-owner cannot access share or restart controls
+PASS mobile saved-result refresh, PNG dimensions and no overflow
+PASS 50th-answer failure retries exactly 50 IDs and restart clears result URL
+PASS rejected old save cannot put an error on a newly loaded result
+{"verdict":"PASS","tests":6,"results":["result switch resets old animal caption and share editor","late share completion cannot add success message on a different result","non-owner cannot access share or restart controls","mobile saved-result refresh, PNG dimensions and no overflow","50th-answer failure retries exactly 50 IDs and restart clears result URL","rejected old save cannot put an error on a newly loaded result"],"viewport":"390x844","browser":"154.0.8037.57","transport":"in-memory mock; external requests blocked; no DB"}
