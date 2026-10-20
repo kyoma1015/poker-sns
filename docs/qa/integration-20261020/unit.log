@@ -1,0 +1,129 @@
+✔ notification entry points use verified events and the saved comment ID (2.04413ms)
+✔ successful verified event returns null once (3.084643ms)
+✔ authorization/validation 401/unauthorized is never retried (0.841462ms)
+✔ authorization/validation 403/denied is never retried (0.689413ms)
+✔ authorization/validation 400/22023 is never retried (0.722232ms)
+✔ authorization/validation 200/42501 is never retried (0.697414ms)
+✔ HTTP 429 retries with the same event and recovers (1.416271ms)
+✔ HTTP 500 retries with the same event and recovers (0.706327ms)
+✔ HTTP 503 retries with the same event and recovers (0.887992ms)
+✔ network failure is retried at most three times (1.483953ms)
+✔ transport ignoring abort still finishes and aborts each of three attempts (3.956291ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 58.58827
+✔ named poll request matches the disclosed named mode (1.320416ms)
+✔ anonymous poll remains anonymous (0.161063ms)
+✔ invalid option null cannot produce a request (0.216847ms)
+✔ invalid option -1 cannot produce a request (0.117097ms)
+✔ invalid option 2 cannot produce a request (0.085299ms)
+✔ invalid option 0.5 cannot produce a request (0.175486ms)
+✔ invalid option NaN cannot produce a request (0.068834ms)
+✔ a previously rendered open card cannot vote at or after the deadline (0.173422ms)
+✔ missing or invalid deadline fails closed (0.273895ms)
+✔ question boxes cannot use the poll write contract (0.307285ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10.341914
+✔ all 32 positive ceilings equal the sum of per-question attainable maxima (3.119956ms)
+✔ negative, zero, unknown and nonfinite values do not become top tendencies (0.689522ms)
+✔ normalization compares proportions rather than raw totals (0.379404ms)
+✔ one incidental selective-burst point must not assert attacking ability (0.354126ms)
+✔ noticing danger must not imply that a calling station folds (0.287144ms)
+✔ attack wording needs both initiative and sustained attack at the threshold (0.159861ms)
+✔ fixed persona replay (not live): 超弱気な初心者 (0.964818ms)
+✔ fixed persona replay (not live): 超タイトな初心者 (0.508138ms)
+✔ fixed persona replay (not live): タイト・パッシブ (0.475939ms)
+✔ fixed persona replay (not live): タイト・アグレッシブ (1.152882ms)
+✔ fixed persona replay (not live): ルース・パッシブ (0.349127ms)
+✔ fixed persona replay (not live): ルース・アグレッシブ (0.321656ms)
+✔ fixed persona replay (not live): コーリングステーション (0.352022ms)
+✔ fixed persona replay (not live): マニアック (0.267334ms)
+✔ fixed persona replay (not live): 超慎重な上級者 (0.506576ms)
+✔ fixed persona replay (not live): 熟練したLAG (0.321646ms)
+✔ fixed persona replay (not live): 熟練したTAG (0.630613ms)
+✔ fixed persona replay (not live): ブラフ嫌い (0.293684ms)
+✔ fixed persona replay (not live): ブラフ多用型 (0.214865ms)
+✔ fixed persona replay (not live): ギャンブラー (0.180933ms)
+✔ fixed persona replay (not live): リスク回避型 (0.200202ms)
+✔ fixed persona replay (not live): バランス型 (0.216667ms)
+✔ fixed persona replay (not live): 相手依存型 (0.181474ms)
+✔ fixed persona replay (not live): 感情的なティルト型 (0.220113ms)
+✔ fixed persona replay (not live): トーナメント生存重視型 (0.343439ms)
+✔ fixed persona replay (not live): トーナメント攻撃型 (0.17212ms)
+✔ fixed persona replay (not live): キャッシュゲーム堅実派 (0.196467ms)
+✔ fixed persona replay (not live): 初心者の無謀型 (0.206332ms)
+✔ fixed persona replay (not live): 上級者の柔軟型 (0.262006ms)
+✔ fixed persona replay (not live): フィット・オア・フォールド型 (0.164089ms)
+✔ fixed persona replay (not live): バリュー重視型 (0.162355ms)
+✔ fixed persona replay (not live): トラップ好き (0.156146ms)
+✔ fixed persona replay (not live): プリフロップ超ルース型 (0.388287ms)
+✔ fixed persona replay (not live): ポストフロップ消極型 (0.175566ms)
+✔ fixed persona replay (not live): 勝負好きだがブラフしない型 (0.211039ms)
+✔ fixed persona replay (not live): 理論重視の冷静型 (0.200012ms)
+✔ question bank validation rejects incomplete or contradictory data (1.05167ms)
+✔ a late result cannot win after a new request, restart or unmount (0.104829ms)
+✔ audit wording corrections apply only to the displayed copy, without mutating saved data (0.234274ms)
+✔ wording correction leaves unrelated copy unchanged (0.114183ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25.960868
+✔ stale or forged question mode is rejected before RPC (1.048425ms)
+✔ stale or forged normal mode is rejected before RPC (0.099971ms)
+✔ stale or forged  mode is rejected before RPC (0.069194ms)
+✔ stale or forged QUESTION mode is rejected before RPC (0.063506ms)
+✔ 2 poll choices and privacy mode produce poll-only contract (0.683653ms)
+✔ 3 poll choices and privacy mode produce poll-only contract (0.101834ms)
+✔ 4 poll choices and privacy mode produce poll-only contract (0.133432ms)
+✔ invalid poll parameters [["A"],24] fail closed (0.135104ms)
+✔ invalid poll parameters [["A","B","C","D","E"],24] fail closed (0.887772ms)
+✔ invalid poll parameters [["A"," a "],24] fail closed (0.169837ms)
+✔ invalid poll parameters [["","B"],24] fail closed (0.116426ms)
+✔ invalid poll parameters [["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx","B"],24] fail closed (0.092981ms)
+✔ invalid poll parameters [["A","B"],0] fail closed (3.296354ms)
+✔ invalid poll parameters [["A","B"],null] fail closed (0.07945ms)
+✔ empty and overlong content fail closed (0.125069ms)
+✔ anonymous presentation drops identities even in unexpected server payload without mutating it (0.192891ms)
+✔ both composers use guarded creation; public card cannot mount historical question thread (1.256039ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14.637889
+✔ guest cannot start and does not make a user lookup (1.110018ms)
+✔ valid session and verified user can answer (0.693668ms)
+✔ user lookup transport error {"status":0} keeps retry guidance (0.232431ms)
+✔ user lookup transport error {"status":503} keeps retry guidance (0.107653ms)
+✔ user lookup transport error {"name":"AuthRetryableFetchError"} keeps retry guidance (0.097157ms)
+✔ expired authentication {"status":401} asks for login (0.123817ms)
+✔ expired authentication {"code":"session_not_found"} asks for login (0.10567ms)
+✔ expired authentication {"name":"AuthSessionMissingError"} asks for login (0.097398ms)
+✔ session transport error does not claim expiry (0.163908ms)
+✔ thrown transport error does not escape the UI action (0.280855ms)
+✔ missing verified user asks for login (0.831237ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10.743482

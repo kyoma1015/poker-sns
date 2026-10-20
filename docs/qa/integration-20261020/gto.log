@@ -1,0 +1,33 @@
+PASS g12_next: 31431 bytes; SHA-256=57a03f3cc6fafb0bbf5d1f333b18188b35720a69693519b5e955a8656507c09a
+PASS g12_p1_cache: 34044 bytes; SHA-256=3ae79dfef498306b87bfc536be919d8a54b58313b8f9647b86793d7840e1d90a
+PASS g12_p1_packed: 32084 bytes; SHA-256=f3b31a0703d130372e84b53ee7b05ab37b7a40fcf3856f6be5b45b7dfedfdb0b
+PASS: all three G12 native solver variants are byte-verified
+PASS g11_rules_embed.h 10159 870b64c0253be86ef139d0c2437d202d9d4f10097e871dd8bde526402dd49353
+PASS pokerid_rules.py 10318 456225cf675a1b8ecf9ac7b16b7e3b6185900fe3dea75fe8f1687ad12354ea5a
+PASS g12_p1_packed_live_backend.py 7749 9d166dfbd0d9da199585de631788e03636c295f595d568451239f0c0e652da52
+PASS N01_one_row {"rows": 1, "readback_equal": true, "digests_equal": true, "meta": [17, 123, "rng-v2"], "other_connection_equal": true}
+PASS N02_multiple_rows {"rows": 3, "readback_equal": true, "digests_equal": true, "meta": [17, 123, "rng-v2"], "other_connection_equal": true}
+PASS N_boundary_255 {"rows": 255, "readback_equal": true, "digests_equal": true, "meta": [17, 123, "rng-v2"], "other_connection_equal": true}
+PASS N_boundary_256 {"rows": 256, "readback_equal": true, "digests_equal": true, "meta": [17, 123, "rng-v2"], "other_connection_equal": true}
+PASS N_boundary_257 {"rows": 257, "readback_equal": true, "digests_equal": true, "meta": [17, 123, "rng-v2"], "other_connection_equal": true}
+PASS N06_replace_key {"rows": 1, "readback_equal": true, "digests_equal": true, "meta": [17, 123, "rng-v2"], "other_connection_equal": true}
+PASS N07_empty_rows {"rows": 0, "readback_equal": true, "digests_equal": true, "meta": [17, 123, "rng-v2"], "other_connection_equal": true}
+PASS N08_binary {"rows": 1, "readback_equal": true, "digests_equal": true, "meta": [17, 123, "rng-v2"], "other_connection_equal": true}
+PASS N09_metadata {"rows": 1, "readback_equal": true, "digests_equal": true, "meta": [17, 123, "rng-v2"], "other_connection_equal": true}
+PASS N10_value_digest {"rows": 1, "readback_equal": true, "digests_equal": true, "meta": [17, 123, "rng-v2"], "other_connection_equal": true}
+PASS N11_other_connection {"rows": 1, "readback_equal": true, "digests_equal": true, "meta": [17, 123, "rng-v2"], "other_connection_equal": true}
+PASS E01_empty_input {"exception": "ValueError: truncated packed batch", "before_caller_rollback": {"active": true, "in_transaction": true}, "committed_snapshot_preserved": true, "after_rollback_active": false}
+PASS E02_seven_bytes {"exception": "ValueError: truncated packed batch", "before_caller_rollback": {"active": true, "in_transaction": true}, "committed_snapshot_preserved": true, "after_rollback_active": false}
+PASS E03_row_count_cap {"exception": "ValueError: packed row count cap", "before_caller_rollback": {"active": true, "in_transaction": true}, "committed_snapshot_preserved": true, "after_rollback_active": false}
+PASS E04_key_length_cap {"exception": "ValueError: invalid packed row length", "before_caller_rollback": {"active": true, "in_transaction": true}, "committed_snapshot_preserved": true, "after_rollback_active": false}
+PASS E05_value_length_cap {"exception": "ValueError: invalid packed row length", "before_caller_rollback": {"active": true, "in_transaction": true}, "committed_snapshot_preserved": true, "after_rollback_active": false}
+PASS E06_truncated_key {"exception": "ValueError: invalid packed row length", "before_caller_rollback": {"active": true, "in_transaction": true}, "committed_snapshot_preserved": true, "after_rollback_active": false}
+PASS E07_truncated_value {"exception": "ValueError: invalid packed row length", "before_caller_rollback": {"active": true, "in_transaction": true}, "committed_snapshot_preserved": true, "after_rollback_active": false}
+PASS E08_trailing_bytes {"exception": "ValueError: trailing packed bytes", "before_caller_rollback": {"active": true, "in_transaction": true}, "committed_snapshot_preserved": true, "after_rollback_active": false}
+PASS E09_no_transaction {"exception": "RuntimeError: no active transaction", "before_caller_rollback": {"active": false, "in_transaction": false}, "committed_snapshot_preserved": true, "after_rollback_active": false}
+PASS A01_exception_after_partial_batch {"error": "invalid packed row length"}
+PASS A02_not_automatically_rolled_back {"own_rows": 257, "active": true, "in_transaction": true}
+PASS A03_no_external_partial_commit {"observer_rows": 1, "baseline_equal": true}
+PASS A04_caller_rollback_succeeds {"active": false, "in_transaction": false}
+PASS A05_no_partial_rows_and_preserved_commit {"own_rows": 1, "observer_rows": 1, "snapshot_equal": true, "writes_counter": 257}
+SUMMARY {"PASS": 25, "FAIL": 0, "BLOCKED": 0} TOTAL 25
