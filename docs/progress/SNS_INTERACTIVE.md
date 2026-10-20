@@ -1,14 +1,13 @@
-# SNS | Poll/question-box isolated candidate
+# SNS | Poll-only integration candidate
 Date: 2026-10-20 JST
-Status: CONDITIONAL PASS; release and live preview QA BLOCKED.
+Status: CONDITIONAL PASS for development; production release BLOCKED.
 
-Base main: f8890b6ec11d30676c55dc7dc8801f1da8549d28.
-Historical candidate: fa90c3320094d8def6e0e4a1248171837f1ba366 / draft PR #4.
-Ported candidate UI and four historical SQL reference files into a separate main-based review branch. SQL files are historical references, NOT an instruction to apply migrations.
-Fixed poll request privacy mode (previously always true even for named polls), and revalidate option/deadline at click time so an open card cannot submit a stale expired vote.
-Tests: node tests/interactive-requests.test.mjs: 10 PASS for named/anonymous requests, invalid choices, exact deadline, missing deadline and wrong post kind. These do not prove server-side anonymity/RLS.
-Dependency install/build/lint blocked locally by unavailable registry proxy; PR CI provides isolated build.
-Live preview writes and production/shared Supabase tests were not performed. No isolated DB configured; SQL/RPC/RLS/cron behavior remains BLOCKED. v4 creation, v2 response, v4 read and question-thread RPCs are runtime dependencies; four legacy SQL files alone are not complete reconstruction.
-Do not apply these SQL files or re-run existing production migrations. Current application history UNKNOWN in this run; earlier migration observations must be checked separately.
-Remaining: isolated schema/three-actor anonymity tests, question-thread ownership/edit/delete tests, poll-close cron, and preview QA against a proven isolated DB. A/SNS share Timeline/PostDetail and require semantic integration rather than whole-file replacement.
+Binding scope: docs/handoff/POLL_ONLY_SCOPE_CORRECTION_20261020.md on handoff branch (8509484bf9186534ca10694eb62aba7075395aee).
+Question boxes are excluded. Both home and bottom-nav composers offer polls only. Both creation entry points call createPollRequest, which rejects stale question mode before RPC and validates 2–4 nonempty unique options, content, allowed deadlines and privacy mode.
+Historical question SQL, data and internal QuestionThread code are retained. The public card never mounts QuestionThread; timeline/reposts exclude known question posts and detail links display unavailable. This is a UI restriction, not a new DB access policy; old clients and direct RPC access require a separate server review.
+Anonymous result presentation strips voters/answers without mutating the source response. Named voter lists remain available. Client redaction is defense in depth, not proof of RPC/RLS confidentiality.
 
+Tests: node tests/interactive-requests.test.mjs (10), node tests/poll-only.test.mjs (17), mocked browser coverage for home and bottom-nav composers, named/anonymous display and question card exclusion. Full integrated evidence is recorded in docs/progress/INTEGRATION_VERIFICATION_20261020.md.
+No SQL executed or modified. Four SQL files are historical references and cannot reconstruct the complete v4 runtime schema.
+BLOCKED: no isolated DB; server-side three-actor anonymity, direct notification INSERT permissions, one-vote enforcement, deadlines and exactly-once close notification/cron need isolated DB integration tests before production release. Browser tests with an in-memory transport do not replace those tests.
+PR #4 is superseded by corrected PR #12 and the integrated Draft PR. Question-box QA is out of release scope.

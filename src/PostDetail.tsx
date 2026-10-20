@@ -1,3 +1,4 @@
+import { pollDisplayResult } from './interactiveRequests'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { supabase } from './supabase'
@@ -158,11 +159,16 @@ function PostDetail() {
 
     const { data: interactiveRow, error: interactiveError } = await supabase.from('post_interactive').select('*').eq('post_id', id).maybeSingle()
     if (interactiveError) { setMessage(`アンケート情報の取得に失敗しました：${interactiveError.message}`); return }
+    if (interactiveRow?.kind === 'question') {
+      setPost(null); setInteractiveItem(null); setInteractiveResult(undefined)
+      setMessage('この投稿は表示できません。')
+      return
+    }
     setInteractiveItem(interactiveRow as InteractiveItem | null)
     if (interactiveRow) {
       const { data: interactiveRows, error: resultError } = await supabase.rpc('get_interactive_results_v4', { p_post_ids: [id] })
       if (resultError) { setMessage(`投票結果の取得に失敗しました：${resultError.message}`); return }
-      setInteractiveResult(((interactiveRows || []) as InteractiveResult[])[0])
+      setInteractiveResult(((interactiveRows || []) as InteractiveResult[]).map(row => pollDisplayResult(interactiveRow.is_anonymous !== false, row))[0])
     } else setInteractiveResult(undefined)
 
     const { data: likes, error: likesError } =
