@@ -1,0 +1,12 @@
+{
+  "python": {
+    "exception": "ValueError",
+    "message": "dead pool has no eligible player"
+  },
+  "native": {
+    "exception": "ValueError",
+    "message": "empty dead eligibility"
+  },
+  "status": "BLOCKED_RULE_POLICY",
+  "note": "Synthetic short BB consumes entire stack as dead ante; after unmatched blind refund positive_live has no eligible seat. Both kernels reject; no house-rule policy changed."
+}

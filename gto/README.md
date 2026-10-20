@@ -71,3 +71,37 @@ configurations. Keep Next/Cache/Packed distinct; no canonical variant selected.
 
 CI verifies this bounded reconstruction on relevant PRs. It does not start a
 permanent development worker, resume old calculations or release production.
+
+## Hand-derived settlement milestone (Issue22)
+
+`gto/fixtures/settlement-v1.json` contains 17 **synthetic, hand-derived** expected
+settlements. They are candidate-rule examples, not recovered G11 baseline data or
+newly approved house rules. The suite compares each implementation to those
+explicit expectations and then compares the full Python/native result, legal
+moves and state after every action/street.
+
+```sh
+python -B -m unittest discover -s gto/tests -v
+python -B gto/native/settlement.py
+# After a fresh reconstructed native build (one invocation per scratch root):
+python -B gto/native/settlement.py --native-root /tmp/pokerid-gto-fresh-build
+```
+
+The final command compiles a **test-only** bridge exposing the unchanged embedded
+Ledger header already used by all G12 variants; no solver module/API is replaced.
+It checks the original header hash before compiling and uses the pinned pybind11
+headers from the reconstructed build root. Only a new `settlement-probe/` directory
+is written. Existing output directories are refused.
+
+Coverage includes ante/blind priority, short BB ante, after-ante stack basis,
+no-flop-no-drop, uncalled refunds, multiple side pots, folded-seat ineligibility,
+odd-chip seat ordering, rake with/without dead ante, whole-hand/per-pot caps and
+floor/nearest/ceil rounding. The simple integer hand-strength vectors deliberately
+isolate settlement from card evaluation; they are not poker hands or solver EVs.
+
+Unresolved candidate-rule edge: a BB whose entire short stack becomes dead ante,
+followed by refund of the unmatched SB, leaves no `positive_live` eligible seat.
+Both preserved kernels reject this state. `all_live` is covered separately; no rule
+profile was silently changed. See docs/qa/gto-settlement-20261020/limitations.json.
+The next independent worker task is gto/tasks/rank7-next.json (hand-derived card
+ranking/category/tiebreak fixtures). Historical baseline/checkpoint gates remain.

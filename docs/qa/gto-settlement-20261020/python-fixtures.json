@@ -1,0 +1,281 @@
+{
+  "status": "PASS",
+  "case_count": 17,
+  "provenance": "Hand-derived synthetic candidate-rule examples, NOT recovered G11 baseline or approved house-rule profiles",
+  "reference_sha256": "456225cf675a1b8ecf9ac7b16b7e3b6185900fe3dea75fe8f1687ad12354ea5a",
+  "native_header_sha256": null,
+  "historical_baseline_used": false,
+  "results": [
+    {
+      "id": "hu_fold_no_flop_no_drop",
+      "status": "PASS",
+      "steps": 1,
+      "net": [
+        -5,
+        5
+      ],
+      "rake": 0,
+      "refund": [
+        0,
+        5
+      ],
+      "native_compared": false
+    },
+    {
+      "id": "hu_fold_drop_enabled",
+      "status": "PASS",
+      "steps": 1,
+      "net": [
+        -5,
+        4
+      ],
+      "rake": 1,
+      "refund": [
+        0,
+        5
+      ],
+      "native_compared": false
+    },
+    {
+      "id": "hu_showdown_no_rake",
+      "status": "PASS",
+      "steps": 12,
+      "net": [
+        10,
+        -10
+      ],
+      "rake": 0,
+      "refund": [
+        0,
+        0
+      ],
+      "native_compared": false
+    },
+    {
+      "id": "short_bb_ante_first_dead_pool",
+      "status": "PASS",
+      "steps": 4,
+      "net": [
+        5,
+        -5
+      ],
+      "rake": 0,
+      "refund": [
+        5,
+        0
+      ],
+      "native_compared": false
+    },
+    {
+      "id": "short_bb_blind_first",
+      "status": "PASS",
+      "steps": 4,
+      "net": [
+        -5,
+        5
+      ],
+      "rake": 0,
+      "refund": [
+        0,
+        0
+      ],
+      "native_compared": false
+    },
+    {
+      "id": "side_pots_short_wins_main_medium_wins_side",
+      "status": "PASS",
+      "steps": 7,
+      "net": [
+        40,
+        10,
+        -50
+      ],
+      "rake": 0,
+      "refund": [
+        0,
+        0,
+        50
+      ],
+      "native_compared": false
+    },
+    {
+      "id": "folded_best_rank_cannot_win",
+      "status": "PASS",
+      "steps": 7,
+      "net": [
+        -5,
+        55,
+        -50
+      ],
+      "rake": 0,
+      "refund": [
+        0,
+        0,
+        50
+      ],
+      "native_compared": false
+    },
+    {
+      "id": "split_pot_odd_chip_seat_order",
+      "status": "PASS",
+      "steps": 13,
+      "net": [
+        -5,
+        3,
+        2
+      ],
+      "rake": 0,
+      "refund": [
+        0,
+        0,
+        0
+      ],
+      "native_compared": false
+    },
+    {
+      "id": "uncalled_refund_not_raked",
+      "status": "PASS",
+      "steps": 6,
+      "net": [
+        16,
+        -20
+      ],
+      "rake": 4,
+      "refund": [
+        80,
+        0
+      ],
+      "native_compared": false
+    },
+    {
+      "id": "rake_includes_dead_ante",
+      "status": "PASS",
+      "steps": 12,
+      "net": [
+        -10,
+        7
+      ],
+      "rake": 3,
+      "refund": [
+        0,
+        0
+      ],
+      "native_compared": false
+    },
+    {
+      "id": "rake_excludes_dead_ante",
+      "status": "PASS",
+      "steps": 12,
+      "net": [
+        -10,
+        8
+      ],
+      "rake": 2,
+      "refund": [
+        0,
+        0
+      ],
+      "native_compared": false
+    },
+    {
+      "id": "after_ante_stack_basis",
+      "status": "PASS",
+      "steps": 12,
+      "net": [
+        20,
+        -20
+      ],
+      "rake": 0,
+      "refund": [
+        0,
+        0
+      ],
+      "native_compared": false
+    },
+    {
+      "id": "whole_hand_cap",
+      "status": "PASS",
+      "steps": 7,
+      "net": [
+        1950,
+        0,
+        -2000
+      ],
+      "rake": 50,
+      "refund": [
+        0,
+        0,
+        1000
+      ],
+      "native_compared": false
+    },
+    {
+      "id": "per_pot_cap",
+      "status": "PASS",
+      "steps": 7,
+      "net": [
+        1950,
+        -50,
+        -2000
+      ],
+      "rake": 100,
+      "refund": [
+        0,
+        0,
+        1000
+      ],
+      "native_compared": false
+    },
+    {
+      "id": "rounding_floor",
+      "status": "PASS",
+      "steps": 13,
+      "net": [
+        -5,
+        13,
+        -10
+      ],
+      "rake": 2,
+      "refund": [
+        0,
+        0,
+        0
+      ],
+      "native_compared": false
+    },
+    {
+      "id": "rounding_nearest",
+      "status": "PASS",
+      "steps": 13,
+      "net": [
+        -5,
+        12,
+        -10
+      ],
+      "rake": 3,
+      "refund": [
+        0,
+        0,
+        0
+      ],
+      "native_compared": false
+    },
+    {
+      "id": "rounding_ceil",
+      "status": "PASS",
+      "steps": 13,
+      "net": [
+        -5,
+        12,
+        -10
+      ],
+      "rake": 3,
+      "refund": [
+        0,
+        0,
+        0
+      ],
+      "native_compared": false
+    }
+  ]
+}
