@@ -1,7 +1,7 @@
 name: Codex lane checks
 on:
   pull_request:
-    branches: [main]
+    branches: [main, codex/integration-poll-only-20261020]
   workflow_dispatch:
 permissions:
   contents: read
