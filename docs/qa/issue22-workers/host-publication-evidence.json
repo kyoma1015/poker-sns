@@ -1,0 +1,73 @@
+{
+  "repository": "kyoma1015/poker-sns",
+  "pull_requests": [
+    {
+      "number": 27,
+      "url": "https://github.com/kyoma1015/poker-sns/pull/27",
+      "head_sha": "9bf10fc8de11fd6644876c50439b3e5fc1ffa24d",
+      "head": "codex/issue22-host-a-fix",
+      "base": "codex/issue22-worker-input-a",
+      "draft": true,
+      "state": "open",
+      "published_by": "trusted_root_GitHub_tools",
+      "standalone_publisher_verified": false,
+      "ci": {
+        "url": "https://github.com/kyoma1015/poker-sns/actions/runs/39513425434",
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "9bf10fc8de11fd6644876c50439b3e5fc1ffa24d"
+      }
+    },
+    {
+      "number": 28,
+      "url": "https://github.com/kyoma1015/poker-sns/pull/28",
+      "head_sha": "a36c7853ca745b40d9607d096b8a2f72c5f5712d",
+      "head": "codex/issue22-host-b-fix",
+      "base": "codex/issue22-worker-input-b",
+      "draft": true,
+      "state": "open",
+      "published_by": "trusted_root_GitHub_tools",
+      "standalone_publisher_verified": false,
+      "ci": {
+        "url": "https://github.com/kyoma1015/poker-sns/actions/runs/39513431818",
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "a36c7853ca745b40d9607d096b8a2f72c5f5712d"
+      }
+    },
+    {
+      "number": 29,
+      "url": "https://github.com/kyoma1015/poker-sns/pull/29",
+      "head_sha": "89fd492422497714d1665a9523e97ad4ba3ebee2",
+      "head": "codex/issue22-host-c-fix",
+      "base": "codex/issue22-worker-input-c",
+      "draft": true,
+      "state": "open",
+      "published_by": "trusted_root_GitHub_tools",
+      "standalone_publisher_verified": false,
+      "ci": {
+        "url": "https://github.com/kyoma1015/poker-sns/actions/runs/39513440363",
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "89fd492422497714d1665a9523e97ad4ba3ebee2"
+      }
+    },
+    {
+      "number": 30,
+      "url": "https://github.com/kyoma1015/poker-sns/pull/30",
+      "head_sha": "6e72672fe1b9e51feb6c5b398dd9d757da83e110",
+      "head": "codex/issue22-host-d-fix",
+      "base": "codex/issue22-worker-input-d",
+      "draft": true,
+      "state": "open",
+      "published_by": "trusted_root_GitHub_tools",
+      "standalone_publisher_verified": false,
+      "ci": {
+        "url": "https://github.com/kyoma1015/poker-sns/actions/runs/39513447188",
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "6e72672fe1b9e51feb6c5b398dd9d757da83e110"
+      }
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "repository": "kyoma1015/poker-sns",
+  "tasks": [
+    {
+      "id": "issue22-host-a",
+      "lane": "A",
+      "base_sha": "56f8a36f4c894b96c2eb2c4375263ccdaf0c8a00",
+      "base_branch": "codex/issue22-worker-input-a",
+      "branch": "codex/issue22-host-a-fix",
+      "test_profile": "node",
+      "allowed_paths": [
+        "src/interactiveRequests.ts"
+      ],
+      "protected_tests": [
+        "tests/worker-acceptance.test.mjs"
+      ],
+      "instruction": "Fix pollVoteRequest so a malformed poll with fewer than 2 or more than 4 options cannot produce a vote RPC request. Preserve normal 2\u20134 option behavior, anonymous/named mode, deadlines and question rejection. No UI/schema/SQL changes. The immutable acceptance test already fails on this real boundary defect."
+    },
+    {
+      "id": "issue22-host-b",
+      "lane": "B",
+      "base_sha": "77b41f7f1f655c5b3367ab595022e970ef37fc61",
+      "base_branch": "codex/issue22-worker-input-b",
+      "branch": "codex/issue22-host-b-fix",
+      "test_profile": "node",
+      "allowed_paths": [
+        "src/tdaQuizData.ts"
+      ],
+      "protected_tests": [
+        "tests/worker-acceptance.test.mjs"
+      ],
+      "instruction": "Fix quizAuditReport([]) without an expected count so empty offline exports are REVIEW_REQUIRED, never STRUCTURE_PASS. Keep parseQuizQuestions([]) legal for empty runtime RPC results; keep nonempty valid audits and publication_approved=false. Do not alter questions, scoring, UI or DB."
+    },
+    {
+      "id": "issue22-host-c",
+      "lane": "C",
+      "base_sha": "44d46db7989a02ce28dba58bea6f30172c525dfc",
+      "base_branch": "codex/issue22-worker-input-c",
+      "branch": "codex/issue22-host-c-fix",
+      "test_profile": "python",
+      "allowed_paths": [
+        "gto/hand169.py"
+      ],
+      "protected_tests": [
+        "tests/worker_acceptance/test_mass.py"
+      ],
+      "instruction": "Fix aggregate in gto/hand169.py: math.fsum of finite reach weights can raise OverflowError before the intended mass validation. Convert overflow into clear ValueError validation while preserving finite ordinary weighted frequencies/EV, original solver source, rules and checkpoints. Do not implement a new solver or change game semantics."
+    },
+    {
+      "id": "issue22-host-d",
+      "lane": "D",
+      "base_sha": "a7895875ba0c8de10c30823ea22ce4cb5f5351a1",
+      "base_branch": "codex/issue22-worker-input-d",
+      "branch": "codex/issue22-host-d-fix",
+      "test_profile": "node",
+      "allowed_paths": [
+        "scripts/audit-player-type.mjs"
+      ],
+      "protected_tests": [
+        "tests/worker-acceptance.test.mjs"
+      ],
+      "instruction": "Extend auditPlayerType to fail on persona.answers lengths other than 50 and on answer letters not present in the matching question. Existing personas use A/B/C etc by ordered option position. Keep checked-in fixtures/scoring/thresholds/SQL untouched and keep normal report CONDITIONAL PASS with semantic UNKNOWN. Do not mutate input."
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+[
+  {
+    "id": "issue22-host-a",
+    "lane": "A",
+    "base_sha": "56f8a36f4c894b96c2eb2c4375263ccdaf0c8a00",
+    "executor": "host_session",
+    "host_agent_id": "/root/host_a",
+    "real_ai_implementation": true,
+    "production": false,
+    "receipt_source": "trusted_host_coordinator",
+    "daemon_running": false,
+    "changed_paths": [
+      "src/interactiveRequests.ts"
+    ],
+    "tested_source_sha256": {
+      "src/interactiveRequests.ts": "5275ca9dba2791b67e23a94163976a0f50caab3b7ada6fa31ec2daf3655fcc6c"
+    },
+    "tests": [
+      {
+        "command": [
+          "node",
+          "--test",
+          "tests/worker-acceptance.test.mjs"
+        ],
+        "exit_code": 0,
+        "test_count": 1,
+        "output_sha256": "f3f57838b9819fcdd56619951b67e2b962c84064c82956841b61bfdecf30f970"
+      }
+    ],
+    "commit": "9bf10fc8de11fd6644876c50439b3e5fc1ffa24d",
+    "status": "implemented_local",
+    "publication": "not_attempted"
+  },
+  {
+    "id": "issue22-host-b",
+    "lane": "B",
+    "base_sha": "77b41f7f1f655c5b3367ab595022e970ef37fc61",
+    "executor": "host_session",
+    "host_agent_id": "/root/lane_b",
+    "real_ai_implementation": true,
+    "production": false,
+    "receipt_source": "trusted_host_coordinator",
+    "daemon_running": false,
+    "changed_paths": [
+      "src/tdaQuizData.ts"
+    ],
+    "tested_source_sha256": {
+      "src/tdaQuizData.ts": "b5d950a4ec545d9042c17bfe654e7f4132e8b305de0811a1bbfcaabcc538bb8f"
+    },
+    "tests": [
+      {
+        "command": [
+          "node",
+          "--test",
+          "tests/worker-acceptance.test.mjs"
+        ],
+        "exit_code": 0,
+        "test_count": 1,
+        "output_sha256": "96713e3c337059c17f358f2cbac9d08c0b8451480f211288d959bcbac3416ffe"
+      }
+    ],
+    "commit": "a36c7853ca745b40d9607d096b8a2f72c5f5712d",
+    "status": "implemented_local",
+    "publication": "not_attempted"
+  },
+  {
+    "id": "issue22-host-c",
+    "lane": "C",
+    "base_sha": "44d46db7989a02ce28dba58bea6f30172c525dfc",
+    "executor": "host_session",
+    "host_agent_id": "/root/lane_c",
+    "real_ai_implementation": true,
+    "production": false,
+    "receipt_source": "trusted_host_coordinator",
+    "daemon_running": false,
+    "changed_paths": [
+      "gto/hand169.py"
+    ],
+    "tested_source_sha256": {
+      "gto/hand169.py": "71214b384391adb4ab94aa0c970e356396a7ebedb86ce19cb4dc235255d5209e"
+    },
+    "tests": [
+      {
+        "command": [
+          "python",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests/worker_acceptance",
+          "-v"
+        ],
+        "exit_code": 0,
+        "test_count": 2,
+        "output_sha256": "e29f2fa5090a96ec9c9ae2f191b4095bb4fc31f5b3bb2462a4960ec8e5e9d269"
+      }
+    ],
+    "commit": "89fd492422497714d1665a9523e97ad4ba3ebee2",
+    "status": "implemented_local",
+    "publication": "not_attempted"
+  },
+  {
+    "id": "issue22-host-d",
+    "lane": "D",
+    "base_sha": "a7895875ba0c8de10c30823ea22ce4cb5f5351a1",
+    "executor": "host_session",
+    "host_agent_id": "/root/lane_d",
+    "real_ai_implementation": true,
+    "production": false,
+    "receipt_source": "trusted_host_coordinator",
+    "daemon_running": false,
+    "changed_paths": [
+      "scripts/audit-player-type.mjs"
+    ],
+    "tested_source_sha256": {
+      "scripts/audit-player-type.mjs": "17a43309c8f184dce6d39c4ade396fd37e86d9b31573b6b4d8cc2bc155ea3307"
+    },
+    "tests": [
+      {
+        "command": [
+          "node",
+          "--test",
+          "tests/worker-acceptance.test.mjs"
+        ],
+        "exit_code": 0,
+        "test_count": 1,
+        "output_sha256": "4a35e83d8fef51e990fd77422636a1f1e6c96f60332b9fe469932c4e00cc0b25"
+      }
+    ],
+    "commit": "6e72672fe1b9e51feb6c5b398dd9d757da83e110",
+    "status": "implemented_local",
+    "publication": "not_attempted"
+  }
+]

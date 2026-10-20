@@ -1,0 +1,30 @@
+name: Code worker safety and fixture rehearsal
+on:
+  pull_request:
+    branches: [main, codex/continuous-queue-controls-20261020]
+    paths:
+      - 'scripts/code_worker.py'
+      - 'tests/automation/**'
+      - '.github/workflows/code-worker-check.yml'
+      - 'docs/workers/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: worker-safety-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+jobs:
+  safety:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Existing validation-only queue regression
+        run: python -B tests/automation/test_development_queue.py
+      - name: Development worker leases, tamper guards and four-lane fixture rehearsal
+        run: python -B tests/automation/test_code_worker.py
