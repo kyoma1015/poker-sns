@@ -1,0 +1,6 @@
+{
+  "defect": "Empty persona answers are not validated",
+  "actualStatus": "CONDITIONAL PASS",
+  "errors": [],
+  "personaAnswers": []
+}
