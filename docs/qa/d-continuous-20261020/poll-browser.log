@@ -1,0 +1,7 @@
+4:55:32 AM [vite] (client) Re-optimizing dependencies because vite config has changed
+PASS home composer has only poll creation and submits named poll
+PASS bottom-nav compose event opens poll-only composer and submits anonymous poll
+PASS anonymous card hides voter identities and voter-list actions
+PASS named card exposes named voter list as disclosed
+PASS historical question card stays unmounted with zero RPC writes
+{"verdict":"PASS","tests":5,"results":["home composer has only poll creation and submits named poll","bottom-nav compose event opens poll-only composer and submits anonymous poll","anonymous card hides voter identities and voter-list actions","named card exposes named voter list as disclosed","historical question card stays unmounted with zero RPC writes"],"browser":"154.0.8037.57","transport":"in-memory mock; external requests blocked; no DB"}
