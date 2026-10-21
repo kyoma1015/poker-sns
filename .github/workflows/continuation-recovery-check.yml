@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'scripts/continuation_recovery.py'
+      - 'scripts/pr_overlap.py'
       - 'tests/worker_acceptance/**'
       - 'docs/workers/CONTINUATION_RECOVERY.md'
       - '.github/workflows/continuation-recovery-check.yml'
