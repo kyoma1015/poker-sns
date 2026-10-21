@@ -108,7 +108,7 @@ test('well-typed optional text and collections retain normal rendering',()=>with
       title_en:'Synthetic official title',body_en:'Synthetic official body'},
   ]);await tick(p)
   assert.deepEqual(await titles(p),['synthetic valid details'])
-  for(const label of ['synthetic summary','synthetic example','synthetic caution'])
+  for(const label of ['synthetic explanation','synthetic example','synthetic caution'])
     assert.match(await p.locator('body').innerText(),new RegExp(label))
   await p.locator('.tda-official-toggle').click()
   assert.match(await p.locator('body').innerText(),/Synthetic official body/)

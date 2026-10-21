@@ -18,3 +18,9 @@ six malformed display-field cases and one rich valid rendering/English expansion
 control. Saved-answer14 remain protected and unchanged. Root owns locked parent
 node_modules and temporary browser/Vite caches. Tests never contact Supabase.
 Official350 accuracy and real authentication/DB integration remain unverified.
+
+During input preparation, the rich control initially expected summary text even
+when explanation is present. The existing UI intentionally displays explanation
+in that case. Root corrected this assertion before candidate/hash registration;
+the malformed-field checks and source bytes were not changed. Preserve the first
+baseline as historical preparation evidence, then pin the corrected input.
