@@ -1,0 +1,76 @@
+{
+  "observed_utc": "2026-10-21T10:13Z",
+  "saved_one_time_prompt_received_in_active_chat": true,
+  "provider_last_run_time": "2026-10-21T10:12:35.957224+00:00",
+  "provider_run_id": null,
+  "provider_run_details_last_run": null,
+  "provider_delivery_status": "unknown",
+  "one_time_is_enabled_after_trigger": false,
+  "next_run_time_after_trigger": null,
+  "independent_cold_start_observed": false,
+  "current_host_session_continued": true,
+  "continuity_checks": [
+    {
+      "id": "issue22-host-a",
+      "spec_hash_matches": true,
+      "status": "implemented"
+    },
+    {
+      "id": "issue22-host-b",
+      "spec_hash_matches": true,
+      "status": "implemented"
+    },
+    {
+      "id": "issue22-host-c",
+      "spec_hash_matches": true,
+      "status": "implemented"
+    },
+    {
+      "id": "issue22-host-d",
+      "spec_hash_matches": true,
+      "status": "implemented"
+    }
+  ],
+  "active_leases": 0,
+  "fresh_complete_pr_snapshot": true,
+  "open_pr_count": 29,
+  "candidate_gates": [
+    {
+      "lane": "B",
+      "ready_count": 0,
+      "blocked": [
+        {
+          "id": "issue22-b-rule-search-latest-20261021",
+          "reason": "overlapping_open_pr"
+        }
+      ]
+    },
+    {
+      "lane": "C",
+      "ready_count": 0,
+      "blocked": [
+        {
+          "id": "issue22-c-checkpoint-budget-v1",
+          "reason": "overlapping_open_pr"
+        }
+      ]
+    },
+    {
+      "lane": "D",
+      "ready_count": 0,
+      "blocked": [
+        {
+          "id": "issue22-d-result-error-redaction-v1",
+          "reason": "overlapping_open_pr"
+        }
+      ]
+    }
+  ],
+  "source_worker_started": false,
+  "code_changed": false,
+  "commit_of_implementation_created": false,
+  "new_implementation_pr_created": false,
+  "reason": "all reviewed candidate inputs blocked by existing open PR path overlap; preserve guards",
+  "new_reservation_created_by_callback": false,
+  "normal_reservation_modified_by_callback": false
+}

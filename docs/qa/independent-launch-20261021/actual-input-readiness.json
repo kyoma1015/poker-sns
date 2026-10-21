@@ -1,0 +1,66 @@
+{
+  "fresh_complete_open_pr_count": 29,
+  "actual_shared_state_continuity_verified": true,
+  "inputs": [
+    {
+      "lane": "B",
+      "base_sha": "2de6670bac8afc0ce778b844a988366fca9bca8e",
+      "manifest_valid": true,
+      "all_protected_hashes_match": true,
+      "gate": {
+        "manifest": {
+          "version": 1,
+          "repository": "kyoma1015/poker-sns",
+          "tasks": []
+        },
+        "blocked": [
+          {
+            "id": "issue22-b-rule-search-latest-20261021",
+            "reason": "overlapping_open_pr"
+          }
+        ],
+        "daemon_running": false
+      }
+    },
+    {
+      "lane": "C",
+      "base_sha": "279d28e0859f7778491c8573bdd8f9015d1bb179",
+      "manifest_valid": true,
+      "all_protected_hashes_match": true,
+      "gate": {
+        "manifest": {
+          "version": 1,
+          "repository": "kyoma1015/poker-sns",
+          "tasks": []
+        },
+        "blocked": [
+          {
+            "id": "issue22-c-checkpoint-budget-v1",
+            "reason": "overlapping_open_pr"
+          }
+        ],
+        "daemon_running": false
+      }
+    },
+    {
+      "lane": "D",
+      "base_sha": "e4c0578dda6e4fa3833cd813b29ed78dc454c7ca",
+      "manifest_valid": true,
+      "all_protected_hashes_match": true,
+      "gate": {
+        "manifest": {
+          "version": 1,
+          "repository": "kyoma1015/poker-sns",
+          "tasks": []
+        },
+        "blocked": [
+          {
+            "id": "issue22-d-result-error-redaction-v1",
+            "reason": "overlapping_open_pr"
+          }
+        ],
+        "daemon_running": false
+      }
+    }
+  ]
+}

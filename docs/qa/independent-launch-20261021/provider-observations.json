@@ -1,0 +1,28 @@
+{
+  "observed_date_utc": "2026-10-21",
+  "existing_reservation": {
+    "enabled_before": true,
+    "reenable_update_succeeded": true,
+    "enabled_after": true,
+    "next_run_time_before": null,
+    "next_run_time_after": null,
+    "last_recorded_run_time": "2026-10-21T04:53:25.146611+00:00",
+    "run_history_available": false,
+    "immediate_run_after_reenable": {
+      "accepted": false,
+      "http_status": 404,
+      "reason": "Action not found prior to invocation"
+    },
+    "schedule_changed": false,
+    "null_cause": "UNKNOWN"
+  },
+  "one_time_probe": {
+    "create_succeeded": true,
+    "scheduled_for_utc": "2026-10-21T10:13:25Z",
+    "recurring": false,
+    "next_run_time_at_create": null,
+    "run_observed_at_create": false
+  },
+  "independent_code_completion_observed": false,
+  "paid_services_added": false
+}

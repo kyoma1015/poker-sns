@@ -1,0 +1,58 @@
+{
+  "task": {
+    "id": "issue22-c-checkpoint-budget-v1",
+    "lane": "C",
+    "base_sha": "279d28e0859f7778491c8573bdd8f9015d1bb179",
+    "base_branch": "codex/c-checkpoint-budget-input-20261021",
+    "branch": "codex/c-checkpoint-budget-fix-20261021",
+    "allowed_paths": [
+      "gto/native/checkpoints.py"
+    ],
+    "protected_tests": [
+      "tests/worker_acceptance/test_checkpoint_budget.py",
+      "tests/worker_acceptance/test_rank7.py"
+    ],
+    "test_profile": "python",
+    "instruction": "Require max_bytes to be a strictly positive exact int at verified_snapshot entry, before source.open or snapshot file open. Reject NaN/infinity/bools/floats/strings/None/nonpositive ints with ValueError. Preserve digest/header/contract/native validation, separate verified copied snapshot, size==limit success and size>limit failure. Do not modify original solvers, transferred source, checkpoint format, tests or historical checkpoint. Only change gto/native/checkpoints.py. Fixed acceptance11 (existing rank7 plus budget) fails15 subcases on pinned input. Low risk resource bound validation, stdlib only; source currently accepts NaN/+Inf and forwards native."
+  },
+  "purpose": "Stop invalid max_bytes values from disabling the read-only checkpoint size limit.",
+  "reviewed": true,
+  "risk": "low",
+  "dependencies": [
+    "issue22-c-rank7-v1"
+  ],
+  "execution_conditions": [
+    "Legitimate formal host runtime and existing shared state continuity",
+    "No overlapping active lease or unreconciled open PR",
+    "Stdlib Python3.12, synthetic owned files only"
+  ],
+  "completion_conditions": [
+    "Fixed acceptance11 PASS and existing GTO Python regressions PASS",
+    "Controller verified sourcehash and commit",
+    "Draft PR CI at published SHA"
+  ],
+  "references": [
+    "https://github.com/kyoma1015/poker-sns/issues/22",
+    "https://github.com/kyoma1015/poker-sns/pull/33",
+    "docs/workers/ISSUE22_RESTART_STATE_20261021.md",
+    "gto/native/checkpoints.py:16"
+  ],
+  "baseline": {
+    "base_sha": "279d28e0859f7778491c8573bdd8f9015d1bb179",
+    "test_profile": "python",
+    "test_count": 11,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/worker_acceptance/test_checkpoint_budget.py": "af8bfd8693d6f77c661a5a9b53843b7377423e9c6f0735e8fe2b26978bef7b4a",
+      "tests/worker_acceptance/test_rank7.py": "7146239998b7ce048bb576ad4bb174ccfa4d2c56df3ac91eb5cbe236c9536c07"
+    }
+  },
+  "inherited_prs": {
+    "20": "8faea88802d0d34ae3e0319399e7f55ba71a9fcd"
+  },
+  "known_overlap": [
+    "PR21 also changes checkpoints.py and must be reconciled by root; no ancestry bypass."
+  ],
+  "risk_note": "No native build or historical checkpoint required; only stdlib synthetic input guard."
+}

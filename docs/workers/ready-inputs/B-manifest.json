@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "repository": "kyoma1015/poker-sns",
+  "tasks": [
+    {
+      "id": "issue22-b-rule-search-latest-20261021",
+      "lane": "B",
+      "base_sha": "2de6670bac8afc0ce778b844a988366fca9bca8e",
+      "base_branch": "codex/issue22-b-search-input-20261021",
+      "branch": "codex/issue22-b-rule-search-latest-20261021",
+      "test_profile": "node",
+      "allowed_paths": [
+        "src/TDA.tsx",
+        "src/tdaSearchRequests.ts"
+      ],
+      "protected_tests": [
+        "tests/worker-acceptance.test.mjs",
+        "tests/browser/tda-search-supabase.ts",
+        "tests/browser/tda-entry.tsx"
+      ],
+      "instruction": "Fix witnessed stale TDA rule-search request handling. New query or clear must invalidate old responses immediately before debounce expires. Only newest request may update results/error/loading; clearing must remain empty and idle even after old completions. Catch thrown transport, show generic Japanese recoverable search error without raw backend detail, and permit subsequent query recovery. Keep rule/quiz content and DB unchanged. Protected browser acceptance covers five real TSX scenarios using synthetic deferred transport and must remain unchanged. Resolve pinned npm dependencies from trusted external parent node_modules, cache in owned OS temp, no installs or cache inside prepared source worktree. No commit/push by worker; controller validates/commits."
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+[
+  {
+    "lane": "B",
+    "overlap_review": [
+      {
+        "pr": 32,
+        "head_sha": "0639d36d720612466474e75fa8994f409d2d41de",
+        "shared_paths": [
+          "src/TDA.tsx"
+        ],
+        "ancestor": true,
+        "explicitly_pinned": true
+      },
+      {
+        "pr": 21,
+        "head_sha": "61a38c4bdcd90111180237ef4451198cdc00d31b",
+        "shared_paths": [
+          "src/TDA.tsx"
+        ],
+        "ancestor": "object_unavailable",
+        "explicitly_pinned": false
+      },
+      {
+        "pr": 19,
+        "head_sha": "3bee4eaace1f933cc4ad0721fcab956e98a61ec9",
+        "shared_paths": [
+          "src/TDA.tsx"
+        ],
+        "ancestor": false,
+        "explicitly_pinned": false
+      },
+      {
+        "pr": 14,
+        "head_sha": "4e16f7a7b567237d2735f1392906a6b1de2b7c23",
+        "shared_paths": [
+          "src/TDA.tsx"
+        ],
+        "ancestor": true,
+        "explicitly_pinned": false
+      },
+      {
+        "pr": 13,
+        "head_sha": "3ca87764e988cac588fef915d48823702a1a3326",
+        "shared_paths": [
+          "src/TDA.tsx"
+        ],
+        "ancestor": true,
+        "explicitly_pinned": false
+      },
+      {
+        "pr": 11,
+        "head_sha": "aed6425d5e70379139f3b35ae66cedffa3a55786",
+        "shared_paths": [
+          "src/TDA.tsx"
+        ],
+        "ancestor": false,
+        "explicitly_pinned": false
+      }
+    ]
+  },
+  {
+    "lane": "C",
+    "overlap_review": [
+      {
+        "pr": 21,
+        "head_sha": "61a38c4bdcd90111180237ef4451198cdc00d31b",
+        "shared_paths": [
+          "gto/native/checkpoints.py"
+        ],
+        "ancestor": "object_unavailable",
+        "explicitly_pinned": false
+      },
+      {
+        "pr": 20,
+        "head_sha": "8faea88802d0d34ae3e0319399e7f55ba71a9fcd",
+        "shared_paths": [
+          "gto/native/checkpoints.py"
+        ],
+        "ancestor": true,
+        "explicitly_pinned": true
+      }
+    ]
+  },
+  {
+    "lane": "D",
+    "overlap_review": [
+      {
+        "pr": 35,
+        "head_sha": "43e2bae1f5de33fc0d94a1d30b974492fbfbf238",
+        "shared_paths": [
+          "src/PlayerTypeDiagnosis.tsx"
+        ],
+        "ancestor": true,
+        "explicitly_pinned": false
+      },
+      {
+        "pr": 21,
+        "head_sha": "61a38c4bdcd90111180237ef4451198cdc00d31b",
+        "shared_paths": [
+          "src/PlayerTypeDiagnosis.tsx"
+        ],
+        "ancestor": "object_unavailable",
+        "explicitly_pinned": false
+      },
+      {
+        "pr": 18,
+        "head_sha": "9051047cfe30bb2a38bb80c8985c0e7ad16e470c",
+        "shared_paths": [
+          "src/PlayerTypeDiagnosis.tsx"
+        ],
+        "ancestor": true,
+        "explicitly_pinned": false
+      },
+      {
+        "pr": 13,
+        "head_sha": "3ca87764e988cac588fef915d48823702a1a3326",
+        "shared_paths": [
+          "src/PlayerTypeDiagnosis.tsx"
+        ],
+        "ancestor": true,
+        "explicitly_pinned": false
+      },
+      {
+        "pr": 10,
+        "head_sha": "1d8fdfe8e69b645796ff85ac18c8d2b4f026c69f",
+        "shared_paths": [
+          "src/PlayerTypeDiagnosis.tsx"
+        ],
+        "ancestor": false,
+        "explicitly_pinned": false
+      }
+    ]
+  }
+]
