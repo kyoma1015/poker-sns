@@ -28,3 +28,7 @@ Shared private state: /workspace/work/issue22-host-controller/leases.sqlite. Exi
 
 ## Remaining release/accuracy gates
 Poll31 isolatedDB56PASS remains synthetic schema/JWT, GoTrue absent: actualcatalog/policyACL/cronsemantics/realDBUI/CLIhistory-advisors/ownerSQLbackupfullACLrollback/deployrights pending; Vercel403 untouched. TDA350 official correctness, diagnosis36 semantic validity, originalG11/checkpointcompat/convergence remain unverified. Synthetic native parity is not a strategy proof.
+
+## Superseded PR state
+After PR41 passed fullCI, root closed PR19 unmerged to prevent duplicateintegration. All17files/uniqueQA/workflow were preserved in the reviewedmerge input and branch/head retained. Other existingPRs remainunchanged. Canonical B source is41, not a second independent merge of19. New review snapshots must reflect19closed; historical29PRaudit remains a datedrecord.
+Normal reservation prompt update succeeded without schedule/count changes. Before its next observedinstruction, pre-scheduled-implementation.json records targetCtask absent,activelease0 and originalsourcehash; root has not manually implemented the queued task.
