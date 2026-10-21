@@ -38,3 +38,20 @@ do $$begin
   raise exception 'Production parity overlay altered historical fixture';
  end if;
 end$$;
+
+-- Return-contract fixtures only: synthetic bodies, NOT copies of live behavior.
+-- These endpoints must exist before core so CREATE OR REPLACE is exercised
+-- against their observed signatures. No requests run until core replaces them.
+create or replace function public.submit_interactive_response_v2(
+ p_post_id uuid,p_option_index integer default null,p_answer text default null,p_is_anonymous boolean default false)
+returns void language plpgsql security invoker set search_path='' as $fixture_vote$
+begin
+ raise exception 'Synthetic contract fixture must be replaced before use';
+end $fixture_vote$;
+create or replace function public.get_interactive_results_v4(p_post_ids uuid[])
+returns table(post_id uuid,total_votes bigint,vote_counts jsonb,answers jsonb,my_option_index integer,has_responded boolean,voters jsonb)
+language plpgsql stable security invoker set search_path='' as $fixture_results$
+begin
+ raise exception 'Synthetic contract fixture must be replaced before use';
+end $fixture_results$;
+revoke all on function public.submit_interactive_response_v2(uuid,integer,text,boolean),public.get_interactive_results_v4(uuid[]) from public,anon,authenticated;
