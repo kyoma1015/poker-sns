@@ -11,3 +11,6 @@ Tests: node tests/interactive-requests.test.mjs (10), node tests/poll-only.test.
 No SQL executed or modified. Four SQL files are historical references and cannot reconstruct the complete v4 runtime schema.
 BLOCKED: no isolated DB; server-side three-actor anonymity, direct notification INSERT permissions, one-vote enforcement, deadlines and exactly-once close notification/cron need isolated DB integration tests before production release. Browser tests with an in-memory transport do not replace those tests.
 PR #4 is superseded by corrected PR #12 and the integrated Draft PR. Question-box QA is out of release scope.
+
+## Issue22 poll independent candidate: isolated acceptance complete 2026-10-21
+PR31, tested b90bd5f34c3791e4ad5da762c51f972a8d73710d, CI39572765844 SUCCESS: real official Supabase Postgres/PostgREST56PASS plus client30/build/lint/audit/mobile mock5. Three-actor anonymity/RLS, legacy RPC, notification privilege preservation/forgery, actual cron, concurrent retries, rollback and retained historical data passed. Exact JSON: docs/qa/issue22-polls-20261020/database-results-ci39572765844.json. Production BLOCKED: schema parity/SQL approval/migration history+advisors/full real-DB UI QA/deployment access. GoTrue absent; this is not production login testing. Question creation remains disabled; old data kept.

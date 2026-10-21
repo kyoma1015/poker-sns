@@ -1,0 +1,563 @@
+{
+  "configuration": "official Supabase Postgres 17.6.1.136 + PostgREST 14.18; GoTrue absent; locally signed JWTs; seeded synthetic app schema; NOT production parity",
+  "summary": {
+    "PASS": 56,
+    "FAIL": 0,
+    "BLOCKED": 0
+  },
+  "tests": [
+    {
+      "name": "official_supabase_auth_uid",
+      "expected": "Real Supabase auth.uid and pg_cron exist",
+      "actual": {
+        "postgres": "PostgreSQL 17.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.2.0, 64-bit",
+        "auth_uid": "auth.uid()",
+        "cron": "1.6.4",
+        "image": "supabase/postgres:17.6.1.136",
+        "GoTrue": "not started; signed local JWT fixtures"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "privileged_schema_boundary",
+      "expected": "Privileged implementations are private; system close not executable",
+      "actual": {
+        "public_rpcs_security_invoker": true,
+        "private_helper_rest_status": 404,
+        "authenticated_close_execute": false
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "create_2_choices",
+      "expected": "2–4 choices accepted",
+      "actual": {
+        "post_id": "6c118441-ee70-456f-bc10-509306faa6ee"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "create_3_choices",
+      "expected": "2–4 choices accepted",
+      "actual": {
+        "post_id": "a08055f9-9782-4e17-93da-a59a76fc4a6e"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "create_4_choices",
+      "expected": "2–4 choices accepted",
+      "actual": {
+        "post_id": "f5d01880-7157-4dd7-a252-5867b66757f1"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "reject_options_['one']",
+      "expected": "Invalid content rejected by direct RPC",
+      "actual": {
+        "status": 400,
+        "code": "22023"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "reject_options_['0', '1', '2', '3', '4']",
+      "expected": "Invalid content rejected by direct RPC",
+      "actual": {
+        "status": 400,
+        "code": "22023"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "reject_options_['A', ' a ']",
+      "expected": "Invalid content rejected by direct RPC",
+      "actual": {
+        "status": 400,
+        "code": "22023"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "reject_options_['', 'B']",
+      "expected": "Invalid content rejected by direct RPC",
+      "actual": {
+        "status": 400,
+        "code": "22023"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "reject_options_['xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "expected": "Invalid content rejected by direct RPC",
+      "actual": {
+        "status": 400,
+        "code": "22023"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "reject_options_[None, 'B']",
+      "expected": "Invalid content rejected by direct RPC",
+      "actual": {
+        "status": 400,
+        "code": "22023"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "legacy_question_rejected_create_interactive_post",
+      "expected": "Question mode rejected at every legacy RPC",
+      "actual": {
+        "status": 400,
+        "code": "22023"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "legacy_question_rejected_create_interactive_post_v2",
+      "expected": "Question mode rejected at every legacy RPC",
+      "actual": {
+        "status": 400,
+        "code": "22023"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "legacy_question_rejected_create_interactive_post_v3",
+      "expected": "Question mode rejected at every legacy RPC",
+      "actual": {
+        "status": 400,
+        "code": "22023"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "legacy_question_rejected_create_interactive_post_v4",
+      "expected": "Question mode rejected at every legacy RPC",
+      "actual": {
+        "status": 400,
+        "code": "22023"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "anonymous_user_create_denied",
+      "expected": "anon cannot create",
+      "actual": {
+        "status": 401,
+        "code": "42501"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "named_vote",
+      "expected": "Owner may vote on named poll",
+      "actual": {
+        "response": null
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "anonymous_vote",
+      "expected": "Anonymous vote accepted",
+      "actual": {
+        "response": null
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "named_voter_response",
+      "expected": "Named voter accepted",
+      "actual": {
+        "response": null
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "one_vote_only",
+      "expected": "Duplicate rejected with unique violation",
+      "actual": {
+        "status": 409,
+        "code": "23505"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "privacy_mode_tamper",
+      "expected": "Cannot change poll privacy at submission",
+      "actual": {
+        "status": 400,
+        "code": "22023"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "invalid_choice_rpc",
+      "expected": "Out of range option rejected",
+      "actual": {
+        "status": 400,
+        "code": "22023"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "anonymous_privacy_owner",
+      "expected": "No voter ID, profile or timestamp from RPC/direct REST",
+      "actual": {
+        "aggregate": {
+          "post_id": "9d6d5199-303d-4ef3-ab20-69d736e9396c",
+          "total_votes": 1,
+          "vote_counts": {
+            "0": 1
+          },
+          "answers": [],
+          "my_option_index": null,
+          "has_responded": false,
+          "voters": []
+        },
+        "direct_rows": []
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "named_display_owner",
+      "expected": "Named voters visible as disclosed",
+      "actual": {
+        "named_voters_visible": true,
+        "total_votes": 2
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "anonymous_privacy_voter",
+      "expected": "No voter ID, profile or timestamp from RPC/direct REST",
+      "actual": {
+        "aggregate": {
+          "post_id": "9d6d5199-303d-4ef3-ab20-69d736e9396c",
+          "total_votes": 1,
+          "vote_counts": {
+            "0": 1
+          },
+          "answers": [],
+          "my_option_index": 0,
+          "has_responded": true,
+          "voters": []
+        },
+        "direct_rows": []
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "named_display_voter",
+      "expected": "Named voters visible as disclosed",
+      "actual": {
+        "named_voters_visible": true,
+        "total_votes": 2
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "anonymous_privacy_observer",
+      "expected": "No voter ID, profile or timestamp from RPC/direct REST",
+      "actual": {
+        "aggregate": {
+          "post_id": "9d6d5199-303d-4ef3-ab20-69d736e9396c",
+          "total_votes": 1,
+          "vote_counts": {
+            "0": 1
+          },
+          "answers": [],
+          "my_option_index": null,
+          "has_responded": false,
+          "voters": []
+        },
+        "direct_rows": []
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "named_display_observer",
+      "expected": "Named voters visible as disclosed",
+      "actual": {
+        "named_voters_visible": true,
+        "total_votes": 2
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "legacy_results_safe",
+      "expected": "Old results RPC does not expose identifiers",
+      "actual": {
+        "response": [
+          {
+            "post_id": "9d6d5199-303d-4ef3-ab20-69d736e9396c",
+            "total_votes": 1,
+            "vote_counts": {
+              "0": 1
+            },
+            "answers": [],
+            "my_option_index": null,
+            "has_responded": false
+          }
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "legacy_create_conservative_privacy",
+      "expected": "Old no-mode caller defaults to anonymous",
+      "actual": {
+        "is_anonymous": true
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "legacy_vote_compatible",
+      "expected": "Old vote client uses stored poll mode",
+      "actual": {
+        "response": null
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "direct_vote_insert_denied",
+      "expected": "Raw INSERT never a voting API",
+      "actual": {
+        "status": 403,
+        "code": "42501"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "direct_question_table_insert_denied",
+      "expected": "Cannot bypass RPC to make question metadata",
+      "actual": {
+        "status": 403,
+        "code": "42501"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "close_rpc_denied_owner",
+      "expected": "Clients cannot execute system close",
+      "actual": {
+        "status": 403,
+        "code": "42501"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "close_rpc_denied_voter",
+      "expected": "Clients cannot execute system close",
+      "actual": {
+        "status": 403,
+        "code": "42501"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "close_rpc_denied_observer",
+      "expected": "Clients cannot execute system close",
+      "actual": {
+        "status": 403,
+        "code": "42501"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "close_rpc_denied_anon",
+      "expected": "Clients cannot execute system close",
+      "actual": {
+        "status": 401,
+        "code": "42501"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "legacy_notification_insert_grant_preserved",
+      "expected": "INSERT grant stays intact",
+      "actual": {
+        "has_insert": "t"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "foreign_notification_returning_denied",
+      "expected": "INSERT RETURNING cannot disclose another recipient row",
+      "actual": {
+        "status": 403,
+        "code": "42501"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "legacy_nonpoll_notification_still_works",
+      "expected": "Minimal INSERT retained; notification readable only by recipient",
+      "actual": {
+        "recipient_rows": 1,
+        "sender_rows": 0,
+        "returning_failure_left_no_partial_insert": true
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "forged_close_direct_denied",
+      "expected": "Restrictive RLS defeats permissive legacy INSERT policy",
+      "actual": {
+        "status": 403,
+        "code": "42501"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "forged_close_definer_denied",
+      "expected": "Trigger also blocks legacy SECURITY DEFINER bypass",
+      "actual": {
+        "status": 403,
+        "code": "42501"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "deadline_vote_rejected",
+      "expected": "No votes after deadline",
+      "actual": {
+        "status": 400,
+        "code": "22023"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "close_concurrency_and_retry",
+      "expected": "Exactly one close despite simultaneous workers/retry",
+      "actual": {
+        "two_worker_counts": [
+          "0",
+          "1"
+        ],
+        "notifications": 1,
+        "retry_notifications": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "close_history_privacy_owner",
+      "expected": "Owner-only notification, no anonymous voter ID",
+      "actual": {
+        "rows": 1,
+        "anonymous_voter_identity_absent": true
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "close_history_privacy_voter",
+      "expected": "Owner-only notification, no anonymous voter ID",
+      "actual": {
+        "rows": 0,
+        "anonymous_voter_identity_absent": true
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "close_history_privacy_observer",
+      "expected": "Owner-only notification, no anonymous voter ID",
+      "actual": {
+        "rows": 0,
+        "anonymous_voter_identity_absent": true
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "owner_can_mark_close_read",
+      "expected": "System notification immutability still allows read_at",
+      "actual": {
+        "marked_read": true
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "close_notification_rewrite_denied",
+      "expected": "Cannot rewrite a close notification identity",
+      "actual": {
+        "status": 403,
+        "code": "42501"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "close_atomic_failure_and_retry",
+      "expected": "Failed transaction retains no receipt/partial notification; retry succeeds",
+      "actual": {
+        "failure_raised": true,
+        "failed_receipt_rows": 0,
+        "after_retry_notifications": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "blocked_actor_vote_denied",
+      "expected": "Explicit block respected by definer RPC",
+      "actual": {
+        "status": 403,
+        "code": "42501"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "blocked_actor_results_denied",
+      "expected": "Blocked viewer cannot bypass UI via results RPC",
+      "actual": {
+        "status": 403,
+        "code": "42501"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "actual_pg_cron_close",
+      "expected": "Real scheduler executes and duplicate retry stays one",
+      "actual": {
+        "elapsed_seconds": 6.39,
+        "cron_succeeded_runs": 1,
+        "notifications_after_retry": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "disable_retains_all_posts",
+      "expected": "Feature-disable never deletes user data",
+      "actual": {
+        "before": "10",
+        "after": "10"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "historical_question_retained",
+      "expected": "Original question and answer still present internally",
+      "actual": {
+        "question_rows": "1",
+        "answer_rows": "1"
+      },
+      "status": "PASS"
+    },
+    {
+      "name": "disable_blocks_writes",
+      "expected": "Rollback disables feature APIs without resurrecting question boxes",
+      "actual": {
+        "status": 403,
+        "code": "42501"
+      },
+      "status": "PASS"
+    }
+  ],
+  "evidence": {
+    "run_url": "https://github.com/kyoma1015/poker-sns/actions/runs/39572765844",
+    "job_id": 119130768731,
+    "tested_commit": "b90bd5f34c3791e4ad5da762c51f972a8d73710d",
+    "capture": "Decoded GitHub job log database-results.json output; original synthetic DB destroyed by owned fixture cleanup",
+    "observed_utc": "2026-10-21T08:55:00Z"
+  }
+}
+

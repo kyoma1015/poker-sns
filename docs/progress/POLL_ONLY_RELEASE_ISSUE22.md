@@ -1,5 +1,5 @@
 # Issue 22 | Poll-only independent release candidate
-2026-10-20. Development: CONDITIONAL PASS. Production release: BLOCKED pending real isolated DB CI, production schema parity review and deployment access.
+2026-10-20. Development: CONDITIONAL PASS. Isolated DB acceptance: PASS56/FAIL0 (CI39572765844). Production release: BLOCKED pending production schema parity review, migration/advisor procedure and deployment access.
 
 ## Baseline and scope
 Main f8890b6ec11d30676c55dc7dc8801f1da8549d28. Select only poll UI/notifications/requests/tests from PR12/13 (66cb278a2e4d53c1afa0fa13bb880eadc2a032ec), and dependency security from independent PR15 (4931675e8763fc4dddb27c11236975a4a5604471). No wholesale PR13/21 merge, F03/D/TDA/GTO application change. Preserve historical question rows/code; question creation is forbidden at UI and every recognized legacy RPC.
@@ -38,3 +38,19 @@ CI39571429917 passed all client steps and official Auth table seeding, then corr
 CI39571853303 booted DB/REST and ran13 checks, but authenticated creation failed Login required. Official postgres image initial auth.uid reads only legacy individual GUCs; PostgREST14 uses request.jwt.claims JSON. Since GoTrue migrations are absent, the fixture now explicitly applies the exact official Supabase Auth 20220224000811 migration (upstream ce9a8eee0cc042be8c7a42981a7ddae631e41d91, blob4be423739aa3bf07bc3769aea5cc7751959ad53e), only rendering Namespace=auth. This is a provenance-pinned upstream Auth upgrade, not a custom identity stub or relaxed login check. It runs only inside the new isolated container as its legitimate administrator. Auth login/refresh and full GoTrue migrations remain outside the tested configuration.
 
 CI39572377050 ran55 DB checks:54PASS/1FAIL. Three-actor anonymous privacy, raw response RLS, named display, old RPC rejection, concurrent close+retry, atomic close rollback, actual pg_cron, historical retention and disable all passed. Remaining failure was the test requesting INSERT RETURNING of a notification owned by another user; recipient-only SELECT RLS correctly rejects that. Harness now models existing Supabase insert-without-select with return=minimal, verifies recipient-only read and no partial INSERT from failed RETURNING. Forged poll_closed test also uses minimal return so it proves write denial independent of SELECT. No RLS policy is weakened. Full rerun remains required.
+
+## Witnessed isolated DB completion (2026-10-21)
+CI [39572765844](https://github.com/kyoma1015/poker-sns/actions/runs/39572765844), job119130768731, tested commit b90bd5f34c3791e4ad5da762c51f972a8d73710d: every workflow step SUCCESS. npm ci, production audit, 30 client tests, build, lint, mock mobile browser5 and real DB acceptance56 PASS/0FAIL/0BLOCKED. The exact decoded database JSON is retained at docs/qa/issue22-polls-20261020/database-results-ci39572765844.json, independent of seven-day artifact retention.
+
+Actual real-DB coverage:
+- Named and anonymous votes; all three actors; raw rows hidden; no voter ID/profile/timestamp in anonymous aggregate or close notice; own choice only.
+- Invalid choice/settings/privacy overrides and every known legacy question-create RPC denied; legacy safe anonymous create/vote/results preserved.
+- Direct table mutation, system close RPC, forged poll_closed INSERT (minimal response) and legacy-definer bypass denied; original notification INSERT privilege remains true.
+- Existing non-poll minimal INSERT succeeds, sender cannot read recipient row; failed cross-recipient INSERT RETURNING leaves no partial insertion.
+- Closed votes rejected; two close workers plus retry yield exactly one notice; injected notification failure leaves zero receipt/notice and successful retry yields one.
+- Actual pg_cron executed one successful run in6.39seconds and retry remained exactly one notice.
+- Feature disable retains posts, historical question+answer and prevents writes. Earlier shell guard also proved unknown historical privacy aborts with no partial DDL; candidate forward is applied twice by harness.
+
+This is a real official Supabase Postgres17 + PostgREST14 REST/SQL test, with the pinned official Auth helper migration; it is not production-schema parity, GoTrue login/refresh, full browser-to-real-DB QA or approval to deploy. SQL remains a REVIEW CANDIDATE, not an applied production migration. Independent main-based Draft PR31 is ready for schema/security review; no wholesale PR13 integration is needed.
+
+Remaining release gates: authorized read-only production catalog comparison without user rows, owner-approved SQL application/disable/backup plan, proper Supabase CLI migration-history/advisor checks in a functioning local/staging runtime, integration QA against that schema and legitimate deployment access. Vercel403 remains blocked and must not be bypassed. No production connection or deployment occurred.
