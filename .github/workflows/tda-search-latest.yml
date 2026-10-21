@@ -1,0 +1,25 @@
+name: TDA latest search acceptance
+on:
+  pull_request:
+    branches: [codex/issue22-b-search-input-20261021]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: node --test tests/worker-acceptance.test.mjs
+        env:
+          CHROMIUM_PATH: /usr/bin/google-chrome
+      - run: npm run build
+      - run: npm run lint
