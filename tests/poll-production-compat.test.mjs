@@ -22,6 +22,11 @@ test('historical result RPC signatures are handled and legacy client permissions
   assert.match(forward, /revoke all on function public\.get_interactive_results_v2\(uuid\[\]\),public\.get_interactive_results_v3\(uuid\[\]\) from public,anon,authenticated/)
 })
 
+test('SQL wrappers contain no invalid bare dollar delimiters', () => {
+  assert.doesNotMatch(forward, /as \\$(?!\\$|[A-Za-z_][A-Za-z0-9_]*\\$)/)
+  assert.match(forward, /as \\$legacy_results\\$/)
+})
+
 test('new scheduler refuses existing production interactive cron', () => {
   assert.match(schedule, /jobname<>\s*'pokerid-poll-close-v1'/)
   assert.match(schedule, /command ~\* '\(poll\|interactive\)'/)
