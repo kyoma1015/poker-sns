@@ -39,6 +39,7 @@ trap cleanup EXIT
 # Only the reserved-role local password setup uses the official image admin.
 # Application fixtures and reviewed candidate continue to run as postgres.
 docker exec -i pokerid-poll-qa-db psql -U supabase_admin -d postgres -v ON_ERROR_STOP=1 < tests/polls/authenticator_fixture.sql
+docker exec -i pokerid-poll-qa-db psql -U supabase_admin -d postgres -v ON_ERROR_STOP=1 < tests/polls/official_auth_functions_fixture.sql
 for sql_file in tests/polls/bootstrap_fixture.sql tests/polls/legacy_schema_fixture.sql; do
   docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 < "$sql_file"
 done
