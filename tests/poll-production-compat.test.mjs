@@ -4,6 +4,8 @@ import { readFileSync } from 'node:fs'
 
 const forward = readFileSync(new URL('../sql/poll_only/forward_candidate.sql', import.meta.url), 'utf8')
 const schedule = readFileSync(new URL('../sql/poll_only/schedule_candidate.sql', import.meta.url), 'utf8')
+const rollback = readFileSync(new URL('../sql/poll_only/disable_candidate.sql', import.meta.url), 'utf8')
+const isolatedRunner = readFileSync(new URL('./polls/run_isolated.sh', import.meta.url), 'utf8')
 
 test('production five-argument v3 creation RPC is replaced without introducing six-argument overload', () => {
   const declaration = forward.match(/create or replace function public\.create_interactive_post_v3\(([^)]*)\)/i)
@@ -31,4 +33,19 @@ test('new scheduler refuses existing production interactive cron', () => {
   assert.match(schedule, /jobname<>\s*'pokerid-poll-close-v1'/)
   assert.match(schedule, /command ~\* '\(poll\|interactive\)'/)
   assert.match(schedule, /raise exception 'Existing interactive cron requires review/)
+})
+
+test('feature-disable rollback revokes every historical results RPC and preserves data', () => {
+  for (const name of ['get_interactive_results_v2', 'get_interactive_results_v3', 'get_interactive_results_v4']) {
+    assert.ok(rollback.includes("'" + name + "'"), name + ' missing from rollback')
+  }
+  assert.doesNotMatch(rollback, /drop\\s+(?:table|schema)\\b/i)
+  assert.match(isolatedRunner, /historical question/)
+  assert.match(isolatedRunner, /Rollback removed notification guard/)
+})
+
+test('isolated runner checks legacy cron collision and preserves both jobs on rejection', () => {
+  assert.match(isolatedRunner, /poker_id_poll_closed_notifications/)
+  assert.match(isolatedRunner, /cron-collision-guard\\.log/)
+  assert.match(isolatedRunner, /Scheduler collision guard changed existing jobs/)
 })
