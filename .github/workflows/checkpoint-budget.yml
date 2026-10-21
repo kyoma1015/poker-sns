@@ -1,7 +1,7 @@
 name: Checkpoint budget acceptance
 on:
   pull_request:
-    branches: [codex/c-checkpoint-budget-input-20261021]
+    branches: [codex/c-checkpoint-budget-input-20261021, codex/c-settlement-nonempty-input-20261021]
   workflow_dispatch:
 permissions:
   contents: read
