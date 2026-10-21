@@ -1,0 +1,39 @@
+name: pokerid-poll-isolated
+services:
+  db:
+    image: supabase/postgres:17.6.1.136
+    container_name: pokerid-poll-qa-db
+    labels:
+      pokerid.qa.run-id: ${POLL_QA_RUN_ID:?run via run_isolated.sh}
+    ports: ["127.0.0.1:55432:5432"]
+    environment:
+      POSTGRES_HOST: /var/run/postgresql
+      PGPORT: "5432"
+      POSTGRES_PORT: "5432"
+      PGDATABASE: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: poll-fixture-only-password
+      PGPASSWORD: poll-fixture-only-password
+      JWT_SECRET: poll-fixture-only-jwt-signing-key-at-least-32-bytes
+      JWT_EXP: "3600"
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "shared_preload_libraries=pg_stat_statements,pg_cron", "-c", "cron.database_name=postgres"]
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-h", "localhost"]
+      interval: 2s
+      timeout: 5s
+      retries: 60
+  rest:
+    image: postgrest/postgrest:v14.18
+    container_name: pokerid-poll-qa-rest
+    labels:
+      pokerid.qa.run-id: ${POLL_QA_RUN_ID:?run via run_isolated.sh}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports: ["127.0.0.1:55431:3000"]
+    environment:
+      PGRST_DB_URI: postgres://authenticator:poll-fixture-only-password@db:5432/postgres
+      PGRST_DB_SCHEMAS: public
+      PGRST_DB_ANON_ROLE: anon
+      PGRST_JWT_SECRET: poll-fixture-only-jwt-signing-key-at-least-32-bytes
+      PGRST_DB_USE_LEGACY_GUCS: "false"
