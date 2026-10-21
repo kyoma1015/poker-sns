@@ -18,12 +18,12 @@ begin
    and (p.proname || ':' || oidvectortypes(p.proargtypes)) not in
     ('create_interactive_post:text, text, text[], integer',
      'create_interactive_post_v2:text, text, text[], integer, boolean',
-     'create_interactive_post_v3:text, text, text[], integer, boolean, text',
+     'create_interactive_post_v3:text, text, text[], integer, boolean',
      'create_interactive_post_v4:text, text, text[], integer, boolean, text')) then
    raise exception 'Unknown legacy creation overload: catalog review required';
  end if;
  if exists(select 1 from pg_proc p join pg_namespace n on n.oid=p.pronamespace
- where n.nspname='public' and ((p.proname like 'get_interactive_results%' and p.proname not in ('get_interactive_results','get_interactive_results_v4'))
+ where n.nspname='public' and ((p.proname like 'get_interactive_results%' and p.proname not in ('get_interactive_results','get_interactive_results_v2','get_interactive_results_v3','get_interactive_results_v4'))
  or (p.proname like 'submit_interactive_response%' and p.proname not in ('submit_interactive_response','submit_interactive_response_v2')))) then
   raise exception 'Unknown historical read/write RPC: privacy catalog review required';
  end if;
@@ -106,8 +106,8 @@ create or replace function public.create_interactive_post(p_content text,p_kind 
 returns uuid language sql security invoker set search_path='' as $$select public.create_interactive_post_v4(p_content,p_kind,p_options,p_hours,true,null)$$;
 create or replace function public.create_interactive_post_v2(p_content text,p_kind text,p_options text[] default null,p_hours integer default 24,p_is_anonymous boolean default true)
 returns uuid language sql security invoker set search_path='' as $$select public.create_interactive_post_v4(p_content,p_kind,p_options,p_hours,p_is_anonymous,null)$$;
-create or replace function public.create_interactive_post_v3(p_content text,p_kind text,p_options text[] default null,p_hours integer default 24,p_is_anonymous boolean default true,p_question_policy text default null)
-returns uuid language sql security invoker set search_path='' as $$select public.create_interactive_post_v4(p_content,p_kind,p_options,p_hours,p_is_anonymous,p_question_policy)$$;
+create or replace function public.create_interactive_post_v3(p_content text,p_kind text,p_options text[] default null,p_hours integer default 24,p_is_anonymous boolean default true)
+returns uuid language sql security invoker set search_path='' as $v3_wrapper$select public.create_interactive_post_v4(p_content,p_kind,p_options,p_hours,p_is_anonymous,null)$v3_wrapper$;
 
 create or replace function poll_private.submit_vote(p_post_id uuid,p_option_index integer default null,p_answer text default null,p_is_anonymous boolean default true)
 returns void language plpgsql security definer set search_path='' as $$
@@ -163,7 +163,24 @@ revoke all on function poll_private.create_poll(text,text,text[],integer,boolean
 grant execute on function poll_private.create_poll(text,text,text[],integer,boolean,text),poll_private.submit_vote(uuid,integer,text,boolean),poll_private.legacy_vote(uuid,integer,text),poll_private.poll_results(uuid[]) to authenticated;
 create or replace function public.get_interactive_results(p_post_ids uuid[])
 returns table(post_id uuid,total_votes bigint,vote_counts jsonb,answers jsonb,my_option_index integer,has_responded boolean)
-language sql stable security invoker set search_path='' as $$ select r.post_id,r.total_votes,r.vote_counts,r.answers,r.my_option_index,r.has_responded from public.get_interactive_results_v4(p_post_ids) r $$;
+language sql stable security invoker set search_path='' as $legacy_results$ select r.post_id,r.total_votes,r.vote_counts,r.answers,r.my_option_index,r.has_responded from public.get_interactive_results_v4(p_post_ids) r $legacy_results$;
+-- Historical result RPCs remain in the live catalog. Preserve their return
+-- signatures but route both through the hardened poll-only v4 result path.
+-- Do not expose historical question answers or anonymous voter identities.
+create or replace function public.get_interactive_results_v2(p_post_ids uuid[])
+returns table(post_id uuid,total_votes bigint,vote_counts jsonb,answers jsonb,my_option_index integer,has_responded boolean)
+language sql stable security invoker set search_path='' as $legacy_results$
+ select r.post_id,r.total_votes,r.vote_counts,r.answers,r.my_option_index,r.has_responded
+ from public.get_interactive_results_v4(p_post_ids) r
+$legacy_results$;
+create or replace function public.get_interactive_results_v3(p_post_ids uuid[])
+returns table(post_id uuid,total_votes bigint,vote_counts jsonb,answers jsonb,my_option_index integer,has_responded boolean,voters jsonb)
+language sql stable security invoker set search_path='' as $legacy_results$
+ select * from public.get_interactive_results_v4(p_post_ids)
+$legacy_results$;
+-- Preserve the existing revoked client grants for legacy v2/v3.
+revoke all on function public.get_interactive_results_v2(uuid[]),public.get_interactive_results_v3(uuid[]) from public,anon,authenticated;
+
 
 -- A restrictive policy combines with every existing permissive INSERT policy.
 -- It does not revoke the legacy INSERT grant or block like/comment/follow.
