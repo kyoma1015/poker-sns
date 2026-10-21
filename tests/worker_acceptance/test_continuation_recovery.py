@@ -73,6 +73,15 @@ class RecoveryAcceptance(unittest.TestCase):
         self.assertFalse(self.store.reserve_run('run-28', now=200))
         self.assertEqual(self.store.public_checkpoint()['run_count'], 28)
 
+    def test_imported_remaining_schedule_cap_only_reduces_and_never_resets(self):
+        self.assertTrue(self.store.reserve_run('used-0',now=100))
+        self.store.restrict_remaining_runs(2)
+        self.assertTrue(self.store.reserve_run('used-1',now=101))
+        self.assertTrue(self.store.reserve_run('used-2',now=102))
+        self.assertFalse(self.store.reserve_run('used-3',now=103))
+        self.store.restrict_remaining_runs(28)
+        self.assertFalse(self.store.reserve_run('used-4',now=104))
+
     def test_candidates_promote_only_one_ready_task_per_lane(self):
         candidates = [self.candidate('task-'+lane, lane) for lane in worker.LANES] + [self.candidate('extra-a')]
         plan = self.store.plan(candidates, self.observe(), self.repo, now=100)

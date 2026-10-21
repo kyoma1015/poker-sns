@@ -1,0 +1,31 @@
+name: Continuation recovery safety (fixture only)
+on:
+  pull_request:
+    paths:
+      - 'scripts/continuation_recovery.py'
+      - 'tests/worker_acceptance/**'
+      - 'docs/workers/CONTINUATION_RECOVERY.md'
+      - '.github/workflows/continuation-recovery-check.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: recovery-check-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  recovery-safety:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Immutable recovery acceptance (isolated fixtures, no real AI claim)
+        run: python -B -m unittest discover -s tests/worker_acceptance -v
+      - name: Existing worker safety
+        run: python -B tests/automation/test_code_worker.py
+      - name: Existing queue safety
+        run: python -B tests/automation/test_development_queue.py
