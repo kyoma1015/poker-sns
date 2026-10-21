@@ -121,6 +121,9 @@ def run_fixture_suite(native_module=None):
     if fixture['schema'] != 'pokerid-synthetic-settlement-v1': raise ValueError('unsupported fixture schema')
     if not isinstance(fixture.get('cases'), list) or not fixture['cases']:
         raise ValueError('settlement fixtures require a nonempty list of cases')
+    for case in fixture['cases']:
+        if not isinstance(case.get('expected'), dict) or not case['expected']:
+            raise ValueError('settlement cases require nonempty expected results')
     ids = [case['id'] for case in fixture['cases']]
     if len(ids) != len(set(ids)): raise ValueError('duplicate fixture ids')
     with reference_module() as reference:
