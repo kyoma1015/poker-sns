@@ -53,3 +53,9 @@ Supabase security advisor reported warnings for exposed SECURITY DEFINER RPCs, i
 - Run [39617562199](https://github.com/kyoma1015/poker-sns/actions/runs/39617562199) tests the latest `0fffdac198f1fcd5280c71ee7fa7750107b27622`, including twice-run feature-disable rollback and preservation checks. Its job logs show artifact upload [12353377044](https://github.com/kyoma1015/poker-sns/actions/runs/39617562199/artifacts/12353377044), with final GitHub run conclusion still pending at audit time.
 - `disable_candidate.sql` now revokes `get_interactive_results_v2` and `get_interactive_results_v3` as well as other interactive RPCs. The rollback is deliberately fail-closed and retains data, receipts and restrictive RLS.
 - **NO-GO remains** for live cutover until existing production dispatcher is reviewed and single-cron cutover approved; isolated fixture success is not proof of full production parity.
+
+## Production-shaped legacy RPC fixture acceptance
+- GitHub Actions [39618410797](https://github.com/kyoma1015/poker-sns/actions/runs/39618410797) completed **successfully** on commit `7e3024c8d52c78cf983e9bf12e57be3dfd6191f2`.
+- Isolated fixture now creates pre-migration production-compatible `create_interactive_post_v2/v3` and `get_interactive_results_v2/v3` RPCs, including five-argument v3 creation and distinct six-/seven-column result shapes.
+- Disposable PostgreSQL asserts migration does not create a six-argument v3 overload and removes SECURITY DEFINER/client EXECUTE exposure from historical v2/v3 results. Existing cron collision and feature-disable tests also run in this workflow.
+- This confirms **fixture compatibility**, not exact live PostgreSQL function bodies, grants, table constraints, or deployed production behavior. Existing live `poker_id_poll_closed_notifications` dispatcher remains unreviewed; **production cutover stays NO-GO**.
