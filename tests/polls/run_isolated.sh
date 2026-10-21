@@ -130,9 +130,36 @@ begin
 end
 $guard_behavior$;
 SQL
+# Model a closed production poll already notified by the old dispatcher:
+# no poll_private receipt exists for these legacy notifications.
+docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 <<'SQL'
+insert into public.posts(id,user_id,content) values
+ ('20000000-0000-0000-0000-000000000098','10000000-0000-0000-0000-000000000001','previously closed poll');
+insert into public.post_interactive(post_id,kind,options,closes_at,is_anonymous) values
+ ('20000000-0000-0000-0000-000000000098','poll','["A","B"]',now()-interval '1 day',true);
+insert into public.notifications(id,user_id,actor_id,type,post_id) values
+ ('30000000-0000-0000-0000-000000000098','10000000-0000-0000-0000-000000000001','10000000-0000-0000-0000-000000000001','poll_closed','20000000-0000-0000-0000-000000000098');
+SQL
 for sql_file in sql/poll_only/forward_candidate.sql sql/poll_only/forward_candidate.sql sql/poll_only/schedule_candidate.sql; do
   docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 < "$sql_file"
 done
+# Legacy notices must not be resent by the new closer, even on retry.
+docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 <<'SQL'
+select poll_private.close_due_polls();
+select poll_private.close_due_polls();
+do $legacy_notice$
+declare v_notices int; v_receipts int;
+begin
+ select count(*) into v_notices from public.notifications
+  where type='poll_closed' and post_id='20000000-0000-0000-0000-000000000098';
+ select count(*) into v_receipts from poll_private.close_receipts
+  where post_id='20000000-0000-0000-0000-000000000098';
+ if v_notices<>1 or v_receipts<>0 then
+  raise exception 'Legacy notification replay: notifications %, receipts %',v_notices,v_receipts;
+ end if;
+end
+$legacy_notice$;
+SQL
 # Check that migration replaced the production legacy overloads in-place and
 # did not leave public legacy result endpoints callable by authenticated users.
 docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 <<'SQL'
