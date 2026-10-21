@@ -84,3 +84,16 @@ No original source, historical checkpoint, main, DB, production or billing chang
 Original G11 baseline/vendor/target20 stack/bet configurations remain unconfirmed.
 Next bounded descriptor: gto/tasks/rank7-next.json, independent hand-derived
 seven-card category/tiebreak validation. No continuous worker is implied by this PR.
+
+## Issue22 continuation — synthetic rank7 (2026-10-21)
+Input base d0a69f48bfbf6a69117f371018226690d5570d1e contains immutable acceptance
+that fails before source implementation. Added 16 hand-derived rank7 fixtures
+covering all nine categories, wheel, two trips, board ties and kicker precedence.
+A strict card boundary rejects duplicate/out-of-range/noninteger/bool cards before
+native execution; preserved kernel bytes are unchanged. Existing native bridge
+already exposes rank7, and the fixed settlement runner now includes its parity.
+Local fixed acceptance4 and complete Python GTO suite40 PASS. Fresh test-only bridge compiled using the prior pinned reconstructed headers;
+17 settlement plus16 rank7 native/reference expected-value cases PASS, logged at
+/workspace/work/issue22-rank7-native.log. No fresh three-solver rebuild in this subtask; no strategy/convergence/G11 claim.
+Historical G11 data/vendor/complete checkpoint and rule-policy edge remain blocked.
+No production, DB, source-original or checkpoint operation performed.
