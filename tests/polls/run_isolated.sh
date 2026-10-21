@@ -65,6 +65,7 @@ SQL
 # Recreate verified production schema/policy/dispatcher deltas in disposable DB.
 docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 < tests/polls/production_catalog_parity_fixture.sql
 # Confirm core can be installed over production-like existing privacy columns.
+docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 < tests/polls/live_rpc_contract_assertions.sql
 # Validate poll core separately, twice for idempotency, before installing any
 # notification worker or scheduler. The disposable DB retains legacy fixtures.
 for core_pass in 1 2; do
@@ -94,6 +95,8 @@ begin
 end
 $core_check$;
 SQL
+# Recheck unchanged RPC return contracts and legacy dispatcher after core.
+docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 < tests/polls/live_rpc_contract_assertions.sql
 # Install non-destructive legacy question guard twice to prove idempotency.
 for guard_pass in 1 2; do
   docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 < sql/poll_only/block_legacy_question_inserts_candidate.sql
