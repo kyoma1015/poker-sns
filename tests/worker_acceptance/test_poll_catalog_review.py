@@ -7,7 +7,13 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'scripts'))
-from poll_catalog_review import review_catalog
+try:
+    from poll_catalog_review import review_catalog
+except ModuleNotFoundError as missing:
+    if missing.name != 'poll_catalog_review':
+        raise
+    def review_catalog(_inventory):
+        raise AssertionError('offline catalog review implementation is missing')
 
 
 FIELDS = {
