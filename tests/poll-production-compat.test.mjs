@@ -39,13 +39,13 @@ test('feature-disable rollback revokes every historical results RPC and preserve
   for (const name of ['get_interactive_results_v2', 'get_interactive_results_v3', 'get_interactive_results_v4']) {
     assert.ok(rollback.includes("'" + name + "'"), name + ' missing from rollback')
   }
-  assert.doesNotMatch(rollback, /drop\\s+(?:table|schema)\\b/i)
+  assert.doesNotMatch(rollback, /drop\s+(?:table|schema)\b/i)
   assert.match(isolatedRunner, /historical question/)
   assert.match(isolatedRunner, /Rollback removed notification guard/)
 })
 
 test('isolated runner checks legacy cron collision and preserves both jobs on rejection', () => {
   assert.match(isolatedRunner, /poker_id_poll_closed_notifications/)
-  assert.match(isolatedRunner, /cron-collision-guard\\.log/)
+  assert.match(isolatedRunner, /cron-collision-guard\.log/)
   assert.match(isolatedRunner, /Scheduler collision guard changed existing jobs/)
 })
