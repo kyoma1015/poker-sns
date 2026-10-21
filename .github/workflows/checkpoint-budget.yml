@@ -1,0 +1,22 @@
+name: Checkpoint budget acceptance
+on:
+  pull_request:
+    branches: [codex/c-checkpoint-budget-input-20261021]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Immutable acceptance (owned synthetic files only)
+        run: python -B -m unittest discover -s tests/worker_acceptance -v
+      - name: Existing GTO Python regressions
+        run: python -B -m unittest discover -s gto/tests -v
