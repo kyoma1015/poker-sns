@@ -1,0 +1,22 @@
+[
+  {
+    "id": "issue22-overlap-proof-v1",
+    "reclaim_returned_none": true
+  },
+  {
+    "id": "issue22-a-poll-catalog-v1",
+    "reclaim_returned_none": true
+  },
+  {
+    "id": "issue22-b-rule-search-reconciled-v2",
+    "reclaim_returned_none": true
+  },
+  {
+    "id": "issue22-c-checkpoint-budget-reviewed-v2",
+    "reclaim_returned_none": true
+  },
+  {
+    "id": "issue22-d-result-error-reviewed-v2",
+    "reclaim_returned_none": true
+  }
+]
