@@ -206,7 +206,11 @@ language plpgsql security definer set search_path='' as $$
 declare r record; v_id uuid; v_claim uuid; v_count integer:=0;
 begin
  for r in select i.post_id,p.user_id from public.post_interactive i join public.posts p on p.id=i.post_id
-  where i.kind='poll' and i.closes_at<=clock_timestamp() and not exists(select 1 from poll_private.close_receipts c where c.post_id=i.post_id)
+  where i.kind='poll' and i.closes_at<=clock_timestamp()
+  and not exists(select 1 from poll_private.close_receipts c where c.post_id=i.post_id)
+  -- Previous production dispatcher wrote poll_closed without a close receipt.
+  -- Do not replay a notification already delivered by that legacy job.
+  and not exists(select 1 from public.notifications n where n.post_id=i.post_id and n.user_id=p.user_id and n.type='poll_closed')
   order by i.closes_at for update of i skip locked loop
    v_id:=gen_random_uuid();v_claim:=null;
    insert into poll_private.close_receipts(post_id,notification_id) values(r.post_id,v_id) on conflict do nothing returning post_id into v_claim;
