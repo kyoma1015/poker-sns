@@ -1,7 +1,7 @@
 name: GTO reconstructed native verification
 on:
   pull_request:
-    branches: [main, codex/integration-poll-only-20261020, codex/c-gto-active-milestones-20261020]
+    branches: [main, codex/integration-poll-only-20261020, codex/c-gto-active-milestones-20261020, codex/c-rank7-input-20261021]
     paths:
       - 'gto/**'
       - 'handoff/gto/**'
@@ -22,7 +22,9 @@ jobs:
         with:
           python-version: '3.12'
       - name: Pure Python validation
-        run: python -B -m unittest discover -s gto/tests -v
+        run: |
+          python -B -m unittest discover -s gto/tests -v
+          python -B -m unittest discover -s tests/worker_acceptance -v
       - name: Transferred source verification
         run: |
           python handoff/gto/verify_native_solvers.py
