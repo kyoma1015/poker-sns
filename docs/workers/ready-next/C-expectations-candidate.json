@@ -1,0 +1,79 @@
+{
+  "task": {
+    "id": "issue22-c-settlement-expectations-v1",
+    "lane": "C",
+    "base_sha": "e706d0de74697142b9be34d2be3306089110360c",
+    "base_branch": "codex/c-settlement-expected-input-20261022",
+    "branch": "codex/c-settlement-expected-fix-20261022",
+    "test_profile": "python",
+    "allowed_paths": [
+      "gto/native/settlement.py"
+    ],
+    "protected_tests": [
+      "tests/worker_acceptance/test_checkpoint_budget.py",
+      "tests/worker_acceptance/test_nonempty_settlement.py",
+      "tests/worker_acceptance/test_rank7.py",
+      "tests/worker_acceptance/test_settlement_expectations.py"
+    ],
+    "instruction": "Before reference_module/native execution, reject every settlement case whose expected is absent, not a dict or empty with ValueError. Existing hand-derived oracle contract requires explicit expected chip results, not only chip conservation. Validate all cases before loading reference, including a bad late case. Preserve 17 valid cases, rank7, checkpoint budget, wrong nonempty expectation comparison and all original fixture/reference/solver/checkpoint bytes. Only gto/native/settlement.py source. Fixed22 currently fails10; protected4 files unchanged. Python stdlib; no build/dependency install/DB/network."
+  },
+  "purpose": "Reject vacuous or malformed hand-derived settlement expectations before claiming validator PASS.",
+  "reviewed": true,
+  "risk": "low",
+  "dependencies": [
+    "issue22-c-nonempty-settlement-v1"
+  ],
+  "execution_conditions": [
+    "Same original durable state continuity and no active lane lease",
+    "Formal host collaboration only after prepare_host_session",
+    "Fresh complete open PR base/head/files and exact inheritance proof",
+    "Python3.12 stdlib and owned temporary synthetic fixture copies only"
+  ],
+  "completion_conditions": [
+    "Fixed22 acceptance PASS and protected4 hashes unchanged",
+    "Existing40 GTO regressions PASS",
+    "Host verified source/test/tamper/noop/commit then Draft PR and CI"
+  ],
+  "references": [
+    "https://github.com/kyoma1015/poker-sns/issues/22",
+    "https://github.com/kyoma1015/poker-sns/pull/57",
+    "gto/README.md: Both implementations must match explicit expected settlements",
+    "docs/qa/gto-settlement-20261020/acceptance.md",
+    "docs/qa/gto-settlement-expected-gate-20261022.md"
+  ],
+  "baseline": {
+    "base_sha": "e706d0de74697142b9be34d2be3306089110360c",
+    "test_profile": "python",
+    "test_count": 22,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/worker_acceptance/test_checkpoint_budget.py": "af8bfd8693d6f77c661a5a9b53843b7377423e9c6f0735e8fe2b26978bef7b4a",
+      "tests/worker_acceptance/test_nonempty_settlement.py": "02c4d041ca2253bd31694f4625ebdf7fd847341eb79b1576eeb2558c7c0f66d0",
+      "tests/worker_acceptance/test_rank7.py": "7146239998b7ce048bb576ad4bb174ccfa4d2c56df3ac91eb5cbe236c9536c07",
+      "tests/worker_acceptance/test_settlement_expectations.py": "cb24da18274a5cb0c30ba94202ed412c0ef85d865715d8b1a8ebe27e46cd8cb2"
+    }
+  },
+  "inherited_prs": {
+    "57": "c73b57d156e3c1aae24e10565787df4d73b1c3a8",
+    "33": "2620396d207970fae7470043a404d7b0582b8829",
+    "25": "6b9bf03f63f1c5f23dc4271ad8714f5f8bbea04e"
+  },
+  "overlap_reviews": {},
+  "observed_baseline_summary": {
+    "tests": 22,
+    "failures": 10,
+    "errors": 0,
+    "log": "issue22-c-expected-baseline.log"
+  },
+  "host_review": {
+    "source_was_not_implemented_by_root": true,
+    "input_diff_only": [
+      "tests/worker_acceptance/test_settlement_expectations.py",
+      "docs/qa/gto-settlement-expected-gate-20261022.md",
+      ".github/workflows/checkpoint-budget.yml"
+    ],
+    "prior_source_blob": "72f47276bbdf55478a7dc8f4d113e9ff838abfcd",
+    "input_source_blob": "72f47276bbdf55478a7dc8f4d113e9ff838abfcd"
+  }
+}

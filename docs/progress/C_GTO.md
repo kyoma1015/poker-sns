@@ -39,3 +39,7 @@ Safe now: source comparison, strict hash checks, temporary SQLite Python tests. 
 These C-lane blockers do not prevent A/B/D/SNS branch development.
 
 Existing Next backend unit suite: `python -B handoff/gto/g12_next/g12_p1_live_backend_tests.py` — 9 PASS using temporary SQLite only (docs/qa/integration-20261020/gto-next.log). Added to CI. Packed25 + Next9 = 34 Python backend tests; this is not native solver/G11-parity coverage.
+
+## Latest validator continuation — 2026-10-21 23:05 UTC
+Earlier handoff statements are dated history; latest reconstructed-native evidence remains in active GTO PRs/README, not original G11 recovery. PR61 b6456dce6e8f468448f2daedc8850dce6d7d76ff rejects absent/non-dict/empty expected objects for every case before reference/native loading. Before: all17 expected mappings erased still PASS17. Fixed22/oldGTO40PASS,CI39690270215SUCCESS. Sourceonlysettlement.py; originalfixtures/reference/solver/checkpoints unchanged.
+Next immutable input7fa1ffd5de8a7bb0479f4f5348445782326cde8e exposes bool/float chip expectation equality; fixed28 baseline30subtest failures,protected5. NOT implemented; no worker/lease. PR38 ready-next/C-chip-oracle-candidate.json requires a later scheduled invocation and fresh gates. Synthetic validation is not strategy precision/convergence or historical checkpoint compatibility.

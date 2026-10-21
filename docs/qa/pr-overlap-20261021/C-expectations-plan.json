@@ -1,0 +1,28 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-c-settlement-expectations-v1",
+        "lane": "C",
+        "base_sha": "e706d0de74697142b9be34d2be3306089110360c",
+        "base_branch": "codex/c-settlement-expected-input-20261022",
+        "branch": "codex/c-settlement-expected-fix-20261022",
+        "test_profile": "python",
+        "allowed_paths": [
+          "gto/native/settlement.py"
+        ],
+        "protected_tests": [
+          "tests/worker_acceptance/test_checkpoint_budget.py",
+          "tests/worker_acceptance/test_nonempty_settlement.py",
+          "tests/worker_acceptance/test_rank7.py",
+          "tests/worker_acceptance/test_settlement_expectations.py"
+        ],
+        "instruction": "Before reference_module/native execution, reject every settlement case whose expected is absent, not a dict or empty with ValueError. Existing hand-derived oracle contract requires explicit expected chip results, not only chip conservation. Validate all cases before loading reference, including a bad late case. Preserve 17 valid cases, rank7, checkpoint budget, wrong nonempty expectation comparison and all original fixture/reference/solver/checkpoint bytes. Only gto/native/settlement.py source. Fixed22 currently fails10; protected4 files unchanged. Python stdlib; no build/dependency install/DB/network."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

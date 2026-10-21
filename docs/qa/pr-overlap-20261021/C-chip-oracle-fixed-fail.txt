@@ -1,0 +1,695 @@
+test_exact_positive_limit_accepts_owned_snapshot (test_checkpoint_budget.CheckpointBudget.test_exact_positive_limit_accepts_owned_snapshot) ... ok
+test_limit_one_byte_smaller_rejects_before_native (test_checkpoint_budget.CheckpointBudget.test_limit_one_byte_smaller_rejects_before_native) ... ok
+test_nan_and_inf_never_reach_native (test_checkpoint_budget.CheckpointBudget.test_nan_and_inf_never_reach_native) ... ok
+test_native_gets_verified_copy_only_for_valid_limit (test_checkpoint_budget.CheckpointBudget.test_native_gets_verified_copy_only_for_valid_limit) ... ok
+test_nonfinite_limit_is_rejected_before_io (test_checkpoint_budget.CheckpointBudget.test_nonfinite_limit_is_rejected_before_io) ... ok
+test_noninteger_limit_is_rejected_before_io (test_checkpoint_budget.CheckpointBudget.test_noninteger_limit_is_rejected_before_io) ... ok
+test_nonpositive_integer_limit_is_rejected_before_io (test_checkpoint_budget.CheckpointBudget.test_nonpositive_integer_limit_is_rejected_before_io) ... ok
+test_boolean_zero_rake_cannot_masquerade_as_expected_integer (test_chip_oracle_types.ChipOracleTypes.test_boolean_zero_rake_cannot_masquerade_as_expected_integer) ... FAIL
+test_equal_float_rake_is_not_an_integer_chip_oracle (test_chip_oracle_types.ChipOracleTypes.test_equal_float_rake_is_not_an_integer_chip_oracle) ... FAIL
+test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) ... 
+  test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) (field='rake', invalid=False) ... FAIL
+  test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) (field='rake', invalid=0.0) ... FAIL
+  test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) (field='rake', invalid='0') ... FAIL
+  test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) (field='rake', invalid=None) ... FAIL
+  test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) (field='rake', invalid=[]) ... FAIL
+  test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) (field='refund', invalid=False) ... FAIL
+  test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) (field='refund', invalid=0.0) ... FAIL
+  test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) (field='refund', invalid='0') ... FAIL
+  test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) (field='refund', invalid=None) ... FAIL
+  test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) (field='refund', invalid=[]) ... FAIL
+test_valid_integer_and_negative_net_expectations_are_preserved (test_chip_oracle_types.ChipOracleTypes.test_valid_integer_and_negative_net_expectations_are_preserved) ... ok
+test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) ... 
+  test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='net', invalid=[False]) ... FAIL
+  test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='net', invalid=[0.0]) ... FAIL
+  test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='net', invalid=['0']) ... FAIL
+  test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='net', invalid=[None]) ... FAIL
+  test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='net', invalid='0') ... FAIL
+  test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='net', invalid={}) ... FAIL
+  test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_amounts', invalid=[False]) ... FAIL
+  test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_amounts', invalid=[0.0]) ... FAIL
+  test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_amounts', invalid=['0']) ... FAIL
+  test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_amounts', invalid=[None]) ... FAIL
+  test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_amounts', invalid='0') ... FAIL
+  test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_amounts', invalid={}) ... FAIL
+  test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_rakes', invalid=[False]) ... FAIL
+  test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_rakes', invalid=[0.0]) ... FAIL
+  test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_rakes', invalid=['0']) ... FAIL
+  test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_rakes', invalid=[None]) ... FAIL
+  test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_rakes', invalid='0') ... FAIL
+  test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_rakes', invalid={}) ... FAIL
+test_wrong_integer_rake_still_fails_actual_equality (test_chip_oracle_types.ChipOracleTypes.test_wrong_integer_rake_still_fails_actual_equality) ... ok
+test_empty_suite_cannot_report_pass (test_nonempty_settlement.NonemptySettlement.test_empty_suite_cannot_report_pass) ... ok
+test_invalid_case_collection_rejected_before_loading_reference (test_nonempty_settlement.NonemptySettlement.test_invalid_case_collection_rejected_before_loading_reference) ... ok
+test_valid_real_synthetic_suite_keeps_nonzero_case_count (test_nonempty_settlement.NonemptySettlement.test_valid_real_synthetic_suite_keeps_nonzero_case_count) ... ok
+test_board_playing_tie_and_pair_kickers (test_rank7.Rank7Acceptance.test_board_playing_tie_and_pair_kickers) ... ok
+test_hand_derived_nine_categories_and_wheels (test_rank7.Rank7Acceptance.test_hand_derived_nine_categories_and_wheels) ... ok
+test_invalid_expected_rank_is_not_a_pass (test_rank7.Rank7Acceptance.test_invalid_expected_rank_is_not_a_pass) ... ok
+test_rejects_bad_cards_before_native_call (test_rank7.Rank7Acceptance.test_rejects_bad_cards_before_native_call) ... ok
+test_all_oracles_erased_cannot_report_pass (test_settlement_expectations.SettlementExpectations.test_all_oracles_erased_cannot_report_pass) ... ok
+test_first_empty_oracle_is_rejected_before_reference (test_settlement_expectations.SettlementExpectations.test_first_empty_oracle_is_rejected_before_reference) ... ok
+test_late_empty_oracle_is_rejected_before_any_case_runs (test_settlement_expectations.SettlementExpectations.test_late_empty_oracle_is_rejected_before_any_case_runs) ... ok
+test_missing_oracle_is_rejected_before_reference (test_settlement_expectations.SettlementExpectations.test_missing_oracle_is_rejected_before_reference) ... ok
+test_non_mapping_oracles_are_rejected_before_reference (test_settlement_expectations.SettlementExpectations.test_non_mapping_oracles_are_rejected_before_reference) ... ok
+test_null_oracle_is_rejected_before_reference (test_settlement_expectations.SettlementExpectations.test_null_oracle_is_rejected_before_reference) ... ok
+test_valid_seventeen_case_suite_is_preserved (test_settlement_expectations.SettlementExpectations.test_valid_seventeen_case_suite_is_preserved) ... ok
+test_wrong_nonempty_oracle_still_fails_comparison (test_settlement_expectations.SettlementExpectations.test_wrong_nonempty_oracle_still_fails_comparison) ... ok
+
+======================================================================
+FAIL: test_boolean_zero_rake_cannot_masquerade_as_expected_integer (test_chip_oracle_types.ChipOracleTypes.test_boolean_zero_rake_cannot_masquerade_as_expected_integer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 36, in test_boolean_zero_rake_cannot_masquerade_as_expected_integer
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_equal_float_rake_is_not_an_integer_chip_oracle (test_chip_oracle_types.ChipOracleTypes.test_equal_float_rake_is_not_an_integer_chip_oracle)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 43, in test_equal_float_rake_is_not_an_integer_chip_oracle
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) (field='rake', invalid=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 52, in test_scalar_chip_fields_are_checked_before_reference
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275279068384'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f94622b0a80>)].
+
+======================================================================
+FAIL: test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) (field='rake', invalid=0.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 52, in test_scalar_chip_fields_are_checked_before_reference
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275281997424'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f94622f6200>)].
+
+======================================================================
+FAIL: test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) (field='rake', invalid='0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 52, in test_scalar_chip_fields_are_checked_before_reference
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275279063104'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f94621980c0>)].
+
+======================================================================
+FAIL: test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) (field='rake', invalid=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 52, in test_scalar_chip_fields_are_checked_before_reference
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275277805376'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f94621a7880>)].
+
+======================================================================
+FAIL: test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) (field='rake', invalid=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 52, in test_scalar_chip_fields_are_checked_before_reference
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275278029712'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f94621db100>)].
+
+======================================================================
+FAIL: test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) (field='refund', invalid=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 52, in test_scalar_chip_fields_are_checked_before_reference
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275276189568'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f94621dab80>)].
+
+======================================================================
+FAIL: test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) (field='refund', invalid=0.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 52, in test_scalar_chip_fields_are_checked_before_reference
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275277964944'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f9462720300>)].
+
+======================================================================
+FAIL: test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) (field='refund', invalid='0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 52, in test_scalar_chip_fields_are_checked_before_reference
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275281228336'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f9462149440>)].
+
+======================================================================
+FAIL: test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) (field='refund', invalid=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 52, in test_scalar_chip_fields_are_checked_before_reference
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275277319968'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f946201e940>)].
+
+======================================================================
+FAIL: test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) (field='refund', invalid=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 52, in test_scalar_chip_fields_are_checked_before_reference
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275281182064'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f9462106880>)].
+
+======================================================================
+FAIL: test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='net', invalid=[False])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 60, in test_vector_chip_fields_require_lists_of_exact_integers
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275281252752'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f9462014240>)].
+
+======================================================================
+FAIL: test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='net', invalid=[0.0])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 60, in test_vector_chip_fields_require_lists_of_exact_integers
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275277873712'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f94621a5ac0>)].
+
+======================================================================
+FAIL: test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='net', invalid=['0'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 60, in test_vector_chip_fields_require_lists_of_exact_integers
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275276517008'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f946212c9c0>)].
+
+======================================================================
+FAIL: test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='net', invalid=[None])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 60, in test_vector_chip_fields_require_lists_of_exact_integers
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275276608672'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f946212d880>)].
+
+======================================================================
+FAIL: test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='net', invalid='0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 60, in test_vector_chip_fields_require_lists_of_exact_integers
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275277970896'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f9462055ec0>)].
+
+======================================================================
+FAIL: test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='net', invalid={})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 60, in test_vector_chip_fields_require_lists_of_exact_integers
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275279065120'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f94621a6200>)].
+
+======================================================================
+FAIL: test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_amounts', invalid=[False])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 60, in test_vector_chip_fields_require_lists_of_exact_integers
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275276689680'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f94620a26c0>)].
+
+======================================================================
+FAIL: test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_amounts', invalid=[0.0])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 60, in test_vector_chip_fields_require_lists_of_exact_integers
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275276686416'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f9462148380>)].
+
+======================================================================
+FAIL: test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_amounts', invalid=['0'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 60, in test_vector_chip_fields_require_lists_of_exact_integers
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275282017552'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f9462015600>)].
+
+======================================================================
+FAIL: test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_amounts', invalid=[None])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 60, in test_vector_chip_fields_require_lists_of_exact_integers
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275277962544'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f9462044500>)].
+
+======================================================================
+FAIL: test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_amounts', invalid='0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 60, in test_vector_chip_fields_require_lists_of_exact_integers
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275276913872'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f94620da340>)].
+
+======================================================================
+FAIL: test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_amounts', invalid={})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 60, in test_vector_chip_fields_require_lists_of_exact_integers
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275276999104'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f94620d8840>)].
+
+======================================================================
+FAIL: test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_rakes', invalid=[False])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 60, in test_vector_chip_fields_require_lists_of_exact_integers
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275277956256'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f94621d9100>)].
+
+======================================================================
+FAIL: test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_rakes', invalid=[0.0])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 60, in test_vector_chip_fields_require_lists_of_exact_integers
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275279057680'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f94620c7c40>)].
+
+======================================================================
+FAIL: test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_rakes', invalid=['0'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 60, in test_vector_chip_fields_require_lists_of_exact_integers
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275275090736'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f9461f1a100>)].
+
+======================================================================
+FAIL: test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_rakes', invalid=[None])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 60, in test_vector_chip_fields_require_lists_of_exact_integers
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275275199552'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f9461f19300>)].
+
+======================================================================
+FAIL: test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_rakes', invalid='0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 60, in test_vector_chip_fields_require_lists_of_exact_integers
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275281221472'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f94622ba9c0>)].
+
+======================================================================
+FAIL: test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) (field='pot_rakes', invalid={})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 60, in test_vector_chip_fields_require_lists_of_exact_integers
+    self.assert_rejected_before_reference(fixture)
+  File "/workspace/work/issue22-c-chip-oracle-input/source/tests/worker_acceptance/test_chip_oracle_types.py", line 27, in assert_rejected_before_reference
+    reference.assert_not_called()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'reference_module' to not have been called. Called 1 times.
+Calls: [call(),
+ call().__enter__(),
+ call().__enter__().Rules(bb=10, bba=0, ante_order='ante_first', stack_basis='before_ante', dead_eligibility='all_live', rake_rate=Fraction(1, 10), rake_cap=None, no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True, collection='terminal'),
+ call().__enter__().Rules().manifest(),
+ call().__enter__().Rules().manifest().items(),
+ call().__enter__().Rules().manifest().items().__iter__(),
+ call().__enter__().Betting([100, 100], <MagicMock name='reference_module().__enter__().Rules()' id='140275277693584'>),
+ call().__enter__().Betting().legal(),
+ call().__enter__().Betting().legal().__contains__(0),
+ call().__exit__(<class 'ValueError'>, ValueError('hu_fold_no_flop_no_drop: fixture contains illegal action'), <traceback object at 0x7f9462056280>)].
+
+----------------------------------------------------------------------
+Ran 28 tests in 0.137s
+
+FAILED (failures=30)

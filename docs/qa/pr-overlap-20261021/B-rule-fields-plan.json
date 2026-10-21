@@ -1,0 +1,28 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-b-rule-fields-v1",
+        "lane": "B",
+        "base_sha": "90b6863e27daa5e749ea3c234253f14edd56b7ab",
+        "base_branch": "codex/b-rule-fields-input-20261022",
+        "branch": "codex/b-rule-fields-fix-20261022",
+        "test_profile": "node",
+        "allowed_paths": [
+          "src/TDA.tsx"
+        ],
+        "protected_tests": [
+          "tests/worker-acceptance.test.mjs",
+          "tests/browser/tda-search-supabase.ts",
+          "tests/browser/tda-entry.tsx",
+          "tests/tda-saved-answer.test.mjs"
+        ],
+        "instruction": "Extend existing latest search response gate before setResults to reject present non-null wrongly typed displayed fields. Text summary_ja/conclusion_ja/explanation_ja/title_en/body_en must be string; keywords_ja/examples_ja/cautions_ja arrays of strings; related_rules array of safe positive integers. Missing/null optional fields remain accepted for existing minimal rows. Keep number/title gates, latest request/clear/unmount/error/retry/scoring/history. Use same fixed localized recoverable error, no payload echo. Only src/TDA.tsx source. Fixedbrowser16 prior9+sixmalformed+richvalidcontrol; savedanswer14 protected. No tests/SQL/corpus/auth/deps edits; parent node_modules trusted, temp cache external. Child loopback EPERM known: do not repeat browser probe in child; root supported-network finish executes immutable browser acceptance. Source/diff and pure unit validation allowed; no npmci/build before rootfinish."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

@@ -1,0 +1,326 @@
+✔ latest request wins even when older search resolves last (2352.666759ms)
+✔ new input invalidates an old response before debounce expires (1977.893304ms)
+✔ clearing search prevents late result resurrection and ends loading (2089.184643ms)
+✔ thrown transport ends loading and permits next search recovery (2213.843125ms)
+✔ old failed request cannot end newer request loading or show stale error (2084.65393ms)
+✔ malformed search non-array payload fails closed and permits retry (2168.625776ms)
+✔ malformed search null rule row fails closed and permits retry (2041.506204ms)
+✔ malformed search invalid title value fails closed and permits retry (2012.309451ms)
+✔ malformed search invalid rule number fails closed and permits retry (1964.60566ms)
+✖ malformed displayed rule field summary object fails closed and permits retry (1510.357296ms)
+✖ malformed displayed rule field keyword string fails closed and permits retry (1510.878366ms)
+10:59:42 PM [vite] (client) [Unhandled error] Error: Objects are not valid as a React child (found: object with keys {internal}). If you meant to render a collection of children, use an array instead.
+ > throwOnInvalidObjectTypeImpl ../../issue22-b-reconciled/issue22-b-rule-search-reconciled-v2/node_modules/react-dom/cjs/react-dom-client.development.js:6461:12
+ > throwOnInvalidObjectType ../../issue22-b-reconciled/issue22-b-rule-search-reconciled-v2/node_modules/react-dom/cjs/react-dom-client.development.js:6475:10
+ > reconcileChildFibersImpl ../../issue22-b-reconciled/issue22-b-rule-search-reconciled-v2/node_modules/react-dom/cjs/react-dom-client.development.js:7416:10
+ > ../../issue22-b-reconciled/issue22-b-rule-search-reconciled-v2/node_modules/react-dom/cjs/react-dom-client.development.js:7456:32
+ > reconcileChildren ../../issue22-b-reconciled/issue22-b-rule-search-reconciled-v2/node_modules/react-dom/cjs/react-dom-client.development.js:10096:12
+ > beginWork ../../issue22-b-reconciled/issue22-b-rule-search-reconciled-v2/node_modules/react-dom/cjs/react-dom-client.development.js:12468:12
+ > runWithFiberInDEV ../../issue22-b-reconciled/issue22-b-rule-search-reconciled-v2/node_modules/react-dom/cjs/react-dom-client.development.js:1045:29
+ > performUnitOfWork ../../issue22-b-reconciled/issue22-b-rule-search-reconciled-v2/node_modules/react-dom/cjs/react-dom-client.development.js:19176:21
+ > workLoopSync ../../issue22-b-reconciled/issue22-b-rule-search-reconciled-v2/node_modules/react-dom/cjs/react-dom-client.development.js:19004:40
+ > renderRootSync ../../issue22-b-reconciled/issue22-b-rule-search-reconciled-v2/node_modules/react-dom/cjs/react-dom-client.development.js:18985:10
+
+10:59:42 PM [vite] (client) [console.warn] An error occurred in the <p> component.
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://react.dev/link/error-boundaries to learn more about error boundaries.
+
+✖ malformed displayed rule field example object element fails closed and permits retry (1501.562257ms)
+✖ malformed displayed rule field caution null element fails closed and permits retry (1532.615038ms)
+✖ malformed displayed rule field related rule string fails closed and permits retry (1609.918382ms)
+✖ malformed displayed rule field official body object fails closed and permits retry (1743.438058ms)
+✔ well-typed optional text and collections retain normal rendering (1929.860331ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 10
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30735.545003
+
+✖ failing tests:
+
+test at tests/worker-acceptance.test.mjs:88:4
+✖ malformed displayed rule field summary object fails closed and permits retry (1510.357296ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /検索.*(エラー|失敗|通信)/. Input:
+  
+  'POKER ID\n' +
+    'TDA\n' +
+    '\n' +
+    'Poker Tournament Directors Association\n' +
+    '2026 Rules Version 1.1\n' +
+    '\n' +
+    '公式ルール準拠\n' +
+    '⌕\n' +
+    'ルール検索\n' +
+    '✓\n' +
+    'TDAクイズ\n' +
+    '↻\n' +
+    '更新情報\n' +
+    'ルールを検索\n' +
+    '\n' +
+    '知りたい状況やキーワードを入力してください。\n' +
+    'Poker TDA公式ルールをもとに、実戦で分かりやすい形で表示します。\n' +
+    '\n' +
+    '⌕\n' +
+    '×\n' +
+    'よく検索されるルール\n' +
+    'ワンチップ\n' +
+    'ショーダウン順\n' +
+    '50%ルール\n' +
+    'アウトオブターン\n' +
+    'オールイン\n' +
+    'クロック\n' +
+    'ミスディール\n' +
+    '体臭\n' +
+    '1件のルールが見つかりました\n' +
+    'RULE 1\n' +
+    'VERIFIED\n' +
+    'synthetic bad row\n' +
+    '公式原文を見る\n' +
+    '▼'
+  
+      at file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:93:10
+      at async withPage (file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:29:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'POKER ID\nTDA\n\nPoker Tournament Directors Association\n2026 Rules Version 1.1\n\n公式ルール準拠\n⌕\nルール検索\n✓\nTDAクイズ\n↻\n更新情報\nルールを検索\n\n知りたい状況やキーワードを入力してください。\nPoker TDA公式ルールをもとに、実戦で分かりやすい形で表示します。\n\n⌕\n×\nよく検索されるルール\nワンチップ\nショーダウン順\n50%ルール\nアウトオブターン\nオールイン\nクロック\nミスディール\n体臭\n1件のルールが見つかりました\nRULE 1\nVERIFIED\nsynthetic bad row\n公式原文を見る\n▼',
+    expected: /検索.*(エラー|失敗|通信)/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/worker-acceptance.test.mjs:88:4
+✖ malformed displayed rule field keyword string fails closed and permits retry (1510.878366ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /検索.*(エラー|失敗|通信)/. Input:
+  
+  'POKER ID\n' +
+    'TDA\n' +
+    '\n' +
+    'Poker Tournament Directors Association\n' +
+    '2026 Rules Version 1.1\n' +
+    '\n' +
+    '公式ルール準拠\n' +
+    '⌕\n' +
+    'ルール検索\n' +
+    '✓\n' +
+    'TDAクイズ\n' +
+    '↻\n' +
+    '更新情報\n' +
+    'ルールを検索\n' +
+    '\n' +
+    '知りたい状況やキーワードを入力してください。\n' +
+    'Poker TDA公式ルールをもとに、実戦で分かりやすい形で表示します。\n' +
+    '\n' +
+    '⌕\n' +
+    '×\n' +
+    'よく検索されるルール\n' +
+    'ワンチップ\n' +
+    'ショーダウン順\n' +
+    '50%ルール\n' +
+    'アウトオブターン\n' +
+    'オールイン\n' +
+    'クロック\n' +
+    'ミスディール\n' +
+    '体臭\n' +
+    '1件のルールが見つかりました\n' +
+    'RULE 1\n' +
+    'VERIFIED\n' +
+    'synthetic bad row\n' +
+    '公式原文を見る\n' +
+    '▼'
+  
+      at file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:93:10
+      at async withPage (file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:29:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'POKER ID\nTDA\n\nPoker Tournament Directors Association\n2026 Rules Version 1.1\n\n公式ルール準拠\n⌕\nルール検索\n✓\nTDAクイズ\n↻\n更新情報\nルールを検索\n\n知りたい状況やキーワードを入力してください。\nPoker TDA公式ルールをもとに、実戦で分かりやすい形で表示します。\n\n⌕\n×\nよく検索されるルール\nワンチップ\nショーダウン順\n50%ルール\nアウトオブターン\nオールイン\nクロック\nミスディール\n体臭\n1件のルールが見つかりました\nRULE 1\nVERIFIED\nsynthetic bad row\n公式原文を見る\n▼',
+    expected: /検索.*(エラー|失敗|通信)/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/worker-acceptance.test.mjs:88:4
+✖ malformed displayed rule field example object element fails closed and permits retry (1501.562257ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /検索.*(エラー|失敗|通信)/. Input:
+  
+  ''
+  
+      at file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:93:10
+      at async withPage (file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:29:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '',
+    expected: /検索.*(エラー|失敗|通信)/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/worker-acceptance.test.mjs:88:4
+✖ malformed displayed rule field caution null element fails closed and permits retry (1532.615038ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /検索.*(エラー|失敗|通信)/. Input:
+  
+  'POKER ID\n' +
+    'TDA\n' +
+    '\n' +
+    'Poker Tournament Directors Association\n' +
+    '2026 Rules Version 1.1\n' +
+    '\n' +
+    '公式ルール準拠\n' +
+    '⌕\n' +
+    'ルール検索\n' +
+    '✓\n' +
+    'TDAクイズ\n' +
+    '↻\n' +
+    '更新情報\n' +
+    'ルールを検索\n' +
+    '\n' +
+    '知りたい状況やキーワードを入力してください。\n' +
+    'Poker TDA公式ルールをもとに、実戦で分かりやすい形で表示します。\n' +
+    '\n' +
+    '⌕\n' +
+    '×\n' +
+    'よく検索されるルール\n' +
+    'ワンチップ\n' +
+    'ショーダウン順\n' +
+    '50%ルール\n' +
+    'アウトオブターン\n' +
+    'オールイン\n' +
+    'クロック\n' +
+    'ミスディール\n' +
+    '体臭\n' +
+    '1件のルールが見つかりました\n' +
+    'RULE 1\n' +
+    'VERIFIED\n' +
+    'synthetic bad row\n' +
+    '注意点\n' +
+    '!\n' +
+    '\n' +
+    '公式原文を見る\n' +
+    '▼'
+  
+      at file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:93:10
+      at async withPage (file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:29:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'POKER ID\nTDA\n\nPoker Tournament Directors Association\n2026 Rules Version 1.1\n\n公式ルール準拠\n⌕\nルール検索\n✓\nTDAクイズ\n↻\n更新情報\nルールを検索\n\n知りたい状況やキーワードを入力してください。\nPoker TDA公式ルールをもとに、実戦で分かりやすい形で表示します。\n\n⌕\n×\nよく検索されるルール\nワンチップ\nショーダウン順\n50%ルール\nアウトオブターン\nオールイン\nクロック\nミスディール\n体臭\n1件のルールが見つかりました\nRULE 1\nVERIFIED\nsynthetic bad row\n注意点\n!\n\n公式原文を見る\n▼',
+    expected: /検索.*(エラー|失敗|通信)/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/worker-acceptance.test.mjs:88:4
+✖ malformed displayed rule field related rule string fails closed and permits retry (1609.918382ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /検索.*(エラー|失敗|通信)/. Input:
+  
+  'POKER ID\n' +
+    'TDA\n' +
+    '\n' +
+    'Poker Tournament Directors Association\n' +
+    '2026 Rules Version 1.1\n' +
+    '\n' +
+    '公式ルール準拠\n' +
+    '⌕\n' +
+    'ルール検索\n' +
+    '✓\n' +
+    'TDAクイズ\n' +
+    '↻\n' +
+    '更新情報\n' +
+    'ルールを検索\n' +
+    '\n' +
+    '知りたい状況やキーワードを入力してください。\n' +
+    'Poker TDA公式ルールをもとに、実戦で分かりやすい形で表示します。\n' +
+    '\n' +
+    '⌕\n' +
+    '×\n' +
+    'よく検索されるルール\n' +
+    'ワンチップ\n' +
+    'ショーダウン順\n' +
+    '50%ルール\n' +
+    'アウトオブターン\n' +
+    'オールイン\n' +
+    'クロック\n' +
+    'ミスディール\n' +
+    '体臭\n' +
+    '1件のルールが見つかりました\n' +
+    'RULE 1\n' +
+    'VERIFIED\n' +
+    'synthetic bad row\n' +
+    '関連ルール\n' +
+    'Rule 2\n' +
+    '公式原文を見る\n' +
+    '▼'
+  
+      at file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:93:10
+      at async withPage (file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:29:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'POKER ID\nTDA\n\nPoker Tournament Directors Association\n2026 Rules Version 1.1\n\n公式ルール準拠\n⌕\nルール検索\n✓\nTDAクイズ\n↻\n更新情報\nルールを検索\n\n知りたい状況やキーワードを入力してください。\nPoker TDA公式ルールをもとに、実戦で分かりやすい形で表示します。\n\n⌕\n×\nよく検索されるルール\nワンチップ\nショーダウン順\n50%ルール\nアウトオブターン\nオールイン\nクロック\nミスディール\n体臭\n1件のルールが見つかりました\nRULE 1\nVERIFIED\nsynthetic bad row\n関連ルール\nRule 2\n公式原文を見る\n▼',
+    expected: /検索.*(エラー|失敗|通信)/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/worker-acceptance.test.mjs:88:4
+✖ malformed displayed rule field official body object fails closed and permits retry (1743.438058ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /検索.*(エラー|失敗|通信)/. Input:
+  
+  'POKER ID\n' +
+    'TDA\n' +
+    '\n' +
+    'Poker Tournament Directors Association\n' +
+    '2026 Rules Version 1.1\n' +
+    '\n' +
+    '公式ルール準拠\n' +
+    '⌕\n' +
+    'ルール検索\n' +
+    '✓\n' +
+    'TDAクイズ\n' +
+    '↻\n' +
+    '更新情報\n' +
+    'ルールを検索\n' +
+    '\n' +
+    '知りたい状況やキーワードを入力してください。\n' +
+    'Poker TDA公式ルールをもとに、実戦で分かりやすい形で表示します。\n' +
+    '\n' +
+    '⌕\n' +
+    '×\n' +
+    'よく検索されるルール\n' +
+    'ワンチップ\n' +
+    'ショーダウン順\n' +
+    '50%ルール\n' +
+    'アウトオブターン\n' +
+    'オールイン\n' +
+    'クロック\n' +
+    'ミスディール\n' +
+    '体臭\n' +
+    '1件のルールが見つかりました\n' +
+    'RULE 1\n' +
+    'VERIFIED\n' +
+    'synthetic bad row\n' +
+    '公式原文を見る\n' +
+    '▼'
+  
+      at file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:93:10
+      at async withPage (file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:29:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'POKER ID\nTDA\n\nPoker Tournament Directors Association\n2026 Rules Version 1.1\n\n公式ルール準拠\n⌕\nルール検索\n✓\nTDAクイズ\n↻\n更新情報\nルールを検索\n\n知りたい状況やキーワードを入力してください。\nPoker TDA公式ルールをもとに、実戦で分かりやすい形で表示します。\n\n⌕\n×\nよく検索されるルール\nワンチップ\nショーダウン順\n50%ルール\nアウトオブターン\nオールイン\nクロック\nミスディール\n体臭\n1件のルールが見つかりました\nRULE 1\nVERIFIED\nsynthetic bad row\n公式原文を見る\n▼',
+    expected: /検索.*(エラー|失敗|通信)/,
+    operator: 'match',
+    diff: 'simple'
+  }

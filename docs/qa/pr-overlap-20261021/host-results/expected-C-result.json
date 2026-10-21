@@ -1,0 +1,37 @@
+{
+  "id": "issue22-c-settlement-expectations-v1",
+  "lane": "C",
+  "base_sha": "e706d0de74697142b9be34d2be3306089110360c",
+  "executor": "host_session",
+  "host_agent_id": "/root/scheduled_c_expectations",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "gto/native/settlement.py"
+  ],
+  "tested_source_sha256": {
+    "gto/native/settlement.py": "e9c9817d99d6593688c95a7e443e974c97071300c17de50f3845c2e46cd7562a"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 22,
+      "output_sha256": "f8e5aa6f491667091543b2f157b39b7e71343511bb2dc0c565a0bc399eaba77a"
+    }
+  ],
+  "commit": "b6456dce6e8f468448f2daedc8850dce6d7d76ff",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}
