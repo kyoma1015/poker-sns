@@ -1,7 +1,7 @@
 name: Codex lane checks
 on:
   pull_request:
-    branches: [main, codex/integration-poll-only-20261020, codex/b-tda-quality-continuous-20261020]
+    branches: [main, codex/integration-poll-only-20261020, codex/b-tda-quality-continuous-20261020, codex/issue22-b-answer-input-20261021]
   workflow_dispatch:
 permissions:
   contents: read
@@ -14,6 +14,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
