@@ -26,3 +26,11 @@ Supabase security advisor reported warnings for exposed SECURITY DEFINER RPCs, i
 
 ## Status
 **BLOCKED for production deployment.** This audit is a grounded catalog comparison and handoff; it is not a migration, QA pass, or authorization to deploy.
+
+## Additional live catalog verification (read-only)
+- Existing cron job: `poker_id_poll_closed_notifications`, schedule `* * * * *`, command `select public.dispatch_poll_closed_notifications();`. The candidate creates a **different** private close function and separate scheduler. **Do not enable the new schedule alongside the old one** until the old dispatcher semantics, receipts, deduplication, and migration plan are audited. The existing cron must not be silently dropped.
+- Notifications table has `event_key`, `id`, `user_id`, `actor_id`, `type`, `post_id`, `read_at`, `created_at`. Existing permissive policies allow authenticated INSERT, own SELECT and own read UPDATE; candidate's restrictive `poll_closed` guard must be verified against real client insert workflows.
+- `post_interactive` CHECK constraints permit both `poll` and historical `question` rows; this is necessary for historical preservation. Block **new question creation in RPC**, not by changing the existing CHECK to forbid historical question rows.
+- `post_interactive_responses` PK is `(post_id,user_id)` and FK references `auth.users`; candidate isolated fixture must faithfully model these constraints.
+- Existing `question_response_policy_valid` CHECK permits `anonymous_only`, `named_only`, `respondent_choice`; leave historical values intact.
+- A request to inspect the old dispatcher definition was blocked by the connected tool safety gate; no assumption about its behavior is made. **Cron compatibility remains BLOCKED.**
