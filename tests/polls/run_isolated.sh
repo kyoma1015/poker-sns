@@ -203,7 +203,9 @@ select cron.unschedule(jobid) from cron.job where jobname='poker_id_poll_closed_
 SQL
 "${qa_compose[@]}" up -d --wait rest
 python tests/polls/verify_isolated.py
-# Verify synthetic fixture backup can be restored separately without writing to production.\nbash tests/polls/verify_backup_restore.sh\n# Verify the feature-disable rollback against the same disposable DB, twice.
+# Verify synthetic fixture backup can be restored separately without writing to production.
+bash tests/polls/verify_backup_restore.sh
+# Verify the feature-disable rollback against the same disposable DB, twice.
 # This must preserve historical questions/answers and remove only our cron.
 for rollback_pass in 1 2; do
   docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 < sql/poll_only/disable_candidate.sql
