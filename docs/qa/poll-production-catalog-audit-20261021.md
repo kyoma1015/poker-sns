@@ -34,3 +34,9 @@ Supabase security advisor reported warnings for exposed SECURITY DEFINER RPCs, i
 - `post_interactive_responses` PK is `(post_id,user_id)` and FK references `auth.users`; candidate isolated fixture must faithfully model these constraints.
 - Existing `question_response_policy_valid` CHECK permits `anonymous_only`, `named_only`, `respondent_choice`; leave historical values intact.
 - A request to inspect the old dispatcher definition was blocked by the connected tool safety gate; no assumption about its behavior is made. **Cron compatibility remains BLOCKED.**
+
+## Implementation update — 2026-10-21
+- Candidate SQL on this branch now replaces `create_interactive_post_v3(text,text,text[],integer,boolean)` **using its exact production signature** (commit `a31175a45af1823f378b8b8929b36b5c6b204808`), forwarding to poll-only v4 with NULL question policy. This fixes the earlier six-argument overload hazard. This change is **not deployed**.
+- Candidate results v2/v3 are wrapped through poll-only v4, preserving historical return shapes and leaving their client EXECUTE grants revoked. Verify all consumers and question history requirements before approval.
+- The existing production cron `poker_id_poll_closed_notifications` still makes `sql/poll_only/schedule_candidate.sql` **fail closed**. Do not remove its conflict gate without verifying the legacy dispatcher and an owner-approved single-scheduler migration plan.
+- A full isolated database test of this modified branch has **not** been executed; previous 56 passing tests belong to a different commit and must not be presented as verification of these changes.
