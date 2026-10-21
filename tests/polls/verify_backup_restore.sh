@@ -23,7 +23,7 @@ docker exec -i "$container" pg_restore -U postgres -d "$scratch" \
   --no-owner --no-acl --exit-on-error --section=pre-data --section=data < "$temp_dump"
 fingerprint() {
   local db="$1"
-  docker exec "$container" psql -U postgres -d "$db" -At -v ON_ERROR_STOP=1 <<'SQL'
+  docker exec -i "$container" psql -U postgres -d "$db" -At -v ON_ERROR_STOP=1 <<'SQL'
 select 'post_interactive', count(*), md5(coalesce(string_agg(to_jsonb(t)::text,'|' order by to_jsonb(t)::text),''))
 from public.post_interactive t;
 select 'post_interactive_responses', count(*), md5(coalesce(string_agg(to_jsonb(t)::text,'|' order by to_jsonb(t)::text),''))
