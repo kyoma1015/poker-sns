@@ -1,0 +1,107 @@
+{
+  "task": {
+    "id": "issue22-b-search-data-v1",
+    "lane": "B",
+    "base_sha": "16b02a76165a07f3ec1c8a1389705cdb13b27739",
+    "base_branch": "codex/issue22-b-search-data-input-20261021",
+    "branch": "codex/issue22-b-search-data-fix-20261021",
+    "allowed_paths": [
+      "src/TDA.tsx"
+    ],
+    "protected_tests": [
+      "tests/worker-acceptance.test.mjs",
+      "tests/browser/tda-search-supabase.ts",
+      "tests/browser/tda-entry.tsx",
+      "tests/tda-saved-answer.test.mjs"
+    ],
+    "test_profile": "node",
+    "instruction": "Validate latest search_tda_rules payload before storing it in React state: preserve null/undefined as empty results, reject non-array data, null/nonobject rows, non-number/non-safe-positive-integer rule_number and non-string title_ja. Malformed latest payload must show fixed localized recoverable search error without render crash, raw payload echo or scoring/content/DB changes; next query must succeed. Preserve latest-request guards including immediate invalidation/clear/unmount and earlier saved-answer checks. Do not alter original rules corpus, SQL, auth or tests. Only src/TDA.tsx may change. Fixed browser9 baseline has old5PASS/new4FAIL, protected saved-answer14 remain PASS. Dependencies outside preparedworktree, cache in owned temp."
+  },
+  "purpose": "Prevent malformed read-only rule search payloads from crashing rendering or being displayed as verified rule results.",
+  "reviewed": true,
+  "risk": "low",
+  "dependencies": [
+    "issue22-b-rule-search-reconciled-v2"
+  ],
+  "execution_conditions": [
+    "Existing formal host and original durable sharedstate continuity",
+    "Fresh complete PR/head/file snapshot and strict overlap proofs",
+    "Trusted locked npm dependencies outside sourceworktree; Chromium with owned external cache"
+  ],
+  "completion_conditions": [
+    "Immutable browser9 PASS and saved-answer14 retained",
+    "All previous unit/build/lint/mobile mock QA pass",
+    "Controller sourcehash/test/commit proof then Draft PR CI"
+  ],
+  "references": [
+    "https://github.com/kyoma1015/poker-sns/issues/22",
+    "src/TDA.tsx searchRules setResults raw type assertion",
+    "commit f6ba3739ca4a61a9fd47accbcb2af7be3993694a"
+  ],
+  "baseline": {
+    "base_sha": "16b02a76165a07f3ec1c8a1389705cdb13b27739",
+    "test_profile": "node",
+    "test_count": 9,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/worker-acceptance.test.mjs": "d246a8dc31de7660b0d26b5a240003009fdbe1dc91b9ee9ec52d9b666f3546bb",
+      "tests/browser/tda-search-supabase.ts": "a26f1c3934df5858744fdb1cca9586fbf450367b4cd12bac9c0746716b8422e8",
+      "tests/browser/tda-entry.tsx": "6030c21b7b36b39dff78566a36cd3f748a91ca8aac315b4847d1077f7a7ae283",
+      "tests/tda-saved-answer.test.mjs": "d167b9f795506bcb56d2bff206575895efc47c5e272d0da7c9ffa30b485df0e1"
+    }
+  },
+  "inherited_prs": {
+    "32": "0639d36d720612466474e75fa8994f409d2d41de",
+    "19": "3bee4eaace1f933cc4ad0721fcab956e98a61ec9",
+    "14": "4e16f7a7b567237d2735f1392906a6b1de2b7c23",
+    "13": "3ca87764e988cac588fef915d48823702a1a3326"
+  },
+  "review_note": "Old search race5 cases pass; new top-level and row scalar malformed-data cases fail. Root must bind current exact openPR inheritance certificates before plan; no arbitrary file-overlap exemptions.",
+  "overlap_reviews": {
+    "41": {
+      "reviewed": true,
+      "reason": "Root audited the pinned PR implementation and independent failing acceptance. All shared file bytes are identical to the input or its verified ancestor; this task fixes a distinct reproduced defect. No pending implementation is ignored.",
+      "candidate_base_sha": "16b02a76165a07f3ec1c8a1389705cdb13b27739",
+      "head_sha": "c08654d487ea4f5a6dcda79a26e25ff693a1ba84",
+      "pr_base_sha": "7ee09c1b3bf71a75e3889951d7520bf3347ba375",
+      "files": {
+        "src/TDA.tsx": {
+          "candidate_blob": "9c44ef8b033680801a0813765016d187c99ab711",
+          "head_blob": "9c44ef8b033680801a0813765016d187c99ab711",
+          "mode": "equivalent_blob"
+        }
+      }
+    },
+    "21": {
+      "reviewed": true,
+      "reason": "Root audited the pinned PR implementation and independent failing acceptance. All shared file bytes are identical to the input or its verified ancestor; this task fixes a distinct reproduced defect. No pending implementation is ignored.",
+      "candidate_base_sha": "16b02a76165a07f3ec1c8a1389705cdb13b27739",
+      "head_sha": "61a38c4bdcd90111180237ef4451198cdc00d31b",
+      "pr_base_sha": "3ca87764e988cac588fef915d48823702a1a3326",
+      "files": {
+        "src/TDA.tsx": {
+          "candidate_blob": "9c44ef8b033680801a0813765016d187c99ab711",
+          "head_blob": "b590ceded8d51c4adba704da81804a5ffa39667d",
+          "mode": "ancestor_blob",
+          "witness_commit": "4e16f7a7b567237d2735f1392906a6b1de2b7c23"
+        }
+      }
+    },
+    "11": {
+      "reviewed": true,
+      "reason": "Root audited the pinned PR implementation and independent failing acceptance. All shared file bytes are identical to the input or its verified ancestor; this task fixes a distinct reproduced defect. No pending implementation is ignored.",
+      "candidate_base_sha": "16b02a76165a07f3ec1c8a1389705cdb13b27739",
+      "head_sha": "aed6425d5e70379139f3b35ae66cedffa3a55786",
+      "pr_base_sha": "f8890b6ec11d30676c55dc7dc8801f1da8549d28",
+      "files": {
+        "src/TDA.tsx": {
+          "candidate_blob": "9c44ef8b033680801a0813765016d187c99ab711",
+          "head_blob": "924827cd053df5f8a5e30bec90456b0d54a0af51",
+          "mode": "ancestor_blob",
+          "witness_commit": "efef38a32ed57ab67cee30a3a28377c34ec6c4dc"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "task": {
+    "id": "issue22-d-image-error-redaction-v1",
+    "lane": "D",
+    "base_sha": "3aa1a2ee02f442fd3983217e19d37607d7cb6a78",
+    "base_branch": "codex/issue22-d-image-error-input-20261021",
+    "branch": "codex/issue22-d-image-error-redaction-fix-20261021",
+    "instruction": "Fix remaining PNG export exception details rendered by saveShareImage catch. Use fixed Japanese image-save retry text without raw Error.message/String(exception). Preserve save/share generic errors, capture/isCurrent gate, PNG1080x1500 dimensions/filename, successful retry after renderer error, stale result isolation, scoring/50questions/36animals. Only source PlayerTypeDiagnosis.tsx; fixed acceptance6 cases unchanged. Trusted parent locked node dependencies and tmpcache outside source, no npmci/build before finish. No DB/SQL/production/checkpoint/paid operations.",
+    "allowed_paths": [
+      "src/PlayerTypeDiagnosis.tsx"
+    ],
+    "protected_tests": [
+      "tests/worker-acceptance.test.mjs",
+      "tests/browser/diagnosis-redaction-supabase.ts",
+      "tests/browser/diagnosis-supabase.ts",
+      "tests/browser/diagnosis-entry.tsx",
+      "tests/browser/diagnosis.mjs",
+      "tests/fixtures/player-type-v2.json"
+    ],
+    "test_profile": "node"
+  },
+  "purpose": "Redact remaining image-export exception details while preserving actual PNG retry output and stale-result isolation.",
+  "reviewed": true,
+  "risk": "low",
+  "dependencies": [
+    "issue22-d-result-error-reviewed-v2"
+  ],
+  "execution_conditions": [
+    "Existing durable shared state and formal host runtime",
+    "Fresh complete PR overlap proofs; new pending D PR may overlap and must be reviewed",
+    "Trusted parent npmci dependencies pinned to lockfile, Chromium and owned external temporary cache"
+  ],
+  "completion_conditions": [
+    "Fixed6 browser acceptance PASS; baseline5PASS1FAIL observed",
+    "Existing unit/build/lint/mobile regression PASS",
+    "Controller source/test hash verification, commit, DraftPR and published SHA CI"
+  ],
+  "references": [
+    "src/PlayerTypeDiagnosis.tsx:552",
+    "https://github.com/kyoma1015/poker-sns/issues/22",
+    "https://github.com/kyoma1015/poker-sns/pull/35"
+  ],
+  "baseline": {
+    "base_sha": "3aa1a2ee02f442fd3983217e19d37607d7cb6a78",
+    "test_profile": "node",
+    "test_count": 6,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/worker-acceptance.test.mjs": "67eac3c4eb36976cd84b338543f1f24b8750c6f1ac124d440f9c8a22eb72e9ba",
+      "tests/browser/diagnosis-redaction-supabase.ts": "5c4ab94a53145c4107c34ee6f673941af0fd78e9ceaa4c9dbb7a8729843f57ee",
+      "tests/browser/diagnosis-supabase.ts": "e8b65579b9bb87032f22d1e7be4e0ea58c39326aaca07ad0fe6d7c8cba2aef55",
+      "tests/browser/diagnosis-entry.tsx": "beaf70ec428da49b2e081c53609c976bfef525c9e4922779ef5554ee6a99d120",
+      "tests/browser/diagnosis.mjs": "ef724a9b863e02f0692c6bdaf43b41d47712ed9840d11fb0294b21f99f44b48d",
+      "tests/fixtures/player-type-v2.json": "ef15e04c485f090f72707656a9127c54a855c98e2453771ad86c68068cfe4d2c"
+    }
+  },
+  "inherited_prs": {
+    "40": "4dab60e1782ad8923320977488d6962efef7fc4b",
+    "35": "43e2bae1f5de33fc0d94a1d30b974492fbfbf238",
+    "18": "9051047cfe30bb2a38bb80c8985c0e7ad16e470c",
+    "13": "3ca87764e988cac588fef915d48823702a1a3326"
+  },
+  "note": "Input readiness only; source unchanged from controller4dab60e. No overlap bypass; root must pin current D successor head and older equivalence proofs.",
+  "overlap_reviews": {
+    "21": {
+      "reviewed": true,
+      "reason": "Root audited the pinned PR implementation and independent failing acceptance. All shared file bytes are identical to the input or its verified ancestor; this task fixes a distinct reproduced defect. No pending implementation is ignored.",
+      "candidate_base_sha": "3aa1a2ee02f442fd3983217e19d37607d7cb6a78",
+      "head_sha": "61a38c4bdcd90111180237ef4451198cdc00d31b",
+      "pr_base_sha": "3ca87764e988cac588fef915d48823702a1a3326",
+      "files": {
+        "src/PlayerTypeDiagnosis.tsx": {
+          "candidate_blob": "56c0cc32d349df26ba8fc744293e1f0b8d4845a2",
+          "head_blob": "342cb93bfb9fa46ad36c3501800defe078a72642",
+          "mode": "ancestor_blob",
+          "witness_commit": "9051047cfe30bb2a38bb80c8985c0e7ad16e470c"
+        }
+      }
+    },
+    "10": {
+      "reviewed": true,
+      "reason": "Root audited the pinned PR implementation and independent failing acceptance. All shared file bytes are identical to the input or its verified ancestor; this task fixes a distinct reproduced defect. No pending implementation is ignored.",
+      "candidate_base_sha": "3aa1a2ee02f442fd3983217e19d37607d7cb6a78",
+      "head_sha": "1d8fdfe8e69b645796ff85ac18c8d2b4f026c69f",
+      "pr_base_sha": "f8890b6ec11d30676c55dc7dc8801f1da8549d28",
+      "files": {
+        "src/PlayerTypeDiagnosis.tsx": {
+          "candidate_blob": "56c0cc32d349df26ba8fc744293e1f0b8d4845a2",
+          "head_blob": "f3fac5db5d20443cc16bd594a6db07c49a72cd9e",
+          "mode": "ancestor_blob",
+          "witness_commit": "4aed33e77d35912b39c4c0e55c642562b802f7d2"
+        }
+      }
+    }
+  }
+}

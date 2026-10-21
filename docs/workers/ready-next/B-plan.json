@@ -1,0 +1,28 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-b-search-data-v1",
+        "lane": "B",
+        "base_sha": "16b02a76165a07f3ec1c8a1389705cdb13b27739",
+        "base_branch": "codex/issue22-b-search-data-input-20261021",
+        "branch": "codex/issue22-b-search-data-fix-20261021",
+        "allowed_paths": [
+          "src/TDA.tsx"
+        ],
+        "protected_tests": [
+          "tests/worker-acceptance.test.mjs",
+          "tests/browser/tda-search-supabase.ts",
+          "tests/browser/tda-entry.tsx",
+          "tests/tda-saved-answer.test.mjs"
+        ],
+        "test_profile": "node",
+        "instruction": "Validate latest search_tda_rules payload before storing it in React state: preserve null/undefined as empty results, reject non-array data, null/nonobject rows, non-number/non-safe-positive-integer rule_number and non-string title_ja. Malformed latest payload must show fixed localized recoverable search error without render crash, raw payload echo or scoring/content/DB changes; next query must succeed. Preserve latest-request guards including immediate invalidation/clear/unmount and earlier saved-answer checks. Do not alter original rules corpus, SQL, auth or tests. Only src/TDA.tsx may change. Fixed browser9 baseline has old5PASS/new4FAIL, protected saved-answer14 remain PASS. Dependencies outside preparedworktree, cache in owned temp."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

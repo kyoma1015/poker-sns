@@ -1,0 +1,32 @@
+{
+  "id": "issue22-d-result-error-reviewed-v2",
+  "lane": "D",
+  "base_sha": "e4c0578dda6e4fa3833cd813b29ed78dc454c7ca",
+  "executor": "host_session",
+  "host_agent_id": "/root/d_error_impl",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "src/PlayerTypeDiagnosis.tsx"
+  ],
+  "tested_source_sha256": {
+    "src/PlayerTypeDiagnosis.tsx": "ce82aa4135691ba81780e11fce28491d8565af3efbfd0f1e5cfeb356d2d07547"
+  },
+  "tests": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/worker-acceptance.test.mjs"
+      ],
+      "exit_code": 0,
+      "test_count": 4,
+      "output_sha256": "2a40a9f75e40f56291672a2b236a6ff76aba93ed6f6f3b97befe3da2687397c6"
+    }
+  ],
+  "commit": "4dab60e1782ad8923320977488d6962efef7fc4b",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

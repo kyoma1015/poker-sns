@@ -1,0 +1,26 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-c-checkpoint-budget-reviewed-v2",
+        "lane": "C",
+        "base_sha": "279d28e0859f7778491c8573bdd8f9015d1bb179",
+        "base_branch": "codex/c-checkpoint-budget-input-20261021",
+        "branch": "codex/c-checkpoint-budget-reviewed-20261021",
+        "allowed_paths": [
+          "gto/native/checkpoints.py"
+        ],
+        "protected_tests": [
+          "tests/worker_acceptance/test_checkpoint_budget.py",
+          "tests/worker_acceptance/test_rank7.py"
+        ],
+        "test_profile": "python",
+        "instruction": "Require max_bytes to be a strictly positive exact int at verified_snapshot entry, before source.open or snapshot file open. Reject NaN/infinity/bools/floats/strings/None/nonpositive ints with ValueError. Preserve digest/header/contract/native validation, separate verified copied snapshot, size==limit success and size>limit failure. Do not modify original solvers, transferred source, checkpoint format, tests or historical checkpoint. Only change gto/native/checkpoints.py. Fixed acceptance11 (existing rank7 plus budget) fails15 subcases on pinned input. Low risk resource bound validation, stdlib only; source currently accepts NaN/+Inf and forwards native."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

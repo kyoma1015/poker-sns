@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "repository": "kyoma1015/poker-sns",
+  "tasks": [
+    {
+      "id": "issue22-c-nonempty-settlement-v1",
+      "lane": "C",
+      "base_sha": "a1ec880c66b54fba67fc16bee0d51f56482e9e81",
+      "base_branch": "codex/c-settlement-nonempty-input-20261021",
+      "branch": "codex/c-settlement-nonempty-fix-20261021",
+      "test_profile": "python",
+      "allowed_paths": [
+        "gto/native/settlement.py"
+      ],
+      "protected_tests": [
+        "tests/worker_acceptance/test_nonempty_settlement.py",
+        "tests/worker_acceptance/test_checkpoint_budget.py",
+        "tests/worker_acceptance/test_rank7.py"
+      ],
+      "instruction": "Reject empty or non-list settlement fixture cases with ValueError before reference_module or native calls. Current run_fixture_suite reports PASS with case_count0 for cases=[]. Preserve all valid17 hand-derived synthetic settlement cases, rank7 cases, exact Python/native comparison and old budget tests. No original/reference/solver/checkpoint changes. Only source gto/native/settlement.py. Fixed14 acceptance currently failures4/errors2 from invalid fixture collections; require allPASS before controller commit."
+    }
+  ]
+}

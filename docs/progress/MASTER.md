@@ -19,3 +19,7 @@
 
 ## Issue22 continuation — 2026-10-21
 Latest evidence and restart contract: docs/workers/ISSUE22_RESTART_STATE_20261021.md (PR34). A poll PR31 isolatedDB56PASS/client30/mobile5, production gates remain; B PR32 saved-result integrity; C PR33 synthetic rank7; D PR35 doubleclick; PR34 reviewed replenishment and bounded recovery. Each has published CI SUCCESS at code SHA. Formal host stop/reopen/resume plus real source implementation verified for simulated quota; future scheduled autonomous completion remains unverified. Do not treat old table above as latest runtime evidence.
+
+
+## PR overlap resolved — 2026-10-21
+Current implementation/restart evidence: PR38 docs/workers/RECONCILED_RESTART_20261021.md. A37/B41/C39/D40 and overlap38 implemented/CI passed. New exact Gitproof gates permit inherited samefile changes, unknown overlaps still block. B19 reviewed normalmerge preservedsource. Next B/C/D fixed inputs each READY on fresh34PRsnapshot, awaiting bounded scheduled/host dispatch. No main/production release.

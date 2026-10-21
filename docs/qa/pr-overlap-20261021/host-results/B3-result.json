@@ -1,0 +1,32 @@
+{
+  "id": "issue22-b-rule-search-reconciled-v2",
+  "lane": "B",
+  "base_sha": "7ee09c1b3bf71a75e3889951d7520bf3347ba375",
+  "executor": "host_session",
+  "host_agent_id": "/root/b_search_impl",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "src/TDA.tsx"
+  ],
+  "tested_source_sha256": {
+    "src/TDA.tsx": "19faae3db6e305c3fe0f017e7bf63c5a7bdab94a33d079d8bf47fda59b27f6b0"
+  },
+  "tests": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/worker-acceptance.test.mjs"
+      ],
+      "exit_code": 0,
+      "test_count": 5,
+      "output_sha256": "f78df8282ca2f5d5ed4ed73f233e800b39268d8e380463a01bfcd26910bf23ee"
+    }
+  ],
+  "commit": "f6ba3739ca4a61a9fd47accbcb2af7be3993694a",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}
