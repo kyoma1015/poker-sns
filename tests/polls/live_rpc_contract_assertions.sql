@@ -5,8 +5,7 @@ do $$
 declare v_actual text; v_expected text;
 begin
  for v_actual,v_expected in
-  select pg_get_function_result(to_regprocedure('public.create_interactive_post_v4(text,text,text[],integer,boolean,text)')), 'uuid'
-  union all select pg_get_function_result(to_regprocedure('public.create_interactive_post_v3(text,text,text[],integer,boolean)')), 'uuid'
+  select pg_get_function_result(to_regprocedure('public.create_interactive_post_v3(text,text,text[],integer,boolean)')), 'uuid'
   union all select pg_get_function_result(to_regprocedure('public.submit_interactive_response_v2(uuid,integer,text,boolean)')), 'void'
   union all select pg_get_function_result(to_regprocedure('public.get_interactive_results_v4(uuid[])')),
     'TABLE(post_id uuid, total_votes bigint, vote_counts jsonb, answers jsonb, my_option_index integer, has_responded boolean, voters jsonb)'

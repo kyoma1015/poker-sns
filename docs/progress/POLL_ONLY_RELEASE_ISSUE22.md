@@ -54,3 +54,7 @@ Actual real-DB coverage:
 This is a real official Supabase Postgres17 + PostgREST14 REST/SQL test, with the pinned official Auth helper migration; it is not production-schema parity, GoTrue login/refresh, full browser-to-real-DB QA or approval to deploy. SQL remains a REVIEW CANDIDATE, not an applied production migration. Independent main-based Draft PR31 is ready for schema/security review; no wholesale PR13 integration is needed.
 
 Remaining release gates: authorized read-only production catalog comparison without user rows, owner-approved SQL application/disable/backup plan, proper Supabase CLI migration-history/advisor checks in a functioning local/staging runtime, integration QA against that schema and legitimate deployment access. Vercel403 remains blocked and must not be bypassed. No production connection or deployment occurred.
+
+## PR49 RPC contract CI repair (2026-10-22 JST)
+Acceptance: latest PR head must pass the complete isolated Actions workflow; inspect actual client/browser/DB logs before merge. Production Supabase and Vercel changes are excluded.
+Resolved main e83113d conflict by keeping legacy-only pre-core contract assertions. run_isolated.sh now explicitly runs those assertions before and after core and checks the new v4 UUID return only after installation. No candidate SQL or application code changed. bash syntax and diff whitespace checks pass; full CI remains pending.
