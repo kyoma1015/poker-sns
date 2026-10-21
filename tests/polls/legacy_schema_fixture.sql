@@ -114,6 +114,28 @@ $$;
 revoke all on function public.get_interactive_results(uuid[]) from public;
 grant execute on function public.get_interactive_results(uuid[]) to authenticated;
 
+-- Production-compatible legacy RPC signatures and return shapes. These are
+-- deliberately permissive historical shims, replaced/revoked by the candidate.
+create or replace function public.create_interactive_post_v2(p_content text,p_kind text,p_options text[] default null,p_hours integer default 24,p_is_anonymous boolean default true)
+returns uuid language sql security definer set search_path='' as $legacy_v2_create$
+ select public.create_interactive_post(p_content,p_kind,p_options,p_hours)
+$legacy_v2_create$;
+create or replace function public.create_interactive_post_v3(p_content text,p_kind text,p_options text[] default null,p_hours integer default 24,p_is_anonymous boolean default true)
+returns uuid language sql security definer set search_path='' as $legacy_v3_create$
+ select public.create_interactive_post_v2(p_content,p_kind,p_options,p_hours,p_is_anonymous)
+$legacy_v3_create$;
+create or replace function public.get_interactive_results_v2(p_post_ids uuid[])
+returns table(post_id uuid,total_votes bigint,vote_counts jsonb,answers jsonb,my_option_index integer,has_responded boolean)
+language sql stable security definer set search_path='' as $legacy_v2_results$
+ select * from public.get_interactive_results(p_post_ids)
+$legacy_v2_results$;
+create or replace function public.get_interactive_results_v3(p_post_ids uuid[])
+returns table(post_id uuid,total_votes bigint,vote_counts jsonb,answers jsonb,my_option_index integer,has_responded boolean,voters jsonb)
+language sql stable security definer set search_path='' as $legacy_v3_results$
+ select r.*, '[]'::jsonb from public.get_interactive_results_v2(p_post_ids) r
+$legacy_v3_results$;
+grant execute on function public.create_interactive_post_v2(text,text,text[],integer,boolean),public.create_interactive_post_v3(text,text,text[],integer,boolean),public.get_interactive_results_v2(uuid[]),public.get_interactive_results_v3(uuid[]) to authenticated;
+
 -- Historical question data must survive both apply and feature-disable.
 insert into public.posts(id,user_id,content,post_type) values('20000000-0000-0000-0000-000000000001','10000000-0000-0000-0000-000000000001','historical question fixture','normal');
 insert into public.post_interactive(post_id,kind,options) values('20000000-0000-0000-0000-000000000001','question','[]');
