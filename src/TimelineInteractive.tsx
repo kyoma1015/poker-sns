@@ -1,5 +1,5 @@
 import { createPollRequest, pollDisplayResult, pollVoteRequest } from './interactiveRequests'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { supabase } from './supabase'
 
 export type InteractiveItem = {
