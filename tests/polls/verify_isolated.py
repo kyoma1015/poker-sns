@@ -25,9 +25,9 @@ def jwt(user):
     message = enc({'alg': 'HS256', 'typ': 'JWT'}) + '.' + enc(claims)
     return message + '.' + base64.urlsafe_b64encode(hmac.new(SECRET, message.encode(), hashlib.sha256).digest()).decode().rstrip('=')
 
-def api(path, data=None, user=OWNER, method=None):
+def api(path, data=None, user=OWNER, method=None, prefer="return=representation"):
     payload = None if data is None else json.dumps(data).encode()
-    request = urllib.request.Request(BASE + path, data=payload, method=method or ('POST' if payload is not None else 'GET'), headers={'Authorization': 'Bearer ' + jwt(user), 'Content-Type': 'application/json', 'Prefer': 'return=representation'})
+    request = urllib.request.Request(BASE + path, data=payload, method=method or ('POST' if payload is not None else 'GET'), headers={'Authorization': 'Bearer ' + jwt(user), 'Content-Type': 'application/json', 'Prefer': prefer})
     try:
         with urllib.request.urlopen(request, timeout=15) as response: status, raw = response.status, response.read()
     except urllib.error.HTTPError as error: status, raw = error.code, error.read()
@@ -133,8 +133,18 @@ def main():
     for user,label in ((OWNER,'owner'), (VOTER,'voter'), (OBSERVER,'observer'), (None,'anon')):
         record('close_rpc_denied_'+label, 'Clients cannot execute system close', lambda user=user: reject(rpc('finish_due_polls_v1', {}, user), (401,403)))
     record('legacy_notification_insert_grant_preserved', 'INSERT grant stays intact', lambda: {'has_insert':sql("select has_table_privilege('authenticated','public.notifications','INSERT');")} if sql("select has_table_privilege('authenticated','public.notifications','INSERT');")=='t' else (_ for _ in ()).throw(AssertionError('grant revoked')))
-    record('legacy_nonpoll_notification_still_works', 'Existing INSERT behavior retained', lambda: {'response':require_ok(api('/notifications', {'user_id':OWNER,'actor_id':VOTER,'type':'like','post_id':named}, VOTER))})
-    record('forged_close_direct_denied', 'Restrictive RLS defeats permissive legacy INSERT policy', lambda: reject(api('/notifications', {'user_id':OWNER,'actor_id':VOTER,'type':'poll_closed','post_id':anonymous}, VOTER), (401,403)))
+    notice = {'user_id':OWNER,'actor_id':VOTER,'type':'like','post_id':named}
+    record('foreign_notification_returning_denied', 'INSERT RETURNING cannot disclose another recipient row', lambda: reject(api('/notifications', notice, VOTER), (401,403)))
+    def legacy_notice():
+        # Supabase .insert() without .select() uses return=minimal. Asking for
+        # RETURNING correctly requires SELECT under recipient-only RLS.
+        require_ok(api('/notifications', notice, VOTER, prefer='return=minimal'))
+        own=require_ok(api('/notifications?post_id=eq.'+named+'&type=eq.like',user=OWNER))
+        sender=require_ok(api('/notifications?post_id=eq.'+named+'&type=eq.like',user=VOTER))
+        assert len(own)==1 and sender==[], (own,sender)
+        return {'recipient_rows':len(own),'sender_rows':len(sender),'returning_failure_left_no_partial_insert':True}
+    record('legacy_nonpoll_notification_still_works', 'Minimal INSERT retained; notification readable only by recipient', legacy_notice)
+    record('forged_close_direct_denied', 'Restrictive RLS defeats permissive legacy INSERT policy', lambda: reject(api('/notifications', {'user_id':OWNER,'actor_id':VOTER,'type':'poll_closed','post_id':anonymous}, VOTER, prefer='return=minimal'), (401,403)))
     record('forged_close_definer_denied', 'Trigger also blocks legacy SECURITY DEFINER bypass', lambda: reject(rpc('legacy_notification_insert_fixture', {'p_user_id':OWNER,'p_actor_id':VOTER,'p_type':'poll_closed','p_post_id':anonymous}, VOTER), (401,403)))
     expire(anonymous)
     record('deadline_vote_rejected', 'No votes after deadline', lambda: reject(vote(anonymous, OBSERVER, True), (400,)))
