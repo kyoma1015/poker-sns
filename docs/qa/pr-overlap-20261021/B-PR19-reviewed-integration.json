@@ -1,0 +1,44 @@
+{
+  "parents": [
+    "2de6670bac8afc0ce778b844a988366fca9bca8e",
+    "3bee4eaace1f933cc4ad0721fcab956e98a61ec9"
+  ],
+  "strategy": "normal merge with explicit per-file reviewed conflict resolution; no ours strategy",
+  "conflicts": [
+    {
+      "path": "docs/progress/B_TDA.md",
+      "resolution": "Preserve latest B progress plus complete PR19 historical evidence; historical gates are not relabeled current.",
+      "source_equal_to_premerge_input": false
+    },
+    {
+      "path": "scripts/audit-tda-questions.mjs",
+      "resolution": "PR23 safe CLI wrapper delegates validation and redaction; prior PR19 CLI features preserved in imported helper, no old exception leak restored.",
+      "source_equal_to_premerge_input": true
+    },
+    {
+      "path": "src/TDA.tsx",
+      "resolution": "PR19 quiz RPC edits are exactly75 ordered +/-lines of ancestorPR14; current retains inherited PR11 authentication guard and PR32 authoritative saved-answer checks.",
+      "source_equal_to_premerge_input": true
+    },
+    {
+      "path": "src/tdaQuizData.ts",
+      "resolution": "PR19 full81-line content prefix equals current first81lines; current appends PR32 strict parseQuizAnswer.",
+      "source_equal_to_premerge_input": true
+    },
+    {
+      "path": "tests/browser/tda-quiz.mjs",
+      "resolution": "Current retains all5 PR19cases and adds malformed persisted-answer sixth case.",
+      "source_equal_to_premerge_input": true
+    },
+    {
+      "path": "tests/browser/tda-supabase.ts",
+      "resolution": "Current differs solely synthetic malformed-answer toggle supporting PR32 regression.",
+      "source_equal_to_premerge_input": true
+    }
+  ],
+  "unique_pr19_files_retained": [
+    ".github/workflows/b-tda-isolated-check.yml",
+    "docs/qa/b-tda-isolated-release-20261020/"
+  ],
+  "implementation_source_changed": false
+}

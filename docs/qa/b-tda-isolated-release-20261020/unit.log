@@ -1,0 +1,25 @@
+✔ question validation sorts a copy without changing option identity or original input (1.600499ms)
+✔ malformed null fails closed (0.21177ms)
+✔ malformed object fails closed (0.079651ms)
+✔ malformed no options fails closed (0.107712ms)
+✔ malformed one option fails closed (0.111308ms)
+✔ malformed empty text fails closed (0.07289ms)
+✔ malformed missing metadata fails closed (0.09299ms)
+✔ malformed duplicate question ID fails closed (1.00567ms)
+✔ malformed duplicate option ID fails closed (0.127212ms)
+✔ malformed duplicate option order fails closed (0.161824ms)
+✔ malformed fractional order fails closed (0.098299ms)
+✔ malformed empty option text fails closed (0.092149ms)
+✔ malformed negative order fails closed (0.050967ms)
+✔ rejected and synchronous transport failures become recoverable errors without retries (0.267855ms)
+✔ successful save data and RPC permission errors are preserved without reinterpretation (0.167022ms)
+✔ offline audit flags normalized question and option duplicate candidates only (0.570793ms)
+✔ audit report flags missing expected count and never claims publication approval (0.268545ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11.318647

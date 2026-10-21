@@ -22,3 +22,11 @@ Published350/official逐条/answer correctness remain UNKNOWN: no complete expor
 
 ## Issue22 B — audit CLI boundary fix
 New branch codex/b-issue22-audit-20261020, base PR14 4e16f7a7b567237d2735f1392906a6b1de2b7c23. Fixed parser-error source-fragment leakage and strict positional/count argument validation. Fixed reason codes never echo input text, read paths or raw error details. Added18 CLI tests; full124 unit/build/lint PASS. Evidence docs/qa/b-issue22-audit-20261020/RESULT.md. No official350/逐条 source received, no publication/DB/main/production operations. Empty no-count export false-pass remains a separately bounded next task, not silently declared fixed.
+
+
+## Historical PR19 isolated release evidence (retained, not current status)
+# B | TDA isolated main-based candidate
+2026-10-20 JST. Branch codex/b-tda-rpc-isolated-release-20261020, base main f8890b6ec11d30676c55dc7dc8801f1da8549d28.
+TDA question payload validation, caught RPC transport errors and offline count/duplicate-candidate audit implemented independently of unmerged PR13. Extra sources from PR13 were not imported. Main's existing inline auth logic is preserved; PR11's auth transport correction remains separate.
+17 unit tests,5 mocked real mobile Chromium tests, locked install/build/lint PASS. Evidence and release limitations: docs/qa/b-tda-isolated-release-20261020/RESULT.md.
+No live DB/auth/SQL or production operations. Published350/official-source comparison remains UNKNOWN; no question publication approved. Runtime RPC/auth integration and existing production high dependency issues remain release gates.
