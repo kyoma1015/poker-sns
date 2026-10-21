@@ -1,7 +1,7 @@
 name: Diagnosis double-click acceptance
 on:
   pull_request:
-    branches: [codex/issue22-d-doubleclick-input]
+    branches: [codex/issue22-d-doubleclick-input-v2]
 permissions:
   contents: read
 concurrency:

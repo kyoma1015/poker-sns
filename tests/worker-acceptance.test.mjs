@@ -1,12 +1,15 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import path from 'node:path'
+import os from 'node:os'
+import { mkdtemp, rm } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { createServer } from 'vite'
 import { chromium } from 'playwright-core'
 const root = fileURLToPath(new URL('../', import.meta.url))
 test('a physical double-click answers only the visible diagnosis question', async () => {
-  const server = await createServer({ root, configFile: false, server: { host: '127.0.0.1', port: 0 },
+  const cacheDir = await mkdtemp(path.join(os.tmpdir(), 'pokerid-diagnosis-gesture-'))
+  const server = await createServer({ root, cacheDir, configFile: false, server: { host: '127.0.0.1', port: 0 },
     plugins: [{ name: 'double-click-test-transport', enforce: 'pre', resolveId(source, importer) {
       if (source === './supabase' && importer?.includes('/src/')) return path.join(root, 'tests/browser/diagnosis-supabase.ts')
     }, configureServer(server) { server.middlewares.use('/__diagnosis', (_req,res) => {
@@ -27,5 +30,5 @@ test('a physical double-click answers only the visible diagnosis question', asyn
     // A later intentional click must still advance to Q3.
     await page.locator('.ptd-option').first().click()
     await page.getByText('QUESTION 3', { exact: true }).waitFor({ timeout: 2000 })
-  } finally { await browser?.close(); await server.close() }
+  } finally { await browser?.close(); await server.close(); await rm(cacheDir, { recursive: true, force: true }) }
 })
