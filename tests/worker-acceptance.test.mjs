@@ -77,3 +77,39 @@ for (const [name,data] of [
   await input.fill('beta');await waitCalls(p,2);await resolve(p,1,'synthetic recovered');await tick(p)
   assert.deepEqual(await titles(p),['synthetic recovered'])
 }))
+
+for (const [name,field,value] of [
+  ['summary object', 'summary_ja', { internal: 'synthetic secret marker' }],
+  ['keyword string', 'keywords_ja', 'not-an-array'],
+  ['example object element', 'examples_ja', [{ internal: 'synthetic secret marker' }]],
+  ['caution null element', 'cautions_ja', [null]],
+  ['related rule string', 'related_rules', ['2']],
+  ['official body object', 'body_en', { internal: 'synthetic secret marker' }],
+]) test(`malformed displayed rule field ${name} fails closed and permits retry`,()=>withPage(async(p,input)=>{
+  await input.fill('alpha');await waitCalls(p,1)
+  await p.evaluate(data=>window.tdaSearchQA.resolveRaw(0,data),[
+    {rule_number:1,title_ja:'synthetic bad row',[field]:value},
+  ]);await tick(p)
+  assert.match(await p.locator('body').innerText(),/検索.*(エラー|失敗|通信)/)
+  assert.equal(await p.getByText('検索しています...', {exact:true}).count(),0)
+  assert.equal(await p.getByPlaceholder('例：ワンチップ、ショーダウン順、体臭...').count(),1)
+  assert.deepEqual(await titles(p),[])
+  assert.doesNotMatch(await p.locator('body').innerText(),/synthetic secret marker/)
+  await input.fill('beta');await waitCalls(p,2);await resolve(p,1,'synthetic recovered');await tick(p)
+  assert.deepEqual(await titles(p),['synthetic recovered'])
+}))
+
+test('well-typed optional text and collections retain normal rendering',()=>withPage(async(p,input)=>{
+  await input.fill('alpha');await waitCalls(p,1)
+  await p.evaluate(data=>window.tdaSearchQA.resolveRaw(0,data),[
+    {rule_number:1,title_ja:'synthetic valid details',summary_ja:'synthetic summary',
+      conclusion_ja:null,explanation_ja:'synthetic explanation',keywords_ja:['synthetic keyword'],
+      examples_ja:['synthetic example'],cautions_ja:['synthetic caution'],related_rules:[2],
+      title_en:'Synthetic official title',body_en:'Synthetic official body'},
+  ]);await tick(p)
+  assert.deepEqual(await titles(p),['synthetic valid details'])
+  for(const label of ['synthetic summary','synthetic example','synthetic caution'])
+    assert.match(await p.locator('body').innerText(),new RegExp(label))
+  await p.locator('.tda-official-toggle').click()
+  assert.match(await p.locator('body').innerText(),/Synthetic official body/)
+}))

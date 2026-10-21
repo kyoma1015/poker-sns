@@ -1,7 +1,7 @@
 name: TDA latest search acceptance
 on:
   pull_request:
-    branches: [codex/issue22-b-search-input-20261021, codex/issue22-b-search-reconciled-input-20261021, codex/issue22-b-search-data-input-20261021]
+    branches: [codex/issue22-b-search-input-20261021, codex/issue22-b-search-reconciled-input-20261021, codex/issue22-b-search-data-input-20261021, codex/b-rule-fields-input-20261022]
   workflow_dispatch:
 permissions:
   contents: read
