@@ -88,3 +88,24 @@ select cron.unschedule(jobid) from cron.job where jobname='poker_id_poll_closed_
 SQL
 "${qa_compose[@]}" up -d --wait rest
 python tests/polls/verify_isolated.py
+# Verify the feature-disable rollback against the same disposable DB, twice.
+# This must preserve historical questions/answers and remove only our cron.
+for rollback_pass in 1 2; do
+  docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 < sql/poll_only/disable_candidate.sql
+done
+docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 <<'SQL'
+do $rollback_check$
+declare n integer;
+begin
+ select count(*) into n from public.post_interactive where post_id='20000000-0000-0000-0000-000000000001' and kind='question';
+ if n <> 1 then raise exception 'Rollback lost historical question'; end if;
+ select count(*) into n from public.post_interactive_responses where post_id='20000000-0000-0000-0000-000000000001' and answer='historical answer fixture';
+ if n <> 1 then raise exception 'Rollback lost historical answer'; end if;
+ if exists(select 1 from cron.job where jobname='pokerid-poll-close-v1') then raise exception 'Rollback retained new scheduler'; end if;
+ if to_regclass('poll_private.close_receipts') is null then raise exception 'Rollback removed private close receipts'; end if;
+ if not exists(select 1 from pg_policies where schemaname='public' and tablename='notifications' and policyname='poll_closed_forgery_guard_v1') then raise exception 'Rollback removed notification guard'; end if;
+ if exists(select 1 from pg_proc p join pg_namespace ns on ns.oid=p.pronamespace where ns.nspname='public' and p.proname in ('get_interactive_results_v2','get_interactive_results_v3') and has_function_privilege('authenticated',p.oid,'EXECUTE')) then raise exception 'Rollback exposed historical results RPC'; end if;
+end
+$rollback_check$;
+SQL
+
