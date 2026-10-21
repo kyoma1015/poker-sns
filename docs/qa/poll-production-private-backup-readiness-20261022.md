@@ -21,3 +21,7 @@ Use only an owner-approved, trusted machine with enough disk and Docker running.
 - Vercel production alias remains behind GitHub latest main (last read-only audit).
 
 This PR only supplies the guarded local export utility, tests, and release documentation. It does not authorize or trigger any production operation.
+
+## Post-export verification gate (synthetic test implemented)
+
+After an authorized local export, validate the privately retained bundle by invoking `bash scripts/poll_verify_backup_bundle.sh "$PRIVATE_EXPORT_DIRECTORY"` on that same trusted machine. The script checks `0700` directory mode, `0600` file mode, nonempty `roles.sql` / `schema.sql` / `data.sql`, absence of symlinks, and SHA256 manifest integrity. It never reads a database, sends network requests or uploads files; it prints only pass/fail. GitHub Actions tests only synthetic throwaway bundles including a deliberately corrupted file. **A passing checksum does not prove restore compatibility or a complete Supabase project backup.** The release gate remains blocked until a genuine private dump is restored into an isolated environment with its relevant Supabase Auth, Storage, extensions and RLS invariants verified.
