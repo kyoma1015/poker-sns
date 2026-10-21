@@ -107,7 +107,7 @@ returns uuid language sql security invoker set search_path='' as $$select public
 create or replace function public.create_interactive_post_v2(p_content text,p_kind text,p_options text[] default null,p_hours integer default 24,p_is_anonymous boolean default true)
 returns uuid language sql security invoker set search_path='' as $$select public.create_interactive_post_v4(p_content,p_kind,p_options,p_hours,p_is_anonymous,null)$$;
 create or replace function public.create_interactive_post_v3(p_content text,p_kind text,p_options text[] default null,p_hours integer default 24,p_is_anonymous boolean default true)
-returns uuid language sql security invoker set search_path='' as $select public.create_interactive_post_v4(p_content,p_kind,p_options,p_hours,p_is_anonymous,null)$;
+returns uuid language sql security invoker set search_path='' as $v3_wrapper$select public.create_interactive_post_v4(p_content,p_kind,p_options,p_hours,p_is_anonymous,null)$v3_wrapper$;
 
 create or replace function poll_private.submit_vote(p_post_id uuid,p_option_index integer default null,p_answer text default null,p_is_anonymous boolean default true)
 returns void language plpgsql security definer set search_path='' as $$
