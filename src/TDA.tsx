@@ -800,6 +800,15 @@ function TDA() {
           || !Number.isSafeInteger(rule.rule_number)
           || rule.rule_number <= 0
           || typeof rule.title_ja !== 'string'
+          || ['summary_ja', 'conclusion_ja', 'explanation_ja', 'title_en', 'body_en'].some((field) =>
+            rule[field] != null && typeof rule[field] !== 'string')
+          || ['keywords_ja', 'examples_ja', 'cautions_ja'].some((field) => {
+            const value = rule[field]
+            return value != null && (!Array.isArray(value) || value.some((item: unknown) => typeof item !== 'string'))
+          })
+          || (rule.related_rules != null && (!Array.isArray(rule.related_rules)
+            || rule.related_rules.some((value: unknown) => typeof value !== 'number'
+              || !Number.isSafeInteger(value) || value <= 0)))
       })) {
         setResults([])
         setErrorMessage('検索中にエラーが発生しました。再度検索してください。')
