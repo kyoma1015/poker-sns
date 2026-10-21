@@ -62,6 +62,35 @@ do $$begin
 end$$;
 delete from public.posts where id='20000000-0000-0000-0000-000000000099';
 SQL
+# Validate poll core separately, twice for idempotency, before installing any
+# notification worker or scheduler. The disposable DB retains legacy fixtures.
+for core_pass in 1 2; do
+  docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 < sql/poll_only/core_without_notifications_candidate.sql
+done
+docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 <<'SQL'
+do $core_check$
+declare has_new_cron boolean := false;
+begin
+ if to_regprocedure('public.create_interactive_post_v4(text,text,text[],integer,boolean,text)') is null then
+  raise exception 'Core poll creation RPC missing';
+ end if;
+ if to_regprocedure('poll_private.close_due_polls()') is not null then
+  raise exception 'Core unexpectedly installed notification worker';
+ end if;
+ if exists(select 1 from pg_trigger where tgname='poll_closed_guard_v1' and not tgisinternal) then
+  raise exception 'Core unexpectedly installed notification trigger';
+ end if;
+ if to_regclass('cron.job') is not null then
+  if exists(select 1 from pg_catalog.pg_class c join pg_catalog.pg_namespace n on n.oid=c.relnamespace
+    where n.nspname='cron' and c.relname='job') then
+   -- pg_cron is not necessarily installed until schedule_candidate.sql.
+   execute 'select exists(select 1 from cron.job where jobname=''pokerid-poll-close-v1'')' into has_new_cron;
+   if has_new_cron then raise exception 'Core unexpectedly installed notification cron'; end if;
+  end if;
+ end if;
+end
+$core_check$;
+SQL
 for sql_file in sql/poll_only/forward_candidate.sql sql/poll_only/forward_candidate.sql sql/poll_only/schedule_candidate.sql; do
   docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 < "$sql_file"
 done
