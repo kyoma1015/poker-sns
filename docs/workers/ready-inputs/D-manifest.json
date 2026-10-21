@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "repository": "kyoma1015/poker-sns",
+  "tasks": [
+    {
+      "id": "issue22-d-result-error-redaction-v1",
+      "lane": "D",
+      "base_sha": "e4c0578dda6e4fa3833cd813b29ed78dc454c7ca",
+      "base_branch": "codex/issue22-d-redaction-input-20261021",
+      "branch": "codex/issue22-d-result-error-redaction-v1",
+      "instruction": "Fix raw backend exception details reaching diagnosis save/share UI. Use fixed Japanese retry guidance in saveResult error branch and shareToTimeline catch; preserve existing catch/stale result gate, exactly50 answers on retry, successful subsequent share, gesture filter and all scoring/50 questions/36 animals. Change only PlayerTypeDiagnosis.tsx, no tests or DB. Fixed mobile memory-transport acceptance has baseline4tests:2FAIL marker leak/2PASS old behaviors. Dependencies must be trusted parent node_modules matching pinned lockfile before prepare; Vite acceptance cache outside worktree. No npmci/build/ignored dependency files inside source before controller finish. No commit/push by worker; trusted host handles finish.",
+      "allowed_paths": [
+        "src/PlayerTypeDiagnosis.tsx"
+      ],
+      "protected_tests": [
+        "tests/worker-acceptance.test.mjs",
+        "tests/browser/diagnosis-redaction-supabase.ts",
+        "tests/browser/diagnosis-supabase.ts",
+        "tests/browser/diagnosis-entry.tsx",
+        "tests/browser/diagnosis.mjs",
+        "tests/fixtures/player-type-v2.json"
+      ],
+      "test_profile": "node"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "task": {
+    "id": "issue22-d-result-error-redaction-v1",
+    "lane": "D",
+    "base_sha": "e4c0578dda6e4fa3833cd813b29ed78dc454c7ca",
+    "base_branch": "codex/issue22-d-redaction-input-20261021",
+    "branch": "codex/issue22-d-result-error-redaction-v1",
+    "instruction": "Fix raw backend exception details reaching diagnosis save/share UI. Use fixed Japanese retry guidance in saveResult error branch and shareToTimeline catch; preserve existing catch/stale result gate, exactly50 answers on retry, successful subsequent share, gesture filter and all scoring/50 questions/36 animals. Change only PlayerTypeDiagnosis.tsx, no tests or DB. Fixed mobile memory-transport acceptance has baseline4tests:2FAIL marker leak/2PASS old behaviors. Dependencies must be trusted parent node_modules matching pinned lockfile before prepare; Vite acceptance cache outside worktree. No npmci/build/ignored dependency files inside source before controller finish. No commit/push by worker; trusted host handles finish.",
+    "allowed_paths": [
+      "src/PlayerTypeDiagnosis.tsx"
+    ],
+    "protected_tests": [
+      "tests/worker-acceptance.test.mjs",
+      "tests/browser/diagnosis-redaction-supabase.ts",
+      "tests/browser/diagnosis-supabase.ts",
+      "tests/browser/diagnosis-entry.tsx",
+      "tests/browser/diagnosis.mjs",
+      "tests/fixtures/player-type-v2.json"
+    ],
+    "test_profile": "node"
+  },
+  "purpose": "Prevent diagnosis backend exception details being displayed while preserving retry and async isolation.",
+  "reviewed": true,
+  "risk": "low",
+  "dependencies": [
+    "issue22-d-doubleclick-v2"
+  ],
+  "execution_conditions": [
+    "Existing shared state continuity",
+    "No active Dlease or duplicate PR",
+    "Fresh complete PR-file overlap snapshot and host approval",
+    "Node24 trusted parent locked dependencies and Chromium; external tmpcache"
+  ],
+  "completion_conditions": [
+    "Immutable4case acceptance PASS",
+    "Existing diagnosis regression/build/lint/mobile PASS",
+    "Source-only controller-tested commit and DraftPR/CI evidence"
+  ],
+  "references": [
+    "https://github.com/kyoma1015/poker-sns/pull/35",
+    "https://github.com/kyoma1015/poker-sns/pull/34",
+    "docs/progress/D_REDACTION_ACCEPTANCE_20261021.md"
+  ],
+  "baseline": {
+    "base_sha": "e4c0578dda6e4fa3833cd813b29ed78dc454c7ca",
+    "test_profile": "node",
+    "test_count": 4,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/worker-acceptance.test.mjs": "721b8f6f170a3e20ddd7609c54754dea62f4d5a7946371236339ca5c7fee95d6",
+      "tests/browser/diagnosis-redaction-supabase.ts": "5c4ab94a53145c4107c34ee6f673941af0fd78e9ceaa4c9dbb7a8729843f57ee",
+      "tests/browser/diagnosis-supabase.ts": "e8b65579b9bb87032f22d1e7be4e0ea58c39326aaca07ad0fe6d7c8cba2aef55",
+      "tests/browser/diagnosis-entry.tsx": "beaf70ec428da49b2e081c53609c976bfef525c9e4922779ef5554ee6a99d120",
+      "tests/browser/diagnosis.mjs": "ef724a9b863e02f0692c6bdaf43b41d47712ed9840d11fb0294b21f99f44b48d",
+      "tests/fixtures/player-type-v2.json": "ef15e04c485f090f72707656a9127c54a855c98e2453771ad86c68068cfe4d2c"
+    }
+  }
+}
