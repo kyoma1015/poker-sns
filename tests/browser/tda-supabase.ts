@@ -24,7 +24,7 @@ export const supabase = {
       if (scenario === 'throw-once' && questionCalls === 1) throw new Error('Synthetic transport failure')
       return { data: [scenario === 'malformed' ? { ...question, options: null } : question], error: null }
     }
-    if (name === 'submit_tda_quiz_answer') return { data: [{ is_correct: true, correct_option_id: 'b', explanation: '保存済みの合成解説', total_answers: 1, correct_answers: 1, correct_rate: null }], error: null }
+    if (name === 'submit_tda_quiz_answer') return { data: [{ is_correct: scenario === 'malformed-answer' ? 'false' : true, correct_option_id: 'b', explanation: '保存済みの合成解説', total_answers: 1, correct_answers: 1, correct_rate: null }], error: null }
     if (name === 'check_tda_quiz_answer' && scenario === 'detail-throws') throw new Error('Synthetic optional detail outage')
     return { data: [], error: null }
   },

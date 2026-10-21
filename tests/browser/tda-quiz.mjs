@@ -51,6 +51,15 @@ try {
     assert.equal(await page.evaluate(() => window.tdaQaCalls.filter(name => name === 'submit_tda_quiz_answer').length), 1)
     assert.equal(await page.getByText('SCORE 1', { exact: true }).count(), 1)
   })
+  await check('malformed saved answer cannot corrupt score or allow duplicate submission', async () => {
+    await open('malformed-answer')
+    await page.getByRole('button', { name: 'クイズを始める', exact: true }).click()
+    await page.getByRole('button', { name: '合成選択肢B', exact: false }).click()
+    await page.getByRole('alert').getByText('回答結果を確認できませんでした。保存済みの可能性があるため、この問題には再回答しないでください。').waitFor()
+    assert.equal(await page.getByText('SCORE 0', { exact: true }).count(), 1)
+    assert.equal(await page.getByRole('button', { name: '合成選択肢B', exact: false }).isDisabled(), true)
+    assert.equal(await page.evaluate(() => window.tdaQaCalls.filter(name => name === 'submit_tda_quiz_answer').length), 1)
+  })
   assert.deepEqual(errors, [])
   console.log(JSON.stringify({ verdict: 'PASS', tests: results.length, results, browser: await browser.version(), transport: 'in-memory mock; all questions synthetic; external requests blocked; no DB' }))
 } finally { await browser?.close(); await server.close() }
