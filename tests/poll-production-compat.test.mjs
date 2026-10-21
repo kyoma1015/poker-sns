@@ -10,6 +10,7 @@ test('production five-argument v3 creation RPC is replaced without introducing s
   assert.ok(declaration, 'v3 replacement declaration is required')
   assert.equal((declaration[1].match(/\bp_[a-z_]+\s/g) || []).length, 5)
   assert.doesNotMatch(declaration[1], /p_question_policy/)
+  assert.match(forward, /create_interactive_post_v3\([\s\S]*?as \$v3_wrapper\$select public\.create_interactive_post_v4\([\s\S]*?\)\$v3_wrapper\$;/i)
   assert.match(forward, /create_interactive_post_v3:text, text, text\[\], integer, boolean/)
 })
 
