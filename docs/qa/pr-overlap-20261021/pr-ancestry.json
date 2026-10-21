@@ -1,0 +1,166 @@
+[
+  {
+    "ancestor_pr": 34,
+    "descendant_pr": 36
+  },
+  {
+    "ancestor_pr": 26,
+    "descendant_pr": 36
+  },
+  {
+    "ancestor_pr": 26,
+    "descendant_pr": 34
+  },
+  {
+    "ancestor_pr": 25,
+    "descendant_pr": 33
+  },
+  {
+    "ancestor_pr": 25,
+    "descendant_pr": 29
+  },
+  {
+    "ancestor_pr": 24,
+    "descendant_pr": 35
+  },
+  {
+    "ancestor_pr": 24,
+    "descendant_pr": 30
+  },
+  {
+    "ancestor_pr": 23,
+    "descendant_pr": 32
+  },
+  {
+    "ancestor_pr": 23,
+    "descendant_pr": 28
+  },
+  {
+    "ancestor_pr": 20,
+    "descendant_pr": 33
+  },
+  {
+    "ancestor_pr": 20,
+    "descendant_pr": 29
+  },
+  {
+    "ancestor_pr": 20,
+    "descendant_pr": 25
+  },
+  {
+    "ancestor_pr": 18,
+    "descendant_pr": 35
+  },
+  {
+    "ancestor_pr": 18,
+    "descendant_pr": 30
+  },
+  {
+    "ancestor_pr": 18,
+    "descendant_pr": 24
+  },
+  {
+    "ancestor_pr": 16,
+    "descendant_pr": 36
+  },
+  {
+    "ancestor_pr": 16,
+    "descendant_pr": 34
+  },
+  {
+    "ancestor_pr": 16,
+    "descendant_pr": 26
+  },
+  {
+    "ancestor_pr": 16,
+    "descendant_pr": 21
+  },
+  {
+    "ancestor_pr": 14,
+    "descendant_pr": 32
+  },
+  {
+    "ancestor_pr": 14,
+    "descendant_pr": 28
+  },
+  {
+    "ancestor_pr": 14,
+    "descendant_pr": 23
+  },
+  {
+    "ancestor_pr": 13,
+    "descendant_pr": 36
+  },
+  {
+    "ancestor_pr": 13,
+    "descendant_pr": 35
+  },
+  {
+    "ancestor_pr": 13,
+    "descendant_pr": 34
+  },
+  {
+    "ancestor_pr": 13,
+    "descendant_pr": 33
+  },
+  {
+    "ancestor_pr": 13,
+    "descendant_pr": 32
+  },
+  {
+    "ancestor_pr": 13,
+    "descendant_pr": 30
+  },
+  {
+    "ancestor_pr": 13,
+    "descendant_pr": 29
+  },
+  {
+    "ancestor_pr": 13,
+    "descendant_pr": 28
+  },
+  {
+    "ancestor_pr": 13,
+    "descendant_pr": 26
+  },
+  {
+    "ancestor_pr": 13,
+    "descendant_pr": 25
+  },
+  {
+    "ancestor_pr": 13,
+    "descendant_pr": 24
+  },
+  {
+    "ancestor_pr": 13,
+    "descendant_pr": 23
+  },
+  {
+    "ancestor_pr": 13,
+    "descendant_pr": 21
+  },
+  {
+    "ancestor_pr": 13,
+    "descendant_pr": 20
+  },
+  {
+    "ancestor_pr": 13,
+    "descendant_pr": 18
+  },
+  {
+    "ancestor_pr": 13,
+    "descendant_pr": 17
+  },
+  {
+    "ancestor_pr": 13,
+    "descendant_pr": 16
+  },
+  {
+    "ancestor_pr": 13,
+    "descendant_pr": 14
+  },
+  {
+    "ancestor_pr": 12,
+    "descendant_pr": 27
+  }
+]

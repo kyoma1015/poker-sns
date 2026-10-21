@@ -1,0 +1,7 @@
+{
+  "path": "src/TDA.tsx",
+  "same_ordered_added_deleted_lines": true,
+  "line_count": 75,
+  "sha256": "30cb11590c9728e24f88033ec72007c6559de468dcf3e92e15e6313703821254",
+  "warning": "Not a substitute for exact head/base pin, protected failed acceptance or ancestor check; line positions/context differ by inherited authentication guard."
+}
