@@ -45,7 +45,7 @@ Visit https://react.dev/link/error-boundaries to learn more about error boundari
 test at tests/worker-acceptance.test.mjs:88:4
 ✖ malformed displayed rule field summary object fails closed and permits retry (1510.357296ms)
   AssertionError [ERR_ASSERTION]: The input did not match the regular expression /検索.*(エラー|失敗|通信)/. Input:
-  
+
   'POKER ID\n' +
     'TDA\n' +
     '\n' +
@@ -81,7 +81,7 @@ test at tests/worker-acceptance.test.mjs:88:4
     'synthetic bad row\n' +
     '公式原文を見る\n' +
     '▼'
-  
+
       at file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:93:10
       at async withPage (file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:29:5)
       at async Test.run (node:internal/test_runner/test:1389:7)
@@ -97,7 +97,7 @@ test at tests/worker-acceptance.test.mjs:88:4
 test at tests/worker-acceptance.test.mjs:88:4
 ✖ malformed displayed rule field keyword string fails closed and permits retry (1510.878366ms)
   AssertionError [ERR_ASSERTION]: The input did not match the regular expression /検索.*(エラー|失敗|通信)/. Input:
-  
+
   'POKER ID\n' +
     'TDA\n' +
     '\n' +
@@ -133,7 +133,7 @@ test at tests/worker-acceptance.test.mjs:88:4
     'synthetic bad row\n' +
     '公式原文を見る\n' +
     '▼'
-  
+
       at file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:93:10
       at async withPage (file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:29:5)
       at async Test.run (node:internal/test_runner/test:1389:7)
@@ -149,9 +149,9 @@ test at tests/worker-acceptance.test.mjs:88:4
 test at tests/worker-acceptance.test.mjs:88:4
 ✖ malformed displayed rule field example object element fails closed and permits retry (1501.562257ms)
   AssertionError [ERR_ASSERTION]: The input did not match the regular expression /検索.*(エラー|失敗|通信)/. Input:
-  
+
   ''
-  
+
       at file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:93:10
       at async withPage (file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:29:5)
       at async Test.run (node:internal/test_runner/test:1389:7)
@@ -167,7 +167,7 @@ test at tests/worker-acceptance.test.mjs:88:4
 test at tests/worker-acceptance.test.mjs:88:4
 ✖ malformed displayed rule field caution null element fails closed and permits retry (1532.615038ms)
   AssertionError [ERR_ASSERTION]: The input did not match the regular expression /検索.*(エラー|失敗|通信)/. Input:
-  
+
   'POKER ID\n' +
     'TDA\n' +
     '\n' +
@@ -206,7 +206,7 @@ test at tests/worker-acceptance.test.mjs:88:4
     '\n' +
     '公式原文を見る\n' +
     '▼'
-  
+
       at file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:93:10
       at async withPage (file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:29:5)
       at async Test.run (node:internal/test_runner/test:1389:7)
@@ -222,7 +222,7 @@ test at tests/worker-acceptance.test.mjs:88:4
 test at tests/worker-acceptance.test.mjs:88:4
 ✖ malformed displayed rule field related rule string fails closed and permits retry (1609.918382ms)
   AssertionError [ERR_ASSERTION]: The input did not match the regular expression /検索.*(エラー|失敗|通信)/. Input:
-  
+
   'POKER ID\n' +
     'TDA\n' +
     '\n' +
@@ -260,7 +260,7 @@ test at tests/worker-acceptance.test.mjs:88:4
     'Rule 2\n' +
     '公式原文を見る\n' +
     '▼'
-  
+
       at file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:93:10
       at async withPage (file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:29:5)
       at async Test.run (node:internal/test_runner/test:1389:7)
@@ -276,7 +276,7 @@ test at tests/worker-acceptance.test.mjs:88:4
 test at tests/worker-acceptance.test.mjs:88:4
 ✖ malformed displayed rule field official body object fails closed and permits retry (1743.438058ms)
   AssertionError [ERR_ASSERTION]: The input did not match the regular expression /検索.*(エラー|失敗|通信)/. Input:
-  
+
   'POKER ID\n' +
     'TDA\n' +
     '\n' +
@@ -312,7 +312,7 @@ test at tests/worker-acceptance.test.mjs:88:4
     'synthetic bad row\n' +
     '公式原文を見る\n' +
     '▼'
-  
+
       at file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:93:10
       at async withPage (file:///workspace/work/issue22-b-search-data-inputs/field-input-source/tests/worker-acceptance.test.mjs:29:5)
       at async Test.run (node:internal/test_runner/test:1389:7)

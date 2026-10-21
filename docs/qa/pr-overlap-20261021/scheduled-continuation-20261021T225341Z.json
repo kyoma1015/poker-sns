@@ -168,5 +168,23 @@
     "requires_future_scheduled_prompt_and_fresh_gates": true
   },
   "running_leases": 0,
-  "production_db_mainmerge_deploy_billing_operations": false
+  "production_db_mainmerge_deploy_billing_operations": false,
+  "baseline_log_views": {
+    "C-expectations-fixed-fail": {
+      "raw_sha256": "4cc29f7e7ba64db98d1b5dd47a52ba19566759d41c6930b5993f634d0cc1587f",
+      "published_view_sha256": "bf5914eeb479ad5211190712e8a1dd2233055ff4c85243328fe415c0662e176a",
+      "transformation": "trailing whitespace stripped only; original raw logs retained locally"
+    },
+    "B-rule-fields-fixed-fail": {
+      "raw_sha256": "a8ec1a407279816a70657e61b6fcaf04e81049a96d3b3abd85f9232027a99c66",
+      "published_view_sha256": "46976433ac5c5d695bbf5f4d192f97d6cd05ceda3ff5e58895dfeea8e9145de4",
+      "transformation": "trailing whitespace stripped only; original raw logs retained locally"
+    },
+    "C-chip-oracle-fixed-fail": {
+      "raw_sha256": "50f9d1df6c9671be3195a5181d72e9149892568f0d84072c05bdcdea26ea99ce",
+      "published_view_sha256": "02305c96867e56d62e4f07cba1262f6768acd20d2c209da52baca96a5a0b3f36",
+      "transformation": "trailing whitespace stripped only; original raw logs retained locally"
+    }
+  },
+  "documentation_check": "Initial diff --check flagged raw log trailing whitespace; published views normalized and original SHA retained. No source/test/acceptance changes."
 }
