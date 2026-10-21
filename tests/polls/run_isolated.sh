@@ -65,6 +65,26 @@ SQL
 for sql_file in sql/poll_only/forward_candidate.sql sql/poll_only/forward_candidate.sql sql/poll_only/schedule_candidate.sql; do
   docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 < "$sql_file"
 done
+# Check that migration replaced the production legacy overloads in-place and
+# did not leave public legacy result endpoints callable by authenticated users.
+docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 <<'SQL'
+do $legacy_rpc_check$
+declare r record;
+begin
+ if to_regprocedure('public.create_interactive_post_v3(text,text,text[],integer,boolean)') is null then
+  raise exception 'Production five-argument v3 creation RPC missing';
+ end if;
+ if to_regprocedure('public.create_interactive_post_v3(text,text,text[],integer,boolean,text)') is not null then
+  raise exception 'Unexpected six-argument v3 overload';
+ end if;
+ for r in select p.oid,p.proname,p.prosecdef from pg_proc p join pg_namespace ns on ns.oid=p.pronamespace
+  where ns.nspname='public' and p.proname in ('get_interactive_results_v2','get_interactive_results_v3') loop
+  if r.prosecdef then raise exception 'Legacy results RPC remains SECURITY DEFINER: %',r.proname; end if;
+  if has_function_privilege('authenticated',r.oid,'EXECUTE') then raise exception 'Legacy results RPC still executable: %',r.proname; end if;
+ end loop;
+end
+$legacy_rpc_check$;
+SQL
 # Reproduce the production scheduler collision in the isolated database.
 # A synthetic legacy cron is created ONLY in this disposable QA instance.
 docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 <<'SQL'
