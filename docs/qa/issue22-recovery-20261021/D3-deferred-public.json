@@ -1,0 +1,9 @@
+{
+  "id": "issue22-d-doubleclick-v2",
+  "status": "deferred",
+  "failure_class": "quota",
+  "retry_after": 1792572717.5644107,
+  "simulation": true,
+  "real_quota_detected": false,
+  "agent_started_before_simulation": false
+}

@@ -1,0 +1,34 @@
+{
+  "id": "issue22-b-saved-answer-20261021",
+  "lane": "B",
+  "base_sha": "a22d64d4f6b10927ea2e98b70871de263ac6f477",
+  "executor": "host_session",
+  "host_agent_id": "/root/b_next",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "src/TDA.tsx",
+    "src/tdaQuizData.ts"
+  ],
+  "tested_source_sha256": {
+    "src/TDA.tsx": "81954cc17b8d6a55a28effe7b8aaeaf729e379af04c521675944587e7b8be066",
+    "src/tdaQuizData.ts": "033deae6d8cf88536b8c689844c6d1973980c4b0d45d9421ca8c8215e2c2f35e"
+  },
+  "tests": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/worker-acceptance.test.mjs"
+      ],
+      "exit_code": 0,
+      "test_count": 1,
+      "output_sha256": "eddddedc7edddf73ac0efd26165984bfc868d81ece5bfa68ad73aba90bce8ec8"
+    }
+  ],
+  "commit": "ade6ba2a3436277f4ea1d530da34eaf04801a295",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

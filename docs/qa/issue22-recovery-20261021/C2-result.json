@@ -1,0 +1,45 @@
+{
+  "id": "issue22-c-rank7-v1",
+  "lane": "C",
+  "base_sha": "d0a69f48bfbf6a69117f371018226690d5570d1e",
+  "executor": "host_session",
+  "host_agent_id": "/root/gto_next",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "docs/progress/C_GTO.md",
+    "gto/README.md",
+    "gto/fixtures/rank7-v1.json",
+    "gto/native/settlement.py",
+    "gto/tests/test_rank7.py"
+  ],
+  "tested_source_sha256": {
+    "docs/progress/C_GTO.md": "a97ef09e1df11dab7388cfd91bf20f9c654d967502591b38d2b5f71d8daab8fc",
+    "gto/README.md": "8aac20419f5e5d454bea77676b56a7e715a757a030f7599535995bcb9ebdc0f2",
+    "gto/fixtures/rank7-v1.json": "98b13be96b76628b14b671f32087a78499792a05e1e4587811684ae707ca86d7",
+    "gto/native/settlement.py": "5a17eff3765b3c1b7f34d4787576828eafb643b056fd64d2bf0529333dc362ab",
+    "gto/tests/test_rank7.py": "306e5e387128446acb9aafa3458ed01b1da6a2579d960fa3fbe9c4dae67e3d8d"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 4,
+      "output_sha256": "f6eda4d016f4a3f570164a8a1a8ab3429ddfaf17741d4f90b1a2390a1c9292be"
+    }
+  ],
+  "commit": "2620396d207970fae7470043a404d7b0582b8829",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}
