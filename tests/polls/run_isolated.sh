@@ -65,5 +65,26 @@ SQL
 for sql_file in sql/poll_only/forward_candidate.sql sql/poll_only/forward_candidate.sql sql/poll_only/schedule_candidate.sql; do
   docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 < "$sql_file"
 done
+# Reproduce the production scheduler collision in the isolated database.
+# A synthetic legacy cron is created ONLY in this disposable QA instance.
+docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 <<'SQL'
+select cron.schedule('poker_id_poll_closed_notifications', '* * * * *', 'select public.dispatch_poll_closed_notifications();');
+SQL
+if docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 < sql/poll_only/schedule_candidate.sql > docs/qa/issue22-polls-20261020/cron-collision-guard.log 2>&1; then
+  echo "FAIL: scheduler accepted concurrent legacy poll notification cron" >&2
+  exit 1
+fi
+grep -q 'Existing interactive cron requires review' docs/qa/issue22-polls-20261020/cron-collision-guard.log
+# The refused migration must not have removed either existing job.
+docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 <<'SQL'
+do $cron_guard$
+begin
+ if (select count(*) from cron.job where jobname in ('pokerid-poll-close-v1','poker_id_poll_closed_notifications')) <> 2 then
+  raise exception 'Scheduler collision guard changed existing jobs';
+ end if;
+end
+$cron_guard$;
+select cron.unschedule(jobid) from cron.job where jobname='poker_id_poll_closed_notifications';
+SQL
 "${qa_compose[@]}" up -d --wait rest
 python tests/polls/verify_isolated.py
