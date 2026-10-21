@@ -91,6 +91,35 @@ begin
 end
 $core_check$;
 SQL
+# Install non-destructive legacy question guard twice to prove idempotency.
+for guard_pass in 1 2; do
+  docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 < sql/poll_only/block_legacy_question_inserts_candidate.sql
+done
+docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 <<'SQL'
+do $guard_check$
+begin
+ if not exists(select 1 from pg_trigger where tgname='reject_new_question_interactive' and not tgisinternal) then
+  raise exception 'Question insert guard missing';
+ end if;
+end
+$guard_check$;
+SQL
+# Verify historical question survives and legacy question INSERT is rejected.
+docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 <<'SQL'
+do $guard_behavior$
+declare v_existing int;
+begin
+ select count(*) into v_existing from public.post_interactive where kind='question';
+ if v_existing < 1 then raise exception 'Historical question fixture was lost'; end if;
+ begin
+  insert into public.post_interactive(post_id,kind,options)
+  values ('20000000-0000-0000-0000-000000000099','question','[]'::jsonb);
+  raise exception 'Question INSERT unexpectedly succeeded';
+ exception when sqlstate '22023' then null;
+ end;
+end
+$guard_behavior$;
+SQL
 for sql_file in sql/poll_only/forward_candidate.sql sql/poll_only/forward_candidate.sql sql/poll_only/schedule_candidate.sql; do
   docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 < "$sql_file"
 done
