@@ -1,0 +1,32 @@
+{
+  "id": "issue22-b-search-data-v1",
+  "lane": "B",
+  "base_sha": "16b02a76165a07f3ec1c8a1389705cdb13b27739",
+  "executor": "host_session",
+  "host_agent_id": "/root/scheduled_b_payload",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "src/TDA.tsx"
+  ],
+  "tested_source_sha256": {
+    "src/TDA.tsx": "65bf0ad4e96b753cb8786e8e8655989e355a1eb918d5e7ee4a4c0d927eaa8e4d"
+  },
+  "tests": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/worker-acceptance.test.mjs"
+      ],
+      "exit_code": 0,
+      "test_count": 9,
+      "output_sha256": "df589d6fbe21ec4687dfd7b4fed340fbd2b4ffcd337f39aa6cf445e94c7fde9f"
+    }
+  ],
+  "commit": "35502ff3af55e58c5ffb518fe7d1a2d7db631e64",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

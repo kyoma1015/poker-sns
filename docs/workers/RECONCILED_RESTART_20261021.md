@@ -32,3 +32,25 @@ Poll31 isolatedDB56PASS remains synthetic schema/JWT, GoTrue absent: actualcatal
 ## Superseded PR state
 After PR41 passed fullCI, root closed PR19 unmerged to prevent duplicateintegration. All17files/uniqueQA/workflow were preserved in the reviewedmerge input and branch/head retained. Other existingPRs remainunchanged. Canonical B source is41, not a second independent merge of19. New review snapshots must reflect19closed; historical29PRaudit remains a datedrecord.
 Normal reservation prompt update succeeded without schedule/count changes. Before its next observedinstruction, pre-scheduled-implementation.json records targetCtask absent,activelease0 and originalsourcehash; root has not manually implemented the queued task.
+
+## Observed ordinary scheduled continuation — 2026-10-21 17:05 UTC
+
+This section supersedes the earlier **pending** status; the original before-record remains historical evidence. C source was dispatched only after the 10:50 recurring instruction and committed at 10:53:36 UTC. Publication completed after the next 16:58 recurring instruction. Do not attribute the earlier source implementation to the later invocation or execute it again.
+
+- C `issue22-c-nonempty-settlement-v1`: Draft PR57, `c73b57d156e3c1aae24e10565787df4d73b1c3a8`. Only `gto/native/settlement.py` changed: empty/non-list cases now fail before reference/native evaluation. Fixed14 and existingGTO40 PASS; CI39639652663 SUCCESS.
+- B `issue22-b-search-data-v1`: Draft PR59, `35502ff3af55e58c5ffb518fe7d1a2d7db631e64`. Only `src/TDA.tsx` changed: reject malformed latest search payload without render crash, keep null as empty/retry/latest-request guards. Fixed9, savedanswer14, existingunit138, npmci/build/lint PASS. CI39640359341 SUCCESS.
+- D `issue22-d-image-error-redaction-v1`: Draft PR60, `93d9948f8f829432fa66c5aafd294bf8924421fa`. Only `src/PlayerTypeDiagnosis.tsx` changed: fixed PNG error copy, keep retry/dimensions/stale protection. Fixed6, existingunit96, npmci/build/lint PASS. CI outcome is recorded in `ordinary-scheduled-source-chain.json`.
+
+B/D source dispatch occurred after the 16:58 instruction, not before. Original four job spec_hash values still match the retained manifest, all implemented. Fresh complete PR base/head/file observations and PR38 exact proof gates selected B/D; C was rejected as existing implemented work. Protected tests were unchanged. Subagent loopback restrictions were not bypassed: root used the supported network permission for local browser execution. Initial npm cache access failed; one retry using an isolated temporary npm cache passed. An attempted nonexistent `npm run test:unit` was corrected to actual `node --test` file commands; it is not reported as a passing command.
+
+### Scheduler evidence boundary
+
+Provider last_run_time advanced to `2026-10-21T10:50:40.967471+00:00` and `2026-10-21T16:58:15.827919+00:00`; the corresponding prompt arrivals were observed. next_run_time and run ID/history remain null, delivery status unknown. The conversation and workspace/state continued; host process identity across the pause is UNKNOWN. This proves scheduled prompt delivery followed by actual formal host source/test/commit/DraftPR/CI, **not independent cold-start or a resident daemon**. The finite6h/COUNT28 schedule was neither extended nor replaced. No new probe was created.
+
+### Current queue and production drift
+
+The three published ready-next candidates are now completed and must not be rewritten/reclaimed. They remain immutable history. Fresh candidate preparation requires new source/spec review plus an independently failing pinned test; no new executable descriptor is asserted here. A remains blocked on authorized nonproduction/auth/release evidence, not on a filename overlap.
+
+GitHub main moved independently to `bf476732baa38ef18bcaaa973e9f957446ef829a` at the initial current check; PR31 and PR42–56 were already merged by other work. PR58 subsequently merged independently. This worker did not merge main or contact production. Consult current main `docs/qa/poll-production-final-cutover-gate-20261022.md` and `poll-production-private-backup-readiness-20261022.md`: release remains NO-GO pending a real private export/isolated restoration, authorized migration/single-cron handoff and real GoTrue/Vercel QA. Do not reuse the stale claim that PR31 is still open or infer release from these merges.
+
+Public controller results, exact commands/counts, scheduler observations and CI links are under `docs/qa/pr-overlap-20261021/`; tokens, private receipts and SQLite are excluded. Official350 TDA accuracy, 36-animal semantic validity, G11 compatibility/convergence and production privacy remain outside synthetic test claims.

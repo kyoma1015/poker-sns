@@ -1,0 +1,146 @@
+{
+  "observed_at_utc": "2026-10-21T17:04:40.704233+00:00",
+  "original_state_continuity": [
+    {
+      "id": "issue22-host-a",
+      "status": "implemented",
+      "spec_hash_matches_original_manifest": true
+    },
+    {
+      "id": "issue22-host-b",
+      "status": "implemented",
+      "spec_hash_matches_original_manifest": true
+    },
+    {
+      "id": "issue22-host-c",
+      "status": "implemented",
+      "spec_hash_matches_original_manifest": true
+    },
+    {
+      "id": "issue22-host-d",
+      "status": "implemented",
+      "spec_hash_matches_original_manifest": true
+    }
+  ],
+  "state_replacement_created": false,
+  "prior_normal_scheduled_prompt_provider_last_run_time": "2026-10-21T10:50:40.967471+00:00",
+  "current_normal_scheduled_prompt_provider_last_run_time": "2026-10-21T16:58:15.827919+00:00",
+  "provider_run_id": null,
+  "next_run_time": null,
+  "provider_delivery_status": "unknown",
+  "independent_cold_start_verified": false,
+  "daemon_running": false,
+  "same_continuing_conversation_and_retained_workspace": true,
+  "host_process_identity_across_pause": "UNKNOWN",
+  "C": {
+    "id": "issue22-c-nonempty-settlement-v1",
+    "source_dispatched_after_prior_scheduled_prompt": true,
+    "source_commit_time": "2026-10-21T10:53:36Z",
+    "publication_after_current_prompt": true,
+    "commit": "c73b57d156e3c1aae24e10565787df4d73b1c3a8",
+    "pr": 57,
+    "ci": 39639652663,
+    "ci_conclusion": "success"
+  },
+  "B": {
+    "source_dispatched_after_current_scheduled_prompt": true,
+    "commit": "35502ff3af55e58c5ffb518fe7d1a2d7db631e64",
+    "pr": 59,
+    "ci": 39640359341,
+    "ci_conclusion": "success",
+    "acceptance_pass": 9,
+    "existing_unit_pass": 138,
+    "local_validation": {
+      "npm_ci": 0,
+      "build": 0,
+      "lint": 0,
+      "unit": {
+        "command": [
+          "node",
+          "--test",
+          "tests/f03-notification.test.mjs",
+          "tests/interactive-requests.test.mjs",
+          "tests/player-type.test.mjs",
+          "tests/poll-only.test.mjs",
+          "tests/tda-audit-cli.test.mjs",
+          "tests/tda-quiz-auth.test.mjs",
+          "tests/tda-quiz-data.test.mjs",
+          "tests/tda-saved-answer.test.mjs"
+        ],
+        "exit_code": 0,
+        "tail": [
+          "\u2714 valid detail references are used without changing authoritative correctness (0.240674ms)",
+          "\u2139 tests 138",
+          "\u2139 suites 0",
+          "\u2139 pass 138",
+          "\u2139 fail 0",
+          "\u2139 cancelled 0",
+          "\u2139 skipped 0",
+          "\u2139 todo 0",
+          "\u2139 duration_ms 849.862299"
+        ]
+      },
+      "invalid_command_attempt": {
+        "command": "npm run test:unit",
+        "exit_code": 1,
+        "reason": "script absent; replaced by explicit node --test file list"
+      },
+      "initial_npm_ci": "cache access failed; isolated temp cache retry succeeded"
+    }
+  },
+  "D": {
+    "source_dispatched_after_current_scheduled_prompt": true,
+    "commit": "93d9948f8f829432fa66c5aafd294bf8924421fa",
+    "pr": 60,
+    "ci": 39640376299,
+    "ci_conclusion": "success",
+    "acceptance_pass": 6,
+    "existing_unit_pass": 96,
+    "local_validation": {
+      "npm_ci": 0,
+      "build": 0,
+      "lint": 0,
+      "unit": {
+        "command": [
+          "node",
+          "--test",
+          "tests/f03-notification.test.mjs",
+          "tests/interactive-requests.test.mjs",
+          "tests/player-type-audit.test.mjs",
+          "tests/player-type.test.mjs",
+          "tests/poll-only.test.mjs",
+          "tests/tda-quiz-auth.test.mjs"
+        ],
+        "exit_code": 0,
+        "tail": [
+          "\u2714 missing verified user asks for login (1.583295ms)",
+          "\u2139 tests 96",
+          "\u2139 suites 0",
+          "\u2139 pass 96",
+          "\u2139 fail 0",
+          "\u2139 cancelled 0",
+          "\u2139 skipped 0",
+          "\u2139 todo 0",
+          "\u2139 duration_ms 718.046005"
+        ]
+      },
+      "invalid_command_attempt": {
+        "command": "npm run test:unit",
+        "exit_code": 1,
+        "reason": "script absent; replaced by explicit node --test file list"
+      },
+      "initial_npm_ci": "cache access failed; isolated temp cache retry succeeded"
+    }
+  },
+  "original_finite_schedule_changed": false,
+  "new_probe_created": false,
+  "current_main_observed": "bf476732baa38ef18bcaaa973e9f957446ef829a",
+  "main_changed_by_this_worker": false,
+  "limitations": [
+    "Provider run history is null; metadata alone is not implementation proof.",
+    "C source completed at prior 10:50 prompt, not reimplemented at 16:58 prompt.",
+    "B/D source implemented using prepared pinned input after latest prompt; no cold-start claim.",
+    "Fresh code CI does not prove production privacy/Auth or G11 strategic convergence."
+  ],
+  "active_leases_at_completion": 0
+}
