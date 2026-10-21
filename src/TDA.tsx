@@ -792,7 +792,20 @@ function TDA() {
         setErrorMessage('検索中にエラーが発生しました。')
         return
       }
-      setResults((data ?? []) as TdaRule[])
+      const rows: unknown = data ?? []
+      if (!Array.isArray(rows) || rows.some((row: unknown) => {
+        if (row === null || typeof row !== 'object' || Array.isArray(row)) return true
+        const rule = row as Record<string, unknown>
+        return typeof rule.rule_number !== 'number'
+          || !Number.isSafeInteger(rule.rule_number)
+          || rule.rule_number <= 0
+          || typeof rule.title_ja !== 'string'
+      })) {
+        setResults([])
+        setErrorMessage('検索中にエラーが発生しました。再度検索してください。')
+        return
+      }
+      setResults(rows as TdaRule[])
     } catch {
       if (version !== searchVersion.current) return
       setResults([])
