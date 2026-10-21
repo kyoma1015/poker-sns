@@ -1,6 +1,6 @@
 import { parseQuizAnswer, parseQuizQuestions, safeQuizRpc, type TdaQuizQuestion } from './tdaQuizData'
 import { checkQuizAuthentication } from './tdaQuizAuth'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -273,6 +273,9 @@ function TDA() {
 
 
   const [query, setQuery] = useState('')
+  const searchVersion = useRef(0)
+  const searchTimer = useRef<number | undefined>(undefined)
+
 
 
 
@@ -751,310 +754,62 @@ function TDA() {
 
 
 
-  const searchRules = async (text: string) => {
-
-
-
-
-
-
-
-    const trimmed = text.trim()
-
-
-
-
-
-
-
-    if (!trimmed) {
-
-
-
-
-
-
-
-      setResults([])
-
-
-
-
-
-
-
-      setSearched(false)
-
-
-
-
-
-
-
-      setOpenRule(null)
-
-
-
-
-
-
-
-      setErrorMessage('')
-
-
-
-
-
-
-
-      return
-
-
-
-
-
-
-
-    }
-
-
-
-
-
-
-
-    setLoading(true)
-
-
-
-
-
-
-
-    setSearched(true)
-
-
-
-
-
-
-
+  // Invalidate at the input event, before the debounce can leave an old RPC live.
+  const changeQuery = (text: string) => {
+    searchVersion.current += 1
+    window.clearTimeout(searchTimer.current)
+    setQuery(text)
+    setResults([])
+    setSearched(false)
     setOpenRule(null)
-
-
-
-
-
-
-
     setErrorMessage('')
-
-
-
-
-
-
-
-    const { data, error } = await supabase.rpc('search_tda_rules', {
-
-
-
-
-
-
-
-      search_text: trimmed,
-
-
-
-
-
-
-
-    })
-
-
-
-
-
-
-
-    if (error) {
-
-
-
-
-
-
-
-      console.error(error)
-
-
-
-
-
-
-
-      setResults([])
-
-
-
-
-
-
-
-      setErrorMessage('検索中にエラーが発生しました。')
-
-
-
-
-
-
-
-      setLoading(false)
-
-
-
-
-
-
-
-      return
-
-
-
-
-
-
-
-    }
-
-
-
-
-
-
-
-    setResults((data ?? []) as TdaRule[])
-
-
-
-
-
-
-
     setLoading(false)
-
-
-
-
-
-
-
   }
 
-
-
-
-
-
+  const searchRules = async (text: string) => {
+    window.clearTimeout(searchTimer.current)
+    const version = ++searchVersion.current
+    const trimmed = text.trim()
+    if (!trimmed) {
+      setResults([])
+      setSearched(false)
+      setOpenRule(null)
+      setErrorMessage('')
+      setLoading(false)
+      return
+    }
+    setLoading(true)
+    setSearched(true)
+    setOpenRule(null)
+    setErrorMessage('')
+    try {
+      const { data, error } = await supabase.rpc('search_tda_rules', {
+        search_text: trimmed,
+      })
+      if (version !== searchVersion.current) return
+      if (error) {
+        setResults([])
+        setErrorMessage('検索中にエラーが発生しました。')
+        return
+      }
+      setResults((data ?? []) as TdaRule[])
+    } catch {
+      if (version !== searchVersion.current) return
+      setResults([])
+      setErrorMessage('検索中に通信エラーが発生しました。再度検索してください。')
+    } finally {
+      if (version === searchVersion.current) setLoading(false)
+    }
+  }
 
   useEffect(() => {
-
-
-
-
-
-
-
-    const timer = window.setTimeout(() => {
-
-
-
-
-
-
-
-      if (query.trim()) {
-
-
-
-
-
-
-
-        searchRules(query)
-
-
-
-
-
-
-
-      } else {
-
-
-
-
-
-
-
-        setResults([])
-
-
-
-
-
-
-
-        setSearched(false)
-
-
-
-
-
-
-
-        setOpenRule(null)
-
-
-
-
-
-
-
-        setErrorMessage('')
-
-
-
-
-
-
-
-      }
-
-
-
-
-
-
-
+    searchTimer.current = window.setTimeout(() => {
+      if (query.trim()) searchRules(query)
     }, 350)
-
-
-
-
-
-
-
-    return () => window.clearTimeout(timer)
-
-
-
-
-
-
-
+    return () => {
+      window.clearTimeout(searchTimer.current)
+      searchVersion.current += 1
+    }
   }, [query])
 
 
@@ -1091,7 +846,7 @@ function TDA() {
 
 
 
-    setQuery(String(ruleNumber))
+    changeQuery(String(ruleNumber))
 
 
 
@@ -1658,7 +1413,7 @@ function TDA() {
 
 
 
-                onChange={(event) => setQuery(event.target.value)}
+                onChange={(event) => changeQuery(event.target.value)}
 
 
 
@@ -1714,7 +1469,7 @@ function TDA() {
 
 
 
-                  onClick={() => setQuery('')}
+                  onClick={() => changeQuery('')}
 
 
 
@@ -1826,7 +1581,7 @@ function TDA() {
 
 
 
-                    onClick={() => setQuery(item)}
+                    onClick={() => changeQuery(item)}
 
 
 
