@@ -28,3 +28,7 @@ Local crontab unavailable. systemctl binary presence is not evidence of persiste
 3. Same durable shared state must survive the independent invocation; otherwise reconcile stopped workers/PRs before any new lease. Public GitHub checkpoint is not private-state recovery.
 4. Complete fresh PR overlap review before dispatch. No safety gate may be weakened to make a probe green.
 No new paid API/service, production DB/SQL/deploy, main merge or original checkpoint changes.
+
+## Actual readiness gate result
+The root verified all3 exact input Gitobjects and every protected-file SHA256, then invoked PR34 Continuation.plan against a fresh complete29-open-PR file/head snapshot and the actual existing sharedstate. All3 were BLOCKED withoverlapping_open_pr; none was leased or dispatched. See docs/qa/independent-launch-20261021/actual-input-readiness.json and overlap-review-required.json. Some ancestor pins can be completed by coordinator review; divergent legacy PRs must be reconciled without changing immutable candidate IDs in-place. These are execution-input-complete, NOT globally ready tasks.
+`systemctl --user is-system-running` returned offline; no user service was installed. crontab absent. Service binary presence is not a usable autonomous model host.
