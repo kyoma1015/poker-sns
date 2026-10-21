@@ -119,6 +119,8 @@ def run_case(reference, base, case, native_module=None):
 def run_fixture_suite(native_module=None):
     fixture = json.loads(FIXTURES.read_text())
     if fixture['schema'] != 'pokerid-synthetic-settlement-v1': raise ValueError('unsupported fixture schema')
+    if not isinstance(fixture.get('cases'), list) or not fixture['cases']:
+        raise ValueError('settlement fixtures require a nonempty list of cases')
     ids = [case['id'] for case in fixture['cases']]
     if len(ids) != len(set(ids)): raise ValueError('duplicate fixture ids')
     with reference_module() as reference:
