@@ -198,7 +198,7 @@ function PlayerTypeDiagnosis() {
       // IMPORTANT:
       // The 50th answer is not committed to answerIds until the RPC succeeds.
       // A retry therefore sends exactly 50 answers instead of duplicating Q50.
-      setError(`結果を保存できませんでした：${saveError.message}`)
+      setError('結果を保存できませんでした。通信状況を確認して、最後の回答をもう一度選んでください。')
       return
     }
 
@@ -395,9 +395,9 @@ function PlayerTypeDiagnosis() {
       if (postError) throw postError
       setShareMessage('タイムラインに投稿しました。')
       setShareEditorOpen(false)
-    } catch (e) {
+    } catch {
       if (!resultRequest.current.isCurrent(request)) return
-      setShareMessage(`投稿に失敗しました：${e instanceof Error ? e.message : String(e)}`)
+      setShareMessage('投稿に失敗しました。通信状況を確認して、もう一度お試しください。')
     } finally {
       if (resultRequest.current.isCurrent(request)) setSharePosting(false)
     }
