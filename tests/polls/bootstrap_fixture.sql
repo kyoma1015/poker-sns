@@ -39,6 +39,3 @@ create function public.legacy_notification_insert_fixture(p_user_id uuid,p_actor
 language sql security definer set search_path='' as $$insert into public.notifications(user_id,actor_id,type,post_id) values(p_user_id,p_actor_id,p_type,p_post_id)$$;
 revoke all on function public.legacy_notification_insert_fixture(uuid,uuid,text,uuid) from public,anon;
 grant execute on function public.legacy_notification_insert_fixture(uuid,uuid,text,uuid) to authenticated;
--- Local-only authenticator for PostgREST; not a production credential.
-alter role authenticator password 'poll-fixture-only-password';
-grant anon,authenticated to authenticator;

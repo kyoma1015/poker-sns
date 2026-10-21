@@ -32,3 +32,5 @@ No main merge, production deployment, production SQL/DB connection, real user ac
 
 ## Isolated-image initialization repair (2026-10-21)
 CI39514232150 failed at `CREATE TABLE IF NOT EXISTS auth.users`: even an existing relation requires schema CREATE permission, correctly absent for the application postgres role. The fixture now requires the official existing auth.users instead of attempting Auth DDL; actual auth.uid remains untouched. The image startup preload explicitly includes pg_stat_statements alongside pg_cron, preserving the extension its startup migrations query. No Auth grants are broadened. These fixes require a new real runner execution before DB acceptance can be PASS.
+
+CI39571429917 passed all client steps and official Auth table seeding, then correctly rejected reserved authenticator-role mutation by postgres. Local fixture password configuration is now isolated into authenticator_fixture.sql, executed only as the official container supabase_admin. Application tables/candidate still execute as postgres. Existing official role memberships are asserted, not expanded. pg_stat_statements startup error was absent in this run.
