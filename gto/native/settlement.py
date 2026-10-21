@@ -128,6 +128,46 @@ def run_fixture_suite(native_module=None):
             'historical_baseline_used': False, 'results': results}
 
 
+
+def validate_rank7_cards(cards):
+    """Fail before either preserved kernel: Python's original omits range checks."""
+    if not isinstance(cards, (list, tuple)) or len(cards) != 7:
+        raise ValueError('seven distinct integer cards required')
+    if any(type(card) is not int or not 0 <= card < 52 for card in cards):
+        raise ValueError('cards must be integers in 0..51')
+    if len(set(cards)) != 7:
+        raise ValueError('seven distinct integer cards required')
+    return list(cards)
+
+
+def run_rank7_case(reference, case, native_module=None):
+    cards = validate_rank7_cards(case['cards'])
+    expected = case['expected']
+    if not isinstance(expected, list) or not expected or any(type(x) is not int for x in expected):
+        raise ValueError('explicit integer rank tuple required')
+    observed = list(reference.rank7(cards))
+    equal(case['id'] + '/python-rank7', observed, expected)
+    if native_module is not None:
+        equal(case['id'] + '/native-rank7', list(native_module.rank7(cards)), expected)
+    return {'id': case['id'], 'status': 'PASS', 'rank': observed,
+            'native_compared': native_module is not None}
+
+
+def run_rank7_fixture_suite(native_module=None):
+    fixture = json.loads((ROOT / 'gto/fixtures/rank7-v1.json').read_text())
+    if fixture['schema'] != 'pokerid-synthetic-rank7-v1' or not fixture['cases']:
+        raise ValueError('nonempty rank7 fixture required')
+    ids = [case['id'] for case in fixture['cases']]
+    if len(ids) != len(set(ids)):
+        raise ValueError('duplicate rank7 fixture ids')
+    with reference_module() as reference:
+        results = [run_rank7_case(reference, case, native_module) for case in fixture['cases']]
+    if {result['rank'][0] for result in results} != set(range(9)):
+        raise ValueError('all nine hand categories required')
+    return {'status': 'PASS', 'case_count': len(results), 'results': results,
+            'provenance': fixture['provenance'], 'historical_baseline_used': False,
+            'strategy_or_convergence_proof': False}
+
 def build_and_run(native_root, compiler):
     native_root = native_root.resolve()
     include = native_root / 'g12_next'
@@ -147,6 +187,7 @@ def build_and_run(native_root, compiler):
     sys.path.insert(0, str(out))
     import pokerid_settlement_probe
     report = run_fixture_suite(pokerid_settlement_probe)
+    report['rank7'] = run_rank7_fixture_suite(pokerid_settlement_probe)
     report['build_command'] = command
     (out / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
     return report
