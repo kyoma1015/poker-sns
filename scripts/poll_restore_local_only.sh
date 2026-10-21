@@ -23,7 +23,7 @@ actual_database=$(psql -X -qAt -v ON_ERROR_STOP=1 --dbname "$restore_url" -c "se
 [[ -n "$actual_database" ]] || fail 'Target DB name unavailable'
 has_poll=$(psql -X -qAt -v ON_ERROR_STOP=1 --dbname "$restore_url" -c "select to_regclass('public.post_interactive') is not null" ) || fail 'Cannot inspect target'
 [[ "$has_poll" == f ]] || fail 'Target already has interactive data/schema; refuse replacement'
-auth_rows=$(psql -X -qAt -v ON_ERROR_STOP=1 --dbname "$restore_url" -c "select case when to_regclass('auth.users') is null then 0 else (select count(*) from auth.users) end" ) || fail 'Cannot check target Auth users'
+auth_rows=$(psql -X -qAt -v ON_ERROR_STOP=1 --dbname "$restore_url" -c "select count(*) from auth.users" ) || fail 'Cannot check target Auth users'
 [[ "$auth_rows" == 0 ]] || fail 'Target has Auth users; refuse restoration'
 printf 'RESTORE TARGET CHECK: %s (localhost), empty interactive/Auth records.\n' "$actual_database"
 printf 'Verify manually that this is a throwaway self-hosted instance, NOT a tunnel to production.\n'
