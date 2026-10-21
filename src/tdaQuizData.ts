@@ -79,3 +79,30 @@ export function quizAuditReport(value: unknown, expectedCount?: number) {
     verdict: countMatches && !candidates ? 'STRUCTURE_PASS' as const : 'REVIEW_REQUIRED' as const,
     publication_approved: false as const }
 }
+
+
+// Saved answers are authoritative only after structural and cross-field checks.
+// Optional explanation failures must not erase a valid, already committed save.
+export function parseQuizAnswer(question: TdaQuizQuestion, selectedOptionId: string, value: unknown, detail: unknown = null) {
+  const invalid = () => { throw new Error('回答結果を確認できませんでした。保存済みの可能性があるため、この問題には再回答しないでください。') }
+  if (!record(value)) return invalid()
+  const options = new Set(question.options.map(option => option.id))
+  if (!options.has(selectedOptionId) || typeof value.is_correct !== 'boolean' ||
+      typeof value.correct_option_id !== 'string' || !options.has(value.correct_option_id) ||
+      value.is_correct !== (selectedOptionId === value.correct_option_id) ||
+      typeof value.total_answers !== 'number' || !Number.isSafeInteger(value.total_answers) || value.total_answers < 0 ||
+      typeof value.correct_answers !== 'number' || !Number.isSafeInteger(value.correct_answers) || value.correct_answers < 0 ||
+      value.correct_answers > value.total_answers ||
+      !(value.correct_rate === null || (typeof value.correct_rate === 'number' && Number.isFinite(value.correct_rate) && value.correct_rate >= 0 && value.correct_rate <= 100)) ||
+      !(value.explanation == null || typeof value.explanation === 'string')) return invalid()
+  const extra = record(detail) ? detail : null
+  const rules: { rule_number: number; title_ja: string | null }[] = []
+  if (extra && Array.isArray(extra.rules)) for (const rule of extra.rules) {
+    if (record(rule) && typeof rule.rule_number === 'number' && Number.isSafeInteger(rule.rule_number) && rule.rule_number > 0 &&
+        (rule.title_ja === null || typeof rule.title_ja === 'string')) rules.push({rule_number:rule.rule_number,title_ja:rule.title_ja})
+  }
+  return { is_correct:value.is_correct, correct_option_id:value.correct_option_id,
+    explanation:extra && typeof extra.explanation === 'string' ? extra.explanation : (value.explanation ?? null) as string | null,
+    rules, total_answers:value.total_answers, correct_answers:value.correct_answers,
+    correct_rate:value.total_answers >= 10 ? value.correct_rate as number | null : null }
+}

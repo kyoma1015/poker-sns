@@ -1,4 +1,4 @@
-import { parseQuizQuestions, safeQuizRpc, type TdaQuizQuestion } from './tdaQuizData'
+import { parseQuizAnswer, parseQuizQuestions, safeQuizRpc, type TdaQuizQuestion } from './tdaQuizData'
 import { checkQuizAuthentication } from './tdaQuizAuth'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -360,6 +360,7 @@ function TDA() {
   const [quizAnswer, setQuizAnswer] = useState<TdaQuizAnswer | null>(null)
 
   const [quizAnswerLoading, setQuizAnswerLoading] = useState(false)
+  const [quizAnswerUnverified, setQuizAnswerUnverified] = useState(false)
 
   const [quizScore, setQuizScore] = useState(0)
 
@@ -446,6 +447,7 @@ function TDA() {
     setQuizSelectedOption(null)
 
     setQuizAnswer(null)
+    setQuizAnswerUnverified(false)
 
     setQuizReview([])
 
@@ -526,6 +528,7 @@ function TDA() {
     setQuizScore(0)
     setQuizSelectedOption(null)
     setQuizAnswer(null)
+    setQuizAnswerUnverified(false)
     setQuizReview([])
 
     const { data, error } = await safeQuizRpc(() => supabase.rpc('get_tda_quiz_hard_questions', {
@@ -576,6 +579,7 @@ function TDA() {
     setQuizScore(0)
     setQuizSelectedOption(null)
     setQuizAnswer(null)
+    setQuizAnswerUnverified(false)
     setQuizReview([])
 
     const { data, error } = await safeQuizRpc(() => supabase.rpc('get_my_wrong_tda_quiz_questions', {
@@ -611,7 +615,7 @@ function TDA() {
 
 
   const answerQuiz = async (optionId: string) => {
-    if (quizAnswer || quizAnswerLoading) return
+    if (quizAnswer || quizAnswerLoading || quizAnswerUnverified) return
 
     const question = quizQuestions[quizIndex]
     if (!question) return
@@ -650,8 +654,8 @@ function TDA() {
     const submitRow = Array.isArray(submitData) ? submitData[0] : submitData
 
     if (!submitRow) {
-      setQuizSelectedOption(null)
-      setQuizError('回答結果を取得できませんでした。')
+      setQuizAnswerUnverified(true)
+      setQuizError('回答結果を確認できませんでした。保存済みの可能性があるため、この問題には再回答しないでください。')
       setQuizAnswerLoading(false)
       return
     }
@@ -670,20 +674,13 @@ function TDA() {
     }
 
     const detailRow = Array.isArray(detailData) ? detailData[0] : detailData
-    const totalAnswers = Number(submitRow.total_answers ?? 0)
-    const correctAnswers = Number(submitRow.correct_answers ?? 0)
-
-    const answerResult: TdaQuizAnswer = {
-      is_correct: Boolean(submitRow.is_correct),
-      correct_option_id: String(submitRow.correct_option_id),
-      explanation: detailRow?.explanation ?? submitRow.explanation ?? null,
-      rules: Array.isArray(detailRow?.rules) ? detailRow.rules : [],
-      total_answers: totalAnswers,
-      correct_answers: correctAnswers,
-      correct_rate:
-        totalAnswers >= 10 && submitRow.correct_rate !== null
-          ? Number(submitRow.correct_rate)
-          : null,
+    let answerResult: TdaQuizAnswer
+    try { answerResult = parseQuizAnswer(question, optionId, submitRow, detailRow) }
+    catch {
+      setQuizAnswerUnverified(true)
+      setQuizError('回答結果を確認できませんでした。保存済みの可能性があるため、この問題には再回答しないでください。')
+      setQuizAnswerLoading(false)
+      return
     }
 
     setQuizAnswer(answerResult)
@@ -696,7 +693,7 @@ function TDA() {
       },
     ])
 
-    if (submitRow.is_correct) {
+    if (answerResult.is_correct) {
       setQuizScore((score) => score + 1)
     }
 
@@ -721,6 +718,7 @@ function TDA() {
     setQuizSelectedOption(null)
 
     setQuizAnswer(null)
+    setQuizAnswerUnverified(false)
 
     setQuizError('')
 
@@ -743,6 +741,7 @@ function TDA() {
     setQuizSelectedOption(null)
 
     setQuizAnswer(null)
+    setQuizAnswerUnverified(false)
 
     setQuizReview([])
 
@@ -3622,7 +3621,7 @@ function TDA() {
 
                           onClick={() => answerQuiz(option.id)}
 
-                          disabled={Boolean(quizAnswer) || quizAnswerLoading}
+                          disabled={Boolean(quizAnswer) || quizAnswerLoading || quizAnswerUnverified}
 
                         >
 
