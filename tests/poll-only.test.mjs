@@ -44,7 +44,7 @@ test('both composers use guarded creation; public card cannot mount historical q
   }
   assert.match(card, /if \(item.kind !== 'poll'\) return null/)
   assert.doesNotMatch(card, /<QuestionThread/)
-  assert.match(card, /export function QuestionThread/)
+  assert.doesNotMatch(card, /QuestionThread|get_question_thread_messages|add_question_thread_message|質問する/)
   assert.match(timeline, /visibleInteractiveIds.includes\(row.id\)/)
   assert.match(detail, /interactiveRow\?\.kind === 'question'/)
   for (const source of [timeline, detail, card]) assert.match(source, /pollDisplayResult\(/)
