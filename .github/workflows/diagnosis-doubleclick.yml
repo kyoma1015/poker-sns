@@ -1,11 +1,11 @@
-name: Diagnosis error-redaction acceptance
+name: Diagnosis PNG-error acceptance
 on:
   pull_request:
-    branches: [codex/issue22-d-redaction-input-20261021]
+    branches: [codex/issue22-d-image-error-input-20261021]
 permissions:
   contents: read
 concurrency:
-  group: diagnosis-redaction-${{ github.ref }}
+  group: diagnosis-image-error-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   verify:

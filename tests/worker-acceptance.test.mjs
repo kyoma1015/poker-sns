@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import path from 'node:path'
 import os from 'node:os'
-import { mkdtemp, rm } from 'node:fs/promises'
+import { mkdtemp, rm, readFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { createServer } from 'vite'
 import { chromium } from 'playwright-core'
@@ -119,5 +119,45 @@ test('late rejected save and share cannot pollute a different result', async () 
     await page.waitForTimeout(100)
     assert.equal((await page.locator('body').innerText()).includes(privateMarker), false)
     assert.equal(await page.locator('.ptd-result-hint[role="status"]').count(), 0)
+  })
+})
+
+
+test('PNG export failure hides exception details and retry preserves PNG dimensions', async () => {
+  await redactionHarness(async (page, base) => {
+    await page.goto(base + '/__diagnosis')
+    await page.getByRole('heading', { name: 'ライオン', exact: true }).waitFor()
+    await page.evaluate(() => {
+      window.savedPngToBlob = HTMLCanvasElement.prototype.toBlob
+      HTMLCanvasElement.prototype.toBlob = function () { throw new Error('SYNTHETIC_PRIVATE_PNG_EXPORT_DETAIL') }
+    })
+    await page.getByRole('button', { name: '画像を保存', exact: true }).click()
+    await page.getByText(/画像の保存に失敗しました/).waitFor()
+    assert.equal((await page.locator('body').innerText()).includes('SYNTHETIC_PRIVATE_PNG_EXPORT_DETAIL'), false, 'PNG exception detail must not reach DOM')
+    assert.match(await page.getByText(/画像の保存に失敗しました/).innerText(), /画像の保存に失敗しました。.*もう一度/)
+    await page.evaluate(() => { HTMLCanvasElement.prototype.toBlob = window.savedPngToBlob })
+    const pendingDownload = page.waitForEvent('download')
+    await page.getByRole('button', { name: '画像を保存', exact: true }).click()
+    const download = await pendingDownload
+    const bytes = await readFile(await download.path())
+    assert.equal(bytes.readUInt32BE(16), 1080)
+    assert.equal(bytes.readUInt32BE(20), 1500)
+    assert.match(download.suggestedFilename(), /^PokerID_lion_one\.png$/)
+  })
+})
+
+test('late PNG failure cannot add errors or loading to another diagnosis result', async () => {
+  await redactionHarness(async (page, base) => {
+    await page.goto(base + '/__diagnosis')
+    await page.getByRole('heading', { name: 'ライオン', exact: true }).waitFor()
+    await page.evaluate(() => { HTMLCanvasElement.prototype.toBlob = function (callback) { window.rejectPendingPng = () => callback(null) } })
+    await page.getByRole('button', { name: '画像を保存', exact: true }).click()
+    await page.waitForFunction(() => typeof window.rejectPendingPng === 'function')
+    await page.getByRole('button', { name: 'QA result two', exact: true }).click()
+    await page.getByRole('heading', { name: 'トラ', exact: true }).waitFor()
+    await page.evaluate(() => window.rejectPendingPng())
+    await page.waitForTimeout(100)
+    assert.equal(await page.getByText(/画像の保存に失敗しました/).count(), 0)
+    assert.equal(await page.getByText('画像を作成しています...').count(), 0)
   })
 })
