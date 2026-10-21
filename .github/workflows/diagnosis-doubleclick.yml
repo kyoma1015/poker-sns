@@ -1,11 +1,11 @@
-name: Diagnosis double-click acceptance
+name: Diagnosis error-redaction acceptance
 on:
   pull_request:
-    branches: [codex/issue22-d-doubleclick-input-v2]
+    branches: [codex/issue22-d-redaction-input-20261021]
 permissions:
   contents: read
 concurrency:
-  group: diagnosis-doubleclick-${{ github.ref }}
+  group: diagnosis-redaction-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   verify:
@@ -20,7 +20,7 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
-      - name: Immutable diagnosis gesture acceptance
+      - name: Immutable diagnosis gesture and error-redaction acceptance
         env:
           CHROMIUM_PATH: /usr/bin/google-chrome
         run: node --test tests/worker-acceptance.test.mjs

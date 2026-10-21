@@ -74,7 +74,7 @@ try {
     }
     await page.evaluate(() => { window.diagnosisControls.failSave = true })
     await page.locator('.ptd-option').first().click()
-    await page.getByText('結果を保存できませんでした：test retry', { exact: true }).waitFor()
+    await page.getByText('結果を保存できませんでした。通信状況を確認して、最後の回答をもう一度選んでください。', { exact: true }).waitFor()
     await page.evaluate(() => { window.diagnosisControls.failSave = false })
     await page.locator('.ptd-option').first().click(); await ready('ライオン')
     const counts = await page.evaluate(() => window.diagnosisCalls.filter(c => c.name === 'complete_player_type_v2_diagnosis').map(c => c.args.p_option_ids.length))
