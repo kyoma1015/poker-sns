@@ -61,3 +61,19 @@ test('old failed request cannot end newer request loading or show stale error',(
   assert.equal(await p.getByText('検索中にエラーが発生しました。',{exact:true}).count(),0)
   await resolve(p,1,'synthetic beta');await tick(p);assert.deepEqual(await titles(p),['synthetic beta'])
 }))
+
+for (const [name,data] of [
+  ['non-array payload', { unexpected: true }],
+  ['null rule row', [null]],
+  ['invalid title value', [{ rule_number: 1, title_ja: { internal: 'synthetic marker' } }]],
+  ['invalid rule number', [{ rule_number: '1', title_ja: 'synthetic invalid number' }]],
+]) test(`malformed search ${name} fails closed and permits retry`,()=>withPage(async(p,input)=>{
+  await input.fill('alpha');await waitCalls(p,1)
+  await p.evaluate(data=>window.tdaSearchQA.resolveRaw(0,data),data);await tick(p)
+  assert.match(await p.locator('body').innerText(),/検索.*(エラー|失敗|通信)/)
+  assert.equal(await p.getByText('検索しています...', {exact:true}).count(),0)
+  assert.equal(await p.getByPlaceholder('例：ワンチップ、ショーダウン順、体臭...').count(),1)
+  assert.deepEqual(await titles(p),[])
+  await input.fill('beta');await waitCalls(p,2);await resolve(p,1,'synthetic recovered');await tick(p)
+  assert.deepEqual(await titles(p),['synthetic recovered'])
+}))

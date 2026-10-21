@@ -4,6 +4,7 @@ const calls: string[] = []
 Object.assign(window, { tdaSearchQA: {
   calls,
   resolve: (index: number, label: string) => pending[index].resolve({ data: [{ rule_number: index + 1, title_ja: label, summary_ja: null, conclusion_ja: null, explanation_ja: null }], error: null }),
+  resolveRaw: (index: number, data: unknown) => pending[index].resolve({ data, error: null }),
   fail: (index: number) => pending[index].resolve({ data: null, error: { message: 'synthetic search error' } }),
   reject: (index: number) => pending[index].reject(new Error('synthetic disconnected search')),
 } })
