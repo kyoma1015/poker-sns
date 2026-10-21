@@ -23,8 +23,8 @@ test('historical result RPC signatures are handled and legacy client permissions
 })
 
 test('SQL wrappers contain no invalid bare dollar delimiters', () => {
-  assert.doesNotMatch(forward, /as \\$(?!\\$|[A-Za-z_][A-Za-z0-9_]*\\$)/)
-  assert.match(forward, /as \\$legacy_results\\$/)
+  assert.doesNotMatch(forward, /as \$(?!\$|[A-Za-z_][A-Za-z0-9_]*\$)/)
+  assert.match(forward, /as \$legacy_results\$/)
 })
 
 test('new scheduler refuses existing production interactive cron', () => {
