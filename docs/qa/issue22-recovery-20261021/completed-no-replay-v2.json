@@ -1,0 +1,21 @@
+{
+  "real_shared_state": true,
+  "tasks": [
+    {
+      "id": "issue22-b-saved-answer-20261021",
+      "reclaim_returned_none": true
+    },
+    {
+      "id": "issue22-c-rank7-v1",
+      "reclaim_returned_none": true
+    },
+    {
+      "id": "issue22-continuation-recovery",
+      "reclaim_returned_none": true
+    },
+    {
+      "id": "issue22-d-doubleclick-v2",
+      "reclaim_returned_none": true
+    }
+  ]
+}
