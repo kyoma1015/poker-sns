@@ -15,6 +15,8 @@ import tempfile
 @contextmanager
 def verified_snapshot(source, expected_contract, *, max_bytes=4 * 1024**3):
     """Copy/hash once, check the complete snapshot, then expose only that copy."""
+    if type(max_bytes) is not int or max_bytes <= 0:
+        raise ValueError('checkpoint size limit must be a positive integer')
     source = Path(source)
     with tempfile.TemporaryDirectory(prefix='pokerid-checkpoint-verified-') as directory:
         snapshot = Path(directory) / 'checkpoint.bin'
