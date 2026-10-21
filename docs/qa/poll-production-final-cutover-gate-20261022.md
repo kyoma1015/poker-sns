@@ -22,7 +22,7 @@
 
 ## Blocking findings and mitigation
 
-1. **Historical close-notice replay (fixed in candidate; still awaiting new CI):** the original `poll_private.close_due_polls()` only consulted close receipts and would re-notify already closed polls. The candidate must also exclude polls with an existing `notifications(type='poll_closed',post_id,user_id)` row. The disposable QA harness seeds an old notification and verifies two close worker executions do not duplicate it.
+1. **Historical close-notice replay (fixed; PR50 isolated CI PASS56, main integrated):** the original `poll_private.close_due_polls()` only consulted close receipts and would re-notify already closed polls. The candidate must also exclude polls with an existing `notifications(type='poll_closed',post_id,user_id)` row. The disposable QA harness seeds an old notification and verifies two close worker executions do not duplicate it.
 2. **Scheduler overlap:** the legacy worker neither locks poll rows nor coordinates with new close receipts; neither table currently provides a unique `(post_id,user_id,type)` constraint. Do not run both schedulers simultaneously. New `schedule_candidate.sql` deliberately rejects the live cron until it is removed. An already running legacy job may continue after unscheduling; wait and verify no executing legacy job remains before enabling the replacement. If run-state cannot be verified, STOP.
 3. **Release is not reversible by a schema rollback alone:** `disable_candidate.sql` disables feature RPCs and new job while retaining votes, historical questions/answers, security guards and receipts. It does not restore old RPC definitions or UI. Keep verified backups and a documented forward-fix/restore plan.
 4. **Production parity remains incomplete:** GoTrue sign-in/refresh, actual authenticated mobile-to-live-backend flows, production storage/RLS beyond this feature, and Vercel deployment have not been tested. PR49 mock browser + PostgREST JWT fixture are not substitutes.
@@ -49,4 +49,11 @@
 
 - PR49 isolated CI (reported passed by Work): https://github.com/kyoma1015/poker-sns/actions/runs/39630047622
 - Current production data and catalog inventory queried in read-only mode on 2026-10-22.
-- The historical notification replay fix requires a **new** green isolated CI before even considering GO.
+- Historical notification replay fix passed CI https://github.com/kyoma1015/poker-sns/actions/runs/39631287828 (PASS56/FAIL0) and merged as PR50.
+
+## Read-only legacy cron run-state evidence, 2026-10-22
+
+- Exactly one active legacy poll cron observed (`jobid=1`, one-minute cadence).
+- `cron.job_run_details`: **5704 succeeded**, latest completed at 2026-10-21 16:21:00 UTC; **0 running** at snapshot time. This is transient evidence, not permission to unschedule or start a new worker.
+- Closed polls without an owner `poll_closed` notification: **0**. Duplicate `(post_id,user_id)` closed-notification pairs: **0**.
+- `sql/poll_only/preflight_readonly.sql` now contains these repeatable read-only checks for the next authorized maintenance window. **Backup/restoration still unverified; release remains NO-GO.**
