@@ -11,6 +11,7 @@ import sqlite3
 import time
 
 from code_worker import Leases, command, protected_hashes, validate_spec
+from pr_overlap import verify_overlap_review
 
 
 def digest(value):
@@ -171,9 +172,12 @@ class Continuation:
                         raise ValueError('existing_branch_pr')
                     if set(pr['changed_paths']) & set(task['allowed_paths']):
                         pin = inherited.get(str(pr['number']))
-                        if pin != pr.get('head_sha') or not re.fullmatch(r'[0-9a-f]{40}', str(pin)):
+                        if pin == pr.get('head_sha') and re.fullmatch(r'[0-9a-f]{40}', str(pin)):
+                            command(['git', 'merge-base', '--is-ancestor', pin, task['base_sha']], repository)
+                        elif str(pr['number']) in candidate.get('overlap_reviews', {}):
+                            verify_overlap_review(candidate, pr, repository)
+                        else:
                             raise ValueError('overlapping_open_pr')
-                        command(['git', 'merge-base', '--is-ancestor', pin, task['base_sha']], repository)
                 selected.add(task['lane']); result['manifest']['tasks'].append(task)
             except (ValueError, KeyError, TypeError, RuntimeError):
                 # Reason codes only; candidate instructions, shell output or auth never logged.
