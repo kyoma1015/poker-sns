@@ -547,9 +547,9 @@ function PlayerTypeDiagnosis() {
       const image = await createShareImage()
       if (!resultRequest.current.isCurrent(request)) return
       downloadShareImage(image)
-    } catch (e) {
+    } catch {
       if (!resultRequest.current.isCurrent(request)) return
-      setExternalShareError(`画像の保存に失敗しました：${e instanceof Error ? e.message : String(e)}`)
+      setExternalShareError('画像の保存に失敗しました。もう一度お試しください。')
     } finally {
       if (resultRequest.current.isCurrent(request)) setImageSaving(false)
     }
