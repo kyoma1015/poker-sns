@@ -1,0 +1,32 @@
+{
+  "id": "issue22-d-doubleclick-v2",
+  "lane": "D",
+  "base_sha": "c477c81fa74f050e28cf99fe3ad67c8d1ffd497c",
+  "executor": "host_session",
+  "host_agent_id": "/root/d_next",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "src/PlayerTypeDiagnosis.tsx"
+  ],
+  "tested_source_sha256": {
+    "src/PlayerTypeDiagnosis.tsx": "9c85503aa57fa4e2e8280ce428d63997b1417d6809e45b6cd7b770a354d24549"
+  },
+  "tests": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/worker-acceptance.test.mjs"
+      ],
+      "exit_code": 0,
+      "test_count": 1,
+      "output_sha256": "2647b9bf2767d847386ce61c6fffb3a22e06b0ef4422896acdefb5dce9a447fb"
+    }
+  ],
+  "commit": "43e2bae1f5de33fc0d94a1d30b974492fbfbf238",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "lane": "A",
+    "reference": "docs/workers/ISSUE22_RESTART_STATE_20261021.md",
+    "title": "A: production-catalog parity and real-DB UI/auth QA for poll; remains owner/environment gate, no production connection authorized.",
+    "status": "review_required"
+  },
+  {
+    "lane": "B",
+    "reference": "docs/workers/ISSUE22_RESTART_STATE_20261021.md",
+    "title": "B: B-RULE-SEARCH-LATEST-01 — src/TDA.tsx raw search RPC unconditionally sets old results/error/loading; invalidate immediately on new query/clear, test out-of-order responses and throw recovery. Refer",
+    "status": "review_required"
+  },
+  {
+    "lane": "C",
+    "reference": "docs/workers/ISSUE22_RESTART_STATE_20261021.md",
+    "title": "C: C-CHECKPOINT-BUDGET-01 — gto/native/checkpoints.py verified_snapshot accepts NaN/Inf max_bytes, observed on own174-byte synthetic file. Require positive exact int before source open; test invalid t",
+    "status": "review_required"
+  },
+  {
+    "lane": "D",
+    "reference": "docs/workers/ISSUE22_RESTART_STATE_20261021.md",
+    "title": "D: D-RESULT-ERROR-REDACTION-01 — saveResult/shareToTimeline render backend Error.message; use fixed Japanese retry guidance without raw SQL/URL markers; test save/share/retry50/stale result preservati",
+    "status": "review_required"
+  }
+]

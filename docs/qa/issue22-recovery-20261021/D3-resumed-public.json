@@ -1,0 +1,10 @@
+{
+  "id": "issue22-d-doubleclick-v2",
+  "status": "prepared",
+  "executor": "host_session",
+  "worktree": "/workspace/work/issue22-d-recovered-worktrees/issue22-d-doubleclick-v2",
+  "real_ai_implementation": false,
+  "recovered_checkpoint": true,
+  "simulated_quota_recovery": true,
+  "new_process": true
+}

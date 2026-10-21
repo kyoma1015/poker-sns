@@ -1,0 +1,39 @@
+{
+  "id": "issue22-continuation-recovery",
+  "lane": "A",
+  "base_sha": "3aaf7c4534c664c3ed97f6dc8a1895249d337241",
+  "executor": "host_session",
+  "host_agent_id": "/root/recovery_queue",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "docs/workers/CONTINUATION_RECOVERY.md",
+    "scripts/continuation_recovery.py"
+  ],
+  "tested_source_sha256": {
+    "docs/workers/CONTINUATION_RECOVERY.md": "e2bb967c98e6b98283ccd8d212947176762a4351c25c1561570ee642630d99a7",
+    "scripts/continuation_recovery.py": "a84c3cb6e05b425145fd20c4a2f10d24e4a627ec11276c4b05845395575da61b"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 13,
+      "output_sha256": "8ac0b77cd973768a7685832e326d2df0fc3d8001e3ec2077ad814b91e7e5b3d1"
+    }
+  ],
+  "commit": "b351e1fb0aeb6fe150e8ff038a76e3fd31bc90ac",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

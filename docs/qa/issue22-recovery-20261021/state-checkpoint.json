@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "daemon_running": false,
+  "run_count": 0,
+  "run_limit": 28,
+  "jobs": [
+    {
+      "id": "issue22-b-saved-answer-20261021",
+      "lane": "B",
+      "status": "implemented",
+      "attempts": 1
+    },
+    {
+      "id": "issue22-c-rank7-v1",
+      "lane": "C",
+      "status": "implemented",
+      "attempts": 1
+    },
+    {
+      "id": "issue22-continuation-recovery",
+      "lane": "A",
+      "status": "implemented",
+      "attempts": 1
+    },
+    {
+      "id": "issue22-d-doubleclick-v1",
+      "lane": "D",
+      "status": "blocked",
+      "attempts": 1
+    },
+    {
+      "id": "issue22-d-doubleclick-v2",
+      "lane": "D",
+      "status": "implemented",
+      "attempts": 2
+    },
+    {
+      "id": "issue22-host-a",
+      "lane": "A",
+      "status": "implemented",
+      "attempts": 1
+    },
+    {
+      "id": "issue22-host-b",
+      "lane": "B",
+      "status": "implemented",
+      "attempts": 1
+    },
+    {
+      "id": "issue22-host-c",
+      "lane": "C",
+      "status": "implemented",
+      "attempts": 1
+    },
+    {
+      "id": "issue22-host-d",
+      "lane": "D",
+      "status": "implemented",
+      "attempts": 1
+    }
+  ],
+  "failures": [
+    {
+      "id": "issue22-d-doubleclick-v2",
+      "failure_class": "quota",
+      "retry_at": 1792572717.5644107
+    }
+  ]
+}

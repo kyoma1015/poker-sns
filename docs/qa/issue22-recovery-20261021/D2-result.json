@@ -1,0 +1,13 @@
+{
+  "id": "issue22-d-doubleclick-v1",
+  "lane": "D",
+  "base_sha": "72401d7e5cf891d6e7735c9c053d4152d9c1ebe4",
+  "executor": "host_session",
+  "host_agent_id": "/root/d_next",
+  "real_ai_implementation": false,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "status": "blocked",
+  "error": "out-of-scope changes: node_modules/.bin/acorn,node_modules/.bin/edge-runtime,node_modules/.bin/esbuild,node_modules/.bin/mkdirp,node_modules/.bin/nanoid,node_modules/.bin/nft,node_modules/.bin/node-gyp-build,node_modules/.bin/node-gyp-build-optional,node_modules/.bin/node-gyp-build-test,node_modules/.bin/node-pre-gyp,node_modules/.bin/nopt,node_modules/.bin/ot,node_modules/.bin/oxlint,node_modules/.bin/playwright-core,node_modules/.bin/rolldown,node_modules/.bin/semver,node_modules/.bin/tsc,node_modules/.bin/tsserver,node_modules/.bin/tsx,node_modules/.bin/vite,node_modules/.package-lock.json,node_modules/.vite/deps/_metadata.json,node_modules/.vite/deps/package.json,node_modules/.vite/deps/react-dom-maye0PxS.js,node_modules/.vite/deps/react-dom-maye0PxS.js.map,node_modules/.vite/deps/react-dom_client.js,node_modules/.vite/deps/react-dom_client.js.map,node_modules/.vite/deps/react-router-dom.js,node_modules/.vite/deps/react-router-dom.js.map,node_modules/.vite/deps/react.js,node_modules/.vite/deps/react.js.map,node_modules/.vite/deps/react_jsx-dev-runtime.js,node_modules/.vite/deps/react_jsx-dev-runtime.js.map,node_modules/.vite/deps/rolldown-runtime-BPOCksWG.js,node_modules/@edge-runtime/format/LICENSE.md,node_modules/@edge-runtime/format/README.md,node_modules/@edge-runtime/format/dist/index.d.mts,node_modules/@edge-runtime/format/dist/index.d.ts,node_modules/@edge-runtime/format/dist/index.js,node_modules/@edge-runtime/format/dist/index.mjs,node_modules/@edge-runtime/format/package.json,node_modules/@edge-runtime/node-utils/LICENSE.md,node_modules/@edge-runtime/node-utils/README.md,node_modules/@edge-runtime/node-utils/dist/index.d.mts,node_modules/@edge-runtime/node-utils/dist/index.d.ts,node_modules/@edge-runtime/node-utils/dist/index.js,node_modules/@edge-runtime/node-utils/dist/index.mjs,node_modules/@edge-runtime/node-utils/package.json,node_modules/@edge-runtime/ponyfill/LICENSE.md,node_modules/@edge-runtime/ponyfill/README.md,node_modules/@edge-runtime/pon"
+}

@@ -15,3 +15,7 @@
 
 詳細: INTEGRATION_VERIFICATION_20261020.md、各系列の進捗ファイル、docs/qa/integration-20261020/。
 本番マージ・デプロイ・本番DB変更・課金は禁止。CI PASSは本番DBや実機QAの完了証明ではない。
+
+
+## Issue22 continuation — 2026-10-21
+Latest evidence and restart contract: docs/workers/ISSUE22_RESTART_STATE_20261021.md (PR34). A poll PR31 isolatedDB56PASS/client30/mobile5, production gates remain; B PR32 saved-result integrity; C PR33 synthetic rank7; D PR35 doubleclick; PR34 reviewed replenishment and bounded recovery. Each has published CI SUCCESS at code SHA. Formal host stop/reopen/resume plus real source implementation verified for simulated quota; future scheduled autonomous completion remains unverified. Do not treat old table above as latest runtime evidence.
