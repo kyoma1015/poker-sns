@@ -12,6 +12,14 @@
 - Notification INSERT RLS permits sender != recipient; SELECT/UPDATE own recipient. No notification uniqueness constraint except id PK.
 - Existing post_interactive and response constraints, question rejection trigger, relevant RLS and posts quote trigger inspected.
 
+## Further verified preflight: 2026-10-22 01:13 JST
+
+- **Production deployment is already live but behind main**: Vercel alias `poker-sns-vert.vercel.app` resolves to READY production deployment `dpl_95ynBzuABKa2DUgofwpQix8fBBRB`, Git SHA `e83113d1d1f92a6a421e687390748530ebb88d27`. Current main after PR50 is `c6a3573d86f82570891d36d9473b0532f79dbdc0`. A separate READY preview deployment `dpl_EPEeyTvd6mz5TFtrUCxGH2U3Xn9r` for branch PR49 SHA `2891c3ba8547708e28f4b07218265ad7db282646` does **not** update the production alias. No Vercel actions taken.
+- **Backup blocker is material**: Supabase organization subscription is `free`. Supabase official backup documentation does not guarantee automatic daily backups on Free. There is no backup-list/verification operation exposed by the connected Supabase integration. Therefore **do not treat a restorable production backup as available**. Before any production SQL, take an authorized independent logical backup (`supabase db dump` or `pg_dump`, including schema/roles/data where appropriate), store it securely off-host, and prove restoration in a separate isolated environment. Do not place customer data, dump bytes, DB passwords or credentials in GitHub.
+- **Confirmed project**: Supabase `poker-id` project is ACTIVE_HEALTHY, PostgreSQL 17.11, region ap-northeast-1. Read-only migration list shows prior notification-cron and legacy-question guard changes; no new poll-private migration.
+- **Advisors**: Supabase security advisors contain warnings in unrelated modules (e.g. anonymously executable SECURITY DEFINER RPCs, mutable function search_path); these findings require their own security review and were not altered in the poll-only audit.
+- **Publication remains NO-GO**: production database unchanged, old cron still running; backend migration, actual GoTrue authenticated QA, independent restorable backup, synchronized Vercel release and release approval outstanding.
+
 ## Blocking findings and mitigation
 
 1. **Historical close-notice replay (fixed in candidate; still awaiting new CI):** the original `poll_private.close_due_polls()` only consulted close receipts and would re-notify already closed polls. The candidate must also exclude polls with an existing `notifications(type='poll_closed',post_id,user_id)` row. The disposable QA harness seeds an old notification and verifies two close worker executions do not duplicate it.
