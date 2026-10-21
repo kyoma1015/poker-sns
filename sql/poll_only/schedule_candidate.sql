@@ -1,4 +1,8 @@
 -- Owner-only isolated QA / reviewed deployment step. pg_cron is required.
+-- Production currently has poker_id_poll_closed_notifications calling
+-- public.dispatch_poll_closed_notifications() every minute. Do NOT install a
+-- second scheduler until its behavior and idempotency have been audited.
+-- This script deliberately fails closed while that job exists.
 begin;
 create extension if not exists pg_cron;
 do $$begin
