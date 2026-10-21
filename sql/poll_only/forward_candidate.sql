@@ -163,21 +163,21 @@ revoke all on function poll_private.create_poll(text,text,text[],integer,boolean
 grant execute on function poll_private.create_poll(text,text,text[],integer,boolean,text),poll_private.submit_vote(uuid,integer,text,boolean),poll_private.legacy_vote(uuid,integer,text),poll_private.poll_results(uuid[]) to authenticated;
 create or replace function public.get_interactive_results(p_post_ids uuid[])
 returns table(post_id uuid,total_votes bigint,vote_counts jsonb,answers jsonb,my_option_index integer,has_responded boolean)
-language sql stable security invoker set search_path='' as $ select r.post_id,r.total_votes,r.vote_counts,r.answers,r.my_option_index,r.has_responded from public.get_interactive_results_v4(p_post_ids) r $;
+language sql stable security invoker set search_path='' as $legacy_results$ select r.post_id,r.total_votes,r.vote_counts,r.answers,r.my_option_index,r.has_responded from public.get_interactive_results_v4(p_post_ids) r $legacy_results$;
 -- Historical result RPCs remain in the live catalog. Preserve their return
 -- signatures but route both through the hardened poll-only v4 result path.
 -- Do not expose historical question answers or anonymous voter identities.
 create or replace function public.get_interactive_results_v2(p_post_ids uuid[])
 returns table(post_id uuid,total_votes bigint,vote_counts jsonb,answers jsonb,my_option_index integer,has_responded boolean)
-language sql stable security invoker set search_path='' as $
+language sql stable security invoker set search_path='' as $legacy_results$
  select r.post_id,r.total_votes,r.vote_counts,r.answers,r.my_option_index,r.has_responded
  from public.get_interactive_results_v4(p_post_ids) r
-$;
+$legacy_results$;
 create or replace function public.get_interactive_results_v3(p_post_ids uuid[])
 returns table(post_id uuid,total_votes bigint,vote_counts jsonb,answers jsonb,my_option_index integer,has_responded boolean,voters jsonb)
-language sql stable security invoker set search_path='' as $
+language sql stable security invoker set search_path='' as $legacy_results$
  select * from public.get_interactive_results_v4(p_post_ids)
-$;
+$legacy_results$;
 -- Preserve the existing revoked client grants for legacy v2/v3.
 revoke all on function public.get_interactive_results_v2(uuid[]),public.get_interactive_results_v3(uuid[]) from public,anon,authenticated;
 
