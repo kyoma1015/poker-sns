@@ -4,7 +4,10 @@ create extension if not exists pgcrypto;
 do $$begin
  if to_regprocedure('auth.uid()') is null then raise exception 'Official Supabase auth.uid() missing: do not substitute plain Postgres'; end if;
 end$$;
-create table if not exists auth.users(id uuid primary key, email text);
+-- The official image owns auth.users; never create/replace Auth objects.
+do $$begin
+ if to_regclass('auth.users') is null then raise exception 'Official Supabase auth.users missing'; end if;
+end$$;
 insert into auth.users(id,email) values
  ('10000000-0000-0000-0000-000000000001','owner@fixture.invalid'),
  ('10000000-0000-0000-0000-000000000002','voter@fixture.invalid'),

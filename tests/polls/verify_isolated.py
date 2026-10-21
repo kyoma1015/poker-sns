@@ -75,6 +75,14 @@ def main():
         time.sleep(.5)
     assert status == 200, 'PostgREST schema cache not ready'
     record('official_supabase_auth_uid', 'Real Supabase auth.uid and pg_cron exist', lambda: {'postgres': sql('select version();'), 'auth_uid': sql("select to_regprocedure('auth.uid()')::text;"), 'cron': sql("select extversion from pg_extension where extname='pg_cron';"), 'image': image, 'GoTrue': 'not started; signed local JWT fixtures'})
+    def privilege_boundaries():
+        value=sql("select bool_and(not p.prosecdef) from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public' and p.proname in ('create_interactive_post','create_interactive_post_v2','create_interactive_post_v3','create_interactive_post_v4','submit_interactive_response','submit_interactive_response_v2','get_interactive_results','get_interactive_results_v4');")
+        assert value=='t',value
+        hidden=api('/rpc/create_poll',{'p_content':'hidden','p_kind':'poll','p_options':['A','B']},OWNER)
+        assert hidden[0]==404,hidden
+        assert sql("select has_function_privilege('authenticated','poll_private.close_due_polls()','execute');")=='f'
+        return {'public_rpcs_security_invoker':True,'private_helper_rest_status':hidden[0],'authenticated_close_execute':False}
+    record('privileged_schema_boundary','Privileged implementations are private; system close not executable',privilege_boundaries)
     for n in (2, 3, 4):
         record('create_%d_choices' % n, '2–4 choices accepted', lambda n=n: {'post_id': create(False, n)})
     for options in (['one'], ['0','1','2','3','4'], ['A',' a '], ['', 'B'], ['x'*81,'B'], [None,'B']):

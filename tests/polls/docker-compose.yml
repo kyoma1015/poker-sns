@@ -16,7 +16,7 @@ services:
       PGPASSWORD: poll-fixture-only-password
       JWT_SECRET: poll-fixture-only-jwt-signing-key-at-least-32-bytes
       JWT_EXP: "3600"
-    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "shared_preload_libraries=pg_cron", "-c", "cron.database_name=postgres"]
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "shared_preload_libraries=pg_stat_statements,pg_cron", "-c", "cron.database_name=postgres"]
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres", "-h", "localhost"]
       interval: 2s

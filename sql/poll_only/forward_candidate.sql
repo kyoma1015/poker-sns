@@ -82,7 +82,7 @@ begin
 end $$;
 revoke all on function poll_private.assert_visible(uuid) from public, anon, authenticated;
 
-create or replace function public.create_interactive_post_v4(p_content text,p_kind text,p_options text[] default null,p_hours integer default 24,p_is_anonymous boolean default true,p_question_policy text default null)
+create or replace function poll_private.create_poll(p_content text,p_kind text,p_options text[] default null,p_hours integer default 24,p_is_anonymous boolean default true,p_question_policy text default null)
 returns uuid language plpgsql security definer set search_path='' as $$
 declare v_user uuid:=auth.uid();v_id uuid;v_options text[];
 begin
@@ -98,6 +98,10 @@ begin
  insert into public.post_interactive(post_id,kind,options,closes_at,is_anonymous) values(v_id,'poll',to_jsonb(v_options),statement_timestamp()+make_interval(hours=>p_hours),p_is_anonymous);
  return v_id;
 end $$;
+-- Public RPCs are invoker wrappers. Privileged implementations stay in an
+-- unexposed schema and enforce auth.uid themselves, including direct SQL calls.
+create or replace function public.create_interactive_post_v4(p_content text,p_kind text,p_options text[] default null,p_hours integer default 24,p_is_anonymous boolean default true,p_question_policy text default null)
+returns uuid language sql security invoker set search_path='' as $$select poll_private.create_poll(p_content,p_kind,p_options,p_hours,p_is_anonymous,p_question_policy)$$;
 create or replace function public.create_interactive_post(p_content text,p_kind text,p_options text[] default null,p_hours integer default 24)
 returns uuid language sql security invoker set search_path='' as $$select public.create_interactive_post_v4(p_content,p_kind,p_options,p_hours,true,null)$$;
 create or replace function public.create_interactive_post_v2(p_content text,p_kind text,p_options text[] default null,p_hours integer default 24,p_is_anonymous boolean default true)
@@ -105,7 +109,7 @@ returns uuid language sql security invoker set search_path='' as $$select public
 create or replace function public.create_interactive_post_v3(p_content text,p_kind text,p_options text[] default null,p_hours integer default 24,p_is_anonymous boolean default true,p_question_policy text default null)
 returns uuid language sql security invoker set search_path='' as $$select public.create_interactive_post_v4(p_content,p_kind,p_options,p_hours,p_is_anonymous,p_question_policy)$$;
 
-create or replace function public.submit_interactive_response_v2(p_post_id uuid,p_option_index integer default null,p_answer text default null,p_is_anonymous boolean default true)
+create or replace function poll_private.submit_vote(p_post_id uuid,p_option_index integer default null,p_answer text default null,p_is_anonymous boolean default true)
 returns void language plpgsql security definer set search_path='' as $$
 declare v_item public.post_interactive%rowtype;
 begin
@@ -117,16 +121,20 @@ begin
  or p_is_anonymous is distinct from v_item.is_anonymous then raise exception 'Invalid vote/privacy mode' using errcode='22023'; end if;
  insert into public.post_interactive_responses(post_id,user_id,option_index,answer) values(p_post_id,auth.uid(),p_option_index,null);
 end $$;
-create or replace function public.submit_interactive_response(p_post_id uuid,p_option_index integer default null,p_answer text default null)
+create or replace function poll_private.legacy_vote(p_post_id uuid,p_option_index integer default null,p_answer text default null)
 returns void language plpgsql security definer set search_path='' as $$
 declare v_anonymous boolean;
 begin
  perform poll_private.assert_visible(p_post_id);
  select is_anonymous into v_anonymous from public.post_interactive where post_id=p_post_id;
- perform public.submit_interactive_response_v2(p_post_id,p_option_index,p_answer,v_anonymous);
+ perform poll_private.submit_vote(p_post_id,p_option_index,p_answer,v_anonymous);
 end $$;
 
-create or replace function public.get_interactive_results_v4(p_post_ids uuid[])
+create or replace function public.submit_interactive_response_v2(p_post_id uuid,p_option_index integer default null,p_answer text default null,p_is_anonymous boolean default false)
+returns void language sql security invoker set search_path='' as $$select poll_private.submit_vote(p_post_id,p_option_index,p_answer,p_is_anonymous)$$;
+create or replace function public.submit_interactive_response(p_post_id uuid,p_option_index integer default null,p_answer text default null)
+returns void language sql security invoker set search_path='' as $$select poll_private.legacy_vote(p_post_id,p_option_index,p_answer)$$;
+create or replace function poll_private.poll_results(p_post_ids uuid[])
 returns table(post_id uuid,total_votes bigint,vote_counts jsonb,answers jsonb,my_option_index integer,has_responded boolean,voters jsonb)
 language plpgsql stable security definer set search_path='' as $$
 declare v_item public.post_interactive%rowtype; v_user uuid:=auth.uid();
@@ -147,6 +155,12 @@ begin
      from public.post_interactive_responses r join public.profiles p on p.id=r.user_id where r.post_id=v_item.post_id) end;
  end loop;
 end $$;
+create or replace function public.get_interactive_results_v4(p_post_ids uuid[])
+returns table(post_id uuid,total_votes bigint,vote_counts jsonb,answers jsonb,my_option_index integer,has_responded boolean,voters jsonb)
+language sql stable security invoker set search_path='' as $$select * from poll_private.poll_results(p_post_ids)$$;
+grant usage on schema poll_private to authenticated;
+revoke all on function poll_private.create_poll(text,text,text[],integer,boolean,text),poll_private.submit_vote(uuid,integer,text,boolean),poll_private.legacy_vote(uuid,integer,text),poll_private.poll_results(uuid[]) from public,anon;
+grant execute on function poll_private.create_poll(text,text,text[],integer,boolean,text),poll_private.submit_vote(uuid,integer,text,boolean),poll_private.legacy_vote(uuid,integer,text),poll_private.poll_results(uuid[]) to authenticated;
 create or replace function public.get_interactive_results(p_post_ids uuid[])
 returns table(post_id uuid,total_votes bigint,vote_counts jsonb,answers jsonb,my_option_index integer,has_responded boolean)
 language sql stable security invoker set search_path='' as $$ select r.post_id,r.total_votes,r.vote_counts,r.answers,r.my_option_index,r.has_responded from public.get_interactive_results_v4(p_post_ids) r $$;
