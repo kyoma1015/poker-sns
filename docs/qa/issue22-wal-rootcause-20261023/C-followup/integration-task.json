@@ -1,0 +1,21 @@
+{
+  "id": "issue22-c-hand169-followup-reuse-v1",
+  "lane": "C",
+  "base_sha": "2c24d4f195da3bce4b228a413cfee6165c1998df",
+  "base_branch": "codex/c-hand169-followup-input-20261023",
+  "branch": "codex/c-hand169-followup-reuse-20261023",
+  "test_profile": "python",
+  "allowed_paths": [
+    "gto/hand169.py"
+  ],
+  "protected_tests": [
+    "tests/worker_acceptance/test_coverage_flag.py",
+    "tests/worker_acceptance/test_frequency_snapshot.py",
+    "tests/worker_acceptance/test_subnormal_ev.py",
+    "tests/worker_acceptance/test_subnormal_policy.py",
+    "tests/worker_acceptance/test_unrepresentable_numbers.py",
+    "tests/worker_acceptance/test_weighted_ev.py",
+    "tests/worker_acceptance/test_weighted_maximum.py"
+  ],
+  "instruction": "Selectively reuse EXACT latest reviewed PR110 gto/hand169.py from /workspace/work/issue22-hand169-followup-reviewed.py, SHA256 11f19f9d6486f1368474b3a512128a07035ad4731ac8df116c74ad5569463ae0. Only gto/hand169.py. Existing main Draft103 lacked C108/C110 fixes, fixed33 baseline10ERROR. Preserve all source behavior by exact source reuse; no new algorithm, tests/metadata/commit/network/DB/dependency changes. Run33fixed plus gto/tests10; host validates and updates existing Draft103, no mainmerge."
+}

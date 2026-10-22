@@ -1,0 +1,14 @@
+{
+  "kind": "selected existing PR108/110 inheritance; not new algorithm",
+  "immutable_input": "2c24d4f195da3bce4b228a413cfee6165c1998df",
+  "prior_PR103_head": "f929d17b9c37be6f224d391e4473eeab6868630b",
+  "source_commit": "dd883b7ded3b792b366c12b18e3b1937ca469156",
+  "sha256": "11f19f9d6486f1368474b3a512128a07035ad4731ac8df116c74ad5569463ae0",
+  "integration_commit": "a4f93af20d5ff85371ecb61c347aaf7df23a68cf",
+  "baseline": "33 tests/10ERROR",
+  "after": "33 PASS and old10 PASS",
+  "ci": 39822187456,
+  "result": "success",
+  "review": "fresh full open PR snapshot; only existing main-target PR103 updated, exact latest source bytes; all other branches retained",
+  "g11_abi_checkpoint_strategy_convergence": "UNVERIFIED"
+}

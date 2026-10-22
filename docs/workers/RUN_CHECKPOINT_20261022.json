@@ -2,15 +2,15 @@
   "version": 1,
   "invocation_id": "issue22-audit-wal-manual-20261022T170541Z",
   "owner": "/root",
-  "updated_at": "2026-10-22T17:18:10.928357+00:00",
+  "updated_at": "2026-10-22T17:26:50.455326+00:00",
   "main": "781f038415503ece850c25a26e72ef67dee9c8a1",
   "original4_continuity": true,
   "counts": {
     "blocked": 2,
-    "implemented": 42
+    "implemented": 43
   },
-  "last_success": "ExactPR69initializer selected into auditDraft; repeated isolated stabilityPASS",
-  "next_action": "Verify newPR38headCI; do not adopt controller/scheduler. Original2 historicalblocked superseded. New source needs fixedFAIL/freshoverlap, not a retry of completed IDs.",
+  "last_success": "A exact PR69 WAL reuse CI39821508379SUCCESS; C exact PR110 export reuse CI39822187456SUCCESS",
+  "next_action": "Review isolated Drafts; no controller or scheduler adoption. New tasks require fixed failure/current overlap; never repeat completed IDs.",
   "retry_count": 0,
   "scheduler_enabled_by_this_invocation": false,
   "controller_switched": false,
@@ -678,13 +678,28 @@
       "owner": "/root/audit_wal_reuse_impl",
       "pr": 38,
       "branch": "codex/issue22-overlap-proof-20261021",
-      "ci_run_id": null,
-      "ci_status": "verify published PR38 head",
-      "last_success": "fixed27/worker22/queue15/10repeatedsuites/80processinitializersPASS",
-      "next_action": "verifyauditCI;do_not_reimplement"
+      "ci_run_id": 39821508379,
+      "ci_status": "success",
+      "last_success": "fixed tests and isolated CI success",
+      "next_action": "review;do_not_reimplement"
+    },
+    {
+      "id": "issue22-c-hand169-followup-reuse-v1",
+      "lane": "C",
+      "status": "implemented",
+      "kind": "selected_existing_patch_reuse_not_new_algorithm",
+      "attempts": 1,
+      "owner": "/root/hand169_followup_reuse_impl",
+      "source_commit": "a4f93af20d5ff85371ecb61c347aaf7df23a68cf",
+      "pr": 103,
+      "branch": "codex/c-hand169-main-20261022",
+      "ci_run_id": 39822187456,
+      "ci_status": "success",
+      "last_success": "fixed tests and isolated CI success",
+      "next_action": "review;do_not_reimplement"
     }
   ],
   "provider_run_id": null,
   "invocation_id_origin": "explicit manual user instruction,not scheduled provider runID",
-  "pending_ci_count": 1
+  "pending_ci_count": 0
 }
