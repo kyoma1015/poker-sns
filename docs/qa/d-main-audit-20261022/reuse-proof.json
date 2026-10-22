@@ -1,0 +1,17 @@
+{
+  "kind": "exact_existing_patch_reuse_not_new_source_task",
+  "original_commit": "6e72672fe1b9e51feb6c5b398dd9d757da83e110",
+  "original_blob": "65d07b48293f37a66055ebe71a92974fb2e5e16b",
+  "sha256": "17a43309c8f184dce6d39c4ade396fd37e86d9b31573b6b4d8cc2bc155ea3307",
+  "baseline": {
+    "tests": 53,
+    "pass": 48,
+    "fail": 5
+  },
+  "after": {
+    "fixed53": "PASS",
+    "old_audit5": "PASS"
+  },
+  "semantic_validity": "UNKNOWN",
+  "source_commit": "08cef31"
+}
