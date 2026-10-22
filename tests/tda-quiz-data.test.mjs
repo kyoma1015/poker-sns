@@ -45,3 +45,14 @@ test('audit report flags missing expected count and never claims publication app
   assert.equal(quizAuditReport([question()],1).verdict,'STRUCTURE_PASS')
   assert.throws(() => quizAuditReport([question()], Infinity))
 })
+
+for (const [label,value] of [
+ ['empty sparse question bank',Array(1)],
+ ['question followed by missing row',Object.assign(Array(2),{0:question()})],
+ ['entirely missing options',[{...question(),options:Array(2)}]],
+ ['one present option',[{...question(),options:Object.assign(Array(2),{0:question().options[0]})}]],
+]) test(`sparse quiz input rejects ${label}`,()=>assert.throws(()=>parseQuizQuestions(value)))
+test('frozen dense valid input and empty bank remain valid',()=>{
+ const q=question();Object.freeze(q.options);Object.freeze(q);const bank=Object.freeze([q]);
+ assert.equal(parseQuizQuestions(bank)[0].options.length,2);assert.deepEqual(parseQuizQuestions([]),[])
+})

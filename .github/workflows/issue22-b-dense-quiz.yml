@@ -1,0 +1,23 @@
+name: Issue22 dense quiz input acceptance
+on:
+  pull_request:
+    branches: [codex/b-dense-quiz-input-20261022]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node tests/tda-quiz-data.test.mjs
+      - run: node tests/tda-saved-answer.test.mjs
+      - run: node tests/tda-audit-cli.test.mjs
+      - run: npm ci --cache "$RUNNER_TEMP/npm-cache"
+      - run: npm run build
+      - run: npm run lint
