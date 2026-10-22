@@ -1,0 +1,72 @@
+{
+  "results": [
+    {
+      "name": "protected27",
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "tail": [
+        "----------------------------------------------------------------------",
+        "Ran 27 tests in 1.492s",
+        "",
+        "OK"
+      ]
+    },
+    {
+      "name": "worker22",
+      "command": [
+        "python",
+        "-B",
+        "tests/automation/test_code_worker.py"
+      ],
+      "exit_code": 0,
+      "tail": [
+        "----------------------------------------------------------------------",
+        "Ran 22 tests in 1.061s",
+        "",
+        "OK"
+      ]
+    },
+    {
+      "name": "queue15",
+      "command": [
+        "python",
+        "-B",
+        "tests/automation/test_development_queue.py"
+      ],
+      "exit_code": 0,
+      "tail": [
+        "----------------------------------------------------------------------",
+        "Ran 15 tests in 0.013s",
+        "",
+        "OK"
+      ]
+    },
+    {
+      "name": "timeout-restart2",
+      "command": [
+        "python",
+        "-B",
+        "tests/automation/test_controller_integration.py"
+      ],
+      "exit_code": 0,
+      "tail": [
+        "----------------------------------------------------------------------",
+        "Ran 2 tests in 0.217s",
+        "",
+        "OK"
+      ]
+    }
+  ],
+  "exact_import_hashes_unchanged": true,
+  "production": false,
+  "scheduler_activated": false
+}

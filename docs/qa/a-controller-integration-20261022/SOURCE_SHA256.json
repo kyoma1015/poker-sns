@@ -1,0 +1,52 @@
+{
+  "source_commit": "4d30c7ac0d08104f9d159987e38c823ef7c3b419",
+  "main_base": "7da31f078624178dbddf8f1edf59eb8d0bf782b7",
+  "method": "exact Git blobs; no merge/cherry-pick or source rewriting",
+  "baseline": {
+    "command": "python -B -c import controller modules",
+    "exit_code": 1,
+    "result": "ERROR: absent controller imports"
+  },
+  "files": {
+    "scripts/code_worker.py": {
+      "sha256": "37a539e207c46ee5ad94bdf6c877cf835e5188a217169ed1f5aa2885ce0def15",
+      "bytes": 26573
+    },
+    "scripts/continuation_recovery.py": {
+      "sha256": "efda4309f1f532f469268de84c5e99a304d9f9036df51bc137c0a09c52ff4c0a",
+      "bytes": 17047
+    },
+    "scripts/pr_overlap.py": {
+      "sha256": "0581fd1f7336b1d34f843d7590b6f8a92c4ac233439fdf18994666cea5790a54",
+      "bytes": 6141
+    },
+    "scripts/development_queue.py": {
+      "sha256": "e528f4e466d91121727454fbae5c45fdd23143fe14fecc6feb5691cc8e2f3aa8",
+      "bytes": 10102
+    },
+    "tests/automation/test_code_worker.py": {
+      "sha256": "71216186a80df56b8b5b0a832948f8c54b25f4fc0fcda119856f66db15e99e8f",
+      "bytes": 13894
+    },
+    "tests/automation/test_development_queue.py": {
+      "sha256": "7e2e24a7464cd5b14b4e87aff0f00833044f4479fbf6b12b8d24cafa0e79879f",
+      "bytes": 6773
+    },
+    ".github/queues/development.json": {
+      "sha256": "de45e23cab77d1fae35ba30fca9f2c39900ff916ef1b47ba364a15a72def9ded",
+      "bytes": 3315
+    },
+    "tests/worker_acceptance/test_continuation_recovery.py": {
+      "sha256": "1d6d8d526006494d869921892dc3ff7d75f1f3cf18f8e0eeeb96a65aa47d8480",
+      "bytes": 11627
+    },
+    "tests/worker_acceptance/test_lease_initialization.py": {
+      "sha256": "f9957c370e68934dc4bf6caa4080c1672e08901a06c6f8d6de76c9a87aa793c0",
+      "bytes": 4645
+    },
+    "tests/worker_acceptance/test_pr_overlap.py": {
+      "sha256": "7a7d4988fbdca1bb720f59701973fee1975fe173b2d9006356a256c648129a0d",
+      "bytes": 8862
+    }
+  }
+}
