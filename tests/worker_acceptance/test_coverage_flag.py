@@ -14,3 +14,7 @@ class CoverageFlag(unittest.TestCase):
  def test_default_and_true_reject_incomplete(self):
   with self.assertRaises(ValueError):aggregate([],1)
   with self.assertRaises(ValueError):aggregate([],1,require_complete=True)
+
+ def test_prior_reviewed_mass_overflow_fix_retained(self):
+  records=[{'cards':['As','Ah'],'weight':1e308,'frequencies':[1.],'ev':1.}, {'cards':['Ac','Ad'],'weight':1e308,'frequencies':[1.],'ev':1.}]
+  with self.assertRaisesRegex(ValueError,'reach mass overflow'):aggregate(records,1,require_complete=False)
