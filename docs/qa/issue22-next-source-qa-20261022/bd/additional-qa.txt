@@ -1,0 +1,16 @@
+✔ B frozen unsorted input stays immutable while parser returns sorted copies (1.565304ms)
+✔ B frozen mixed sparse optional filters produce dense string-only copies (0.230218ms)
+✔ B normalized duplicate candidates never grant official accuracy/publication (0.506084ms)
+✔ B transport rejection executes once and preserves later successful result identity (0.250909ms)
+✔ D deeply frozen historical fixture remains unchanged and semantically UNKNOWN (7.909986ms)
+✔ D all 50 persona positions reject a foreign answer without mutation (339.501759ms)
+✔ D each nonfinite score remains a structural failure (10.04414ms)
+✔ D every missing configured animal asset is rejected (49.663669ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 417.541946

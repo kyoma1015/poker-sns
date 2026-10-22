@@ -1,0 +1,58 @@
+[
+  {
+    "local_original": "A-cli-qa.log",
+    "public_file": "A-cli-qa.txt",
+    "original_sha256": "c897b34ecbfd731cb2bb0c41bc60f4bedb344078332e98e1cf02f66a6f8262bb",
+    "public_sha256": "c897b34ecbfd731cb2bb0c41bc60f4bedb344078332e98e1cf02f66a6f8262bb",
+    "normalization": "trailing whitespace only"
+  },
+  {
+    "local_original": "D-audit-direct.log",
+    "public_file": "bd/D-audit-direct.txt",
+    "original_sha256": "56a2f85812e60f6598872a3ef25dde1904aa2db10dc5311bcf9d16bbb1c7bf5c",
+    "public_sha256": "56a2f85812e60f6598872a3ef25dde1904aa2db10dc5311bcf9d16bbb1c7bf5c",
+    "normalization": "trailing whitespace only"
+  },
+  {
+    "local_original": "D-existing.log",
+    "public_file": "bd/D-existing.txt",
+    "original_sha256": "9276396a74f370310125c6eee2f240c877d684140ce3f2c192254d8a61afcacc",
+    "public_sha256": "9276396a74f370310125c6eee2f240c877d684140ce3f2c192254d8a61afcacc",
+    "normalization": "trailing whitespace only"
+  },
+  {
+    "local_original": "B-existing.log",
+    "public_file": "bd/B-existing.txt",
+    "original_sha256": "e69f17ab26bad421ff1b45206cb6f6863617d8c60afc7cb111e30f81ed0073a8",
+    "public_sha256": "e69f17ab26bad421ff1b45206cb6f6863617d8c60afc7cb111e30f81ed0073a8",
+    "normalization": "trailing whitespace only"
+  },
+  {
+    "local_original": "B-answer-direct.log",
+    "public_file": "bd/B-answer-direct.txt",
+    "original_sha256": "846fb437a6c3d60467b8a84ed08c0ec5914e8d1d2af9bc6934473fb48b7cd2d1",
+    "public_sha256": "846fb437a6c3d60467b8a84ed08c0ec5914e8d1d2af9bc6934473fb48b7cd2d1",
+    "normalization": "trailing whitespace only"
+  },
+  {
+    "local_original": "B-data-direct.log",
+    "public_file": "bd/B-data-direct.txt",
+    "original_sha256": "61af4437a1a7681e3bdd12e662ce98592149ca17b72a94c618b2fe20994f5ee9",
+    "public_sha256": "61af4437a1a7681e3bdd12e662ce98592149ca17b72a94c618b2fe20994f5ee9",
+    "normalization": "trailing whitespace only"
+  },
+  {
+    "local_original": "D-core-direct.log",
+    "public_file": "bd/D-core-direct.txt",
+    "original_sha256": "a582a064c298d8614d86c45dfe4b540467e3316092be69ebff5b16b38141cbeb",
+    "public_sha256": "a582a064c298d8614d86c45dfe4b540467e3316092be69ebff5b16b38141cbeb",
+    "normalization": "trailing whitespace only"
+  },
+  {
+    "local_original": "additional-qa.log",
+    "public_file": "bd/additional-qa.txt",
+    "original_sha256": "aab3bada62e39185f586f2d479847fd7962f6b1d190856b9b5e421aa81c1d63d",
+    "public_sha256": "aab3bada62e39185f586f2d479847fd7962f6b1d190856b9b5e421aa81c1d63d",
+    "normalization": "trailing whitespace only"
+  }
+]

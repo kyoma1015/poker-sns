@@ -1,0 +1,70 @@
+✔ question validation sorts a copy without changing option identity or original input (3.692958ms)
+✔ malformed null fails closed (0.302829ms)
+✔ malformed object fails closed (1.027665ms)
+✔ malformed no options fails closed (0.109345ms)
+✔ malformed one option fails closed (0.109095ms)
+✔ malformed empty text fails closed (0.0729ms)
+✔ malformed missing metadata fails closed (0.075915ms)
+✔ malformed duplicate question ID fails closed (0.09189ms)
+✔ malformed duplicate option ID fails closed (0.299924ms)
+✔ malformed duplicate option order fails closed (0.17206ms)
+✔ malformed fractional order fails closed (0.20481ms)
+✔ malformed empty option text fails closed (0.095314ms)
+✔ malformed negative order fails closed (0.101734ms)
+✔ rejected and synchronous transport failures become recoverable errors without retries (0.427567ms)
+✔ successful save data and RPC permission errors are preserved without reinterpretation (0.150487ms)
+✔ offline audit flags normalized question and option duplicate candidates only (0.752899ms)
+✔ audit report flags missing expected count and never claims publication approval (0.293845ms)
+✔ sparse quiz input rejects empty sparse question bank (0.074983ms)
+✔ sparse quiz input rejects question followed by missing row (0.049124ms)
+✔ sparse quiz input rejects entirely missing options (0.074523ms)
+✔ sparse quiz input rejects one present option (0.047512ms)
+✔ frozen dense valid input and empty bank remain valid (0.133672ms)
+✔ reviewed PR28 empty-audit guard remains present (0.096766ms)
+✔ optional filters default invalid rows and fields to empty lists (0.176988ms)
+✔ optional filters exclude nonstring items and preserve valid sibling fields (0.105109ms)
+✔ optional filters preserve string values order and copy frozen arrays (0.121954ms)
+✔ optional filters densify sparse lists without inventing choices (0.089395ms)
+✖ optional filters render and preserve quiz requests in four mocked mobile scenarios (873.307341ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 27
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 896.19717
+
+✖ failing tests:
+
+test at tests/tda-quiz-data.test.mjs:89:1
+✖ optional filters render and preserve quiz requests in four mocked mobile scenarios (873.307341ms)
+  AssertionError [ERR_ASSERTION]: browser process must finish within bounded time
+  + actual - expected
+
+  + Error: spawnSync /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node EPERM
+  +     at Object.spawnSync (node:internal/child_process:1160:20)
+  +     at spawnSync (node:child_process:928:24)
+  +     at TestContext.<anonymous> (file:///workspace/work/issue22-filter-values-worktrees/issue22-b-filter-values-v1/tests/tda-quiz-data.test.mjs:91:18)
+  +     at async Test.run (node:internal/test_runner/test:1389:7)
+  +     at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+  +   code: 'EPERM',
+  +   errno: -1,
+  +   path: '/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node',
+  +   spawnargs: [
+  +     'tests/browser/tda-filters.mjs'
+  +   ],
+  +   syscall: 'spawnSync /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node'
+  + }
+  - undefined
+
+      at TestContext.<anonymous> (file:///workspace/work/issue22-filter-values-worktrees/issue22-b-filter-values-v1/tests/tda-quiz-data.test.mjs:92:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [Error],
+    expected: undefined,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
