@@ -1,0 +1,38 @@
+name: GTO isolated selective integration
+on:
+  pull_request:
+    paths:
+      - 'gto/**'
+      - 'handoff/gto/compressed/**'
+      - 'handoff/gto/verify_native_solvers.py'
+      - 'docs/progress/C_GTO_INTEGRATION.md'
+      - 'docs/qa/gto-main-integration-20261022/**'
+      - '.github/workflows/gto-isolated-integration.yml'
+permissions:
+  contents: read
+jobs:
+  gto-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Original transferred solver bytes
+        run: python -B handoff/gto/verify_native_solvers.py
+      - name: Existing GTO regressions
+        run: python -B -m unittest discover -s gto/tests -v
+      - name: Unchanged fixed C acceptance
+        run: python -B -m unittest discover -s gto/integration_acceptance -v
+      - name: Strict launcher input boundaries
+        run: python -B -m unittest discover -s gto/integration_tools_tests -v
+      - name: Download pinned headers only (no pip install)
+        run: |
+          curl --fail --location --silent --show-error --proto '=https' --tlsv1.2 \
+            'https://files.pythonhosted.org/packages/13/2f/0f24b288e2ce56f51c920137620b4434a38fd80583dbbe24fc2a1656c388/pybind11-2.13.6-py3-none-any.whl' \
+            --output "$RUNNER_TEMP/pybind11-2.13.6.whl"
+      - name: Hash-gated temporary native bridge (17 settlement plus16 rank7)
+        run: python -B gto/native/verify_integration.py --wheel "$RUNNER_TEMP/pybind11-2.13.6.whl"
