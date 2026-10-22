@@ -139,3 +139,19 @@ test('known trait remains finite and wins over inherited key',()=>{
  assert.deepEqual(r.map(x=>x.key),['initiative'])
  assert.ok(Number.isFinite(relativePositiveScore('initiative',1)))
 })
+
+const { auditPlayerType } = await import('../scripts/audit-player-type.mjs')
+const personaAssets = readdirSync(new URL('../public/animals/', import.meta.url)).filter(x => x.endsWith('.png')).map(x => x.slice(0, -4))
+for (const answers of [[], Array(49).fill('A'), Array(51).fill('A'), null]) {
+ test(`persona audit rejects invalid answer count ${answers?.length ?? 'null'}`, () => {
+  const data = structuredClone(fixture); data.personas[0].answers = answers
+  const result = auditPlayerType(data, personaAssets)
+  assert.equal(result.status, 'FAIL')
+  assert.ok(result.errors.some(e => e.code === 'INVALID_PERSONA_ANSWER_COUNT'))
+ })
+}
+test('persona audit rejects choice outside the question options', () => {
+ const data = structuredClone(fixture); data.personas[0].answers[0] = '?'
+ const result = auditPlayerType(data, personaAssets)
+ assert.equal(result.status, 'FAIL'); assert.ok(result.errors.some(e => e.code === 'INVALID_PERSONA_CHOICE'))
+})
