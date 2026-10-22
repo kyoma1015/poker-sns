@@ -1,0 +1,6 @@
+test_acceptance_cleanup_unknown_preserves_running_context (__main__.HostUnknownLiveness.test_acceptance_cleanup_unknown_preserves_running_context) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.042s
+
+OK

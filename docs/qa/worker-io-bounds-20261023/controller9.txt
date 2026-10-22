@@ -1,0 +1,14 @@
+test_controller_ddl_failure_closes_connection_and_restart_preserves_jobs (__main__.ControllerIntegration.test_controller_ddl_failure_closes_connection_and_restart_preserves_jobs) ... ok
+test_cross_process_publication_cas_one_winner (__main__.ControllerIntegration.test_cross_process_publication_cas_one_winner) ... ok
+test_during_stop_check_prevents_next_cooperative_step (__main__.ControllerIntegration.test_during_stop_check_prevents_next_cooperative_step) ... ok
+test_mixed_wal_bootstrap_and_controller_ddl_eight_processes (__main__.ControllerIntegration.test_mixed_wal_bootstrap_and_controller_ddl_eight_processes) ... ok
+test_process_death_releases_lock_preserves_budget_and_unknown_job (__main__.ControllerIntegration.test_process_death_releases_lock_preserves_budget_and_unknown_job) ... ok
+test_process_death_rolls_back_uncommitted_checkpoint (__main__.ControllerIntegration.test_process_death_rolls_back_uncommitted_checkpoint) ... ok
+test_publication_sql_failure_rolls_back_and_connection_recovers (__main__.ControllerIntegration.test_publication_sql_failure_rolls_back_and_connection_recovers) ... ok
+test_same_run_live_exclusion_then_restart_replay_rejected (__main__.ControllerIntegration.test_same_run_live_exclusion_then_restart_replay_rejected) ... ok
+test_stop_arrives_between_reservation_and_entry_check (__main__.ControllerIntegration.test_stop_arrives_between_reservation_and_entry_check) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 1.725s
+
+OK

@@ -1,0 +1,13 @@
+test_ci_failure_metadata_retains_committed_source_until_new_observation (__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation) ... ok
+test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed (__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed) ... ok
+test_executor_timeout_terminates_term_ignoring_descendant (__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant) ... ok
+test_permission_and_second_transient_require_review_not_budget_reset (__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset) ... ok
+test_pr111_cleanup_failure_preserves_original_ddl_exception (__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception) ... ok
+test_pr111_probe_connection_failure_propagates_without_new_state (__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state) ... ok
+test_stop_before_entry_dispatches_no_worker_or_lease (__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease) ... ok
+test_stop_preserve_reopen_resume_commit_then_next_reviewed_task (__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.764s
+
+OK

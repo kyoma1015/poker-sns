@@ -1,0 +1,19 @@
+test_detached_session_survives_and_is_explicitly_unknown (__main__.WorkerTreeBoundaries.test_detached_session_survives_and_is_explicitly_unknown) ... FAIL
+test_parent_death_during_stdin_retains_file_and_unknown_worker (__main__.WorkerTreeBoundaries.test_parent_death_during_stdin_retains_file_and_unknown_worker) ... ok
+test_real_wait_budget_under_injected_permission_failure (__main__.WorkerTreeBoundaries.test_real_wait_budget_under_injected_permission_failure) ... ok
+test_same_group_child_and_grandchild_terminated_and_fixture_reaped (__main__.WorkerTreeBoundaries.test_same_group_child_and_grandchild_terminated_and_fixture_reaped) ... ok
+
+======================================================================
+FAIL: test_detached_session_survives_and_is_explicitly_unknown (__main__.WorkerTreeBoundaries.test_detached_session_survives_and_is_explicitly_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-worker-io-bounds/tests/automation/test_worker_tree_boundaries.py", line 83, in test_detached_session_survives_and_is_explicitly_unknown
+    self.probe(True)
+  File "/workspace/work/issue22-worker-io-bounds/tests/automation/test_worker_tree_boundaries.py", line 66, in probe
+    self.assertEqual(data['worker_liveness_unknown'],escaped)
+AssertionError: False != True
+
+----------------------------------------------------------------------
+Ran 4 tests in 2.276s
+
+FAILED (failures=1)

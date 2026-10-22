@@ -1,0 +1,10 @@
+test_expired_unknown_blocks_other_lane_without_erasing_context (__main__.UnknownLivenessExpiry.test_expired_unknown_blocks_other_lane_without_erasing_context) ... ok
+test_expired_unknown_blocks_same_lane_without_erasing_context (__main__.UnknownLivenessExpiry.test_expired_unknown_blocks_same_lane_without_erasing_context) ... ok
+test_missing_metadata_remains_known_missing (__main__.UnknownLivenessExpiry.test_missing_metadata_remains_known_missing) ... ok
+test_pending_descendant_observation_denial_retains_unknown (__main__.UnknownLivenessExpiry.test_pending_descendant_observation_denial_retains_unknown) ... ok
+test_process_metadata_denial_is_not_process_exit (__main__.UnknownLivenessExpiry.test_process_metadata_denial_is_not_process_exit) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.072s
+
+OK

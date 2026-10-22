@@ -1,0 +1,49 @@
+test_expired_unknown_blocks_other_lane_without_erasing_context (__main__.UnknownLivenessExpiry.test_expired_unknown_blocks_other_lane_without_erasing_context) ... FAIL
+test_expired_unknown_blocks_same_lane_without_erasing_context (__main__.UnknownLivenessExpiry.test_expired_unknown_blocks_same_lane_without_erasing_context) ... FAIL
+test_missing_metadata_remains_known_missing (__main__.UnknownLivenessExpiry.test_missing_metadata_remains_known_missing) ... ok
+test_pending_descendant_observation_denial_retains_unknown (__main__.UnknownLivenessExpiry.test_pending_descendant_observation_denial_retains_unknown) ... FAIL
+test_process_metadata_denial_is_not_process_exit (__main__.UnknownLivenessExpiry.test_process_metadata_denial_is_not_process_exit) ... FAIL
+
+======================================================================
+FAIL: test_expired_unknown_blocks_other_lane_without_erasing_context (__main__.UnknownLivenessExpiry.test_expired_unknown_blocks_other_lane_without_erasing_context)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-worker-io-bounds/tests/automation/test_unknown_liveness_expiry.py", line 30, in test_expired_unknown_blocks_other_lane_without_erasing_context
+    def test_expired_unknown_blocks_other_lane_without_erasing_context(self):self.expiry('B')
+                                                                             ^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-worker-io-bounds/tests/automation/test_unknown_liveness_expiry.py", line 24, in expiry
+    self.assertIsNone(f.store.leases.claim(f.task('new-task',lane),now=time.time()+10000))
+AssertionError: '[FIXTURE_CAPABILITY_REDACTED]' is not None
+
+======================================================================
+FAIL: test_expired_unknown_blocks_same_lane_without_erasing_context (__main__.UnknownLivenessExpiry.test_expired_unknown_blocks_same_lane_without_erasing_context)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-worker-io-bounds/tests/automation/test_unknown_liveness_expiry.py", line 29, in test_expired_unknown_blocks_same_lane_without_erasing_context
+    def test_expired_unknown_blocks_same_lane_without_erasing_context(self):self.expiry('A')
+                                                                            ^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-worker-io-bounds/tests/automation/test_unknown_liveness_expiry.py", line 24, in expiry
+    self.assertIsNone(f.store.leases.claim(f.task('new-task',lane),now=time.time()+10000))
+AssertionError: '[FIXTURE_CAPABILITY_REDACTED]' is not None
+
+======================================================================
+FAIL: test_pending_descendant_observation_denial_retains_unknown (__main__.UnknownLivenessExpiry.test_pending_descendant_observation_denial_retains_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-worker-io-bounds/tests/automation/test_unknown_liveness_expiry.py", line 49, in test_pending_descendant_observation_denial_retains_unknown
+    self.assertTrue(getattr(primary,'worker_liveness_unknown',False))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_process_metadata_denial_is_not_process_exit (__main__.UnknownLivenessExpiry.test_process_metadata_denial_is_not_process_exit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-worker-io-bounds/tests/automation/test_unknown_liveness_expiry.py", line 34, in test_process_metadata_denial_is_not_process_exit
+    with self.assertRaises(worker.WorkerLivenessUnknown):worker._process_stat(999999)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: WorkerLivenessUnknown not raised
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.074s
+
+FAILED (failures=4)

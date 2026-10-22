@@ -1,0 +1,17 @@
+test_acceptance_cleanup_unknown_preserves_running_context (__main__.HostUnknownLiveness.test_acceptance_cleanup_unknown_preserves_running_context) ... FAIL
+
+======================================================================
+FAIL: test_acceptance_cleanup_unknown_preserves_running_context (__main__.HostUnknownLiveness.test_acceptance_cleanup_unknown_preserves_running_context)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-worker-io-bounds/tests/automation/test_host_unknown_liveness.py", line 30, in test_acceptance_cleanup_unknown_preserves_running_context
+    self.assertEqual(status,'running')
+AssertionError: 'blocked' != 'running'
+- blocked
++ running
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.027s
+
+FAILED (failures=1)

@@ -1,0 +1,120 @@
+test_cleanup_permission_failure_is_bounded_and_preserves_primary (__main__.WorkerIOBounds.test_cleanup_permission_failure_is_bounded_and_preserves_primary) ... FAIL
+test_command_preserves_stdout_stderr_and_nonzero_contract (__main__.WorkerIOBounds.test_command_preserves_stdout_stderr_and_nonzero_contract) ... ok
+test_stdin_backpressure_obeys_timeout (__main__.WorkerIOBounds.test_stdin_backpressure_obeys_timeout) ... FAIL
+test_stdin_backpressure_observes_cooperative_stop (__main__.WorkerIOBounds.test_stdin_backpressure_observes_cooperative_stop) ... FAIL
+test_unknown_liveness_keeps_job_running_and_refuses_restart (__main__.WorkerIOBounds.test_unknown_liveness_keeps_job_running_and_refuses_restart) ... FAIL
+
+======================================================================
+FAIL: test_cleanup_permission_failure_is_bounded_and_preserves_primary (__main__.WorkerIOBounds.test_cleanup_permission_failure_is_bounded_and_preserves_primary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-worker-io-bounds/scripts/code_worker.py", line 104, in command
+    stdout, stderr = process.communicate(timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-worker-io-bounds/tests/automation/test_worker_io_bounds.py", line 94, in communicate
+    def communicate(self,**kw):raise primary
+                               ^^^^^^^^^^^^^
+subprocess.TimeoutExpired: Command '['owned']' timed out after 0.1 seconds
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/work/issue22-worker-io-bounds/scripts/code_worker.py", line 107, in command
+    os.killpg(process.pid, signal.SIGKILL)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+PermissionError: owned denied
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/work/issue22-worker-io-bounds/tests/automation/test_worker_io_bounds.py", line 103, in test_cleanup_permission_failure_is_bounded_and_preserves_primary
+    try:worker.command(['owned'],'.',timeout=.1)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-worker-io-bounds/scripts/code_worker.py", line 101, in command
+    with subprocess.Popen(argv, cwd=cwd, env=env, text=True, stdout=subprocess.PIPE,
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-worker-io-bounds/tests/automation/test_worker_io_bounds.py", line 101, in __exit__
+    def __exit__(self,*args):raise AssertionError('unbounded Popen context exit')
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unbounded Popen context exit
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/work/issue22-worker-io-bounds/tests/automation/test_worker_io_bounds.py", line 104, in test_cleanup_permission_failure_is_bounded_and_preserves_primary
+    except BaseException as error:self.assertIs(error,primary)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError('unbounded Popen context exit') is not TimeoutExpired(['owned'], 0.1)
+
+======================================================================
+FAIL: test_stdin_backpressure_obeys_timeout (__main__.WorkerIOBounds.test_stdin_backpressure_obeys_timeout)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-worker-io-bounds/tests/automation/test_worker_io_bounds.py", line 62, in stdin_case
+    out,err=p.communicate(timeout=3)
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1209, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 2116, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1253, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python', '-B', '-c', "\nimport sys,os,json,time,fcntl,threading\nfrom pathlib import Path\nsys.path.insert(0,sys.argv[1]);import code_worker as w\nbase=Path(sys.argv[2]);mode=sys.argv[3]\nreal=w.subprocess.Popen\ndef tracked(*a,**kw):\n p=real(*a,**kw)\n fcntl.fcntl(p.stdin.fileno(),fcntl.F_SETPIPE_SZ,4096)\n (base/'worker.pid').write_text(str(p.pid))\n return p\nw.subprocess.Popen=tracked\nexecutor=w.CodexExecutor(base/'owned-worker',base/'fixture-attestation.json')\ndef stop_check():\n if (base/'stop').exists():raise RuntimeError('owned stop')\nexecutor.stop_check=stop_check\nif mode=='stop':\n threading.Timer(.15,lambda:(base/'stop').write_text('stop')).start()\nstart=time.monotonic()\ntry:\n executor({'allowed_paths':['source.py'],'instruction':'あ'*6000},base,.25 if mode=='timeout' else 1.0)\n print(json.dumps({'unexpected_success':True}),flush=True)\nexcept BaseException as error:\n print(json.dumps({'type':type(error).__name__,'message':str(error),'elapsed':time.monotonic()-start}),flush=True)\n", '/workspace/work/issue22-worker-io-bounds/scripts', '/tmp/owned-stdin-qa-a41aiptu', 'timeout']' timed out after 3 seconds
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/work/issue22-worker-io-bounds/tests/automation/test_worker_io_bounds.py", line 80, in test_stdin_backpressure_obeys_timeout
+    self.stdin_case('timeout')
+  File "/workspace/work/issue22-worker-io-bounds/tests/automation/test_worker_io_bounds.py", line 64, in stdin_case
+    self.fail('stdin write outlived bounded watchdog')
+AssertionError: stdin write outlived bounded watchdog
+
+======================================================================
+FAIL: test_stdin_backpressure_observes_cooperative_stop (__main__.WorkerIOBounds.test_stdin_backpressure_observes_cooperative_stop)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-worker-io-bounds/tests/automation/test_worker_io_bounds.py", line 62, in stdin_case
+    out,err=p.communicate(timeout=3)
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1209, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 2116, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1253, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python', '-B', '-c', "\nimport sys,os,json,time,fcntl,threading\nfrom pathlib import Path\nsys.path.insert(0,sys.argv[1]);import code_worker as w\nbase=Path(sys.argv[2]);mode=sys.argv[3]\nreal=w.subprocess.Popen\ndef tracked(*a,**kw):\n p=real(*a,**kw)\n fcntl.fcntl(p.stdin.fileno(),fcntl.F_SETPIPE_SZ,4096)\n (base/'worker.pid').write_text(str(p.pid))\n return p\nw.subprocess.Popen=tracked\nexecutor=w.CodexExecutor(base/'owned-worker',base/'fixture-attestation.json')\ndef stop_check():\n if (base/'stop').exists():raise RuntimeError('owned stop')\nexecutor.stop_check=stop_check\nif mode=='stop':\n threading.Timer(.15,lambda:(base/'stop').write_text('stop')).start()\nstart=time.monotonic()\ntry:\n executor({'allowed_paths':['source.py'],'instruction':'あ'*6000},base,.25 if mode=='timeout' else 1.0)\n print(json.dumps({'unexpected_success':True}),flush=True)\nexcept BaseException as error:\n print(json.dumps({'type':type(error).__name__,'message':str(error),'elapsed':time.monotonic()-start}),flush=True)\n", '/workspace/work/issue22-worker-io-bounds/scripts', '/tmp/owned-stdin-qa-j1j3z_7k', 'stop']' timed out after 3 seconds
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/work/issue22-worker-io-bounds/tests/automation/test_worker_io_bounds.py", line 83, in test_stdin_backpressure_observes_cooperative_stop
+    self.stdin_case('stop')
+  File "/workspace/work/issue22-worker-io-bounds/tests/automation/test_worker_io_bounds.py", line 64, in stdin_case
+    self.fail('stdin write outlived bounded watchdog')
+AssertionError: stdin write outlived bounded watchdog
+
+======================================================================
+FAIL: test_unknown_liveness_keeps_job_running_and_refuses_restart (__main__.WorkerIOBounds.test_unknown_liveness_keeps_job_running_and_refuses_restart)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-worker-io-bounds/tests/automation/test_worker_io_bounds.py", line 120, in test_unknown_liveness_keeps_job_running_and_refuses_restart
+    self.assertEqual(f.store.db.execute("select status from development_jobs where id='next-a'").fetchone()[0],'running')
+AssertionError: 'blocked' != 'running'
+- blocked
++ running
+
+
+----------------------------------------------------------------------
+Ran 5 tests in 6.076s
+
+FAILED (failures=4)

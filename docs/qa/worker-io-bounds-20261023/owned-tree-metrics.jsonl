@@ -1,0 +1,30 @@
+{"ids": {"child": 112997, "grand": 113025, "leader": 112975}, "command_seconds": 0.7283397560240701, "escaped_survived": true, "worker_liveness_unknown": true, "child_reaped_signal": 9, "automatic_full_tree_liveness": "UNKNOWN", "grand_reaped_signal": 9}
+{"parent_pid": 113214, "worker_pid": 113217, "parent_exit": -9, "checkpoint_preserved": true, "worker_liveness": "UNKNOWN"}
+{"ids": {"child": 113235, "grand": 113236, "leader": 113234}, "command_seconds": 0.7129680390062276, "escaped_survived": false, "worker_liveness_unknown": false, "child_reaped_signal": 9, "grand_reaped_signal": 9}
+{"ids": {"child": 113441, "grand": 113447, "leader": 113421}, "command_seconds": 0.7062040659948252, "escaped_survived": true, "worker_liveness_unknown": true, "child_reaped_signal": 9, "automatic_full_tree_liveness": "UNKNOWN", "grand_reaped_signal": 9}
+{"parent_pid": 113483, "worker_pid": 113484, "parent_exit": -9, "checkpoint_preserved": true, "worker_liveness": "UNKNOWN"}
+{"ids": {"child": 113488, "grand": 113489, "leader": 113487}, "command_seconds": 0.7243226949940436, "escaped_survived": false, "worker_liveness_unknown": false, "child_reaped_signal": 9, "grand_reaped_signal": 9}
+{"ids": {"child": 113544, "grand": 113545, "leader": 113543}, "command_seconds": 0.7145216600038111, "escaped_survived": true, "worker_liveness_unknown": true, "child_reaped_signal": 9, "automatic_full_tree_liveness": "UNKNOWN", "grand_reaped_signal": 9}
+{"parent_pid": 113546, "worker_pid": 113547, "parent_exit": -9, "checkpoint_preserved": true, "worker_liveness": "UNKNOWN"}
+{"ids": {"child": 113551, "grand": 113552, "leader": 113550}, "command_seconds": 0.6931501459912397, "escaped_survived": false, "worker_liveness_unknown": false, "child_reaped_signal": 9, "grand_reaped_signal": 9}
+{"ids": {"child": 113607, "grand": 113608, "leader": 113606}, "command_seconds": 0.7077421779977158, "escaped_survived": true, "worker_liveness_unknown": true, "child_reaped_signal": 9, "automatic_full_tree_liveness": "UNKNOWN", "grand_reaped_signal": 9}
+{"parent_pid": 113609, "worker_pid": 113610, "parent_exit": -9, "checkpoint_preserved": true, "worker_liveness": "UNKNOWN"}
+{"ids": {"child": 113614, "grand": 113615, "leader": 113613}, "command_seconds": 0.7005737700092141, "escaped_survived": false, "worker_liveness_unknown": false, "child_reaped_signal": 9, "grand_reaped_signal": 9}
+{"ids": {"child": 113670, "grand": 113671, "leader": 113669}, "command_seconds": 0.7265538559877314, "escaped_survived": true, "worker_liveness_unknown": true, "child_reaped_signal": 9, "automatic_full_tree_liveness": "UNKNOWN", "grand_reaped_signal": 9}
+{"parent_pid": 113672, "worker_pid": 113673, "parent_exit": -9, "checkpoint_preserved": true, "worker_liveness": "UNKNOWN"}
+{"ids": {"child": 113677, "grand": 113678, "leader": 113676}, "command_seconds": 0.7181521659949794, "escaped_survived": false, "worker_liveness_unknown": false, "child_reaped_signal": 9, "grand_reaped_signal": 9}
+{"ids": {"child": 113733, "grand": 113734, "leader": 113732}, "command_seconds": 0.7341882490145508, "escaped_survived": true, "worker_liveness_unknown": true, "child_reaped_signal": 9, "automatic_full_tree_liveness": "UNKNOWN", "grand_reaped_signal": 9}
+{"parent_pid": 113735, "worker_pid": 113736, "parent_exit": -9, "checkpoint_preserved": true, "worker_liveness": "UNKNOWN"}
+{"ids": {"child": 113740, "grand": 113741, "leader": 113739}, "command_seconds": 0.7017338580044452, "escaped_survived": false, "worker_liveness_unknown": false, "child_reaped_signal": 9, "grand_reaped_signal": 9}
+{"ids": {"child": 113796, "grand": 113797, "leader": 113795}, "command_seconds": 0.728094425983727, "escaped_survived": true, "worker_liveness_unknown": true, "child_reaped_signal": 9, "automatic_full_tree_liveness": "UNKNOWN", "grand_reaped_signal": 9}
+{"parent_pid": 113798, "worker_pid": 113799, "parent_exit": -9, "checkpoint_preserved": true, "worker_liveness": "UNKNOWN"}
+{"ids": {"child": 113803, "grand": 113804, "leader": 113802}, "command_seconds": 0.7180049779999536, "escaped_survived": false, "worker_liveness_unknown": false, "child_reaped_signal": 9, "grand_reaped_signal": 9}
+{"ids": {"child": 113859, "grand": 113860, "leader": 113858}, "command_seconds": 0.7201503010001034, "escaped_survived": true, "worker_liveness_unknown": true, "child_reaped_signal": 9, "automatic_full_tree_liveness": "UNKNOWN", "grand_reaped_signal": 9}
+{"parent_pid": 113861, "worker_pid": 113862, "parent_exit": -9, "checkpoint_preserved": true, "worker_liveness": "UNKNOWN"}
+{"ids": {"child": 113866, "grand": 113867, "leader": 113865}, "command_seconds": 0.752890400995966, "escaped_survived": false, "worker_liveness_unknown": false, "child_reaped_signal": 9, "grand_reaped_signal": 9}
+{"ids": {"child": 113922, "grand": 113923, "leader": 113921}, "command_seconds": 0.7038396909774747, "escaped_survived": true, "worker_liveness_unknown": true, "child_reaped_signal": 9, "automatic_full_tree_liveness": "UNKNOWN", "grand_reaped_signal": 9}
+{"parent_pid": 113924, "worker_pid": 113925, "parent_exit": -9, "checkpoint_preserved": true, "worker_liveness": "UNKNOWN"}
+{"ids": {"child": 113929, "grand": 113930, "leader": 113928}, "command_seconds": 0.7282073720125481, "escaped_survived": false, "worker_liveness_unknown": false, "child_reaped_signal": 9, "grand_reaped_signal": 9}
+{"ids": {"child": 113985, "grand": 113986, "leader": 113984}, "command_seconds": 0.745536203001393, "escaped_survived": true, "worker_liveness_unknown": true, "child_reaped_signal": 9, "automatic_full_tree_liveness": "UNKNOWN", "grand_reaped_signal": 9}
+{"parent_pid": 113987, "worker_pid": 113988, "parent_exit": -9, "checkpoint_preserved": true, "worker_liveness": "UNKNOWN"}
+{"ids": {"child": 113992, "grand": 113993, "leader": 113991}, "command_seconds": 0.698206711007515, "escaped_survived": false, "worker_liveness_unknown": false, "child_reaped_signal": 9, "grand_reaped_signal": 9}
