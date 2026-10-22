@@ -1,0 +1,35 @@
+name: Controller pre-adoption integration QA
+on:
+  pull_request:
+    branches: [codex/a-invocation-guard-fix-20261022]
+    paths:
+      - 'scripts/continuation_recovery.py'
+      - 'tests/automation/test_controller_integration.py'
+      - '.github/workflows/controller-integration-qa.yml'
+permissions:
+  contents: read
+concurrency:
+  group: controller-pre-adoption-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+jobs:
+  isolated-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Existing immutable acceptance
+        run: python -B -m unittest discover -s tests/worker_acceptance -v
+      - name: Existing worker and queue regressions
+        run: |
+          python -B tests/automation/test_code_worker.py
+          python -B tests/automation/test_development_queue.py
+      - name: Ten bounded rounds of isolated process integration
+        run: |
+          for round in $(seq 1 10); do
+            python -B tests/automation/test_controller_integration.py -v || exit 1
+          done

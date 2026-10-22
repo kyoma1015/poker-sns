@@ -15,3 +15,7 @@ Remaining: isolated DB event-provenance/idempotency/legacy-client tests BLOCKED 
 
 ## Integrated verification update (2026-10-20)
 Integrated in B → D → A → SNS order. Local network permission resolved the previous registry blocker. npm ci, full unit regression, build and lint now run successfully on the integrated source; see INTEGRATION_VERIFICATION_20261020.md and docs/qa/integration-20261020/. Earlier blocked statements above describe the previous lane task. No production DB verification or release approval is implied.
+
+
+## Controller pre-adoption QA — 2026-10-23 JST
+PR107 pinned6d2f4834d3a06abb61058fcebca952f360ec0f45 composition tested on owned temporary SQLite only. New controller-DDL connection cleanup defect reproduced9tests/1FAIL, minimal sourcefix16fd9d43e97b1ce12e2823a424b7883a8128782e; after9PASS, ten rounds90PASS, existing85/worker22/queue15PASS. All original acceptance bytes preserved. Retained45records43implemented/2blocked/running0 untouched (mode=ro), no new lease or controller adoption. Evidence docs/workers/CONTROLLER_PRE_ADOPTION_QA_20261023.md and docs/qa/controller-integration-20261023/. Independent provider startup remainsUNKNOWN; no reservations/main/production/billing changes. This is manual QA/source work, not unattended operation.

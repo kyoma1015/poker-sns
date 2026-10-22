@@ -1,0 +1,69 @@
+{
+  "38": {
+    "head": "1ad98e82750fc3056efcc1d2b8da8f44e7b611f2",
+    "files": {
+      "scripts/code_worker.py": {
+        "sha256": "37a539e207c46ee5ad94bdf6c877cf835e5188a217169ed1f5aa2885ce0def15",
+        "initializer_ast_sha256": "dd7027b262ecadd9f3e71437595a99d6b7573994986da40dd7028671219682d9"
+      },
+      "scripts/continuation_recovery.py": {
+        "sha256": "efda4309f1f532f469268de84c5e99a304d9f9036df51bc137c0a09c52ff4c0a"
+      },
+      "scripts/invocation_guard.py": "absent"
+    }
+  },
+  "69": {
+    "head": "4d30c7ac0d08104f9d159987e38c823ef7c3b419",
+    "files": {
+      "scripts/code_worker.py": {
+        "sha256": "37a539e207c46ee5ad94bdf6c877cf835e5188a217169ed1f5aa2885ce0def15",
+        "initializer_ast_sha256": "dd7027b262ecadd9f3e71437595a99d6b7573994986da40dd7028671219682d9"
+      },
+      "scripts/continuation_recovery.py": {
+        "sha256": "efda4309f1f532f469268de84c5e99a304d9f9036df51bc137c0a09c52ff4c0a"
+      },
+      "scripts/invocation_guard.py": "absent"
+    }
+  },
+  "74": {
+    "head": "2a1f39264f2b467df652a33864de659f6537e92e",
+    "files": {
+      "scripts/code_worker.py": {
+        "sha256": "37a539e207c46ee5ad94bdf6c877cf835e5188a217169ed1f5aa2885ce0def15",
+        "initializer_ast_sha256": "dd7027b262ecadd9f3e71437595a99d6b7573994986da40dd7028671219682d9"
+      },
+      "scripts/continuation_recovery.py": {
+        "sha256": "efda4309f1f532f469268de84c5e99a304d9f9036df51bc137c0a09c52ff4c0a"
+      },
+      "scripts/invocation_guard.py": "absent"
+    }
+  },
+  "106": {
+    "head": "3a9176c388707d8b4f7121cfc1b9f83ee2a23556",
+    "files": {
+      "scripts/code_worker.py": {
+        "sha256": "2d74d630accbf487134f06932856850d0c27ada3185b2f5d31a9db42fce246c5",
+        "initializer_ast_sha256": "dd7027b262ecadd9f3e71437595a99d6b7573994986da40dd7028671219682d9"
+      },
+      "scripts/continuation_recovery.py": {
+        "sha256": "9ce39fb621c308a4402647c23a816e7b93f9c9b93d5f499e939777e13dd8c384"
+      },
+      "scripts/invocation_guard.py": "absent"
+    }
+  },
+  "107": {
+    "head": "6d2f4834d3a06abb61058fcebca952f360ec0f45",
+    "files": {
+      "scripts/code_worker.py": {
+        "sha256": "2d74d630accbf487134f06932856850d0c27ada3185b2f5d31a9db42fce246c5",
+        "initializer_ast_sha256": "dd7027b262ecadd9f3e71437595a99d6b7573994986da40dd7028671219682d9"
+      },
+      "scripts/continuation_recovery.py": {
+        "sha256": "9ce39fb621c308a4402647c23a816e7b93f9c9b93d5f499e939777e13dd8c384"
+      },
+      "scripts/invocation_guard.py": {
+        "sha256": "aa973c998614c8fd6460a7f76cfce9391d35def5f9d4206ac60527ccc61657ef"
+      }
+    }
+  }
+}

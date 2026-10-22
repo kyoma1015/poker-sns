@@ -1,0 +1,15 @@
+{
+  "observed_at": "2026-10-22T17:36Z",
+  "automation_id": "6ada2596d5148191be6c9dbf73ec2d34",
+  "enabled": false,
+  "schedule": "BEGIN:VEVENT\nDTSTART:20261022T160246Z\nRRULE:FREQ=HOURLY;COUNT=2\nEND:VEVENT",
+  "last_run_time": "2026-10-22T16:57:54.154987+00:00",
+  "next_run_time": null,
+  "updated_at": "2026-10-22T16:57:54.396998+00:00",
+  "last_run": null,
+  "latest_result": null,
+  "delivery_status": "unknown",
+  "independent_launch": "UNKNOWN",
+  "timing_difference_seconds": 291.845013,
+  "changes": false
+}
