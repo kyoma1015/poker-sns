@@ -1,0 +1,10 @@
+{
+  "kind": "exact_existing_source_reuse",
+  "source_commit": "4bff6519c9b12d3d0eed162936085bd87b71c113",
+  "sha256": "b7957ce063c6064367d71a78a22a61ad94c3104f6f528fe766d5aca70b3f101e",
+  "base_main": "781f038415503ece850c25a26e72ef67dee9c8a1",
+  "fixed17": "4FAIL to17PASS",
+  "old_hand16910": "PASS",
+  "strategy_convergence": "UNVERIFIED",
+  "original_checkpoint_modified": false
+}
