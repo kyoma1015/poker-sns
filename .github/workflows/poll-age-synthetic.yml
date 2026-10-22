@@ -1,0 +1,21 @@
+name: Poll gate0 age synthetic encryption QA
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/poll-age-synthetic.yml'
+      - 'tests/polls/verify_age_synthetic.sh'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  age-synthetic:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install age (Ubuntu package)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y age
+      - name: Synthetic encryption QA (no Supabase, no secrets)
+        run: bash tests/polls/verify_age_synthetic.sh
