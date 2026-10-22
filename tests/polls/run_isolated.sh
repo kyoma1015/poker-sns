@@ -248,4 +248,38 @@ begin
 end
 $rollback_check$;
 SQL
+# Prove a safe re-enable cycle in the disposable database after a
+# fail-closed disable: do NOT replay legacy notifications or lose history.
+for reactivate_pass in 1 2; do
+  docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 < sql/poll_only/core_without_notifications_candidate.sql
+  docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 < sql/poll_only/forward_candidate.sql
+done
+docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 <<'SQL'
+do $reactivation_check$
+declare r record; n int;
+begin
+ if not has_schema_privilege('authenticated','poll_private','USAGE') then raise exception 'Reactivation did not restore private schema usage'; end if;
+ for r in select p.oid, p.proname from pg_proc p join pg_namespace ns on ns.oid=p.pronamespace
+ where ns.nspname='poll_private' and p.proname in ('create_poll','submit_vote','legacy_vote','poll_results') loop
+  if not has_function_privilege('authenticated',r.oid,'EXECUTE') then raise exception 'Reactivation did not restore helper %',r.proname; end if;
+  if has_function_privilege('anon',r.oid,'EXECUTE') then raise exception 'Reactivation exposed helper % to anon',r.proname; end if;
+ end loop;
+ if (select count(*) from pg_proc p join pg_namespace ns on ns.oid=p.pronamespace
+      where ns.nspname='poll_private' and p.proname in ('create_poll','submit_vote','legacy_vote','poll_results')) <> 4 then
+  raise exception 'Reactivation lost a required helper'; end if;
+ if not has_function_privilege('authenticated','public.create_interactive_post_v4(text,text,text[],integer,boolean,text)','EXECUTE') then raise exception 'Creation RPC not restored'; end if;
+ if not has_function_privilege('authenticated','public.get_interactive_results_v4(uuid[])','EXECUTE') then raise exception 'Result RPC not restored'; end if;
+ if has_function_privilege('authenticated','public.get_interactive_results_v3(uuid[])','EXECUTE') then raise exception 'Old result RPC exposed'; end if;
+ if has_function_privilege('authenticated','poll_private.close_due_polls()','EXECUTE') then raise exception 'Private close worker unexpectedly exposed'; end if;
+ select count(*) into n from public.post_interactive where post_id='20000000-0000-0000-0000-000000000001' and kind='question';
+ if n <> 1 then raise exception 'Reactivation lost historical question'; end if;
+ select count(*) into n from public.post_interactive_responses where post_id='20000000-0000-0000-0000-000000000001' and answer='historical answer fixture';
+ if n <> 1 then raise exception 'Reactivation lost historical answer'; end if;
+ select count(*) into n from public.notifications where type='poll_closed' and post_id='20000000-0000-0000-0000-000000000098';
+ if n <> 1 then raise exception 'Reactivation replayed legacy close notice'; end if;
+ if exists(select 1 from cron.job where jobname='pokerid-poll-close-v1') then raise exception 'Reactivation started cron without separate owner action'; end if;
+end
+$reactivation_check$;
+SQL
+echo 'PASS poll reactivation cycle: grants restored, historical rows preserved, no cron auto-start'
 
