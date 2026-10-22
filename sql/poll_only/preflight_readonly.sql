@@ -1,5 +1,6 @@
--- Run only on an explicitly authorized isolated/staging DB. Never fetch a
--- production password to execute this task. No user-row data or secret values.
+-- READ-ONLY catalog/aggregate inventory. Authorized production SELECTs are allowed.
+-- Never use this as a substitute for a verified full backup or restoration.
+-- No user-row data, credentials, or secret values are selected.
 select c.relname,c.relrowsecurity,a.attname,format_type(a.atttypid,a.atttypmod) type,a.attnotnull,pg_get_expr(d.adbin,d.adrelid) default_expression
 from pg_class c join pg_namespace n on n.oid=c.relnamespace join pg_attribute a on a.attrelid=c.oid and a.attnum>0 and not a.attisdropped left join pg_attrdef d on d.adrelid=c.oid and d.adnum=a.attnum
 where n.nspname='public' and c.relname in ('posts','profiles','user_blocks','notifications','post_interactive','post_interactive_responses') order by c.relname,a.attnum;

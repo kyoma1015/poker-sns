@@ -30,7 +30,7 @@
 
 ## Go / no-go operational sequence (future, requires explicit authorization)
 
-1. Freeze feature rollout. Confirm deployed Vercel SHA, main SHA, branch and migration checksum. Obtain and verify a restore-capable Supabase backup/PITR and capture *fresh* preflight inventory: table columns/checks/PK/FK, function signatures and ACLs, RLS, triggers, cron jobs and execution state. Record counts for 6 polls, 4 questions, 3 votes, 3 answers, all existing notifications; use dynamically rechecked counts, not assumed fixed release-day numbers.
+1. Freeze feature rollout. Confirm deployed Vercel SHA, main SHA, branch and migration checksum. Obtain and verify a restore-capable Supabase backup/PITR and capture *fresh* preflight inventory: table columns/checks/PK/FK, function signatures and ACLs, RLS, triggers, cron jobs and execution state. Record current counts for polls, historical questions, votes, answers and existing notifications; **never hardcode the 2026-10-22 early snapshot of 6 polls**, and use dynamically rechecked counts at maintenance time.
 2. Confirm the approved SQL files exactly match CI-passed SHA. Prove the old notification job is healthy and no duplicate `poll_closed` pairs exist. Run migration and release checks against a restored staging snapshot with *real schema*, no real-user writes.
 3. **Core-only DB migration first:** apply `sql/poll_only/core_without_notifications_candidate.sql` in its own transaction. Check RPC results/anonymous privacy, legacy data count preservation, grants/RLS, and no unexpected cron/trigger. Existing legacy cron remains active. Roll out no UI yet. If any check fails, STOP and use reviewed disable/restore plan.
 4. In an approved maintenance window, disable new poll creation UI; ensure old poll close worker execution is quiescent. Apply `sql/poll_only/forward_candidate.sql` (includes notification guard and new worker) only after snapshot checks and review. Validate old notices remain unchanged before any schedule change.
@@ -57,3 +57,17 @@
 - `cron.job_run_details`: **5704 succeeded**, latest completed at 2026-10-21 16:21:00 UTC; **0 running** at snapshot time. This is transient evidence, not permission to unschedule or start a new worker.
 - Closed polls without an owner `poll_closed` notification: **0**. Duplicate `(post_id,user_id)` closed-notification pairs: **0**.
 - `sql/poll_only/preflight_readonly.sql` now contains these repeatable read-only checks for the next authorized maintenance window. **Backup/restoration still unverified; release remains NO-GO.**
+
+## Mac-unavailable read-only preflight update (2026-10-22 approximately 10:40 JST)
+
+The owner currently has no access to their Mac. Connected Supabase's SQL tool was used for **SELECT-only, aggregate/catalog** queries; user-row contents and credentials were not exported. Observed production snapshots:
+
+- Polls: **7** (increased from the prior 6); historical questions: **4**; votes: **3**; historical answers: **3**.
+- Existing `poll_closed` notices: **6**. Duplicate `(post_id,user_id)` closed-notification pairs: **0**.
+- Exactly one old poll close cron, active at one-minute cadence: `poker_id_poll_closed_notifications`. `cron.job_run_details` success count **6262**, latest start at **2026-10-22 01:39 UTC**; no failed runs returned in the grouped snapshot.
+- `poll_private` schema / `poll_private.close_due_polls()`: **absent**. New backend and new cron still NOT deployed.
+- Installed extensions: `pg_cron` 1.6.4, `pg_stat_statements` 1.11, `pgcrypto` 1.3, `plpgsql` 1.0, `supabase_vault` 0.3.1, `uuid-ossp` 1.1.
+
+**No-Mac alternative decision:** the connected Supabase tool can inspect public catalog and aggregate counts but cannot export the entire project into a durable, encrypted private backup file or conduct independent full restore. There is no verified authorized off-host storage + production dump credential in this chat's tool environment. Do **not** use SQL dumps returned in chat, public GitHub, CI artifacts, a free third-party cloud service, or a write-enabled clone of production as a workaround. A remote Work cloud computer may be suitable only when explicitly available with approved secure storage and a proper connection, but the current chat cannot directly invoke Work cloud computing. On an authorized trusted device later, use the guarded `scripts/poll_backup_vscode.sh` workflow and restore test on an independent instance.
+
+A snapshot of 7 polls is not proof of data integrity across the complete project. Existing users may continue to add legitimate polls; re-check counts before migration. **NO-GO until real off-host backup and actual isolated restore prove recoverability, plus explicit release authorization.**
