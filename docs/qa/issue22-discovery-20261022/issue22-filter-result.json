@@ -1,0 +1,33 @@
+{
+  "id": "issue22-b-filter-values-v1",
+  "lane": "B",
+  "base_sha": "6b8610876b607920fffcbde7399b736aa27b6db7",
+  "executor": "host_session",
+  "host_agent_id": "/root/b_next",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "src/TDA.tsx",
+    "src/tdaQuizData.ts"
+  ],
+  "tested_source_sha256": {
+    "src/TDA.tsx": "7de8f2d7760f6b32f76beb1ef8faa5df5374909e0fd97dfd9a4835503f1023de",
+    "src/tdaQuizData.ts": "36f29cca6eb582c7b7508a2d9ef805d4846e26f2e4feba685dc50449b2936148"
+  },
+  "tests": [
+    {
+      "command": [
+        "node",
+        "tests/tda-quiz-data.test.mjs"
+      ],
+      "exit_code": 0,
+      "test_count": 28,
+      "output_sha256": "c182576bad3cc44e18178b8f660d84c9f9f974c854ee26fbfb61cb8e68179e3e"
+    }
+  ],
+  "commit": "74ade9a2ebe844dab9874533dc49bb0905655f49",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

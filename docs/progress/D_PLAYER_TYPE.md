@@ -21,3 +21,5 @@ PR60 source93d9948f8f829432fa66c5aafd294bf8924421fa unchanged,CI39640376299SUCCE
 
 ## New source continuation — 2026-10-22
 D82 own trait keys: fixed48/audit5 +types/build/lint PASS, CI SUCCESS. No semantic animal classification claim. See [ledger](../workers/ISSUE22_AUTONOMOUS_SOURCE_20261022.md). Existing source/original4state/BLOCKED history retained; no production/main/paid action.
+
+2026-10-22 PR82 audit source exactly matches PR30-before blob374d22b05ed81fe6207537c0c2ee08b6c8242ad5. PR30's existing12-line persona checks are missing; new input65901ec358ac75ec7aaea250800b7acfdbb7b0a3 reproduces53tests/48PASS5FAIL. Exact oldpatch forwardcheckPASS/reversecheckFAIL, no source changed. Reuse in reviewed integration input; do not rewrite/merge twice. Semantic36animal evidence stillBLOCKED.

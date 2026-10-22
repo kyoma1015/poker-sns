@@ -1,0 +1,37 @@
+{
+  "id": "issue22-a-discovery-store-v2",
+  "lane": "A",
+  "base_sha": "2f5faca8b0230c4afbff6fca10ca30a59e3bf918",
+  "executor": "host_session",
+  "host_agent_id": "/root/bd_evidence_audit",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "scripts/continuation_recovery.py"
+  ],
+  "tested_source_sha256": {
+    "scripts/continuation_recovery.py": "36e5773619b5d149fa44d8522c7b881904b882326092c25ed31351f41de55e5f"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 49,
+      "output_sha256": "d1e3e4136780f9dbf4cb284d8939e1d9643a9fba82f0abf990642ee9e948e5d4"
+    }
+  ],
+  "commit": "a3186ef6a5da4c3489aa2e7947fdea2b00395c31",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

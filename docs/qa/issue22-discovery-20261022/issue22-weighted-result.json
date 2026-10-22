@@ -1,0 +1,37 @@
+{
+  "id": "issue22-c-weighted-ev-v1",
+  "lane": "C",
+  "base_sha": "599ef4c02d87d6e902f725bed3d9ac1f5bc466b2",
+  "executor": "host_session",
+  "host_agent_id": "/root/c_budget_impl",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "gto/hand169.py"
+  ],
+  "tested_source_sha256": {
+    "gto/hand169.py": "8bc79fb302bb78680f62ac1ec7b000a1879d611c7c9a1e7968191b5ffc68a3dc"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 42,
+      "output_sha256": "3567b8aff38dd2de1abf71abfac74dcfff8ffd61cfdacdf2072ec49a47e57326"
+    }
+  ],
+  "commit": "a4ced9e4e37e79e32a259ed28d2cfbe279542521",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

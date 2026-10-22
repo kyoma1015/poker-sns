@@ -18,3 +18,5 @@ Integrated in B → D → A → SNS order. Local network permission resolved the
 
 ## New source continuation — 2026-10-22
 A80 finite lease inputs and A85 finite setup waits: fixed35/39 +worker22/queue15 PASS, dedicated CI SUCCESS. See [ledger](../workers/ISSUE22_AUTONOMOUS_SOURCE_20261022.md). Existing source/original4state/BLOCKED history retained; no production/main/paid action.
+
+2026-10-22 Draft96 adds bounded durable discovery metadata to the existing controller:49fixed+22worker+15queuePASS/CI39767309432. No task promotion or live state/controller adoption. Source a3186ef6a5da4c3489aa2e7947fdea2b00395c31; see ISSUE22_DISCOVERY_CONTINUATION_20261022.md for limits.

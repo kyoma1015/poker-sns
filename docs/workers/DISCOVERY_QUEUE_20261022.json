@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "executable": false,
+  "purpose": "Public review/discovery handoff only; no private state reconstruction or task promotion",
+  "items": [
+    {
+      "id": "review-discovery-invocation-adapter",
+      "lane": "A",
+      "status": "review_required",
+      "owner": null,
+      "reference": "PR96",
+      "title": "Review bounded per-invocation caller and persistence adoption; fixed FAIL and approved controller rollout required"
+    },
+    {
+      "id": "review-tda-350-official-evidence",
+      "lane": "B",
+      "status": "blocked",
+      "owner": null,
+      "reference": "PR62/83",
+      "title": "Recover immutable official snapshot and clause review evidence; no question publication approval"
+    },
+    {
+      "id": "review-gto-scaling-cancellation",
+      "lane": "C",
+      "status": "review_required",
+      "owner": null,
+      "reference": "PR97",
+      "title": "Explore independent cancellation/scaling oracles; not ready without witnessed distinct FAIL"
+    },
+    {
+      "id": "reuse-pr30-persona-audit",
+      "lane": "D",
+      "status": "review_required",
+      "owner": null,
+      "reference": "PR30, input65901ec",
+      "title": "Reuse exact existing persona audit patch in reviewed integration input; do not create duplicate source implementation"
+    },
+    {
+      "id": "review-diagnosis-semantic-labels",
+      "lane": "D",
+      "status": "blocked",
+      "owner": null,
+      "reference": "PR60/82",
+      "title": "Expert labels and independent 36-animal semantic evidence required"
+    },
+    {
+      "id": "review-optional-filter-transport-recovery",
+      "lane": "B",
+      "status": "review_required",
+      "owner": null,
+      "reference": "PR98",
+      "title": "Explore actual transport/filter refresh recovery after malformed payload; no descriptor ready without distinct witnessed FAIL"
+    }
+  ]
+}

@@ -49,3 +49,5 @@ The above v1 is BLOCKED, not PASS: coordinator descriptor mistakenly called refu
 
 ## New source continuation — 2026-10-22
 C81 strict coverage flag and C84 per-row frequency snapshot: fixed34/37 +GTO40 PASS, CI SUCCESS. OriginalG11/pokerconvergence remain BLOCKED. See [ledger](../workers/ISSUE22_AUTONOMOUS_SOURCE_20261022.md). Existing source/original4state/BLOCKED history retained; no production/main/paid action.
+
+2026-10-22 Draft97 fixes finite representable EV lost by ratio-first underflow. Sourcea4ced9e4e37e79e32a259ed28d2cfbe279542521; fixed42 inclDecimaloracle5/GTO40PASS, CI39767319480SUCCESS. Synthetic export aggregation only, no G11/checkpoint/convergence proof. Original artifacts unchanged.

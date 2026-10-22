@@ -1,0 +1,31 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-b-filter-values-v1",
+        "lane": "B",
+        "base_sha": "6b8610876b607920fffcbde7399b736aa27b6db7",
+        "base_branch": "codex/b-filter-values-input-20261022",
+        "branch": "codex/b-filter-values-fix-20261022",
+        "test_profile": "tda",
+        "allowed_paths": [
+          "src/tdaQuizData.ts",
+          "src/TDA.tsx"
+        ],
+        "protected_tests": [
+          "tests/tda-quiz-data.test.mjs",
+          "tests/tda-saved-answer.test.mjs",
+          "tests/tda-audit-cli.test.mjs",
+          "tests/browser/tda-filters.mjs",
+          "tests/browser/tda-filters-supabase.ts",
+          "tests/browser/tda-entry.tsx"
+        ],
+        "instruction": "Normalize optional quiz filters at unknown-data boundary, and wire loadQuizFilters to helper normalizeQuizFilters. Invalid row/field yields emptyarray; each array keeps strings only in existing order/value with newcopy, preserving whitespace/empty/duplicates; densifyholes. Never render object/nonstringitems. Preserve valid siblingfields and RPC args/questions/answer state. Only src/tdaQuizData.ts and src/TDA.tsx. Fixed28 baseline5FAIL including actual React objectchild crash; browser4 mobile scenarios allPASS, savedanswer14/audit18, fulltypes/build/lint. No SQL/question content/auth changes. Dependencies outside source worktree, Vitecache/build externaltemp; no tests/fixture modifications or commit."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

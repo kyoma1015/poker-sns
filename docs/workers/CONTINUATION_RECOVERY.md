@@ -103,3 +103,6 @@ reviewed setup lifecycle. No ignored-file/path guard was weakened by this
 component, and no API to bless arbitrary dependency deltas is provided. If a
 prepared worktree acquires unexpected node_modules/ignored deltas, preserve it
 and BLOCK rather than manually replacing the snapshot to obtain PASS.
+
+## Durable discovery metadata — Draft96, 2026-10-22
+New source adds discover/discoveries/set_discovery to existing Continuation. Suggestions remain non-executable and cannot bypass review/protected acceptance/lease/run caps. Atomic cap1000 and owner/status retention survive temp-state restart;49 fixed +22worker+15queue tests passed (CI39767309432). Active controller/state schema were NOT switched. See ISSUE22_DISCOVERY_CONTINUATION_20261022.md and DISCOVERY_QUEUE_20261022.json for source/CI/next invocation and approval limits. No new scheduler or unattended-runtime proof.

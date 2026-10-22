@@ -72,3 +72,6 @@ Read ISSUE22_MAIN_TRANSPLANT_20261022.md. Current observedmain5a49f437727fba0f4d
 
 ## Autonomous source continuation — 2026-10-22
 Read ISSUE22_AUTONOMOUS_SOURCE_20261022.md. New completed IDs: issue22-a-finite-lease-v1 (PR80), issue22-b-dense-quiz-v1 (PR83), issue22-c-coverage-mode-v1 (PR81), issue22-d-own-trait-v1 (PR82), issue22-c-frequency-snapshot-v1 (PR84), issue22-a-finite-setup-v1 (PR85). All exact-headActions SUCCESS. Do not replay or rewrite these IDs/candidates; public source/hash/acceptance/plan evidence under docs/qa/issue22-autonomous-20261022/. Original4 state matches,29implemented/2blocked/running0 at finalsource check. B28/C29 exact older patches reused in new inputs, not counted as new fixes. New Drafts target fixedinputs, not main;74/75 untouched. Later explicit manual source cycle, no schedule/daemon/coldstart claim.
+
+## 2026-10-22 discovery continuation
+A96/B98/C97 are three new formal host source completions with preserved original4/state (32implemented/2blocked). Old ready C57/B59/D60 IDs not replayed. D30 exact-source reuse pending; no new duplicate implementation. See ISSUE22_DISCOVERY_CONTINUATION_20261022.md and non-executable DISCOVERY_QUEUE_20261022.json; new discovery API not adopted in live controller, no scheduler/coldstart proof, no main/production operations.

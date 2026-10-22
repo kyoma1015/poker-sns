@@ -41,3 +41,6 @@ See [evidence ledger](../workers/ISSUE22_VERIFICATION_20261022.md). New isolated
 
 ## New source continuation — 2026-10-22
 Six source fixes A80/A85/B83/C81/C84/D82 committed and CI SUCCESS. Separate pinned branches/Drafts, no main adoption; see source evidence ledger. See [ledger](../workers/ISSUE22_AUTONOMOUS_SOURCE_20261022.md). Existing source/original4state/BLOCKED history retained; no production/main/paid action.
+
+## Bounded discovery continuation — 2026-10-22
+New formal source A96 durable review suggestions (not executable), B98 optional-filter React crash prevention, C97 finite weighted-EV scaling. Original state32implemented/2blocked, original4 hashes retained; no live controller switch/main merge. D PR30 inheritance gap reproduced53/5FAIL, reuse pending, no duplicate source. Details/source/CI: docs/workers/ISSUE22_DISCOVERY_CONTINUATION_20261022.md and docs/qa/issue22-discovery-20261022/. Public non-executable next-review queue saved; official350/D36semantic/G11/poll-production gates remain unproven.
