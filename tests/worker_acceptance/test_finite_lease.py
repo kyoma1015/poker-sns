@@ -38,3 +38,12 @@ class FiniteLease(unittest.TestCase):
  def test_valid_duration_still_expires_without_takeover(self):
   t={'id':'valid','lane':'A'};self.l.claim(t,seconds=2,now=10)
   self.assertIsNone(self.l.claim(t,now=12));self.assertEqual(self.l.report()[0]['status'],'blocked')
+
+ def test_invalid_finish_clock_preserves_running(self):
+  for x in [float('nan'),float('inf'),-float('inf'),True,'100']:
+   with self.subTest(x=x),tempfile.TemporaryDirectory() as d:
+    l=w.Leases(Path(d)/'owned.sqlite');t={'id':'owned','lane':'A'};token=l.claim(t,now=100)
+    try:
+     with self.assertRaises(ValueError):l.finish(t['id'],token,'implemented',{},now=x)
+     self.assertEqual(l.report()[0]['status'],'running')
+    finally:l.close()
