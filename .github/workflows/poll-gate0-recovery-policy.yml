@@ -1,0 +1,33 @@
+name: Poll gate0 synthetic retention and recovery policy
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/poll-gate0-recovery-policy.yml'
+      - 'tests/polls/verify_gate0_recovery_policy.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  gate0-synthetic-policy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Synthetic-only policy and failure-path tests
+        env:
+          GATE0_REPORT: gate0-synthetic-policy-report.json
+        run: python3 tests/polls/verify_gate0_recovery_policy.py
+      - name: Evidence SHA-256
+        if: always()
+        run: |
+          if [ -f gate0-synthetic-policy-report.json ]; then
+            sha256sum gate0-synthetic-policy-report.json
+          fi
+      - name: Upload synthetic-only evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: poll-gate0-synthetic-policy-evidence
+          path: gate0-synthetic-policy-report.json
+          if-no-files-found: warn
+          retention-days: 7
