@@ -50,6 +50,16 @@ def _weighted_sum(weighted_values, mass, *, policy=False):
     return math.fsum(terms)
 
 
+def _finite_number(value):
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return False
+    try:
+        return math.isfinite(value)
+    except OverflowError:
+        # Python integers may exceed the finite binary64 input domain.
+        return False
+
+
 def aggregate(records, action_count, *, require_complete=True):
     """Validate and aggregate reach-weighted strategy/EV without hiding gaps.
 
@@ -68,12 +78,12 @@ def aggregate(records, action_count, *, require_complete=True):
         if key in seen: raise ValueError('duplicate concrete combination')
         seen.add(key)
         weight = record['weight']; frequencies = record['frequencies']; ev = record.get('ev')
-        if isinstance(weight, bool) or not isinstance(weight, (int, float)) or not math.isfinite(weight) or weight < 0:
+        if not _finite_number(weight) or weight < 0:
             raise ValueError('finite nonnegative reach weight required')
-        if not isinstance(frequencies, (list, tuple)) or len(frequencies) != action_count or any(isinstance(x, bool) or not isinstance(x, (int, float)) or not math.isfinite(x) or x < 0 or x > 1 for x in frequencies):
+        if not isinstance(frequencies, (list, tuple)) or len(frequencies) != action_count or any(not _finite_number(x) or x < 0 or x > 1 for x in frequencies):
             raise ValueError('invalid action frequencies')
         if abs(math.fsum(frequencies) - 1) > 1e-9: raise ValueError('frequencies must sum to one')
-        if ev is not None and (isinstance(ev, bool) or not isinstance(ev, (int, float)) or not math.isfinite(ev)):
+        if ev is not None and not _finite_number(ev):
             raise ValueError('EV must be finite or explicitly unknown')
         # Export iterators may reuse a mutable buffer for their next row.
         buckets[label].append((weight, tuple(frequencies), ev))
