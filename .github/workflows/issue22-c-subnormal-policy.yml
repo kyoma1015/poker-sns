@@ -1,0 +1,22 @@
+name: Issue22 subnormal policy fixed oracle
+on:
+  pull_request:
+    branches: [codex/c-subnormal-policy-input-20261022]
+permissions:
+  contents: read
+concurrency:
+  group: subnormal-policy-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -B -m unittest discover -s tests/worker_acceptance -v
+      - run: python -B -m unittest discover -s gto/tests -v
