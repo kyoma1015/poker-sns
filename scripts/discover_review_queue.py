@@ -62,7 +62,9 @@ def main(argv=None):
     except (OSError, ValueError, UnicodeError, RecursionError):
         print('review queue preview input rejected', file=sys.stderr)
         return 2
-    print(json.dumps(result, ensure_ascii=False, sort_keys=True))
+    # Escaping also covers lone surrogates accepted by the JSON reader, so the
+    # complete document is safe to write without an encoding failure mid-output.
+    print(json.dumps(result, ensure_ascii=True, sort_keys=True))
     return 0
 
 
