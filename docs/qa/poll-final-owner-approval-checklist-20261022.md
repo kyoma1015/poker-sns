@@ -8,7 +8,7 @@
 - **Historical read-only snapshot:** PostgreSQL 17.11; 8 polls and 4 historical questions; 7 Storage metadata objects; 19 migrations; legacy cron `poker_id_poll_closed_notifications` calling `public.dispatch_poll_closed_notifications()`; historical `poll_private` absent. Re-verify under a separate future read-only authorization.
 - **Unverified:** real backup, full isolated restore, Vault key portability, Storage bytes, Auth/external dependencies, current catalog/RLS/RPC, live cron drain, maintenance and production release. **BLOCKED** until individually evidenced.
 
-## Independent gates — all required for GO
+## Eleven independent gates (0–10) — all required for GO
 
 | Order | Gate | Owner / reviewer | Minimum private evidence to pass | Stop / NO-GO condition | Potential zero-extra-subscription route |
 |---|---|---|---|---|---|
@@ -57,4 +57,4 @@
 - `sql/poll_only/disable_candidate.sql`
 - `tests/polls/verify_backup_restore.sh` (**three synthetic tables only**, not full restore)
 
-**Final decision: NO-GO until all ten gates have private, current, independently reviewed evidence and separately authorized production actions.**
+**Final decision: NO-GO until all eleven gates have private, current, independently reviewed evidence and separately authorized production actions.**
