@@ -1,0 +1,22 @@
+name: Issue22 d-own-trait fixed acceptance
+on:
+  pull_request:
+    branches: [codex/d-own-trait-input-20261022]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node tests/player-type.test.mjs
+      - run: node tests/player-type-audit.test.mjs
+      - run: npm ci --cache "$RUNNER_TEMP/npm-cache"
+      - run: npm run build
+      - run: npm run lint
