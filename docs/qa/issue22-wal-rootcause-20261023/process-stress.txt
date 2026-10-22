@@ -1,0 +1,1 @@
+{"rounds": 10, "processes_per_round": 8, "successful_initializers": 80, "owned_databases_only": true, "result": "PASS"}

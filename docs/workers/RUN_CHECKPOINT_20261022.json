@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "invocation_id": "issue22-next-source-manual-20261022T164337Z",
+  "invocation_id": "issue22-audit-wal-manual-20261022T170541Z",
   "owner": "/root",
-  "updated_at": "2026-10-22T16:50:13.134883+00:00",
+  "updated_at": "2026-10-22T17:18:10.928357+00:00",
   "main": "781f038415503ece850c25a26e72ef67dee9c8a1",
   "original4_continuity": true,
   "counts": {
     "blocked": 2,
-    "implemented": 41
+    "implemented": 42
   },
-  "last_success": "Draft110 weighted maximum EV fixed62/GTO40/CI39817184387SUCCESS;A109CI39814795806SUCCESS;B/Dadditional8PASS/browser1BLOCKED",
-  "next_action": "Observe existing second readonlyprobe17:02:46UTC without acquiring lease/sourceworker; compare intentional manual checkpoint advancement. Review PR110 dependency/main selection, recover missing2integration descriptors, B350/D36/G11 evidence; newsource needs fixedFAIL/freshgates",
+  "last_success": "ExactPR69initializer selected into auditDraft; repeated isolated stabilityPASS",
+  "next_action": "Verify newPR38headCI; do not adopt controller/scheduler. Original2 historicalblocked superseded. New source needs fixedFAIL/freshoverlap, not a retry of completed IDs.",
   "retry_count": 0,
   "scheduler_enabled_by_this_invocation": false,
   "controller_switched": false,
@@ -667,9 +667,24 @@
       "pr": 110,
       "ci_run_id": 39817184387,
       "ci_status": "success"
+    },
+    {
+      "id": "issue22-a-audit-wal-reuse-v1",
+      "lane": "A",
+      "status": "implemented",
+      "kind": "selected_existing_patch_reuse_not_new_algorithm",
+      "attempts": 1,
+      "source_commit": "199d15d7f0302ffaeb27185ae50ceb1ad634ea1e",
+      "owner": "/root/audit_wal_reuse_impl",
+      "pr": 38,
+      "branch": "codex/issue22-overlap-proof-20261021",
+      "ci_run_id": null,
+      "ci_status": "verify published PR38 head",
+      "last_success": "fixed27/worker22/queue15/10repeatedsuites/80processinitializersPASS",
+      "next_action": "verifyauditCI;do_not_reimplement"
     }
   ],
   "provider_run_id": null,
   "invocation_id_origin": "explicit manual user instruction,not scheduled provider runID",
-  "pending_ci_count": 0
+  "pending_ci_count": 1
 }

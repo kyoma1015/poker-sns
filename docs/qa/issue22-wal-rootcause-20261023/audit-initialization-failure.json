@@ -1,0 +1,17 @@
+{
+  "run": 39817880993,
+  "attempt": 1,
+  "job": 119961040154,
+  "conclusion": "failure",
+  "failed_test": "test_four_real_git_worktrees_and_commits_without_faking_ai",
+  "cause": "sqlite3.OperationalError:database is locked at code_worker.py115 PRAGMA journal_mode=WAL",
+  "existing_fix": "PR69 and descendants; serialized init present in PR107; not adopted by old audit/live checkout",
+  "failed_jobs_retry_requested_once": true,
+  "root_cause_fixed": false,
+  "source_C110_CI": 39817184387,
+  "source_C110_result": "success",
+  "historical": true,
+  "observed_on_head": "cc495c914284d955e0d6b75be55818bdd8081f54",
+  "original_attempt2": "success;not a source fix",
+  "selected_fix_source": "199d15d7f0302ffaeb27185ae50ceb1ad634ea1e"
+}

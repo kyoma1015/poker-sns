@@ -1,0 +1,37 @@
+{
+  "id": "issue22-a-audit-wal-reuse-v1",
+  "lane": "A",
+  "base_sha": "a18885d839ffee6b06bc0b456c85c968a9e2efe6",
+  "executor": "host_session",
+  "host_agent_id": "/root/audit_wal_reuse_impl",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "scripts/code_worker.py"
+  ],
+  "tested_source_sha256": {
+    "scripts/code_worker.py": "37a539e207c46ee5ad94bdf6c877cf835e5188a217169ed1f5aa2885ce0def15"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 27,
+      "output_sha256": "4e784e190b15eff3d6fd8363e91a1c04b8ac4f9352df159f27c7c1253d63dc39"
+    }
+  ],
+  "commit": "199d15d7f0302ffaeb27185ae50ceb1ad634ea1e",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

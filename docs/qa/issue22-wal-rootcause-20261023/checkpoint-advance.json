@@ -1,0 +1,11 @@
+{
+  "sha256": "8b6b3155ea0372ba28b4cf825eb1457204361ba0671b5470de6823bc98b98713",
+  "reason": "explicit manual selected-patch integration;not automatic sourcework",
+  "counts": {
+    "blocked": 2,
+    "implemented": 42
+  },
+  "original43_statuses_retained": true,
+  "original4_anchor_match": true,
+  "runtime_controller_switched": false
+}

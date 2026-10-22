@@ -1,0 +1,39 @@
+diff --git a/scripts/code_worker.py b/scripts/code_worker.py
+index e45d66a..bbfee07 100644
+--- a/scripts/code_worker.py
++++ b/scripts/code_worker.py
+@@ -111,13 +111,18 @@ def acceptance_count(output):
+ 
+ class Leases:
+     def __init__(self, path):
+-        self.db = sqlite3.connect(path, timeout=10, isolation_level=None)
+-        self.db.execute('PRAGMA journal_mode=WAL')
+-        self.db.execute('PRAGMA busy_timeout=10000')
+-        self.db.execute('''CREATE TABLE IF NOT EXISTS development_jobs (
+-          id TEXT PRIMARY KEY, lane TEXT NOT NULL, spec_hash TEXT NOT NULL,
+-          status TEXT NOT NULL, attempts INTEGER NOT NULL DEFAULT 0,
+-          token TEXT, expires REAL, evidence TEXT)''')
++        with setup_lock(path):
++            self.db = sqlite3.connect(path, timeout=10, isolation_level=None)
++            try:
++                self.db.execute('PRAGMA journal_mode=WAL')
++                self.db.execute('PRAGMA busy_timeout=10000')
++                self.db.execute('''CREATE TABLE IF NOT EXISTS development_jobs (
++                  id TEXT PRIMARY KEY, lane TEXT NOT NULL, spec_hash TEXT NOT NULL,
++                  status TEXT NOT NULL, attempts INTEGER NOT NULL DEFAULT 0,
++                  token TEXT, expires REAL, evidence TEXT)''')
++            except BaseException:
++                self.db.close()
++                raise
+ 
+     def close(self):
+         self.db.close()
+@@ -248,7 +253,7 @@ class CodexExecutor:
+ 
+ @contextmanager
+ def setup_lock(state, seconds=30):
+-    """Serialize git worktree preparation across processes sharing durable state."""
++    """Serialize state initialization and git preparation across processes."""
+     with open(str(state) + '.setup.lock', 'a') as handle:
+         deadline = time.monotonic() + seconds
+         while True:

@@ -1,0 +1,39 @@
+{
+  "kind": "manual selected-reuse review,not automatic planner readiness",
+  "scope": "PR38 audit only;no merge/retarget/update of other PRs",
+  "source_before_exact_PR69_parent": true,
+  "source_after_exact_PR69_head": true,
+  "constructors": [
+    {
+      "number": 85,
+      "head": "f7f246ecbf5ab55ec47a0cb12bbfdc5ba8d57ced",
+      "available": true,
+      "constructor_matches_selected_fix": true
+    },
+    {
+      "number": 80,
+      "head": "6b43510328486531f60b712421d48510e7c2447b",
+      "available": true,
+      "constructor_matches_selected_fix": true
+    },
+    {
+      "number": 74,
+      "head": "2a1f39264f2b467df652a33864de659f6537e92e",
+      "available": true,
+      "constructor_matches_selected_fix": true
+    },
+    {
+      "number": 69,
+      "head": "4d30c7ac0d08104f9d159987e38c823ef7c3b419",
+      "available": true,
+      "constructor_matches_selected_fix": true
+    },
+    {
+      "number": 26,
+      "head": "4fbfd95ef42292c91b6fe8573ea214371d759fda",
+      "available": true,
+      "constructor_matches_selected_fix": false
+    }
+  ],
+  "unrelated_followup_features_not_imported": true
+}
