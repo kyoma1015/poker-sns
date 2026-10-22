@@ -31,7 +31,10 @@ if test "$ready" -ne 1; then
   exit 1
 fi
 docker inspect "$c" --format 'DIAG: status={{.State.Status}} oom={{.State.OOMKilled}}' || true
-echo 'DIAG: database ready'
+echo 'DIAG: initial database ready; allow Supabase image init restart to settle'
+sleep 8
+if ! docker exec "$c" pg_isready -U postgres -d postgres >/dev/null 2>&1; then echo '::error::Postgres unavailable after init settle'; exit 1; fi
+echo 'DIAG: post-init database ready'
 q() { docker exec "$c" psql -X -At -U supabase_admin -d postgres -v ON_ERROR_STOP=1 -c "$1"; }
 docker exec -i "$c" psql -X -q -U supabase_admin -d postgres -v ON_ERROR_STOP=1 < tests/poll_close_concurrency_fixture.sql
 echo 'DIAG: fixture loaded'
