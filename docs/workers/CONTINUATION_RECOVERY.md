@@ -109,3 +109,6 @@ New source adds discover/discoveries/set_discovery to existing Continuation. Sug
 
 ## Offline discovery preview and finite invocation clock — Draft102/104
 reserve_run validates explicit/generated clocks before transactions using existing finite validator (58+22+15PASS). New discover_review_queue.py previews bounded local metadata, no DB/dispatch/network/write;67+22+15PASS, actual4review suggestions/executable=false. It is not a live persistence caller or scheduler. See ISSUE22_SELECTED_REUSE_20261022.md; controller adoption remains prohibited.
+
+## Restart preparation — Draft106/107
+Publication metadata now has typed allowlist, source/attempt consistency and atomic CAS; opt-in InvocationGuard reuses setup_lock/reserve_run for context-wide exclusion/cooperative stop. Neither is connected to the live controller. Source/local/CI facts and gaps are separated in ISSUE22_RESTART_PREPARATION_20261022.md. Native30min scheduling unsupported; disabled hourly readonlyCOUNT2 proposal is not registered or completed automation.

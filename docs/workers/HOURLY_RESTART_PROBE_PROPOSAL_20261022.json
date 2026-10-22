@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "enabled": false,
+  "status": "approval_required",
+  "requested_interval_seconds": 1800,
+  "requested_cadence_supported": false,
+  "alternative_interval_seconds": 3600,
+  "provider": "ChatGPT automations",
+  "purpose": "Two read-only independent launch/capability observations; not an implementation worker",
+  "requires_approval": [
+    "Change cadence from requested30min to supported60min",
+    "Pause existing6h reservation during probe",
+    "Create finite COUNT2 read-only automation"
+  ],
+  "existing_automation_id": "6ad6f43503cc8191b11915fdbaa51312",
+  "create_arguments": {
+    "title": "Poker ID 再開接続検証",
+    "timing_mode": "exact_schedule",
+    "schedule": "BEGIN:VEVENT\nRRULE:FREQ=HOURLY;COUNT=2\nEND:VEVENT",
+    "dtstart_offset_json": "{\"hours\":1}",
+    "prompt": "Poker ID kyoma1015/poker-sns Issue22の独立起動・再開接続を読み取り専用で検証する。GitHub main、PR38最新headのdocs/workers/ISSUE22_RESTART_PREPARATION_20261022.mdとdocs/qa/issue22-restart-preparation-20261022/を読む。共有state /workspace/work/issue22-host-controller/leases.sqlite の存在と元4task spec_hash continuityを読み取り専用で照合し、現在の実装済ID・実行中lease・最新CI・次処理を確認。SQLite新規作成/変更、lease取得、source実装、commit/push/PR変更、nestedCLI、credentialcopy、controller/scheduler切替、予約延長、production/Supabase/Vercel/課金は禁止。正式shell/collaboration/GitHub認証/同じstateがあるか、provider runID/chat_ref/起動契機が実際に観測できるかだけを秘密値なしで報告。tool不足やstate消失はBLOCKED。fixtureや親hostの手動作業を独立起動成功としない。新しい予約は作らず、この単発起動を完了したら終了。日本語単一Markdownコードブロックで観測事実と不足能力を報告。",
+    "default_timezone": "America/Los_Angeles"
+  },
+  "limits": {
+    "provider_occurrences": 2,
+    "overlap_implementation_allowed": false,
+    "model_source_writes": false,
+    "new_paid_api": false,
+    "new_secret_registration": false,
+    "automatic_extension": false
+  },
+  "acceptance": "Two independent provider runs with observed IDs, retained state continuity and supported host tools; otherwise BLOCKED, not automated development complete",
+  "not_verified": [
+    "Scheduler activation",
+    "Independent Codex coldstart",
+    "Global invocation exclusion",
+    "Emergency stop during active run",
+    "Account quota/cost telemetry"
+  ],
+  "restore_existing_automatically": false,
+  "post_probe": "No extension or automatic re-enable; review observations and obtain next explicit approval"
+}

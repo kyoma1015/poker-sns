@@ -22,3 +22,5 @@ A80 finite lease inputs and A85 finite setup waits: fixed35/39 +worker22/queue15
 2026-10-22 Draft96 adds bounded durable discovery metadata to the existing controller:49fixed+22worker+15queuePASS/CI39767309432. No task promotion or live state/controller adoption. Source a3186ef6a5da4c3489aa2e7947fdea2b00395c31; see ISSUE22_DISCOVERY_CONTINUATION_20261022.md for limits.
 
 2026-10-22 Draft102 finite invocation clocks58+22+15PASS/CI39784286230; Draft104 bounded read-only discovery CLI67+22+15PASS/CI39785322289. Live controller/state schema unchanged. Exact source/restart: ISSUE22_SELECTED_REUSE_20261022.md.
+
+2026-10-22 Restart preparation: Draft106 publication CAS/redaction76+22+15 localPASS; Draft107 opt-in invocation exclusion/stop/processdeath recovery85+22+15 localPASS. Component CI pending separately; source38implemented/2blocked, no live controller/schema/guard/scheduler adoption. Exact checkpoint/limits: ISSUE22_RESTART_PREPARATION_20261022.md. Hourly readonlyCOUNT2 proposal disabled;30min unsupported.

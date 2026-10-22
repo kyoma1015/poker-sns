@@ -1,0 +1,35 @@
+{
+  "observed_at": "2026-10-22T14:35:05.551Z",
+  "runs": {
+    "publication": [
+      {
+        "id": 39795238064,
+        "head": "3a9176c388707d8b4f7121cfc1b9f83ee2a23556",
+        "status": "queued",
+        "conclusion": null
+      }
+    ],
+    "guard": [
+      {
+        "id": 39796232980,
+        "head": "6d2f4834d3a06abb61058fcebca952f360ec0f45",
+        "status": "queued",
+        "conclusion": null
+      }
+    ]
+  },
+  "local_tests": {
+    "publication": {
+      "fixed76": "PASS",
+      "worker22": "PASS",
+      "queue15": "PASS"
+    },
+    "guard": {
+      "fixed85": "PASS",
+      "worker22": "PASS",
+      "queue15": "PASS"
+    }
+  },
+  "ci_rerun_requested": false,
+  "runner_queue_cause": "UNKNOWN"
+}

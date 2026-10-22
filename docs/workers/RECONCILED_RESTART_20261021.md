@@ -78,3 +78,6 @@ A96/B98/C97 are three new formal host source completions with preserved original
 
 ## Continuous selected reuse — 2026-10-22
 Latest: ISSUE22_SELECTED_REUSE_20261022.md. A102/A104/C101/C105 implemented; D100/C103 selected minimal main candidates. Original4 continuity;36implemented/2blocked. Preserve all old inputs/IDs; D30/old GTO fixes reused exactly, not rewritten. No controller switch/scheduler/main merge; next invocation must fresh-reconcile exact heads and tests.
+
+## Restart-system preparation — 2026-10-22
+Latest source/preparation: ISSUE22_RESTART_PREPARATION_20261022.md and RUN_CHECKPOINT_20261022.json. New106/107 local source testsPASS, CI independently tracked. Existing original4 hashes retained;38implemented/2blocked. Official scheduler minimum1h;30min unsupported; no activation/extension. Any next callback must read actual latest CI/state and skip completed IDs; the proposedCOUNT2 callback remains readonly/approval-required.

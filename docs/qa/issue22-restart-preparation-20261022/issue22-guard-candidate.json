@@ -1,0 +1,66 @@
+{
+  "task": {
+    "id": "issue22-a-invocation-guard-v1",
+    "lane": "A",
+    "base_sha": "40792437109b0e8e2f5eae48a794e3ecded306d6",
+    "base_branch": "codex/a-invocation-guard-input-20261022",
+    "branch": "codex/a-invocation-guard-fix-20261022",
+    "test_profile": "python",
+    "allowed_paths": [
+      "scripts/invocation_guard.py"
+    ],
+    "protected_tests": [
+      "tests/worker_acceptance/test_continuation_recovery.py",
+      "tests/worker_acceptance/test_discovery_preview.py",
+      "tests/worker_acceptance/test_discovery_store.py",
+      "tests/worker_acceptance/test_finite_lease.py",
+      "tests/worker_acceptance/test_finite_setup.py",
+      "tests/worker_acceptance/test_invocation_clock.py",
+      "tests/worker_acceptance/test_invocation_guard.py",
+      "tests/worker_acceptance/test_lease_initialization.py",
+      "tests/worker_acceptance/test_pr_overlap.py",
+      "tests/worker_acceptance/test_publication_checkpoint.py"
+    ],
+    "instruction": "Implement scripts/invocation_guard.py only: opt-in InvocationGuard(controller,run_id,owner,enabled=False,max_seconds=1800) context manager and check(). Reuse existing code_worker.setup_lock over controller.path.with_suffix(.invocation.lock),seconds0; no new SQLite/job/task lease implementation. Check stop flag controller.path.with_suffix(.stop) and ANY running development_jobs even expired before reservation. Reuse controller.reserve_run exactly once only after lock held/preflight succeeds; duplicate/capdenied raisesValueError, no budgetextension. enabled requires exactTrue; max_seconds finite nonbool positive <=1800 and owner/runid bounded safe identifiers. Existing flock automatically releases on processdeath; never steal unknown-live runningjobs. Hold lock throughout context and release on any __enter__/body/exitfailure. check() only active; emergency stop RuntimeError and monotonic deadline TimeoutError, inactiveValueError. Cooperative only, not processkiller. No scheduler/daemon/provider/model/network/credential/logging. All tests ownedtemp including childprocess; never instantiate guard on realretainedstate. Fixed85 baseline9ERROR;85+automation37PASS. No protectedtests/commit/private access."
+  },
+  "purpose": "Opt-in invocation exclusion and cooperative stop, reusing existing finite state budget without runtime activation",
+  "reviewed": true,
+  "risk": "medium",
+  "dependencies": [
+    "issue22-a-publication-checkpoint-v1"
+  ],
+  "execution_conditions": [
+    "Explicit authorized independent safe development",
+    "Original4 durable state continuity and fresh complete allPR snapshot",
+    "Formal prepare/source collaboration/trusted finish; protected tests untouched"
+  ],
+  "completion_conditions": [
+    "Fixed acceptance and existing regressions pass",
+    "Only exact allowed source path changes",
+    "Host hash/test/tamper/commit then DraftPR and CI"
+  ],
+  "references": [
+    "https://github.com/kyoma1015/poker-sns/issues/22"
+  ],
+  "baseline": {
+    "base_sha": "40792437109b0e8e2f5eae48a794e3ecded306d6",
+    "test_profile": "python",
+    "test_count": 85,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/worker_acceptance/test_continuation_recovery.py": "1d6d8d526006494d869921892dc3ff7d75f1f3cf18f8e0eeeb96a65aa47d8480",
+      "tests/worker_acceptance/test_discovery_preview.py": "61de61d1c67ea9db1443a501a703fe0d845cb65d75d6590cdf861a13996c0617",
+      "tests/worker_acceptance/test_discovery_store.py": "f47a506749c98265db23a37fd629c3fd597e29066882444686effcf247fc3fa8",
+      "tests/worker_acceptance/test_finite_lease.py": "d497616524d2bdee11afcb9fd39519bc0e270bdea29a2f6dd4d17cb60fa2456f",
+      "tests/worker_acceptance/test_finite_setup.py": "d6b0a334d65dd70bc000d296144e471d7f4cef301191fd84be9e7b07aee4a7e7",
+      "tests/worker_acceptance/test_invocation_clock.py": "a131098e56526a47e53d16b518f766fd37710cbf17939e0579178c1f26097eb1",
+      "tests/worker_acceptance/test_invocation_guard.py": "f8593516179c8f0e2dc112a1e00b56af77cf56935419567932f4e73989b5e732",
+      "tests/worker_acceptance/test_lease_initialization.py": "f9957c370e68934dc4bf6caa4080c1672e08901a06c6f8d6de76c9a87aa793c0",
+      "tests/worker_acceptance/test_pr_overlap.py": "7a7d4988fbdca1bb720f59701973fee1975fe173b2d9006356a256c648129a0d",
+      "tests/worker_acceptance/test_publication_checkpoint.py": "66f0518fa9a5dafef69ee75cdd19320651ae261ab005cab313a4b14faa9efb6a"
+    }
+  },
+  "inherited_prs": {},
+  "overlap_reviews": {}
+}

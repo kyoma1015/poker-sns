@@ -1,0 +1,33 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-a-publication-checkpoint-v1",
+        "lane": "A",
+        "base_sha": "921872d70427e069d58fddfb1a3523da1bfcfd8c",
+        "base_branch": "codex/a-publication-checkpoint-input-20261022",
+        "branch": "codex/a-publication-checkpoint-fix-20261022",
+        "test_profile": "python",
+        "allowed_paths": [
+          "scripts/continuation_recovery.py"
+        ],
+        "protected_tests": [
+          "tests/worker_acceptance/test_continuation_recovery.py",
+          "tests/worker_acceptance/test_discovery_preview.py",
+          "tests/worker_acceptance/test_discovery_store.py",
+          "tests/worker_acceptance/test_finite_lease.py",
+          "tests/worker_acceptance/test_finite_setup.py",
+          "tests/worker_acceptance/test_invocation_clock.py",
+          "tests/worker_acceptance/test_lease_initialization.py",
+          "tests/worker_acceptance/test_pr_overlap.py",
+          "tests/worker_acceptance/test_publication_checkpoint.py"
+        ],
+        "instruction": "Add record_publication(task_id,metadata,*,expected_revision,now=None) and publications list to public_checkpoint in scripts/continuation_recovery.py only. Isolated additive continuation_publications table after anchor validation, no existingjob/run/lease mutations. Exact metadata keys: source_commit/head_commit40hex, branch safe bounded git branch, pr_number/ci_run_id/ci_attempt positive exactint, ci_status enum queued,in_progress,success,failure,cancelled,timed_out,action_required,neutral,skipped,unknown; owner/run_id bounded nonsecret regex; last_success enum source_committed,draft_created,ci_observed,checkpoint_saved; next_action await_ci,review,discover_next,blocked; retry_count exactint equal job attempts-1 within0..1. Reject extra keys. Require implementedjob and source_commit matches persisted evidence.commit, immutable branch/pr/source identity. BEGIN IMMEDIATE CAS expected_revision0 first then exactrevision, monotonic finite timestamps via existingvalidator, return metadata plus id/revision/updated_at. Public checkpoint sorted publicationrows only, never raw evidence/token/context. All failures atomic. Fixed76baseline9ERROR;76+automation37PASS. Do not instantiate newcontroller on real state. No tests/commit/private access."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

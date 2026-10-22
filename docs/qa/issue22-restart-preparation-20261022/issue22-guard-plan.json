@@ -1,0 +1,34 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-a-invocation-guard-v1",
+        "lane": "A",
+        "base_sha": "40792437109b0e8e2f5eae48a794e3ecded306d6",
+        "base_branch": "codex/a-invocation-guard-input-20261022",
+        "branch": "codex/a-invocation-guard-fix-20261022",
+        "test_profile": "python",
+        "allowed_paths": [
+          "scripts/invocation_guard.py"
+        ],
+        "protected_tests": [
+          "tests/worker_acceptance/test_continuation_recovery.py",
+          "tests/worker_acceptance/test_discovery_preview.py",
+          "tests/worker_acceptance/test_discovery_store.py",
+          "tests/worker_acceptance/test_finite_lease.py",
+          "tests/worker_acceptance/test_finite_setup.py",
+          "tests/worker_acceptance/test_invocation_clock.py",
+          "tests/worker_acceptance/test_invocation_guard.py",
+          "tests/worker_acceptance/test_lease_initialization.py",
+          "tests/worker_acceptance/test_pr_overlap.py",
+          "tests/worker_acceptance/test_publication_checkpoint.py"
+        ],
+        "instruction": "Implement scripts/invocation_guard.py only: opt-in InvocationGuard(controller,run_id,owner,enabled=False,max_seconds=1800) context manager and check(). Reuse existing code_worker.setup_lock over controller.path.with_suffix(.invocation.lock),seconds0; no new SQLite/job/task lease implementation. Check stop flag controller.path.with_suffix(.stop) and ANY running development_jobs even expired before reservation. Reuse controller.reserve_run exactly once only after lock held/preflight succeeds; duplicate/capdenied raisesValueError, no budgetextension. enabled requires exactTrue; max_seconds finite nonbool positive <=1800 and owner/runid bounded safe identifiers. Existing flock automatically releases on processdeath; never steal unknown-live runningjobs. Hold lock throughout context and release on any __enter__/body/exitfailure. check() only active; emergency stop RuntimeError and monotonic deadline TimeoutError, inactiveValueError. Cooperative only, not processkiller. No scheduler/daemon/provider/model/network/credential/logging. All tests ownedtemp including childprocess; never instantiate guard on realretainedstate. Fixed85 baseline9ERROR;85+automation37PASS. No protectedtests/commit/private access."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

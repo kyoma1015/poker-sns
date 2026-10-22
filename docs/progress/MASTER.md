@@ -47,3 +47,6 @@ New formal source A96 durable review suggestions (not executable), B98 optional-
 
 ## Continuous selected reuse — 2026-10-22
 Four new formal source tasks (A102/A104/C101/C105) and two selected main candidates (D100/C103), successful component CI. Retained original4 hashes; implemented36/blocked2/running0, integration reuse not double-counted. Read docs/workers/ISSUE22_SELECTED_REUSE_20261022.md and its QA branches/Actions evidence. D30 exact patch now in Draft100; C103 inherits latest policy/EV fixes. No main/controller/scheduler/production adoption, no semantic/G11/strategy proof.
+
+## Restart-system preparation — 2026-10-22
+Official automation contract supports at most hourly, not requested30min. Existing6h COUNT28 untouched/nextnull causeUNKNOWN; old pending39785868353 nowSUCCESS. New Draft106(publication CAS) and107(opt-in global invocation guard) local testsPASS, CI tracked separately. Retained38implemented/2blocked, no live controller/schema/scheduler adoption. Read docs/workers/ISSUE22_RESTART_PREPARATION_20261022.md and RUN_CHECKPOINT_20261022.json. Disabled hourlyCOUNT2 read-only probe proposal requires explicit user approval; no unattended-source completion claimed.
