@@ -18,7 +18,7 @@ do $$begin
  ) then
   raise exception 'Previous interactive cron execution still running; wait for drain';
  end if;
-end$;
+end$$;
 select cron.unschedule(jobid) from cron.job where jobname='pokerid-poll-close-v1';
 select cron.schedule('pokerid-poll-close-v1','* * * * *','select poll_private.close_due_polls();');
 commit;
