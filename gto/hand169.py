@@ -47,7 +47,8 @@ def aggregate(records, action_count, *, require_complete=True):
         if abs(math.fsum(frequencies) - 1) > 1e-9: raise ValueError('frequencies must sum to one')
         if ev is not None and (isinstance(ev, bool) or not isinstance(ev, (int, float)) or not math.isfinite(ev)):
             raise ValueError('EV must be finite or explicitly unknown')
-        buckets[label].append((weight, frequencies, ev))
+        # Export iterators may reuse a mutable buffer for their next row.
+        buckets[label].append((weight, tuple(frequencies), ev))
     if require_complete and len(seen) != 1326: raise ValueError('incomplete concrete hand coverage')
     output = {}
     for label, rows in buckets.items():
