@@ -1,0 +1,29 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-a-finite-setup-v1",
+        "lane": "A",
+        "base_sha": "1f8ee7054a918497c566e28022791d4a929e0f22",
+        "base_branch": "codex/a-finite-setup-input-20261022",
+        "branch": "codex/a-finite-setup-fix-20261022",
+        "test_profile": "python",
+        "allowed_paths": [
+          "scripts/code_worker.py"
+        ],
+        "protected_tests": [
+          "tests/worker_acceptance/test_continuation_recovery.py",
+          "tests/worker_acceptance/test_finite_lease.py",
+          "tests/worker_acceptance/test_finite_setup.py",
+          "tests/worker_acceptance/test_lease_initialization.py",
+          "tests/worker_acceptance/test_pr_overlap.py"
+        ],
+        "instruction": "Reject NaN and positive/negativeInfinity setup_lock timeout before path/lock side effects. Preserve all finite existing values, including zero and negative try-once semantics; do not invent positive-only policy. Only scripts/code_worker.py. Fixed39 baseline5FAIL; existing35/worker22/queue15 retained. No change to lease clocks/expiry/claim/hash/commit/replay/SQL logic. All probes ownedtemp or bounded mocks; no realruntime process interruption."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

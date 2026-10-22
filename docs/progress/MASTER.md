@@ -38,3 +38,6 @@ See [evidence ledger](../workers/ISSUE22_VERIFICATION_20261022.md). New isolated
 
 ## Issue22 main transplant candidates — 2026-10-22
 [Audit](../workers/ISSUE22_MAIN_TRANSPLANT_20261022.md): minimumcontroller from69 in Draft74 and GTO-onlyclosure from66 in Draft75, both isolatedActions and existingmainregressionActions SUCCESS, clean simulatedmerge againstmain5a49f437727fba0f4d48585300a04ec7e9d747a4. No mainmerge/liveadoption. VercelstatusFAIL(rate-limit), B350/D36semantics/G11compatibility/actualpokerconvergence/pollproductionBLOCKED. Newintegrationtaskscompleted; original4statehashesretained, noactiveleases, noautomaticdaemonclaim.
+
+## New source continuation — 2026-10-22
+Six source fixes A80/A85/B83/C81/C84/D82 committed and CI SUCCESS. Separate pinned branches/Drafts, no main adoption; see source evidence ledger. See [ledger](../workers/ISSUE22_AUTONOMOUS_SOURCE_20261022.md). Existing source/original4state/BLOCKED history retained; no production/main/paid action.

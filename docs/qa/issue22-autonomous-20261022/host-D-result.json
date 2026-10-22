@@ -1,0 +1,31 @@
+{
+  "id": "issue22-d-own-trait-v1",
+  "lane": "D",
+  "base_sha": "fbc937d3742e2eaec6ab7d2dbc2e446245ac6675",
+  "executor": "host_session",
+  "host_agent_id": "/root/d_next",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "src/playerTypePresentation.ts"
+  ],
+  "tested_source_sha256": {
+    "src/playerTypePresentation.ts": "d7b3030c78aa0bc2b6725115b65b7d53e35035c79c9521d12ce5bd37226dc5c4"
+  },
+  "tests": [
+    {
+      "command": [
+        "node",
+        "tests/player-type.test.mjs"
+      ],
+      "exit_code": 0,
+      "test_count": 48,
+      "output_sha256": "70a15e8c4a4a8bff5fa8f73bea6b4a90550594e8b808bd57b9650522adcc4a98"
+    }
+  ],
+  "commit": "0f01889ac5ee1d4c872acacead595f67f6cac961",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

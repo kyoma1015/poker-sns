@@ -1,0 +1,37 @@
+{
+  "id": "issue22-a-finite-lease-v1",
+  "lane": "A",
+  "base_sha": "2581170538b804f09920f557f98f2459feb6d814",
+  "executor": "host_session",
+  "host_agent_id": "/root/bd_evidence_audit",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "scripts/code_worker.py"
+  ],
+  "tested_source_sha256": {
+    "scripts/code_worker.py": "16e6959fc90bf3e26f8c1588cc38e1be59f5c748665861356eb9c92a515025ca"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 35,
+      "output_sha256": "c9cb374b902e39d8d78e16ad9ef72e7b3a058923c1067859437114ef5aa6305a"
+    }
+  ],
+  "commit": "6b43510328486531f60b712421d48510e7c2447b",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

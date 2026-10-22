@@ -1,0 +1,132 @@
+[
+  {
+    "lane": "A",
+    "pr": 80,
+    "url": "https://github.com/kyoma1015/poker-sns/pull/80",
+    "source_commit": "6b43510328486531f60b712421d48510e7c2447b",
+    "input_commit": "2581170538b804f09920f557f98f2459feb6d814",
+    "branch": "codex/a-finite-lease-fix-20261022",
+    "base_branch": "codex/a-finite-lease-input-20261022",
+    "source_paths": [
+      "scripts/code_worker.py"
+    ],
+    "fixed_tests": 35,
+    "runs": [
+      {
+        "id": 39729463145,
+        "conclusion": "success",
+        "evidence": "GitHub check-runs observed at exact source head"
+      },
+      {
+        "id": 39729463106,
+        "conclusion": "success",
+        "evidence": "GitHub check-runs observed at exact source head"
+      }
+    ]
+  },
+  {
+    "lane": "B",
+    "pr": 83,
+    "url": "https://github.com/kyoma1015/poker-sns/pull/83",
+    "source_commit": "7713dc4e1b939b59c8e23938c1320f6c2118ab19",
+    "input_commit": "eb62eb72870e52a44e2755479e860f7502894a3f",
+    "branch": "codex/b-dense-quiz-fix-20261022",
+    "base_branch": "codex/b-dense-quiz-input-20261022",
+    "source_paths": [
+      "src/tdaQuizData.ts"
+    ],
+    "fixed_tests": 23,
+    "runs": [
+      {
+        "id": 39729861225,
+        "conclusion": "success",
+        "evidence": "GitHub check-runs observed at exact source head"
+      }
+    ]
+  },
+  {
+    "lane": "C",
+    "pr": 81,
+    "url": "https://github.com/kyoma1015/poker-sns/pull/81",
+    "source_commit": "712a7fa57031f94413511ba0423353568e8b4e9c",
+    "input_commit": "1ba12af9c84c1cb6d499843c368553ff4d654f43",
+    "branch": "codex/c-coverage-flag-fix-20261022",
+    "base_branch": "codex/c-coverage-flag-input-20261022",
+    "source_paths": [
+      "gto/hand169.py"
+    ],
+    "fixed_tests": 34,
+    "runs": [
+      {
+        "id": 39729472018,
+        "conclusion": "success",
+        "evidence": "GitHub check-runs observed at exact source head"
+      }
+    ]
+  },
+  {
+    "lane": "D",
+    "pr": 82,
+    "url": "https://github.com/kyoma1015/poker-sns/pull/82",
+    "source_commit": "0f01889ac5ee1d4c872acacead595f67f6cac961",
+    "input_commit": "fbc937d3742e2eaec6ab7d2dbc2e446245ac6675",
+    "branch": "codex/d-own-trait-fix-20261022",
+    "base_branch": "codex/d-own-trait-input-20261022",
+    "source_paths": [
+      "src/playerTypePresentation.ts"
+    ],
+    "fixed_tests": 48,
+    "runs": [
+      {
+        "id": 39729482143,
+        "conclusion": "success",
+        "evidence": "GitHub check-runs observed at exact source head"
+      }
+    ]
+  },
+  {
+    "lane": "C2",
+    "pr": 84,
+    "url": "https://github.com/kyoma1015/poker-sns/pull/84",
+    "source_commit": "881ea9d099d44df15fc95880064c9818fbda6b49",
+    "input_commit": "fd25f0909c66160150c24dacc9b8175901bd1888",
+    "branch": "codex/c-frequency-snapshot-fix-20261022",
+    "base_branch": "codex/c-frequency-snapshot-input-20261022",
+    "source_paths": [
+      "gto/hand169.py"
+    ],
+    "fixed_tests": 37,
+    "runs": [
+      {
+        "id": 39730113247,
+        "conclusion": "success",
+        "evidence": "GitHub check-runs observed at exact source head"
+      }
+    ]
+  },
+  {
+    "lane": "A2",
+    "pr": 85,
+    "url": "https://github.com/kyoma1015/poker-sns/pull/85",
+    "source_commit": "f7f246ecbf5ab55ec47a0cb12bbfdc5ba8d57ced",
+    "input_commit": "1f8ee7054a918497c566e28022791d4a929e0f22",
+    "branch": "codex/a-finite-setup-fix-20261022",
+    "base_branch": "codex/a-finite-setup-input-20261022",
+    "source_paths": [
+      "scripts/code_worker.py"
+    ],
+    "fixed_tests": 39,
+    "runs": [
+      {
+        "id": 39730575035,
+        "conclusion": "success",
+        "evidence": "GitHub check-runs observed at exact source head"
+      },
+      {
+        "id": 39730574895,
+        "conclusion": "success",
+        "evidence": "GitHub check-runs observed at exact source head"
+      }
+    ]
+  }
+]

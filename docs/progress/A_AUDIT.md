@@ -15,3 +15,6 @@ Remaining: isolated DB event-provenance/idempotency/legacy-client tests BLOCKED 
 
 ## Integrated verification update (2026-10-20)
 Integrated in B → D → A → SNS order. Local network permission resolved the previous registry blocker. npm ci, full unit regression, build and lint now run successfully on the integrated source; see INTEGRATION_VERIFICATION_20261020.md and docs/qa/integration-20261020/. Earlier blocked statements above describe the previous lane task. No production DB verification or release approval is implied.
+
+## New source continuation — 2026-10-22
+A80 finite lease inputs and A85 finite setup waits: fixed35/39 +worker22/queue15 PASS, dedicated CI SUCCESS. See [ledger](../workers/ISSUE22_AUTONOMOUS_SOURCE_20261022.md). Existing source/original4state/BLOCKED history retained; no production/main/paid action.

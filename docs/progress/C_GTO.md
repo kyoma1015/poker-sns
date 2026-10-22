@@ -46,3 +46,6 @@ Next immutable input7fa1ffd5de8a7bb0479f4f5348445782326cde8e exposes bool/float 
 
 ## Explicit correction — 2026-10-22
 The above v1 is BLOCKED, not PASS: coordinator descriptor mistakenly called refund scalar, contradicting original17 fixtures and hash-verified Betting.settle refund vector. Its implementation produced5 errors in original28; no successful commit, old spec/tests/worktree retained. One separate v2 retry on input115adb8a6ec7aff591aaf90d479a1eb205c1d24b correctly checks rake exact int and refund/net/pot_amounts/pot_rakes exact int[]. Fixed29/oldGTO40PASS, controller guards PASS, Draft PR66 b492f8c7730cb5ebb66beee909ba2526dcb7cc85,CI39711822875SUCCESS. Only settlement.py changed; reference/fixtures/solver/checkpoints untouched. Trigger was explicit user instruction, not scheduler. Detailed contract/error/evidence: PR38 docs/workers/ISSUE22_FOLLOWUP_20261022.md. No G11/strategy/convergence/resume claim.
+
+## New source continuation — 2026-10-22
+C81 strict coverage flag and C84 per-row frequency snapshot: fixed34/37 +GTO40 PASS, CI SUCCESS. OriginalG11/pokerconvergence remain BLOCKED. See [ledger](../workers/ISSUE22_AUTONOMOUS_SOURCE_20261022.md). Existing source/original4state/BLOCKED history retained; no production/main/paid action.

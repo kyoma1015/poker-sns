@@ -1,0 +1,35 @@
+{
+  "observed_at": "2026-10-22T05:55:46.493669+00:00",
+  "original4": [
+    {
+      "id": "issue22-host-a",
+      "status": "implemented",
+      "hash_matches": true
+    },
+    {
+      "id": "issue22-host-b",
+      "status": "implemented",
+      "hash_matches": true
+    },
+    {
+      "id": "issue22-host-c",
+      "status": "implemented",
+      "hash_matches": true
+    },
+    {
+      "id": "issue22-host-d",
+      "status": "implemented",
+      "hash_matches": true
+    }
+  ],
+  "task_counts": {
+    "blocked": 2,
+    "implemented": 29
+  },
+  "running_leases": 0,
+  "state_replaced": false,
+  "live_controller_replaced": false,
+  "scheduler_changed": false,
+  "daemon_proven": false,
+  "trigger": "explicit user manual continuous instruction; two successive bounded source cycles, not reservation extension"
+}

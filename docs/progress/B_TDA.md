@@ -19,3 +19,6 @@ PR62 be0fd9197bb17c0ff6de15ec9527a12ff49241c2 extends PR59 with optional rendere
 
 ## Evidence audit — 2026-10-22
 PR62 source unchanged and CI39690895245SUCCESS rechecked. The existing audit-cli-expected350.json is synthetic1question/count_mismatch, not350 reviewed questions. Complete official source bundle, immutable published350 export and all-question clause-review ledger were not found in inspected B checkout (GitHub-wide absence not proved). Need official version/URL/hash, full question-choice-answer-explanation-clause snapshot/hash, reviewer/date/dispositions/correction diffs and duplicate decisions; remeasure actual published count. No unresolved question gets new publication approval. Full checklist: PR38 ISSUE22_FOLLOWUP_20261022.md. No DB/corpus change.
+
+## New source continuation — 2026-10-22
+B83 sparse quiz/option validation: fixed23/saved14/audit18 +types/build/lint PASS, CI SUCCESS. Aggregate-rate candidate remains BLOCKED on original RPC spec. See [ledger](../workers/ISSUE22_AUTONOMOUS_SOURCE_20261022.md). Existing source/original4state/BLOCKED history retained; no production/main/paid action.

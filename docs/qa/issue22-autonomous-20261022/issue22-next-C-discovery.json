@@ -1,0 +1,59 @@
+{
+  "lane": "C",
+  "candidate_id": "C-HAND169-INPUT-SNAPSHOT-01",
+  "status": "review_required",
+  "base_sha_observed": "712a7fa57031f94413511ba0423353568e8b4e9c",
+  "source_path": "gto/hand169.py",
+  "function": "aggregate",
+  "purpose": "Snapshot each validated frequency vector before retaining it for reach-weighted aggregation; streamed records may reuse mutable buffers.",
+  "risk": "low",
+  "existing_contract": "aggregate consumes records with numeric frequencies, validates normalized finite policies, then returns reach-weighted169-class frequencies. No immutable-buffer requirement or list-only restriction is documented.",
+  "reproduction": {
+    "records": "generator yields AsKs weight1 frequencies buffer[1,0], then mutates the same buffer to[0,1] and yields AhKh weight3; both cards mapAKs",
+    "expected_frequencies": [
+      0.25,
+      0.75
+    ],
+    "observed_frequencies": [
+      0.0,
+      1.0
+    ],
+    "observed_reach_mass": 4.0,
+    "observed_ev": 5.0,
+    "second_reproduction": "generator mutates validated frequency buffer toNaN after yielding its sole record",
+    "second_observed_frequencies_repr": "[nan, 1.0]",
+    "explanation": "buckets append retains the mutable frequency list reference; subsequent generator execution changes already validated row data before aggregation."
+  },
+  "allowed_paths_proposal": [
+    "gto/hand169.py"
+  ],
+  "acceptance_proposal": [
+    "Fixed failing generator reuse case must preserve weighted policy[0.25,0.75].",
+    "Mutation after final yield must not introduce NaN or alter the already consumed policy.",
+    "Ordinary list/tuple inputs, zero-mass/unknownEV/full1326 coverage/strictcoverageflag/retainedPR29overflow behavior remain unchanged.",
+    "Input buffers must not be mutated byaggregate."
+  ],
+  "dependencies": [
+    "issue22-c-coverage-mode-v1"
+  ],
+  "prohibited": [
+    "source_edit_in_discovery",
+    "original_checkpoint_access",
+    "strategy_accuracy_claim",
+    "shared_state_access",
+    "network"
+  ],
+  "performed": [
+    "readonly source inspection",
+    "memory-only synthetic reproduction",
+    "write this permitted public discoveryJSON only"
+  ],
+  "source_implemented": false,
+  "fixed_acceptance_prepared": false,
+  "needs_before_dispatch": [
+    "parent semantic review",
+    "pin next inputSHA with failing protectedtests",
+    "fresh PR overlap review",
+    "formallease/hostdispatch"
+  ]
+}

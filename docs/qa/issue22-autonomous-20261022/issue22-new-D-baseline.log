@@ -1,0 +1,218 @@
+✔ all 32 positive ceilings equal the sum of per-question attainable maxima (3.812856ms)
+✔ negative, zero, unknown and nonfinite values do not become top tendencies (0.91384ms)
+✔ normalization compares proportions rather than raw totals (0.315466ms)
+✔ one incidental selective-burst point must not assert attacking ability (0.407585ms)
+✔ noticing danger must not imply that a calling station folds (0.227874ms)
+✔ attack wording needs both initiative and sustained attack at the threshold (0.183567ms)
+✔ fixed persona replay (not live): 超弱気な初心者 (0.944947ms)
+✔ fixed persona replay (not live): 超タイトな初心者 (0.723743ms)
+✔ fixed persona replay (not live): タイト・パッシブ (1.879719ms)
+✔ fixed persona replay (not live): タイト・アグレッシブ (0.643742ms)
+✔ fixed persona replay (not live): ルース・パッシブ (0.373363ms)
+✔ fixed persona replay (not live): ルース・アグレッシブ (0.43078ms)
+✔ fixed persona replay (not live): コーリングステーション (0.677413ms)
+✔ fixed persona replay (not live): マニアック (0.427886ms)
+✔ fixed persona replay (not live): 超慎重な上級者 (0.603331ms)
+✔ fixed persona replay (not live): 熟練したLAG (0.809032ms)
+✔ fixed persona replay (not live): 熟練したTAG (0.774269ms)
+✔ fixed persona replay (not live): ブラフ嫌い (0.196266ms)
+✔ fixed persona replay (not live): ブラフ多用型 (0.435958ms)
+✔ fixed persona replay (not live): ギャンブラー (0.192891ms)
+✔ fixed persona replay (not live): リスク回避型 (0.271199ms)
+✔ fixed persona replay (not live): バランス型 (0.242666ms)
+✔ fixed persona replay (not live): 相手依存型 (0.274324ms)
+✔ fixed persona replay (not live): 感情的なティルト型 (0.619325ms)
+✔ fixed persona replay (not live): トーナメント生存重視型 (0.265651ms)
+✔ fixed persona replay (not live): トーナメント攻撃型 (0.179471ms)
+✔ fixed persona replay (not live): キャッシュゲーム堅実派 (0.197468ms)
+✔ fixed persona replay (not live): 初心者の無謀型 (0.189015ms)
+✔ fixed persona replay (not live): 上級者の柔軟型 (0.202916ms)
+✔ fixed persona replay (not live): フィット・オア・フォールド型 (0.261344ms)
+✔ fixed persona replay (not live): バリュー重視型 (0.201264ms)
+✔ fixed persona replay (not live): トラップ好き (0.513055ms)
+✔ fixed persona replay (not live): プリフロップ超ルース型 (0.17857ms)
+✔ fixed persona replay (not live): ポストフロップ消極型 (0.227944ms)
+✔ fixed persona replay (not live): 勝負好きだがブラフしない型 (0.230468ms)
+✔ fixed persona replay (not live): 理論重視の冷静型 (0.208985ms)
+✔ question bank validation rejects incomplete or contradictory data (1.316087ms)
+✔ a late result cannot win after a new request, restart or unmount (0.203257ms)
+✔ audit wording corrections apply only to the displayed copy, without mutating saved data (0.303599ms)
+✔ wording correction leaves unrelated copy unchanged (0.175345ms)
+✔ result action snapshots do not invalidate each other, but navigation invalidates all old actions (0.220563ms)
+✔ all 36 configured animal display keys have exactly one matching PNG asset (0.293954ms)
+✖ prototype key constructor is not a known trait (1.379643ms)
+✖ prototype key toString is not a known trait (0.295125ms)
+✖ prototype key __proto__ is not a known trait (0.361466ms)
+✖ prototype key hasOwnProperty is not a known trait (0.191058ms)
+✖ prototype key valueOf is not a known trait (0.18508ms)
+✖ known trait remains finite and wins over inherited key (0.408872ms)
+ℹ tests 48
+ℹ suites 0
+ℹ pass 42
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 38.284887
+
+✖ failing tests:
+
+test at tests/player-type.test.mjs:131:2
+✖ prototype key constructor is not a known trait (1.379643ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   {
+  +     key: 'constructor'
+  +   }
+  + ]
+  - []
+
+      at TestContext.<anonymous> (file:///workspace/work/issue22-own-trait-input/tests/player-type.test.mjs:133:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type.test.mjs:131:2
+✖ prototype key toString is not a known trait (0.295125ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   {
+  +     key: 'toString'
+  +   }
+  + ]
+  - []
+
+      at TestContext.<anonymous> (file:///workspace/work/issue22-own-trait-input/tests/player-type.test.mjs:133:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type.test.mjs:131:2
+✖ prototype key __proto__ is not a known trait (0.361466ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   {
+  +     key: '__proto__'
+  +   }
+  + ]
+  - []
+
+      at TestContext.<anonymous> (file:///workspace/work/issue22-own-trait-input/tests/player-type.test.mjs:133:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type.test.mjs:131:2
+✖ prototype key hasOwnProperty is not a known trait (0.191058ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   {
+  +     key: 'hasOwnProperty'
+  +   }
+  + ]
+  - []
+
+      at TestContext.<anonymous> (file:///workspace/work/issue22-own-trait-input/tests/player-type.test.mjs:133:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type.test.mjs:131:2
+✖ prototype key valueOf is not a known trait (0.18508ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   {
+  +     key: 'valueOf'
+  +   }
+  + ]
+  - []
+
+      at TestContext.<anonymous> (file:///workspace/work/issue22-own-trait-input/tests/player-type.test.mjs:133:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type.test.mjs:137:1
+✖ known trait remains finite and wins over inherited key (0.408872ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    [
+  +   'constructor',
+      'initiative'
+    ]
+
+      at TestContext.<anonymous> (file:///workspace/work/issue22-own-trait-input/tests/player-type.test.mjs:139:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

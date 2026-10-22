@@ -1,0 +1,30 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-c-coverage-mode-v1",
+        "lane": "C",
+        "base_sha": "1ba12af9c84c1cb6d499843c368553ff4d654f43",
+        "base_branch": "codex/c-coverage-flag-input-20261022",
+        "branch": "codex/c-coverage-flag-fix-20261022",
+        "test_profile": "python",
+        "allowed_paths": [
+          "gto/hand169.py"
+        ],
+        "protected_tests": [
+          "tests/worker_acceptance/test_checkpoint_budget.py",
+          "tests/worker_acceptance/test_chip_oracle_types.py",
+          "tests/worker_acceptance/test_coverage_flag.py",
+          "tests/worker_acceptance/test_nonempty_settlement.py",
+          "tests/worker_acceptance/test_rank7.py",
+          "tests/worker_acceptance/test_settlement_expectations.py"
+        ],
+        "instruction": "Enforce exact bool require_complete before consuming records. Invalid None/int/string/list/dict/tuple control must raise ValueError; explicitFalse partial and defaultTrue strict complete1326 coverage behavior retained. Only gto/hand169.py. Fixed33 baseline7failures; existingGTO40 retained; no poker rules/solver/checkpoint/convergence changes."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

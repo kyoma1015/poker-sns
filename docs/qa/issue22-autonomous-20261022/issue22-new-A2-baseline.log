@@ -1,0 +1,166 @@
+test_candidates_promote_only_one_ready_task_per_lane (test_continuation_recovery.RecoveryAcceptance.test_candidates_promote_only_one_ready_task_per_lane) ... ok
+test_changed_candidate_id_spec_is_rejected_on_restart (test_continuation_recovery.RecoveryAcceptance.test_changed_candidate_id_spec_is_rejected_on_restart) ... ok
+test_completed_and_active_lane_are_not_replayed (test_continuation_recovery.RecoveryAcceptance.test_completed_and_active_lane_are_not_replayed) ... ok
+test_finite_run_budget_and_duplicate_run_survive_restart (test_continuation_recovery.RecoveryAcceptance.test_finite_run_budget_and_duplicate_run_survive_restart) ... ok
+test_imported_remaining_schedule_cap_only_reduces_and_never_resets (test_continuation_recovery.RecoveryAcceptance.test_imported_remaining_schedule_cap_only_reduces_and_never_resets) ... ok
+test_missing_state_and_changed_anchor_fail_closed (test_continuation_recovery.RecoveryAcceptance.test_missing_state_and_changed_anchor_fail_closed) ... ok
+test_one_retry_only_and_permission_errors_not_retried (test_continuation_recovery.RecoveryAcceptance.test_one_retry_only_and_permission_errors_not_retried) ... ok
+test_public_checkpoint_excludes_tokens_context_errors_and_secrets (test_continuation_recovery.RecoveryAcceptance.test_public_checkpoint_excludes_tokens_context_errors_and_secrets) ... ok
+test_quota_defer_restart_resume_same_worktree_and_commit (test_continuation_recovery.RecoveryAcceptance.test_quota_defer_restart_resume_same_worktree_and_commit) ... ok
+test_reference_extraction_never_turns_untrusted_text_into_tasks (test_continuation_recovery.RecoveryAcceptance.test_reference_extraction_never_turns_untrusted_text_into_tasks) ... ok
+test_resume_rejects_tampered_checkpoint_and_never_steals_expired_lease (test_continuation_recovery.RecoveryAcceptance.test_resume_rejects_tampered_checkpoint_and_never_steals_expired_lease) ... ok
+test_stale_incomplete_or_overlapping_pr_snapshot_blocks (test_continuation_recovery.RecoveryAcceptance.test_stale_incomplete_or_overlapping_pr_snapshot_blocks) ... ok
+test_unreviewed_bad_baseline_missing_tests_and_wildcards_cannot_run (test_continuation_recovery.RecoveryAcceptance.test_unreviewed_bad_baseline_missing_tests_and_wildcards_cannot_run) ... ok
+test_invalid_clock_preserves_existing_lease (test_finite_lease.FiniteLease.test_invalid_clock_preserves_existing_lease) ... ok
+test_invalid_finish_clock_preserves_running (test_finite_lease.FiniteLease.test_invalid_finish_clock_preserves_running) ... ok
+test_rejects_boolean_and_text_duration (test_finite_lease.FiniteLease.test_rejects_boolean_and_text_duration) ... ok
+test_rejects_nonfinite_duration_without_writing (test_finite_lease.FiniteLease.test_rejects_nonfinite_duration_without_writing) ... ok
+test_rejects_nonpositive_duration_without_writing (test_finite_lease.FiniteLease.test_rejects_nonpositive_duration_without_writing) ... ok
+test_rejects_overflowing_expiry (test_finite_lease.FiniteLease.test_rejects_overflowing_expiry) ... ok
+test_valid_duration_still_expires_without_takeover (test_finite_lease.FiniteLease.test_valid_duration_still_expires_without_takeover) ... ok
+test_valid_fractional_duration_and_epoch_clock (test_finite_lease.FiniteLease.test_valid_fractional_duration_and_epoch_clock) ... ok
+test_contention_nonfinite_never_enters_wait_watchdog (test_finite_setup.FiniteSetup.test_contention_nonfinite_never_enters_wait_watchdog) ...
+  test_contention_nonfinite_never_enters_wait_watchdog (test_finite_setup.FiniteSetup.test_contention_nonfinite_never_enters_wait_watchdog) (seconds=nan) ... FAIL
+  test_contention_nonfinite_never_enters_wait_watchdog (test_finite_setup.FiniteSetup.test_contention_nonfinite_never_enters_wait_watchdog) (seconds=inf) ... FAIL
+test_finite_uncontended_values_still_acquire_and_release (test_finite_setup.FiniteSetup.test_finite_uncontended_values_still_acquire_and_release) ... ok
+test_nonfinite_wait_rejected_before_os_lock (test_finite_setup.FiniteSetup.test_nonfinite_wait_rejected_before_os_lock) ...
+  test_nonfinite_wait_rejected_before_os_lock (test_finite_setup.FiniteSetup.test_nonfinite_wait_rejected_before_os_lock) (seconds=nan) ... FAIL
+  test_nonfinite_wait_rejected_before_os_lock (test_finite_setup.FiniteSetup.test_nonfinite_wait_rejected_before_os_lock) (seconds=inf) ... FAIL
+  test_nonfinite_wait_rejected_before_os_lock (test_finite_setup.FiniteSetup.test_nonfinite_wait_rejected_before_os_lock) (seconds=-inf) ... FAIL
+test_zero_and_negative_finite_keep_try_once (test_finite_setup.FiniteSetup.test_zero_and_negative_finite_keep_try_once) ... ok
+test_existing_cross_process_setup_exclusion_covers_state_initialization (test_lease_initialization.LeaseInitialization.test_existing_cross_process_setup_exclusion_covers_state_initialization) ... ok
+test_initialization_failure_closes_connection_and_releases_setup_guard (test_lease_initialization.LeaseInitialization.test_initialization_failure_closes_connection_and_releases_setup_guard) ... ok
+test_parallel_fresh_initializers_keep_wal_schema_and_all_rows (test_lease_initialization.LeaseInitialization.test_parallel_fresh_initializers_keep_wal_schema_and_all_rows) ... ok
+test_ancestor_with_different_blob_is_not_a_witness (test_pr_overlap.OverlapProof.test_ancestor_with_different_blob_is_not_a_witness) ... ok
+test_changed_head_base_or_candidate_pins_are_rejected (test_pr_overlap.OverlapProof.test_changed_head_base_or_candidate_pins_are_rejected) ... ok
+test_exact_patch_already_included_with_unrelated_newer_changes (test_pr_overlap.OverlapProof.test_exact_patch_already_included_with_unrelated_newer_changes) ... ok
+test_exact_prior_source_blob_in_verified_ancestor (test_pr_overlap.OverlapProof.test_exact_prior_source_blob_in_verified_ancestor) ... ok
+test_independent_history_identical_source_is_proved (test_pr_overlap.OverlapProof.test_independent_history_identical_source_is_proved) ... ok
+test_missing_extra_path_and_unknown_mode_rejected (test_pr_overlap.OverlapProof.test_missing_extra_path_and_unknown_mode_rejected) ... ok
+test_noop_patch_not_accepted_as_coverage (test_pr_overlap.OverlapProof.test_noop_patch_not_accepted_as_coverage) ... ok
+test_pending_change_not_in_candidate_is_not_exempted (test_pr_overlap.OverlapProof.test_pending_change_not_in_candidate_is_not_exempted) ... ok
+test_proof_does_not_modify_repository_index_or_working_tree (test_pr_overlap.OverlapProof.test_proof_does_not_modify_repository_index_or_working_tree) ... ok
+test_wrong_blob_patch_digest_and_review_flag_rejected (test_pr_overlap.OverlapProof.test_wrong_blob_patch_digest_and_review_flag_rejected) ... ok
+test_planner_accepts_verified_equivalence_but_still_requires_failed_baseline (test_pr_overlap.PlannerIntegration.test_planner_accepts_verified_equivalence_but_still_requires_failed_baseline) ... ok
+
+======================================================================
+FAIL: test_contention_nonfinite_never_enters_wait_watchdog (test_finite_setup.FiniteSetup.test_contention_nonfinite_never_enters_wait_watchdog) (seconds=nan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-finite-setup-input/scripts/code_worker.py", line 278, in setup_lock
+    fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+BlockingIOError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/work/issue22-finite-setup-input/tests/worker_acceptance/test_finite_setup.py", line 21, in test_contention_nonfinite_never_enters_wait_watchdog
+    with w.setup_lock(Path(d)/'owned.sqlite',seconds=seconds):pass
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-finite-setup-input/scripts/code_worker.py", line 283, in setup_lock
+    time.sleep(0.05)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+RuntimeError: owned watchdog
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/work/issue22-finite-setup-input/tests/worker_acceptance/test_finite_setup.py", line 22, in test_contention_nonfinite_never_enters_wait_watchdog
+    except Exception as e:self.assertIsInstance(e,ValueError)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError('owned watchdog') is not an instance of <class 'ValueError'>
+
+======================================================================
+FAIL: test_contention_nonfinite_never_enters_wait_watchdog (test_finite_setup.FiniteSetup.test_contention_nonfinite_never_enters_wait_watchdog) (seconds=inf)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-finite-setup-input/scripts/code_worker.py", line 278, in setup_lock
+    fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+BlockingIOError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/work/issue22-finite-setup-input/tests/worker_acceptance/test_finite_setup.py", line 21, in test_contention_nonfinite_never_enters_wait_watchdog
+    with w.setup_lock(Path(d)/'owned.sqlite',seconds=seconds):pass
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-finite-setup-input/scripts/code_worker.py", line 283, in setup_lock
+    time.sleep(0.05)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+RuntimeError: owned watchdog
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/work/issue22-finite-setup-input/tests/worker_acceptance/test_finite_setup.py", line 22, in test_contention_nonfinite_never_enters_wait_watchdog
+    except Exception as e:self.assertIsInstance(e,ValueError)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError('owned watchdog') is not an instance of <class 'ValueError'>
+
+======================================================================
+FAIL: test_nonfinite_wait_rejected_before_os_lock (test_finite_setup.FiniteSetup.test_nonfinite_wait_rejected_before_os_lock) (seconds=nan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-finite-setup-input/tests/worker_acceptance/test_finite_setup.py", line 13, in test_nonfinite_wait_rejected_before_os_lock
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_nonfinite_wait_rejected_before_os_lock (test_finite_setup.FiniteSetup.test_nonfinite_wait_rejected_before_os_lock) (seconds=inf)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-finite-setup-input/tests/worker_acceptance/test_finite_setup.py", line 13, in test_nonfinite_wait_rejected_before_os_lock
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_nonfinite_wait_rejected_before_os_lock (test_finite_setup.FiniteSetup.test_nonfinite_wait_rejected_before_os_lock) (seconds=-inf)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-finite-setup-input/tests/worker_acceptance/test_finite_setup.py", line 13, in test_nonfinite_wait_rejected_before_os_lock
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 39 tests in 1.475s
+
+FAILED (failures=5)
