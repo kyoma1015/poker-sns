@@ -60,20 +60,24 @@ class Continuation:
             probe.close()
         self.leases = Leases(self.path)
         self.db = self.leases.db
-        self.db.execute('CREATE TABLE IF NOT EXISTS continuation_runs (id TEXT PRIMARY KEY, started REAL NOT NULL)')
-        self.db.execute('CREATE TABLE IF NOT EXISTS continuation_limits (id INTEGER PRIMARY KEY CHECK(id=1), run_limit INTEGER NOT NULL)')
-        self.db.execute('INSERT OR IGNORE INTO continuation_limits VALUES(1,28)')
-        self.db.execute('CREATE TABLE IF NOT EXISTS continuation_candidates (id TEXT PRIMARY KEY, spec_hash TEXT NOT NULL)')
-        self.db.execute('''CREATE TABLE IF NOT EXISTS continuation_failures (
-            id TEXT PRIMARY KEY, kind TEXT NOT NULL, not_before REAL NOT NULL,
-            context TEXT NOT NULL, checkpoint TEXT NOT NULL)''')
-        self.db.execute('''CREATE TABLE IF NOT EXISTS continuation_discoveries (
-            id TEXT PRIMARY KEY, lane TEXT NOT NULL, reference TEXT NOT NULL,
-            title TEXT NOT NULL, owner TEXT,
-            status TEXT NOT NULL CHECK(status IN ('review_required','blocked','dismissed')))''')
-        self.db.execute('''CREATE TABLE IF NOT EXISTS continuation_publications (
-            task_id TEXT PRIMARY KEY, metadata TEXT NOT NULL,
-            revision INTEGER NOT NULL, updated_at REAL NOT NULL)''')
+        try:
+            self.db.execute('CREATE TABLE IF NOT EXISTS continuation_runs (id TEXT PRIMARY KEY, started REAL NOT NULL)')
+            self.db.execute('CREATE TABLE IF NOT EXISTS continuation_limits (id INTEGER PRIMARY KEY CHECK(id=1), run_limit INTEGER NOT NULL)')
+            self.db.execute('INSERT OR IGNORE INTO continuation_limits VALUES(1,28)')
+            self.db.execute('CREATE TABLE IF NOT EXISTS continuation_candidates (id TEXT PRIMARY KEY, spec_hash TEXT NOT NULL)')
+            self.db.execute('''CREATE TABLE IF NOT EXISTS continuation_failures (
+                id TEXT PRIMARY KEY, kind TEXT NOT NULL, not_before REAL NOT NULL,
+                context TEXT NOT NULL, checkpoint TEXT NOT NULL)''')
+            self.db.execute('''CREATE TABLE IF NOT EXISTS continuation_discoveries (
+                id TEXT PRIMARY KEY, lane TEXT NOT NULL, reference TEXT NOT NULL,
+                title TEXT NOT NULL, owner TEXT,
+                status TEXT NOT NULL CHECK(status IN ('review_required','blocked','dismissed')))''')
+            self.db.execute('''CREATE TABLE IF NOT EXISTS continuation_publications (
+                task_id TEXT PRIMARY KEY, metadata TEXT NOT NULL,
+                revision INTEGER NOT NULL, updated_at REAL NOT NULL)''')
+        except BaseException:
+            self.leases.close()
+            raise
 
     def close(self):
         self.leases.close()
