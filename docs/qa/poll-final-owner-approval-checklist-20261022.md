@@ -58,3 +58,11 @@
 - `tests/polls/verify_backup_restore.sh` (**three synthetic tables only**, not full restore)
 
 **Final decision: NO-GO until all eleven gates have private, current, independently reviewed evidence and separately authorized production actions.**
+
+## Synthetic gate-0 evidence addendum — 2026-10-22 (no gate status change)
+
+- PR #92 merged at `8a3b786a64d82455cb61af4b07c9a701bf63f8f8`: synthetic age key generation, encryption, decrypt/roundtrip, ciphertext SHA-256 copy parity, key separation, wrong-key/tamper rejection and marker nonexposure; [run 39745333770](https://github.com/kyoma1015/poker-sns/actions/runs/39745333770), **7 PASS / 0 FAIL / 0 BLOCKED**. This is not an actual offsite storage or real backup test.
+- PR #94 merged at `9c6e65c18297bea59a1db2366ef27ac4e8259596`: synthetic 30-day retention, verified-generation preservation, RPO/RTO 24-hour boundary *predicates*, SHA-256 mismatch, missing key, insufficient capacity, interrupted copy and synthetic logging; [run 39746532560](https://github.com/kyoma1015/poker-sns/actions/runs/39746532560), **10 PASS / 0 FAIL / 0 BLOCKED**. These predicates do not measure actual restoration time.
+- This PR adds an integrated synthetic age lifecycle test and isolated workflow, with actual outcome, run ID, artifact ID and SHA-256 to be recorded **only after CI completion**. The test creates throwaway synthetic keys/data on a GitHub runner; staging/offsite are separate directories on the same runner, **not** physically independent storage.
+- Evidence classification remains **synthetic PASS only**. No production source access, encrypted real backup, disconnected full restore, actual Vault/Storage/Auth recovery, private key custody verification, independent review or owner authorization has occurred.
+- **Gate 0 = BLOCKED; gates 1–10 = BLOCKED; publication = NO-GO.** No approval or production action is implied by this addendum.
