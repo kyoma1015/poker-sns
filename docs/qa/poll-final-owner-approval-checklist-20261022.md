@@ -66,3 +66,7 @@
 - This PR adds an integrated synthetic age lifecycle test and isolated workflow, with actual outcome, run ID, artifact ID and SHA-256 to be recorded **only after CI completion**. The test creates throwaway synthetic keys/data on a GitHub runner; staging/offsite are separate directories on the same runner, **not** physically independent storage.
 - Evidence classification remains **synthetic PASS only**. No production source access, encrypted real backup, disconnected full restore, actual Vault/Storage/Auth recovery, private key custody verification, independent review or owner authorization has occurred.
 - **Gate 0 = BLOCKED; gates 1–10 = BLOCKED; publication = NO-GO.** No approval or production action is implied by this addendum.
+
+## Gate 0 operational readiness — canonical preparation document
+
+See [poll-gate0-operational-readiness-checklist-20261022.md](poll-gate0-operational-readiness-checklist-20261022.md) for the **single non-executing Gate 0 operating checklist** covering independent storage, age key custody, 30-day retention, 24h RPO/RTO, stop procedures, private evidence and independent reviewer approval. This reference does **not** change any gate status or authorize any production action.
