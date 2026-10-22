@@ -1,0 +1,150 @@
+{
+  "schema": "issue22-main-transplant-evidence-recheck-v1",
+  "saved_at_utc": "2026-10-22T04:33:34.516Z",
+  "mode": "read-only evidence recheck; no source changes, test reruns, DB/credentials/production access",
+  "prior_audit": "/workspace/work/issue22-bd-deep-audit-20261022.json",
+  "main": {
+    "sha": "7da31f078624178dbddf8f1edf59eb8d0bf782b7",
+    "evidence": "parent-provided context; main/PR72 not independently fetched in this subtask"
+  },
+  "handoff": {
+    "branch": "chore/codex-handoff-artifacts-20261020",
+    "sha": "ae22acd1ba5d167f1d7111069966dda672260129",
+    "recursive_tree_truncated": false,
+    "tree_entries": 171,
+    "access": "existing legitimate GitHub fetch connector",
+    "tree_url": "https://api.github.com/repos/kyoma1015/poker-sns/git/trees/ae22acd1ba5d167f1d7111069966dda672260129?recursive=1",
+    "scope": "complete current handoff tree path inventory plus four referenced documents; not repository-wide/all-branch content proof",
+    "relevant_paths": [
+      {
+        "path": "docs/handoff/GTO_G11_PACKED_SOURCE_DISCOVERY_20261020.md",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "266f5e891bd559c8b3e4a35df03174484d706674",
+        "size": 3371,
+        "url": "https://api.github.com/repos/kyoma1015/poker-sns/git/blobs/266f5e891bd559c8b3e4a35df03174484d706674"
+      },
+      {
+        "path": "docs/handoff/SOURCE_ARCHIVE_SHA256_20261020.csv",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fac1e8259b243f14c25b7d547d769c4fe62bbd16",
+        "size": 955,
+        "url": "https://api.github.com/repos/kyoma1015/poker-sns/git/blobs/fac1e8259b243f14c25b7d547d769c4fe62bbd16"
+      },
+      {
+        "path": "handoff/gto/check_vendor_bundle.py",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0eabebb5d0be6555be0adb47368399c7716e6595",
+        "size": 1339,
+        "url": "https://api.github.com/repos/kyoma1015/poker-sns/git/blobs/0eabebb5d0be6555be0adb47368399c7716e6595"
+      },
+      {
+        "path": "handoff/gto/compressed/g11_rules_embed.h.zlib.b64",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "aded33bc80b58db68947c8f871f50747bc0cf16a",
+        "size": 5116,
+        "url": "https://api.github.com/repos/kyoma1015/poker-sns/git/blobs/aded33bc80b58db68947c8f871f50747bc0cf16a"
+      },
+      {
+        "path": "handoff/gto/g12_next/g11_native_state.h",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "45109e06d1840c5ee10d226bc72a51b10eebbd65",
+        "size": 3913,
+        "url": "https://api.github.com/repos/kyoma1015/poker-sns/git/blobs/45109e06d1840c5ee10d226bc72a51b10eebbd65"
+      }
+    ],
+    "source_unchanged": true,
+    "document_0": {
+      "url": "https://github.com/kyoma1015/poker-sns/blob/ae22acd1ba5d167f1d7111069966dda672260129/docs/handoff/GTO_DEPENDENCY_TRANSFER_BLOCKER_20261020.md",
+      "received": true,
+      "content_scope": "documentation, not archive binary receipt"
+    },
+    "document_1": {
+      "url": "https://github.com/kyoma1015/poker-sns/blob/ae22acd1ba5d167f1d7111069966dda672260129/docs/handoff/GTO_LOCAL_NATIVE_BUILD_EVIDENCE_20261020.md",
+      "received": true,
+      "content_scope": "documentation, not archive binary receipt"
+    },
+    "document_2": {
+      "url": "https://github.com/kyoma1015/poker-sns/blob/ae22acd1ba5d167f1d7111069966dda672260129/docs/handoff/GTO_G11_PACKED_SOURCE_DISCOVERY_20261020.md",
+      "received": true,
+      "content_scope": "documentation, not archive binary receipt"
+    },
+    "document_3": {
+      "url": "https://github.com/kyoma1015/poker-sns/blob/ae22acd1ba5d167f1d7111069966dda672260129/docs/handoff/SOURCE_ARCHIVE_SHA256_20261020.csv",
+      "received": true,
+      "content_scope": "documentation, not archive binary receipt"
+    }
+  },
+  "local": {
+    "scope": "os.walk /workspace/work and /tmp/codex-remote-attachments, excluding node_modules/.git/.venv/npm-cache/__pycache__; name/mtime candidate scan, not arbitrary payload semantic search",
+    "zip_pdf_paths": [],
+    "new_authoritative_bundle_found": false,
+    "new_evidence_candidates_are": "controller SOURCE_SHA256 manifest, copied G11 audit, duplicate known headers/compressed source/docs in new convergence checkout; not original vendor/350 snapshot/clause ledger/expert labels"
+  },
+  "B": {
+    "status": "BLOCKED",
+    "received": "prior legitimate official HTML heading identifies 2026 rules1.1 Sept21; source identity is distinct from correctness",
+    "not_received": [
+      "complete immutable 350-question corpus with choices/answers/explanations/references/publication state",
+      "official Longform PDF original bytes and verified SHA256",
+      "per-question clause review ledger"
+    ],
+    "translation_parity": "UNKNOWN",
+    "new_evidence_found": false,
+    "next_requirements": [
+      "receive versioned original rules bundle and hash/provenance",
+      "receive complete question export and hash/count",
+      "question-ID clause/scenario/reviewer/date/correction/approval evidence"
+    ],
+    "prior_tests": "B18 PASS retained as earlier execution evidence; no duplicate test rerun"
+  },
+  "D": {
+    "status": "BLOCKED",
+    "received": "existing 50-question/222-option/32-dimension fixture,36 display animals/PNG,30 trait personas",
+    "not_received": [
+      "authoritative36 classification thresholds/tie-priority",
+      "expert animal-key labels including boundaries",
+      "name/description/image semantic review"
+    ],
+    "expected_animal_key_labels": 0,
+    "new_evidence_found": false,
+    "prior_tests": "D5/D42 PASS earlier evidence; no rerun",
+    "next_requirements": [
+      "versioned classifier definition",
+      "expert-labeled36-animal/boundary cases",
+      "semantic name/description/image review"
+    ]
+  },
+  "G11": {
+    "status": "BLOCKED",
+    "received": "existing transferred sources and reconstructed dependency builds/audit; no new original vendor bundle",
+    "not_received": [
+      "PokerID_GTO_G11_VENDORED_DEPENDENCIES_20261020.zip with SOURCE_SHA256.csv and1588 source entries",
+      "original G11 environment ABI/compiler metadata",
+      "validated original G11 settings/output baseline and complete historical checkpoint"
+    ],
+    "historical_doc_claims_are_not_receipt": true,
+    "source_document": "docs/handoff/GTO_G11_PACKED_SOURCE_DISCOVERY_20261020.md",
+    "original_nested_member": "assets/PokerID_OpenSpiel_G11修正版(1).zip",
+    "sender_reported_nested_bytes": 204756925,
+    "sender_reported_nested_sha256": "2ba54faad3367480a08bb91a02620f620b64ff95b8e29c36a2351c35cecbb4f5",
+    "reported_dependency_paths": [
+      "PokerID_OpenSpiel_G11/patched/pybind11/include/pybind11/pybind11.h",
+      "PokerID_OpenSpiel_G11/patched/open_spiel/abseil-cpp/absl/random/discrete_distribution.h"
+    ],
+    "current_audit": "/workspace/work/issue22-g11-current-audit.json",
+    "distinction": "synthetic960 matrix, toy matching-pennies metrics and temporary checkpoint roundtrip are not original G11 compatibility or poker strategic convergence",
+    "next_requirements": [
+      "transfer actual vendor closure and validate1588 entries",
+      "record original Python/compiler/ABI and flags",
+      "recover baseline and historical checkpoint read-only before compatibility claims"
+    ]
+  },
+  "permission_error": false,
+  "nonpermission_fetch_error": "percent-encoded branch endpoint invalid repository path; corrected once to legitimate git/ref/heads endpoint succeeded",
+  "conclusion": "No newly received authoritative B/D/G11 evidence found in this bounded scope. Existing evidence gates remain; independent safe development may continue."
+}

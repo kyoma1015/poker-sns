@@ -1,0 +1,32 @@
+[
+  {
+    "id": "issue22-a-main-controller-transplant-v1",
+    "lane": "A",
+    "operation": "reviewed_selective_import",
+    "base_sha": "7da31f078624178dbddf8f1edf59eb8d0bf782b7",
+    "source_sha": "4d30c7ac0d08104f9d159987e38c823ef7c3b419",
+    "head_sha": "2a1f39264f2b467df652a33864de659f6537e92e",
+    "draft_pr": 74,
+    "isolated_ci": 39723091434,
+    "isolated_ci_conclusion": "success",
+    "main_merged": false,
+    "live_controller_replaced": false,
+    "daemon_running": false,
+    "prepare_finish_model_cycle_claimed": false
+  },
+  {
+    "id": "issue22-c-main-gto-transplant-v1",
+    "lane": "C",
+    "operation": "reviewed_selective_import",
+    "base_sha": "7da31f078624178dbddf8f1edf59eb8d0bf782b7",
+    "source_sha": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+    "head_sha": "b7f3d2910526c8762ac4b19acb2e8fee7535d8a9",
+    "draft_pr": 75,
+    "isolated_ci": 39723383344,
+    "isolated_ci_conclusion": "success",
+    "main_merged": false,
+    "live_controller_replaced": false,
+    "daemon_running": false,
+    "prepare_finish_model_cycle_claimed": false
+  }
+]

@@ -1,0 +1,274 @@
+[
+  {
+    "id": 39723091434,
+    "head_sha": "2a1f39264f2b467df652a33864de659f6537e92e",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/kyoma1015/poker-sns/actions/runs/39723091434",
+    "jobs": [
+      {
+        "id": 119640792728,
+        "name": "isolated-controller",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "conclusion": "success"
+          },
+          {
+            "name": "Preserved protected acceptance (27)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Existing worker safety (22)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Existing queue safety (15)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Bounded lock timeout and process restart",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 39723091294,
+    "head_sha": "2a1f39264f2b467df652a33864de659f6537e92e",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/kyoma1015/poker-sns/actions/runs/39723091294",
+    "jobs": [
+      {
+        "id": 119640792602,
+        "name": "verify",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm ci",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm audit --omit=dev --audit-level=high",
+            "conclusion": "success"
+          },
+          {
+            "name": "Client regression",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run build",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run lint",
+            "conclusion": "success"
+          },
+          {
+            "name": "Mobile browser QA (mock transport)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Real isolated Supabase Postgres and PostgREST QA",
+            "conclusion": "success"
+          },
+          {
+            "name": "Database acceptance evidence",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 39723383344,
+    "head_sha": "b7f3d2910526c8762ac4b19acb2e8fee7535d8a9",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/kyoma1015/poker-sns/actions/runs/39723383344",
+    "jobs": [
+      {
+        "id": 119641720691,
+        "name": "gto-only",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "conclusion": "success"
+          },
+          {
+            "name": "Original transferred solver bytes",
+            "conclusion": "success"
+          },
+          {
+            "name": "Existing GTO regressions",
+            "conclusion": "success"
+          },
+          {
+            "name": "Unchanged fixed C acceptance",
+            "conclusion": "success"
+          },
+          {
+            "name": "Strict launcher input boundaries",
+            "conclusion": "success"
+          },
+          {
+            "name": "Download pinned headers only (no pip install)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Hash-gated temporary native bridge (17 settlement plus16 rank7)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 39723383251,
+    "head_sha": "b7f3d2910526c8762ac4b19acb2e8fee7535d8a9",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/kyoma1015/poker-sns/actions/runs/39723383251",
+    "jobs": [
+      {
+        "id": 119641721019,
+        "name": "verify",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm ci",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm audit --omit=dev --audit-level=high",
+            "conclusion": "success"
+          },
+          {
+            "name": "Client regression",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run build",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run lint",
+            "conclusion": "success"
+          },
+          {
+            "name": "Mobile browser QA (mock transport)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Real isolated Supabase Postgres and PostgREST QA",
+            "conclusion": "success"
+          },
+          {
+            "name": "Database acceptance evidence",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ]
+  }
+]

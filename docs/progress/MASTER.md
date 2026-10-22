@@ -35,3 +35,6 @@ C v1 BLOCKED: prior coordinator descriptor mistakenly treated refund as scalar; 
 
 ## Issue22 verification update — 2026-10-22
 See [evidence ledger](../workers/ISSUE22_VERIFICATION_20261022.md). New isolated source Draft69 SQLite init and Draft70 exact toy BR metrics have successful CI. PR66 fixed input passes but inherited full branch conflicts with current main in seven files. B350 immutable source/review, D36 semantic classification, originalG11 compatibility/poker convergence and poll production release remain BLOCKED; no main merge or production operation.
+
+## Issue22 main transplant candidates — 2026-10-22
+[Audit](../workers/ISSUE22_MAIN_TRANSPLANT_20261022.md): minimumcontroller from69 in Draft74 and GTO-onlyclosure from66 in Draft75, both isolatedActions and existingmainregressionActions SUCCESS, clean simulatedmerge againstmain5a49f437727fba0f4d48585300a04ec7e9d747a4. No mainmerge/liveadoption. VercelstatusFAIL(rate-limit), B350/D36semantics/G11compatibility/actualpokerconvergence/pollproductionBLOCKED. Newintegrationtaskscompleted; original4statehashesretained, noactiveleases, noautomaticdaemonclaim.

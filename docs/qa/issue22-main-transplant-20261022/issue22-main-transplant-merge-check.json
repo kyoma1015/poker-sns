@@ -1,0 +1,22 @@
+[
+  {
+    "pr": 74,
+    "head": "2a1f39264f2b467df652a33864de659f6537e92e",
+    "main": "5a49f437727fba0f4d48585300a04ec7e9d747a4",
+    "exit_code": 0,
+    "output": "ea85301b1e2270049f723ef3a37aa04093eed5f7\n",
+    "stderr": "",
+    "simulation_only": true,
+    "references_index_worktree_changed": false
+  },
+  {
+    "pr": 75,
+    "head": "b7f3d2910526c8762ac4b19acb2e8fee7535d8a9",
+    "main": "5a49f437727fba0f4d48585300a04ec7e9d747a4",
+    "exit_code": 0,
+    "output": "7f385b94c1a6d2c8410abac18661798f64ad682b\n",
+    "stderr": "",
+    "simulation_only": true,
+    "references_index_worktree_changed": false
+  }
+]
