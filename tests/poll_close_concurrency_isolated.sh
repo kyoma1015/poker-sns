@@ -11,17 +11,30 @@ cleanup() {
   exit "$status"
 }
 trap cleanup EXIT
-docker run -d --name "$c" --network none -e POSTGRES_PASSWORD=synthetic_only_not_a_secret \
+echo 'DIAG: host memory and container availability (no secrets)'
+free -m || true
+docker info --format 'Docker memory bytes={{.MemTotal}}' || true
+docker run -d --name "$c" --network none --memory 2g --memory-swap 2g \
+  -e POSTGRES_PASSWORD=synthetic_only_not_a_secret \
   supabase/postgres:17.11.0.004 postgres -D /etc/postgresql \
-  -c shared_preload_libraries=pg_cron,pgsodium,supabase_vault >/dev/null
+  -c shared_preload_libraries='' -c max_connections=25 \
+  -c shared_buffers=32MB -c work_mem=2MB -c maintenance_work_mem=16MB >/dev/null
+echo 'DIAG: container launched'
 ready=0
 for i in $(seq 1 90); do
   if docker exec "$c" pg_isready -U postgres -d postgres >/dev/null 2>&1; then ready=1; break; fi
   sleep 1
 done
-test "$ready" -eq 1
+if test "$ready" -ne 1; then
+  docker inspect "$c" --format 'DIAG: status={{.State.Status}} exit={{.State.ExitCode}} oom={{.State.OOMKilled}}' || true
+  docker logs "$c" 2>&1 | tail -25 || true
+  exit 1
+fi
+docker inspect "$c" --format 'DIAG: status={{.State.Status}} oom={{.State.OOMKilled}}' || true
+echo 'DIAG: database ready'
 q() { docker exec "$c" psql -X -At -U supabase_admin -d postgres -v ON_ERROR_STOP=1 -c "$1"; }
 docker exec -i "$c" psql -X -q -U supabase_admin -d postgres -v ON_ERROR_STOP=1 < tests/poll_close_concurrency_fixture.sql
+echo 'DIAG: fixture loaded'
 # Extract and execute the production-candidate function definition verbatim.
 # Fail closed if the marker, ending or expected signature changes.
 python3 - <<'PY'
@@ -36,6 +49,7 @@ Path('/tmp/poll-close-real-function.sql').write_text(body)
 print('PASS: exact production-candidate function extracted')
 PY
 docker exec -i "$c" psql -X -q -U supabase_admin -d postgres -v ON_ERROR_STOP=1 < /tmp/poll-close-real-function.sql
+echo 'DIAG: real function installed'
 # Make first invocation hold a notification INSERT so the second connection
 # must encounter an already-locked poll row (SKIP LOCKED).
 q 'update public.synthetic_controls set delay_seconds=4' >/dev/null
