@@ -1,7 +1,5 @@
 \set ON_ERROR_STOP on
 create extension if not exists pgcrypto;
-create role anon nologin;
-create role authenticated nologin;
 create schema poll_private;
 create table public.posts(id uuid primary key,user_id uuid not null);
 create table public.post_interactive(post_id uuid primary key references public.posts(id),kind text not null,closes_at timestamptz not null);
