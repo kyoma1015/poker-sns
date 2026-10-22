@@ -53,3 +53,6 @@ Official automation contract supports at most hourly, not requested30min. Existi
 
 ## Approved finite launch observation — 2026-10-22 15:03 UTC
 Owner approved hourly COUNT2 read-only probe. Original Poker-only6h config saved before pause; disabled confirmed. New exact finite schedule registered/verified; next_run_time and run history null, actual launches PENDING. See docs/workers/ISSUE22_HOURLY_PROBE_20261022.md and docs/qa/issue22-hourly-probe-20261022/. No live controller/source/state adoption.38implemented/2blocked/running0 and original4hashes verified read-only. No automatic restore/extension; ongoing unattended development OFF. PR106/107 CI39795238064/39796232980 confirmedSUCCESS, Drafts unmerged; pollNO-GO.
+
+## Explicit source development resumed —2026-10-22
+Draft108 finite binary64 numeric-input validation: fixed58 baseline6ERROR→58PASS, GTO40PASS, CI39813869671SUCCESS; formal host source9213c8691f4ae45d8398a7b745808e941793b7b6. Retained39implemented/2blocked/running0; original4hashes unchanged. See ISSUE22_SOURCE_RESUME_20261022.md. Manual authorized source invocation, not scheduled coldstart/daemon proof. Existing second readonly probe still pending; no schedule/controller/main/production adoption.

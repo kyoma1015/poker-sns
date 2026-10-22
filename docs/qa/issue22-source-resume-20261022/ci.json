@@ -1,0 +1,12 @@
+{
+  "pr": 108,
+  "source": "9213c8691f4ae45d8398a7b745808e941793b7b6",
+  "head": "1b7dab0bcfc1ca642d4bf3cbb299c3b76a7ca20b",
+  "run": 39813869671,
+  "status": "completed",
+  "conclusion": "success",
+  "local_fixed_tests": 58,
+  "local_gto_tests": 40,
+  "new_paid_service": false,
+  "scheduled_invocation": false
+}

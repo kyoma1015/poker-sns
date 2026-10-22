@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "invocation_id": "issue22-restart-preparation-20261022T141010Z",
+  "invocation_id": "issue22-source-resume-manual-20261022T1620Z",
   "owner": "/root",
-  "updated_at": "2026-10-22T14:38:21.367951+00:00",
+  "updated_at": "2026-10-22T16:26:02.137058+00:00",
   "main": "781f038415503ece850c25a26e72ef67dee9c8a1",
   "original4_continuity": true,
   "counts": {
     "blocked": 2,
-    "implemented": 38
+    "implemented": 39
   },
-  "last_success": "PR106/107 component CI SUCCESS at verified source heads",
-  "next_action": "await explicit approval for disabled hourly COUNT2 readonly probe; no scheduler/controller activation before approval",
+  "last_success": "Draft108 source and fixed58/GTO40 plus CI39813869671 SUCCESS",
+  "next_action": "Observe existing second read-only probe at2026-10-22T17:02:46Z; reconcile PR108 CI; review next grounded candidate; no new schedule/controller adoption",
   "retry_count": 0,
   "scheduler_enabled_by_this_invocation": false,
   "controller_switched": false,
@@ -622,9 +622,24 @@
       "pr": null,
       "ci_run_id": null,
       "ci_status": "UNKNOWN: see historical Actions evidence"
+    },
+    {
+      "id": "issue22-c-finite-number-v1",
+      "lane": "C",
+      "status": "implemented",
+      "attempts": 1,
+      "retry_count": 0,
+      "source_commit": "9213c8691f4ae45d8398a7b745808e941793b7b6",
+      "owner": "/root/finite_number_impl",
+      "last_success": "ci_observed",
+      "next_action": "verify_CI_and_review;do_not_reimplement",
+      "branch": "codex/c-finite-number-fix-20261022",
+      "pr": 108,
+      "ci_run_id": 39813869671,
+      "ci_status": "success"
     }
   ],
   "provider_run_id": null,
-  "invocation_id_origin": "locally assigned manual host invocation, not provider runID",
+  "invocation_id_origin": "locally assigned manual user-authorized host invocation;not scheduled or provider runID",
   "pending_ci_count": 0
 }

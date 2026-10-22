@@ -53,3 +53,5 @@ C81 strict coverage flag and C84 per-row frequency snapshot: fixed34/37 +GTO40 P
 2026-10-22 Draft97 fixes finite representable EV lost by ratio-first underflow. Sourcea4ced9e4e37e79e32a259ed28d2cfbe279542521; fixed42 inclDecimaloracle5/GTO40PASS, CI39767319480SUCCESS. Synthetic export aggregation only, no G11/checkpoint/convergence proof. Original artifacts unchanged.
 
 2026-10-22 Draft101 subnormal EV46+40PASS/CI39784081988; Draft105 subnormal frequencies50+40PASS/CI39785885665. Minimal main candidate103 exact source reuse,21+10PASS/CI39785868404. Actual engine convergence/G11 compatibility still unproven; full target unchanged. Source/branch/limits in ISSUE22_SELECTED_REUSE_20261022.md.
+
+2026-10-22 Draft108: reject unrepresentable integer weight/frequency/EV consistently as ValueError, preserve latest weighted/subnormal source.58fixed+40GTO PASS, CI39813869671SUCCESS. Source9213c8691f4ae45d8398a7b745808e941793b7b6. No G11/strategy convergence or main adoption claim; see ISSUE22_SOURCE_RESUME_20261022.md.
