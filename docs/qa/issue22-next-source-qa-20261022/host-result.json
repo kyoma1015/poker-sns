@@ -1,0 +1,37 @@
+{
+  "id": "issue22-c-weighted-maximum-v1",
+  "lane": "C",
+  "base_sha": "a78169a7a0731893ea1dd907a6a9c41eb933f0bd",
+  "executor": "host_session",
+  "host_agent_id": "/root/weighted_maximum_impl",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "gto/hand169.py"
+  ],
+  "tested_source_sha256": {
+    "gto/hand169.py": "11f19f9d6486f1368474b3a512128a07035ad4731ac8df116c74ad5569463ae0"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 62,
+      "output_sha256": "5d5afc4e0c57bd1a6bc57f1610eedee344fc0cf3b07e28bf58b23e787362535b"
+    }
+  ],
+  "commit": "dd883b7ded3b792b366c12b18e3b1937ca469156",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

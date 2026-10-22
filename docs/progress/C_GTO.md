@@ -55,3 +55,5 @@ C81 strict coverage flag and C84 per-row frequency snapshot: fixed34/37 +GTO40 P
 2026-10-22 Draft101 subnormal EV46+40PASS/CI39784081988; Draft105 subnormal frequencies50+40PASS/CI39785885665. Minimal main candidate103 exact source reuse,21+10PASS/CI39785868404. Actual engine convergence/G11 compatibility still unproven; full target unchanged. Source/branch/limits in ISSUE22_SELECTED_REUSE_20261022.md.
 
 2026-10-22 Draft108: reject unrepresentable integer weight/frequency/EV consistently as ValueError, preserve latest weighted/subnormal source.58fixed+40GTO PASS, CI39813869671SUCCESS. Source9213c8691f4ae45d8398a7b745808e941793b7b6. No G11/strategy convergence or main adoption claim; see ISSUE22_SOURCE_RESUME_20261022.md.
+
+2026-10-22 Draft110 prevents fsum intermediate overflow from discarding representable +/-maximum finite weighted EV.62fixed/40GTO PASS;CI39817184387SUCCESS at5d4d031f472e9c0e1631ef0d532295ec44b10d20; source dd883b7ded3b792b366c12b18e3b1937ca469156. Normalfastpath/exportedmass/prior fixes preserved. Not G11/pokerconvergence proof; stacked source reuse, no main merge. See ISSUE22_NEXT_SOURCE_QA_20261022.md.

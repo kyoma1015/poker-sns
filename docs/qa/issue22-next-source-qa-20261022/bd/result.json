@@ -1,0 +1,39 @@
+{
+  "observed_at": "2026-10-22T16:48:11.389428+00:00",
+  "new_source_fail": false,
+  "production_access": false,
+  "network_access": false,
+  "source_edits": false,
+  "additional_tests": {
+    "count": 8,
+    "pass": 8,
+    "fail": 0,
+    "B_tests": 4,
+    "D_tests": 4,
+    "D_persona_positions": 50,
+    "D_nonfinite_scores": 3,
+    "D_asset_omissions": 36
+  },
+  "existing_tests": {
+    "B_saved_answers": {
+      "pass": 14
+    },
+    "D_audit": {
+      "pass": 5
+    },
+    "D_core": {
+      "pass": 53
+    },
+    "B_data": {
+      "status": "one browser subprocess blocked by managed runtime spawnSync EPERM; see B-data-direct.log",
+      "pass_count": 27,
+      "runner_fail_count": 1,
+      "classification": "BLOCKED: browser subprocess spawnSync EPERM"
+    }
+  },
+  "limitations": [
+    "B350 official source/accuracy not verified",
+    "D36 expert semantics not verified",
+    "Browser spawning is a capability blocker, not source regression"
+  ]
+}

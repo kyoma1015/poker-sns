@@ -1,0 +1,10 @@
+{
+  "sha256": "ddaf95486f09af01c5e665c23849558ceb2dbf3d4524cd55dbc358a9abbce1b7",
+  "cause": "authorized manualsource+QA,not automated code development",
+  "counts": {
+    "blocked": 2,
+    "implemented": 41
+  },
+  "probe_settings_changed": false,
+  "provider_run_id": null
+}
