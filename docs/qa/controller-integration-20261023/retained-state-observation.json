@@ -1,0 +1,36 @@
+{
+  "observed_at": "2026-10-22T17:41:06.351770+00:00",
+  "access": "mode=ro only",
+  "counts": {
+    "blocked": 2,
+    "implemented": 43
+  },
+  "running": 0,
+  "total": 45,
+  "original4": [
+    {
+      "id": "issue22-host-a",
+      "status": "implemented",
+      "hash_match": true
+    },
+    {
+      "id": "issue22-host-b",
+      "status": "implemented",
+      "hash_match": true
+    },
+    {
+      "id": "issue22-host-c",
+      "status": "implemented",
+      "hash_match": true
+    },
+    {
+      "id": "issue22-host-d",
+      "status": "implemented",
+      "hash_match": true
+    }
+  ],
+  "logical_jobs_digest": "281bd3a0b00057eef2a00cdd5d7283d8cc8f4031f39f029c63c5af8533670ada",
+  "checkpoint_sha256": "b8afdc9feb93d142f723c41850d5806c0efc5917cafe6cd2324255cdab2555c0",
+  "writes_or_leases_this_invocation": false,
+  "note": "new isolated QA fix is tracked in Git only, not inserted into retained state"
+}

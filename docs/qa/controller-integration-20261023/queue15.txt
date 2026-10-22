@@ -1,0 +1,20 @@
+test_development_tasks_never_execute (__main__.QueueTests.test_development_tasks_never_execute) ... ok
+test_expiry_blocks_without_duplicate_retry (__main__.QueueTests.test_expiry_blocks_without_duplicate_retry) ... ok
+test_four_lanes_are_independent (__main__.QueueTests.test_four_lanes_are_independent) ... ok
+test_invalid_lane_rejected (__main__.QueueTests.test_invalid_lane_rejected) ... ok
+test_manifest_change_cannot_reuse_completed_id (__main__.QueueTests.test_manifest_change_cannot_reuse_completed_id) ... ok
+test_record_implementation_advances_to_dependent_task (__main__.QueueTests.test_record_implementation_advances_to_dependent_task) ... ok
+test_record_requires_full_commit_pr_and_ci_evidence (__main__.QueueTests.test_record_requires_full_commit_pr_and_ci_evidence) ... ok
+test_rejects_dependency_cycles_and_missing_ids (__main__.QueueTests.test_rejects_dependency_cycles_and_missing_ids) ... ok
+test_rejects_unbounded_or_executable_configuration (__main__.QueueTests.test_rejects_unbounded_or_executable_configuration) ... ok
+test_removed_tasks_cannot_run_from_old_state (__main__.QueueTests.test_removed_tasks_cannot_run_from_old_state) ... ok
+test_reopen_preserves_completed_state (__main__.QueueTests.test_reopen_preserves_completed_state) ... ok
+test_second_connection_cannot_duplicate_lane (__main__.QueueTests.test_second_connection_cannot_duplicate_lane) ... ok
+test_success_advances_only_validation_task (__main__.QueueTests.test_success_advances_only_validation_task) ... ok
+test_three_attempts_then_terminal_failure (__main__.QueueTests.test_three_attempts_then_terminal_failure) ... ok
+test_wrong_token_and_empty_evidence_rejected (__main__.QueueTests.test_wrong_token_and_empty_evidence_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.014s
+
+OK
