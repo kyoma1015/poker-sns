@@ -15,6 +15,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Synthetic retention RPO RTO and failure QA
         run: |
+          set -o pipefail
           python3 -m unittest -v tests/polls/verify_gate0_synthetic_recovery.py 2>&1 | tee gate0-synthetic-qa.log
       - name: Save synthetic-only evidence
         if: always()
