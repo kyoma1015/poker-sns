@@ -220,6 +220,10 @@ docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=
 python tests/polls/verify_isolated.py
 # Verify synthetic fixture backup can be restored separately without writing to production.
 bash tests/polls/verify_backup_restore.sh
+# Regression: emergency disable must unschedule a still-present legacy cron.
+docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 <<'SQL'
+select cron.schedule('poker_id_poll_closed_notifications','* * * * *','select public.dispatch_poll_closed_notifications();');
+SQL
 # Verify the feature-disable rollback against the same disposable DB, twice.
 # This must preserve historical questions/answers and remove only our cron.
 for rollback_pass in 1 2; do
@@ -234,6 +238,7 @@ begin
  select count(*) into n from public.post_interactive_responses where post_id='20000000-0000-0000-0000-000000000001' and answer='historical answer fixture';
  if n <> 1 then raise exception 'Rollback lost historical answer'; end if;
  if exists(select 1 from cron.job where jobname='pokerid-poll-close-v1') then raise exception 'Rollback retained new scheduler'; end if;
+ if exists(select 1 from cron.job where jobname='poker_id_poll_closed_notifications') then raise exception 'Rollback retained legacy scheduler'; end if;
  if to_regclass('poll_private.close_receipts') is null then raise exception 'Rollback removed private close receipts'; end if;
  if has_schema_privilege('authenticated','poll_private','USAGE') then raise exception 'Rollback retained private schema usage'; end if;
  if exists (
