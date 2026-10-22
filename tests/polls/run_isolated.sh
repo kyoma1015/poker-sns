@@ -201,6 +201,21 @@ end
 $cron_guard$;
 select cron.unschedule(jobid) from cron.job where jobname='poker_id_poll_closed_notifications';
 SQL
+# The old cron has been removed but an invocation may remain in run history.
+docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 <<'SQL'
+insert into cron.job_run_details(runid,jobid,command,status,username,database)
+values(987654321,987654321,'select public.dispatch_poll_closed_notifications();','running','postgres','postgres');
+SQL
+if docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 < sql/poll_only/schedule_candidate.sql > docs/qa/issue22-polls-20261020/cron-inflight-guard.log 2>&1; then
+  echo "FAIL: scheduler accepted an in-flight poll close execution" >&2
+  exit 1
+fi
+grep -q 'Previous interactive cron execution still running; wait for drain' docs/qa/issue22-polls-20261020/cron-inflight-guard.log
+docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 <<'SQL'
+delete from cron.job_run_details where runid=987654321 and jobid=987654321
+  and command='select public.dispatch_poll_closed_notifications();';
+SQL
+docker exec -i pokerid-poll-qa-db psql -U postgres -d postgres -v ON_ERROR_STOP=1 < sql/poll_only/schedule_candidate.sql
 "${qa_compose[@]}" up -d --wait rest
 python tests/polls/verify_isolated.py
 # Verify synthetic fixture backup can be restored separately without writing to production.
