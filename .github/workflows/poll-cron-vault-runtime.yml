@@ -1,0 +1,101 @@
+name: Poll isolated cron and Vault runtime QA
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/poll-cron-vault-runtime.yml'
+permissions:
+  contents: read
+jobs:
+  isolated-runtime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - name: Execute synthetic cron and Vault lifecycle
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          c=poll-cron-vault-synthetic
+          cleanup() {
+            status=$?
+            trap - EXIT
+            docker rm -f "$c" >/dev/null 2>&1 || true
+            if docker inspect "$c" >/dev/null 2>&1; then
+              echo '::error::Isolated container remains'
+              status=1
+            else
+              echo 'PASS: container cleanup'
+            fi
+            exit "$status"
+          }
+          trap cleanup EXIT
+          docker run -d --name "$c" --network none \
+            -e POSTGRES_PASSWORD=synthetic_only_not_a_secret \
+            supabase/postgres:17.11.0.004 \
+            postgres -D /etc/postgresql -c shared_preload_libraries=pg_cron,pgsodium,supabase_vault \
+            -c cron.database_name=postgres -c cron.use_background_workers=on >/dev/null
+          ready=0
+          for i in $(seq 1 90); do
+            if docker exec "$c" pg_isready -U postgres -d postgres >/dev/null 2>&1; then ready=1; break; fi
+            sleep 1
+          done
+          test "$ready" -eq 1
+          # Confirm the image's official config and key script are active, without reading key bytes.
+          docker exec "$c" psql -X -At -U supabase_admin -d postgres -c "select current_setting('config_file'), current_setting('vault.getkey_script', true), current_setting('pgsodium.getkey_script', true)" | grep -F '/usr/lib/postgresql/bin/pgsodium_getkey.sh' >/dev/null
+          docker exec "$c" test -s /etc/postgresql-custom/pgsodium_root.key
+          # Diagnostic metadata only: never execute key script or display its output.
+          docker exec "$c" psql -X -At -U supabase_admin -d postgres -v ON_ERROR_STOP=1 -c "select 'CONFIG='||current_setting('config_file'); select 'PRELOAD='||current_setting('shared_preload_libraries'); select 'SODIUM_SCRIPT_CONFIGURED='||(current_setting('pgsodium.getkey_script',true) is not null); select 'VAULT_SCRIPT_CONFIGURED='||(current_setting('vault.getkey_script',true) is not null); select 'SODIUM_PRELOADED='||(position('pgsodium' in current_setting('shared_preload_libraries'))>0); select 'VAULT_PRELOADED='||(position('supabase_vault' in current_setting('shared_preload_libraries'))>0);"
+          docker exec "$c" sh -ec 'for p in /usr/lib/postgresql/bin/pgsodium_getkey.sh /etc/postgresql-custom/pgsodium_root.key; do if test -e "$p"; then stat -c "KEY_PATH_METADATA=%n:%U:%G:%a:%s" "$p"; else echo "KEY_PATH_MISSING=$p"; fi; done'
+          # Only bounded log lines relating to configuration or pgsodium errors; no key material.
+          docker logs "$c" 2>&1 | grep -Ei 'pgsodium|vault|preload|configuration|secret key|FATAL|ERROR' | tail -30 | sed -E 's/([[:xdigit:]]{64})/[REDACTED_HEX]/g' || true
+          docker exec -i "$c" psql -X -q -U supabase_admin -d postgres -v ON_ERROR_STOP=1 <<'SQL'
+          create extension if not exists pg_cron;
+          create extension if not exists supabase_vault;
+          do $$
+          declare v text;
+          begin
+            select extversion into v from pg_extension where extname='pg_cron';
+            if v <> '1.6.4' then raise exception 'pg_cron version mismatch'; end if;
+            select extversion into v from pg_extension where extname='supabase_vault';
+            if v <> '0.3.1' then raise exception 'Vault version mismatch'; end if;
+          end $$;
+          create schema poll_synthetic;
+          create table poll_synthetic.ticks (id integer generated always as identity primary key);
+          select cron.schedule('poll-synthetic-only','5 seconds','insert into poll_synthetic.ticks default values');
+          SQL
+          ticks=0
+          for i in $(seq 1 18); do
+            ticks=$(docker exec "$c" psql -X -At -U supabase_admin -d postgres -c 'select count(*) from poll_synthetic.ticks')
+            if test "$ticks" -gt 0; then break; fi
+            sleep 5
+          done
+          test "$ticks" -gt 0
+          docker exec -i "$c" psql -X -q -U supabase_admin -d postgres -v ON_ERROR_STOP=1 <<'SQL'
+          create role poll_synthetic_unprivileged nologin;
+          do $vault_test$
+          declare secret_id uuid; fixture text; ciphertext text; plaintext text;
+          begin
+            fixture := md5(random()::text || clock_timestamp()::text);
+            secret_id := vault.create_secret(fixture, 'poll_runtime_fixture');
+            select secret into ciphertext from vault.secrets where id=secret_id;
+            select decrypted_secret into plaintext from vault.decrypted_secrets where id=secret_id;
+            if plaintext is distinct from fixture then raise exception 'Vault decrypt mismatch'; end if;
+            if ciphertext = fixture or ciphertext is null then raise exception 'Vault plaintext at rest'; end if;
+            if has_table_privilege('poll_synthetic_unprivileged','vault.decrypted_secrets','SELECT') then
+              raise exception 'Vault decrypted view exposed to unprivileged role';
+            end if;
+            delete from vault.secrets where id=secret_id;
+            if exists(select 1 from vault.secrets where id=secret_id) then raise exception 'Vault cleanup failed'; end if;
+          end $vault_test$;
+          drop role poll_synthetic_unprivileged;
+          select cron.unschedule('poll-synthetic-only');
+          do $$
+          begin
+            if exists(select 1 from cron.job where jobname='poll-synthetic-only') then raise exception 'Cron cleanup failed'; end if;
+          end $$;
+          drop schema poll_synthetic cascade;
+          SQL
+          echo 'PASS: pg_cron registration, actual execution, unschedule and cleanup'
+          echo 'PASS: Vault synthetic encrypt/decrypt, unprivileged role access check and deletion'
+          echo 'BLOCKED: production key portability, production restore, non-PUBLIC role grants and production cron configuration'
+          echo 'No real secrets, production network access or artifact uploads'
