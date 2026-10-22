@@ -1,0 +1,21 @@
+name: Poll isolated legacy cron cutover and emergency disable
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/poll-cron-cutover-isolated.yml'
+      - 'tests/poll_cron_cutover_fixture.sql'
+      - 'tests/poll_cron_cutover_isolated.sh'
+      - 'sql/poll_only/schedule_candidate.sql'
+      - 'sql/poll_only/disable_candidate.sql'
+permissions:
+  contents: read
+jobs:
+  isolated-cutover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test synthetic cron drain, disable and explicit re-enable
+        shell: bash
+        run: bash tests/poll_cron_cutover_isolated.sh
