@@ -1,0 +1,48 @@
+{
+  "observed_at": "2026-10-22T05:26:06.383314+00:00",
+  "issue": 22,
+  "main": "9607dbee614f2bd076a9ca102db442c6e2b0a29a",
+  "active_agent_registry": [
+    "/root"
+  ],
+  "ui_19_agent_mapping": "UNKNOWN",
+  "historical_public_agent_ids": 21,
+  "original4": [
+    {
+      "id": "issue22-host-a",
+      "status": "implemented",
+      "spec_hash_match": true
+    },
+    {
+      "id": "issue22-host-b",
+      "status": "implemented",
+      "spec_hash_match": true
+    },
+    {
+      "id": "issue22-host-c",
+      "status": "implemented",
+      "spec_hash_match": true
+    },
+    {
+      "id": "issue22-host-d",
+      "status": "implemented",
+      "spec_hash_match": true
+    }
+  ],
+  "task_counts": {
+    "blocked": 2,
+    "implemented": 23
+  },
+  "running_leases": 0,
+  "remote_actions_running_before_audit": 0,
+  "remote_actions_queued_before_audit": 0,
+  "git_zombies": 801,
+  "git_zombie_parent_pid": 1,
+  "git_zombie_rss_kib": 0,
+  "active_git_fetch_seen": false,
+  "normal_processes_interrupted": false,
+  "code_modified_this_audit": false,
+  "runtime_replaced": false,
+  "unattended_daemon_proven": false,
+  "new_task_dispatched": false
+}
