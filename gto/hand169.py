@@ -37,15 +37,18 @@ def _weighted_ev_term(weight, value, mass):
                       weight_exponent + value_exponent - mass_exponent)
 
 
-def _weighted_ev_sum(rows, mass):
-    terms = [_weighted_ev_term(w, e, mass) for w, _, e in rows if w > 0]
-    if any(e != 0 and abs(term) < sys.float_info.min
-           for (w, _, e), term in zip((row for row in rows if row[0] > 0), terms)):
+def _weighted_sum(weighted_values, mass, *, policy=False):
+    values = [(weight, value) for weight, value in weighted_values if weight > 0]
+    terms = [(w / mass) * value if policy else _weighted_ev_term(w, value, mass)
+             for w, value in values]
+    if any(value != 0 and abs(term) < sys.float_info.min
+           for (_, value), term in zip(values, terms)):
         # Round once after summation when individual terms lose subnormal bits.
         # Keep the exported float mass as the denominator of the exact fallback.
-        return float(sum((Fraction(w) * Fraction(e) for w, _, e in rows if w > 0),
+        return float(sum((Fraction(w) * Fraction(value) for w, value in values),
                          Fraction(0)) / Fraction(mass))
     return math.fsum(terms)
+
 
 def aggregate(records, action_count, *, require_complete=True):
     """Validate and aggregate reach-weighted strategy/EV without hiding gaps.
@@ -83,8 +86,8 @@ def aggregate(records, action_count, *, require_complete=True):
             raise ValueError('reach mass overflow') from error
         if not math.isfinite(mass): raise ValueError('reach mass overflow')
         # Divide weights before multiplying to avoid finite-input overflow.
-        policy = [math.fsum((w / mass) * f[action] for w, f, _ in rows) for action in range(action_count)] if mass else None
-        ev = _weighted_ev_sum(rows, mass) if mass and all(e is not None for w, _, e in rows if w > 0) else None
+        policy = [_weighted_sum(((w, f[action]) for w, f, _ in rows), mass, policy=True) for action in range(action_count)] if mass else None
+        ev = _weighted_sum(((w, e) for w, _, e in rows), mass) if mass and all(e is not None for w, _, e in rows if w > 0) else None
         if ev is not None and not math.isfinite(ev): raise ValueError('aggregate EV overflow')
         output[label] = {'combinations': len(rows), 'reach_mass': mass, 'frequencies': policy, 'ev': ev}
     return {'schema': 'pokerid-hand169-v1', 'complete': len(seen) == 1326, 'concrete_combinations': len(seen), 'hands': output}
