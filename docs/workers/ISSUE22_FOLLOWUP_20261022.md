@@ -107,3 +107,16 @@ release authorization remain gates. No production was connected in this run.
 
 Detailed snapshots, CI references, baseline/results and log hashes:
 `docs/qa/issue22-followup-20261022/`. Private token/receipt/SQLite files are excluded.
+
+## Newly observed worker infrastructure risk
+
+PR38 documentation commit97c87d0359787c56e5b8e193306f0841398d9cef had CI39712373480
+attempt1 fail in existing22-worker safety tests: simultaneous Leases initialization
+raised sqlite3.OperationalError at PRAGMA journal_mode=WAL. One authorized retry
+only, attempt2, passed at the same commit. **Retry success is not a code fix.**
+The initializer race remains unresolved; do not claim stable unattended parallel
+workers on that basis. Prepare a separate reviewed A/infrastructure task with a
+fixed concurrency reproduction before changing initialization/locks; preserve
+lease/replay/immutable acceptance safeguards and never test on private live state.
+No production or C oracle code caused this fixture-safety failure. The C PR66
+CI39711822875 independently passed. This run did not weaken tests or add retries.

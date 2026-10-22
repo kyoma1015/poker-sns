@@ -84,5 +84,21 @@
   },
   "release_gate": "NO-GO",
   "backup_restore": "INCOMPLETE: Mac unavailable; trusted alternative required",
-  "production_db_mainmerge_deploy_billing_operations": false
+  "production_db_mainmerge_deploy_billing_operations": false,
+  "infrastructure_ci": {
+    "run": 39712373480,
+    "sha": "97c87d0359787c56e5b8e193306f0841398d9cef",
+    "attempt1": "FAIL: existing worker test SQLite WAL initialization locked",
+    "attempt2": "SUCCESS, one retry only",
+    "underlying_race_fixed": false,
+    "next": "Separate reviewed immutable concurrency reproduction and initializer fix; no safety-gate weakening.",
+    "selected_original_failure_lines": [
+      "2026-10-22T02:37:16.1533382Z test_four_real_git_worktrees_and_commits_without_faking_ai (__main__.CodeWorkerTests.test_four_real_git_worktrees_and_commits_without_faking_ai) ... ERROR",
+      "2026-10-22T02:37:16.6370957Z ERROR: test_four_real_git_worktrees_and_commits_without_faking_ai (__main__.CodeWorkerTests.test_four_real_git_worktrees_and_commits_without_faking_ai)",
+      "2026-10-22T02:37:16.6376107Z   File \"/home/runner/work/poker-sns/poker-sns/tests/automation/test_code_worker.py\", line 56, in test_four_real_git_worktrees_and_commits_without_faking_ai",
+      "2026-10-22T02:37:16.6382465Z   File \"/home/runner/work/poker-sns/poker-sns/scripts/code_worker.py\", line 115, in __init__",
+      "2026-10-22T02:37:16.6382701Z     self.db.execute('PRAGMA journal_mode=WAL')",
+      "2026-10-22T02:37:16.6382873Z sqlite3.OperationalError: database is locked"
+    ]
+  }
 }
