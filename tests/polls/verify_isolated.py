@@ -130,12 +130,15 @@ def main():
     record('legacy_vote_compatible', 'Old vote client uses stored poll mode', lambda: {'response':require_ok(rpc('submit_interactive_response', {'p_post_id':legacy,'p_option_index':1,'p_answer':None}, VOTER))})
     # Additional adversarial identity/role matrix; actual PostgREST JWT roles,
     # not catalog-only assertions. No production services or user records.
+    def raw_vote_denied(user):
+        status, body = api('/post_interactive_responses?select=post_id,user_id,option_index&limit=10', user=user)
+        assert status in (200, 401, 403), (status, body)
+        if status == 200: assert body == [], 'Raw voter identity disclosed'
+        return {'status': status, 'visible_rows': 0}
     for label, user in [('anon', None), ('owner', OWNER), ('voter', VOTER), ('observer', OBSERVER)]:
         record('identity_matrix_raw_vote_select_' + label,
                'Raw vote rows are never exposed to any client identity',
-               lambda user=user: {'rows': require_ok(api('/post_interactive_responses?select=post_id,user_id,option_index&limit=10', user=user))}
-               if require_ok(api('/post_interactive_responses?select=post_id,user_id,option_index&limit=10', user=user)) == []
-               else (_ for _ in ()).throw(AssertionError('Raw voter identity disclosed')))
+               lambda user=user: raw_vote_denied(user))
         record('identity_matrix_private_close_' + label,
                'No client can execute private close worker through PostgREST',
                lambda user=user: reject(rpc('close_due_polls', {}, user), (401,403,404)))
