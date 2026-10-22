@@ -1,0 +1,16 @@
+{
+  "status": "CONDITIONAL PASS",
+  "source": "checked-in historical fixture; not live DB",
+  "questions": 50,
+  "options": 222,
+  "scoreDimensions": 32,
+  "animalDisplayKeys": 36,
+  "pngAssets": 36,
+  "personas": 30,
+  "errors": [],
+  "warnings": [],
+  "classificationSemanticValidity": "UNKNOWN: fixture includes option scores/personas, not authoritative 36-animal classifier definitions or human-reviewed labels",
+  "liveSchemaAndQuestions": "NOT CHECKED",
+  "scoringChanges": "none",
+  "sqlExecuted": false
+}

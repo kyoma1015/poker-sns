@@ -1,0 +1,999 @@
+{
+  "drafts": [
+    {
+      "number": 62,
+      "base_branch": "codex/b-rule-fields-input-20261022",
+      "base_sha": "90b6863e27daa5e749ea3c234253f14edd56b7ab",
+      "head_branch": "codex/b-rule-fields-fix-20261022",
+      "head_sha": "be0fd9197bb17c0ff6de15ec9527a12ff49241c2",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 1,
+      "title": "[B/Issue22] Validate displayed TDA rule text and collections before rendering"
+    },
+    {
+      "number": 61,
+      "base_branch": "codex/c-settlement-expected-input-20261022",
+      "base_sha": "e706d0de74697142b9be34d2be3306089110360c",
+      "head_branch": "codex/c-settlement-expected-fix-20261022",
+      "head_sha": "b6456dce6e8f468448f2daedc8850dce6d7d76ff",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 1,
+      "title": "[C/Issue22] Reject settlement fixtures without explicit expectations"
+    },
+    {
+      "number": 60,
+      "base_branch": "codex/issue22-d-image-error-input-20261021",
+      "base_sha": "3aa1a2ee02f442fd3983217e19d37607d7cb6a78",
+      "head_branch": "codex/issue22-d-image-error-redaction-fix-20261021",
+      "head_sha": "93d9948f8f829432fa66c5aafd294bf8924421fa",
+      "mergeable": true,
+      "mergeable_state": "unstable",
+      "changed_files": 1,
+      "title": "[D/Issue22] Redact PNG export errors while preserving image retry"
+    },
+    {
+      "number": 59,
+      "base_branch": "codex/issue22-b-search-data-input-20261021",
+      "base_sha": "16b02a76165a07f3ec1c8a1389705cdb13b27739",
+      "head_branch": "codex/issue22-b-search-data-fix-20261021",
+      "head_sha": "35502ff3af55e58c5ffb518fe7d1a2d7db631e64",
+      "mergeable": true,
+      "mergeable_state": "unstable",
+      "changed_files": 1,
+      "title": "[B/Issue22] Reject malformed TDA search responses and preserve retry"
+    },
+    {
+      "number": 57,
+      "base_branch": "codex/c-settlement-nonempty-input-20261021",
+      "base_sha": "a1ec880c66b54fba67fc16bee0d51f56482e9e81",
+      "head_branch": "codex/c-settlement-nonempty-fix-20261021",
+      "head_sha": "c73b57d156e3c1aae24e10565787df4d73b1c3a8",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 1,
+      "title": "[C/Issue22] Reject empty and non-list settlement fixtures before validation"
+    },
+    {
+      "number": 41,
+      "base_branch": "codex/issue22-b-search-reconciled-input-20261021",
+      "base_sha": "7ee09c1b3bf71a75e3889951d7520bf3347ba375",
+      "head_branch": "codex/issue22-b-rule-search-reconciled-fix-20261021",
+      "head_sha": "c08654d487ea4f5a6dcda79a26e25ff693a1ba84",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 2,
+      "title": "[B/Issue22] Keep only latest TDA rule search results and recover transport errors"
+    },
+    {
+      "number": 40,
+      "base_branch": "codex/issue22-d-redaction-input-20261021",
+      "base_sha": "e4c0578dda6e4fa3833cd813b29ed78dc454c7ca",
+      "head_branch": "codex/issue22-d-error-redaction-reviewed-20261021",
+      "head_sha": "4dab60e1782ad8923320977488d6962efef7fc4b",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 1,
+      "title": "[D/Issue22] Hide backend save and share error details"
+    },
+    {
+      "number": 39,
+      "base_branch": "codex/c-checkpoint-budget-input-20261021",
+      "base_sha": "279d28e0859f7778491c8573bdd8f9015d1bb179",
+      "head_branch": "codex/c-checkpoint-budget-reviewed-20261021",
+      "head_sha": "66033db8806838722a4cf7c4965542ac86903776",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 1,
+      "title": "[C/Issue22] Reject invalid checkpoint byte budgets before reading files"
+    },
+    {
+      "number": 38,
+      "base_branch": "codex/issue22-overlap-input-20261021",
+      "base_sha": "ee9b1d2521bfe8434f76010f87e53d5da477723f",
+      "head_branch": "codex/issue22-overlap-proof-20261021",
+      "head_sha": "1c72414150c653bc1e203cf47a22895a9717fcd0",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 73,
+      "title": "[Issue22] Verify inherited PR changes instead of blocking shared filenames"
+    },
+    {
+      "number": 37,
+      "base_branch": "codex/issue22-a-catalog-input-20261021",
+      "base_sha": "34ba71724c073b5608f0e228522a04bcea37e63c",
+      "head_branch": "codex/issue22-a-poll-catalog-20261021",
+      "head_sha": "ef6a26299f6e35a33bc3a5cf61ce7b78a68081a6",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 2,
+      "title": "[A/Issue22] Review exported poll schema offline without database access"
+    },
+    {
+      "number": 36,
+      "base_branch": "codex/issue22-continuation-recovery-20261021",
+      "base_sha": "0a24e1935cb18efcc36ee75666de5b282e8ed3f4",
+      "head_branch": "codex/issue22-independent-launch-20261021",
+      "head_sha": "5068a58e8bfcc4055a3bea6a31e8b10c08967a35",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 11,
+      "title": "[Issue22] Prepare fixed next-task inputs and diagnose independent scheduler launch"
+    },
+    {
+      "number": 35,
+      "base_branch": "codex/issue22-d-doubleclick-input-v2",
+      "base_sha": "c477c81fa74f050e28cf99fe3ad67c8d1ffd497c",
+      "head_branch": "codex/issue22-d-doubleclick-fix-v2",
+      "head_sha": "43e2bae1f5de33fc0d94a1d30b974492fbfbf238",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 1,
+      "title": "[D/Issue22] Prevent one double-click answering two diagnosis questions"
+    },
+    {
+      "number": 34,
+      "base_branch": "codex/issue22-recovery-input-20261021",
+      "base_sha": "3aaf7c4534c664c3ed97f6dc8a1895249d337241",
+      "head_branch": "codex/issue22-continuation-recovery-20261021",
+      "head_sha": "0a24e1935cb18efcc36ee75666de5b282e8ed3f4",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 14,
+      "title": "[Issue22] Replenish reviewed tasks and recover bounded host sessions"
+    },
+    {
+      "number": 33,
+      "base_branch": "codex/c-rank7-input-20261021",
+      "base_sha": "d0a69f48bfbf6a69117f371018226690d5570d1e",
+      "head_branch": "codex/c-rank7-20261021",
+      "head_sha": "2620396d207970fae7470043a404d7b0582b8829",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 5,
+      "title": "[C/Issue22] Compare synthetic rank7 expectations across Python and native"
+    },
+    {
+      "number": 32,
+      "base_branch": "codex/issue22-b-answer-input-20261021",
+      "base_sha": "a22d64d4f6b10927ea2e98b70871de263ac6f477",
+      "head_branch": "codex/issue22-b-saved-answer-20261021",
+      "head_sha": "0639d36d720612466474e75fa8994f409d2d41de",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 5,
+      "title": "[B/Issue22] Reject malformed saved quiz answers without corrupting score"
+    },
+    {
+      "number": 30,
+      "base_branch": "codex/issue22-worker-input-d",
+      "base_sha": "a7895875ba0c8de10c30823ea22ce4cb5f5351a1",
+      "head_branch": "codex/issue22-host-d-fix",
+      "head_sha": "6e72672fe1b9e51feb6c5b398dd9d757da83e110",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 1,
+      "title": "[Host worker D] Validate diagnosis persona answer integrity"
+    },
+    {
+      "number": 29,
+      "base_branch": "codex/issue22-worker-input-c",
+      "base_sha": "44d46db7989a02ce28dba58bea6f30172c525dfc",
+      "head_branch": "codex/issue22-host-c-fix",
+      "head_sha": "89fd492422497714d1665a9523e97ad4ba3ebee2",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 1,
+      "title": "[Host worker C] Normalize GTO reach-mass overflow validation"
+    },
+    {
+      "number": 28,
+      "base_branch": "codex/issue22-worker-input-b",
+      "base_sha": "77b41f7f1f655c5b3367ab595022e970ef37fc61",
+      "head_branch": "codex/issue22-host-b-fix",
+      "head_sha": "a36c7853ca745b40d9607d096b8a2f72c5f5712d",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 1,
+      "title": "[Host worker B] Reject empty offline TDA exports"
+    },
+    {
+      "number": 27,
+      "base_branch": "codex/issue22-worker-input-a",
+      "base_sha": "56f8a36f4c894b96c2eb2c4375263ccdaf0c8a00",
+      "head_branch": "codex/issue22-host-a-fix",
+      "head_sha": "9bf10fc8de11fd6644876c50439b3e5fc1ffa24d",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 1,
+      "title": "[Host worker A] Reject malformed poll option counts"
+    },
+    {
+      "number": 26,
+      "base_branch": "codex/continuous-queue-controls-20261020",
+      "base_sha": "e2c88b15230407a3917795b605bf3b5dd76fdbca",
+      "head_branch": "codex/issue22-real-workers-20261020",
+      "head_sha": "4fbfd95ef42292c91b6fe8573ea214371d759fda",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 17,
+      "title": "[Issue22] Guarded four-lane code workers and approved host-session lifecycle"
+    },
+    {
+      "number": 25,
+      "base_branch": "codex/c-gto-active-milestones-20261020",
+      "base_sha": "8faea88802d0d34ae3e0319399e7f55ba71a9fcd",
+      "head_branch": "codex/c-issue22-settlement-20261020",
+      "head_sha": "6b9bf03f63f1c5f23dc4271ad8714f5f8bbea04e",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 19,
+      "title": "[C/Issue22] Verify hand-derived ante, rake and side-pot settlements"
+    },
+    {
+      "number": 24,
+      "base_branch": "codex/d-diagnosis-quality-continuous-20261020",
+      "base_sha": "9051047cfe30bb2a38bb80c8985c0e7ad16e470c",
+      "head_branch": "codex/d-issue22-audit-20261020",
+      "head_sha": "5c0356264cf4e7f8724fe8c97cb1d4e4ab63cf90",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 13,
+      "title": "[D] Reject duplicate and orphan diagnosis audit score rows"
+    },
+    {
+      "number": 23,
+      "base_branch": "codex/b-tda-quality-continuous-20261020",
+      "base_sha": "4e16f7a7b567237d2735f1392906a6b1de2b7c23",
+      "head_branch": "codex/b-issue22-audit-20261020",
+      "head_sha": "f6282f574e991b600685e5b95af18709c0feef99",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 17,
+      "title": "[B/Issue22] Redact quiz audit parse failures and reject ambiguous CLI arguments"
+    },
+    {
+      "number": 21,
+      "base_branch": "codex/integration-poll-only-20261020",
+      "base_sha": "3ca87764e988cac588fef915d48823702a1a3326",
+      "head_branch": "codex/continuous-combined-check-20261020",
+      "head_sha": "61a38c4bdcd90111180237ef4451198cdc00d31b",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 96,
+      "title": "[Draft] Verify parallel A B C D changes together without production release"
+    },
+    {
+      "number": 20,
+      "base_branch": "codex/integration-poll-only-20261020",
+      "base_sha": "3ca87764e988cac588fef915d48823702a1a3326",
+      "head_branch": "codex/c-gto-active-milestones-20261020",
+      "head_sha": "8faea88802d0d34ae3e0319399e7f55ba71a9fcd",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 28,
+      "title": "[C/GTO] Active native reconstruction, checkpoint integrity and 169-hand export"
+    },
+    {
+      "number": 18,
+      "base_branch": "codex/integration-poll-only-20261020",
+      "base_sha": "3ca87764e988cac588fef915d48823702a1a3326",
+      "head_branch": "codex/d-diagnosis-quality-continuous-20261020",
+      "head_sha": "9051047cfe30bb2a38bb80c8985c0e7ad16e470c",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 18,
+      "title": "[D] Isolate diagnosis result actions and add mobile recovery QA"
+    },
+    {
+      "number": 17,
+      "base_branch": "codex/integration-poll-only-20261020",
+      "base_sha": "3ca87764e988cac588fef915d48823702a1a3326",
+      "head_branch": "codex/a-security-ui-continuous-20261020",
+      "head_sha": "6bc055b223d31174f042a95b00bd29be2d24fce1",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 21,
+      "title": "[Draft] A: patched transport and reliable mobile external sharing"
+    },
+    {
+      "number": 16,
+      "base_branch": "codex/integration-poll-only-20261020",
+      "base_sha": "3ca87764e988cac588fef915d48823702a1a3326",
+      "head_branch": "codex/continuous-queue-controls-20261020",
+      "head_sha": "e2c88b15230407a3917795b605bf3b5dd76fdbca",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 15,
+      "title": "[Draft] Bounded four-lane queue, retry controls and CI rehearsal"
+    },
+    {
+      "number": 15,
+      "base_branch": "main",
+      "base_sha": "f8890b6ec11d30676c55dc7dc8801f1da8549d28",
+      "head_branch": "codex/a-http-security-release-20261020",
+      "head_sha": "4931675e8763fc4dddb27c11236975a4a5604471",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 10,
+      "title": "[Draft] Security: isolate patched HTTP transport dependency update"
+    },
+    {
+      "number": 14,
+      "base_branch": "codex/integration-poll-only-20261020",
+      "base_sha": "3ca87764e988cac588fef915d48823702a1a3326",
+      "head_branch": "codex/b-tda-quality-continuous-20261020",
+      "head_sha": "4e16f7a7b567237d2735f1392906a6b1de2b7c23",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 18,
+      "title": "[B/TDA] Validate quiz payloads, recover RPC failures and audit offline exports"
+    },
+    {
+      "number": 13,
+      "base_branch": "main",
+      "base_sha": "f8890b6ec11d30676c55dc7dc8801f1da8549d28",
+      "head_branch": "codex/integration-poll-only-20261020",
+      "head_sha": "3ca87764e988cac588fef915d48823702a1a3326",
+      "mergeable": false,
+      "mergeable_state": "dirty",
+      "changed_files": 68,
+      "title": "[Draft] Integrate B/D/A/SNS with poll-only scope and verified handoff"
+    },
+    {
+      "number": 12,
+      "base_branch": "main",
+      "base_sha": "f8890b6ec11d30676c55dc7dc8801f1da8549d28",
+      "head_branch": "codex/sns-poll-privacy-regression-20261020",
+      "head_sha": "66cb278a2e4d53c1afa0fa13bb880eadc2a032ec",
+      "mergeable": false,
+      "mergeable_state": "dirty",
+      "changed_files": 13,
+      "title": "[Draft] SNS: poll-only creation, privacy contract and regression coverage"
+    },
+    {
+      "number": 11,
+      "base_branch": "main",
+      "base_sha": "f8890b6ec11d30676c55dc7dc8801f1da8549d28",
+      "head_branch": "codex/tda-auth-network-guidance-20261020",
+      "head_sha": "aed6425d5e70379139f3b35ae66cedffa3a55786",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 5,
+      "title": "fix: show retry guidance for TDA authentication network failures"
+    },
+    {
+      "number": 10,
+      "base_branch": "main",
+      "base_sha": "f8890b6ec11d30676c55dc7dc8801f1da8549d28",
+      "head_branch": "codex/diagnosis-phase1-regression-20261020",
+      "head_sha": "1d8fdfe8e69b645796ff85ac18c8d2b4f026c69f",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 7,
+      "title": "fix: port diagnosis phase-one recovery and display corrections onto main"
+    },
+    {
+      "number": 9,
+      "base_branch": "main",
+      "base_sha": "f8890b6ec11d30676c55dc7dc8801f1da8549d28",
+      "head_branch": "codex/f03-selective-regression-20261020",
+      "head_sha": "1451f343521915351cb79678575e4438f13aafa7",
+      "mergeable": true,
+      "mergeable_state": "clean",
+      "changed_files": 8,
+      "title": "fix: route notification events through verified RPC with regression coverage"
+    },
+    {
+      "number": 8,
+      "base_branch": "main",
+      "base_sha": "f8890b6ec11d30676c55dc7dc8801f1da8549d28",
+      "head_branch": "chore/autonomous-dev-foundation-20261020",
+      "head_sha": "6c591650f7c73c8b615564eae4864bb525ced3a4",
+      "mergeable": false,
+      "mergeable_state": "dirty",
+      "changed_files": 15,
+      "title": "chore: bootstrap Poker ID development coordination and CI"
+    },
+    {
+      "number": 2,
+      "base_branch": "main",
+      "base_sha": "c3fe008291980c77236008894e728cee63f563bd",
+      "head_branch": "feature/poker-id-card",
+      "head_sha": "3323a023f418bec5aa5a462db5fdf67fe853ffae",
+      "mergeable": false,
+      "mergeable_state": "dirty",
+      "changed_files": 12,
+      "title": "WIP: Poker ID\u30ab\u30fc\u30c9 \u2014 \u9032\u6357\u30fb8\u8272\u30d7\u30ec\u30d3\u30e5\u30fc\u30fb\u516c\u958b\u8a2d\u5b9a\u30fb\u4ed6\u8005\u95b2\u89a7"
+    }
+  ],
+  "recent_head_actions": [
+    {
+      "number": 62,
+      "head_sha": "be0fd9197bb17c0ff6de15ec9527a12ff49241c2",
+      "runs": [
+        {
+          "id": 39690895245,
+          "name": "TDA latest search acceptance",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "be0fd9197bb17c0ff6de15ec9527a12ff49241c2"
+        }
+      ]
+    },
+    {
+      "number": 61,
+      "head_sha": "b6456dce6e8f468448f2daedc8850dce6d7d76ff",
+      "runs": [
+        {
+          "id": 39690270215,
+          "name": "Checkpoint budget acceptance",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "b6456dce6e8f468448f2daedc8850dce6d7d76ff"
+        }
+      ]
+    },
+    {
+      "number": 60,
+      "head_sha": "93d9948f8f829432fa66c5aafd294bf8924421fa",
+      "runs": [
+        {
+          "id": 39640376299,
+          "name": "Diagnosis PNG-error acceptance",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "93d9948f8f829432fa66c5aafd294bf8924421fa"
+        }
+      ]
+    },
+    {
+      "number": 59,
+      "head_sha": "35502ff3af55e58c5ffb518fe7d1a2d7db631e64",
+      "runs": [
+        {
+          "id": 39640359341,
+          "name": "TDA latest search acceptance",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "35502ff3af55e58c5ffb518fe7d1a2d7db631e64"
+        }
+      ]
+    },
+    {
+      "number": 57,
+      "head_sha": "c73b57d156e3c1aae24e10565787df4d73b1c3a8",
+      "runs": [
+        {
+          "id": 39639652663,
+          "name": "Checkpoint budget acceptance",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "c73b57d156e3c1aae24e10565787df4d73b1c3a8"
+        }
+      ]
+    },
+    {
+      "number": 41,
+      "head_sha": "c08654d487ea4f5a6dcda79a26e25ff693a1ba84",
+      "runs": [
+        {
+          "id": 39586338980,
+          "name": "TDA latest search acceptance",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "c08654d487ea4f5a6dcda79a26e25ff693a1ba84"
+        }
+      ]
+    },
+    {
+      "number": 40,
+      "head_sha": "4dab60e1782ad8923320977488d6962efef7fc4b",
+      "runs": [
+        {
+          "id": 39586228371,
+          "name": "Diagnosis error-redaction acceptance",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "4dab60e1782ad8923320977488d6962efef7fc4b"
+        }
+      ]
+    },
+    {
+      "number": 39,
+      "head_sha": "66033db8806838722a4cf7c4965542ac86903776",
+      "runs": [
+        {
+          "id": 39586016041,
+          "name": "Checkpoint budget acceptance",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "66033db8806838722a4cf7c4965542ac86903776"
+        }
+      ]
+    },
+    {
+      "number": 38,
+      "head_sha": "1c72414150c653bc1e203cf47a22895a9717fcd0",
+      "runs": [
+        {
+          "id": 39691343665,
+          "name": "Continuation recovery safety (fixture only)",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "1c72414150c653bc1e203cf47a22895a9717fcd0"
+        }
+      ]
+    },
+    {
+      "number": 37,
+      "head_sha": "ef6a26299f6e35a33bc3a5cf61ce7b78a68081a6",
+      "runs": [
+        {
+          "id": 39585992898,
+          "name": "Offline poll catalog review",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "ef6a26299f6e35a33bc3a5cf61ce7b78a68081a6"
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "head_sha": "5068a58e8bfcc4055a3bea6a31e8b10c08967a35",
+      "runs": []
+    },
+    {
+      "number": 35,
+      "head_sha": "43e2bae1f5de33fc0d94a1d30b974492fbfbf238",
+      "runs": [
+        {
+          "id": 39572865720,
+          "name": "Diagnosis double-click acceptance",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "43e2bae1f5de33fc0d94a1d30b974492fbfbf238"
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "head_sha": "0a24e1935cb18efcc36ee75666de5b282e8ed3f4",
+      "runs": [
+        {
+          "id": 39573451705,
+          "name": "Continuation recovery safety (fixture only)",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "0a24e1935cb18efcc36ee75666de5b282e8ed3f4"
+        }
+      ]
+    },
+    {
+      "number": 33,
+      "head_sha": "2620396d207970fae7470043a404d7b0582b8829",
+      "runs": [
+        {
+          "id": 39572168502,
+          "name": "GTO reconstructed native verification",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "2620396d207970fae7470043a404d7b0582b8829"
+        }
+      ]
+    },
+    {
+      "number": 32,
+      "head_sha": "0639d36d720612466474e75fa8994f409d2d41de",
+      "runs": [
+        {
+          "id": 39572125844,
+          "name": "Codex lane checks",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "0639d36d720612466474e75fa8994f409d2d41de"
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "head_sha": "6e72672fe1b9e51feb6c5b398dd9d757da83e110",
+      "runs": [
+        {
+          "id": 39513447188,
+          "name": "Worker immutable acceptance",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "6e72672fe1b9e51feb6c5b398dd9d757da83e110"
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "head_sha": "89fd492422497714d1665a9523e97ad4ba3ebee2",
+      "runs": [
+        {
+          "id": 39513440363,
+          "name": "Worker immutable acceptance",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "89fd492422497714d1665a9523e97ad4ba3ebee2"
+        }
+      ]
+    },
+    {
+      "number": 28,
+      "head_sha": "a36c7853ca745b40d9607d096b8a2f72c5f5712d",
+      "runs": [
+        {
+          "id": 39513431818,
+          "name": "Worker immutable acceptance",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "a36c7853ca745b40d9607d096b8a2f72c5f5712d"
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "head_sha": "9bf10fc8de11fd6644876c50439b3e5fc1ffa24d",
+      "runs": [
+        {
+          "id": 39513425434,
+          "name": "Worker immutable acceptance",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "9bf10fc8de11fd6644876c50439b3e5fc1ffa24d"
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "head_sha": "4fbfd95ef42292c91b6fe8573ea214371d759fda",
+      "runs": [
+        {
+          "id": 39513668568,
+          "name": "Code worker safety and fixture rehearsal",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "4fbfd95ef42292c91b6fe8573ea214371d759fda"
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "head_sha": "6b9bf03f63f1c5f23dc4271ad8714f5f8bbea04e",
+      "runs": [
+        {
+          "id": 39512678577,
+          "name": "GTO reconstructed native verification",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "6b9bf03f63f1c5f23dc4271ad8714f5f8bbea04e"
+        },
+        {
+          "id": 39512678542,
+          "name": "Codex lane checks",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "6b9bf03f63f1c5f23dc4271ad8714f5f8bbea04e"
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "head_sha": "5c0356264cf4e7f8724fe8c97cb1d4e4ab63cf90",
+      "runs": [
+        {
+          "id": 39512452208,
+          "name": "Codex lane checks",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "5c0356264cf4e7f8724fe8c97cb1d4e4ab63cf90"
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "head_sha": "f6282f574e991b600685e5b95af18709c0feef99",
+      "runs": [
+        {
+          "id": 39512474760,
+          "name": "Codex lane checks",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "f6282f574e991b600685e5b95af18709c0feef99"
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "head_sha": "61a38c4bdcd90111180237ef4451198cdc00d31b",
+      "runs": [
+        {
+          "id": 39372608862,
+          "name": "Bounded four-lane queue verification",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "61a38c4bdcd90111180237ef4451198cdc00d31b"
+        },
+        {
+          "id": 39372608786,
+          "name": "GTO reconstructed native verification",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "61a38c4bdcd90111180237ef4451198cdc00d31b"
+        },
+        {
+          "id": 39372608829,
+          "name": "Codex lane checks",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "61a38c4bdcd90111180237ef4451198cdc00d31b"
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "head_sha": "8faea88802d0d34ae3e0319399e7f55ba71a9fcd",
+      "runs": [
+        {
+          "id": 39372432108,
+          "name": "GTO reconstructed native verification",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "8faea88802d0d34ae3e0319399e7f55ba71a9fcd"
+        },
+        {
+          "id": 39372432026,
+          "name": "Codex lane checks",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "8faea88802d0d34ae3e0319399e7f55ba71a9fcd"
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "head_sha": "9051047cfe30bb2a38bb80c8985c0e7ad16e470c",
+      "runs": [
+        {
+          "id": 39372270048,
+          "name": "Codex lane checks",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "9051047cfe30bb2a38bb80c8985c0e7ad16e470c"
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "head_sha": "6bc055b223d31174f042a95b00bd29be2d24fce1",
+      "runs": [
+        {
+          "id": 39372161987,
+          "name": "Codex lane checks",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "6bc055b223d31174f042a95b00bd29be2d24fce1"
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "head_sha": "e2c88b15230407a3917795b605bf3b5dd76fdbca",
+      "runs": [
+        {
+          "id": 39372365486,
+          "name": "Bounded four-lane queue verification",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "e2c88b15230407a3917795b605bf3b5dd76fdbca"
+        },
+        {
+          "id": 39372365427,
+          "name": "Codex lane checks",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "e2c88b15230407a3917795b605bf3b5dd76fdbca"
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "head_sha": "4931675e8763fc4dddb27c11236975a4a5604471",
+      "runs": [
+        {
+          "id": 39372150337,
+          "name": "HTTP transport security checks",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "4931675e8763fc4dddb27c11236975a4a5604471"
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "head_sha": "4e16f7a7b567237d2735f1392906a6b1de2b7c23",
+      "runs": [
+        {
+          "id": 39372127795,
+          "name": "Codex lane checks",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "4e16f7a7b567237d2735f1392906a6b1de2b7c23"
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "head_sha": "3ca87764e988cac588fef915d48823702a1a3326",
+      "runs": [
+        {
+          "id": 39370819211,
+          "name": "Codex lane checks",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "3ca87764e988cac588fef915d48823702a1a3326"
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "head_sha": "66cb278a2e4d53c1afa0fa13bb880eadc2a032ec",
+      "runs": [
+        {
+          "id": 39370377159,
+          "name": "Codex lane checks",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "66cb278a2e4d53c1afa0fa13bb880eadc2a032ec"
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "head_sha": "aed6425d5e70379139f3b35ae66cedffa3a55786",
+      "runs": [
+        {
+          "id": 39369249835,
+          "name": "Codex lane checks",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "aed6425d5e70379139f3b35ae66cedffa3a55786"
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "head_sha": "1d8fdfe8e69b645796ff85ac18c8d2b4f026c69f",
+      "runs": [
+        {
+          "id": 39369224433,
+          "name": "Codex lane checks",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "1d8fdfe8e69b645796ff85ac18c8d2b4f026c69f"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "head_sha": "1451f343521915351cb79678575e4438f13aafa7",
+      "runs": [
+        {
+          "id": 39369197272,
+          "name": "Codex lane checks",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "1451f343521915351cb79678575e4438f13aafa7"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "head_sha": "6c591650f7c73c8b615564eae4864bb525ced3a4",
+      "runs": [
+        {
+          "id": 39300235235,
+          "name": "Quality Check",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "pull_request",
+          "sha": "6c591650f7c73c8b615564eae4864bb525ced3a4"
+        },
+        {
+          "id": 39300228334,
+          "name": "Quality Check",
+          "status": "completed",
+          "conclusion": "success",
+          "event": "push",
+          "sha": "6c591650f7c73c8b615564eae4864bb525ced3a4"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "head_sha": "3323a023f418bec5aa5a462db5fdf67fe853ffae",
+      "runs": []
+    }
+  ],
+  "main_sha": "3ff2c03bddcf74c252f2533769f79ccc85dba1fe",
+  "pr64": {
+    "merge": "c85cbff0dd543b39ef0effed9191f690dbfa0efe",
+    "ci": 39708426732,
+    "job": 119593799325,
+    "summary": {
+      "PASS": 56,
+      "FAIL": 0,
+      "BLOCKED": 0
+    },
+    "summary_observed_in_job_log": true
+  },
+  "pr65": {
+    "merge": "3ff2c03bddcf74c252f2533769f79ccc85dba1fe",
+    "ci": [
+      {
+        "id": 39711407028,
+        "status": "completed",
+        "conclusion": "success",
+        "sha": "83faf8c6660f53ecb301bfb2b77aab5def464a71"
+      }
+    ]
+  },
+  "external_statuses": [
+    {
+      "pr": 59,
+      "context": "Vercel",
+      "state": "failure",
+      "description": "Deployment rate limited \u2014 retry in 24 hours."
+    },
+    {
+      "pr": 60,
+      "context": "Vercel",
+      "state": "failure",
+      "description": "Deployment rate limited \u2014 retry in 24 hours."
+    }
+  ],
+  "source": "GitHub read-only snapshots; no main merge/production access/deploy by this worker"
+}

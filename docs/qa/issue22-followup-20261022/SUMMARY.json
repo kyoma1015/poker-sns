@@ -1,0 +1,88 @@
+{
+  "observed_at_utc": "2026-10-22T02:36:18.870251+00:00",
+  "launch": "explicit_user_request",
+  "scheduler_evidence": false,
+  "schedule_changed": false,
+  "replacement_state_created": false,
+  "original4_continuity": [
+    {
+      "id": "issue22-host-a",
+      "status": "implemented",
+      "original_spec_hash_matches": true
+    },
+    {
+      "id": "issue22-host-b",
+      "status": "implemented",
+      "original_spec_hash_matches": true
+    },
+    {
+      "id": "issue22-host-c",
+      "status": "implemented",
+      "original_spec_hash_matches": true
+    },
+    {
+      "id": "issue22-host-d",
+      "status": "implemented",
+      "original_spec_hash_matches": true
+    }
+  ],
+  "v1": {
+    "status": "BLOCKED",
+    "spec_error": "refund scalar contradicts preserved refund vector",
+    "fixed_baseline_tests": 28,
+    "baseline_subtest_failures": 30,
+    "after_implementation_errors": 5,
+    "successful_commit": null,
+    "worktree_spec_tests_preserved": true
+  },
+  "v2": {
+    "id": "issue22-c-chip-oracle-types-v2",
+    "input": "115adb8a6ec7aff591aaf90d479a1eb205c1d24b",
+    "baseline_tests": 29,
+    "baseline_subtest_failures": 47,
+    "acceptance_pass": 29,
+    "existing_gto_pass": 40,
+    "protected_files": 5,
+    "commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+    "branch": "codex/c-chip-oracle-v2-fix-20261022",
+    "pr": 66,
+    "ci": 39711822875,
+    "ci_conclusion": "success",
+    "one_corrective_retry": true
+  },
+  "state_statuses": {
+    "issue22-c-chip-oracle-types-v1": "blocked",
+    "issue22-c-chip-oracle-types-v2": "implemented"
+  },
+  "running_leases": 0,
+  "logs": {
+    "C-v1-baseline": {
+      "raw_sha256": "63b0fbe1b8abe26db1cf10ad02df7f063c1192ecd483fda89c4433751ed44b4c",
+      "published_view_sha256": "afa3f2d6707594ccea0a9a78e427fa9536196c263d2bd614fe186f4f28a0ae1c",
+      "transformation": "Trailing whitespace stripped only; original raw files preserved locally."
+    },
+    "C-v1-failed-implementation": {
+      "raw_sha256": "b59872ba768fc49704ca7b6dd7523b6a2a77c2e9bdc656d372b71efaad292824",
+      "published_view_sha256": "b59872ba768fc49704ca7b6dd7523b6a2a77c2e9bdc656d372b71efaad292824",
+      "transformation": "Trailing whitespace stripped only; original raw files preserved locally."
+    },
+    "C-v2-baseline": {
+      "raw_sha256": "667aca89440577df95c294d84bf176366ec98a39e49a20fbb7f15a8de61b5477",
+      "published_view_sha256": "2736424082b08c583db60fe5874d9dfbdae2594738780a839d9d99b2f7d8306b",
+      "transformation": "Trailing whitespace stripped only; original raw files preserved locally."
+    },
+    "C-v2-acceptance-pass": {
+      "raw_sha256": "c1d0155c65cce0e5f69cf90aaea7cc16a62c8d9a8d6076574c614292d5663b69",
+      "published_view_sha256": "c1d0155c65cce0e5f69cf90aaea7cc16a62c8d9a8d6076574c614292d5663b69",
+      "transformation": "Trailing whitespace stripped only; original raw files preserved locally."
+    },
+    "C-v2-existing-gto-pass": {
+      "raw_sha256": "f5cf7531f74a2b4f95bfe9ac273e056dfa7c9718336883659ec2239f909ab6e6",
+      "published_view_sha256": "f5cf7531f74a2b4f95bfe9ac273e056dfa7c9718336883659ec2239f909ab6e6",
+      "transformation": "Trailing whitespace stripped only; original raw files preserved locally."
+    }
+  },
+  "release_gate": "NO-GO",
+  "backup_restore": "INCOMPLETE: Mac unavailable; trusted alternative required",
+  "production_db_mainmerge_deploy_billing_operations": false
+}
