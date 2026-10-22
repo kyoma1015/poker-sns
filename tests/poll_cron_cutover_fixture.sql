@@ -6,8 +6,6 @@ create table poll_fixture.events(kind text not null);
 create table poll_fixture.votes(id integer primary key, voter text not null);
 insert into poll_fixture.votes values (1,'synthetic-a'),(2,'synthetic-b');
 create table poll_fixture.receipts(poll_id int primary key, created_at timestamptz default now());
-create role anon nologin;
-create role authenticated nologin;
 create or replace function public.get_interactive_results_v4() returns int language sql as 'select 1';
 grant execute on function public.get_interactive_results_v4() to public,anon,authenticated;
 create or replace function poll_private.close_due_polls() returns void language plpgsql as $$
