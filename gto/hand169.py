@@ -22,6 +22,19 @@ def hand_class(cards):
     return a[0] + b[0] + ('' if a[0] == b[0] else 's' if a[1] == b[1] else 'o')
 
 
+def _weighted_ev_term(weight, value, mass):
+    """Scale mantissas first so neither the product nor ratio loses range."""
+    if value == 0 or weight == 0:
+        return 0.0
+    if weight == mass:
+        return value
+    weight_mantissa, weight_exponent = math.frexp(weight)
+    value_mantissa, value_exponent = math.frexp(value)
+    mass_mantissa, mass_exponent = math.frexp(mass)
+    return math.ldexp((weight_mantissa * value_mantissa) / mass_mantissa,
+                      weight_exponent + value_exponent - mass_exponent)
+
+
 def aggregate(records, action_count, *, require_complete=True):
     """Validate and aggregate reach-weighted strategy/EV without hiding gaps.
 
@@ -59,7 +72,7 @@ def aggregate(records, action_count, *, require_complete=True):
         if not math.isfinite(mass): raise ValueError('reach mass overflow')
         # Divide weights before multiplying to avoid finite-input overflow.
         policy = [math.fsum((w / mass) * f[action] for w, f, _ in rows) for action in range(action_count)] if mass else None
-        ev = math.fsum((w / mass) * e for w, _, e in rows if w > 0) if mass and all(e is not None for w, _, e in rows if w > 0) else None
+        ev = math.fsum(_weighted_ev_term(w, e, mass) for w, _, e in rows if w > 0) if mass and all(e is not None for w, _, e in rows if w > 0) else None
         if ev is not None and not math.isfinite(ev): raise ValueError('aggregate EV overflow')
         output[label] = {'combinations': len(rows), 'reach_mass': mass, 'frequencies': policy, 'ev': ev}
     return {'schema': 'pokerid-hand169-v1', 'complete': len(seen) == 1326, 'concrete_combinations': len(seen), 'hands': output}
