@@ -58,3 +58,40 @@ test('frozen dense valid input and empty bank remain valid',()=>{
 })
 
 test('reviewed PR28 empty-audit guard remains present',()=>assert.equal(quizAuditReport([]).verdict,'REVIEW_REQUIRED'))
+
+// Immutable optional-filter acceptance; no question or answer content is changed.
+const filterHelpers = await import('../src/tdaQuizData.ts')
+test('optional filters default invalid rows and fields to empty lists', () => {
+  for (const row of [null, undefined, 4, 'bad', [], { difficulties: {}, categories: false }]) {
+    assert.deepEqual(filterHelpers.normalizeQuizFilters(row), { difficulties: [], categories: [] })
+  }
+})
+test('optional filters exclude nonstring items and preserve valid sibling fields', () => {
+  assert.deepEqual(filterHelpers.normalizeQuizFilters({ difficulties: ['BEGINNER', {}, null, 4, ['nested']], categories: ['MTT'] }),
+    { difficulties: ['BEGINNER'], categories: ['MTT'] })
+  assert.deepEqual(filterHelpers.normalizeQuizFilters({ difficulties: false, categories: ['MTT', {}, 'RING'] }),
+    { difficulties: [], categories: ['MTT', 'RING'] })
+})
+test('optional filters preserve string values order and copy frozen arrays', () => {
+  const difficulties = Object.freeze([' ADVANCED ', '', 'BEGINNER', 'BEGINNER'])
+  const categories = Object.freeze(['MTT'])
+  const row = Object.freeze({ difficulties, categories })
+  const parsed = filterHelpers.normalizeQuizFilters(row)
+  assert.deepEqual(parsed, { difficulties: [' ADVANCED ', '', 'BEGINNER', 'BEGINNER'], categories: ['MTT'] })
+  assert.notEqual(parsed.difficulties, difficulties)
+  assert.notEqual(parsed.categories, categories)
+})
+test('optional filters densify sparse lists without inventing choices', () => {
+  const difficulties = Object.assign(Array(4), { 1: 'BEGINNER', 3: 'ADVANCED' })
+  assert.deepEqual(filterHelpers.normalizeQuizFilters({ difficulties, categories: Array(2) }),
+    { difficulties: ['BEGINNER', 'ADVANCED'], categories: [] })
+})
+test('optional filters render and preserve quiz requests in four mocked mobile scenarios', { timeout: 28000 }, async () => {
+  const { spawnSync } = await import('node:child_process')
+  const result = spawnSync(process.execPath, ['tests/browser/tda-filters.mjs'], { cwd: process.cwd(), encoding: 'utf8', timeout: 25000 })
+  assert.equal(result.error, undefined, 'browser process must finish within bounded time')
+  assert.equal(result.status, 0, 'browser filter acceptance failed:\n' + result.stdout + result.stderr)
+  const reports = result.stdout.split('\n').filter(line => line.startsWith('{')).map(line => JSON.parse(line))
+  assert.equal(reports.at(-1)?.browser_cases, 4)
+  assert.equal(reports.at(-1)?.verdict, 'PASS')
+})
