@@ -99,9 +99,42 @@ class WorkerLivenessUnknown(RuntimeError):
     worker_liveness_unknown = True
 
 
+def _process_stat(pid):
+    try:
+        fields = Path('/proc', str(pid), 'stat').read_text().rsplit(')', 1)[1].split()
+        return fields[0], int(fields[1]), int(fields[2]), fields[19]
+    except (OSError, ValueError, IndexError):
+        return None
+
+
+def _descendant_snapshot(pid):
+    """Linux metadata only; no command lines, environment, or cross-session kills."""
+    if _process_stat(pid) is None:
+        return None
+    try:
+        table = {}
+        for index, path in enumerate(Path('/proc').iterdir()):
+            if index >= 20000:
+                return None
+            if path.name.isdigit():
+                stat = _process_stat(int(path.name))
+                if stat is not None:
+                    table[int(path.name)] = stat
+    except OSError:
+        return None
+    owned, frontier = {}, {pid}
+    while frontier:
+        children = {ident: stat for ident, stat in table.items()
+                    if ident not in owned and ident != pid and stat[1] in frontier}
+        owned.update(children)
+        frontier = set(children)
+    return owned
+
+
 def cleanup_owned_process(process, primary=None):
     """Bound wait calls; never publish completion when termination is unconfirmed."""
-    unknown = False
+    descendants = _descendant_snapshot(process.pid) if process.poll() is None else {}
+    unknown = descendants is None
     for sig, limit in ((signal.SIGTERM, .2), (signal.SIGKILL, .5)):
         try:
             os.killpg(process.pid, sig)
@@ -117,6 +150,22 @@ def cleanup_owned_process(process, primary=None):
                     unknown = True
             except OSError:
                 unknown = True
+    # Confirm only descendants observed while this leader was still alive.
+    # Escaped sessions are not killed by PID; retain UNKNOWN for coordinator review.
+    pending = dict(descendants or {})
+    deadline = time.monotonic() + .2
+    while pending:
+        for pid, before in list(pending.items()):
+            current = _process_stat(pid)
+            if current is None or current[3] != before[3] or current[0] == 'Z':
+                pending.pop(pid)
+            elif current[2] != process.pid:
+                unknown = True
+                pending.pop(pid)
+        if not pending or time.monotonic() >= deadline:
+            break
+        time.sleep(.01)
+    unknown = unknown or bool(pending)
     for stream in (process.stdin, process.stdout, process.stderr):
         if stream is not None:
             try:
@@ -283,6 +332,8 @@ class CodexExecutor:
             if not 0 < timeout <= 1800:
                 raise ValueError('executor timeout must be within 1800 seconds')
             deadline = time.monotonic() + timeout
+            if self.stop_check is not None:
+                self.stop_check()
             process = subprocess.Popen(argv, cwd=worktree, env=child_env(auth=True), stdin=subprocess.PIPE,
                                        stdout=output, stderr=subprocess.STDOUT, start_new_session=True)
             try:
@@ -310,6 +361,8 @@ class CodexExecutor:
                 raise
             else:
                 cleanup_owned_process(process)
+            if self.stop_check is not None:
+                self.stop_check()
             output.seek(0)
             raw = output.read(2 * 1024 * 1024).decode(errors='replace')
             if process.returncode:
