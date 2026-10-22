@@ -32,17 +32,17 @@ jobs:
           docker run -d --name "$c" --network none \
             -e POSTGRES_PASSWORD=synthetic_only_not_a_secret \
             supabase/postgres:17.11.0.004 \
-            postgres -c shared_preload_libraries=pg_cron \
+            postgres -D /etc/postgresql -c shared_preload_libraries=pg_cron,pgsodium \
             -c cron.database_name=postgres -c cron.use_background_workers=on >/dev/null
-          # Synthetic ephemeral root key for the isolated container only; never log its bytes.
-          openssl rand -hex 32 | docker exec -i "$c" sh -ec 'umask 077; cat > /etc/postgresql-custom/pgsodium_root.key; chown postgres:postgres /etc/postgresql-custom/pgsodium_root.key; chmod 600 /etc/postgresql-custom/pgsodium_root.key'
-          docker restart "$c" >/dev/null
           ready=0
           for i in $(seq 1 90); do
             if docker exec "$c" pg_isready -U postgres -d postgres >/dev/null 2>&1; then ready=1; break; fi
             sleep 1
           done
           test "$ready" -eq 1
+          # Confirm the image's official config and key script are active, without reading key bytes.
+          docker exec "$c" psql -X -At -U supabase_admin -d postgres -c "select current_setting('config_file'), current_setting('vault.getkey_script', true), current_setting('pgsodium.getkey_script', true)" | grep -F '/usr/lib/postgresql/bin/pgsodium_getkey.sh' >/dev/null
+          docker exec "$c" test -s /etc/postgresql-custom/pgsodium_root.key
           docker exec -i "$c" psql -X -q -U supabase_admin -d postgres -v ON_ERROR_STOP=1 <<'SQL'
           create extension if not exists pg_cron;
           create extension if not exists supabase_vault;
