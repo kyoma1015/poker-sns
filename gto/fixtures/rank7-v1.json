@@ -1,0 +1,286 @@
+{
+  "schema": "pokerid-synthetic-rank7-v1",
+  "provenance": "Hand-derived synthetic poker categories and tiebreak examples; not G11 baseline or solver strategy data. Cards rank*4+suit, ranks 2..A, suits c/d/h/s.",
+  "cases": [
+    {
+      "id": "high_card",
+      "cards": [
+        48,
+        45,
+        30,
+        23,
+        12,
+        5,
+        2
+      ],
+      "expected": [
+        0,
+        14,
+        13,
+        9,
+        7,
+        5
+      ]
+    },
+    {
+      "id": "one_pair",
+      "cards": [
+        48,
+        49,
+        46,
+        31,
+        20,
+        9,
+        2
+      ],
+      "expected": [
+        1,
+        14,
+        13,
+        9,
+        7
+      ]
+    },
+    {
+      "id": "two_pair",
+      "cards": [
+        48,
+        49,
+        46,
+        47,
+        28,
+        9,
+        2
+      ],
+      "expected": [
+        2,
+        14,
+        13,
+        9
+      ]
+    },
+    {
+      "id": "trips",
+      "cards": [
+        48,
+        49,
+        50,
+        47,
+        28,
+        9,
+        2
+      ],
+      "expected": [
+        3,
+        14,
+        13,
+        9
+      ]
+    },
+    {
+      "id": "straight",
+      "cards": [
+        28,
+        33,
+        38,
+        43,
+        44,
+        5,
+        2
+      ],
+      "expected": [
+        4,
+        13
+      ]
+    },
+    {
+      "id": "wheel",
+      "cards": [
+        48,
+        1,
+        6,
+        11,
+        12,
+        29,
+        34
+      ],
+      "expected": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": "flush",
+      "cards": [
+        48,
+        36,
+        28,
+        20,
+        4,
+        45,
+        42
+      ],
+      "expected": [
+        5,
+        14,
+        11,
+        9,
+        7,
+        3
+      ]
+    },
+    {
+      "id": "full_house",
+      "cards": [
+        48,
+        49,
+        50,
+        47,
+        44,
+        9,
+        2
+      ],
+      "expected": [
+        6,
+        14,
+        13
+      ]
+    },
+    {
+      "id": "two_trips",
+      "cards": [
+        48,
+        49,
+        50,
+        47,
+        44,
+        45,
+        2
+      ],
+      "expected": [
+        6,
+        14,
+        13
+      ]
+    },
+    {
+      "id": "quads",
+      "cards": [
+        48,
+        49,
+        50,
+        51,
+        44,
+        9,
+        2
+      ],
+      "expected": [
+        7,
+        14,
+        13
+      ]
+    },
+    {
+      "id": "straight_flush",
+      "cards": [
+        28,
+        32,
+        36,
+        40,
+        44,
+        5,
+        2
+      ],
+      "expected": [
+        8,
+        13
+      ]
+    },
+    {
+      "id": "wheel_straight_flush",
+      "cards": [
+        48,
+        0,
+        4,
+        8,
+        12,
+        45,
+        42
+      ],
+      "expected": [
+        8,
+        5
+      ]
+    },
+    {
+      "id": "board_tie_a",
+      "cards": [
+        48,
+        44,
+        40,
+        36,
+        32,
+        1,
+        6
+      ],
+      "expected": [
+        8,
+        14
+      ]
+    },
+    {
+      "id": "board_tie_b",
+      "cards": [
+        48,
+        44,
+        40,
+        36,
+        32,
+        9,
+        14
+      ],
+      "expected": [
+        8,
+        14
+      ]
+    },
+    {
+      "id": "pair_high_kicker",
+      "cards": [
+        48,
+        49,
+        46,
+        43,
+        28,
+        9,
+        2
+      ],
+      "expected": [
+        1,
+        14,
+        13,
+        12,
+        9
+      ]
+    },
+    {
+      "id": "pair_low_kicker",
+      "cards": [
+        48,
+        49,
+        46,
+        39,
+        28,
+        9,
+        2
+      ],
+      "expected": [
+        1,
+        14,
+        13,
+        11,
+        9
+      ]
+    }
+  ]
+}

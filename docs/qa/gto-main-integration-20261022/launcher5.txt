@@ -1,0 +1,10 @@
+test_base64_is_strict (test_verify_integration.IntegrationInputSafety.test_base64_is_strict) ... ok
+test_trailing_zlib_data_is_rejected (test_verify_integration.IntegrationInputSafety.test_trailing_zlib_data_is_rejected) ... ok
+test_unpinned_wheel_rejected_before_extraction (test_verify_integration.IntegrationInputSafety.test_unpinned_wheel_rejected_before_extraction) ... ok
+test_valid_owned_payload (test_verify_integration.IntegrationInputSafety.test_valid_owned_payload) ... ok
+test_wrong_size_or_hash_is_rejected (test_verify_integration.IntegrationInputSafety.test_wrong_size_or_hash_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.002s
+
+OK
