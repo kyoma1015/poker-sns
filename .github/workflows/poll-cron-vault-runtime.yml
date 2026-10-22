@@ -34,6 +34,9 @@ jobs:
             supabase/postgres:17.11.0.004 \
             postgres -c shared_preload_libraries=pg_cron \
             -c cron.database_name=postgres -c cron.use_background_workers=on >/dev/null
+          # Synthetic ephemeral root key for the isolated container only; never log its bytes.
+          docker exec "$c" sh -ec 'umask 077; openssl rand -hex 32 > /etc/postgresql-custom/pgsodium_root.key; chown postgres:postgres /etc/postgresql-custom/pgsodium_root.key; chmod 600 /etc/postgresql-custom/pgsodium_root.key'
+          docker restart "$c" >/dev/null
           ready=0
           for i in $(seq 1 90); do
             if docker exec "$c" pg_isready -U postgres -d postgres >/dev/null 2>&1; then ready=1; break; fi
@@ -63,7 +66,8 @@ jobs:
           done
           test "$ticks" -gt 0
           docker exec -i "$c" psql -X -q -U postgres -d postgres -v ON_ERROR_STOP=1 <<'SQL'
-          do $$
+          create role poll_synthetic_unprivileged nologin;
+          do $
           declare secret_id uuid; fixture text; ciphertext text; plaintext text;
           begin
             fixture := md5(random()::text || clock_timestamp()::text);
@@ -72,12 +76,13 @@ jobs:
             select decrypted_secret into plaintext from vault.decrypted_secrets where id=secret_id;
             if plaintext is distinct from fixture then raise exception 'Vault decrypt mismatch'; end if;
             if ciphertext = fixture or ciphertext is null then raise exception 'Vault plaintext at rest'; end if;
-            if has_table_privilege('public','vault.decrypted_secrets','SELECT') then
-              raise exception 'Vault decrypted view exposed to PUBLIC';
+            if has_table_privilege('poll_synthetic_unprivileged','vault.decrypted_secrets','SELECT') then
+              raise exception 'Vault decrypted view exposed to unprivileged role';
             end if;
             delete from vault.secrets where id=secret_id;
             if exists(select 1 from vault.secrets where id=secret_id) then raise exception 'Vault cleanup failed'; end if;
           end $$;
+          drop role poll_synthetic_unprivileged;
           select cron.unschedule('poll-synthetic-only');
           do $$
           begin
