@@ -2,6 +2,7 @@ name: Continuation recovery safety (fixture only)
 on:
   pull_request:
     paths:
+      - 'scripts/code_worker.py'
       - 'scripts/continuation_recovery.py'
       - 'scripts/pr_overlap.py'
       - 'tests/worker_acceptance/**'
