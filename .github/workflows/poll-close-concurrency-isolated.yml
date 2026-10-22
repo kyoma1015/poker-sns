@@ -1,0 +1,20 @@
+name: Poll close concurrency isolated PostgreSQL
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/poll-close-concurrency-isolated.yml'
+      - 'tests/poll_close_concurrency_fixture.sql'
+      - 'tests/poll_close_concurrency_isolated.sh'
+      - 'sql/poll_only/forward_candidate.sql'
+permissions:
+  contents: read
+jobs:
+  synthetic-concurrency:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify exact candidate close function concurrently with synthetic data
+        shell: bash
+        run: bash tests/poll_close_concurrency_isolated.sh
