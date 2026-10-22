@@ -26,7 +26,8 @@ function text(value: unknown): value is string { return typeof value === 'string
 export function parseQuizQuestions(value: unknown): TdaQuizQuestion[] {
   if (!Array.isArray(value)) throw new Error('問題データの形式を確認できませんでした。再度お試しください。')
   const ids = new Set<string>()
-  return value.map(row => {
+  // Materialize holes as undefined so every position reaches the record checks.
+  return Array.from(value).map(row => {
     if (!record(row) || !text(row.question_id) || ids.has(row.question_id) || !text(row.question_text) ||
         !(row.difficulty === null || typeof row.difficulty === 'string') ||
         !(row.category === null || typeof row.category === 'string') || !Array.isArray(row.options) || row.options.length < 2) {
@@ -35,7 +36,7 @@ export function parseQuizQuestions(value: unknown): TdaQuizQuestion[] {
     ids.add(row.question_id)
     const optionIds = new Set<string>()
     const orders = new Set<number>()
-    const options = row.options.map(option => {
+    const options = Array.from(row.options).map(option => {
       if (!record(option) || !text(option.id) || optionIds.has(option.id) || !text(option.option_text) ||
           typeof option.option_order !== 'number' || !Number.isInteger(option.option_order) ||
           option.option_order < 0 || orders.has(option.option_order)) {
