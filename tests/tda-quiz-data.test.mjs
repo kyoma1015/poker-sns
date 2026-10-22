@@ -56,3 +56,5 @@ test('frozen dense valid input and empty bank remain valid',()=>{
  const q=question();Object.freeze(q.options);Object.freeze(q);const bank=Object.freeze([q]);
  assert.equal(parseQuizQuestions(bank)[0].options.length,2);assert.deepEqual(parseQuizQuestions([]),[])
 })
+
+test('reviewed PR28 empty-audit guard remains present',()=>assert.equal(quizAuditReport([]).verdict,'REVIEW_REQUIRED'))

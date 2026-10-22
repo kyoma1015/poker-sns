@@ -76,7 +76,7 @@ export function quizAuditReport(value: unknown, expectedCount?: number) {
   const countMatches = expectedCount === undefined || report.question_count === expectedCount
   const candidates = report.duplicateQuestionCandidates.length + report.duplicateOptionCandidates.length
   return { ...report, expected_count: expectedCount ?? null, count_matches: countMatches,
-    verdict: countMatches && !candidates ? 'STRUCTURE_PASS' as const : 'REVIEW_REQUIRED' as const,
+    verdict: report.question_count > 0 && countMatches && !candidates ? 'STRUCTURE_PASS' as const : 'REVIEW_REQUIRED' as const,
     publication_approved: false as const }
 }
 
