@@ -271,6 +271,8 @@ class CodexExecutor:
 @contextmanager
 def setup_lock(state, seconds=30):
     """Serialize state initialization and git preparation across processes."""
+    if not math.isfinite(seconds):
+        raise ValueError('setup lock timeout must be finite')
     with open(str(state) + '.setup.lock', 'a') as handle:
         deadline = time.monotonic() + seconds
         while True:
