@@ -50,3 +50,6 @@ Four new formal source tasks (A102/A104/C101/C105) and two selected main candida
 
 ## Restart-system preparation — 2026-10-22
 Official automation contract supports at most hourly, not requested30min. Existing6h COUNT28 untouched/nextnull causeUNKNOWN; old pending39785868353 nowSUCCESS. New Draft106(publication CAS) and107(opt-in global invocation guard) local testsPASS, CI tracked separately. Retained38implemented/2blocked, no live controller/schema/scheduler adoption. Read docs/workers/ISSUE22_RESTART_PREPARATION_20261022.md and RUN_CHECKPOINT_20261022.json. Disabled hourlyCOUNT2 read-only probe proposal requires explicit user approval; no unattended-source completion claimed.
+
+## Approved finite launch observation — 2026-10-22 15:03 UTC
+Owner approved hourly COUNT2 read-only probe. Original Poker-only6h config saved before pause; disabled confirmed. New exact finite schedule registered/verified; next_run_time and run history null, actual launches PENDING. See docs/workers/ISSUE22_HOURLY_PROBE_20261022.md and docs/qa/issue22-hourly-probe-20261022/. No live controller/source/state adoption.38implemented/2blocked/running0 and original4hashes verified read-only. No automatic restore/extension; ongoing unattended development OFF. PR106/107 CI39795238064/39796232980 confirmedSUCCESS, Drafts unmerged; pollNO-GO.
