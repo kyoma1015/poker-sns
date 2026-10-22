@@ -1,0 +1,20 @@
+name: Issue22 a-finite-setup fixed acceptance
+on:
+  pull_request:
+    branches: [codex/a-finite-setup-input-20261022]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -B -m unittest discover -s tests/worker_acceptance -v
+      - run: python -B tests/automation/test_code_worker.py
+      - run: python -B tests/automation/test_development_queue.py
