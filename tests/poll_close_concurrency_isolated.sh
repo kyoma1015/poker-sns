@@ -44,8 +44,8 @@ p1=$!
 sleep 1
 docker exec "$c" psql -X -At -U supabase_admin -d postgres -v ON_ERROR_STOP=1 -c 'select poll_private.close_due_polls()' > /tmp/poll-close-b.out 2>/tmp/poll-close-b.err &
 p2=$!
-wait "$p1"
-wait "$p2"
+if ! wait "$p1"; then sed -E "s/[[:xdigit:]]{32,}/[REDACTED]/g" /tmp/poll-close-a.err; exit 1; fi
+if ! wait "$p2"; then sed -E "s/[[:xdigit:]]{32,}/[REDACTED]/g" /tmp/poll-close-b.err; exit 1; fi
 test "$(q "select count(*) from public.notifications where type='poll_closed'")" = 3
 test "$(q "select count(*) from poll_private.close_receipts")" = 2
 test "$(q "select count(distinct user_id) from public.notifications where type='poll_closed'")" = 3
