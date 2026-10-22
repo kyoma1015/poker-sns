@@ -103,15 +103,17 @@ def _process_stat(pid):
     try:
         fields = Path('/proc', str(pid), 'stat').read_text().rsplit(')', 1)[1].split()
         return fields[0], int(fields[1]), int(fields[2]), fields[19]
-    except (OSError, ValueError, IndexError):
+    except (FileNotFoundError, ProcessLookupError):
         return None
+    except (OSError, ValueError, IndexError) as error:
+        raise WorkerLivenessUnknown('Process metadata unavailable') from error
 
 
 def _descendant_snapshot(pid):
     """Linux metadata only; no command lines, environment, or cross-session kills."""
-    if _process_stat(pid) is None:
-        return None
     try:
+        if _process_stat(pid) is None:
+            return None
         table = {}
         for index, path in enumerate(Path('/proc').iterdir()):
             if index >= 20000:
@@ -120,7 +122,7 @@ def _descendant_snapshot(pid):
                 stat = _process_stat(int(path.name))
                 if stat is not None:
                     table[int(path.name)] = stat
-    except OSError:
+    except (OSError, WorkerLivenessUnknown):
         return None
     owned, frontier = {}, {pid}
     while frontier:
@@ -156,7 +158,12 @@ def cleanup_owned_process(process, primary=None):
     deadline = time.monotonic() + .2
     while pending:
         for pid, before in list(pending.items()):
-            current = _process_stat(pid)
+            try:
+                current = _process_stat(pid)
+            except WorkerLivenessUnknown:
+                unknown = True
+                pending.pop(pid)
+                continue
             if current is None or current[3] != before[3] or current[0] == 'Z':
                 pending.pop(pid)
             elif current[2] != process.pid:
@@ -241,6 +248,15 @@ class Leases:
         digest = hashlib.sha256(json.dumps(task, sort_keys=True).encode()).hexdigest()
         self.db.execute('BEGIN IMMEDIATE')
         try:
+            for (raw,) in self.db.execute("SELECT evidence FROM development_jobs WHERE status='running'"):
+                try:
+                    prior = json.loads(raw)
+                except (TypeError, ValueError):
+                    continue
+                if isinstance(prior, dict) and (prior.get('worker_liveness_unknown') is True
+                                                or prior.get('worker_liveness') == 'unknown'):
+                    self.db.execute('COMMIT')
+                    return None
             self.db.execute("UPDATE development_jobs SET status='blocked', token=NULL, evidence='lease expired; review required' WHERE status='running' AND expires<=?", (now,))
             old = self.db.execute('SELECT spec_hash,status,attempts FROM development_jobs WHERE id=?', (task['id'],)).fetchone()
             if old and old[0] != digest:
