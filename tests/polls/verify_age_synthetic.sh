@@ -31,7 +31,13 @@ if age -d -i "$work/keys/wrong.key" -o "$work/data/wrong-output" "$work/data/bac
   echo 'FAIL: wrong key unexpectedly decrypted'; exit 1
 fi
 cp "$work/data/backup.age" "$work/data/tampered.age"
-printf 'tampered' >> "$work/data/tampered.age"
+python3 - "$work/data/tampered.age" <<'PY'
+import pathlib, sys
+p = pathlib.Path(sys.argv[1])
+data = bytearray(p.read_bytes())
+data[-8] ^= 1
+p.write_bytes(data)
+PY
 if age -d -i "$work/keys/primary.key" -o "$work/data/tampered-output" "$work/data/tampered.age" >"$work/tampered.stdout" 2>"$work/tampered.stderr"; then
   echo 'FAIL: modified ciphertext unexpectedly decrypted'; exit 1
 fi
