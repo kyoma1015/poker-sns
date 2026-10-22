@@ -650,8 +650,8 @@
       "next_action": "verify_CI_and_review;do_not_reimplement",
       "branch": "codex/a-preview-unicode-fix-20261022",
       "pr": 109,
-      "ci_run_id": null,
-      "ci_status": "pending"
+      "ci_run_id": 39814795806,
+      "ci_status": "queued"
     }
   ],
   "provider_run_id": null,

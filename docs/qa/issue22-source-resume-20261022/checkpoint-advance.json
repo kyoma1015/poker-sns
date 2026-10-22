@@ -1,0 +1,14 @@
+{
+  "checkpoint_sha256": "c06c74401e2427d8038f0c531f6c30f8df267579984b345cf33c8cc73d3b121d",
+  "reason": "Authorized manual source invocation added completedC108/A109 and CI/publication metadata;not scheduled sourcework",
+  "prior_checkpoint_sha256": "b6c7ef171ab594da6ac9c3982ed57b306e354be165281afd63ff8f97096a664f",
+  "original40_statuses_retained": true,
+  "original4_spec_hashes_retained": true,
+  "state_counts": {
+    "implemented": 40,
+    "blocked": 2,
+    "running": 0
+  },
+  "unattended_development": false,
+  "probe_settings_changed": false
+}
