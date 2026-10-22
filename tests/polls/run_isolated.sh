@@ -235,6 +235,14 @@ begin
  if n <> 1 then raise exception 'Rollback lost historical answer'; end if;
  if exists(select 1 from cron.job where jobname='pokerid-poll-close-v1') then raise exception 'Rollback retained new scheduler'; end if;
  if to_regclass('poll_private.close_receipts') is null then raise exception 'Rollback removed private close receipts'; end if;
+ if has_schema_privilege('authenticated','poll_private','USAGE') then raise exception 'Rollback retained private schema usage'; end if;
+ if exists (
+  select 1 from pg_proc p join pg_namespace ns on ns.oid=p.pronamespace
+  where ns.nspname='poll_private'
+    and (has_function_privilege('authenticated',p.oid,'EXECUTE')
+      or has_function_privilege('anon',p.oid,'EXECUTE'))
+ ) then raise exception 'Rollback retained private poll function execution rights'; end if;
+
  if not exists(select 1 from pg_policies where schemaname='public' and tablename='notifications' and policyname='poll_closed_forgery_guard_v1') then raise exception 'Rollback removed notification guard'; end if;
  if exists(select 1 from pg_proc p join pg_namespace ns on ns.oid=p.pronamespace where ns.nspname='public' and p.proname in ('get_interactive_results_v2','get_interactive_results_v3') and has_function_privilege('authenticated',p.oid,'EXECUTE')) then raise exception 'Rollback exposed historical results RPC'; end if;
 end
