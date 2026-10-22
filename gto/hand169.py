@@ -29,6 +29,8 @@ def aggregate(records, action_count, *, require_complete=True):
     Complete export requires all 1,326 distinct concrete combinations. Zero-mass
     classes report None (unknown), never a fabricated all-zero strategy or EV.
     """
+    if type(require_complete) is not bool:
+        raise ValueError('boolean require_complete required')
     if type(action_count) is not int or action_count < 1:
         raise ValueError('positive integer action_count required')
     buckets = {label: [] for label in CLASSES}
