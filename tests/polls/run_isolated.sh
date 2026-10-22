@@ -271,6 +271,22 @@ begin
  if not has_function_privilege('authenticated','public.get_interactive_results_v4(uuid[])','EXECUTE') then raise exception 'Result RPC not restored'; end if;
  if has_function_privilege('authenticated','public.get_interactive_results_v3(uuid[])','EXECUTE') then raise exception 'Old result RPC exposed'; end if;
  if has_function_privilege('authenticated','poll_private.close_due_polls()','EXECUTE') then raise exception 'Private close worker unexpectedly exposed'; end if;
+ -- RLS and direct DML controls must survive disable + repeated re-enable.
+ if not (select relrowsecurity from pg_class where oid='public.post_interactive_responses'::regclass) then raise exception 'Vote RLS disabled'; end if;
+ if not (select relrowsecurity from pg_class where oid='public.post_interactive'::regclass) then raise exception 'Poll metadata RLS disabled'; end if;
+ if not (select relrowsecurity from pg_class where oid='public.notifications'::regclass) then raise exception 'Notification RLS disabled'; end if;
+ if (select count(*) from pg_policies where schemaname='public' and tablename='post_interactive_responses' and policyname='poll_raw_identity_guard_v1' and permissive='RESTRICTIVE' and cmd='SELECT' and replace(qual,' ','')='false') <> 1 then
+  raise exception 'Anonymous voter raw identity protection not restored'; end if;
+ if not exists(select 1 from pg_policies where schemaname='public' and tablename='post_interactive' and policyname='poll_metadata_visibility_v1' and permissive='RESTRICTIVE' and cmd='SELECT') then raise exception 'Poll metadata visibility guard not restored'; end if;
+ if not exists(select 1 from pg_policies where schemaname='public' and tablename='notifications' and policyname='poll_closed_forgery_guard_v1' and permissive='RESTRICTIVE' and cmd='INSERT') then raise exception 'Forged closed-notice policy not restored'; end if;
+ if not exists(select 1 from pg_trigger where tgname='poll_closed_guard_v1' and tgrelid='public.notifications'::regclass and not tgisinternal and tgenabled <> 'D') then raise exception 'Closed-notification immutability trigger not restored'; end if;
+ for r in select unnest(array['public.post_interactive','public.post_interactive_responses'])::regclass as rel loop
+  if has_table_privilege('authenticated',r.rel,'INSERT') or has_table_privilege('authenticated',r.rel,'UPDATE') or has_table_privilege('authenticated',r.rel,'DELETE') then raise exception 'Poll raw table DML grant exposed: %',r.rel; end if;
+ end loop;
+ if has_function_privilege('anon','public.get_interactive_results_v4(uuid[])','EXECUTE') then raise exception 'Anonymous results RPC exposed'; end if;
+ if has_function_privilege('authenticated','public.get_interactive_results_v2(uuid[])','EXECUTE') then raise exception 'Legacy v2 result exposed'; end if;
+ if has_function_privilege('authenticated','public.finish_due_polls_v1()','EXECUTE') then raise exception 'Close RPC exposed'; end if;
+ if has_function_privilege('authenticated','poll_private.guard_closed_notification()','EXECUTE') then raise exception 'Notice trigger helper exposed'; end if;
  select count(*) into n from public.post_interactive where post_id='20000000-0000-0000-0000-000000000001' and kind='question';
  if n <> 1 then raise exception 'Reactivation lost historical question'; end if;
  select count(*) into n from public.post_interactive_responses where post_id='20000000-0000-0000-0000-000000000001' and answer='historical answer fixture';
