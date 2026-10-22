@@ -47,7 +47,13 @@ def _weighted_sum(weighted_values, mass, *, policy=False):
         # Keep the exported float mass as the denominator of the exact fallback.
         return float(sum((Fraction(w) * Fraction(value) for w, value in values),
                          Fraction(0)) / Fraction(mass))
-    return math.fsum(terms)
+    try:
+        return math.fsum(terms)
+    except OverflowError:
+        # Rounded terms can overflow even when their exact mean is finite.
+        # Keep the exported mass and round once, as in the subnormal fallback.
+        return float(sum((Fraction(w) * Fraction(value) for w, value in values),
+                         Fraction(0)) / Fraction(mass))
 
 
 def _finite_number(value):
