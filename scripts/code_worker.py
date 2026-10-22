@@ -6,6 +6,7 @@ import argparse
 import concurrent.futures
 import hashlib
 import json
+import math
 import os
 from pathlib import Path, PurePosixPath
 import re
@@ -109,6 +110,18 @@ def acceptance_count(output):
     return sum(int(left or right) for left, right in counts)
 
 
+def finite_lease_number(value, label):
+    if type(value) not in (int, float):
+        raise ValueError('lease ' + label + ' must be a finite number')
+    try:
+        finite = math.isfinite(value)
+    except OverflowError:
+        finite = False
+    if not finite:
+        raise ValueError('lease ' + label + ' must be a finite number')
+    return value
+
+
 class Leases:
     def __init__(self, path):
         with setup_lock(path):
@@ -128,7 +141,11 @@ class Leases:
         self.db.close()
 
     def claim(self, task, seconds=900, now=None):
-        now = time.time() if now is None else now
+        now = finite_lease_number(time.time() if now is None else now, 'clock')
+        seconds = finite_lease_number(seconds, 'duration')
+        if seconds <= 0:
+            raise ValueError('lease duration must be positive')
+        expires = finite_lease_number(now + seconds, 'expiry')
         digest = hashlib.sha256(json.dumps(task, sort_keys=True).encode()).hexdigest()
         self.db.execute('BEGIN IMMEDIATE')
         try:
@@ -142,9 +159,9 @@ class Leases:
                 return None
             token = uuid.uuid4().hex
             if old:
-                self.db.execute("UPDATE development_jobs SET status='running',attempts=attempts+1,token=?,expires=? WHERE id=?", (token, now + seconds, task['id']))
+                self.db.execute("UPDATE development_jobs SET status='running',attempts=attempts+1,token=?,expires=? WHERE id=?", (token, expires, task['id']))
             else:
-                self.db.execute("INSERT INTO development_jobs(id,lane,spec_hash,status,attempts,token,expires) VALUES(?,?,?,'running',1,?,?)", (task['id'], task['lane'], digest, token, now + seconds))
+                self.db.execute("INSERT INTO development_jobs(id,lane,spec_hash,status,attempts,token,expires) VALUES(?,?,?,'running',1,?,?)", (task['id'], task['lane'], digest, token, expires))
             self.db.execute('COMMIT')
             return token
         except BaseException:
@@ -154,7 +171,7 @@ class Leases:
     def finish(self, task_id, token, status, evidence, now=None):
         if status not in ('implemented', 'blocked', 'failed', 'retry_wait'):
             raise ValueError('invalid terminal status')
-        now = time.time() if now is None else now
+        now = finite_lease_number(time.time() if now is None else now, 'clock')
         cursor = self.db.execute("UPDATE development_jobs SET status=?,token=NULL,expires=NULL,evidence=? WHERE id=? AND token=? AND status='running' AND expires>?",
                                  (status, json.dumps(evidence), task_id, token, now))
         if cursor.rowcount != 1:
