@@ -53,14 +53,14 @@ export const traitPositiveMax: Record<string, number> = {
   collision_avoidance: 7,
 }
 export function relativePositiveScore(key: string, score: number): number {
-  const cap = traitPositiveMax[key]
+  const cap = Object.hasOwn(traitPositiveMax, key) ? traitPositiveMax[key] : undefined
   return cap && Number.isFinite(score) ? Math.max(0, Math.min(1, score / cap)) : 0
 }
 
 export function topPersonalTraits(detail: ScoreDetail) {
   const all = { ...detail.trait_scores, ...detail.discriminator_scores }
   return Object.entries(all)
-    .filter(([key, value]) => traitCopy[key] && Number.isFinite(Number(value)) && Number(value) > 0)
+    .filter(([key, value]) => Object.hasOwn(traitCopy, key) && Number.isFinite(Number(value)) && Number(value) > 0)
     .sort((a, b) => relativePositiveScore(b[0], Number(b[1])) - relativePositiveScore(a[0], Number(a[1])))
     .slice(0, 3)
     .map(([key]) => ({ key, ...traitCopy[key] }))
