@@ -22,6 +22,17 @@ function record(value: unknown): value is Record<string, unknown> {
 }
 function text(value: unknown): value is string { return typeof value === 'string' && value.trim().length > 0 }
 
+// Optional RPC filters must only contribute renderable string choices.
+// Filtering creates dense copies while preserving every valid string value/order.
+export function normalizeQuizFilters(value: unknown): { difficulties: string[]; categories: string[] } {
+  const strings = (items: unknown): string[] => Array.isArray(items)
+    ? items.filter((item): item is string => typeof item === 'string') : []
+  return record(value)
+    ? { difficulties: strings(value.difficulties), categories: strings(value.categories) }
+    : { difficulties: [], categories: [] }
+}
+
+
 // Structural validation is deliberately separate from official-rule correctness.
 export function parseQuizQuestions(value: unknown): TdaQuizQuestion[] {
   if (!Array.isArray(value)) throw new Error('問題データの形式を確認できませんでした。再度お試しください。')

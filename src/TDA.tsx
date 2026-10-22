@@ -1,4 +1,4 @@
-import { parseQuizAnswer, parseQuizQuestions, safeQuizRpc, type TdaQuizQuestion } from './tdaQuizData'
+import { normalizeQuizFilters, parseQuizAnswer, parseQuizQuestions, safeQuizRpc, type TdaQuizQuestion } from './tdaQuizData'
 import { checkQuizAuthentication } from './tdaQuizAuth'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -397,17 +397,7 @@ function TDA() {
 
     const row = Array.isArray(data) ? data[0] : data
 
-    if (!row) return
-
-
-
-    setQuizFilters({
-
-      difficulties: Array.isArray(row.difficulties) ? row.difficulties : [],
-
-      categories: Array.isArray(row.categories) ? row.categories : [],
-
-    })
+    setQuizFilters(normalizeQuizFilters(row))
 
   }
 
