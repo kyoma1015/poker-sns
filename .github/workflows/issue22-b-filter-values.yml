@@ -1,0 +1,29 @@
+name: Issue22 optional TDA filter safety
+on:
+  pull_request:
+    branches: [codex/b-filter-values-input-20261022]
+permissions:
+  contents: read
+concurrency:
+  group: filter-values-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    env:
+      CHROMIUM_PATH: /usr/bin/google-chrome
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci --cache "$RUNNER_TEMP/npm-cache"
+      - run: node tests/tda-quiz-data.test.mjs
+      - run: node tests/tda-saved-answer.test.mjs
+      - run: node tests/tda-audit-cli.test.mjs
+      - run: node tests/worker-acceptance.test.mjs
+      - run: npm run build
+      - run: npm run lint
