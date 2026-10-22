@@ -1,0 +1,14 @@
+{
+  "tests/worker_acceptance/test_invocation_clock.py": "a131098e56526a47e53d16b518f766fd37710cbf17939e0579178c1f26097eb1",
+  "tests/worker_acceptance/test_invocation_guard.py": "f8593516179c8f0e2dc112a1e00b56af77cf56935419567932f4e73989b5e732",
+  "tests/worker_acceptance/test_discovery_preview.py": "61de61d1c67ea9db1443a501a703fe0d845cb65d75d6590cdf861a13996c0617",
+  "tests/worker_acceptance/test_publication_checkpoint.py": "66f0518fa9a5dafef69ee75cdd19320651ae261ab005cab313a4b14faa9efb6a",
+  "tests/worker_acceptance/test_discovery_store.py": "f47a506749c98265db23a37fd629c3fd597e29066882444686effcf247fc3fa8",
+  "tests/worker_acceptance/test_finite_lease.py": "d497616524d2bdee11afcb9fd39519bc0e270bdea29a2f6dd4d17cb60fa2456f",
+  "tests/worker_acceptance/test_pr_overlap.py": "7a7d4988fbdca1bb720f59701973fee1975fe173b2d9006356a256c648129a0d",
+  "tests/worker_acceptance/test_finite_setup.py": "d6b0a334d65dd70bc000d296144e471d7f4cef301191fd84be9e7b07aee4a7e7",
+  "tests/worker_acceptance/test_continuation_recovery.py": "1d6d8d526006494d869921892dc3ff7d75f1f3cf18f8e0eeeb96a65aa47d8480",
+  "tests/worker_acceptance/test_lease_initialization.py": "f9957c370e68934dc4bf6caa4080c1672e08901a06c6f8d6de76c9a87aa793c0",
+  "tests/automation/test_controller_integration.py": "31bf1cdd4d4218fc68bab3d02bc67a3a041e7c30ac6ffdf974b1858e0e7f891f",
+  "tests/automation/test_worker_recovery_lifecycle.py": "7bac082b87a29eda75782b94666f415583dc52d71fac7720185637b52954deae"
+}

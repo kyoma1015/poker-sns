@@ -1,0 +1,49 @@
+test_ci_failure_metadata_retains_committed_source_until_new_observation (__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation) ... ok
+test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed (__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed) ... ok
+test_executor_timeout_terminates_term_ignoring_descendant (__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant) ... FAIL
+test_permission_and_second_transient_require_review_not_budget_reset (__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset) ... ok
+test_pr111_cleanup_failure_preserves_original_ddl_exception (__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception) ... FAIL
+test_pr111_probe_connection_failure_propagates_without_new_state (__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state) ... ok
+test_stop_before_entry_dispatches_no_worker_or_lease (__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease) ... ok
+test_stop_preserve_reopen_resume_commit_then_next_reviewed_task (__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task) ... ok
+
+======================================================================
+FAIL: test_executor_timeout_terminates_term_ignoring_descendant (__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-worker-recovery-qa/tests/automation/test_worker_recovery_lifecycle.py", line 108, in test_executor_timeout_terminates_term_ignoring_descendant
+    self.assertTrue(child_stopped, 'executor returned with a live descendant')
+AssertionError: False is not true : executor returned with a live descendant
+
+======================================================================
+FAIL: test_pr111_cleanup_failure_preserves_original_ddl_exception (__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-worker-recovery-qa/scripts/continuation_recovery.py", line 64, in __init__
+    self.db.execute('CREATE TABLE IF NOT EXISTS continuation_runs (id TEXT PRIMARY KEY, started REAL NOT NULL)')
+  File "/workspace/work/issue22-worker-recovery-qa/tests/automation/test_worker_recovery_lifecycle.py", line 63, in execute
+    raise original
+RuntimeError: owned original DDL error
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/work/issue22-worker-recovery-qa/tests/automation/test_worker_recovery_lifecycle.py", line 72, in test_pr111_cleanup_failure_preserves_original_ddl_exception
+    recovery.Continuation(self.f.state, self.f.anchor)
+  File "/workspace/work/issue22-worker-recovery-qa/scripts/continuation_recovery.py", line 79, in __init__
+    self.leases.close()
+  File "/workspace/work/issue22-worker-recovery-qa/tests/automation/test_worker_recovery_lifecycle.py", line 68, in close
+    raise OSError('owned close error')
+OSError: owned close error
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/work/issue22-worker-recovery-qa/tests/automation/test_worker_recovery_lifecycle.py", line 74, in test_pr111_cleanup_failure_preserves_original_ddl_exception
+    self.assertIs(error, original, 'cleanup masked the original DDL exception')
+AssertionError: OSError('owned close error') is not RuntimeError('owned original DDL error') : cleanup masked the original DDL exception
+
+----------------------------------------------------------------------
+Ran 8 tests in 3.938s
+
+FAILED (failures=2)

@@ -1,0 +1,47 @@
+{
+  "observed_at": "2026-10-22T18:02:43.176403+00:00",
+  "total": 45,
+  "counts": {
+    "blocked": 2,
+    "implemented": 43
+  },
+  "running": 0,
+  "logical_digest": "281bd3a0b00057eef2a00cdd5d7283d8cc8f4031f39f029c63c5af8533670ada",
+  "checkpoint_sha256": "b8afdc9feb93d142f723c41850d5806c0efc5917cafe6cd2324255cdab2555c0",
+  "original4": [
+    {
+      "id": "issue22-host-a",
+      "status": "implemented",
+      "hash_match": true
+    },
+    {
+      "id": "issue22-host-b",
+      "status": "implemented",
+      "hash_match": true
+    },
+    {
+      "id": "issue22-host-c",
+      "status": "implemented",
+      "hash_match": true
+    },
+    {
+      "id": "issue22-host-d",
+      "status": "implemented",
+      "hash_match": true
+    }
+  ],
+  "existing_runs": [
+    [
+      "observed_normal_20261021T225341_375948",
+      1792623382.9695504
+    ]
+  ],
+  "run_limit": 28,
+  "not_provider_remaining_budget": true,
+  "retained_database_mode": "ro",
+  "retained_writes": false,
+  "blocked_unchanged": [
+    "issue22-c-chip-oracle-types-v1",
+    "issue22-d-doubleclick-v1"
+  ]
+}

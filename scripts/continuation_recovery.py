@@ -75,8 +75,11 @@ class Continuation:
             self.db.execute('''CREATE TABLE IF NOT EXISTS continuation_publications (
                 task_id TEXT PRIMARY KEY, metadata TEXT NOT NULL,
                 revision INTEGER NOT NULL, updated_at REAL NOT NULL)''')
-        except BaseException:
-            self.leases.close()
+        except BaseException as error:
+            try:
+                self.leases.close()
+            except BaseException:
+                error.add_note('Continuation connection cleanup also failed')
             raise
 
     def close(self):

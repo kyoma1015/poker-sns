@@ -98,11 +98,19 @@ def child_env(auth=False):
 def command(argv, cwd, timeout=60, env=None, include_stderr=False):
     if argv[0] == 'git':
         argv = ['git', '-c', 'core.hooksPath=/dev/null', '-c', 'core.fsmonitor=false', *argv[1:]]
-    result = subprocess.run(argv, cwd=cwd, env=env, timeout=timeout, text=True,
-                            capture_output=True, check=False)
-    if result.returncode:
-        raise RuntimeError(scrub(f'{argv[0]} exited {result.returncode}: {result.stderr}'))
-    return (result.stdout + (result.stderr if include_stderr else "")).strip()
+    with subprocess.Popen(argv, cwd=cwd, env=env, text=True, stdout=subprocess.PIPE,
+                          stderr=subprocess.PIPE, start_new_session=True) as process:
+        try:
+            stdout, stderr = process.communicate(timeout=timeout)
+        finally:
+            try:
+                os.killpg(process.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+            process.wait()
+        if process.returncode:
+            raise RuntimeError(scrub(f'{argv[0]} exited {process.returncode}: {stderr}'))
+        return (stdout + (stderr if include_stderr else "")).strip()
 
 
 def acceptance_count(output):
@@ -263,9 +271,13 @@ class CodexExecutor:
                 return {'executor': self.name, 'exit_code': process.returncode,
                         'event_types': sorted(set(str(event) for event in events)), 'output_bytes': len(raw)}
             finally:
-                if process.poll() is None:
+                # A terminated leader may leave live descendants in its session.
+                # Always clean up the owned process group, even after leader exit.
+                try:
                     os.killpg(process.pid, signal.SIGKILL)
-                    process.wait()
+                except ProcessLookupError:
+                    pass
+                process.wait()
 
 
 @contextmanager
