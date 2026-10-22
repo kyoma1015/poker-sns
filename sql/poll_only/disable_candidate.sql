@@ -13,5 +13,22 @@ begin
  execute format('revoke execute on function %s from public,anon,authenticated',r.sig);
  end loop;
 end $$;
+-- Also deny direct access to poll_private helpers if that schema is ever
+-- included in exposed schemas. Preserve the worker's owner/cron execution
+-- permissions and preserve all existing user data, RLS and triggers.
+do $private_disable$
+declare r record;
+begin
+ if to_regnamespace('poll_private') is not null then
+  revoke usage on schema poll_private from public,anon,authenticated;
+  for r in select p.oid::regprocedure sig
+    from pg_proc p join pg_namespace n on n.oid=p.pronamespace
+    where n.nspname='poll_private'
+  loop
+   execute format('revoke execute on function %s from public,anon,authenticated',r.sig);
+  end loop;
+ end if;
+end
+$private_disable$;
 notify pgrst, 'reload schema';
 commit;
