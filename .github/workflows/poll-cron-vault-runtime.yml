@@ -43,6 +43,11 @@ jobs:
           # Confirm the image's official config and key script are active, without reading key bytes.
           docker exec "$c" psql -X -At -U supabase_admin -d postgres -c "select current_setting('config_file'), current_setting('vault.getkey_script', true), current_setting('pgsodium.getkey_script', true)" | grep -F '/usr/lib/postgresql/bin/pgsodium_getkey.sh' >/dev/null
           docker exec "$c" test -s /etc/postgresql-custom/pgsodium_root.key
+          # Diagnostic metadata only: never execute key script or display its output.
+          docker exec "$c" psql -X -At -U supabase_admin -d postgres -v ON_ERROR_STOP=1 -c "select 'CONFIG='||current_setting('config_file'); select 'PRELOAD='||current_setting('shared_preload_libraries'); select 'SODIUM_SCRIPT_CONFIGURED='||(current_setting('pgsodium.getkey_script',true) is not null); select 'VAULT_SCRIPT_CONFIGURED='||(current_setting('vault.getkey_script',true) is not null); select 'SODIUM_PRELOADED='||(position('pgsodium' in current_setting('shared_preload_libraries'))>0);"
+          docker exec "$c" sh -ec 'for p in /usr/lib/postgresql/bin/pgsodium_getkey.sh /etc/postgresql-custom/pgsodium_root.key; do if test -e "$p"; then stat -c "KEY_PATH_METADATA=%n:%U:%G:%a:%s" "$p"; else echo "KEY_PATH_MISSING=$p"; fi; done'
+          # Only bounded log lines relating to configuration or pgsodium errors; no key material.
+          docker logs "$c" 2>&1 | grep -Ei 'pgsodium|vault|preload|configuration|secret key|FATAL|ERROR' | tail -30 | sed -E 's/([[:xdigit:]]{64})/[REDACTED_HEX]/g' || true
           docker exec -i "$c" psql -X -q -U supabase_admin -d postgres -v ON_ERROR_STOP=1 <<'SQL'
           create extension if not exists pg_cron;
           create extension if not exists supabase_vault;
