@@ -95,22 +95,57 @@ def child_env(auth=False):
     return result
 
 
+class WorkerLivenessUnknown(RuntimeError):
+    worker_liveness_unknown = True
+
+
+def cleanup_owned_process(process, primary=None):
+    """Bound wait calls; never publish completion when termination is unconfirmed."""
+    unknown = False
+    for sig, limit in ((signal.SIGTERM, .2), (signal.SIGKILL, .5)):
+        try:
+            os.killpg(process.pid, sig)
+        except ProcessLookupError:
+            pass
+        except OSError:
+            unknown = True
+        if process.poll() is None:
+            try:
+                process.wait(timeout=limit)
+            except subprocess.TimeoutExpired:
+                if sig == signal.SIGKILL:
+                    unknown = True
+            except OSError:
+                unknown = True
+    for stream in (process.stdin, process.stdout, process.stderr):
+        if stream is not None:
+            try:
+                stream.close()
+            except OSError:
+                unknown = True
+    if unknown:
+        if primary is not None:
+            primary.worker_liveness_unknown = True
+            primary.add_note('Owned process cleanup unconfirmed; automatic restart forbidden')
+        else:
+            raise WorkerLivenessUnknown('Owned process cleanup unconfirmed; automatic restart forbidden')
+
+
 def command(argv, cwd, timeout=60, env=None, include_stderr=False):
     if argv[0] == 'git':
         argv = ['git', '-c', 'core.hooksPath=/dev/null', '-c', 'core.fsmonitor=false', *argv[1:]]
-    with subprocess.Popen(argv, cwd=cwd, env=env, text=True, stdout=subprocess.PIPE,
-                          stderr=subprocess.PIPE, start_new_session=True) as process:
-        try:
-            stdout, stderr = process.communicate(timeout=timeout)
-        finally:
-            try:
-                os.killpg(process.pid, signal.SIGKILL)
-            except ProcessLookupError:
-                pass
-            process.wait()
-        if process.returncode:
-            raise RuntimeError(scrub(f'{argv[0]} exited {process.returncode}: {stderr}'))
-        return (stdout + (stderr if include_stderr else "")).strip()
+    process = subprocess.Popen(argv, cwd=cwd, env=env, text=True, stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE, start_new_session=True)
+    try:
+        stdout, stderr = process.communicate(timeout=timeout)
+    except BaseException as error:
+        cleanup_owned_process(process, error)
+        raise
+    else:
+        cleanup_owned_process(process)
+    if process.returncode:
+        raise RuntimeError(scrub(f'{argv[0]} exited {process.returncode}: {stderr}'))
+    return (stdout + (stderr if include_stderr else "")).strip()
 
 
 def acceptance_count(output):
@@ -219,7 +254,10 @@ def checked_changes(worktree, allowed):
 class CodexExecutor:
     name = 'codex_cli'
 
-    def __init__(self, executable, attestation):
+    def __init__(self, executable, attestation, stop_check=None):
+        if stop_check is not None and not callable(stop_check):
+            raise ValueError('stop check must be a trusted callable')
+        self.stop_check = stop_check
         self.executable = str(Path(executable).resolve())
         data = json.loads(Path(attestation).read_text())
         if data != {'auth_mode': 'existing_chatgpt_subscription', 'owner_confirmed': True,
@@ -241,43 +279,51 @@ class CodexExecutor:
         # Output is bounded and discarded after extracting non-sensitive event metadata.
         import tempfile
         with tempfile.TemporaryFile() as output:
+            timeout = finite_lease_number(timeout, 'executor timeout')
+            if not 0 < timeout <= 1800:
+                raise ValueError('executor timeout must be within 1800 seconds')
+            deadline = time.monotonic() + timeout
             process = subprocess.Popen(argv, cwd=worktree, env=child_env(auth=True), stdin=subprocess.PIPE,
                                        stdout=output, stderr=subprocess.STDOUT, start_new_session=True)
             try:
-                process.stdin.write(prompt.encode())
-                process.stdin.close()
-                deadline = time.monotonic() + timeout
-                while process.poll() is None:
+                pending = memoryview(prompt.encode())
+                os.set_blocking(process.stdin.fileno(), False)
+                while True:
+                    if self.stop_check is not None:
+                        self.stop_check()
                     if time.monotonic() >= deadline or output.tell() > 2 * 1024 * 1024:
-                        os.killpg(process.pid, signal.SIGTERM)
-                        try:
-                            process.wait(timeout=5)
-                        except subprocess.TimeoutExpired:
-                            os.killpg(process.pid, signal.SIGKILL)
-                            process.wait()
                         raise RuntimeError('Codex time/output limit reached')
-                    time.sleep(0.1)
-                output.seek(0)
-                raw = output.read(2 * 1024 * 1024).decode(errors='replace')
-                if process.returncode:
-                    raise RuntimeError('Codex failed: ' + scrub(raw[-1800:]))
-                events = []
-                for line in raw.splitlines():
-                    try:
-                        event = json.loads(line)
-                    except ValueError:
-                        continue
-                    events.append(event.get('type'))
-                return {'executor': self.name, 'exit_code': process.returncode,
-                        'event_types': sorted(set(str(event) for event in events)), 'output_bytes': len(raw)}
-            finally:
-                # A terminated leader may leave live descendants in its session.
-                # Always clean up the owned process group, even after leader exit.
+                    if process.poll() is not None:
+                        if pending:
+                            raise RuntimeError('Worker exited before complete input delivery')
+                        break
+                    if pending:
+                        try:
+                            pending = pending[os.write(process.stdin.fileno(), pending):]
+                        except BlockingIOError:
+                            pass
+                        if not pending:
+                            process.stdin.close()
+                    time.sleep(.02)
+            except BaseException as error:
+                cleanup_owned_process(process, error)
+                raise
+            else:
+                cleanup_owned_process(process)
+            output.seek(0)
+            raw = output.read(2 * 1024 * 1024).decode(errors='replace')
+            if process.returncode:
+                raise RuntimeError('Codex failed: ' + scrub(raw[-1800:]))
+            events = []
+            for line in raw.splitlines():
                 try:
-                    os.killpg(process.pid, signal.SIGKILL)
-                except ProcessLookupError:
-                    pass
-                process.wait()
+                    event = json.loads(line)
+                except ValueError:
+                    continue
+                events.append(event.get('type'))
+            return {'executor': self.name, 'exit_code': process.returncode,
+                    'event_types': sorted(set(str(event) for event in events)), 'output_bytes': len(raw)}
+
 
 
 @contextmanager
@@ -407,10 +453,15 @@ def run_task(repository, work_root, state, task, executor, timeout=180):
     except Exception as error:
         evidence.update(status='blocked', error=scrub(error))
         # Failed output/worktree retained for review, never reset/deleted automatically.
-        try:
-            leases.finish(task['id'], token, 'blocked', evidence)
-        except ValueError:
-            evidence['lease_status'] = 'expired; cannot finalize'
+        if getattr(error, 'worker_liveness_unknown', False):
+            evidence.update(worker_liveness='unknown', lease_status='running; termination unconfirmed')
+            leases.db.execute("UPDATE development_jobs SET evidence=? WHERE id=? AND token=? AND status='running'",
+                              (json.dumps(evidence), task['id'], token))
+        else:
+            try:
+                leases.finish(task['id'], token, 'blocked', evidence)
+            except ValueError:
+                evidence['lease_status'] = 'expired; cannot finalize'
     finally:
         leases.close()
     return evidence
@@ -480,10 +531,16 @@ def finish_host_session(state, task_id, token, receipt, now=None):
         leases.finish(task_id, token, 'implemented', evidence, now=now)
     except Exception as error:
         evidence.update(status='blocked', error=scrub(error))
-        try:
-            leases.finish(task_id, token, 'blocked', evidence, now=now)
-        except ValueError:
-            evidence['lease_status'] = 'expired; cannot finalize'
+        if getattr(error, 'worker_liveness_unknown', False):
+            evidence.update(worker_liveness='unknown', lease_status='running; termination unconfirmed')
+            context['worker_liveness_unknown'] = True
+            leases.db.execute("UPDATE development_jobs SET evidence=? WHERE id=? AND token=? AND status='running'",
+                              (json.dumps(context), task_id, token))
+        else:
+            try:
+                leases.finish(task_id, token, 'blocked', evidence, now=now)
+            except ValueError:
+                evidence['lease_status'] = 'expired; cannot finalize'
     finally:
         leases.close()
     return evidence
