@@ -1,0 +1,7 @@
+{
+  "input_commit": "a7a7b4d6dbe8aafc41ce56f28c8a6ef52d537900",
+  "path": "tests/automation/test_command_process_cleanup.py",
+  "sha256": "24bf84b2a4e6512fffbca899c71d4dc8cb20cca2702994fb75f5226be28e77b0",
+  "baseline": "1test/1FAIL",
+  "after": "1PASS"
+}

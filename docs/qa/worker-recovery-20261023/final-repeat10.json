@@ -1,0 +1,122 @@
+[
+  {
+    "round": 1,
+    "suite": "test_worker_recovery_lifecycle.py",
+    "exit_code": 0,
+    "output": "test_ci_failure_metadata_retains_committed_source_until_new_observation (__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation) ... ok\ntest_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed (__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed) ... ok\ntest_executor_timeout_terminates_term_ignoring_descendant (__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant) ... ok\ntest_permission_and_second_transient_require_review_not_budget_reset (__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset) ... ok\ntest_pr111_cleanup_failure_preserves_original_ddl_exception (__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception) ... ok\ntest_pr111_probe_connection_failure_propagates_without_new_state (__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state) ... ok\ntest_stop_before_entry_dispatches_no_worker_or_lease (__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease) ... ok\ntest_stop_preserve_reopen_resume_commit_then_next_reviewed_task (__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 1.703s\n\nOK\n"
+  },
+  {
+    "round": 1,
+    "suite": "test_command_process_cleanup.py",
+    "exit_code": 0,
+    "output": "test_timed_out_command_does_not_leave_its_child_executing (__main__.CommandProcessCleanup.test_timed_out_command_does_not_leave_its_child_executing) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.503s\n\nOK\n"
+  },
+  {
+    "round": 2,
+    "suite": "test_worker_recovery_lifecycle.py",
+    "exit_code": 0,
+    "output": "test_ci_failure_metadata_retains_committed_source_until_new_observation (__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation) ... ok\ntest_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed (__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed) ... ok\ntest_executor_timeout_terminates_term_ignoring_descendant (__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant) ... ok\ntest_permission_and_second_transient_require_review_not_budget_reset (__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset) ... ok\ntest_pr111_cleanup_failure_preserves_original_ddl_exception (__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception) ... ok\ntest_pr111_probe_connection_failure_propagates_without_new_state (__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state) ... ok\ntest_stop_before_entry_dispatches_no_worker_or_lease (__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease) ... ok\ntest_stop_preserve_reopen_resume_commit_then_next_reviewed_task (__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 1.602s\n\nOK\n"
+  },
+  {
+    "round": 2,
+    "suite": "test_command_process_cleanup.py",
+    "exit_code": 0,
+    "output": "test_timed_out_command_does_not_leave_its_child_executing (__main__.CommandProcessCleanup.test_timed_out_command_does_not_leave_its_child_executing) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.502s\n\nOK\n"
+  },
+  {
+    "round": 3,
+    "suite": "test_worker_recovery_lifecycle.py",
+    "exit_code": 0,
+    "output": "test_ci_failure_metadata_retains_committed_source_until_new_observation (__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation) ... ok\ntest_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed (__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed) ... ok\ntest_executor_timeout_terminates_term_ignoring_descendant (__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant) ... ok\ntest_permission_and_second_transient_require_review_not_budget_reset (__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset) ... ok\ntest_pr111_cleanup_failure_preserves_original_ddl_exception (__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception) ... ok\ntest_pr111_probe_connection_failure_propagates_without_new_state (__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state) ... ok\ntest_stop_before_entry_dispatches_no_worker_or_lease (__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease) ... ok\ntest_stop_preserve_reopen_resume_commit_then_next_reviewed_task (__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 1.729s\n\nOK\n"
+  },
+  {
+    "round": 3,
+    "suite": "test_command_process_cleanup.py",
+    "exit_code": 0,
+    "output": "test_timed_out_command_does_not_leave_its_child_executing (__main__.CommandProcessCleanup.test_timed_out_command_does_not_leave_its_child_executing) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.505s\n\nOK\n"
+  },
+  {
+    "round": 4,
+    "suite": "test_worker_recovery_lifecycle.py",
+    "exit_code": 0,
+    "output": "test_ci_failure_metadata_retains_committed_source_until_new_observation (__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation) ... ok\ntest_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed (__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed) ... ok\ntest_executor_timeout_terminates_term_ignoring_descendant (__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant) ... ok\ntest_permission_and_second_transient_require_review_not_budget_reset (__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset) ... ok\ntest_pr111_cleanup_failure_preserves_original_ddl_exception (__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception) ... ok\ntest_pr111_probe_connection_failure_propagates_without_new_state (__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state) ... ok\ntest_stop_before_entry_dispatches_no_worker_or_lease (__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease) ... ok\ntest_stop_preserve_reopen_resume_commit_then_next_reviewed_task (__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 1.629s\n\nOK\n"
+  },
+  {
+    "round": 4,
+    "suite": "test_command_process_cleanup.py",
+    "exit_code": 0,
+    "output": "test_timed_out_command_does_not_leave_its_child_executing (__main__.CommandProcessCleanup.test_timed_out_command_does_not_leave_its_child_executing) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.502s\n\nOK\n"
+  },
+  {
+    "round": 5,
+    "suite": "test_worker_recovery_lifecycle.py",
+    "exit_code": 0,
+    "output": "test_ci_failure_metadata_retains_committed_source_until_new_observation (__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation) ... ok\ntest_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed (__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed) ... ok\ntest_executor_timeout_terminates_term_ignoring_descendant (__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant) ... ok\ntest_permission_and_second_transient_require_review_not_budget_reset (__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset) ... ok\ntest_pr111_cleanup_failure_preserves_original_ddl_exception (__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception) ... ok\ntest_pr111_probe_connection_failure_propagates_without_new_state (__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state) ... ok\ntest_stop_before_entry_dispatches_no_worker_or_lease (__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease) ... ok\ntest_stop_preserve_reopen_resume_commit_then_next_reviewed_task (__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 1.600s\n\nOK\n"
+  },
+  {
+    "round": 5,
+    "suite": "test_command_process_cleanup.py",
+    "exit_code": 0,
+    "output": "test_timed_out_command_does_not_leave_its_child_executing (__main__.CommandProcessCleanup.test_timed_out_command_does_not_leave_its_child_executing) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.503s\n\nOK\n"
+  },
+  {
+    "round": 6,
+    "suite": "test_worker_recovery_lifecycle.py",
+    "exit_code": 0,
+    "output": "test_ci_failure_metadata_retains_committed_source_until_new_observation (__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation) ... ok\ntest_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed (__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed) ... ok\ntest_executor_timeout_terminates_term_ignoring_descendant (__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant) ... ok\ntest_permission_and_second_transient_require_review_not_budget_reset (__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset) ... ok\ntest_pr111_cleanup_failure_preserves_original_ddl_exception (__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception) ... ok\ntest_pr111_probe_connection_failure_propagates_without_new_state (__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state) ... ok\ntest_stop_before_entry_dispatches_no_worker_or_lease (__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease) ... ok\ntest_stop_preserve_reopen_resume_commit_then_next_reviewed_task (__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 1.630s\n\nOK\n"
+  },
+  {
+    "round": 6,
+    "suite": "test_command_process_cleanup.py",
+    "exit_code": 0,
+    "output": "test_timed_out_command_does_not_leave_its_child_executing (__main__.CommandProcessCleanup.test_timed_out_command_does_not_leave_its_child_executing) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.513s\n\nOK\n"
+  },
+  {
+    "round": 7,
+    "suite": "test_worker_recovery_lifecycle.py",
+    "exit_code": 0,
+    "output": "test_ci_failure_metadata_retains_committed_source_until_new_observation (__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation) ... ok\ntest_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed (__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed) ... ok\ntest_executor_timeout_terminates_term_ignoring_descendant (__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant) ... ok\ntest_permission_and_second_transient_require_review_not_budget_reset (__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset) ... ok\ntest_pr111_cleanup_failure_preserves_original_ddl_exception (__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception) ... ok\ntest_pr111_probe_connection_failure_propagates_without_new_state (__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state) ... ok\ntest_stop_before_entry_dispatches_no_worker_or_lease (__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease) ... ok\ntest_stop_preserve_reopen_resume_commit_then_next_reviewed_task (__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 1.656s\n\nOK\n"
+  },
+  {
+    "round": 7,
+    "suite": "test_command_process_cleanup.py",
+    "exit_code": 0,
+    "output": "test_timed_out_command_does_not_leave_its_child_executing (__main__.CommandProcessCleanup.test_timed_out_command_does_not_leave_its_child_executing) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.503s\n\nOK\n"
+  },
+  {
+    "round": 8,
+    "suite": "test_worker_recovery_lifecycle.py",
+    "exit_code": 0,
+    "output": "test_ci_failure_metadata_retains_committed_source_until_new_observation (__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation) ... ok\ntest_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed (__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed) ... ok\ntest_executor_timeout_terminates_term_ignoring_descendant (__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant) ... ok\ntest_permission_and_second_transient_require_review_not_budget_reset (__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset) ... ok\ntest_pr111_cleanup_failure_preserves_original_ddl_exception (__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception) ... ok\ntest_pr111_probe_connection_failure_propagates_without_new_state (__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state) ... ok\ntest_stop_before_entry_dispatches_no_worker_or_lease (__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease) ... ok\ntest_stop_preserve_reopen_resume_commit_then_next_reviewed_task (__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 1.652s\n\nOK\n"
+  },
+  {
+    "round": 8,
+    "suite": "test_command_process_cleanup.py",
+    "exit_code": 0,
+    "output": "test_timed_out_command_does_not_leave_its_child_executing (__main__.CommandProcessCleanup.test_timed_out_command_does_not_leave_its_child_executing) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.503s\n\nOK\n"
+  },
+  {
+    "round": 9,
+    "suite": "test_worker_recovery_lifecycle.py",
+    "exit_code": 0,
+    "output": "test_ci_failure_metadata_retains_committed_source_until_new_observation (__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation) ... ok\ntest_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed (__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed) ... ok\ntest_executor_timeout_terminates_term_ignoring_descendant (__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant) ... ok\ntest_permission_and_second_transient_require_review_not_budget_reset (__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset) ... ok\ntest_pr111_cleanup_failure_preserves_original_ddl_exception (__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception) ... ok\ntest_pr111_probe_connection_failure_propagates_without_new_state (__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state) ... ok\ntest_stop_before_entry_dispatches_no_worker_or_lease (__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease) ... ok\ntest_stop_preserve_reopen_resume_commit_then_next_reviewed_task (__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 1.550s\n\nOK\n"
+  },
+  {
+    "round": 9,
+    "suite": "test_command_process_cleanup.py",
+    "exit_code": 0,
+    "output": "test_timed_out_command_does_not_leave_its_child_executing (__main__.CommandProcessCleanup.test_timed_out_command_does_not_leave_its_child_executing) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.503s\n\nOK\n"
+  },
+  {
+    "round": 10,
+    "suite": "test_worker_recovery_lifecycle.py",
+    "exit_code": 0,
+    "output": "test_ci_failure_metadata_retains_committed_source_until_new_observation (__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation) ... ok\ntest_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed (__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed) ... ok\ntest_executor_timeout_terminates_term_ignoring_descendant (__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant) ... ok\ntest_permission_and_second_transient_require_review_not_budget_reset (__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset) ... ok\ntest_pr111_cleanup_failure_preserves_original_ddl_exception (__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception) ... ok\ntest_pr111_probe_connection_failure_propagates_without_new_state (__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state) ... ok\ntest_stop_before_entry_dispatches_no_worker_or_lease (__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease) ... ok\ntest_stop_preserve_reopen_resume_commit_then_next_reviewed_task (__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 1.535s\n\nOK\n"
+  },
+  {
+    "round": 10,
+    "suite": "test_command_process_cleanup.py",
+    "exit_code": 0,
+    "output": "test_timed_out_command_does_not_leave_its_child_executing (__main__.CommandProcessCleanup.test_timed_out_command_does_not_leave_its_child_executing) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.503s\n\nOK\n"
+  }
+]

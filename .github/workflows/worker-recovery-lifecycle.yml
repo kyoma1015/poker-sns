@@ -6,6 +6,7 @@ on:
       - 'scripts/code_worker.py'
       - 'scripts/continuation_recovery.py'
       - 'tests/automation/test_worker_recovery_lifecycle.py'
+      - 'tests/automation/test_command_process_cleanup.py'
       - '.github/workflows/worker-recovery-lifecycle.yml'
 permissions:
   contents: read
@@ -34,6 +35,7 @@ jobs:
         run: |
           for round in $(seq 1 10); do
             ISSUE22_OWNED_QA_METRICS="$RUNNER_TEMP/owned-lifecycle.jsonl" python -B tests/automation/test_worker_recovery_lifecycle.py -v || exit 1
+            python -B tests/automation/test_command_process_cleanup.py -v || exit 1
           done
       - name: Preserve fixture-only PID timing evidence
         if: always()

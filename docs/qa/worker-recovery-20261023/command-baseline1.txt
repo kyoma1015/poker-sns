@@ -1,0 +1,14 @@
+test_timed_out_command_does_not_leave_its_child_executing (__main__.CommandProcessCleanup.test_timed_out_command_does_not_leave_its_child_executing) ... FAIL
+
+======================================================================
+FAIL: test_timed_out_command_does_not_leave_its_child_executing (__main__.CommandProcessCleanup.test_timed_out_command_does_not_leave_its_child_executing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-worker-recovery-qa/tests/automation/test_command_process_cleanup.py", line 33, in test_timed_out_command_does_not_leave_its_child_executing
+    self.assertTrue(wait_dead(ids['child']), 'command timeout left its descendant running')
+AssertionError: False is not true : command timeout left its descendant running
+
+----------------------------------------------------------------------
+Ran 1 test in 2.509s
+
+FAILED (failures=1)

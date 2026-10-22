@@ -1,0 +1,80 @@
+{"case": "__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed", "events": [{"controller_pid": 107274, "worker_pid": 107280, "controller_exit": -9, "worker_stopped_after_confirmation": true, "worker_stop_seconds": 0.0005970130150672048, "run_count": 2}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant", "events": [{"event": "executor_timeout", "leader_pid": 107311, "child_pid": 107312, "child_stopped": true, "seconds": 0.8155472310027108, "child_reaped_by_this_controller": false}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task", "events": [{"event": "stop_to_exit", "pid": 107395, "exit_code": -15, "seconds": 0.0005321950011420995}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed", "events": [{"controller_pid": 107478, "worker_pid": 107483, "controller_exit": -9, "worker_stopped_after_confirmation": true, "worker_stop_seconds": 0.01039494900032878, "run_count": 2}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant", "events": [{"event": "executor_timeout", "leader_pid": 107514, "child_pid": 107515, "child_stopped": true, "seconds": 0.8039239530044142, "child_reaped_by_this_controller": false}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task", "events": [{"event": "stop_to_exit", "pid": 107582, "exit_code": -15, "seconds": 0.0008733619761187583}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed", "events": [{"controller_pid": 107665, "worker_pid": 107670, "controller_exit": -9, "worker_stopped_after_confirmation": true, "worker_stop_seconds": 0.010506609018193558, "run_count": 2}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant", "events": [{"event": "executor_timeout", "leader_pid": 107701, "child_pid": 107702, "child_stopped": true, "seconds": 0.8143351020116825, "child_reaped_by_this_controller": false}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task", "events": [{"event": "stop_to_exit", "pid": 107769, "exit_code": -15, "seconds": 0.000596282014157623}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed", "events": [{"controller_pid": 107852, "worker_pid": 107857, "controller_exit": -9, "worker_stopped_after_confirmation": true, "worker_stop_seconds": 0.010279426991473883, "run_count": 2}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant", "events": [{"event": "executor_timeout", "leader_pid": 107888, "child_pid": 107889, "child_stopped": true, "seconds": 0.8038672960246913, "child_reaped_by_this_controller": false}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task", "events": [{"event": "stop_to_exit", "pid": 107957, "exit_code": -15, "seconds": 0.000551624980289489}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed", "events": [{"controller_pid": 108042, "worker_pid": 108047, "controller_exit": -9, "worker_stopped_after_confirmation": true, "worker_stop_seconds": 0.010606561991153285, "run_count": 2}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant", "events": [{"event": "executor_timeout", "leader_pid": 108078, "child_pid": 108079, "child_stopped": true, "seconds": 0.813919904991053, "child_reaped_by_this_controller": false}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task", "events": [{"event": "stop_to_exit", "pid": 108146, "exit_code": -15, "seconds": 0.0005633320251945406}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed", "events": [{"controller_pid": 108229, "worker_pid": 108234, "controller_exit": -9, "worker_stopped_after_confirmation": true, "worker_stop_seconds": 0.010805824014823884, "run_count": 2}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant", "events": [{"event": "executor_timeout", "leader_pid": 108265, "child_pid": 108266, "child_stopped": true, "seconds": 0.8161145639896858, "child_reaped_by_this_controller": false}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task", "events": [{"event": "stop_to_exit", "pid": 108333, "exit_code": -15, "seconds": 0.000512319995323196}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed", "events": [{"controller_pid": 108426, "worker_pid": 108431, "controller_exit": -9, "worker_stopped_after_confirmation": true, "worker_stop_seconds": 0.010421562008559704, "run_count": 2}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant", "events": [{"event": "executor_timeout", "leader_pid": 108462, "child_pid": 108463, "child_stopped": true, "seconds": 0.8037596299836878, "child_reaped_by_this_controller": false}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task", "events": [{"event": "stop_to_exit", "pid": 108530, "exit_code": -15, "seconds": 0.0007174210040830076}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed", "events": [{"controller_pid": 108613, "worker_pid": 108618, "controller_exit": -9, "worker_stopped_after_confirmation": true, "worker_stop_seconds": 0.010338619002141058, "run_count": 2}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant", "events": [{"event": "executor_timeout", "leader_pid": 108649, "child_pid": 108650, "child_stopped": true, "seconds": 0.8143452829972375, "child_reaped_by_this_controller": false}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task", "events": [{"event": "stop_to_exit", "pid": 108717, "exit_code": -15, "seconds": 0.0006655069882981479}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed", "events": [{"controller_pid": 108800, "worker_pid": 108805, "controller_exit": -9, "worker_stopped_after_confirmation": true, "worker_stop_seconds": 0.000903347012354061, "run_count": 2}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant", "events": [{"event": "executor_timeout", "leader_pid": 108836, "child_pid": 108837, "child_stopped": true, "seconds": 0.8138593009789474, "child_reaped_by_this_controller": false}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task", "events": [{"event": "stop_to_exit", "pid": 108904, "exit_code": -15, "seconds": 0.0005688499950338155}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_ci_failure_metadata_retains_committed_source_until_new_observation", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_controller_sigkill_keeps_partial_work_until_worker_liveness_confirmed", "events": [{"controller_pid": 108987, "worker_pid": 108992, "controller_exit": -9, "worker_stopped_after_confirmation": true, "worker_stop_seconds": 0.010286175005603582, "run_count": 2}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_executor_timeout_terminates_term_ignoring_descendant", "events": [{"event": "executor_timeout", "leader_pid": 109023, "child_pid": 109024, "child_stopped": true, "seconds": 0.8037494629970752, "child_reaped_by_this_controller": false}]}
+{"case": "__main__.WorkerRecoveryLifecycle.test_permission_and_second_transient_require_review_not_budget_reset", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_pr111_cleanup_failure_preserves_original_ddl_exception", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_pr111_probe_connection_failure_propagates_without_new_state", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_stop_before_entry_dispatches_no_worker_or_lease", "events": []}
+{"case": "__main__.WorkerRecoveryLifecycle.test_stop_preserve_reopen_resume_commit_then_next_reviewed_task", "events": [{"event": "stop_to_exit", "pid": 109091, "exit_code": -15, "seconds": 0.000540006993105635}]}

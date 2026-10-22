@@ -1,0 +1,16 @@
+{
+  "reviewer": "/root/audit_wal_reuse_impl",
+  "formal_github_approval": false,
+  "initial_head": "2ad5d57bae15baeeabf577059ee4c445c9920e90",
+  "initial_lifecycle_tests": "8PASS; no changes",
+  "command_diff_review": "2ad5d57..3aba398 read-only; no extra execution",
+  "verdict": "CONDITIONAL PASS",
+  "limits": [
+    "killpg PermissionError may mask original executor/command failure; successful publication is not claimed",
+    "command Popen context/wait can remain blocked if cleanup cannot terminate leader; no strict all-OS-state deadline guarantee",
+    "read-only probe.close and Leases.close do not universally preserve earlier errors",
+    "CodexExecutor deadline starts after stdin writes, so blocked input is not covered",
+    "escaped sessions, PID/PGID reuse and orphan reaping are unproved",
+    "manual liveness confirmation and synthetic receipts are not autonomous formal-agent recovery"
+  ]
+}
