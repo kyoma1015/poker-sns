@@ -67,7 +67,7 @@ jobs:
           test "$ticks" -gt 0
           docker exec -i "$c" psql -X -q -U supabase_admin -d postgres -v ON_ERROR_STOP=1 <<'SQL'
           create role poll_synthetic_unprivileged nologin;
-          do $
+          do $vault_test$
           declare secret_id uuid; fixture text; ciphertext text; plaintext text;
           begin
             fixture := md5(random()::text || clock_timestamp()::text);
@@ -81,7 +81,7 @@ jobs:
             end if;
             delete from vault.secrets where id=secret_id;
             if exists(select 1 from vault.secrets where id=secret_id) then raise exception 'Vault cleanup failed'; end if;
-          end $$;
+          end $vault_test$;
           drop role poll_synthetic_unprivileged;
           select cron.unschedule('poll-synthetic-only');
           do $$
