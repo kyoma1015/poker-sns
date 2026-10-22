@@ -1,0 +1,66 @@
+{
+  "task": {
+    "id": "issue22-a-preview-unicode-v1",
+    "lane": "A",
+    "base_sha": "a3708f542c6b9f349712c02a8924aa44a9a7a44e",
+    "base_branch": "codex/a-preview-unicode-input-20261022",
+    "branch": "codex/a-preview-unicode-fix-20261022",
+    "test_profile": "python",
+    "allowed_paths": [
+      "scripts/discover_review_queue.py"
+    ],
+    "protected_tests": [
+      "tests/worker_acceptance/test_continuation_recovery.py",
+      "tests/worker_acceptance/test_discovery_preview.py",
+      "tests/worker_acceptance/test_discovery_store.py",
+      "tests/worker_acceptance/test_finite_lease.py",
+      "tests/worker_acceptance/test_finite_setup.py",
+      "tests/worker_acceptance/test_invocation_clock.py",
+      "tests/worker_acceptance/test_lease_initialization.py",
+      "tests/worker_acceptance/test_pr_overlap.py",
+      "tests/worker_acceptance/test_preview_unicode.py"
+    ],
+    "instruction": "Fix read-only discovery CLI Unicode serialization/UTF8 output boundary so valid JSON containing lone high/low surrogates in title/reference never leaks UnicodeEncodeError traceback or partial output. Preserve complete deterministic parseable JSON or existing sanitized exit2 rejection contract. Keep normal Japanese/normal CLI behavior and nonexecutable/readonly limits. Only scripts/discover_review_queue.py. Fixed72 baseline4FAIL. No queue/state/controller schema changes, tests or commits. Host runs72+worker22+queue15."
+  },
+  "purpose": "Prevent malformed Unicode output from leaking CLI exceptions or partial JSON.",
+  "reviewed": true,
+  "risk": "low",
+  "dependencies": [
+    "issue22-a-discovery-preview-v1"
+  ],
+  "execution_conditions": [
+    "Explicit authorized independent safe development",
+    "Original4 durable state continuity and fresh complete allPR snapshot",
+    "Formal prepare/source collaboration/trusted finish; protected tests untouched"
+  ],
+  "completion_conditions": [
+    "Fixed acceptance and existing regressions pass",
+    "Only exact allowed source path changes",
+    "Host hash/test/tamper/commit then DraftPR and CI"
+  ],
+  "references": [
+    "https://github.com/kyoma1015/poker-sns/issues/22"
+  ],
+  "baseline": {
+    "base_sha": "a3708f542c6b9f349712c02a8924aa44a9a7a44e",
+    "test_profile": "python",
+    "test_count": 72,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/worker_acceptance/test_continuation_recovery.py": "1d6d8d526006494d869921892dc3ff7d75f1f3cf18f8e0eeeb96a65aa47d8480",
+      "tests/worker_acceptance/test_discovery_preview.py": "61de61d1c67ea9db1443a501a703fe0d845cb65d75d6590cdf861a13996c0617",
+      "tests/worker_acceptance/test_discovery_store.py": "f47a506749c98265db23a37fd629c3fd597e29066882444686effcf247fc3fa8",
+      "tests/worker_acceptance/test_finite_lease.py": "d497616524d2bdee11afcb9fd39519bc0e270bdea29a2f6dd4d17cb60fa2456f",
+      "tests/worker_acceptance/test_finite_setup.py": "d6b0a334d65dd70bc000d296144e471d7f4cef301191fd84be9e7b07aee4a7e7",
+      "tests/worker_acceptance/test_invocation_clock.py": "a131098e56526a47e53d16b518f766fd37710cbf17939e0579178c1f26097eb1",
+      "tests/worker_acceptance/test_lease_initialization.py": "f9957c370e68934dc4bf6caa4080c1672e08901a06c6f8d6de76c9a87aa793c0",
+      "tests/worker_acceptance/test_pr_overlap.py": "7a7d4988fbdca1bb720f59701973fee1975fe173b2d9006356a256c648129a0d",
+      "tests/worker_acceptance/test_preview_unicode.py": "3123edf41b0ced264a3dea9eb670f425aa9cb8c554b9a81df3dbac446f63eb26"
+    }
+  },
+  "inherited_prs": {
+    "104": "960bd6a95e050206b43f356f0d90fb1ba2cfea80"
+  },
+  "overlap_reviews": {}
+}

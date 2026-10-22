@@ -1,0 +1,33 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-a-preview-unicode-v1",
+        "lane": "A",
+        "base_sha": "a3708f542c6b9f349712c02a8924aa44a9a7a44e",
+        "base_branch": "codex/a-preview-unicode-input-20261022",
+        "branch": "codex/a-preview-unicode-fix-20261022",
+        "test_profile": "python",
+        "allowed_paths": [
+          "scripts/discover_review_queue.py"
+        ],
+        "protected_tests": [
+          "tests/worker_acceptance/test_continuation_recovery.py",
+          "tests/worker_acceptance/test_discovery_preview.py",
+          "tests/worker_acceptance/test_discovery_store.py",
+          "tests/worker_acceptance/test_finite_lease.py",
+          "tests/worker_acceptance/test_finite_setup.py",
+          "tests/worker_acceptance/test_invocation_clock.py",
+          "tests/worker_acceptance/test_lease_initialization.py",
+          "tests/worker_acceptance/test_pr_overlap.py",
+          "tests/worker_acceptance/test_preview_unicode.py"
+        ],
+        "instruction": "Fix read-only discovery CLI Unicode serialization/UTF8 output boundary so valid JSON containing lone high/low surrogates in title/reference never leaks UnicodeEncodeError traceback or partial output. Preserve complete deterministic parseable JSON or existing sanitized exit2 rejection contract. Keep normal Japanese/normal CLI behavior and nonexecutable/readonly limits. Only scripts/discover_review_queue.py. Fixed72 baseline4FAIL. No queue/state/controller schema changes, tests or commits. Host runs72+worker22+queue15."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

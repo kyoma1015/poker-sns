@@ -24,3 +24,5 @@ A80 finite lease inputs and A85 finite setup waits: fixed35/39 +worker22/queue15
 2026-10-22 Draft102 finite invocation clocks58+22+15PASS/CI39784286230; Draft104 bounded read-only discovery CLI67+22+15PASS/CI39785322289. Live controller/state schema unchanged. Exact source/restart: ISSUE22_SELECTED_REUSE_20261022.md.
 
 2026-10-22 Restart preparation: Draft106 publication CAS/redaction76+22+15 localPASS; Draft107 opt-in invocation exclusion/stop/processdeath recovery85+22+15 localPASS. Component CI pending separately; source38implemented/2blocked, no live controller/schema/guard/scheduler adoption. Exact checkpoint/limits: ISSUE22_RESTART_PREPARATION_20261022.md. Hourly readonlyCOUNT2 proposal disabled;30min unsupported.
+
+2026-10-22 Draft109 offline preview Unicode safety: fixed72 baseline4FAIL→72PASS;worker22/queue15PASS. Source15e4f78dfcbf7078c0c6da19e9c10145b425a20c onlyscripts/discover_review_queue.py. No livecontroller/schema/scheduler adoption. See ISSUE22_SOURCE_RESUME_20261022.md.

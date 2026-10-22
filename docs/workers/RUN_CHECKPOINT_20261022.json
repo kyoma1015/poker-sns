@@ -2,15 +2,15 @@
   "version": 1,
   "invocation_id": "issue22-source-resume-manual-20261022T1620Z",
   "owner": "/root",
-  "updated_at": "2026-10-22T16:26:02.137058+00:00",
+  "updated_at": "2026-10-22T16:32:11.531907+00:00",
   "main": "781f038415503ece850c25a26e72ef67dee9c8a1",
   "original4_continuity": true,
   "counts": {
     "blocked": 2,
-    "implemented": 39
+    "implemented": 40
   },
-  "last_success": "Draft108 source and fixed58/GTO40 plus CI39813869671 SUCCESS",
-  "next_action": "Observe existing second read-only probe at2026-10-22T17:02:46Z; reconcile PR108 CI; review next grounded candidate; no new schedule/controller adoption",
+  "last_success": "Two formal host source fixes: C108 CI39813869671SUCCESS; A109 fixed72/worker22/queue15PASS, CI pending",
+  "next_action": "Observe existing second read-only probe17:02:46UTC; verifyA109 CI; do not replay completedC108/A109; B350 snapshot/RPC and D36 expert evidence absent; newsource needs new fixedFAIL and fresh gates",
   "retry_count": 0,
   "scheduler_enabled_by_this_invocation": false,
   "controller_switched": false,
@@ -637,9 +637,24 @@
       "pr": 108,
       "ci_run_id": 39813869671,
       "ci_status": "success"
+    },
+    {
+      "id": "issue22-a-preview-unicode-v1",
+      "lane": "A",
+      "status": "implemented",
+      "attempts": 1,
+      "retry_count": 0,
+      "source_commit": "15e4f78dfcbf7078c0c6da19e9c10145b425a20c",
+      "owner": "/root/preview_unicode_impl",
+      "last_success": "formal_host_tests_hash_commit_and_DraftPR",
+      "next_action": "verify_CI_and_review;do_not_reimplement",
+      "branch": "codex/a-preview-unicode-fix-20261022",
+      "pr": 109,
+      "ci_run_id": null,
+      "ci_status": "pending"
     }
   ],
   "provider_run_id": null,
   "invocation_id_origin": "locally assigned manual user-authorized host invocation;not scheduled or provider runID",
-  "pending_ci_count": 0
+  "pending_ci_count": 1
 }
