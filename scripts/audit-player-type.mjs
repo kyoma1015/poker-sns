@@ -32,6 +32,18 @@ export function auditPlayerType(fixture, assets) {
     const actual = questions.reduce((sum, question) => sum + Math.max(0, ...question.options.map(option => Number(scores.get(option.id)?.[key]))), 0)
     if (actual !== expected) errors.push({ code: 'CEILING_MISMATCH', key, expected, actual })
   }
+  for (const [personaIndex, persona] of fixture.personas.entries()) {
+    const answers = persona?.answers
+    if (!Array.isArray(answers) || answers.length !== questions.length) {
+      errors.push({ code: 'INVALID_PERSONA_ANSWER_COUNT', persona: personaIndex, expected: questions.length, actual: Array.isArray(answers) ? answers.length : null })
+      continue
+    }
+    for (const [questionIndex, question] of questions.entries()) {
+      if (!question.options.some(option => answers[questionIndex] === String.fromCharCode(64 + option.order))) {
+        errors.push({ code: 'INVALID_PERSONA_CHOICE', persona: personaIndex, question: question.order })
+      }
+    }
+  }
   const configured = Object.keys(animalEmoji)
   for (const key of new Set([...assets, ...configured])) {
     if (!assets.includes(key) || !configured.includes(key)) errors.push({ code: 'ANIMAL_ASSET_MISMATCH', key })
