@@ -15,3 +15,16 @@ Remaining: isolated DB event-provenance/idempotency/legacy-client tests BLOCKED 
 
 ## Integrated verification update (2026-10-20)
 Integrated in B → D → A → SNS order. Local network permission resolved the previous registry blocker. npm ci, full unit regression, build and lint now run successfully on the integrated source; see INTEGRATION_VERIFICATION_20261020.md and docs/qa/integration-20261020/. Earlier blocked statements above describe the previous lane task. No production DB verification or release approval is implied.
+
+## New source continuation — 2026-10-22
+A80 finite lease inputs and A85 finite setup waits: fixed35/39 +worker22/queue15 PASS, dedicated CI SUCCESS. See [ledger](../workers/ISSUE22_AUTONOMOUS_SOURCE_20261022.md). Existing source/original4state/BLOCKED history retained; no production/main/paid action.
+
+2026-10-22 Draft96 adds bounded durable discovery metadata to the existing controller:49fixed+22worker+15queuePASS/CI39767309432. No task promotion or live state/controller adoption. Source a3186ef6a5da4c3489aa2e7947fdea2b00395c31; see ISSUE22_DISCOVERY_CONTINUATION_20261022.md for limits.
+
+2026-10-22 Draft102 finite invocation clocks58+22+15PASS/CI39784286230; Draft104 bounded read-only discovery CLI67+22+15PASS/CI39785322289. Live controller/state schema unchanged. Exact source/restart: ISSUE22_SELECTED_REUSE_20261022.md.
+
+2026-10-22 Restart preparation: Draft106 publication CAS/redaction76+22+15 localPASS; Draft107 opt-in invocation exclusion/stop/processdeath recovery85+22+15 localPASS. Component CI pending separately; source38implemented/2blocked, no live controller/schema/guard/scheduler adoption. Exact checkpoint/limits: ISSUE22_RESTART_PREPARATION_20261022.md. Hourly readonlyCOUNT2 proposal disabled;30min unsupported.
+
+2026-10-22 Draft109 offline preview Unicode safety: fixed72 baseline4FAIL→72PASS;worker22/queue15PASS. Source15e4f78dfcbf7078c0c6da19e9c10145b425a20c onlyscripts/discover_review_queue.py. No livecontroller/schema/scheduler adoption. See ISSUE22_SOURCE_RESUME_20261022.md.
+
+2026-10-23 AuditCI WAL race fixed in auditDraft by exactPR69source reuse (199d15d7f0302ffaeb27185ae50ceb1ad634ea1e); before27/2FAIL, after27PASS/worker22/queue15PASS,10repeatedinit/worker suites and80freshDBprocessinitializersPASS. Livecontroller remains unadopted; no claim that attempt2success repaired source. See ISSUE22_WAL_ROOTCAUSE_20261023.md and isolated evidence.

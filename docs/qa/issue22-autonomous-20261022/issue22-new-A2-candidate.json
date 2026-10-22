@@ -1,0 +1,76 @@
+{
+  "task": {
+    "id": "issue22-a-finite-setup-v1",
+    "lane": "A",
+    "base_sha": "1f8ee7054a918497c566e28022791d4a929e0f22",
+    "base_branch": "codex/a-finite-setup-input-20261022",
+    "branch": "codex/a-finite-setup-fix-20261022",
+    "test_profile": "python",
+    "allowed_paths": [
+      "scripts/code_worker.py"
+    ],
+    "protected_tests": [
+      "tests/worker_acceptance/test_continuation_recovery.py",
+      "tests/worker_acceptance/test_finite_lease.py",
+      "tests/worker_acceptance/test_finite_setup.py",
+      "tests/worker_acceptance/test_lease_initialization.py",
+      "tests/worker_acceptance/test_pr_overlap.py"
+    ],
+    "instruction": "Reject NaN and positive/negativeInfinity setup_lock timeout before path/lock side effects. Preserve all finite existing values, including zero and negative try-once semantics; do not invent positive-only policy. Only scripts/code_worker.py. Fixed39 baseline5FAIL; existing35/worker22/queue15 retained. No change to lease clocks/expiry/claim/hash/commit/replay/SQL logic. All probes ownedtemp or bounded mocks; no realruntime process interruption."
+  },
+  "purpose": "Keep setup exclusion waits finite under invalid nonfinite timeout input; preserve existing finite behavior.",
+  "reviewed": true,
+  "risk": "medium",
+  "dependencies": [
+    "issue22-a-finite-lease-v1"
+  ],
+  "execution_conditions": [
+    "Explicit authorized independent safe development",
+    "Original4 durable state continuity and fresh complete allPR snapshot",
+    "Formal prepare/source collaboration/trusted finish; protected tests untouched"
+  ],
+  "completion_conditions": [
+    "Fixed acceptance and existing regressions pass",
+    "Only exact allowed source path changes",
+    "Host hash/test/tamper/commit then DraftPR and CI"
+  ],
+  "references": [
+    "https://github.com/kyoma1015/poker-sns/issues/22"
+  ],
+  "baseline": {
+    "base_sha": "1f8ee7054a918497c566e28022791d4a929e0f22",
+    "test_profile": "python",
+    "test_count": 39,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/worker_acceptance/test_continuation_recovery.py": "1d6d8d526006494d869921892dc3ff7d75f1f3cf18f8e0eeeb96a65aa47d8480",
+      "tests/worker_acceptance/test_finite_lease.py": "d497616524d2bdee11afcb9fd39519bc0e270bdea29a2f6dd4d17cb60fa2456f",
+      "tests/worker_acceptance/test_finite_setup.py": "d6b0a334d65dd70bc000d296144e471d7f4cef301191fd84be9e7b07aee4a7e7",
+      "tests/worker_acceptance/test_lease_initialization.py": "f9957c370e68934dc4bf6caa4080c1672e08901a06c6f8d6de76c9a87aa793c0",
+      "tests/worker_acceptance/test_pr_overlap.py": "7a7d4988fbdca1bb720f59701973fee1975fe173b2d9006356a256c648129a0d"
+    }
+  },
+  "inherited_prs": {
+    "80": "6b43510328486531f60b712421d48510e7c2447b",
+    "69": "4d30c7ac0d08104f9d159987e38c823ef7c3b419",
+    "26": "4fbfd95ef42292c91b6fe8573ea214371d759fda"
+  },
+  "overlap_reviews": {
+    "74": {
+      "reviewed": true,
+      "reason": "Prior source implementation preserved as exact verified historical blob; distinct deterministic nonfinite-wait FAIL.",
+      "candidate_base_sha": "1f8ee7054a918497c566e28022791d4a929e0f22",
+      "head_sha": "2a1f39264f2b467df652a33864de659f6537e92e",
+      "pr_base_sha": "d8b3687f058227ce8a779d463262d4e2b6fad536",
+      "files": {
+        "scripts/code_worker.py": {
+          "candidate_blob": "afcf1165c701807c84d88c925d570af20a15d372",
+          "head_blob": "bbfee076eaf03225c23871c3e24bc1a84f82fe9c",
+          "mode": "ancestor_blob",
+          "witness_commit": "4d30c7ac0d08104f9d159987e38c823ef7c3b419"
+        }
+      }
+    }
+  }
+}

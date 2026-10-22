@@ -1,0 +1,139 @@
+{
+  "task": {
+    "id": "issue22-c-weighted-maximum-v1",
+    "lane": "C",
+    "base_sha": "a78169a7a0731893ea1dd907a6a9c41eb933f0bd",
+    "base_branch": "codex/c-weighted-maximum-input-20261022",
+    "branch": "codex/c-weighted-maximum-fix-20261022",
+    "test_profile": "python",
+    "allowed_paths": [
+      "gto/hand169.py"
+    ],
+    "protected_tests": [
+      "tests/worker_acceptance/test_checkpoint_budget.py",
+      "tests/worker_acceptance/test_chip_oracle_types.py",
+      "tests/worker_acceptance/test_coverage_flag.py",
+      "tests/worker_acceptance/test_frequency_snapshot.py",
+      "tests/worker_acceptance/test_nonempty_settlement.py",
+      "tests/worker_acceptance/test_rank7.py",
+      "tests/worker_acceptance/test_settlement_expectations.py",
+      "tests/worker_acceptance/test_subnormal_ev.py",
+      "tests/worker_acceptance/test_subnormal_policy.py",
+      "tests/worker_acceptance/test_unrepresentable_numbers.py",
+      "tests/worker_acceptance/test_weighted_ev.py",
+      "tests/worker_acceptance/test_weighted_maximum.py"
+    ],
+    "instruction": "Fix representable finite maximum weighted EV lost by rounded-term math.fsum intermediate overflow. Only gto/hand169.py. Four independent Fraction oracles:3equal rows, weights1.0 or5e-324, EV +/-sys.float_info.max; exact finite mean must survive. Preserve exported float mass denominator, ordinary fastpath, prior subnormal/finite-input fixes, strictcoverage, buffer snapshots, unknown/zeromass. Narrow exact fallback on intermediate OverflowError is acceptable, no broad clamp or error swallowing. Fixed62 baseline4ERROR, oldGTO40. No tests/fixture/metadata edits, commits, dependencies, network or DB."
+  },
+  "purpose": "Preserve finite maximum weighted means despite rounded intermediate summation overflow.",
+  "reviewed": true,
+  "risk": "low",
+  "dependencies": [
+    "issue22-c-finite-number-v1"
+  ],
+  "execution_conditions": [
+    "Explicit authorized independent safe development",
+    "Original4 durable state continuity and fresh complete allPR snapshot",
+    "Formal prepare/source collaboration/trusted finish; protected tests untouched"
+  ],
+  "completion_conditions": [
+    "Fixed acceptance and existing regressions pass",
+    "Only exact allowed source path changes",
+    "Host hash/test/tamper/commit then DraftPR and CI"
+  ],
+  "references": [
+    "https://github.com/kyoma1015/poker-sns/issues/22"
+  ],
+  "baseline": {
+    "base_sha": "a78169a7a0731893ea1dd907a6a9c41eb933f0bd",
+    "test_profile": "python",
+    "test_count": 62,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/worker_acceptance/test_checkpoint_budget.py": "af8bfd8693d6f77c661a5a9b53843b7377423e9c6f0735e8fe2b26978bef7b4a",
+      "tests/worker_acceptance/test_chip_oracle_types.py": "d835e4892502bc869ccbee8d4d2ce154fa5faf1c84bdada82d96035d84f00e5a",
+      "tests/worker_acceptance/test_coverage_flag.py": "7fada2998bf186d5f828783ce4706a2633c9a8f195d3d480f350990214d9a0ca",
+      "tests/worker_acceptance/test_frequency_snapshot.py": "cae8f5e1980fdfce880f9b3539e40024cdce8c8d09b4278b788f85e0b30c585e",
+      "tests/worker_acceptance/test_nonempty_settlement.py": "02c4d041ca2253bd31694f4625ebdf7fd847341eb79b1576eeb2558c7c0f66d0",
+      "tests/worker_acceptance/test_rank7.py": "7146239998b7ce048bb576ad4bb174ccfa4d2c56df3ac91eb5cbe236c9536c07",
+      "tests/worker_acceptance/test_settlement_expectations.py": "cb24da18274a5cb0c30ba94202ed412c0ef85d865715d8b1a8ebe27e46cd8cb2",
+      "tests/worker_acceptance/test_subnormal_ev.py": "f846b25044ce7c760e11ddf844ab21b438e6e308ad061bb897aa73378d7575f4",
+      "tests/worker_acceptance/test_subnormal_policy.py": "bb4e4976489fd42380363283fa6aac3d06f154fe6878c725e93c2501fca51b22",
+      "tests/worker_acceptance/test_unrepresentable_numbers.py": "efe50901d3a6b3ea7316399578396bc39c2d5c774d0312e5a25b3d3aef945778",
+      "tests/worker_acceptance/test_weighted_ev.py": "2e1e12ca637ecbd870ee336c604c6850da5c1b0348562d1c9a0530d4dac2dfb7",
+      "tests/worker_acceptance/test_weighted_maximum.py": "d2e19b79797eb6a47bb70614224798b0c3e30fc10e5c404d9db8323749ccaf73"
+    }
+  },
+  "inherited_prs": {
+    "108": "1b7dab0bcfc1ca642d4bf3cbb299c3b76a7ca20b",
+    "105": "0f00e85ef54b8d7435e5f94d0f1e0480fc91984f",
+    "101": "d0a5ae219ca2a094b2d700019fa7271b84cf4563",
+    "97": "322b3f3ad904074018d2b4e25acd319c0c9f6f53",
+    "84": "881ea9d099d44df15fc95880064c9818fbda6b49",
+    "81": "712a7fa57031f94413511ba0423353568e8b4e9c",
+    "20": "8faea88802d0d34ae3e0319399e7f55ba71a9fcd"
+  },
+  "overlap_reviews": {
+    "103": {
+      "reviewed": true,
+      "reason": "Prior source implementation preserved as exact verified historical blob; distinct huge integer validation FAIL.",
+      "candidate_base_sha": "a78169a7a0731893ea1dd907a6a9c41eb933f0bd",
+      "head_sha": "f929d17b9c37be6f224d391e4473eeab6868630b",
+      "pr_base_sha": "781f038415503ece850c25a26e72ef67dee9c8a1",
+      "files": {
+        "gto/hand169.py": {
+          "candidate_blob": "d8c549342994e24a25b498e6e225c766681fd9e5",
+          "head_blob": "1a528326bca8a16b31c4eb8649a5378068447047",
+          "mode": "ancestor_blob",
+          "witness_commit": "381059c799c55f4eb876cbf3f426527a0b09d97a"
+        }
+      }
+    },
+    "75": {
+      "reviewed": true,
+      "reason": "Prior source implementation preserved as exact verified historical blob; distinct huge integer validation FAIL.",
+      "candidate_base_sha": "a78169a7a0731893ea1dd907a6a9c41eb933f0bd",
+      "head_sha": "b7f3d2910526c8762ac4b19acb2e8fee7535d8a9",
+      "pr_base_sha": "5a49f437727fba0f4d48585300a04ec7e9d747a4",
+      "files": {
+        "gto/hand169.py": {
+          "candidate_blob": "d8c549342994e24a25b498e6e225c766681fd9e5",
+          "head_blob": "1bf6aaf8abf1f8c10cf6dec3ff0ea5d0ddeedb7e",
+          "mode": "ancestor_blob",
+          "witness_commit": "8faea88802d0d34ae3e0319399e7f55ba71a9fcd"
+        }
+      }
+    },
+    "29": {
+      "reviewed": true,
+      "reason": "Prior source implementation preserved as exact verified historical blob; distinct huge integer validation FAIL.",
+      "candidate_base_sha": "a78169a7a0731893ea1dd907a6a9c41eb933f0bd",
+      "head_sha": "89fd492422497714d1665a9523e97ad4ba3ebee2",
+      "pr_base_sha": "44d46db7989a02ce28dba58bea6f30172c525dfc",
+      "files": {
+        "gto/hand169.py": {
+          "candidate_blob": "d8c549342994e24a25b498e6e225c766681fd9e5",
+          "head_blob": "b491c694f2353152d51c6fe87dd0facd5efd0a14",
+          "mode": "ancestor_blob",
+          "witness_commit": "1ba12af9c84c1cb6d499843c368553ff4d654f43"
+        }
+      }
+    },
+    "21": {
+      "reviewed": true,
+      "reason": "Prior source implementation preserved as exact verified historical blob; distinct huge integer validation FAIL.",
+      "candidate_base_sha": "a78169a7a0731893ea1dd907a6a9c41eb933f0bd",
+      "head_sha": "61a38c4bdcd90111180237ef4451198cdc00d31b",
+      "pr_base_sha": "3ca87764e988cac588fef915d48823702a1a3326",
+      "files": {
+        "gto/hand169.py": {
+          "candidate_blob": "d8c549342994e24a25b498e6e225c766681fd9e5",
+          "head_blob": "1bf6aaf8abf1f8c10cf6dec3ff0ea5d0ddeedb7e",
+          "mode": "ancestor_blob",
+          "witness_commit": "8faea88802d0d34ae3e0319399e7f55ba71a9fcd"
+        }
+      }
+    }
+  }
+}

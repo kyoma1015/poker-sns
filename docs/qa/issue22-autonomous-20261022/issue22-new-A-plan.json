@@ -1,0 +1,28 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-a-finite-lease-v1",
+        "lane": "A",
+        "base_sha": "2581170538b804f09920f557f98f2459feb6d814",
+        "base_branch": "codex/a-finite-lease-input-20261022",
+        "branch": "codex/a-finite-lease-fix-20261022",
+        "test_profile": "python",
+        "allowed_paths": [
+          "scripts/code_worker.py"
+        ],
+        "protected_tests": [
+          "tests/worker_acceptance/test_continuation_recovery.py",
+          "tests/worker_acceptance/test_lease_initialization.py",
+          "tests/worker_acceptance/test_pr_overlap.py",
+          "tests/worker_acceptance/test_finite_lease.py"
+        ],
+        "instruction": "Reject nonfinite or nonpositive duration, bool/string duration, nonfinite or bool/string explicit clocks and nonfinite expiration with ValueError BEFORE any lease transaction or write. Claim and finish must preserve existing rows when rejected. Retain valid integer/float clocks including epoch0 and fractional duration. Preserve replay/expiry/lane/attempt/lock/hash policies; only scripts/code_worker.py. Fixed35 baseline21failures. Run old22worker/15queue; no live state used in tests."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

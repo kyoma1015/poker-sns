@@ -1,0 +1,30 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-a-discovery-store-v2",
+        "lane": "A",
+        "base_sha": "2f5faca8b0230c4afbff6fca10ca30a59e3bf918",
+        "base_branch": "codex/a-discovery-store-input-20261022",
+        "branch": "codex/a-discovery-store-fix-20261022",
+        "test_profile": "python",
+        "allowed_paths": [
+          "scripts/continuation_recovery.py"
+        ],
+        "protected_tests": [
+          "tests/worker_acceptance/test_continuation_recovery.py",
+          "tests/worker_acceptance/test_discovery_store.py",
+          "tests/worker_acceptance/test_finite_lease.py",
+          "tests/worker_acceptance/test_finite_setup.py",
+          "tests/worker_acceptance/test_lease_initialization.py",
+          "tests/worker_acceptance/test_pr_overlap.py"
+        ],
+        "instruction": "Implement durable metadata API discover(sources), discoveries(lane=None), set_discovery(id,owner=...,status=...) in scripts/continuation_recovery.py only. Existing extractor supplies bounded suggestions; deterministic SHA256 id of lane/reference/title via digest; INSERT OR IGNORE same-source duplicates, preserve owner/status on rediscovery. New continuation_discoveries table additive; constructor validates original anchor before schema. Return rows with id/lane/reference/title/status/owner in deterministic id order; discover returns unique rows for submitted batch. statuses ONLY review_required/blocked/dismissed, owner None or bounded regex [A-Za-z0-9_./@-]{1,80}; reject unknownID/invalid lane filter/update before mutation. Atomic cap1000 persisted rows, duplicates permitted at cap; reject entire overflowing batch. Transaction BEGIN IMMEDIATE concurrency; source owner/status/review flags ignored. No promotion/execution/newleases/runlimit change/public metadata dump; existing plan/defer/resume gates unchanged. Fixed49 baseline9ERROR; run all plus worker/queue. Only temp DB tests. Do not modify real retained state or protected tests. Source only allowed file."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

@@ -1,0 +1,25 @@
+✔ latest request wins even when older search resolves last (2471.929564ms)
+✔ new input invalidates an old response before debounce expires (1756.094931ms)
+✔ clearing search prevents late result resurrection and ends loading (2203.724903ms)
+✔ thrown transport ends loading and permits next search recovery (2282.463425ms)
+✔ old failed request cannot end newer request loading or show stale error (2160.654511ms)
+✔ malformed search non-array payload fails closed and permits retry (2196.138003ms)
+✔ malformed search null rule row fails closed and permits retry (2396.347042ms)
+11:07:17 AM [vite] (client) [optimizer] bundling dependencies...
+✔ malformed search invalid title value fails closed and permits retry (2737.544546ms)
+✔ malformed search invalid rule number fails closed and permits retry (2440.677639ms)
+✔ malformed displayed rule field summary object fails closed and permits retry (2119.133913ms)
+✔ malformed displayed rule field keyword string fails closed and permits retry (2477.526922ms)
+✔ malformed displayed rule field example object element fails closed and permits retry (2273.737563ms)
+✔ malformed displayed rule field caution null element fails closed and permits retry (2337.116265ms)
+✔ malformed displayed rule field related rule string fails closed and permits retry (2216.264398ms)
+✔ malformed displayed rule field official body object fails closed and permits retry (2086.211018ms)
+✔ well-typed optional text and collections retain normal rendering (1887.53419ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 36058.732286

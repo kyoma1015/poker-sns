@@ -1,0 +1,30 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-c-exact-toy-metric-v1",
+        "lane": "C",
+        "base_sha": "3eb08c4723ec3ef55faf0b86f6b54768c1cab738",
+        "base_branch": "codex/c-convergence-metric-input-20261022",
+        "branch": "codex/c-convergence-metric-fix-20261022",
+        "test_profile": "python",
+        "allowed_paths": [
+          "gto/convergence.py"
+        ],
+        "protected_tests": [
+          "tests/worker_acceptance/test_checkpoint_budget.py",
+          "tests/worker_acceptance/test_chip_oracle_types.py",
+          "tests/worker_acceptance/test_convergence_metrics.py",
+          "tests/worker_acceptance/test_nonempty_settlement.py",
+          "tests/worker_acceptance/test_rank7.py",
+          "tests/worker_acceptance/test_settlement_expectations.py"
+        ],
+        "instruction": "Implement only gto/convergence.py matching_pennies_metrics(policy0,policy1) per fixed docs. Finite int/float nonbool probability pairs list/tuple length2, values0..1, abs normalization tolerance1e-12/rel_tol0, invalidValueError/no mutation/no silentnormalize. Fixed matching-pennies utility matrix P0 match+1/mismatch-1, P1zero-sum; return game, utilities, BR values, nash_conv=sum improvements, exploitability=half gap, strategy_convergence_proof=False/historical_baseline_used=False. stdlib only, no solver/reference/settlement/checkpoint/network/DB changes. Fixed36 baseline7ERROR missing newmodule; protected6 unchanged. Validate36+existingGTO40 and replay saved9 native policy measurements vs exact reported toy gaps. Never claim poker convergence."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

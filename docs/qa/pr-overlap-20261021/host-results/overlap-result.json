@@ -1,0 +1,41 @@
+{
+  "id": "issue22-overlap-proof-v1",
+  "lane": "A",
+  "base_sha": "ee9b1d2521bfe8434f76010f87e53d5da477723f",
+  "executor": "host_session",
+  "host_agent_id": "/root/overlap_engine",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "docs/workers/PR_OVERLAP_REVIEW.md",
+    "scripts/continuation_recovery.py",
+    "scripts/pr_overlap.py"
+  ],
+  "tested_source_sha256": {
+    "docs/workers/PR_OVERLAP_REVIEW.md": "d069213e50938adffd04422caa260ea50740d4f1379986065f4c262da6e20599",
+    "scripts/continuation_recovery.py": "efda4309f1f532f469268de84c5e99a304d9f9036df51bc137c0a09c52ff4c0a",
+    "scripts/pr_overlap.py": "0581fd1f7336b1d34f843d7590b6f8a92c4ac233439fdf18994666cea5790a54"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 24,
+      "output_sha256": "ac3a89f745ea9b3ae51154393fa17b78ec2ab7a1c1dfbd52f275a00ae1bdc181"
+    }
+  ],
+  "commit": "2fcd124d06e2627a1436f2123a7fdc9ce41df95f",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

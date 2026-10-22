@@ -1,0 +1,259 @@
+{
+  "scope": "bounded existing reconstructed artifacts; NOT original G11 or poker convergence",
+  "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+  "python": "3.12.14",
+  "pins": {
+    "pybind11-2.13.6-py3-none-any.whl": {
+      "bytes": 243282,
+      "sha256": "237c41e29157b962835d356b370ededd57594a26d5894a795960f0047cb5caf5",
+      "matches_manifest": true
+    },
+    "abseil-20240116.2.tar.gz": {
+      "bytes": 2151288,
+      "sha256": "733726b8c3a6d39a4120d7e45ea8b41a434cdacde401cba500f14236c49b39dc",
+      "matches_manifest": true
+    }
+  },
+  "variants": {
+    "g12_next": {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "/workspace/work/issue22-c-chip-oracle-v2-input/issue22-c-chip-oracle-types-v2/gto/native/smoke.py",
+        "--module-dir",
+        "/tmp/issue22-gto-existing-native-c20b5szt/g12_next",
+        "--backend",
+        "/tmp/issue22-gto-existing-native-c20b5szt/g12_next/backend.py",
+        "--iterations",
+        "200"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "iterations": 200,
+      "fixture": "synthetic matching pennies, NOT full poker/G11 reference",
+      "infosets": 2,
+      "checkpoint_sha256": "b38355859e67d65e2b50fdf057153c0e1ba6237cdab6d8355617298878d685db",
+      "long_double_digits": 64,
+      "temporary_disk_resume_byte_equal": true,
+      "verified_snapshot_rejects_corruption": true,
+      "historical_checkpoint_used": false,
+      "native_poker_matrix": {
+        "status": "PASS",
+        "case_count": 320,
+        "seconds": 0.15893682700698264,
+        "note": "20 synthetic equal-stack sizes 2..40bb, NOT recovered owner/G11 stack fixtures; one-iteration smoke only",
+        "bb_ante": true,
+        "cash_rake": "1/10",
+        "mtt_rake": 0
+      },
+      "original_artifact_hashes_unchanged": true,
+      "artifacts": {
+        "backend.py": "6178fe9f04635fcbb572ebdf5f13dce6e0289f69a686c5967951363e328ee3b6",
+        "pokerid_rules.py": "456225cf675a1b8ecf9ac7b16b7e3b6185900fe3dea75fe8f1687ad12354ea5a",
+        "pokerid_g12.cpython-312-x86_64-linux-gnu.so": "8c526da4ee321dcf4d6cf056b836625ddd93a7ef3a75687736bb40033c9b002b"
+      }
+    },
+    "g12_p1_cache": {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "/workspace/work/issue22-c-chip-oracle-v2-input/issue22-c-chip-oracle-types-v2/gto/native/smoke.py",
+        "--module-dir",
+        "/tmp/issue22-gto-existing-native-c20b5szt/g12_p1_cache",
+        "--backend",
+        "/tmp/issue22-gto-existing-native-c20b5szt/g12_p1_cache/backend.py",
+        "--iterations",
+        "200"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "iterations": 200,
+      "fixture": "synthetic matching pennies, NOT full poker/G11 reference",
+      "infosets": 2,
+      "checkpoint_sha256": "b38355859e67d65e2b50fdf057153c0e1ba6237cdab6d8355617298878d685db",
+      "long_double_digits": 64,
+      "temporary_disk_resume_byte_equal": true,
+      "verified_snapshot_rejects_corruption": true,
+      "historical_checkpoint_used": false,
+      "native_poker_matrix": {
+        "status": "PASS",
+        "case_count": 320,
+        "seconds": 0.1679562559875194,
+        "note": "20 synthetic equal-stack sizes 2..40bb, NOT recovered owner/G11 stack fixtures; one-iteration smoke only",
+        "bb_ante": true,
+        "cash_rake": "1/10",
+        "mtt_rake": 0
+      },
+      "original_artifact_hashes_unchanged": true,
+      "artifacts": {
+        "backend.py": "9d166dfbd0d9da199585de631788e03636c295f595d568451239f0c0e652da52",
+        "pokerid_rules.py": "456225cf675a1b8ecf9ac7b16b7e3b6185900fe3dea75fe8f1687ad12354ea5a",
+        "pokerid_g12.cpython-312-x86_64-linux-gnu.so": "8182c656cda23fe12b86dc4e44cb5f69cdc577c50876971fdfb845a274d71fa9"
+      }
+    },
+    "g12_p1_packed": {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "/workspace/work/issue22-c-chip-oracle-v2-input/issue22-c-chip-oracle-types-v2/gto/native/smoke.py",
+        "--module-dir",
+        "/tmp/issue22-gto-existing-native-c20b5szt/g12_p1_packed",
+        "--backend",
+        "/tmp/issue22-gto-existing-native-c20b5szt/g12_p1_packed/backend.py",
+        "--iterations",
+        "200"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "iterations": 200,
+      "fixture": "synthetic matching pennies, NOT full poker/G11 reference",
+      "infosets": 2,
+      "checkpoint_sha256": "b38355859e67d65e2b50fdf057153c0e1ba6237cdab6d8355617298878d685db",
+      "long_double_digits": 64,
+      "temporary_disk_resume_byte_equal": true,
+      "verified_snapshot_rejects_corruption": true,
+      "historical_checkpoint_used": false,
+      "native_poker_matrix": {
+        "status": "PASS",
+        "case_count": 320,
+        "seconds": 0.1650849260040559,
+        "note": "20 synthetic equal-stack sizes 2..40bb, NOT recovered owner/G11 stack fixtures; one-iteration smoke only",
+        "bb_ante": true,
+        "cash_rake": "1/10",
+        "mtt_rake": 0
+      },
+      "original_artifact_hashes_unchanged": true,
+      "artifacts": {
+        "backend.py": "9d166dfbd0d9da199585de631788e03636c295f595d568451239f0c0e652da52",
+        "pokerid_rules.py": "456225cf675a1b8ecf9ac7b16b7e3b6185900fe3dea75fe8f1687ad12354ea5a",
+        "pokerid_g12.cpython-312-x86_64-linux-gnu.so": "feaed4b7c1a808032d91ccfd669b4faede643837ab38ae62018d787061cd84b3"
+      }
+    }
+  },
+  "no_network_install_build": true,
+  "historical_checkpoint_opened": false,
+  "native_reference_expected_fixtures": {
+    "exit_code": 0,
+    "settlement_status": "PASS",
+    "settlement_cases": 17,
+    "rank7_status": "PASS",
+    "rank7_cases": 16,
+    "native_all_compared": true,
+    "strategy_or_convergence_proof": false,
+    "historical_baseline_used": false,
+    "probe_sha256": "954f71fb89582adb3d68d16318155b541127a62e5e643ced0169fcaf6e7aeda7"
+  },
+  "matching_pennies_exact_gap_probe": {
+    "g12_next": {
+      "seed": 17,
+      "epsilon": 0.6,
+      "measurements": [
+        {
+          "iterations": 200,
+          "average_policy_p0_action0": 0.5075669503339953,
+          "average_policy_p1_action0": 0.5023940464451176,
+          "exact_toy_nash_conv": 0.019921993558225992,
+          "exact_toy_exploitability_half_gap": 0.009960996779112996
+        },
+        {
+          "iterations": 2000,
+          "average_policy_p0_action0": 0.5142484849247426,
+          "average_policy_p1_action0": 0.5101511661668966,
+          "exact_toy_nash_conv": 0.04879930218327844,
+          "exact_toy_exploitability_half_gap": 0.02439965109163922
+        },
+        {
+          "iterations": 20000,
+          "average_policy_p0_action0": 0.5098757494074779,
+          "average_policy_p1_action0": 0.49613022598035655,
+          "exact_toy_nash_conv": 0.02749104685424275,
+          "exact_toy_exploitability_half_gap": 0.013745523427121376
+        }
+      ],
+      "note": "Exact closed-form matching-pennies best-response gap only, not poker convergence."
+    },
+    "g12_p1_cache": {
+      "seed": 17,
+      "epsilon": 0.6,
+      "measurements": [
+        {
+          "iterations": 200,
+          "average_policy_p0_action0": 0.5075669503339953,
+          "average_policy_p1_action0": 0.5023940464451176,
+          "exact_toy_nash_conv": 0.019921993558225992,
+          "exact_toy_exploitability_half_gap": 0.009960996779112996
+        },
+        {
+          "iterations": 2000,
+          "average_policy_p0_action0": 0.5142484849247426,
+          "average_policy_p1_action0": 0.5101511661668966,
+          "exact_toy_nash_conv": 0.04879930218327844,
+          "exact_toy_exploitability_half_gap": 0.02439965109163922
+        },
+        {
+          "iterations": 20000,
+          "average_policy_p0_action0": 0.5098757494074779,
+          "average_policy_p1_action0": 0.49613022598035655,
+          "exact_toy_nash_conv": 0.02749104685424275,
+          "exact_toy_exploitability_half_gap": 0.013745523427121376
+        }
+      ],
+      "note": "Exact closed-form matching-pennies best-response gap only, not poker convergence."
+    },
+    "g12_p1_packed": {
+      "seed": 17,
+      "epsilon": 0.6,
+      "measurements": [
+        {
+          "iterations": 200,
+          "average_policy_p0_action0": 0.5075669503339953,
+          "average_policy_p1_action0": 0.5023940464451176,
+          "exact_toy_nash_conv": 0.019921993558225992,
+          "exact_toy_exploitability_half_gap": 0.009960996779112996
+        },
+        {
+          "iterations": 2000,
+          "average_policy_p0_action0": 0.5142484849247426,
+          "average_policy_p1_action0": 0.5101511661668966,
+          "exact_toy_nash_conv": 0.04879930218327844,
+          "exact_toy_exploitability_half_gap": 0.02439965109163922
+        },
+        {
+          "iterations": 20000,
+          "average_policy_p0_action0": 0.5098757494074779,
+          "average_policy_p1_action0": 0.49613022598035655,
+          "exact_toy_nash_conv": 0.02749104685424275,
+          "exact_toy_exploitability_half_gap": 0.013745523427121376
+        }
+      ],
+      "note": "Exact closed-form matching-pennies best-response gap only, not poker convergence."
+    }
+  },
+  "actual_poker_convergence": "BLOCKED: no game-specific exploitability/best-response trajectory or validated convergence acceptance available",
+  "g11_compatibility": "BLOCKED: original vendor ABI, baseline settings/output and complete historical checkpoint not recovered",
+  "artifact_inventory": {
+    "scope": "rg --files /workspace/work, ordinary visible files; no external GitHub/object store claim",
+    "original_zip_paths": [],
+    "existing_checkpoint_paths": [],
+    "source_manifest_paths": [],
+    "attachments_directory_exists": false
+  },
+  "source_verification": {
+    "command": [
+      "python",
+      "-B",
+      "handoff/gto/verify_native_solvers.py"
+    ],
+    "status": "PASS",
+    "variants": 3,
+    "sources_original_bytes_unchanged": true
+  },
+  "unresolved_rule_policy": {
+    "evidence": "docs/qa/gto-settlement-20261020/limitations.json",
+    "status": "BLOCKED_RULE_POLICY",
+    "case": "BB stack fully consumed by dead ante, unmatched blind refund leaves no positive_live eligible seat",
+    "python": "dead pool has no eligible player",
+    "native": "empty dead eligibility",
+    "owner_rule_choice_required": true
+  }
+}

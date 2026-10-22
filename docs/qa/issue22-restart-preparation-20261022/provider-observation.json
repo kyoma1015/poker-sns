@@ -1,0 +1,20 @@
+{
+  "observed_at": "2026-10-22T14:19:53.517Z",
+  "provider": "ChatGPT automations",
+  "supported_min_interval_seconds": 3600,
+  "requested_interval_seconds": 1800,
+  "frequency_source": "Available automations.create tool contract: maximum once per hour",
+  "existing": {
+    "id": "6ad6f43503cc8191b11915fdbaa51312",
+    "title": "Poker ID 継続開発",
+    "is_enabled": true,
+    "schedule": "BEGIN:VEVENT\nDTSTART:20261020T045517Z\nRRULE:FREQ=HOURLY;INTERVAL=6;COUNT=28\nEND:VEVENT",
+    "next_run_time": null,
+    "last_run_time": "2026-10-22T10:54:27.935759+00:00",
+    "recorded_run_details_available": false
+  },
+  "new_schedule_created": false,
+  "existing_schedule_modified": false,
+  "independent_codex_host_launch_verified": false,
+  "cause_of_null_next_run_time": "UNKNOWN"
+}

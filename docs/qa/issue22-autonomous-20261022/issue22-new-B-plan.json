@@ -1,0 +1,27 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-b-dense-quiz-v1",
+        "lane": "B",
+        "base_sha": "eb62eb72870e52a44e2755479e860f7502894a3f",
+        "base_branch": "codex/b-dense-quiz-input-20261022",
+        "branch": "codex/b-dense-quiz-fix-20261022",
+        "test_profile": "tda",
+        "allowed_paths": [
+          "src/tdaQuizData.ts"
+        ],
+        "protected_tests": [
+          "tests/tda-quiz-data.test.mjs",
+          "tests/tda-saved-answer.test.mjs",
+          "tests/tda-audit-cli.test.mjs"
+        ],
+        "instruction": "Reject sparse question/option arrays instead of skipping holes. Every requested row and option must pass existing record checks; one actual option cannot satisfy min2 by array holes. Preserve densevalid arrays, [] bank, copies/sorting/nonmutation and savedanswer/audit behavior. Only src/tdaQuizData.ts source. Fixed23 baseline4FAIL, savedanswer14/auditCLI18 mustpass. No questioncontent/rules/stats semantics/SQL/UI/auth changes. Run protected suites, typechecks/Vitebuild/lint with caches and buildoutput in externaltemp/trusted dependencyparent."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

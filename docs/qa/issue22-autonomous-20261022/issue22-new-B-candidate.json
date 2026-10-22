@@ -1,0 +1,87 @@
+{
+  "task": {
+    "id": "issue22-b-dense-quiz-v1",
+    "lane": "B",
+    "base_sha": "eb62eb72870e52a44e2755479e860f7502894a3f",
+    "base_branch": "codex/b-dense-quiz-input-20261022",
+    "branch": "codex/b-dense-quiz-fix-20261022",
+    "test_profile": "tda",
+    "allowed_paths": [
+      "src/tdaQuizData.ts"
+    ],
+    "protected_tests": [
+      "tests/tda-quiz-data.test.mjs",
+      "tests/tda-saved-answer.test.mjs",
+      "tests/tda-audit-cli.test.mjs"
+    ],
+    "instruction": "Reject sparse question/option arrays instead of skipping holes. Every requested row and option must pass existing record checks; one actual option cannot satisfy min2 by array holes. Preserve densevalid arrays, [] bank, copies/sorting/nonmutation and savedanswer/audit behavior. Only src/tdaQuizData.ts source. Fixed23 baseline4FAIL, savedanswer14/auditCLI18 mustpass. No questioncontent/rules/stats semantics/SQL/UI/auth changes. Run protected suites, typechecks/Vitebuild/lint with caches and buildoutput in externaltemp/trusted dependencyparent."
+  },
+  "purpose": "Close sparse-array bypass of existing quiz row/option structural validation without content changes.",
+  "reviewed": true,
+  "risk": "low",
+  "dependencies": [
+    "issue22-b-rule-fields-v1"
+  ],
+  "execution_conditions": [
+    "Original4 state continuity",
+    "Fresh complete PR SHA/file snapshot and strict Git overlap proofs",
+    "Formal prepare/source agent/trusted finish"
+  ],
+  "completion_conditions": [
+    "Fixed23 and old14/18 pass",
+    "Protectedtests/source-onlyscope preserved",
+    "Types/build/lint and DraftPR CI"
+  ],
+  "references": [
+    "https://github.com/kyoma1015/poker-sns/issues/22",
+    "tests/tda-quiz-data.test.mjs one-option validation"
+  ],
+  "baseline": {
+    "base_sha": "eb62eb72870e52a44e2755479e860f7502894a3f",
+    "test_profile": "tda",
+    "test_count": 23,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/tda-quiz-data.test.mjs": "644c3686384338ad6d22f416bf60c8ae3c5be1a6ca7c91f590d26f4cf3761389",
+      "tests/tda-saved-answer.test.mjs": "d167b9f795506bcb56d2bff206575895efc47c5e272d0da7c9ffa30b485df0e1",
+      "tests/tda-audit-cli.test.mjs": "3ef7175260e6cc178cfdab342506b6c28813e2d0795bed5ba30a6a916b9270cd"
+    }
+  },
+  "inherited_prs": {
+    "32": "0639d36d720612466474e75fa8994f409d2d41de",
+    "14": "4e16f7a7b567237d2735f1392906a6b1de2b7c23"
+  },
+  "overlap_reviews": {
+    "28": {
+      "reviewed": true,
+      "reason": "Exact preserved source/ancestor; new fixed sparse-array validation failure is distinct from earlier saved-answer changes.",
+      "candidate_base_sha": "eb62eb72870e52a44e2755479e860f7502894a3f",
+      "head_sha": "a36c7853ca745b40d9607d096b8a2f72c5f5712d",
+      "pr_base_sha": "77b41f7f1f655c5b3367ab595022e970ef37fc61",
+      "files": {
+        "src/tdaQuizData.ts": {
+          "candidate_blob": "44fecdfac08c8d8cdb07688b6454e89d74e2b3e5",
+          "head_blob": "fd402698ffc6a0a8fa2069d3b5f563ef364c84d2",
+          "mode": "included_patch",
+          "patch_sha256": "53c1e1cb7e22090bc09cef389a44ed1a64f75ec0703bf09b3a0e78ebf8c51fa3"
+        }
+      }
+    },
+    "21": {
+      "reviewed": true,
+      "reason": "Exact preserved source/ancestor; new fixed sparse-array validation failure is distinct from earlier saved-answer changes.",
+      "candidate_base_sha": "eb62eb72870e52a44e2755479e860f7502894a3f",
+      "head_sha": "61a38c4bdcd90111180237ef4451198cdc00d31b",
+      "pr_base_sha": "3ca87764e988cac588fef915d48823702a1a3326",
+      "files": {
+        "src/tdaQuizData.ts": {
+          "candidate_blob": "44fecdfac08c8d8cdb07688b6454e89d74e2b3e5",
+          "head_blob": "4756ea266a63692d66d5ae5cf4171b3cb79b97d1",
+          "mode": "ancestor_blob",
+          "witness_commit": "4e16f7a7b567237d2735f1392906a6b1de2b7c23"
+        }
+      }
+    }
+  }
+}

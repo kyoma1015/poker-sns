@@ -1,0 +1,31 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-a-invocation-clock-v1",
+        "lane": "A",
+        "base_sha": "5698d7796bacdc040e88f7705707d98f0c8c0dbe",
+        "base_branch": "codex/a-invocation-clock-input-20261022",
+        "branch": "codex/a-invocation-clock-fix-20261022",
+        "test_profile": "python",
+        "allowed_paths": [
+          "scripts/continuation_recovery.py"
+        ],
+        "protected_tests": [
+          "tests/worker_acceptance/test_continuation_recovery.py",
+          "tests/worker_acceptance/test_discovery_store.py",
+          "tests/worker_acceptance/test_finite_lease.py",
+          "tests/worker_acceptance/test_finite_setup.py",
+          "tests/worker_acceptance/test_invocation_clock.py",
+          "tests/worker_acceptance/test_lease_initialization.py",
+          "tests/worker_acceptance/test_pr_overlap.py"
+        ],
+        "instruction": "Reject nonfinite/bool/nonnumeric/unrepresentably huge invocation timestamps before starting transaction or consuming finite run budget. Only scripts/continuation_recovery.py reserve_run timestamp boundary; reuse existing code_worker.finite_lease_number validator. Validate generated time too. Preserve all finite numeric clocks including zero/negative, duplicate/run caps, all recovery/discovery/hash/lease gates. Fixed58 baseline invalid clocks currently accepted or SQLiteerrors; require ValueError and no reservation; subsequent valid sameID succeeds. Only ownedtemp tests. No live controller/schema switch or real run reservation. No tests/commit/private-state changes."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

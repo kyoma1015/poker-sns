@@ -1,0 +1,17 @@
+diff --git a/src/PlayerTypeDiagnosis.tsx b/src/PlayerTypeDiagnosis.tsx
+index 342cb93..345c820 100644
+--- a/src/PlayerTypeDiagnosis.tsx
++++ b/src/PlayerTypeDiagnosis.tsx
+@@ -736,7 +736,11 @@ function PlayerTypeDiagnosis() {
+                   key={option.id}
+                   className="ptd-option"
+                   disabled={loading}
+-                  onClick={() => void chooseOption(option.id)}
++                  onClick={(event) => {
++                    // A double-click may land its second click on the next question.
++                    // Keyboard activation has detail 0; a fresh click has detail 1.
++                    if (event.detail <= 1) void chooseOption(option.id)
++                  }}
+                 >
+                   <span className="ptd-option-letter">
+                     {String.fromCharCode(64 + option.order)}

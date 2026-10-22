@@ -1,0 +1,105 @@
+✔ question validation sorts a copy without changing option identity or original input (1.965011ms)
+✔ malformed null fails closed (0.226012ms)
+✔ malformed object fails closed (0.133081ms)
+✔ malformed no options fails closed (0.087993ms)
+✔ malformed one option fails closed (1.048255ms)
+✔ malformed empty text fails closed (0.096776ms)
+✔ malformed missing metadata fails closed (0.086181ms)
+✔ malformed duplicate question ID fails closed (0.081984ms)
+✔ malformed duplicate option ID fails closed (0.16577ms)
+✔ malformed duplicate option order fails closed (0.273744ms)
+✔ malformed fractional order fails closed (0.171069ms)
+✔ malformed empty option text fails closed (0.113561ms)
+✔ malformed negative order fails closed (0.093872ms)
+✔ rejected and synchronous transport failures become recoverable errors without retries (0.405473ms)
+✔ successful save data and RPC permission errors are preserved without reinterpretation (0.23141ms)
+✔ offline audit flags normalized question and option duplicate candidates only (0.693549ms)
+✔ audit report flags missing expected count and never claims publication approval (0.244159ms)
+✖ sparse quiz input rejects empty sparse question bank (0.703393ms)
+✖ sparse quiz input rejects question followed by missing row (0.159511ms)
+✖ sparse quiz input rejects entirely missing options (0.098759ms)
+✖ sparse quiz input rejects one present option (0.150217ms)
+✔ frozen dense valid input and empty bank remain valid (0.181995ms)
+✔ reviewed PR28 empty-audit guard remains present (0.093151ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 19
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15.264581
+
+✖ failing tests:
+
+test at tests/tda-quiz-data.test.mjs:54:4
+✖ sparse quiz input rejects empty sparse question bank (0.703393ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/work/issue22-dense-quiz-input/tests/tda-quiz-data.test.mjs:54:57)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/tda-quiz-data.test.mjs:54:4
+✖ sparse quiz input rejects question followed by missing row (0.159511ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/work/issue22-dense-quiz-input/tests/tda-quiz-data.test.mjs:54:57)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/tda-quiz-data.test.mjs:54:4
+✖ sparse quiz input rejects entirely missing options (0.098759ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/work/issue22-dense-quiz-input/tests/tda-quiz-data.test.mjs:54:57)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/tda-quiz-data.test.mjs:54:4
+✖ sparse quiz input rejects one present option (0.150217ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/work/issue22-dense-quiz-input/tests/tda-quiz-data.test.mjs:54:57)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }

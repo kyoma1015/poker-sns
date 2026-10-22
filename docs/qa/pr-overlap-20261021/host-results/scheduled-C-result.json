@@ -1,0 +1,37 @@
+{
+  "id": "issue22-c-nonempty-settlement-v1",
+  "lane": "C",
+  "base_sha": "a1ec880c66b54fba67fc16bee0d51f56482e9e81",
+  "executor": "host_session",
+  "host_agent_id": "/root/scheduled_c_nonempty",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "gto/native/settlement.py"
+  ],
+  "tested_source_sha256": {
+    "gto/native/settlement.py": "a4c213ca6cddda6688c9e93f012498ea44aa46b34d6caa3f5ecfdee7d3001ea5"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 14,
+      "output_sha256": "f105ff1cd9c089791b11f55d1923f5d124ec53431781d1fadac82b8e55302b53"
+    }
+  ],
+  "commit": "c73b57d156e3c1aae24e10565787df4d73b1c3a8",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

@@ -1,0 +1,33 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-c-subnormal-ev-v1",
+        "lane": "C",
+        "base_sha": "f170c02b6680fec6ba742be9088a7f55f6bf20a5",
+        "base_branch": "codex/c-subnormal-ev-input-20261022",
+        "branch": "codex/c-subnormal-ev-fix-20261022",
+        "test_profile": "python",
+        "allowed_paths": [
+          "gto/hand169.py"
+        ],
+        "protected_tests": [
+          "tests/worker_acceptance/test_checkpoint_budget.py",
+          "tests/worker_acceptance/test_chip_oracle_types.py",
+          "tests/worker_acceptance/test_coverage_flag.py",
+          "tests/worker_acceptance/test_frequency_snapshot.py",
+          "tests/worker_acceptance/test_nonempty_settlement.py",
+          "tests/worker_acceptance/test_rank7.py",
+          "tests/worker_acceptance/test_settlement_expectations.py",
+          "tests/worker_acceptance/test_subnormal_ev.py",
+          "tests/worker_acceptance/test_weighted_ev.py"
+        ],
+        "instruction": "Preserve representable subnormal weighted EV when individually rounded terms lose or overround the final sum. Only gto/hand169.py. Fixed46 baseline4FAIL, Decimal oracle uses existing exported math.fsum mass denominator. Keep existing mass semantics, normal finite accuracy, intermediate overflow avoidance, strict coverage/snapshot/unknownEV/zeroMass. A narrowly scoped stdlib Fraction exact fallback for subnormal/underflow terms is acceptable; no external dependencies or broad solver changes. Test old46/GTO40 and bound fallback work. No strategy convergence claim. No tests/fixture changes or commit."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

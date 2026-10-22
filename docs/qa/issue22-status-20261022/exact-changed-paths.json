@@ -1,0 +1,281 @@
+[
+  {
+    "pr": 74,
+    "head": "2a1f39264f2b467df652a33864de659f6537e92e",
+    "branch": "codex/a-controller-main-input-20261022",
+    "files": [
+      {
+        "path": ".github/queues/development.json",
+        "added": 101,
+        "deleted": 0
+      },
+      {
+        "path": ".github/workflows/controller-main-integration.yml",
+        "added": 36,
+        "deleted": 0
+      },
+      {
+        "path": "docs/progress/A_CONTROLLER_INTEGRATION.md",
+        "added": 48,
+        "deleted": 0
+      },
+      {
+        "path": "docs/qa/a-controller-integration-20261022/RESULTS.json",
+        "added": 72,
+        "deleted": 0
+      },
+      {
+        "path": "docs/qa/a-controller-integration-20261022/SOURCE_SHA256.json",
+        "added": 52,
+        "deleted": 0
+      },
+      {
+        "path": "docs/qa/a-controller-integration-20261022/baseline-absent-controller.txt",
+        "added": 3,
+        "deleted": 0
+      },
+      {
+        "path": "docs/qa/a-controller-integration-20261022/protected27.txt",
+        "added": 32,
+        "deleted": 0
+      },
+      {
+        "path": "docs/qa/a-controller-integration-20261022/queue15.txt",
+        "added": 20,
+        "deleted": 0
+      },
+      {
+        "path": "docs/qa/a-controller-integration-20261022/timeout-restart2.txt",
+        "added": 5,
+        "deleted": 0
+      },
+      {
+        "path": "docs/qa/a-controller-integration-20261022/worker22.txt",
+        "added": 27,
+        "deleted": 0
+      },
+      {
+        "path": "scripts/code_worker.py",
+        "added": 500,
+        "deleted": 0
+      },
+      {
+        "path": "scripts/continuation_recovery.py",
+        "added": 280,
+        "deleted": 0
+      },
+      {
+        "path": "scripts/development_queue.py",
+        "added": 194,
+        "deleted": 0
+      },
+      {
+        "path": "scripts/pr_overlap.py",
+        "added": 118,
+        "deleted": 0
+      },
+      {
+        "path": "tests/automation/test_code_worker.py",
+        "added": 266,
+        "deleted": 0
+      },
+      {
+        "path": "tests/automation/test_controller_integration.py",
+        "added": 52,
+        "deleted": 0
+      },
+      {
+        "path": "tests/automation/test_development_queue.py",
+        "added": 149,
+        "deleted": 0
+      },
+      {
+        "path": "tests/worker_acceptance/test_continuation_recovery.py",
+        "added": 178,
+        "deleted": 0
+      },
+      {
+        "path": "tests/worker_acceptance/test_lease_initialization.py",
+        "added": 96,
+        "deleted": 0
+      },
+      {
+        "path": "tests/worker_acceptance/test_pr_overlap.py",
+        "added": 149,
+        "deleted": 0
+      }
+    ]
+  },
+  {
+    "pr": 75,
+    "head": "b7f3d2910526c8762ac4b19acb2e8fee7535d8a9",
+    "branch": "codex/c-gto-main-transplant-20261022",
+    "files": [
+      {
+        "path": ".github/workflows/gto-isolated-integration.yml",
+        "added": 38,
+        "deleted": 0
+      },
+      {
+        "path": "docs/progress/C_GTO_INTEGRATION.md",
+        "added": 46,
+        "deleted": 0
+      },
+      {
+        "path": "docs/qa/gto-main-integration-20261022/RESULT.json",
+        "added": 39,
+        "deleted": 0
+      },
+      {
+        "path": "docs/qa/gto-main-integration-20261022/TRANSPLANT_MANIFEST.json",
+        "added": 197,
+        "deleted": 0
+      },
+      {
+        "path": "docs/qa/gto-main-integration-20261022/before-import.txt",
+        "added": 3,
+        "deleted": 0
+      },
+      {
+        "path": "docs/qa/gto-main-integration-20261022/fixed29.txt",
+        "added": 34,
+        "deleted": 0
+      },
+      {
+        "path": "docs/qa/gto-main-integration-20261022/launcher5.txt",
+        "added": 10,
+        "deleted": 0
+      },
+      {
+        "path": "docs/qa/gto-main-integration-20261022/native33.txt",
+        "added": 25,
+        "deleted": 0
+      },
+      {
+        "path": "docs/qa/gto-main-integration-20261022/source-hashes.txt",
+        "added": 4,
+        "deleted": 0
+      },
+      {
+        "path": "docs/qa/gto-main-integration-20261022/unit40.txt",
+        "added": 45,
+        "deleted": 0
+      },
+      {
+        "path": "gto/fixtures/rank7-v1.json",
+        "added": 286,
+        "deleted": 0
+      },
+      {
+        "path": "gto/fixtures/settlement-v1.json",
+        "added": 912,
+        "deleted": 0
+      },
+      {
+        "path": "gto/hand169.py",
+        "added": 59,
+        "deleted": 0
+      },
+      {
+        "path": "gto/integration_acceptance/test_checkpoint_budget.py",
+        "added": 94,
+        "deleted": 0
+      },
+      {
+        "path": "gto/integration_acceptance/test_chip_oracle_types.py",
+        "added": 80,
+        "deleted": 0
+      },
+      {
+        "path": "gto/integration_acceptance/test_nonempty_settlement.py",
+        "added": 39,
+        "deleted": 0
+      },
+      {
+        "path": "gto/integration_acceptance/test_rank7.py",
+        "added": 63,
+        "deleted": 0
+      },
+      {
+        "path": "gto/integration_acceptance/test_settlement_expectations.py",
+        "added": 67,
+        "deleted": 0
+      },
+      {
+        "path": "gto/integration_tools_tests/test_verify_integration.py",
+        "added": 48,
+        "deleted": 0
+      },
+      {
+        "path": "gto/native/checkpoints.py",
+        "added": 79,
+        "deleted": 0
+      },
+      {
+        "path": "gto/native/settlement.py",
+        "added": 214,
+        "deleted": 0
+      },
+      {
+        "path": "gto/native/settlement_probe.cc",
+        "added": 14,
+        "deleted": 0
+      },
+      {
+        "path": "gto/native/verify_integration.py",
+        "added": 97,
+        "deleted": 0
+      },
+      {
+        "path": "gto/tests/test_checkpoints.py",
+        "added": 58,
+        "deleted": 0
+      },
+      {
+        "path": "gto/tests/test_hand169.py",
+        "added": 53,
+        "deleted": 0
+      },
+      {
+        "path": "gto/tests/test_rank7.py",
+        "added": 22,
+        "deleted": 0
+      },
+      {
+        "path": "gto/tests/test_settlement.py",
+        "added": 40,
+        "deleted": 0
+      },
+      {
+        "path": "handoff/gto/compressed/g11_rules_embed.h.zlib.b64",
+        "added": 1,
+        "deleted": 0
+      },
+      {
+        "path": "handoff/gto/compressed/g12_next_solver_disk.cc.zlib.b64",
+        "added": 1,
+        "deleted": 0
+      },
+      {
+        "path": "handoff/gto/compressed/g12_p1_cache_solver_disk.cc.zlib.b64",
+        "added": 1,
+        "deleted": 0
+      },
+      {
+        "path": "handoff/gto/compressed/g12_p1_packed_solver_disk.cc.zlib.b64",
+        "added": 1,
+        "deleted": 0
+      },
+      {
+        "path": "handoff/gto/compressed/pokerid_rules.py.zlib.b64",
+        "added": 1,
+        "deleted": 0
+      },
+      {
+        "path": "handoff/gto/verify_native_solvers.py",
+        "added": 32,
+        "deleted": 0
+      }
+    ]
+  }
+]

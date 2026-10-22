@@ -1,0 +1,105 @@
+{
+  "task": {
+    "id": "issue22-c-coverage-mode-v1",
+    "lane": "C",
+    "base_sha": "1ba12af9c84c1cb6d499843c368553ff4d654f43",
+    "base_branch": "codex/c-coverage-flag-input-20261022",
+    "branch": "codex/c-coverage-flag-fix-20261022",
+    "test_profile": "python",
+    "allowed_paths": [
+      "gto/hand169.py"
+    ],
+    "protected_tests": [
+      "tests/worker_acceptance/test_checkpoint_budget.py",
+      "tests/worker_acceptance/test_chip_oracle_types.py",
+      "tests/worker_acceptance/test_coverage_flag.py",
+      "tests/worker_acceptance/test_nonempty_settlement.py",
+      "tests/worker_acceptance/test_rank7.py",
+      "tests/worker_acceptance/test_settlement_expectations.py"
+    ],
+    "instruction": "Enforce exact bool require_complete before consuming records. Invalid None/int/string/list/dict/tuple control must raise ValueError; explicitFalse partial and defaultTrue strict complete1326 coverage behavior retained. Only gto/hand169.py. Fixed33 baseline7failures; existingGTO40 retained; no poker rules/solver/checkpoint/convergence changes."
+  },
+  "purpose": "Enforce exact bool require_complete before consuming records. Invalid None/int/string/list/dict/tuple control must raise ValueError; explicitFalse partial and defaultTrue strict complete1326 coverage behavior retained. Only gto/hand169.py. Fixed33 baseline7failures; existingGTO40 retained; no poker ",
+  "reviewed": true,
+  "risk": "low",
+  "dependencies": [
+    "issue22-c-chip-oracle-types-v2"
+  ],
+  "execution_conditions": [
+    "Explicit authorized independent safe development",
+    "Original4 durable state continuity and fresh complete allPR snapshot",
+    "Formal prepare/source collaboration/trusted finish; protected tests untouched"
+  ],
+  "completion_conditions": [
+    "Fixed acceptance and existing regressions pass",
+    "Only exact allowed source path changes",
+    "Host hash/test/tamper/commit then DraftPR and CI"
+  ],
+  "references": [
+    "https://github.com/kyoma1015/poker-sns/issues/22"
+  ],
+  "baseline": {
+    "base_sha": "1ba12af9c84c1cb6d499843c368553ff4d654f43",
+    "test_profile": "python",
+    "test_count": 34,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/worker_acceptance/test_checkpoint_budget.py": "af8bfd8693d6f77c661a5a9b53843b7377423e9c6f0735e8fe2b26978bef7b4a",
+      "tests/worker_acceptance/test_chip_oracle_types.py": "d835e4892502bc869ccbee8d4d2ce154fa5faf1c84bdada82d96035d84f00e5a",
+      "tests/worker_acceptance/test_coverage_flag.py": "7fada2998bf186d5f828783ce4706a2633c9a8f195d3d480f350990214d9a0ca",
+      "tests/worker_acceptance/test_nonempty_settlement.py": "02c4d041ca2253bd31694f4625ebdf7fd847341eb79b1576eeb2558c7c0f66d0",
+      "tests/worker_acceptance/test_rank7.py": "7146239998b7ce048bb576ad4bb174ccfa4d2c56df3ac91eb5cbe236c9536c07",
+      "tests/worker_acceptance/test_settlement_expectations.py": "cb24da18274a5cb0c30ba94202ed412c0ef85d865715d8b1a8ebe27e46cd8cb2"
+    }
+  },
+  "inherited_prs": {
+    "20": "8faea88802d0d34ae3e0319399e7f55ba71a9fcd"
+  },
+  "overlap_reviews": {
+    "75": {
+      "reviewed": true,
+      "reason": "Reviewed distinct fixed FAIL input boundary; existing source is preserved via exact complete blob or verified historical ancestor, not duplicate implementation.",
+      "candidate_base_sha": "1ba12af9c84c1cb6d499843c368553ff4d654f43",
+      "head_sha": "b7f3d2910526c8762ac4b19acb2e8fee7535d8a9",
+      "pr_base_sha": "5a49f437727fba0f4d48585300a04ec7e9d747a4",
+      "files": {
+        "gto/hand169.py": {
+          "candidate_blob": "b491c694f2353152d51c6fe87dd0facd5efd0a14",
+          "head_blob": "1bf6aaf8abf1f8c10cf6dec3ff0ea5d0ddeedb7e",
+          "mode": "ancestor_blob",
+          "witness_commit": "8faea88802d0d34ae3e0319399e7f55ba71a9fcd"
+        }
+      }
+    },
+    "29": {
+      "reviewed": true,
+      "reason": "Reviewed distinct fixed FAIL input boundary; existing source is preserved via exact complete blob or verified historical ancestor, not duplicate implementation.",
+      "candidate_base_sha": "1ba12af9c84c1cb6d499843c368553ff4d654f43",
+      "head_sha": "89fd492422497714d1665a9523e97ad4ba3ebee2",
+      "pr_base_sha": "44d46db7989a02ce28dba58bea6f30172c525dfc",
+      "files": {
+        "gto/hand169.py": {
+          "candidate_blob": "b491c694f2353152d51c6fe87dd0facd5efd0a14",
+          "head_blob": "b491c694f2353152d51c6fe87dd0facd5efd0a14",
+          "mode": "equivalent_blob"
+        }
+      }
+    },
+    "21": {
+      "reviewed": true,
+      "reason": "Reviewed distinct fixed FAIL input boundary; existing source is preserved via exact complete blob or verified historical ancestor, not duplicate implementation.",
+      "candidate_base_sha": "1ba12af9c84c1cb6d499843c368553ff4d654f43",
+      "head_sha": "61a38c4bdcd90111180237ef4451198cdc00d31b",
+      "pr_base_sha": "3ca87764e988cac588fef915d48823702a1a3326",
+      "files": {
+        "gto/hand169.py": {
+          "candidate_blob": "b491c694f2353152d51c6fe87dd0facd5efd0a14",
+          "head_blob": "1bf6aaf8abf1f8c10cf6dec3ff0ea5d0ddeedb7e",
+          "mode": "ancestor_blob",
+          "witness_commit": "8faea88802d0d34ae3e0319399e7f55ba71a9fcd"
+        }
+      }
+    }
+  }
+}

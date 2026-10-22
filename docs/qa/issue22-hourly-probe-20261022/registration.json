@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "approved_scope": "hourly COUNT=2 read-only launch probe; no source implementation",
+  "automation_id": "6ada2596d5148191be6c9dbf73ec2d34",
+  "registered_at": "2026-10-22T15:02:48.314396+00:00",
+  "schedule": "BEGIN:VEVENT\nDTSTART:20261022T160246Z\nRRULE:FREQ=HOURLY;COUNT=2\nEND:VEVENT",
+  "timing_mode": "exact_schedule",
+  "default_timezone": "America/Los_Angeles",
+  "is_enabled": true,
+  "next_run_time": null,
+  "provider_last_run": null,
+  "observed_runs": 0,
+  "configured_occurrences_utc": [
+    "2026-10-22T16:02:46Z",
+    "2026-10-22T17:02:46Z"
+  ],
+  "occurrence_times_are": "Computed from returned DTSTART/RRULE, NOT confirmed delivery times",
+  "next_run_null_cause": "UNKNOWN",
+  "previous_automation_paused": true,
+  "previous_configuration": "previous-automation.json",
+  "pause_reason": "Poker-only source-writing task could overlap read-only probe; enabled with unknown next run",
+  "automatic_restore": false,
+  "automatic_extension": false,
+  "unattended_development_enabled": false,
+  "new_paid_service": false,
+  "account_usage_cost_telemetry": "UNKNOWN",
+  "baseline_main": "781f038415503ece850c25a26e72ef67dee9c8a1",
+  "baseline_audit": "6c5197fcae060fc3b6355d7335f9f9f2b865ca7f",
+  "baseline_state": {
+    "implemented": 38,
+    "blocked": 2,
+    "running": 0,
+    "original_four_spec_hashes_match": true
+  },
+  "acceptance": "Two independently recorded provider runs with checkpoint/state continuity; registration alone is not PASS",
+  "limitations": [
+    "Native task may deliver into same conversation; independent Codex coldstart NOT proven",
+    "No provider next_run_time despite success; actual dispatch UNKNOWN",
+    "Read-only run cannot write new checkpoint; prior observation must be recovered from official latest_result, otherwise continuity UNKNOWN",
+    "Live invocation guard not installed; read-only observation does not prove active source-worker global exclusion",
+    "No live quota/error recovery or fee telemetry proof"
+  ]
+}

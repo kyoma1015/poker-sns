@@ -1,0 +1,31 @@
+{
+  "checkpoint_path": "docs/workers/RUN_CHECKPOINT_20261022.json",
+  "checkpoint_sha256": "b6c7ef171ab594da6ac9c3982ed57b306e354be165281afd63ff8f97096a664f",
+  "checkpoint_bytes": 21819,
+  "original_four": [
+    {
+      "id": "issue22-host-a",
+      "spec_hash": "b8e5cef7a2551629c1b0ad7dc009933fbfcc8b819193672cafb8a5f4540aeafd",
+      "status": "implemented"
+    },
+    {
+      "id": "issue22-host-b",
+      "spec_hash": "36e21fe50462ba564f1a378f56fea45de6165235d478821133f4069f66a5f890",
+      "status": "implemented"
+    },
+    {
+      "id": "issue22-host-c",
+      "spec_hash": "0ffe7156f52b4ece3ed889a48c486d5016d176bf60fea980617dc1541b5bbabc",
+      "status": "implemented"
+    },
+    {
+      "id": "issue22-host-d",
+      "spec_hash": "aab23a3d38a4484ea4e1bfb00ef1f306e68d8d5e84ada4e990ec6c44deecc539",
+      "status": "implemented"
+    }
+  ],
+  "status_counts": {
+    "blocked": 2,
+    "implemented": 38
+  }
+}

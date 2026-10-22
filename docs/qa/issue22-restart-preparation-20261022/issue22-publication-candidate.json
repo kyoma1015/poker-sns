@@ -1,0 +1,99 @@
+{
+  "task": {
+    "id": "issue22-a-publication-checkpoint-v1",
+    "lane": "A",
+    "base_sha": "921872d70427e069d58fddfb1a3523da1bfcfd8c",
+    "base_branch": "codex/a-publication-checkpoint-input-20261022",
+    "branch": "codex/a-publication-checkpoint-fix-20261022",
+    "test_profile": "python",
+    "allowed_paths": [
+      "scripts/continuation_recovery.py"
+    ],
+    "protected_tests": [
+      "tests/worker_acceptance/test_continuation_recovery.py",
+      "tests/worker_acceptance/test_discovery_preview.py",
+      "tests/worker_acceptance/test_discovery_store.py",
+      "tests/worker_acceptance/test_finite_lease.py",
+      "tests/worker_acceptance/test_finite_setup.py",
+      "tests/worker_acceptance/test_invocation_clock.py",
+      "tests/worker_acceptance/test_lease_initialization.py",
+      "tests/worker_acceptance/test_pr_overlap.py",
+      "tests/worker_acceptance/test_publication_checkpoint.py"
+    ],
+    "instruction": "Add record_publication(task_id,metadata,*,expected_revision,now=None) and publications list to public_checkpoint in scripts/continuation_recovery.py only. Isolated additive continuation_publications table after anchor validation, no existingjob/run/lease mutations. Exact metadata keys: source_commit/head_commit40hex, branch safe bounded git branch, pr_number/ci_run_id/ci_attempt positive exactint, ci_status enum queued,in_progress,success,failure,cancelled,timed_out,action_required,neutral,skipped,unknown; owner/run_id bounded nonsecret regex; last_success enum source_committed,draft_created,ci_observed,checkpoint_saved; next_action await_ci,review,discover_next,blocked; retry_count exactint equal job attempts-1 within0..1. Reject extra keys. Require implementedjob and source_commit matches persisted evidence.commit, immutable branch/pr/source identity. BEGIN IMMEDIATE CAS expected_revision0 first then exactrevision, monotonic finite timestamps via existingvalidator, return metadata plus id/revision/updated_at. Public checkpoint sorted publicationrows only, never raw evidence/token/context. All failures atomic. Fixed76baseline9ERROR;76+automation37PASS. Do not instantiate newcontroller on real state. No tests/commit/private access."
+  },
+  "purpose": "Persist bounded non-executable discovery suggestions across restarts without weakening reviewed worker gates.",
+  "reviewed": true,
+  "risk": "medium",
+  "dependencies": [
+    "issue22-a-discovery-preview-v1"
+  ],
+  "execution_conditions": [
+    "Explicit authorized independent safe development",
+    "Original4 durable state continuity and fresh complete allPR snapshot",
+    "Formal prepare/source collaboration/trusted finish; protected tests untouched"
+  ],
+  "completion_conditions": [
+    "Fixed acceptance and existing regressions pass",
+    "Only exact allowed source path changes",
+    "Host hash/test/tamper/commit then DraftPR and CI"
+  ],
+  "references": [
+    "https://github.com/kyoma1015/poker-sns/issues/22"
+  ],
+  "baseline": {
+    "base_sha": "921872d70427e069d58fddfb1a3523da1bfcfd8c",
+    "test_profile": "python",
+    "test_count": 76,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/worker_acceptance/test_continuation_recovery.py": "1d6d8d526006494d869921892dc3ff7d75f1f3cf18f8e0eeeb96a65aa47d8480",
+      "tests/worker_acceptance/test_discovery_preview.py": "61de61d1c67ea9db1443a501a703fe0d845cb65d75d6590cdf861a13996c0617",
+      "tests/worker_acceptance/test_discovery_store.py": "f47a506749c98265db23a37fd629c3fd597e29066882444686effcf247fc3fa8",
+      "tests/worker_acceptance/test_finite_lease.py": "d497616524d2bdee11afcb9fd39519bc0e270bdea29a2f6dd4d17cb60fa2456f",
+      "tests/worker_acceptance/test_finite_setup.py": "d6b0a334d65dd70bc000d296144e471d7f4cef301191fd84be9e7b07aee4a7e7",
+      "tests/worker_acceptance/test_invocation_clock.py": "a131098e56526a47e53d16b518f766fd37710cbf17939e0579178c1f26097eb1",
+      "tests/worker_acceptance/test_lease_initialization.py": "f9957c370e68934dc4bf6caa4080c1672e08901a06c6f8d6de76c9a87aa793c0",
+      "tests/worker_acceptance/test_pr_overlap.py": "7a7d4988fbdca1bb720f59701973fee1975fe173b2d9006356a256c648129a0d",
+      "tests/worker_acceptance/test_publication_checkpoint.py": "66f0518fa9a5dafef69ee75cdd19320651ae261ab005cab313a4b14faa9efb6a"
+    }
+  },
+  "inherited_prs": {
+    "102": "7e4e258a1be6e24634bf0c5e6535b3581f59dd9d",
+    "96": "a3186ef6a5da4c3489aa2e7947fdea2b00395c31",
+    "34": "0a24e1935cb18efcc36ee75666de5b282e8ed3f4"
+  },
+  "overlap_reviews": {
+    "74": {
+      "reviewed": true,
+      "reason": "Prior source implementation preserved as exact verified historical blob; distinct deterministic nonfinite-wait FAIL.",
+      "candidate_base_sha": "921872d70427e069d58fddfb1a3523da1bfcfd8c",
+      "head_sha": "2a1f39264f2b467df652a33864de659f6537e92e",
+      "pr_base_sha": "d8b3687f058227ce8a779d463262d4e2b6fad536",
+      "files": {
+        "scripts/continuation_recovery.py": {
+          "candidate_blob": "550a1807b9bd7d09182276d954566695e57ebd5c",
+          "head_blob": "f913c6c8474040a59916926953da9a03ceefa4a9",
+          "mode": "ancestor_blob",
+          "witness_commit": "2fcd124d06e2627a1436f2123a7fdc9ce41df95f"
+        }
+      }
+    },
+    "38": {
+      "reviewed": true,
+      "reason": "Prior source implementation preserved as exact verified historical blob; distinct deterministic nonfinite-wait FAIL.",
+      "candidate_base_sha": "921872d70427e069d58fddfb1a3523da1bfcfd8c",
+      "head_sha": "2cdce5a05c72fa4f0bd6f4c9ec68682cdf5aa9dd",
+      "pr_base_sha": "ee9b1d2521bfe8434f76010f87e53d5da477723f",
+      "files": {
+        "scripts/continuation_recovery.py": {
+          "candidate_blob": "550a1807b9bd7d09182276d954566695e57ebd5c",
+          "head_blob": "f913c6c8474040a59916926953da9a03ceefa4a9",
+          "mode": "ancestor_blob",
+          "witness_commit": "2fcd124d06e2627a1436f2123a7fdc9ce41df95f"
+        }
+      }
+    }
+  }
+}

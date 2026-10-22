@@ -1,0 +1,178 @@
+✔ all 32 positive ceilings equal the sum of per-question attainable maxima (4.003594ms)
+✔ negative, zero, unknown and nonfinite values do not become top tendencies (1.393457ms)
+✔ normalization compares proportions rather than raw totals (0.27121ms)
+✔ one incidental selective-burst point must not assert attacking ability (0.514608ms)
+✔ noticing danger must not imply that a calling station folds (0.236678ms)
+✔ attack wording needs both initiative and sustained attack at the threshold (0.192752ms)
+✔ fixed persona replay (not live): 超弱気な初心者 (0.96556ms)
+✔ fixed persona replay (not live): 超タイトな初心者 (0.667399ms)
+✔ fixed persona replay (not live): タイト・パッシブ (1.514971ms)
+✔ fixed persona replay (not live): タイト・アグレッシブ (0.547458ms)
+✔ fixed persona replay (not live): ルース・パッシブ (0.737906ms)
+✔ fixed persona replay (not live): ルース・アグレッシブ (0.504493ms)
+✔ fixed persona replay (not live): コーリングステーション (0.583172ms)
+✔ fixed persona replay (not live): マニアック (0.479735ms)
+✔ fixed persona replay (not live): 超慎重な上級者 (1.401128ms)
+✔ fixed persona replay (not live): 熟練したLAG (0.450522ms)
+✔ fixed persona replay (not live): 熟練したTAG (0.401748ms)
+✔ fixed persona replay (not live): ブラフ嫌い (0.252001ms)
+✔ fixed persona replay (not live): ブラフ多用型 (0.19819ms)
+✔ fixed persona replay (not live): ギャンブラー (0.220453ms)
+✔ fixed persona replay (not live): リスク回避型 (0.232652ms)
+✔ fixed persona replay (not live): バランス型 (0.278731ms)
+✔ fixed persona replay (not live): 相手依存型 (0.466565ms)
+✔ fixed persona replay (not live): 感情的なティルト型 (0.187904ms)
+✔ fixed persona replay (not live): トーナメント生存重視型 (0.452634ms)
+✔ fixed persona replay (not live): トーナメント攻撃型 (0.232061ms)
+✔ fixed persona replay (not live): キャッシュゲーム堅実派 (0.178169ms)
+✔ fixed persona replay (not live): 初心者の無謀型 (0.222497ms)
+✔ fixed persona replay (not live): 上級者の柔軟型 (0.255357ms)
+✔ fixed persona replay (not live): フィット・オア・フォールド型 (0.314055ms)
+✔ fixed persona replay (not live): バリュー重視型 (0.528068ms)
+✔ fixed persona replay (not live): トラップ好き (0.27077ms)
+✔ fixed persona replay (not live): プリフロップ超ルース型 (0.203487ms)
+✔ fixed persona replay (not live): ポストフロップ消極型 (0.173613ms)
+✔ fixed persona replay (not live): 勝負好きだがブラフしない型 (0.318792ms)
+✔ fixed persona replay (not live): 理論重視の冷静型 (0.235245ms)
+✔ question bank validation rejects incomplete or contradictory data (1.123799ms)
+✔ a late result cannot win after a new request, restart or unmount (0.109645ms)
+✔ audit wording corrections apply only to the displayed copy, without mutating saved data (0.246813ms)
+✔ wording correction leaves unrelated copy unchanged (0.110987ms)
+✔ result action snapshots do not invalidate each other, but navigation invalidates all old actions (0.081533ms)
+✔ all 36 configured animal display keys have exactly one matching PNG asset (0.533296ms)
+✔ prototype key constructor is not a known trait (0.136366ms)
+✔ prototype key toString is not a known trait (0.076466ms)
+✔ prototype key __proto__ is not a known trait (0.070837ms)
+✔ prototype key hasOwnProperty is not a known trait (0.425443ms)
+✔ prototype key valueOf is not a known trait (0.043826ms)
+✔ known trait remains finite and wins over inherited key (0.097227ms)
+✖ persona audit rejects invalid answer count 0 (3.876741ms)
+✖ persona audit rejects invalid answer count 49 (2.831161ms)
+✖ persona audit rejects invalid answer count 51 (2.495393ms)
+✖ persona audit rejects invalid answer count null (2.496164ms)
+✖ persona audit rejects choice outside the question options (2.957652ms)
+ℹ tests 53
+ℹ suites 0
+ℹ pass 48
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 52.580074
+
+✖ failing tests:
+
+test at tests/player-type.test.mjs:146:2
+✖ persona audit rejects invalid answer count 0 (3.876741ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+
+      at TestContext.<anonymous> (file://<retained-workspace>/issue22-d-main-input/tests/player-type.test.mjs:149:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type.test.mjs:146:2
+✖ persona audit rejects invalid answer count 49 (2.831161ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+
+      at TestContext.<anonymous> (file://<retained-workspace>/issue22-d-main-input/tests/player-type.test.mjs:149:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type.test.mjs:146:2
+✖ persona audit rejects invalid answer count 51 (2.495393ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+
+      at TestContext.<anonymous> (file://<retained-workspace>/issue22-d-main-input/tests/player-type.test.mjs:149:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type.test.mjs:146:2
+✖ persona audit rejects invalid answer count null (2.496164ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+
+      at TestContext.<anonymous> (file://<retained-workspace>/issue22-d-main-input/tests/player-type.test.mjs:149:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type.test.mjs:153:1
+✖ persona audit rejects choice outside the question options (2.957652ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+
+      at TestContext.<anonymous> (file://<retained-workspace>/issue22-d-main-input/tests/player-type.test.mjs:156:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

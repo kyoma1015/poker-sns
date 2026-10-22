@@ -1,0 +1,36 @@
+{
+  "observed_at": "2026-10-22T04:40:38.109506+00:00",
+  "A_C_changed_path_overlap": [],
+  "poll_source_paths_changed": false,
+  "github_vercel_status": [
+    {
+      "head": "2a1f39264f2b467df652a33864de659f6537e92e",
+      "context": "Vercel",
+      "state": "failure",
+      "description": "Deployment rate limited \u2014 retry in 24 hours."
+    },
+    {
+      "head": "b7f3d2910526c8762ac4b19acb2e8fee7535d8a9",
+      "context": "Vercel",
+      "state": "failure",
+      "description": "Deployment rate limited \u2014 retry in 24 hours."
+    }
+  ],
+  "vercel_operations_attempted": false,
+  "new_other_owner_prs": [
+    {
+      "number": 77,
+      "head_sha": "077e690f7904d2f0cb4755e8adfb1b33d005284b",
+      "changed_paths": [
+        ".github/workflows/poll-pg17-synthetic-restore.yml"
+      ]
+    },
+    {
+      "number": 76,
+      "head_sha": "667fee7a470166f1d214571affd2dd3709d7670c",
+      "changed_paths": [
+        "docs/qa/poll-github-actions-live-backup-threat-model-20261022.md"
+      ]
+    }
+  ]
+}

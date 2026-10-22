@@ -1,0 +1,92 @@
+{
+  "task": {
+    "id": "issue22-b-rule-search-reconciled-v2",
+    "lane": "B",
+    "base_sha": "7ee09c1b3bf71a75e3889951d7520bf3347ba375",
+    "base_branch": "codex/issue22-b-search-reconciled-input-20261021",
+    "branch": "codex/issue22-b-rule-search-reconciled-fix-20261021",
+    "test_profile": "node",
+    "allowed_paths": [
+      "src/TDA.tsx",
+      "src/tdaSearchRequests.ts"
+    ],
+    "protected_tests": [
+      "tests/worker-acceptance.test.mjs",
+      "tests/browser/tda-search-supabase.ts",
+      "tests/browser/tda-entry.tsx"
+    ],
+    "instruction": "Fix witnessed stale TDA rule-search request handling. New query or clear must invalidate old responses immediately before debounce expires. Only newest request may update results/error/loading; clearing must remain empty and idle even after old completions. Catch thrown transport, show generic Japanese recoverable search error without raw backend detail, and permit subsequent query recovery. Keep rule/quiz content and DB unchanged. Protected browser acceptance covers five real TSX scenarios using synthetic deferred transport and must remain unchanged. Resolve pinned npm dependencies from trusted external parent node_modules, cache in owned OS temp, no installs or cache inside prepared source worktree. No commit/push by worker; controller validates/commits."
+  },
+  "purpose": "Prevent old TDA rule search results/errors overwriting a newer query or resurrecting after clear; recover thrown transport.",
+  "reviewed": true,
+  "risk": "low",
+  "dependencies": [
+    "issue22-b-saved-answer-20261021"
+  ],
+  "execution_conditions": [
+    "Authorized formal host with durable shared-state continuity and no active B lease",
+    "Node24, Chromium and lockfile-installed dependencies preprovisioned outside source worktree",
+    "Fresh complete open PR file/head snapshot and inherited/overlap review"
+  ],
+  "completion_conditions": [
+    "Fixed five browser acceptance cases pass unchanged",
+    "All existing quiz tests and mocked browser QA/build/lint pass",
+    "Controller source/hash/commit checks; new branch Draft PR and CI evidence"
+  ],
+  "references": [
+    "https://github.com/kyoma1015/poker-sns/pull/32",
+    "docs/workers/ISSUE22_RESTART_STATE_20261021.md",
+    "src/TDA.tsx searchRules and query debounce effect",
+    "docs/qa/pr-overlap-20261021/B-PR19-reviewed-integration.json"
+  ],
+  "baseline": {
+    "base_sha": "7ee09c1b3bf71a75e3889951d7520bf3347ba375",
+    "test_profile": "node",
+    "test_count": 5,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/worker-acceptance.test.mjs": "29f6f0e9a9cb956fe59fe9bffeb2f73053f8f149a6e539fef8d0101332db025d",
+      "tests/browser/tda-search-supabase.ts": "d6ab7db17e0d5df1f9378da549a80b260a08e856c1744079251dca7b99f89953",
+      "tests/browser/tda-entry.tsx": "6030c21b7b36b39dff78566a36cd3f748a91ca8aac315b4847d1077f7a7ae283"
+    }
+  },
+  "inherited_prs": {
+    "32": "0639d36d720612466474e75fa8994f409d2d41de",
+    "19": "3bee4eaace1f933cc4ad0721fcab956e98a61ec9",
+    "14": "4e16f7a7b567237d2735f1392906a6b1de2b7c23",
+    "13": "3ca87764e988cac588fef915d48823702a1a3326"
+  },
+  "overlap_reviews": {
+    "21": {
+      "reviewed": true,
+      "reason": "Root audited the pinned PR implementation and independent failing acceptance. All shared file bytes are identical to the input or its verified ancestor; this task fixes a distinct reproduced defect. No pending implementation is ignored.",
+      "candidate_base_sha": "7ee09c1b3bf71a75e3889951d7520bf3347ba375",
+      "head_sha": "61a38c4bdcd90111180237ef4451198cdc00d31b",
+      "pr_base_sha": "3ca87764e988cac588fef915d48823702a1a3326",
+      "files": {
+        "src/TDA.tsx": {
+          "candidate_blob": "b46978da60210a2693be4a0e08fd7fc99de9fa26",
+          "head_blob": "b590ceded8d51c4adba704da81804a5ffa39667d",
+          "mode": "ancestor_blob",
+          "witness_commit": "4e16f7a7b567237d2735f1392906a6b1de2b7c23"
+        }
+      }
+    },
+    "11": {
+      "reviewed": true,
+      "reason": "Root audited the pinned PR implementation and independent failing acceptance. All shared file bytes are identical to the input or its verified ancestor; this task fixes a distinct reproduced defect. No pending implementation is ignored.",
+      "candidate_base_sha": "7ee09c1b3bf71a75e3889951d7520bf3347ba375",
+      "head_sha": "aed6425d5e70379139f3b35ae66cedffa3a55786",
+      "pr_base_sha": "f8890b6ec11d30676c55dc7dc8801f1da8549d28",
+      "files": {
+        "src/TDA.tsx": {
+          "candidate_blob": "b46978da60210a2693be4a0e08fd7fc99de9fa26",
+          "head_blob": "924827cd053df5f8a5e30bec90456b0d54a0af51",
+          "mode": "ancestor_blob",
+          "witness_commit": "efef38a32ed57ab67cee30a3a28377c34ec6c4dc"
+        }
+      }
+    }
+  }
+}

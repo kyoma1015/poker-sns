@@ -1,0 +1,32 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-a-discovery-preview-v1",
+        "lane": "A",
+        "base_sha": "9bab2ff06be4b9fba7b9f3b1945c9a1c1dafb11d",
+        "base_branch": "codex/a-discovery-preview-input-20261022",
+        "branch": "codex/a-discovery-preview-fix-20261022",
+        "test_profile": "python",
+        "allowed_paths": [
+          "scripts/discover_review_queue.py"
+        ],
+        "protected_tests": [
+          "tests/worker_acceptance/test_continuation_recovery.py",
+          "tests/worker_acceptance/test_discovery_preview.py",
+          "tests/worker_acceptance/test_discovery_store.py",
+          "tests/worker_acceptance/test_finite_lease.py",
+          "tests/worker_acceptance/test_finite_setup.py",
+          "tests/worker_acceptance/test_invocation_clock.py",
+          "tests/worker_acceptance/test_lease_initialization.py",
+          "tests/worker_acceptance/test_pr_overlap.py"
+        ],
+        "instruction": "Implement new offline read-only scripts/discover_review_queue.py only. preview(sources) accepts list max100 validated dicts laneABCD/reference str/text str. Reuse existing extract_candidates and digest on lane/reference/title; stable dedup sortedid returns version1/executableFalse/count/items(id/lane/ref/title/status review_required/ownerNone), never promote source status/owner/task. CLI --sources local regular non-symlink file max1MiB, bounded read with safe O_NOFOLLOW O_NONBLOCK/fstat regular checks; no FIFO/device/state/network/workers/filesystemwrites. JSON only stdout success; return2 with static safe stderr for invalidinput (no rawvalues). Existing extractor100suggestions/1000lines/title200/ref300 limits preserved. Fixed67 baseline1FAIL6ERROR source missing. Must not open SQLite or run subprocess in adapter. No live controller or scheduler change. No protectedtests/commit/private state. Run67+automation37."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

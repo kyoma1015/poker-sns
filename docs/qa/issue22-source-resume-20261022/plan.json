@@ -1,0 +1,35 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-c-finite-number-v1",
+        "lane": "C",
+        "base_sha": "f88a477592287aada9322fcf3db254a57f77e4cc",
+        "base_branch": "codex/c-finite-number-input-20261022",
+        "branch": "codex/c-finite-number-fix-20261022",
+        "test_profile": "python",
+        "allowed_paths": [
+          "gto/hand169.py"
+        ],
+        "protected_tests": [
+          "tests/worker_acceptance/test_checkpoint_budget.py",
+          "tests/worker_acceptance/test_chip_oracle_types.py",
+          "tests/worker_acceptance/test_coverage_flag.py",
+          "tests/worker_acceptance/test_frequency_snapshot.py",
+          "tests/worker_acceptance/test_nonempty_settlement.py",
+          "tests/worker_acceptance/test_rank7.py",
+          "tests/worker_acceptance/test_settlement_expectations.py",
+          "tests/worker_acceptance/test_subnormal_ev.py",
+          "tests/worker_acceptance/test_subnormal_policy.py",
+          "tests/worker_acceptance/test_unrepresentable_numbers.py",
+          "tests/worker_acceptance/test_weighted_ev.py"
+        ],
+        "instruction": "Normalize unrepresentable huge integer weight, frequency and EV inputs into the existing ValueError validation contract instead of leaking math.isfinite OverflowError. Only gto/hand169.py. Minimal shared finite-number predicate is acceptable. Preserve ordinary ints/floats, bool rejection, invalid types, all existing weighted/subnormal algorithms, source inputs/fixtures/checkpoints. Fixed58 baseline6ERROR; existing GTO40. Do not edit tests, install dependencies, commit, network or access DB."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

@@ -39,3 +39,21 @@ Safe now: source comparison, strict hash checks, temporary SQLite Python tests. 
 These C-lane blockers do not prevent A/B/D/SNS branch development.
 
 Existing Next backend unit suite: `python -B handoff/gto/g12_next/g12_p1_live_backend_tests.py` — 9 PASS using temporary SQLite only (docs/qa/integration-20261020/gto-next.log). Added to CI. Packed25 + Next9 = 34 Python backend tests; this is not native solver/G11-parity coverage.
+
+## Latest validator continuation — 2026-10-21 23:05 UTC
+Earlier handoff statements are dated history; latest reconstructed-native evidence remains in active GTO PRs/README, not original G11 recovery. PR61 b6456dce6e8f468448f2daedc8850dce6d7d76ff rejects absent/non-dict/empty expected objects for every case before reference/native loading. Before: all17 expected mappings erased still PASS17. Fixed22/oldGTO40PASS,CI39690270215SUCCESS. Sourceonlysettlement.py; originalfixtures/reference/solver/checkpoints unchanged.
+Next immutable input7fa1ffd5de8a7bb0479f4f5348445782326cde8e exposes bool/float chip expectation equality; fixed28 baseline30subtest failures,protected5. NOT implemented; no worker/lease. PR38 ready-next/C-chip-oracle-candidate.json requires a later scheduled invocation and fresh gates. Synthetic validation is not strategy precision/convergence or historical checkpoint compatibility.
+
+## Explicit correction — 2026-10-22
+The above v1 is BLOCKED, not PASS: coordinator descriptor mistakenly called refund scalar, contradicting original17 fixtures and hash-verified Betting.settle refund vector. Its implementation produced5 errors in original28; no successful commit, old spec/tests/worktree retained. One separate v2 retry on input115adb8a6ec7aff591aaf90d479a1eb205c1d24b correctly checks rake exact int and refund/net/pot_amounts/pot_rakes exact int[]. Fixed29/oldGTO40PASS, controller guards PASS, Draft PR66 b492f8c7730cb5ebb66beee909ba2526dcb7cc85,CI39711822875SUCCESS. Only settlement.py changed; reference/fixtures/solver/checkpoints untouched. Trigger was explicit user instruction, not scheduler. Detailed contract/error/evidence: PR38 docs/workers/ISSUE22_FOLLOWUP_20261022.md. No G11/strategy/convergence/resume claim.
+
+## New source continuation — 2026-10-22
+C81 strict coverage flag and C84 per-row frequency snapshot: fixed34/37 +GTO40 PASS, CI SUCCESS. OriginalG11/pokerconvergence remain BLOCKED. See [ledger](../workers/ISSUE22_AUTONOMOUS_SOURCE_20261022.md). Existing source/original4state/BLOCKED history retained; no production/main/paid action.
+
+2026-10-22 Draft97 fixes finite representable EV lost by ratio-first underflow. Sourcea4ced9e4e37e79e32a259ed28d2cfbe279542521; fixed42 inclDecimaloracle5/GTO40PASS, CI39767319480SUCCESS. Synthetic export aggregation only, no G11/checkpoint/convergence proof. Original artifacts unchanged.
+
+2026-10-22 Draft101 subnormal EV46+40PASS/CI39784081988; Draft105 subnormal frequencies50+40PASS/CI39785885665. Minimal main candidate103 exact source reuse,21+10PASS/CI39785868404. Actual engine convergence/G11 compatibility still unproven; full target unchanged. Source/branch/limits in ISSUE22_SELECTED_REUSE_20261022.md.
+
+2026-10-22 Draft108: reject unrepresentable integer weight/frequency/EV consistently as ValueError, preserve latest weighted/subnormal source.58fixed+40GTO PASS, CI39813869671SUCCESS. Source9213c8691f4ae45d8398a7b745808e941793b7b6. No G11/strategy convergence or main adoption claim; see ISSUE22_SOURCE_RESUME_20261022.md.
+
+2026-10-22 Draft110 prevents fsum intermediate overflow from discarding representable +/-maximum finite weighted EV.62fixed/40GTO PASS;CI39817184387SUCCESS at5d4d031f472e9c0e1631ef0d532295ec44b10d20; source dd883b7ded3b792b366c12b18e3b1937ca469156. Normalfastpath/exportedmass/prior fixes preserved. Not G11/pokerconvergence proof; stacked source reuse, no main merge. See ISSUE22_NEXT_SOURCE_QA_20261022.md.

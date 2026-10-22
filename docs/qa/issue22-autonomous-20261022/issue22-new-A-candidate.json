@@ -1,0 +1,72 @@
+{
+  "task": {
+    "id": "issue22-a-finite-lease-v1",
+    "lane": "A",
+    "base_sha": "2581170538b804f09920f557f98f2459feb6d814",
+    "base_branch": "codex/a-finite-lease-input-20261022",
+    "branch": "codex/a-finite-lease-fix-20261022",
+    "test_profile": "python",
+    "allowed_paths": [
+      "scripts/code_worker.py"
+    ],
+    "protected_tests": [
+      "tests/worker_acceptance/test_continuation_recovery.py",
+      "tests/worker_acceptance/test_lease_initialization.py",
+      "tests/worker_acceptance/test_pr_overlap.py",
+      "tests/worker_acceptance/test_finite_lease.py"
+    ],
+    "instruction": "Reject nonfinite or nonpositive duration, bool/string duration, nonfinite or bool/string explicit clocks and nonfinite expiration with ValueError BEFORE any lease transaction or write. Claim and finish must preserve existing rows when rejected. Retain valid integer/float clocks including epoch0 and fractional duration. Preserve replay/expiry/lane/attempt/lock/hash policies; only scripts/code_worker.py. Fixed35 baseline21failures. Run old22worker/15queue; no live state used in tests."
+  },
+  "purpose": "Reject nonfinite or nonpositive duration, bool/string duration, nonfinite or bool/string explicit clocks and nonfinite expiration with ValueError BEFORE any lease transaction or write. Claim and finish must preserve existing rows when rejected. Retain valid integer/float clocks including epoch0 and ",
+  "reviewed": true,
+  "risk": "medium",
+  "dependencies": [
+    "issue22-a-sqlite-init-v1"
+  ],
+  "execution_conditions": [
+    "Explicit authorized independent safe development",
+    "Original4 durable state continuity and fresh complete allPR snapshot",
+    "Formal prepare/source collaboration/trusted finish; protected tests untouched"
+  ],
+  "completion_conditions": [
+    "Fixed acceptance and existing regressions pass",
+    "Only exact allowed source path changes",
+    "Host hash/test/tamper/commit then DraftPR and CI"
+  ],
+  "references": [
+    "https://github.com/kyoma1015/poker-sns/issues/22"
+  ],
+  "baseline": {
+    "base_sha": "2581170538b804f09920f557f98f2459feb6d814",
+    "test_profile": "python",
+    "test_count": 35,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/worker_acceptance/test_continuation_recovery.py": "1d6d8d526006494d869921892dc3ff7d75f1f3cf18f8e0eeeb96a65aa47d8480",
+      "tests/worker_acceptance/test_lease_initialization.py": "f9957c370e68934dc4bf6caa4080c1672e08901a06c6f8d6de76c9a87aa793c0",
+      "tests/worker_acceptance/test_pr_overlap.py": "7a7d4988fbdca1bb720f59701973fee1975fe173b2d9006356a256c648129a0d",
+      "tests/worker_acceptance/test_finite_lease.py": "d497616524d2bdee11afcb9fd39519bc0e270bdea29a2f6dd4d17cb60fa2456f"
+    }
+  },
+  "inherited_prs": {
+    "69": "4d30c7ac0d08104f9d159987e38c823ef7c3b419",
+    "26": "4fbfd95ef42292c91b6fe8573ea214371d759fda"
+  },
+  "overlap_reviews": {
+    "74": {
+      "reviewed": true,
+      "reason": "Reviewed distinct fixed FAIL input boundary; existing source is preserved via exact complete blob or verified historical ancestor, not duplicate implementation.",
+      "candidate_base_sha": "2581170538b804f09920f557f98f2459feb6d814",
+      "head_sha": "2a1f39264f2b467df652a33864de659f6537e92e",
+      "pr_base_sha": "d8b3687f058227ce8a779d463262d4e2b6fad536",
+      "files": {
+        "scripts/code_worker.py": {
+          "candidate_blob": "bbfee076eaf03225c23871c3e24bc1a84f82fe9c",
+          "head_blob": "bbfee076eaf03225c23871c3e24bc1a84f82fe9c",
+          "mode": "equivalent_blob"
+        }
+      }
+    }
+  }
+}

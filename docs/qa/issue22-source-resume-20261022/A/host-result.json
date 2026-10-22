@@ -1,0 +1,37 @@
+{
+  "id": "issue22-a-preview-unicode-v1",
+  "lane": "A",
+  "base_sha": "a3708f542c6b9f349712c02a8924aa44a9a7a44e",
+  "executor": "host_session",
+  "host_agent_id": "/root/preview_unicode_impl",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "scripts/discover_review_queue.py"
+  ],
+  "tested_source_sha256": {
+    "scripts/discover_review_queue.py": "52d6ca0cc3f08ae75cef846275d0dc3780bc8a8efc87010ba60de7c2ff38bf01"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 72,
+      "output_sha256": "79a9b14196bdfaadbc0b063120a24f2f2d23f6f47a27843b875605b9c331501b"
+    }
+  ],
+  "commit": "15e4f78dfcbf7078c0c6da19e9c10145b425a20c",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

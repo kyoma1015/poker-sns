@@ -1,0 +1,77 @@
+{
+  "task": {
+    "id": "issue22-c-chip-oracle-types-v1",
+    "lane": "C",
+    "base_sha": "7fa1ffd5de8a7bb0479f4f5348445782326cde8e",
+    "base_branch": "codex/c-chip-oracle-input-20261022",
+    "branch": "codex/c-chip-oracle-fix-20261022",
+    "test_profile": "python",
+    "allowed_paths": [
+      "gto/native/settlement.py"
+    ],
+    "protected_tests": [
+      "tests/worker_acceptance/test_checkpoint_budget.py",
+      "tests/worker_acceptance/test_chip_oracle_types.py",
+      "tests/worker_acceptance/test_nonempty_settlement.py",
+      "tests/worker_acceptance/test_rank7.py",
+      "tests/worker_acceptance/test_settlement_expectations.py"
+    ],
+    "instruction": "Before reference/native execution validate known chip expectation fields: present rake/refund type exactly int, not bool or float; present net/pot_amounts/pot_rakes lists of exact ints. Negative integer net stays valid. Preserve partial expectation field support and existing nonempty expected gate, unchanged comparisons for other fields, valid17 cases/rank7/checkpoint tests. No original/reference/fixture/solver/checkpoint changes. Only gto/native/settlement.py. Fixed28 currently fails30 subtests; protected5 must remain unchanged. Pure Python stdlib, owned synthetic temp fixture copies. Must NOT dispatch in same invocation as issue22-c-settlement-expectations-v1; current lane C task already used. Fresh scheduled prompt/PR snapshot/dependency/lease gates required before future host prepare."
+  },
+  "purpose": "Prevent boolean/float chip expectations from passing integer equality and falsely counting as verified exact chip oracles.",
+  "reviewed": true,
+  "risk": "low",
+  "dependencies": [
+    "issue22-c-settlement-expectations-v1"
+  ],
+  "execution_conditions": [
+    "A later original finite scheduled invocation, not an extra local run",
+    "Same original sharedstate continuity and no active lane lease",
+    "Fresh complete all open PR base/head/files snapshot with strict exact Git proof",
+    "Actual formal host collaboration and Python3.12 stdlib, owned temp fixtures only"
+  ],
+  "completion_conditions": [
+    "Immutable28 acceptance PASS; protected5 hashes unchanged",
+    "Existing40 GTO Python regression PASS",
+    "Host sourcehash/test/tamper/noop/commit proof and Draft PR CI"
+  ],
+  "references": [
+    "https://github.com/kyoma1015/poker-sns/issues/22",
+    "https://github.com/kyoma1015/poker-sns/pull/61",
+    "gto/README.md exact hand-derived chip expectations and rounding",
+    "docs/qa/gto-chip-oracle-input-20261022.md"
+  ],
+  "baseline": {
+    "base_sha": "7fa1ffd5de8a7bb0479f4f5348445782326cde8e",
+    "test_profile": "python",
+    "test_count": 28,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/worker_acceptance/test_checkpoint_budget.py": "af8bfd8693d6f77c661a5a9b53843b7377423e9c6f0735e8fe2b26978bef7b4a",
+      "tests/worker_acceptance/test_chip_oracle_types.py": "7a3cf40b138d385ecfa430aeb31683ba89617ac4a59885309358f860a6d69c20",
+      "tests/worker_acceptance/test_nonempty_settlement.py": "02c4d041ca2253bd31694f4625ebdf7fd847341eb79b1576eeb2558c7c0f66d0",
+      "tests/worker_acceptance/test_rank7.py": "7146239998b7ce048bb576ad4bb174ccfa4d2c56df3ac91eb5cbe236c9536c07",
+      "tests/worker_acceptance/test_settlement_expectations.py": "cb24da18274a5cb0c30ba94202ed412c0ef85d865715d8b1a8ebe27e46cd8cb2"
+    }
+  },
+  "inherited_prs": {
+    "61": "b6456dce6e8f468448f2daedc8850dce6d7d76ff",
+    "57": "c73b57d156e3c1aae24e10565787df4d73b1c3a8",
+    "33": "2620396d207970fae7470043a404d7b0582b8829",
+    "25": "6b9bf03f63f1c5f23dc4271ad8714f5f8bbea04e"
+  },
+  "overlap_reviews": {},
+  "observed_baseline_summary": {
+    "tests": 28,
+    "subtest_failures": 30,
+    "errors": 0,
+    "reproduction": "Eight zero-rake expected values changed from integer0 to boolFalse still PASS17 on prior source",
+    "log": "issue22-c-chip-oracle-baseline.log"
+  },
+  "host_review": {
+    "source_not_implemented_by_root": true,
+    "input_source_unchanged_from_PR61": true
+  },
+  "readiness": "Prepared input only. Never count failing baseline as completed source. Fresh future scheduled gates required."
+}

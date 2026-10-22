@@ -1,0 +1,109 @@
+{
+  "task": {
+    "id": "issue22-c-frequency-snapshot-v1",
+    "lane": "C",
+    "base_sha": "fd25f0909c66160150c24dacc9b8175901bd1888",
+    "base_branch": "codex/c-frequency-snapshot-input-20261022",
+    "branch": "codex/c-frequency-snapshot-fix-20261022",
+    "test_profile": "python",
+    "allowed_paths": [
+      "gto/hand169.py"
+    ],
+    "protected_tests": [
+      "tests/worker_acceptance/test_checkpoint_budget.py",
+      "tests/worker_acceptance/test_chip_oracle_types.py",
+      "tests/worker_acceptance/test_coverage_flag.py",
+      "tests/worker_acceptance/test_frequency_snapshot.py",
+      "tests/worker_acceptance/test_nonempty_settlement.py",
+      "tests/worker_acceptance/test_rank7.py",
+      "tests/worker_acceptance/test_settlement_expectations.py"
+    ],
+    "instruction": "Snapshot each already-validated frequencies vector before retaining it in aggregation buckets. A generator may reuse/mutate its list between yields: preserve consumed-row weighted values and prevent post-yieldNaN bypass. Do not mutate input buffers. Preserve strict bool coverage, priorPR29overflow, math/export/zero-mass/unknownEV semantics. Only gto/hand169.py source. Fixed37 baseline2FAIL; existingGTO40; no solver/rules/checkpoint/strategy claims."
+  },
+  "purpose": "Prevent mutable input buffer reuse from corrupting validated streamed hand169 aggregates.",
+  "reviewed": true,
+  "risk": "low",
+  "dependencies": [
+    "issue22-c-coverage-mode-v1"
+  ],
+  "execution_conditions": [
+    "Explicit authorized independent safe development",
+    "Original4 durable state continuity and fresh complete allPR snapshot",
+    "Formal prepare/source collaboration/trusted finish; protected tests untouched"
+  ],
+  "completion_conditions": [
+    "Fixed acceptance and existing regressions pass",
+    "Only exact allowed source path changes",
+    "Host hash/test/tamper/commit then DraftPR and CI"
+  ],
+  "references": [
+    "https://github.com/kyoma1015/poker-sns/issues/22"
+  ],
+  "baseline": {
+    "base_sha": "fd25f0909c66160150c24dacc9b8175901bd1888",
+    "test_profile": "python",
+    "test_count": 37,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/worker_acceptance/test_checkpoint_budget.py": "af8bfd8693d6f77c661a5a9b53843b7377423e9c6f0735e8fe2b26978bef7b4a",
+      "tests/worker_acceptance/test_chip_oracle_types.py": "d835e4892502bc869ccbee8d4d2ce154fa5faf1c84bdada82d96035d84f00e5a",
+      "tests/worker_acceptance/test_coverage_flag.py": "7fada2998bf186d5f828783ce4706a2633c9a8f195d3d480f350990214d9a0ca",
+      "tests/worker_acceptance/test_frequency_snapshot.py": "cae8f5e1980fdfce880f9b3539e40024cdce8c8d09b4278b788f85e0b30c585e",
+      "tests/worker_acceptance/test_nonempty_settlement.py": "02c4d041ca2253bd31694f4625ebdf7fd847341eb79b1576eeb2558c7c0f66d0",
+      "tests/worker_acceptance/test_rank7.py": "7146239998b7ce048bb576ad4bb174ccfa4d2c56df3ac91eb5cbe236c9536c07",
+      "tests/worker_acceptance/test_settlement_expectations.py": "cb24da18274a5cb0c30ba94202ed412c0ef85d865715d8b1a8ebe27e46cd8cb2"
+    }
+  },
+  "inherited_prs": {
+    "81": "712a7fa57031f94413511ba0423353568e8b4e9c",
+    "20": "8faea88802d0d34ae3e0319399e7f55ba71a9fcd"
+  },
+  "overlap_reviews": {
+    "75": {
+      "reviewed": true,
+      "reason": "Prior source implementation preserved as exact verified historical blob; distinct deterministic stream-aliasing FAIL.",
+      "candidate_base_sha": "fd25f0909c66160150c24dacc9b8175901bd1888",
+      "head_sha": "b7f3d2910526c8762ac4b19acb2e8fee7535d8a9",
+      "pr_base_sha": "5a49f437727fba0f4d48585300a04ec7e9d747a4",
+      "files": {
+        "gto/hand169.py": {
+          "candidate_blob": "179355ceabfcfeaadd2514d7e8c917e2c7d8e5d6",
+          "head_blob": "1bf6aaf8abf1f8c10cf6dec3ff0ea5d0ddeedb7e",
+          "mode": "ancestor_blob",
+          "witness_commit": "8faea88802d0d34ae3e0319399e7f55ba71a9fcd"
+        }
+      }
+    },
+    "29": {
+      "reviewed": true,
+      "reason": "Prior source implementation preserved as exact verified historical blob; distinct deterministic stream-aliasing FAIL.",
+      "candidate_base_sha": "fd25f0909c66160150c24dacc9b8175901bd1888",
+      "head_sha": "89fd492422497714d1665a9523e97ad4ba3ebee2",
+      "pr_base_sha": "44d46db7989a02ce28dba58bea6f30172c525dfc",
+      "files": {
+        "gto/hand169.py": {
+          "candidate_blob": "179355ceabfcfeaadd2514d7e8c917e2c7d8e5d6",
+          "head_blob": "b491c694f2353152d51c6fe87dd0facd5efd0a14",
+          "mode": "ancestor_blob",
+          "witness_commit": "1ba12af9c84c1cb6d499843c368553ff4d654f43"
+        }
+      }
+    },
+    "21": {
+      "reviewed": true,
+      "reason": "Prior source implementation preserved as exact verified historical blob; distinct deterministic stream-aliasing FAIL.",
+      "candidate_base_sha": "fd25f0909c66160150c24dacc9b8175901bd1888",
+      "head_sha": "61a38c4bdcd90111180237ef4451198cdc00d31b",
+      "pr_base_sha": "3ca87764e988cac588fef915d48823702a1a3326",
+      "files": {
+        "gto/hand169.py": {
+          "candidate_blob": "179355ceabfcfeaadd2514d7e8c917e2c7d8e5d6",
+          "head_blob": "1bf6aaf8abf1f8c10cf6dec3ff0ea5d0ddeedb7e",
+          "mode": "ancestor_blob",
+          "witness_commit": "8faea88802d0d34ae3e0319399e7f55ba71a9fcd"
+        }
+      }
+    }
+  }
+}

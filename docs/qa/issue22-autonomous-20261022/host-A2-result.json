@@ -1,0 +1,37 @@
+{
+  "id": "issue22-a-finite-setup-v1",
+  "lane": "A",
+  "base_sha": "1f8ee7054a918497c566e28022791d4a929e0f22",
+  "executor": "host_session",
+  "host_agent_id": "/root/bd_evidence_audit",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "scripts/code_worker.py"
+  ],
+  "tested_source_sha256": {
+    "scripts/code_worker.py": "2d74d630accbf487134f06932856850d0c27ada3185b2f5d31a9db42fce246c5"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 39,
+      "output_sha256": "0abc5e97aa73ac31ff7f9690fdf31d00a1a7e16758f909116e9a6a2743e285ed"
+    }
+  ],
+  "commit": "f7f246ecbf5ab55ec47a0cb12bbfdc5ba8d57ced",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

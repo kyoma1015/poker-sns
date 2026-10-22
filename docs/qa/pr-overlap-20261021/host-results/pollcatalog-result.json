@@ -1,0 +1,39 @@
+{
+  "id": "issue22-a-poll-catalog-v1",
+  "lane": "A",
+  "base_sha": "34ba71724c073b5608f0e228522a04bcea37e63c",
+  "executor": "host_session",
+  "host_agent_id": "/root/poll_next",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "docs/progress/POLL_CATALOG_OFFLINE_REVIEW.md",
+    "scripts/poll_catalog_review.py"
+  ],
+  "tested_source_sha256": {
+    "docs/progress/POLL_CATALOG_OFFLINE_REVIEW.md": "13bbca65675204376b46046eccda30f4a863286596e211460c857f4fd208562f",
+    "scripts/poll_catalog_review.py": "cfd782257f64129a7b5d70ac4bbcf31f5bb8c22ab8af2849e9aebb92b8d134a5"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 10,
+      "output_sha256": "b1fc3af35b2ab3213a8e620f813e5b517d308a08a64d21f1db65285bc6169a89"
+    }
+  ],
+  "commit": "ef6a26299f6e35a33bc3a5cf61ce7b78a68081a6",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

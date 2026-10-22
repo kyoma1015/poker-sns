@@ -1,0 +1,27 @@
+test_acceptance_cannot_mutate_source_then_commit_untested_bytes (__main__.CodeWorkerTests.test_acceptance_cannot_mutate_source_then_commit_untested_bytes) ... ok
+test_acceptance_tamper_fails (__main__.CodeWorkerTests.test_acceptance_tamper_fails) ... ok
+test_api_billing_attestation_rejected_without_running_cli (__main__.CodeWorkerTests.test_api_billing_attestation_rejected_without_running_cli) ... ok
+test_changed_task_cannot_reuse_immutable_id (__main__.CodeWorkerTests.test_changed_task_cannot_reuse_immutable_id) ... ok
+test_completed_lane_can_claim_the_next_reviewed_task (__main__.CodeWorkerTests.test_completed_lane_can_claim_the_next_reviewed_task) ... ok
+test_existing_worktree_is_preserved (__main__.CodeWorkerTests.test_existing_worktree_is_preserved) ... ok
+test_expired_lease_blocks_and_never_stolen (__main__.CodeWorkerTests.test_expired_lease_blocks_and_never_stolen) ... ok
+test_failed_acceptance_cannot_commit (__main__.CodeWorkerTests.test_failed_acceptance_cannot_commit) ... ok
+test_fake_executor_cannot_publish_as_real_ai (__main__.CodeWorkerTests.test_fake_executor_cannot_publish_as_real_ai) ... ok
+test_four_real_git_worktrees_and_commits_without_faking_ai (__main__.CodeWorkerTests.test_four_real_git_worktrees_and_commits_without_faking_ai) ... ok
+test_host_missing_receipt_cannot_forge_completion (__main__.CodeWorkerTests.test_host_missing_receipt_cannot_forge_completion) ... ok
+test_host_prepare_dispatch_finish_uses_same_acceptance_and_leases (__main__.CodeWorkerTests.test_host_prepare_dispatch_finish_uses_same_acceptance_and_leases) ... ok
+test_ignored_secret_file_is_detected (__main__.CodeWorkerTests.test_ignored_secret_file_is_detected) ... ok
+test_manifest_rejects_main_shell_secret_paths_and_tampering (__main__.CodeWorkerTests.test_manifest_rejects_main_shell_secret_paths_and_tampering) ... ok
+test_noop_is_not_implementation (__main__.CodeWorkerTests.test_noop_is_not_implementation) ... ok
+test_out_of_scope_change_fails_before_commit (__main__.CodeWorkerTests.test_out_of_scope_change_fails_before_commit) ... ok
+test_retry_is_bounded_at_two_attempts (__main__.CodeWorkerTests.test_retry_is_bounded_at_two_attempts) ... ok
+test_secrets_are_not_in_shell_or_test_environment (__main__.CodeWorkerTests.test_secrets_are_not_in_shell_or_test_environment) ... ok
+test_source_symlink_rejected (__main__.CodeWorkerTests.test_source_symlink_rejected) ... ok
+test_two_connections_cannot_claim_same_lane (__main__.CodeWorkerTests.test_two_connections_cannot_claim_same_lane) ... ok
+test_wrong_or_replayed_lease_cannot_finish (__main__.CodeWorkerTests.test_wrong_or_replayed_lease_cannot_finish) ... ok
+test_zero_test_acceptance_does_not_pass (__main__.CodeWorkerTests.test_zero_test_acceptance_does_not_pass) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.979s
+
+OK

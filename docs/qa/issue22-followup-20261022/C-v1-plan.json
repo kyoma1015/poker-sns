@@ -1,0 +1,29 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-c-chip-oracle-types-v1",
+        "lane": "C",
+        "base_sha": "7fa1ffd5de8a7bb0479f4f5348445782326cde8e",
+        "base_branch": "codex/c-chip-oracle-input-20261022",
+        "branch": "codex/c-chip-oracle-fix-20261022",
+        "test_profile": "python",
+        "allowed_paths": [
+          "gto/native/settlement.py"
+        ],
+        "protected_tests": [
+          "tests/worker_acceptance/test_checkpoint_budget.py",
+          "tests/worker_acceptance/test_chip_oracle_types.py",
+          "tests/worker_acceptance/test_nonempty_settlement.py",
+          "tests/worker_acceptance/test_rank7.py",
+          "tests/worker_acceptance/test_settlement_expectations.py"
+        ],
+        "instruction": "Before reference/native execution validate known chip expectation fields: present rake/refund type exactly int, not bool or float; present net/pot_amounts/pot_rakes lists of exact ints. Negative integer net stays valid. Preserve partial expectation field support and existing nonempty expected gate, unchanged comparisons for other fields, valid17 cases/rank7/checkpoint tests. No original/reference/fixture/solver/checkpoint changes. Only gto/native/settlement.py. Fixed28 currently fails30 subtests; protected5 must remain unchanged. Pure Python stdlib, owned synthetic temp fixture copies. Must NOT dispatch in same invocation as issue22-c-settlement-expectations-v1; current lane C task already used. Fresh scheduled prompt/PR snapshot/dependency/lease gates required before future host prepare."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

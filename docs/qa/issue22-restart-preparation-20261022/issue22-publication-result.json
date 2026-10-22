@@ -1,0 +1,37 @@
+{
+  "id": "issue22-a-publication-checkpoint-v1",
+  "lane": "A",
+  "base_sha": "921872d70427e069d58fddfb1a3523da1bfcfd8c",
+  "executor": "host_session",
+  "host_agent_id": "/root/bd_evidence_audit",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "scripts/continuation_recovery.py"
+  ],
+  "tested_source_sha256": {
+    "scripts/continuation_recovery.py": "9ce39fb621c308a4402647c23a816e7b93f9c9b93d5f499e939777e13dd8c384"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 76,
+      "output_sha256": "06990befd6819090aeebe328d487e5f4951a105b554f5dae6953521b6f0525e8"
+    }
+  ],
+  "commit": "3a9176c388707d8b4f7121cfc1b9f83ee2a23556",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

@@ -1,0 +1,12 @@
+{
+  "observed_utc": "2026-10-21T10:48:01.400479+00:00",
+  "task_id": "issue22-c-nonempty-settlement-v1",
+  "task_row_present_before_scheduled_prompt": false,
+  "active_leases": 0,
+  "source_sha256_before_scheduled_prompt": "5a17eff3765b3c1b7f34d4787576828eafb643b056fd64d2bf0529333dc362ab",
+  "source_dispatched_before_scheduled_prompt": false,
+  "normal_scheduler_prompt_update_confirmed": true,
+  "normal_schedule_changed": false,
+  "provider_run_id": null,
+  "awaiting_actual_normal_scheduled_prompt": true
+}

@@ -1,0 +1,333 @@
+[
+  {
+    "id": 39783419650,
+    "jobs": [
+      {
+        "id": 119840215240,
+        "name": "verify",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run node tests/player-type.test.mjs",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run node tests/player-type-audit.test.mjs",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run node scripts/audit-player-type.mjs",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm ci --cache \"$RUNNER_TEMP/npm-cache\"",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run build",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run npm run lint",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ],
+        "test_lines": [
+          "2026-10-22T13:02:50.0356378Z ℹ tests 53",
+          "2026-10-22T13:02:50.0357416Z ℹ pass 53",
+          "2026-10-22T13:02:50.0357878Z ℹ fail 0",
+          "2026-10-22T13:02:50.1973419Z ℹ tests 5",
+          "2026-10-22T13:02:50.1974874Z ℹ pass 5",
+          "2026-10-22T13:02:50.1975516Z ℹ fail 0",
+          "2026-10-22T13:03:04.0518372Z \u001b[32m✓ built in 342ms\u001b[39m"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 39784081988,
+    "jobs": [
+      {
+        "id": 119842509068,
+        "name": "verify",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run python -B -m unittest discover -s tests/worker_acceptance -v",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run python -B -m unittest discover -s gto/tests -v",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ],
+        "test_lines": [
+          "2026-10-22T13:07:24.1943594Z Ran 46 tests in 0.137s",
+          "2026-10-22T13:07:24.1944015Z OK",
+          "2026-10-22T13:07:24.3705442Z Ran 40 tests in 0.043s",
+          "2026-10-22T13:07:24.3705756Z OK"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 39784286230,
+    "jobs": [
+      {
+        "id": 119843221512,
+        "name": "recovery-safety",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "conclusion": "success"
+          },
+          {
+            "name": "Immutable recovery acceptance (isolated fixtures, no real AI claim)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Existing worker safety",
+            "conclusion": "success"
+          },
+          {
+            "name": "Existing queue safety",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ],
+        "test_lines": [
+          "2026-10-22T13:08:56.2294808Z Ran 58 tests in 2.419s",
+          "2026-10-22T13:08:56.2295142Z OK",
+          "2026-10-22T13:08:57.8379821Z Ran 22 tests in 1.438s",
+          "2026-10-22T13:08:57.8380079Z OK",
+          "2026-10-22T13:08:59.1225790Z Ran 15 tests in 1.146s",
+          "2026-10-22T13:08:59.1226275Z OK"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 39785322289,
+    "jobs": [
+      {
+        "id": 119846853636,
+        "name": "verify",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run python -B -m unittest discover -s tests/worker_acceptance -v",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run python -B tests/automation/test_code_worker.py",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run python -B tests/automation/test_development_queue.py",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ],
+        "test_lines": [
+          "2026-10-22T13:16:12.9922032Z Ran 67 tests in 2.496s",
+          "2026-10-22T13:16:12.9922275Z OK",
+          "2026-10-22T13:16:14.4503704Z Ran 22 tests in 1.320s",
+          "2026-10-22T13:16:14.4503968Z OK",
+          "2026-10-22T13:16:14.6433126Z Ran 15 tests in 0.081s",
+          "2026-10-22T13:16:14.6433400Z OK"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 39785885665,
+    "jobs": [
+      {
+        "id": 119848853013,
+        "name": "verify",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run python -B -m unittest discover -s tests/worker_acceptance -v",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run python -B -m unittest discover -s gto/tests -v",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ],
+        "test_lines": [
+          "2026-10-22T13:20:05.2343851Z Ran 50 tests in 0.087s",
+          "2026-10-22T13:20:05.2344103Z OK",
+          "2026-10-22T13:20:05.3591295Z Ran 40 tests in 0.030s",
+          "2026-10-22T13:20:05.3591545Z OK"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 39785868404,
+    "jobs": [
+      {
+        "id": 119848792322,
+        "name": "verify",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run python -B -m unittest discover -s tests/worker_acceptance -v",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run python -B -m unittest discover -s gto/tests -v",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ],
+        "test_lines": [
+          "2026-10-22T13:19:58.2972851Z Ran 21 tests in 0.004s",
+          "2026-10-22T13:19:58.2973032Z OK",
+          "2026-10-22T13:19:58.3823443Z Ran 10 tests in 0.011s",
+          "2026-10-22T13:19:58.3823671Z OK"
+        ]
+      }
+    ]
+  }
+]

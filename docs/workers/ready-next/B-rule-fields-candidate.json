@@ -1,0 +1,120 @@
+{
+  "task": {
+    "id": "issue22-b-rule-fields-v1",
+    "lane": "B",
+    "base_sha": "90b6863e27daa5e749ea3c234253f14edd56b7ab",
+    "base_branch": "codex/b-rule-fields-input-20261022",
+    "branch": "codex/b-rule-fields-fix-20261022",
+    "test_profile": "node",
+    "allowed_paths": [
+      "src/TDA.tsx"
+    ],
+    "protected_tests": [
+      "tests/worker-acceptance.test.mjs",
+      "tests/browser/tda-search-supabase.ts",
+      "tests/browser/tda-entry.tsx",
+      "tests/tda-saved-answer.test.mjs"
+    ],
+    "instruction": "Extend existing latest search response gate before setResults to reject present non-null wrongly typed displayed fields. Text summary_ja/conclusion_ja/explanation_ja/title_en/body_en must be string; keywords_ja/examples_ja/cautions_ja arrays of strings; related_rules array of safe positive integers. Missing/null optional fields remain accepted for existing minimal rows. Keep number/title gates, latest request/clear/unmount/error/retry/scoring/history. Use same fixed localized recoverable error, no payload echo. Only src/TDA.tsx source. Fixedbrowser16 prior9+sixmalformed+richvalidcontrol; savedanswer14 protected. No tests/SQL/corpus/auth/deps edits; parent node_modules trusted, temp cache external. Child loopback EPERM known: do not repeat browser probe in child; root supported-network finish executes immutable browser acceptance. Source/diff and pure unit validation allowed; no npmci/build before rootfinish."
+  },
+  "purpose": "Prevent malformed optional displayed rule text/collections from crashing React or producing invalid related-rule links.",
+  "reviewed": true,
+  "risk": "low",
+  "dependencies": [
+    "issue22-b-search-data-v1"
+  ],
+  "execution_conditions": [
+    "Original durable4task continuity and no active lane lease",
+    "Formal host collaboration after prepare and fresh complete open PR snapshot",
+    "Pinned locked parent node dependencies and supported host browser network permission, isolated cache"
+  ],
+  "completion_conditions": [
+    "Fixedbrowser16 and saved-answer14 PASS with protected4 exact hashes",
+    "Existing unit/build/lint PASS",
+    "Controller sourcehash/tamper/noop/commit then DraftPR CI"
+  ],
+  "references": [
+    "https://github.com/kyoma1015/poker-sns/issues/22",
+    "https://github.com/kyoma1015/poker-sns/pull/59",
+    "src/TDA.tsx TdaRule type and direct rule rendering",
+    "docs/qa/tda-rule-fields-input-20261022.md"
+  ],
+  "baseline": {
+    "base_sha": "90b6863e27daa5e749ea3c234253f14edd56b7ab",
+    "test_profile": "node",
+    "test_count": 16,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/worker-acceptance.test.mjs": "1d2f2efb02f69982d023bd7e88e931c53425bc30a72a70d82b459149ead57c93",
+      "tests/browser/tda-search-supabase.ts": "a26f1c3934df5858744fdb1cca9586fbf450367b4cd12bac9c0746716b8422e8",
+      "tests/browser/tda-entry.tsx": "6030c21b7b36b39dff78566a36cd3f748a91ca8aac315b4847d1077f7a7ae283",
+      "tests/tda-saved-answer.test.mjs": "d167b9f795506bcb56d2bff206575895efc47c5e272d0da7c9ffa30b485df0e1"
+    }
+  },
+  "inherited_prs": {
+    "32": "0639d36d720612466474e75fa8994f409d2d41de",
+    "19": "3bee4eaace1f933cc4ad0721fcab956e98a61ec9",
+    "14": "4e16f7a7b567237d2735f1392906a6b1de2b7c23",
+    "13": "3ca87764e988cac588fef915d48823702a1a3326",
+    "59": "35502ff3af55e58c5ffb518fe7d1a2d7db631e64"
+  },
+  "overlap_reviews": {
+    "41": {
+      "reviewed": true,
+      "reason": "Root reviewed distinct reproducible malformed display-field defect; exact historical source blob is already in pinned input ancestry, while later corrections remain preserved.",
+      "candidate_base_sha": "90b6863e27daa5e749ea3c234253f14edd56b7ab",
+      "head_sha": "c08654d487ea4f5a6dcda79a26e25ff693a1ba84",
+      "pr_base_sha": "7ee09c1b3bf71a75e3889951d7520bf3347ba375",
+      "files": {
+        "src/TDA.tsx": {
+          "candidate_blob": "a186592c636004e624d0de2372cc03cb217cadda",
+          "head_blob": "9c44ef8b033680801a0813765016d187c99ab711",
+          "mode": "ancestor_blob",
+          "witness_commit": "16b02a76165a07f3ec1c8a1389705cdb13b27739"
+        }
+      }
+    },
+    "21": {
+      "reviewed": true,
+      "reason": "Root reviewed distinct reproducible malformed display-field defect; exact historical source blob is already in pinned input ancestry, while later corrections remain preserved.",
+      "candidate_base_sha": "90b6863e27daa5e749ea3c234253f14edd56b7ab",
+      "head_sha": "61a38c4bdcd90111180237ef4451198cdc00d31b",
+      "pr_base_sha": "3ca87764e988cac588fef915d48823702a1a3326",
+      "files": {
+        "src/TDA.tsx": {
+          "candidate_blob": "a186592c636004e624d0de2372cc03cb217cadda",
+          "head_blob": "b590ceded8d51c4adba704da81804a5ffa39667d",
+          "mode": "ancestor_blob",
+          "witness_commit": "4e16f7a7b567237d2735f1392906a6b1de2b7c23"
+        }
+      }
+    },
+    "11": {
+      "reviewed": true,
+      "reason": "Root reviewed distinct reproducible malformed display-field defect; exact historical source blob is already in pinned input ancestry, while later corrections remain preserved.",
+      "candidate_base_sha": "90b6863e27daa5e749ea3c234253f14edd56b7ab",
+      "head_sha": "aed6425d5e70379139f3b35ae66cedffa3a55786",
+      "pr_base_sha": "f8890b6ec11d30676c55dc7dc8801f1da8549d28",
+      "files": {
+        "src/TDA.tsx": {
+          "candidate_blob": "a186592c636004e624d0de2372cc03cb217cadda",
+          "head_blob": "924827cd053df5f8a5e30bec90456b0d54a0af51",
+          "mode": "ancestor_blob",
+          "witness_commit": "efef38a32ed57ab67cee30a3a28377c34ec6c4dc"
+        }
+      }
+    }
+  },
+  "host_review": {
+    "source_not_implemented_by_root": true,
+    "source_blob_unchanged_from_PR59": true,
+    "baseline_log": "issue22-b-fields-baseline-v2.log",
+    "pre_pin_control_correction": "Existing explanation overrides summary; corrected input assertion before immutable registration."
+  },
+  "observed_baseline_summary": {
+    "tests": 16,
+    "pass": 10,
+    "fail": 6
+  }
+}

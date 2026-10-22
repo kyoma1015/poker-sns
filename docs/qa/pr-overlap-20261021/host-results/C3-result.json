@@ -1,0 +1,37 @@
+{
+  "id": "issue22-c-checkpoint-budget-reviewed-v2",
+  "lane": "C",
+  "base_sha": "279d28e0859f7778491c8573bdd8f9015d1bb179",
+  "executor": "host_session",
+  "host_agent_id": "/root/c_budget_impl",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "gto/native/checkpoints.py"
+  ],
+  "tested_source_sha256": {
+    "gto/native/checkpoints.py": "a3176dcbc8850216322fa2b62cd6fa08a9ac4a2292fad1dbefdec8bbd4b2fa18"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 11,
+      "output_sha256": "fbb3163e054679a836a417130770a551f244330a0c6dad7589ebd74aea2d42cc"
+    }
+  ],
+  "commit": "66033db8806838722a4cf7c4965542ac86903776",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

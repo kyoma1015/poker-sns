@@ -1,0 +1,68 @@
+{
+  "task": {
+    "id": "issue22-c-exact-toy-metric-v1",
+    "lane": "C",
+    "base_sha": "3eb08c4723ec3ef55faf0b86f6b54768c1cab738",
+    "base_branch": "codex/c-convergence-metric-input-20261022",
+    "branch": "codex/c-convergence-metric-fix-20261022",
+    "test_profile": "python",
+    "allowed_paths": [
+      "gto/convergence.py"
+    ],
+    "protected_tests": [
+      "tests/worker_acceptance/test_checkpoint_budget.py",
+      "tests/worker_acceptance/test_chip_oracle_types.py",
+      "tests/worker_acceptance/test_convergence_metrics.py",
+      "tests/worker_acceptance/test_nonempty_settlement.py",
+      "tests/worker_acceptance/test_rank7.py",
+      "tests/worker_acceptance/test_settlement_expectations.py"
+    ],
+    "instruction": "Implement only gto/convergence.py matching_pennies_metrics(policy0,policy1) per fixed docs. Finite int/float nonbool probability pairs list/tuple length2, values0..1, abs normalization tolerance1e-12/rel_tol0, invalidValueError/no mutation/no silentnormalize. Fixed matching-pennies utility matrix P0 match+1/mismatch-1, P1zero-sum; return game, utilities, BR values, nash_conv=sum improvements, exploitability=half gap, strategy_convergence_proof=False/historical_baseline_used=False. stdlib only, no solver/reference/settlement/checkpoint/network/DB changes. Fixed36 baseline7ERROR missing newmodule; protected6 unchanged. Validate36+existingGTO40 and replay saved9 native policy measurements vs exact reported toy gaps. Never claim poker convergence."
+  },
+  "purpose": "Make exact matching-pennies BR measurement reproducible and independently tested rather than ad-hoc convergence claims.",
+  "reviewed": true,
+  "risk": "low",
+  "dependencies": [
+    "issue22-c-chip-oracle-types-v2"
+  ],
+  "execution_conditions": [
+    "Explicit safe independent GTO benchmark development authorization",
+    "Same original state continuity/no active C lease and complete fresh PR/file snapshot",
+    "New unique module path with no existing pending implementation",
+    "Formal host source agent; Python stdlib/owned artifacts only"
+  ],
+  "completion_conditions": [
+    "Immutable36 acceptance PASS; protected6 unchanged",
+    "ExistingGTO40PASS and all9 saved native toy gaps replay within1e-12",
+    "Root sourcehash/tamper/noop/commit check then Draft PR CI; proof flags remainFalse"
+  ],
+  "references": [
+    "https://github.com/kyoma1015/poker-sns/issues/22",
+    "https://github.com/kyoma1015/poker-sns/pull/66",
+    "docs/qa/convergence-metric-input-20261022.md",
+    "Existing isolated audit issue22-g11-current-audit.json toy measurements"
+  ],
+  "baseline": {
+    "base_sha": "3eb08c4723ec3ef55faf0b86f6b54768c1cab738",
+    "test_profile": "python",
+    "test_count": 36,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/worker_acceptance/test_checkpoint_budget.py": "af8bfd8693d6f77c661a5a9b53843b7377423e9c6f0735e8fe2b26978bef7b4a",
+      "tests/worker_acceptance/test_chip_oracle_types.py": "d835e4892502bc869ccbee8d4d2ce154fa5faf1c84bdada82d96035d84f00e5a",
+      "tests/worker_acceptance/test_convergence_metrics.py": "2aa02cc03922e6e4303b96514f2e1fcfa9eefe52920331978a3ae4484742f298",
+      "tests/worker_acceptance/test_nonempty_settlement.py": "02c4d041ca2253bd31694f4625ebdf7fd847341eb79b1576eeb2558c7c0f66d0",
+      "tests/worker_acceptance/test_rank7.py": "7146239998b7ce048bb576ad4bb174ccfa4d2c56df3ac91eb5cbe236c9536c07",
+      "tests/worker_acceptance/test_settlement_expectations.py": "cb24da18274a5cb0c30ba94202ed412c0ef85d865715d8b1a8ebe27e46cd8cb2"
+    }
+  },
+  "inherited_prs": {},
+  "overlap_reviews": {},
+  "observed_baseline_summary": {
+    "tests": 36,
+    "errors": 7,
+    "reason": "new metric module absent",
+    "log": "issue22-convergence-baseline.log"
+  }
+}

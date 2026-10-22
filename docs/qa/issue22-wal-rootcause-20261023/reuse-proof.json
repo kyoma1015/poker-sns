@@ -1,0 +1,16 @@
+{
+  "kind": "selected_existing_PR69_patch_reuse_not_new_algorithm",
+  "origin": "4d30c7ac0d08104f9d159987e38c823ef7c3b419",
+  "source_commit": "199d15d7f0302ffaeb27185ae50ceb1ad634ea1e",
+  "before_blob": "e45d66a236c407b458fb780db9fa199b5111b895",
+  "after_blob": "bbfee076eaf03225c23871c3e24bc1a84f82fe9c",
+  "after_sha256": "37a539e207c46ee5ad94bdf6c877cf835e5188a217169ed1f5aa2885ce0def15",
+  "original4_anchor_match": true,
+  "original43_records_not_replayed": true,
+  "runtime_controller_switched": false,
+  "known_original_failure_run": 39817880993,
+  "original_attempt1": "failure",
+  "original_attempt2": "success_not_root_fix",
+  "exact_origin_patch_bytes_match": true,
+  "origin_patch_sha256": "6a96635c8aa33a0f6aca9bc95e76cad2124ff2685e6849786c8fc8a7ab62ee8a"
+}

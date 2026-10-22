@@ -1,0 +1,22 @@
+test_default_and_true_reject_incomplete (test_coverage_flag.CoverageFlag.test_default_and_true_reject_incomplete) ... ok
+test_explicit_partial_retained (test_coverage_flag.CoverageFlag.test_explicit_partial_retained) ... ok
+test_invalid_flag_does_not_iterate_input (test_coverage_flag.CoverageFlag.test_invalid_flag_does_not_iterate_input) ... ok
+test_nonboolean_flags_rejected (test_coverage_flag.CoverageFlag.test_nonboolean_flags_rejected) ... ok
+test_prior_reviewed_mass_overflow_fix_retained (test_coverage_flag.CoverageFlag.test_prior_reviewed_mass_overflow_fix_retained) ... ok
+test_post_yield_mutation_cannot_introduce_unvalidated_nan (test_frequency_snapshot.FrequencySnapshot.test_post_yield_mutation_cannot_introduce_unvalidated_nan) ... ok
+test_stream_reused_buffer_preserves_each_validated_row (test_frequency_snapshot.FrequencySnapshot.test_stream_reused_buffer_preserves_each_validated_row) ... ok
+test_tuple_list_and_zero_mass_stay_supported (test_frequency_snapshot.FrequencySnapshot.test_tuple_list_and_zero_mass_stay_supported) ... ok
+test_negative_terms_not_individually_overrounded (test_subnormal_ev.SubnormalEV.test_negative_terms_not_individually_overrounded) ... ok
+test_negative_terms_round_up_only_after_sum (test_subnormal_ev.SubnormalEV.test_negative_terms_round_up_only_after_sum) ... ok
+test_positive_terms_not_individually_overrounded (test_subnormal_ev.SubnormalEV.test_positive_terms_not_individually_overrounded) ... ok
+test_positive_terms_round_up_only_after_sum (test_subnormal_ev.SubnormalEV.test_positive_terms_round_up_only_after_sum) ... ok
+test_large_product_no_overflow (test_weighted_ev.WeightedEV.test_large_product_no_overflow) ... ok
+test_negative_representable_contribution (test_weighted_ev.WeightedEV.test_negative_representable_contribution) ... ok
+test_positive_representable_contribution (test_weighted_ev.WeightedEV.test_positive_representable_contribution) ... ok
+test_small_weight_product_before_normalization (test_weighted_ev.WeightedEV.test_small_weight_product_before_normalization) ... ok
+test_zero_ev_and_zero_weight (test_weighted_ev.WeightedEV.test_zero_ev_and_zero_weight) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.004s
+
+OK

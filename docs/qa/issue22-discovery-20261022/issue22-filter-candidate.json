@@ -1,0 +1,134 @@
+{
+  "task": {
+    "id": "issue22-b-filter-values-v1",
+    "lane": "B",
+    "base_sha": "6b8610876b607920fffcbde7399b736aa27b6db7",
+    "base_branch": "codex/b-filter-values-input-20261022",
+    "branch": "codex/b-filter-values-fix-20261022",
+    "test_profile": "tda",
+    "allowed_paths": [
+      "src/tdaQuizData.ts",
+      "src/TDA.tsx"
+    ],
+    "protected_tests": [
+      "tests/tda-quiz-data.test.mjs",
+      "tests/tda-saved-answer.test.mjs",
+      "tests/tda-audit-cli.test.mjs",
+      "tests/browser/tda-filters.mjs",
+      "tests/browser/tda-filters-supabase.ts",
+      "tests/browser/tda-entry.tsx"
+    ],
+    "instruction": "Normalize optional quiz filters at unknown-data boundary, and wire loadQuizFilters to helper normalizeQuizFilters. Invalid row/field yields emptyarray; each array keeps strings only in existing order/value with newcopy, preserving whitespace/empty/duplicates; densifyholes. Never render object/nonstringitems. Preserve valid siblingfields and RPC args/questions/answer state. Only src/tdaQuizData.ts and src/TDA.tsx. Fixed28 baseline5FAIL including actual React objectchild crash; browser4 mobile scenarios allPASS, savedanswer14/audit18, fulltypes/build/lint. No SQL/question content/auth changes. Dependencies outside source worktree, Vitecache/build externaltemp; no tests/fixture modifications or commit."
+  },
+  "purpose": "Prevent malformed optional RPC filter items from crashing quiz UI without changing questions or answers.",
+  "reviewed": true,
+  "risk": "low",
+  "dependencies": [
+    "issue22-b-dense-quiz-v1"
+  ],
+  "execution_conditions": [
+    "Original4 state continuity",
+    "Fresh complete PR SHA/file snapshot and strict Git overlap proofs",
+    "Formal prepare/source agent/trusted finish"
+  ],
+  "completion_conditions": [
+    "Fixed23 and old14/18 pass",
+    "Protectedtests/source-onlyscope preserved",
+    "Types/build/lint and DraftPR CI"
+  ],
+  "references": [
+    "https://github.com/kyoma1015/poker-sns/issues/22",
+    "tests/tda-quiz-data.test.mjs one-option validation"
+  ],
+  "baseline": {
+    "base_sha": "6b8610876b607920fffcbde7399b736aa27b6db7",
+    "test_profile": "tda",
+    "test_count": 28,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/tda-quiz-data.test.mjs": "8b2bb1ddaa9be52e343f31fab8a1c5e8087ddca1d33a376a398a2f02e87a779d",
+      "tests/tda-saved-answer.test.mjs": "d167b9f795506bcb56d2bff206575895efc47c5e272d0da7c9ffa30b485df0e1",
+      "tests/tda-audit-cli.test.mjs": "3ef7175260e6cc178cfdab342506b6c28813e2d0795bed5ba30a6a916b9270cd",
+      "tests/browser/tda-filters.mjs": "7205732aeb9081f1c4c50d7529049a6799c5c394e12008f4565a4ec78aeae16e",
+      "tests/browser/tda-filters-supabase.ts": "5de85787dc3c92959867bee13a0496de75cbb3835fbf5961dedf4d5170633a50",
+      "tests/browser/tda-entry.tsx": "6030c21b7b36b39dff78566a36cd3f748a91ca8aac315b4847d1077f7a7ae283"
+    }
+  },
+  "inherited_prs": {
+    "83": "7713dc4e1b939b59c8e23938c1320f6c2118ab19",
+    "62": "be0fd9197bb17c0ff6de15ec9527a12ff49241c2",
+    "59": "35502ff3af55e58c5ffb518fe7d1a2d7db631e64",
+    "32": "0639d36d720612466474e75fa8994f409d2d41de",
+    "14": "4e16f7a7b567237d2735f1392906a6b1de2b7c23",
+    "13": "3ca87764e988cac588fef915d48823702a1a3326"
+  },
+  "overlap_reviews": {
+    "41": {
+      "reviewed": true,
+      "reason": "Verified preserved source/ancestor/exact patch; distinct actual React optional-filter crash baseline.",
+      "candidate_base_sha": "6b8610876b607920fffcbde7399b736aa27b6db7",
+      "head_sha": "c08654d487ea4f5a6dcda79a26e25ff693a1ba84",
+      "pr_base_sha": "7ee09c1b3bf71a75e3889951d7520bf3347ba375",
+      "files": {
+        "src/TDA.tsx": {
+          "candidate_blob": "051b56af3fe743b5b91bc381a4394328aa0d76c8",
+          "head_blob": "9c44ef8b033680801a0813765016d187c99ab711",
+          "mode": "ancestor_blob",
+          "witness_commit": "f6ba3739ca4a61a9fd47accbcb2af7be3993694a"
+        }
+      }
+    },
+    "28": {
+      "reviewed": true,
+      "reason": "Verified preserved source/ancestor/exact patch; distinct actual React optional-filter crash baseline.",
+      "candidate_base_sha": "6b8610876b607920fffcbde7399b736aa27b6db7",
+      "head_sha": "a36c7853ca745b40d9607d096b8a2f72c5f5712d",
+      "pr_base_sha": "77b41f7f1f655c5b3367ab595022e970ef37fc61",
+      "files": {
+        "src/tdaQuizData.ts": {
+          "candidate_blob": "3674f7a2cbb2d21e6642f2fdab9c43f45e3b7d28",
+          "head_blob": "fd402698ffc6a0a8fa2069d3b5f563ef364c84d2",
+          "mode": "included_patch",
+          "patch_sha256": "53c1e1cb7e22090bc09cef389a44ed1a64f75ec0703bf09b3a0e78ebf8c51fa3"
+        }
+      }
+    },
+    "21": {
+      "reviewed": true,
+      "reason": "Verified preserved source/ancestor/exact patch; distinct actual React optional-filter crash baseline.",
+      "candidate_base_sha": "6b8610876b607920fffcbde7399b736aa27b6db7",
+      "head_sha": "61a38c4bdcd90111180237ef4451198cdc00d31b",
+      "pr_base_sha": "3ca87764e988cac588fef915d48823702a1a3326",
+      "files": {
+        "src/tdaQuizData.ts": {
+          "candidate_blob": "3674f7a2cbb2d21e6642f2fdab9c43f45e3b7d28",
+          "head_blob": "4756ea266a63692d66d5ae5cf4171b3cb79b97d1",
+          "mode": "ancestor_blob",
+          "witness_commit": "4e16f7a7b567237d2735f1392906a6b1de2b7c23"
+        },
+        "src/TDA.tsx": {
+          "candidate_blob": "051b56af3fe743b5b91bc381a4394328aa0d76c8",
+          "head_blob": "b590ceded8d51c4adba704da81804a5ffa39667d",
+          "mode": "ancestor_blob",
+          "witness_commit": "4e16f7a7b567237d2735f1392906a6b1de2b7c23"
+        }
+      }
+    },
+    "11": {
+      "reviewed": true,
+      "reason": "Verified preserved source/ancestor/exact patch; distinct actual React optional-filter crash baseline.",
+      "candidate_base_sha": "6b8610876b607920fffcbde7399b736aa27b6db7",
+      "head_sha": "aed6425d5e70379139f3b35ae66cedffa3a55786",
+      "pr_base_sha": "f8890b6ec11d30676c55dc7dc8801f1da8549d28",
+      "files": {
+        "src/TDA.tsx": {
+          "candidate_blob": "051b56af3fe743b5b91bc381a4394328aa0d76c8",
+          "head_blob": "924827cd053df5f8a5e30bec90456b0d54a0af51",
+          "mode": "ancestor_blob",
+          "witness_commit": "efef38a32ed57ab67cee30a3a28377c34ec6c4dc"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "raw_sha256": "96beb9e757b68f7c5bd69a6bd4e7ca4d01214389769f901601a48f95021a34c2",
+  "published_sha256": "72f97ca6205c41e2729139aae7dab13cb1f333dffb0ff6a5bc9c8acc2ee85eff",
+  "normalization": "Workspace absolute prefix replaced; line trailing whitespace removed; original local raw log retained",
+  "published_file": "issue22-filter-baseline.txt"
+}

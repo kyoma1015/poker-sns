@@ -1,0 +1,37 @@
+{
+  "id": "issue22-a-invocation-guard-v1",
+  "lane": "A",
+  "base_sha": "40792437109b0e8e2f5eae48a794e3ecded306d6",
+  "executor": "host_session",
+  "host_agent_id": "/root/bd_evidence_audit",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "scripts/invocation_guard.py"
+  ],
+  "tested_source_sha256": {
+    "scripts/invocation_guard.py": "aa973c998614c8fd6460a7f76cfce9391d35def5f9d4206ac60527ccc61657ef"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 85,
+      "output_sha256": "a15afd38a3488c4ebe8102eee4b23b93191f52a4544bd201eec000bcbdaa740f"
+    }
+  ],
+  "commit": "f71e823ddffd147664bba0aee7062d991155745d",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

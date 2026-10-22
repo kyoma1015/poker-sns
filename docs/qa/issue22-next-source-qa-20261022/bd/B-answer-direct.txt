@@ -1,0 +1,22 @@
+✔ false remains false, valid statistics and saved explanation are preserved (1.446568ms)
+✔ reject malformed saved answer: string false (0.335608ms)
+✔ reject malformed saved answer: numeric correctness (0.139481ms)
+✔ reject malformed saved answer: foreign correct option (0.098029ms)
+✔ reject malformed saved answer: contradictory correctness (0.140763ms)
+✔ reject malformed saved answer: negative count (0.09896ms)
+✔ reject malformed saved answer: fractional count (0.117198ms)
+✔ reject malformed saved answer: correct count exceeds total (0.164809ms)
+✔ reject malformed saved answer: nonfinite rate (0.198971ms)
+✔ reject malformed saved answer: out of range rate (2.100006ms)
+✔ reject malformed saved answer: array result (0.14549ms)
+✔ selected option must belong to this question (0.127212ms)
+✔ null low-sample rate is retained, malformed optional explanation cannot replace saved result (0.660689ms)
+✔ valid detail references are used without changing authoritative correctness (0.192492ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14.277728

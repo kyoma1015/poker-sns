@@ -1,0 +1,182 @@
+{
+  "/root/b_next": [
+    {
+      "task": "issue22-b-saved-answer-20261021",
+      "lane": "B",
+      "recorded_status": "implemented_local",
+      "source": "docs/qa/issue22-recovery-20261021/B2-result.json"
+    }
+  ],
+  "/root/b_search_impl": [
+    {
+      "task": "issue22-b-rule-search-reconciled-v2",
+      "lane": "B",
+      "recorded_status": "implemented_local",
+      "source": "docs/qa/pr-overlap-20261021/host-results/B3-result.json"
+    }
+  ],
+  "/root/c_budget_impl": [
+    {
+      "task": "issue22-c-checkpoint-budget-reviewed-v2",
+      "lane": "C",
+      "recorded_status": "implemented_local",
+      "source": "docs/qa/pr-overlap-20261021/host-results/C3-result.json"
+    }
+  ],
+  "/root/chip_oracle_impl": [
+    {
+      "task": "issue22-c-chip-oracle-types-v1",
+      "lane": "C",
+      "recorded_status": "blocked",
+      "source": "docs/qa/issue22-followup-20261022/chip-C-host-result.json"
+    },
+    {
+      "task": "issue22-c-chip-oracle-types-v2",
+      "lane": "C",
+      "recorded_status": "implemented_local",
+      "source": "docs/qa/issue22-followup-20261022/chip-C2-host-result.json"
+    }
+  ],
+  "/root/d_error_impl": [
+    {
+      "task": "issue22-d-result-error-reviewed-v2",
+      "lane": "D",
+      "recorded_status": "implemented_local",
+      "source": "docs/qa/pr-overlap-20261021/host-results/D4-result.json"
+    }
+  ],
+  "/root/d_next": [
+    {
+      "task": "issue22-d-doubleclick-v2",
+      "lane": "D",
+      "recorded_status": "implemented_local",
+      "source": "docs/qa/issue22-recovery-20261021/D3-result.json"
+    },
+    {
+      "task": "issue22-d-doubleclick-v1",
+      "lane": "D",
+      "recorded_status": "blocked",
+      "source": "docs/qa/issue22-recovery-20261021/D2-result.json"
+    }
+  ],
+  "/root/g11_convergence_audit": [
+    {
+      "task": "issue22-c-exact-toy-metric-v1",
+      "lane": "C",
+      "recorded_status": "implemented_local",
+      "source": "docs/qa/issue22-verification-20261022/metric-C-result.json"
+    }
+  ],
+  "/root/gto_next": [
+    {
+      "task": "issue22-c-rank7-v1",
+      "lane": "C",
+      "recorded_status": "implemented_local",
+      "source": "docs/qa/issue22-recovery-20261021/C2-result.json"
+    }
+  ],
+  "/root/host_a": [
+    {
+      "task": "issue22-host-a",
+      "lane": "A",
+      "recorded_status": "implemented_local",
+      "source": "docs/qa/issue22-workers/host-session-results.json"
+    }
+  ],
+  "/root/lane_b": [
+    {
+      "task": "issue22-host-b",
+      "lane": "B",
+      "recorded_status": "implemented_local",
+      "source": "docs/qa/issue22-workers/host-session-results.json"
+    }
+  ],
+  "/root/lane_c": [
+    {
+      "task": "issue22-host-c",
+      "lane": "C",
+      "recorded_status": "implemented_local",
+      "source": "docs/qa/issue22-workers/host-session-results.json"
+    }
+  ],
+  "/root/lane_d": [
+    {
+      "task": "issue22-host-d",
+      "lane": "D",
+      "recorded_status": "implemented_local",
+      "source": "docs/qa/issue22-workers/host-session-results.json"
+    }
+  ],
+  "/root/overlap_engine": [
+    {
+      "task": "issue22-overlap-proof-v1",
+      "lane": "A",
+      "recorded_status": "implemented_local",
+      "source": "docs/qa/pr-overlap-20261021/host-results/overlap-result.json"
+    }
+  ],
+  "/root/poll_next": [
+    {
+      "task": "issue22-a-poll-catalog-v1",
+      "lane": "A",
+      "recorded_status": "implemented_local",
+      "source": "docs/qa/pr-overlap-20261021/host-results/pollcatalog-result.json"
+    }
+  ],
+  "/root/recovery_queue": [
+    {
+      "task": "issue22-continuation-recovery",
+      "lane": "A",
+      "recorded_status": "implemented_local",
+      "source": "docs/qa/issue22-recovery-20261021/A2-result.json"
+    }
+  ],
+  "/root/scheduled_b_payload": [
+    {
+      "task": "issue22-b-search-data-v1",
+      "lane": "B",
+      "recorded_status": "implemented_local",
+      "source": "docs/qa/pr-overlap-20261021/host-results/scheduled-B-result.json"
+    }
+  ],
+  "/root/scheduled_b_rule_fields": [
+    {
+      "task": "issue22-b-rule-fields-v1",
+      "lane": "B",
+      "recorded_status": "implemented_local",
+      "source": "docs/qa/pr-overlap-20261021/host-results/fields-B-result.json"
+    }
+  ],
+  "/root/scheduled_c_expectations": [
+    {
+      "task": "issue22-c-settlement-expectations-v1",
+      "lane": "C",
+      "recorded_status": "implemented_local",
+      "source": "docs/qa/pr-overlap-20261021/host-results/expected-C-result.json"
+    }
+  ],
+  "/root/scheduled_c_nonempty": [
+    {
+      "task": "issue22-c-nonempty-settlement-v1",
+      "lane": "C",
+      "recorded_status": "implemented_local",
+      "source": "docs/qa/pr-overlap-20261021/host-results/scheduled-C-result.json"
+    }
+  ],
+  "/root/scheduled_d_png": [
+    {
+      "task": "issue22-d-image-error-redaction-v1",
+      "lane": "D",
+      "recorded_status": "implemented_local",
+      "source": "docs/qa/pr-overlap-20261021/host-results/scheduled-D-result.json"
+    }
+  ],
+  "/root/sqlite_init_impl": [
+    {
+      "task": "issue22-a-sqlite-init-v1",
+      "lane": "A",
+      "recorded_status": "implemented_local",
+      "source": "docs/qa/issue22-verification-20261022/sqlite-A-result.json"
+    }
+  ]
+}

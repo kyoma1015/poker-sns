@@ -1,0 +1,89 @@
+{
+  "task": {
+    "id": "issue22-a-discovery-store-v1",
+    "lane": "A",
+    "base_sha": "2f5faca8b0230c4afbff6fca10ca30a59e3bf918",
+    "base_branch": "codex/a-discovery-store-input-20261022",
+    "branch": "codex/a-discovery-store-fix-20261022",
+    "test_profile": "python",
+    "allowed_paths": [
+      "scripts/code_worker.py"
+    ],
+    "protected_tests": [
+      "tests/worker_acceptance/test_continuation_recovery.py",
+      "tests/worker_acceptance/test_discovery_store.py",
+      "tests/worker_acceptance/test_finite_lease.py",
+      "tests/worker_acceptance/test_finite_setup.py",
+      "tests/worker_acceptance/test_lease_initialization.py",
+      "tests/worker_acceptance/test_pr_overlap.py"
+    ],
+    "instruction": "Implement durable metadata API discover(sources), discoveries(lane=None), set_discovery(id,owner=...,status=...) in scripts/continuation_recovery.py only. Existing extractor supplies bounded suggestions; deterministic SHA256 id of lane/reference/title via digest; INSERT OR IGNORE same-source duplicates, preserve owner/status on rediscovery. New continuation_discoveries table additive; constructor validates original anchor before schema. Return rows with id/lane/reference/title/status/owner in deterministic id order; discover returns unique rows for submitted batch. statuses ONLY review_required/blocked/dismissed, owner None or bounded regex [A-Za-z0-9_./@-]{1,80}; reject unknownID/invalid lane filter/update before mutation. Atomic cap1000 persisted rows, duplicates permitted at cap; reject entire overflowing batch. Transaction BEGIN IMMEDIATE concurrency; source owner/status/review flags ignored. No promotion/execution/newleases/runlimit change/public metadata dump; existing plan/defer/resume gates unchanged. Fixed49 baseline9ERROR; run all plus worker/queue. Only temp DB tests. Do not modify real retained state or protected tests. Source only allowed file."
+  },
+  "purpose": "Persist bounded non-executable discovery suggestions across restarts without weakening reviewed worker gates.",
+  "reviewed": true,
+  "risk": "medium",
+  "dependencies": [
+    "issue22-a-finite-setup-v1"
+  ],
+  "execution_conditions": [
+    "Explicit authorized independent safe development",
+    "Original4 durable state continuity and fresh complete allPR snapshot",
+    "Formal prepare/source collaboration/trusted finish; protected tests untouched"
+  ],
+  "completion_conditions": [
+    "Fixed acceptance and existing regressions pass",
+    "Only exact allowed source path changes",
+    "Host hash/test/tamper/commit then DraftPR and CI"
+  ],
+  "references": [
+    "https://github.com/kyoma1015/poker-sns/issues/22"
+  ],
+  "baseline": {
+    "base_sha": "2f5faca8b0230c4afbff6fca10ca30a59e3bf918",
+    "test_profile": "python",
+    "test_count": 49,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/worker_acceptance/test_continuation_recovery.py": "1d6d8d526006494d869921892dc3ff7d75f1f3cf18f8e0eeeb96a65aa47d8480",
+      "tests/worker_acceptance/test_discovery_store.py": "f47a506749c98265db23a37fd629c3fd597e29066882444686effcf247fc3fa8",
+      "tests/worker_acceptance/test_finite_lease.py": "d497616524d2bdee11afcb9fd39519bc0e270bdea29a2f6dd4d17cb60fa2456f",
+      "tests/worker_acceptance/test_finite_setup.py": "d6b0a334d65dd70bc000d296144e471d7f4cef301191fd84be9e7b07aee4a7e7",
+      "tests/worker_acceptance/test_lease_initialization.py": "f9957c370e68934dc4bf6caa4080c1672e08901a06c6f8d6de76c9a87aa793c0",
+      "tests/worker_acceptance/test_pr_overlap.py": "7a7d4988fbdca1bb720f59701973fee1975fe173b2d9006356a256c648129a0d"
+    }
+  },
+  "inherited_prs": {
+    "34": "0a24e1935cb18efcc36ee75666de5b282e8ed3f4"
+  },
+  "overlap_reviews": {
+    "74": {
+      "reviewed": true,
+      "reason": "Prior source implementation preserved as exact verified historical blob; distinct deterministic nonfinite-wait FAIL.",
+      "candidate_base_sha": "2f5faca8b0230c4afbff6fca10ca30a59e3bf918",
+      "head_sha": "2a1f39264f2b467df652a33864de659f6537e92e",
+      "pr_base_sha": "d8b3687f058227ce8a779d463262d4e2b6fad536",
+      "files": {
+        "scripts/continuation_recovery.py": {
+          "candidate_blob": "f913c6c8474040a59916926953da9a03ceefa4a9",
+          "head_blob": "f913c6c8474040a59916926953da9a03ceefa4a9",
+          "mode": "equivalent_blob"
+        }
+      }
+    },
+    "38": {
+      "reviewed": true,
+      "reason": "Prior source implementation preserved as exact verified historical blob; distinct deterministic nonfinite-wait FAIL.",
+      "candidate_base_sha": "2f5faca8b0230c4afbff6fca10ca30a59e3bf918",
+      "head_sha": "dadf4d82b24fd166f15f291724cb6ac0c35d3974",
+      "pr_base_sha": "ee9b1d2521bfe8434f76010f87e53d5da477723f",
+      "files": {
+        "scripts/continuation_recovery.py": {
+          "candidate_blob": "f913c6c8474040a59916926953da9a03ceefa4a9",
+          "head_blob": "f913c6c8474040a59916926953da9a03ceefa4a9",
+          "mode": "equivalent_blob"
+        }
+      }
+    }
+  }
+}

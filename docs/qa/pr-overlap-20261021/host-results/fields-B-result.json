@@ -1,0 +1,32 @@
+{
+  "id": "issue22-b-rule-fields-v1",
+  "lane": "B",
+  "base_sha": "90b6863e27daa5e749ea3c234253f14edd56b7ab",
+  "executor": "host_session",
+  "host_agent_id": "/root/scheduled_b_rule_fields",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "src/TDA.tsx"
+  ],
+  "tested_source_sha256": {
+    "src/TDA.tsx": "aa8e88cbee0781a24a91f2a86211273fc4bc7e4311d35f72a8465369944b1601"
+  },
+  "tests": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/worker-acceptance.test.mjs"
+      ],
+      "exit_code": 0,
+      "test_count": 16,
+      "output_sha256": "586672a55ad52a120704fc510666ced26dac57e4b3fc8acf24ff8e34f52335fb"
+    }
+  ],
+  "commit": "be0fd9197bb17c0ff6de15ec9527a12ff49241c2",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

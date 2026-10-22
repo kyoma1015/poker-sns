@@ -1,0 +1,114 @@
+test_exact_positive_limit_accepts_owned_snapshot (test_checkpoint_budget.CheckpointBudget.test_exact_positive_limit_accepts_owned_snapshot) ... ok
+test_limit_one_byte_smaller_rejects_before_native (test_checkpoint_budget.CheckpointBudget.test_limit_one_byte_smaller_rejects_before_native) ... ok
+test_nan_and_inf_never_reach_native (test_checkpoint_budget.CheckpointBudget.test_nan_and_inf_never_reach_native) ... ok
+test_native_gets_verified_copy_only_for_valid_limit (test_checkpoint_budget.CheckpointBudget.test_native_gets_verified_copy_only_for_valid_limit) ... ok
+test_nonfinite_limit_is_rejected_before_io (test_checkpoint_budget.CheckpointBudget.test_nonfinite_limit_is_rejected_before_io) ... ok
+test_noninteger_limit_is_rejected_before_io (test_checkpoint_budget.CheckpointBudget.test_noninteger_limit_is_rejected_before_io) ... ok
+test_nonpositive_integer_limit_is_rejected_before_io (test_checkpoint_budget.CheckpointBudget.test_nonpositive_integer_limit_is_rejected_before_io) ... ok
+test_boolean_zero_rake_cannot_masquerade_as_expected_integer (test_chip_oracle_types.ChipOracleTypes.test_boolean_zero_rake_cannot_masquerade_as_expected_integer) ... ok
+test_equal_float_rake_is_not_an_integer_chip_oracle (test_chip_oracle_types.ChipOracleTypes.test_equal_float_rake_is_not_an_integer_chip_oracle) ... ok
+test_refund_vector_and_partial_expectations_remain_supported (test_chip_oracle_types.ChipOracleTypes.test_refund_vector_and_partial_expectations_remain_supported) ... ok
+test_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) ... ok
+test_valid_integer_and_negative_net_expectations_are_preserved (test_chip_oracle_types.ChipOracleTypes.test_valid_integer_and_negative_net_expectations_are_preserved) ... ok
+test_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) ... ok
+test_wrong_integer_rake_still_fails_actual_equality (test_chip_oracle_types.ChipOracleTypes.test_wrong_integer_rake_still_fails_actual_equality) ... ok
+test_default_and_true_reject_incomplete (test_coverage_flag.CoverageFlag.test_default_and_true_reject_incomplete) ... ok
+test_explicit_partial_retained (test_coverage_flag.CoverageFlag.test_explicit_partial_retained) ... ok
+test_invalid_flag_does_not_iterate_input (test_coverage_flag.CoverageFlag.test_invalid_flag_does_not_iterate_input) ... FAIL
+test_nonboolean_flags_rejected (test_coverage_flag.CoverageFlag.test_nonboolean_flags_rejected) ...
+  test_nonboolean_flags_rejected (test_coverage_flag.CoverageFlag.test_nonboolean_flags_rejected) (flag=None) ... FAIL
+  test_nonboolean_flags_rejected (test_coverage_flag.CoverageFlag.test_nonboolean_flags_rejected) (flag=0) ... FAIL
+  test_nonboolean_flags_rejected (test_coverage_flag.CoverageFlag.test_nonboolean_flags_rejected) (flag='') ... FAIL
+  test_nonboolean_flags_rejected (test_coverage_flag.CoverageFlag.test_nonboolean_flags_rejected) (flag=[]) ... FAIL
+  test_nonboolean_flags_rejected (test_coverage_flag.CoverageFlag.test_nonboolean_flags_rejected) (flag={}) ... FAIL
+  test_nonboolean_flags_rejected (test_coverage_flag.CoverageFlag.test_nonboolean_flags_rejected) (flag=()) ... FAIL
+test_prior_reviewed_mass_overflow_fix_retained (test_coverage_flag.CoverageFlag.test_prior_reviewed_mass_overflow_fix_retained) ... ok
+test_empty_suite_cannot_report_pass (test_nonempty_settlement.NonemptySettlement.test_empty_suite_cannot_report_pass) ... ok
+test_invalid_case_collection_rejected_before_loading_reference (test_nonempty_settlement.NonemptySettlement.test_invalid_case_collection_rejected_before_loading_reference) ... ok
+test_valid_real_synthetic_suite_keeps_nonzero_case_count (test_nonempty_settlement.NonemptySettlement.test_valid_real_synthetic_suite_keeps_nonzero_case_count) ... ok
+test_board_playing_tie_and_pair_kickers (test_rank7.Rank7Acceptance.test_board_playing_tie_and_pair_kickers) ... ok
+test_hand_derived_nine_categories_and_wheels (test_rank7.Rank7Acceptance.test_hand_derived_nine_categories_and_wheels) ... ok
+test_invalid_expected_rank_is_not_a_pass (test_rank7.Rank7Acceptance.test_invalid_expected_rank_is_not_a_pass) ... ok
+test_rejects_bad_cards_before_native_call (test_rank7.Rank7Acceptance.test_rejects_bad_cards_before_native_call) ... ok
+test_all_oracles_erased_cannot_report_pass (test_settlement_expectations.SettlementExpectations.test_all_oracles_erased_cannot_report_pass) ... ok
+test_first_empty_oracle_is_rejected_before_reference (test_settlement_expectations.SettlementExpectations.test_first_empty_oracle_is_rejected_before_reference) ... ok
+test_late_empty_oracle_is_rejected_before_any_case_runs (test_settlement_expectations.SettlementExpectations.test_late_empty_oracle_is_rejected_before_any_case_runs) ... ok
+test_missing_oracle_is_rejected_before_reference (test_settlement_expectations.SettlementExpectations.test_missing_oracle_is_rejected_before_reference) ... ok
+test_non_mapping_oracles_are_rejected_before_reference (test_settlement_expectations.SettlementExpectations.test_non_mapping_oracles_are_rejected_before_reference) ... ok
+test_null_oracle_is_rejected_before_reference (test_settlement_expectations.SettlementExpectations.test_null_oracle_is_rejected_before_reference) ... ok
+test_valid_seventeen_case_suite_is_preserved (test_settlement_expectations.SettlementExpectations.test_valid_seventeen_case_suite_is_preserved) ... ok
+test_wrong_nonempty_oracle_still_fails_comparison (test_settlement_expectations.SettlementExpectations.test_wrong_nonempty_oracle_still_fails_comparison) ... ok
+
+======================================================================
+FAIL: test_invalid_flag_does_not_iterate_input (test_coverage_flag.CoverageFlag.test_invalid_flag_does_not_iterate_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-coverage-flag-input/tests/worker_acceptance/test_coverage_flag.py", line 11, in test_invalid_flag_does_not_iterate_input
+    with self.assertRaises(ValueError):aggregate(Untouched(),1,require_complete=None)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-coverage-flag-input/gto/hand169.py", line 36, in aggregate
+    for record in records:
+                  ^^^^^^^
+  File "/workspace/work/issue22-coverage-flag-input/tests/worker_acceptance/test_coverage_flag.py", line 10, in __iter__
+    def __iter__(self):raise AssertionError('invalid mode consumed records')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: invalid mode consumed records
+
+======================================================================
+FAIL: test_nonboolean_flags_rejected (test_coverage_flag.CoverageFlag.test_nonboolean_flags_rejected) (flag=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-coverage-flag-input/tests/worker_acceptance/test_coverage_flag.py", line 7, in test_nonboolean_flags_rejected
+    with self.subTest(flag=flag),self.assertRaises(ValueError):aggregate([],1,require_complete=flag)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_nonboolean_flags_rejected (test_coverage_flag.CoverageFlag.test_nonboolean_flags_rejected) (flag=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-coverage-flag-input/tests/worker_acceptance/test_coverage_flag.py", line 7, in test_nonboolean_flags_rejected
+    with self.subTest(flag=flag),self.assertRaises(ValueError):aggregate([],1,require_complete=flag)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_nonboolean_flags_rejected (test_coverage_flag.CoverageFlag.test_nonboolean_flags_rejected) (flag='')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-coverage-flag-input/tests/worker_acceptance/test_coverage_flag.py", line 7, in test_nonboolean_flags_rejected
+    with self.subTest(flag=flag),self.assertRaises(ValueError):aggregate([],1,require_complete=flag)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_nonboolean_flags_rejected (test_coverage_flag.CoverageFlag.test_nonboolean_flags_rejected) (flag=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-coverage-flag-input/tests/worker_acceptance/test_coverage_flag.py", line 7, in test_nonboolean_flags_rejected
+    with self.subTest(flag=flag),self.assertRaises(ValueError):aggregate([],1,require_complete=flag)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_nonboolean_flags_rejected (test_coverage_flag.CoverageFlag.test_nonboolean_flags_rejected) (flag={})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-coverage-flag-input/tests/worker_acceptance/test_coverage_flag.py", line 7, in test_nonboolean_flags_rejected
+    with self.subTest(flag=flag),self.assertRaises(ValueError):aggregate([],1,require_complete=flag)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_nonboolean_flags_rejected (test_coverage_flag.CoverageFlag.test_nonboolean_flags_rejected) (flag=())
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-coverage-flag-input/tests/worker_acceptance/test_coverage_flag.py", line 7, in test_nonboolean_flags_rejected
+    with self.subTest(flag=flag),self.assertRaises(ValueError):aggregate([],1,require_complete=flag)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 34 tests in 0.084s
+
+FAILED (failures=7)

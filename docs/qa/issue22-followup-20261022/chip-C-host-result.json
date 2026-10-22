@@ -1,0 +1,20 @@
+{
+  "id": "issue22-c-chip-oracle-types-v1",
+  "lane": "C",
+  "base_sha": "7fa1ffd5de8a7bb0479f4f5348445782326cde8e",
+  "executor": "host_session",
+  "host_agent_id": "/root/chip_oracle_impl",
+  "real_ai_implementation": false,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "gto/native/settlement.py"
+  ],
+  "tested_source_sha256": {
+    "gto/native/settlement.py": "23a3d9f382fd57dec57f8a94e916e3bfcf80dc8a93a5f7fc54435aa23703ccaf"
+  },
+  "tests": [],
+  "status": "blocked",
+  "error": "python exited 1: test_exact_positive_limit_accepts_owned_snapshot (test_checkpoint_budget.CheckpointBudget.test_exact_positive_limit_accepts_owned_snapshot) ... ok\ntest_limit_one_byte_smaller_rejects_before_native (test_checkpoint_budget.CheckpointBudget.test_limit_one_byte_smaller_rejects_before_native) ... ok\ntest_nan_and_inf_never_reach_native (test_checkpoint_budget.CheckpointBudget.test_nan_and_inf_never_reach_native) ... ok\ntest_native_gets_verified_copy_only_for_valid_limit (test_checkpoint_budget.CheckpointBudget.test_native_gets_verified_copy_only_for_valid_limit) ... ok\ntest_nonfinite_limit_is_rejected_before_io (test_checkpoint_budget.CheckpointBudget.test_nonfinite_limit_is_rejected_before_io) ... ok\ntest_noninteger_limit_is_rejected_before_io (test_checkpoint_budget.CheckpointBudget.test_noninteger_limit_is_rejected_before_io) ... ok\ntest_nonpositive_integer_limit_is_rejected_before_io (test_checkpoint_budget.CheckpointBudget.test_nonpositive_integer_limit_is_rejected_before_io) ... ok\ntest_boolean_zero_rake_cannot_masquerade_as_expected_integer (test_chip_oracle_types.ChipOracleTypes.test_boolean_zero_rake_cannot_masquerade_as_expected_integer) ... ok\ntest_equal_float_rake_is_not_an_integer_chip_oracle (test_chip_oracle_types.ChipOracleTypes.test_equal_float_rake_is_not_an_integer_chip_oracle) ... ok\ntest_scalar_chip_fields_are_checked_before_reference (test_chip_oracle_types.ChipOracleTypes.test_scalar_chip_fields_are_checked_before_reference) ... ok\ntest_valid_integer_and_negative_net_expectations_are_preserved (test_chip_oracle_types.ChipOracleTypes.test_valid_integer_and_negative_net_expectations_are_preserved) ... ERROR\ntest_vector_chip_fields_require_lists_of_exact_integers (test_chip_oracle_types.ChipOracleTypes.test_vector_chip_fields_require_lists_of_exact_integers) ... ok\ntest_wrong_integer_rake_still_fails_actual_equality (test_chip_oracle_types.ChipOracleTypes.test_wrong_integer_rake_still_fails_actual_equality) ... ERROR\ntest_empty_suite_c"
+}

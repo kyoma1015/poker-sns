@@ -1,0 +1,37 @@
+{
+  "id": "issue22-c-frequency-snapshot-v1",
+  "lane": "C",
+  "base_sha": "fd25f0909c66160150c24dacc9b8175901bd1888",
+  "executor": "host_session",
+  "host_agent_id": "/root/c_budget_impl",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "gto/hand169.py"
+  ],
+  "tested_source_sha256": {
+    "gto/hand169.py": "7ffddc455f7a1451047116c36035e766685f46384ece5c135a361c715d469661"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 37,
+      "output_sha256": "24f6e2f85006f50eee4db4ad3d088ddf0b5afa0fb19858a237e4e4fcafd9fc2c"
+    }
+  ],
+  "commit": "881ea9d099d44df15fc95880064c9818fbda6b49",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

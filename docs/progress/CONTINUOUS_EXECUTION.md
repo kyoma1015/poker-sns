@@ -50,3 +50,6 @@ Root prepared four durable development leases and independent pinned worktrees, 
 This confirms a finite real host-agent implementation cycle, not a permanent daemon. Nested CLI execution remains EROFS-blocked, and future unattended sessions must confirm runtime and durable lease access before claiming work. The standalone publisher adapter remains unverified; the root used its approved GitHub tools to publish controller-created commits.
 
 Root's host output PRs #27–#30 all passed their published-SHA acceptance CI (links in docs/workers/REAL_CODE_WORKER.md). The existing finite six-hour/28-occurrence reservation was updated to use this host lifecycle with retained-state checks; its next cold-start-to-code-completion run remains unverified. Missing shared lease state must fall back to read-only. No scheduler extension, CLI bypass or permanent daemon was introduced.
+
+## New source continuation — 2026-10-22
+Explicit manual source continuation completed four lanes then a second bounded A/C cycle. No schedule/count extension, daemon or coldstart claim. See [ledger](../workers/ISSUE22_AUTONOMOUS_SOURCE_20261022.md). Existing source/original4state/BLOCKED history retained; no production/main/paid action.

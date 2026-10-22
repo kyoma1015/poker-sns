@@ -1,0 +1,37 @@
+{
+  "id": "issue22-a-sqlite-init-v1",
+  "lane": "A",
+  "base_sha": "0ce21f5885b8a5a0c5e20fe5befdf626d910b4ca",
+  "executor": "host_session",
+  "host_agent_id": "/root/sqlite_init_impl",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "scripts/code_worker.py"
+  ],
+  "tested_source_sha256": {
+    "scripts/code_worker.py": "37a539e207c46ee5ad94bdf6c877cf835e5188a217169ed1f5aa2885ce0def15"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 27,
+      "output_sha256": "6f94261165d20a8174ccb65db1002e8eeffbd8bdcaa2fc1cdd92da7cf1d67323"
+    }
+  ],
+  "commit": "4d30c7ac0d08104f9d159987e38c823ef7c3b419",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

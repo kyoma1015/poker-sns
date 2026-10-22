@@ -1,0 +1,152 @@
+test_candidates_promote_only_one_ready_task_per_lane (test_continuation_recovery.RecoveryAcceptance.test_candidates_promote_only_one_ready_task_per_lane) ... ok
+test_changed_candidate_id_spec_is_rejected_on_restart (test_continuation_recovery.RecoveryAcceptance.test_changed_candidate_id_spec_is_rejected_on_restart) ... ok
+test_completed_and_active_lane_are_not_replayed (test_continuation_recovery.RecoveryAcceptance.test_completed_and_active_lane_are_not_replayed) ... ok
+test_finite_run_budget_and_duplicate_run_survive_restart (test_continuation_recovery.RecoveryAcceptance.test_finite_run_budget_and_duplicate_run_survive_restart) ... ok
+test_imported_remaining_schedule_cap_only_reduces_and_never_resets (test_continuation_recovery.RecoveryAcceptance.test_imported_remaining_schedule_cap_only_reduces_and_never_resets) ... ok
+test_missing_state_and_changed_anchor_fail_closed (test_continuation_recovery.RecoveryAcceptance.test_missing_state_and_changed_anchor_fail_closed) ... ok
+test_one_retry_only_and_permission_errors_not_retried (test_continuation_recovery.RecoveryAcceptance.test_one_retry_only_and_permission_errors_not_retried) ... ok
+test_public_checkpoint_excludes_tokens_context_errors_and_secrets (test_continuation_recovery.RecoveryAcceptance.test_public_checkpoint_excludes_tokens_context_errors_and_secrets) ... ok
+test_quota_defer_restart_resume_same_worktree_and_commit (test_continuation_recovery.RecoveryAcceptance.test_quota_defer_restart_resume_same_worktree_and_commit) ... ok
+test_reference_extraction_never_turns_untrusted_text_into_tasks (test_continuation_recovery.RecoveryAcceptance.test_reference_extraction_never_turns_untrusted_text_into_tasks) ... ok
+test_resume_rejects_tampered_checkpoint_and_never_steals_expired_lease (test_continuation_recovery.RecoveryAcceptance.test_resume_rejects_tampered_checkpoint_and_never_steals_expired_lease) ... ok
+test_stale_incomplete_or_overlapping_pr_snapshot_blocks (test_continuation_recovery.RecoveryAcceptance.test_stale_incomplete_or_overlapping_pr_snapshot_blocks) ... ok
+test_unreviewed_bad_baseline_missing_tests_and_wildcards_cannot_run (test_continuation_recovery.RecoveryAcceptance.test_unreviewed_bad_baseline_missing_tests_and_wildcards_cannot_run) ... ok
+test_concurrent_deduplication (test_discovery_store.DiscoveryStore.test_concurrent_deduplication) ... ERROR
+test_duplicate_batch_and_four_lanes (test_discovery_store.DiscoveryStore.test_duplicate_batch_and_four_lanes) ... ERROR
+test_empty_and_bounded_untrusted_extraction (test_discovery_store.DiscoveryStore.test_empty_and_bounded_untrusted_extraction) ... ERROR
+test_invalid_lane_filter_rejected (test_discovery_store.DiscoveryStore.test_invalid_lane_filter_rejected) ... ERROR
+test_invalid_updates_are_atomic (test_discovery_store.DiscoveryStore.test_invalid_updates_are_atomic) ... ERROR
+test_missing_state_remains_missing (test_discovery_store.DiscoveryStore.test_missing_state_remains_missing) ... ok
+test_owner_status_survive_rediscovery (test_discovery_store.DiscoveryStore.test_owner_status_survive_rediscovery) ... ERROR
+test_persistence_and_stable_id (test_discovery_store.DiscoveryStore.test_persistence_and_stable_id) ... ERROR
+test_resource_cap_atomic_batch (test_discovery_store.DiscoveryStore.test_resource_cap_atomic_batch) ... ERROR
+test_untrusted_promotion_and_metadata_ignored (test_discovery_store.DiscoveryStore.test_untrusted_promotion_and_metadata_ignored) ... ERROR
+test_invalid_clock_preserves_existing_lease (test_finite_lease.FiniteLease.test_invalid_clock_preserves_existing_lease) ... ok
+test_invalid_finish_clock_preserves_running (test_finite_lease.FiniteLease.test_invalid_finish_clock_preserves_running) ... ok
+test_rejects_boolean_and_text_duration (test_finite_lease.FiniteLease.test_rejects_boolean_and_text_duration) ... ok
+test_rejects_nonfinite_duration_without_writing (test_finite_lease.FiniteLease.test_rejects_nonfinite_duration_without_writing) ... ok
+test_rejects_nonpositive_duration_without_writing (test_finite_lease.FiniteLease.test_rejects_nonpositive_duration_without_writing) ... ok
+test_rejects_overflowing_expiry (test_finite_lease.FiniteLease.test_rejects_overflowing_expiry) ... ok
+test_valid_duration_still_expires_without_takeover (test_finite_lease.FiniteLease.test_valid_duration_still_expires_without_takeover) ... ok
+test_valid_fractional_duration_and_epoch_clock (test_finite_lease.FiniteLease.test_valid_fractional_duration_and_epoch_clock) ... ok
+test_contention_nonfinite_never_enters_wait_watchdog (test_finite_setup.FiniteSetup.test_contention_nonfinite_never_enters_wait_watchdog) ... ok
+test_finite_uncontended_values_still_acquire_and_release (test_finite_setup.FiniteSetup.test_finite_uncontended_values_still_acquire_and_release) ... ok
+test_nonfinite_wait_rejected_before_os_lock (test_finite_setup.FiniteSetup.test_nonfinite_wait_rejected_before_os_lock) ... ok
+test_zero_and_negative_finite_keep_try_once (test_finite_setup.FiniteSetup.test_zero_and_negative_finite_keep_try_once) ... ok
+test_existing_cross_process_setup_exclusion_covers_state_initialization (test_lease_initialization.LeaseInitialization.test_existing_cross_process_setup_exclusion_covers_state_initialization) ... ok
+test_initialization_failure_closes_connection_and_releases_setup_guard (test_lease_initialization.LeaseInitialization.test_initialization_failure_closes_connection_and_releases_setup_guard) ... ok
+test_parallel_fresh_initializers_keep_wal_schema_and_all_rows (test_lease_initialization.LeaseInitialization.test_parallel_fresh_initializers_keep_wal_schema_and_all_rows) ... ok
+test_ancestor_with_different_blob_is_not_a_witness (test_pr_overlap.OverlapProof.test_ancestor_with_different_blob_is_not_a_witness) ... ok
+test_changed_head_base_or_candidate_pins_are_rejected (test_pr_overlap.OverlapProof.test_changed_head_base_or_candidate_pins_are_rejected) ... ok
+test_exact_patch_already_included_with_unrelated_newer_changes (test_pr_overlap.OverlapProof.test_exact_patch_already_included_with_unrelated_newer_changes) ... ok
+test_exact_prior_source_blob_in_verified_ancestor (test_pr_overlap.OverlapProof.test_exact_prior_source_blob_in_verified_ancestor) ... ok
+test_independent_history_identical_source_is_proved (test_pr_overlap.OverlapProof.test_independent_history_identical_source_is_proved) ... ok
+test_missing_extra_path_and_unknown_mode_rejected (test_pr_overlap.OverlapProof.test_missing_extra_path_and_unknown_mode_rejected) ... ok
+test_noop_patch_not_accepted_as_coverage (test_pr_overlap.OverlapProof.test_noop_patch_not_accepted_as_coverage) ... ok
+test_pending_change_not_in_candidate_is_not_exempted (test_pr_overlap.OverlapProof.test_pending_change_not_in_candidate_is_not_exempted) ... ok
+test_proof_does_not_modify_repository_index_or_working_tree (test_pr_overlap.OverlapProof.test_proof_does_not_modify_repository_index_or_working_tree) ... ok
+test_wrong_blob_patch_digest_and_review_flag_rejected (test_pr_overlap.OverlapProof.test_wrong_blob_patch_digest_and_review_flag_rejected) ... ok
+test_planner_accepts_verified_equivalence_but_still_requires_failed_baseline (test_pr_overlap.PlannerIntegration.test_planner_accepts_verified_equivalence_but_still_requires_failed_baseline) ... ok
+
+======================================================================
+ERROR: test_concurrent_deduplication (test_discovery_store.DiscoveryStore.test_concurrent_deduplication)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<retained-workspace>/issue22-discovery-store-input/tests/worker_acceptance/test_discovery_store.py", line 61, in test_concurrent_deduplication
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:rows=list(pool.map(run,range(4)))
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<retained-workspace>/issue22-discovery-store-input/tests/worker_acceptance/test_discovery_store.py", line 59, in run
+    try:return other.discover([self.src()])
+               ^^^^^^^^^^^^^^
+AttributeError: 'Continuation' object has no attribute 'discover'
+
+======================================================================
+ERROR: test_duplicate_batch_and_four_lanes (test_discovery_store.DiscoveryStore.test_duplicate_batch_and_four_lanes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<retained-workspace>/issue22-discovery-store-input/tests/worker_acceptance/test_discovery_store.py", line 29, in test_duplicate_batch_and_four_lanes
+    rows=self.store.discover([self.src(lane) for lane in 'ABCD']+[self.src()]);self.assertEqual(len(rows),4)
+         ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Continuation' object has no attribute 'discover'
+
+======================================================================
+ERROR: test_empty_and_bounded_untrusted_extraction (test_discovery_store.DiscoveryStore.test_empty_and_bounded_untrusted_extraction)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<retained-workspace>/issue22-discovery-store-input/tests/worker_acceptance/test_discovery_store.py", line 70, in test_empty_and_bounded_untrusted_extraction
+    self.assertEqual(self.store.discover([]),[])
+                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Continuation' object has no attribute 'discover'
+
+======================================================================
+ERROR: test_invalid_lane_filter_rejected (test_discovery_store.DiscoveryStore.test_invalid_lane_filter_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<retained-workspace>/issue22-discovery-store-input/tests/worker_acceptance/test_discovery_store.py", line 54, in test_invalid_lane_filter_rejected
+    self.store.discover([self.src()])
+    ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Continuation' object has no attribute 'discover'
+
+======================================================================
+ERROR: test_invalid_updates_are_atomic (test_discovery_store.DiscoveryStore.test_invalid_updates_are_atomic)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<retained-workspace>/issue22-discovery-store-input/tests/worker_acceptance/test_discovery_store.py", line 41, in test_invalid_updates_are_atomic
+    row=self.store.discover([self.src()])[0]
+        ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Continuation' object has no attribute 'discover'
+
+======================================================================
+ERROR: test_owner_status_survive_rediscovery (test_discovery_store.DiscoveryStore.test_owner_status_survive_rediscovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<retained-workspace>/issue22-discovery-store-input/tests/worker_acceptance/test_discovery_store.py", line 32, in test_owner_status_survive_rediscovery
+    row=self.store.discover([self.src()])[0];self.store.set_discovery(row['id'],owner='/root/a',status='blocked')
+        ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Continuation' object has no attribute 'discover'
+
+======================================================================
+ERROR: test_persistence_and_stable_id (test_discovery_store.DiscoveryStore.test_persistence_and_stable_id)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<retained-workspace>/issue22-discovery-store-input/tests/worker_acceptance/test_discovery_store.py", line 24, in test_persistence_and_stable_id
+    first=self.store.discover([self.src()]); self.assertEqual(len(first),1)
+          ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Continuation' object has no attribute 'discover'
+
+======================================================================
+ERROR: test_resource_cap_atomic_batch (test_discovery_store.DiscoveryStore.test_resource_cap_atomic_batch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<retained-workspace>/issue22-discovery-store-input/tests/worker_acceptance/test_discovery_store.py", line 64, in test_resource_cap_atomic_batch
+    for batch in range(10):self.store.discover([self.src(title=str(batch*100+n)) for n in range(100)])
+                           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Continuation' object has no attribute 'discover'
+
+======================================================================
+ERROR: test_untrusted_promotion_and_metadata_ignored (test_discovery_store.DiscoveryStore.test_untrusted_promotion_and_metadata_ignored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<retained-workspace>/issue22-discovery-store-input/tests/worker_acceptance/test_discovery_store.py", line 37, in test_untrusted_promotion_and_metadata_ignored
+    row=self.store.discover([src])[0];self.assertIsNone(row['owner']);self.assertEqual(row['status'],'review_required')
+        ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Continuation' object has no attribute 'discover'
+
+----------------------------------------------------------------------
+Ran 49 tests in 1.596s
+
+FAILED (errors=9)

@@ -1,0 +1,39 @@
+{
+  "observed_at": "2026-10-22T04:38:31.789926+00:00",
+  "original4": [
+    {
+      "id": "issue22-host-a",
+      "status": "implemented",
+      "spec_hash_matches": true
+    },
+    {
+      "id": "issue22-host-b",
+      "status": "implemented",
+      "spec_hash_matches": true
+    },
+    {
+      "id": "issue22-host-c",
+      "status": "implemented",
+      "spec_hash_matches": true
+    },
+    {
+      "id": "issue22-host-d",
+      "status": "implemented",
+      "spec_hash_matches": true
+    }
+  ],
+  "running_count": 0,
+  "integration_tasks": [
+    {
+      "id": "issue22-a-main-controller-transplant-v1",
+      "status": "implemented"
+    },
+    {
+      "id": "issue22-c-main-gto-transplant-v1",
+      "status": "implemented"
+    }
+  ],
+  "state_replaced": false,
+  "live_controller_replaced": false,
+  "scheduled_start_proven": false
+}

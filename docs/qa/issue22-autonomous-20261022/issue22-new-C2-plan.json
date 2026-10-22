@@ -1,0 +1,31 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-c-frequency-snapshot-v1",
+        "lane": "C",
+        "base_sha": "fd25f0909c66160150c24dacc9b8175901bd1888",
+        "base_branch": "codex/c-frequency-snapshot-input-20261022",
+        "branch": "codex/c-frequency-snapshot-fix-20261022",
+        "test_profile": "python",
+        "allowed_paths": [
+          "gto/hand169.py"
+        ],
+        "protected_tests": [
+          "tests/worker_acceptance/test_checkpoint_budget.py",
+          "tests/worker_acceptance/test_chip_oracle_types.py",
+          "tests/worker_acceptance/test_coverage_flag.py",
+          "tests/worker_acceptance/test_frequency_snapshot.py",
+          "tests/worker_acceptance/test_nonempty_settlement.py",
+          "tests/worker_acceptance/test_rank7.py",
+          "tests/worker_acceptance/test_settlement_expectations.py"
+        ],
+        "instruction": "Snapshot each already-validated frequencies vector before retaining it in aggregation buckets. A generator may reuse/mutate its list between yields: preserve consumed-row weighted values and prevent post-yieldNaN bypass. Do not mutate input buffers. Preserve strict bool coverage, priorPR29overflow, math/export/zero-mass/unknownEV semantics. Only gto/hand169.py source. Fixed37 baseline2FAIL; existingGTO40; no solver/rules/checkpoint/strategy claims."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

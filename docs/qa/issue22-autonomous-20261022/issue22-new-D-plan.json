@@ -1,0 +1,26 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-d-own-trait-v1",
+        "lane": "D",
+        "base_sha": "fbc937d3742e2eaec6ab7d2dbc2e446245ac6675",
+        "base_branch": "codex/d-own-trait-input-20261022",
+        "branch": "codex/d-own-trait-fix-20261022",
+        "test_profile": "diagnosis",
+        "allowed_paths": [
+          "src/playerTypePresentation.ts"
+        ],
+        "protected_tests": [
+          "tests/player-type.test.mjs",
+          "tests/fixtures/player-type-v2.json"
+        ],
+        "instruction": "Only known OWN trait keys may resolve traitCopy or traitPositiveMax. Reject Object.prototype names such as constructor/toString/__proto__/hasOwnProperty/valueOf in topPersonalTraits; relativePositiveScore unknown returns finite0. Preserve realtrait ranking/advice/caps and classification semantics. Only src/playerTypePresentation.ts source, fixed48 baseline6FAIL. Run fixed48/playeraudit5/build/lint, buildout/cache external ownedtmp, dependencies trusted parent. No scoring/animals/DB/UI/SQL changes."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

@@ -1,0 +1,37 @@
+{
+  "id": "issue22-c-subnormal-policy-v1",
+  "lane": "C",
+  "base_sha": "935d76a4ab9b39e2ace077ce5cc969f1726009f8",
+  "executor": "host_session",
+  "host_agent_id": "/root/c_budget_impl",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "gto/hand169.py"
+  ],
+  "tested_source_sha256": {
+    "gto/hand169.py": "400c1f0b3683f1bdeaddab0d8e41e2a6e548fc910a068fddb0533ccbe7e8beb2"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 50,
+      "output_sha256": "181b2cbcbb0da2859e40434c4b41fb59d99ebc2e02a58e1502de63941a404965"
+    }
+  ],
+  "commit": "381059c799c55f4eb876cbf3f426527a0b09d97a",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

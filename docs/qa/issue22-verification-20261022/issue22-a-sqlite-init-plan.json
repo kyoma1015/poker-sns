@@ -1,0 +1,27 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-a-sqlite-init-v1",
+        "lane": "A",
+        "base_sha": "0ce21f5885b8a5a0c5e20fe5befdf626d910b4ca",
+        "base_branch": "codex/a-sqlite-init-input-20261022",
+        "branch": "codex/a-sqlite-init-fix-20261022",
+        "test_profile": "python",
+        "allowed_paths": [
+          "scripts/code_worker.py"
+        ],
+        "protected_tests": [
+          "tests/worker_acceptance/test_continuation_recovery.py",
+          "tests/worker_acceptance/test_lease_initialization.py",
+          "tests/worker_acceptance/test_pr_overlap.py"
+        ],
+        "instruction": "Fix Leases startup WAL/schema concurrency and failed connection cleanup. Serialize opening/journal/schema initialization using existing bounded cross-process setup_lock; release on all paths and close connections on initialization failure. Preserve timeout bounds, lease claim/finish/expiry/replay/spec/hash/path/source/test/commit/executor/publication logic byte-for-byte outside minimal initializer/docstring change. No unbounded retries or sleep-based test workaround. Fixed27 baseline2FAIL. Run fixed27, existing22 worker and15 queue, git diffcheck. Only scripts/code_worker.py source. Tests only owned temp SQLite, never retained private state. No GitHub/Vercel/DB/CLI auth operations in source agent."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}

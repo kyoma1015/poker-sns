@@ -19,3 +19,46 @@
 
 ## Issue22 continuation — 2026-10-21
 Latest evidence and restart contract: docs/workers/ISSUE22_RESTART_STATE_20261021.md (PR34). A poll PR31 isolatedDB56PASS/client30/mobile5, production gates remain; B PR32 saved-result integrity; C PR33 synthetic rank7; D PR35 doubleclick; PR34 reviewed replenishment and bounded recovery. Each has published CI SUCCESS at code SHA. Formal host stop/reopen/resume plus real source implementation verified for simulated quota; future scheduled autonomous completion remains unverified. Do not treat old table above as latest runtime evidence.
+
+
+## PR overlap resolved — 2026-10-21
+Current implementation/restart evidence: PR38 docs/workers/RECONCILED_RESTART_20261021.md. A37/B41/C39/D40 and overlap38 implemented/CI passed. New exact Gitproof gates permit inherited samefile changes, unknown overlaps still block. B19 reviewed normalmerge preservedsource. Next B/C/D fixed inputs each READY on fresh34PRsnapshot, awaiting bounded scheduled/host dispatch. No main/production release.
+
+## Ordinary scheduled source continuation — 2026-10-21 17:05 UTC
+C ready-next completed as PR57 c73b57d156e3c1aae24e10565787df4d73b1c3a8 (14+40PASS); B as PR59 35502ff3af55e58c5ffb518fe7d1a2d7db631e64 (browser9/unit138/build/lintPASS); D as PR60 93d9948f8f829432fa66c5aafd294bf8924421fa (browser6/unit96/build/lintPASS). Do not rerun these IDs or edit immutable descriptors. Evidence: PR38 ordinary-scheduled-source-chain.json and RECONCILED_RESTART. Two recurring prompt arrivals observed; independent coldstart/daemon and provider runID remain unverified. Original durable4task hashes retained. Next executable descriptors require new fixed failing acceptance and review; none falsely marked ready. Other work merged poll PR31, PR42–56 and PR58 into main; current main release gate still NO-GO. This worker did not merge/deploy/connect production or change finite schedule.
+
+## Scheduled continuation — 2026-10-21 23:05 UTC
+New actual source: C PR61 b6456dce6e8f468448f2daedc8850dce6d7d76ff (22+40PASS/CI39690270215), B PR62 be0fd9197bb17c0ff6de15ec9527a12ff49241c2 (browser16/unit138/build/lintPASS/CI39690895245). A37/D60 unchanged. Next C issue22-c-chip-oracle-types-v1 has new input7fa1ffd5de8a7bb0479f4f5348445782326cde8e, fixed28 FAIL/protected5/READY-on37PRsnapshot; NOT source-implemented or dispatched. Read PR38 docs/workers/SCHEDULED_CONTINUATION_20261022.md and RECONCILED_RESTART. Later scheduled prompt and fresh gates required. Original state/finite schedule retained; no main/production changes.
+
+## Explicit follow-up — 2026-10-22
+C v1 BLOCKED: prior coordinator descriptor mistakenly treated refund as scalar; original17/refund vector contradict it. Old fixed28/5ERROR and worktree/spec retained. Corrective immutable v2 input115adb8a6ec7aff591aaf90d479a1eb205c1d24b -> Draft PR66 b492f8c7730cb5ebb66beee909ba2526dcb7cc85, fixed29/oldGTO40PASS,CI39711822875SUCCESS. Only settlement.py source changed; one corrective retry. B62/D60 source maintained; official350/36-animal semantic evidence remains incomplete. Main now includes external64/65 at3ff2c03bddcf74c252f2533769f79ccc85dba1fe; this worker did not merge. PR13/12/8/2 conflict with main; releaseNO-GO and realbackup/restore awaiting trusted alternative environment. Details: PR38 docs/workers/ISSUE22_FOLLOWUP_20261022.md. This was explicit user execution, not scheduler/coldstart proof.
+
+## Issue22 verification update — 2026-10-22
+See [evidence ledger](../workers/ISSUE22_VERIFICATION_20261022.md). New isolated source Draft69 SQLite init and Draft70 exact toy BR metrics have successful CI. PR66 fixed input passes but inherited full branch conflicts with current main in seven files. B350 immutable source/review, D36 semantic classification, originalG11 compatibility/poker convergence and poll production release remain BLOCKED; no main merge or production operation.
+
+## Issue22 main transplant candidates — 2026-10-22
+[Audit](../workers/ISSUE22_MAIN_TRANSPLANT_20261022.md): minimumcontroller from69 in Draft74 and GTO-onlyclosure from66 in Draft75, both isolatedActions and existingmainregressionActions SUCCESS, clean simulatedmerge againstmain5a49f437727fba0f4d48585300a04ec7e9d747a4. No mainmerge/liveadoption. VercelstatusFAIL(rate-limit), B350/D36semantics/G11compatibility/actualpokerconvergence/pollproductionBLOCKED. Newintegrationtaskscompleted; original4statehashesretained, noactiveleases, noautomaticdaemonclaim.
+
+## New source continuation — 2026-10-22
+Six source fixes A80/A85/B83/C81/C84/D82 committed and CI SUCCESS. Separate pinned branches/Drafts, no main adoption; see source evidence ledger. See [ledger](../workers/ISSUE22_AUTONOMOUS_SOURCE_20261022.md). Existing source/original4state/BLOCKED history retained; no production/main/paid action.
+
+## Bounded discovery continuation — 2026-10-22
+New formal source A96 durable review suggestions (not executable), B98 optional-filter React crash prevention, C97 finite weighted-EV scaling. Original state32implemented/2blocked, original4 hashes retained; no live controller switch/main merge. D PR30 inheritance gap reproduced53/5FAIL, reuse pending, no duplicate source. Details/source/CI: docs/workers/ISSUE22_DISCOVERY_CONTINUATION_20261022.md and docs/qa/issue22-discovery-20261022/. Public non-executable next-review queue saved; official350/D36semantic/G11/poll-production gates remain unproven.
+
+## Continuous selected reuse — 2026-10-22
+Four new formal source tasks (A102/A104/C101/C105) and two selected main candidates (D100/C103), successful component CI. Retained original4 hashes; implemented36/blocked2/running0, integration reuse not double-counted. Read docs/workers/ISSUE22_SELECTED_REUSE_20261022.md and its QA branches/Actions evidence. D30 exact patch now in Draft100; C103 inherits latest policy/EV fixes. No main/controller/scheduler/production adoption, no semantic/G11/strategy proof.
+
+## Restart-system preparation — 2026-10-22
+Official automation contract supports at most hourly, not requested30min. Existing6h COUNT28 untouched/nextnull causeUNKNOWN; old pending39785868353 nowSUCCESS. New Draft106(publication CAS) and107(opt-in global invocation guard) local testsPASS, CI tracked separately. Retained38implemented/2blocked, no live controller/schema/scheduler adoption. Read docs/workers/ISSUE22_RESTART_PREPARATION_20261022.md and RUN_CHECKPOINT_20261022.json. Disabled hourlyCOUNT2 read-only probe proposal requires explicit user approval; no unattended-source completion claimed.
+
+## Approved finite launch observation — 2026-10-22 15:03 UTC
+Owner approved hourly COUNT2 read-only probe. Original Poker-only6h config saved before pause; disabled confirmed. New exact finite schedule registered/verified; next_run_time and run history null, actual launches PENDING. See docs/workers/ISSUE22_HOURLY_PROBE_20261022.md and docs/qa/issue22-hourly-probe-20261022/. No live controller/source/state adoption.38implemented/2blocked/running0 and original4hashes verified read-only. No automatic restore/extension; ongoing unattended development OFF. PR106/107 CI39795238064/39796232980 confirmedSUCCESS, Drafts unmerged; pollNO-GO.
+
+## Explicit source development resumed —2026-10-22
+Draft108 finite binary64 numeric-input validation: fixed58 baseline6ERROR→58PASS, GTO40PASS, CI39813869671SUCCESS; formal host source9213c8691f4ae45d8398a7b745808e941793b7b6. Retained39implemented/2blocked/running0; original4hashes unchanged. See ISSUE22_SOURCE_RESUME_20261022.md. Manual authorized source invocation, not scheduled coldstart/daemon proof. Existing second readonly probe still pending; no schedule/controller/main/production adoption.
+
+## Next explicit source + multi-lane QA —2026-10-22
+Draft110 finite maximum weightedEV: fixed62 baseline4ERROR→62PASS, GTO40PASS, CI39817184387SUCCESS; formal source dd883b7ded3b792b366c12b18e3b1937ca469156. A6/B-Dadditional8 plus existingB/D QA executed; browser1BLOCKED spawnSync EPERM, no repeated permissionprobe. ExistingA109/audit43cf CI nowSUCCESS.41implemented/2oldblocked/running0 (43total), old40statuses/original4hash retained; independent full descriptor verification38/40original, two oldintegration descriptorsUNKNOWN. Exact evidence ISSUE22_NEXT_SOURCE_QA_20261022.md. Existing secondreadonlyprobe future17:02:46UTC; no scheduler/controller/main/production adoption.
+
+## Audit WAL initialization fix selected —2026-10-23 JST
+PR38 inherited exact existingPR69 patch after fixed27/2FAIL baseline, now27PASS/worker22/queue15PASS; init3+worker22 each repeated10times,8processes×10freshDB rounds80success withWAL/integrity/rowparity. Source199d15d7f0302ffaeb27185ae50ceb1ad634ea1e, targetfileexactPR69SHA256. One selected-reuse integration row, not a new algorithm;44total/42implemented/2oldblocked/running0. NewCI tracked at publishedhead. No activecontroller switch/mainmerge/scheduler/production. See ISSUE22_WAL_ROOTCAUSE_20261023.md. Startup timing discrepancy291.845013s and missing provider runhistory remainUNKNOWN; reservations disabled.

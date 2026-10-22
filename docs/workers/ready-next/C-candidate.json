@@ -1,0 +1,64 @@
+{
+  "task": {
+    "id": "issue22-c-nonempty-settlement-v1",
+    "lane": "C",
+    "base_sha": "a1ec880c66b54fba67fc16bee0d51f56482e9e81",
+    "base_branch": "codex/c-settlement-nonempty-input-20261021",
+    "branch": "codex/c-settlement-nonempty-fix-20261021",
+    "test_profile": "python",
+    "allowed_paths": [
+      "gto/native/settlement.py"
+    ],
+    "protected_tests": [
+      "tests/worker_acceptance/test_nonempty_settlement.py",
+      "tests/worker_acceptance/test_checkpoint_budget.py",
+      "tests/worker_acceptance/test_rank7.py"
+    ],
+    "instruction": "Reject empty or non-list settlement fixture cases with ValueError before reference_module or native calls. Current run_fixture_suite reports PASS with case_count0 for cases=[]. Preserve all valid17 hand-derived synthetic settlement cases, rank7 cases, exact Python/native comparison and old budget tests. No original/reference/solver/checkpoint changes. Only source gto/native/settlement.py. Fixed14 acceptance currently failures4/errors2 from invalid fixture collections; require allPASS before controller commit."
+  },
+  "purpose": "Prevent synthetic settlement verification from falsely reporting PASS without executing any case.",
+  "reviewed": true,
+  "risk": "low",
+  "dependencies": [
+    "issue22-c-checkpoint-budget-reviewed-v2"
+  ],
+  "execution_conditions": [
+    "Existing legitimate host collaboration and unchanged shared state",
+    "Fresh complete PR snapshot and exact inherited overlap review",
+    "Python3.12 stdlib; owned synthetic fixtures only"
+  ],
+  "completion_conditions": [
+    "Fixed14 acceptance PASS",
+    "Existing40 GTO regression PASS",
+    "Formal controller tested sourcehash/commit and Draft PR CI"
+  ],
+  "references": [
+    "https://github.com/kyoma1015/poker-sns/issues/22",
+    "https://github.com/kyoma1015/poker-sns/pull/39",
+    "gto/native/settlement.py:run_fixture_suite"
+  ],
+  "baseline": {
+    "base_sha": "a1ec880c66b54fba67fc16bee0d51f56482e9e81",
+    "test_profile": "python",
+    "test_count": 14,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/worker_acceptance/test_nonempty_settlement.py": "02c4d041ca2253bd31694f4625ebdf7fd847341eb79b1576eeb2558c7c0f66d0",
+      "tests/worker_acceptance/test_checkpoint_budget.py": "af8bfd8693d6f77c661a5a9b53843b7377423e9c6f0735e8fe2b26978bef7b4a",
+      "tests/worker_acceptance/test_rank7.py": "7146239998b7ce048bb576ad4bb174ccfa4d2c56df3ac91eb5cbe236c9536c07"
+    }
+  },
+  "inherited_prs": {
+    "33": "2620396d207970fae7470043a404d7b0582b8829",
+    "25": "6b9bf03f63f1c5f23dc4271ad8714f5f8bbea04e"
+  },
+  "observed_baseline_summary": {
+    "tests": 14,
+    "failures": 4,
+    "errors": 2,
+    "log": "/workspace/work/issue22-c-nonempty-baseline.log"
+  },
+  "readiness": "fixed_input_ready; fresh overlap proofs and lease still required",
+  "overlap_reviews": {}
+}

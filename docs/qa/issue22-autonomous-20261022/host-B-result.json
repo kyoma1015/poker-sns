@@ -1,0 +1,31 @@
+{
+  "id": "issue22-b-dense-quiz-v1",
+  "lane": "B",
+  "base_sha": "eb62eb72870e52a44e2755479e860f7502894a3f",
+  "executor": "host_session",
+  "host_agent_id": "/root/b_next",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "src/tdaQuizData.ts"
+  ],
+  "tested_source_sha256": {
+    "src/tdaQuizData.ts": "aa45b6475c967b721211671d598acb9f46a8fe386f6c1a26f3c3c4c74a7b42ec"
+  },
+  "tests": [
+    {
+      "command": [
+        "node",
+        "tests/tda-quiz-data.test.mjs"
+      ],
+      "exit_code": 0,
+      "test_count": 23,
+      "output_sha256": "a61b61351946a8f933562c2768e6a60cbb139454da9ec431ba4ae133a90e2432"
+    }
+  ],
+  "commit": "7713dc4e1b939b59c8e23938c1320f6c2118ab19",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

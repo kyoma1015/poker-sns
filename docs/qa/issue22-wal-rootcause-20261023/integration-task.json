@@ -1,0 +1,17 @@
+{
+  "id": "issue22-a-audit-wal-reuse-v1",
+  "lane": "A",
+  "base_sha": "a18885d839ffee6b06bc0b456c85c968a9e2efe6",
+  "branch": "codex/a-audit-wal-reuse-20261022",
+  "base_branch": "codex/a-audit-wal-input-20261022",
+  "test_profile": "python",
+  "allowed_paths": [
+    "scripts/code_worker.py"
+  ],
+  "protected_tests": [
+    "tests/worker_acceptance/test_continuation_recovery.py",
+    "tests/worker_acceptance/test_lease_initialization.py",
+    "tests/worker_acceptance/test_pr_overlap.py"
+  ],
+  "instruction": "Selectively reuse EXACT existing reviewed PR69 initialization patch from /workspace/work/issue22-audit-wal-reviewed.patch. Sourcebefore is exactPR69parent e45d66a236c407b458fb780db9fa199b5111b895; sourceafter must be exactPR69 bbfee07 blob. Only scripts/code_worker.py. No new algorithm, no tests/metadata edits, no live controller switch, no original completed task replay. Fixed27 baseline2FAIL. Host runs fixed/worker/queue and repeatedisolatedprocess QA, commits and updates existing auditDraft only."
+}

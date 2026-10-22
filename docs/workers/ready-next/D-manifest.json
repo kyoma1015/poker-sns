@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "repository": "kyoma1015/poker-sns",
+  "tasks": [
+    {
+      "id": "issue22-d-image-error-redaction-v1",
+      "lane": "D",
+      "base_sha": "3aa1a2ee02f442fd3983217e19d37607d7cb6a78",
+      "base_branch": "codex/issue22-d-image-error-input-20261021",
+      "branch": "codex/issue22-d-image-error-redaction-fix-20261021",
+      "instruction": "Fix remaining PNG export exception details rendered by saveShareImage catch. Use fixed Japanese image-save retry text without raw Error.message/String(exception). Preserve save/share generic errors, capture/isCurrent gate, PNG1080x1500 dimensions/filename, successful retry after renderer error, stale result isolation, scoring/50questions/36animals. Only source PlayerTypeDiagnosis.tsx; fixed acceptance6 cases unchanged. Trusted parent locked node dependencies and tmpcache outside source, no npmci/build before finish. No DB/SQL/production/checkpoint/paid operations.",
+      "allowed_paths": [
+        "src/PlayerTypeDiagnosis.tsx"
+      ],
+      "protected_tests": [
+        "tests/worker-acceptance.test.mjs",
+        "tests/browser/diagnosis-redaction-supabase.ts",
+        "tests/browser/diagnosis-supabase.ts",
+        "tests/browser/diagnosis-entry.tsx",
+        "tests/browser/diagnosis.mjs",
+        "tests/fixtures/player-type-v2.json"
+      ],
+      "test_profile": "node"
+    }
+  ]
+}

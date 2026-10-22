@@ -1,0 +1,190 @@
+{
+  "observed_at_utc": "2026-10-21T23:05:03.498933+00:00",
+  "invocation": "observed_normal_20261021T225341_375948",
+  "invocation_id_is_provider_run_id": false,
+  "prompt_observed_after_previous_final_response": true,
+  "provider": {
+    "last_run_time": "2026-10-21T22:53:41.375948+00:00",
+    "next_run_time": null,
+    "schedule": "BEGIN:VEVENT\nDTSTART:20261020T045517Z\nRRULE:FREQ=HOURLY;INTERVAL=6;COUNT=28\nEND:VEVENT",
+    "is_enabled": true,
+    "run_details": {
+      "last_run": null,
+      "latest_result": null,
+      "delivery_status": "unknown"
+    }
+  },
+  "provider_run_id": null,
+  "independent_host_process_cold_start": "UNKNOWN",
+  "same_conversation_retained_workspace": true,
+  "daemon_running": false,
+  "finite_schedule_changed": false,
+  "new_probe_or_extra_scheduled_run_created": false,
+  "original_state_continuity": [
+    {
+      "id": "issue22-host-a",
+      "status": "implemented",
+      "spec_hash_matches_original": true
+    },
+    {
+      "id": "issue22-host-b",
+      "status": "implemented",
+      "spec_hash_matches_original": true
+    },
+    {
+      "id": "issue22-host-c",
+      "status": "implemented",
+      "spec_hash_matches_original": true
+    },
+    {
+      "id": "issue22-host-d",
+      "status": "implemented",
+      "spec_hash_matches_original": true
+    }
+  ],
+  "main_observed": "9b08deb5d2829c43b505c1977eb7f08d8d18c326",
+  "B": {
+    "id": "issue22-b-rule-fields-v1",
+    "source_dispatched_after_current_prompt": true,
+    "base_sha": "90b6863e27daa5e749ea3c234253f14edd56b7ab",
+    "commit": "be0fd9197bb17c0ff6de15ec9527a12ff49241c2",
+    "pr": 62,
+    "acceptance_pass": 16,
+    "prior_unit_pass": 138,
+    "build_lint": "PASS",
+    "broad_results": {
+      "npm_ci": {
+        "command": [
+          "npm",
+          "ci"
+        ],
+        "exit_code": 0,
+        "tail": [
+          "",
+          "added 179 packages in 4s",
+          "npm notice",
+          "npm notice New major version of npm available! 11.9.0 -> 12.2.1",
+          "npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1",
+          "npm notice To update run: npm install -g npm@12.2.1",
+          "npm notice"
+        ]
+      },
+      "build": {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit_code": 0,
+        "tail": [
+          "dist/assets/index-sFtBlFUo.js   990.65 kB \u2502 gzip: 256.82 kB",
+          "",
+          "\u2713 built in 356ms",
+          "[plugin builtin:vite-reporter] ",
+          "(!) Some chunks are larger than 500 kB after minification. Consider:",
+          "- Using dynamic import() to code-split the application",
+          "- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting",
+          "- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit."
+        ]
+      },
+      "lint": {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exit_code": 0,
+        "tail": [
+          "src/DirectMessageChat.tsx:206:5: warning react-hooks(exhaustive-deps): React Hook useEffect has a missing dependency: 'loadMessages' help: Either include it or remove the dependency array.",
+          "src/DirectMessageChat.tsx:265:19: warning react-hooks(exhaustive-deps): React Hook useEffect has a missing dependency: 'loadMessages' help: Either include it or remove the dependency array.",
+          "src/CashGameEdit.tsx:249:7: warning react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.",
+          "src/TDA.tsx:847:7: warning react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system.",
+          "src/TDA.tsx:845:74: warning react-hooks(exhaustive-deps): React Hook useEffect has missing dependencies: 'quizFilters.categories.length', and 'quizFilters.difficulties.length' help: Either include it or remove the dependency array.",
+          "src/TDA.tsx:3759:13: warning eslint(no-useless-escape): Unnecessary escape character '#' help: Replace `\\#` with `#`.",
+          "src/PokerResultCreate.tsx:13:17: warning react(purity): Cannot call impure function during render help: `Date` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component re-renders",
+          "src/PokerIdCard.tsx:116:7: warning react(set-state-in-effect): Calling setState synchronously within an effect can trigger cascading renders help: Effects should synchronize React with external systems. Calling setState synchronously inside an effect starts another render and is usually unnecessary. Derive the value during render, initialize state directly, or update it from the event that caused the change. Use an effect only when synchronizing with an external system."
+        ]
+      },
+      "unit": {
+        "command": [
+          "node",
+          "--test",
+          "tests/f03-notification.test.mjs",
+          "tests/interactive-requests.test.mjs",
+          "tests/player-type.test.mjs",
+          "tests/poll-only.test.mjs",
+          "tests/tda-audit-cli.test.mjs",
+          "tests/tda-quiz-auth.test.mjs",
+          "tests/tda-quiz-data.test.mjs",
+          "tests/tda-saved-answer.test.mjs"
+        ],
+        "exit_code": 0,
+        "tail": [
+          "\u2139 tests 138",
+          "\u2139 suites 0",
+          "\u2139 pass 138",
+          "\u2139 fail 0",
+          "\u2139 cancelled 0",
+          "\u2139 skipped 0",
+          "\u2139 todo 0",
+          "\u2139 duration_ms 775.439362"
+        ]
+      }
+    },
+    "ci": 39690895245,
+    "ci_conclusion": "success"
+  },
+  "C": {
+    "id": "issue22-c-settlement-expectations-v1",
+    "source_dispatched_after_current_prompt": true,
+    "base_sha": "e706d0de74697142b9be34d2be3306089110360c",
+    "commit": "b6456dce6e8f468448f2daedc8850dce6d7d76ff",
+    "pr": 61,
+    "acceptance_pass": 22,
+    "prior_gto_pass": 40,
+    "ci": 39690270215,
+    "ci_conclusion": "success"
+  },
+  "A": {
+    "new_source_implementation": false,
+    "reason": "Existing poll release work must not be duplicated; production/recovery/Auth release gates remain."
+  },
+  "D": {
+    "new_source_implementation": false,
+    "latest_completed_pr": 60,
+    "ci": 39640376299,
+    "ci_conclusion": "success",
+    "reason": "Published descriptor completed; no newly reviewed failing D acceptance selected."
+  },
+  "future_C": {
+    "id": "issue22-c-chip-oracle-types-v1",
+    "base_sha": "7fa1ffd5de8a7bb0479f4f5348445782326cde8e",
+    "baseline_tests": 28,
+    "baseline_subtest_failures": 30,
+    "protected_files": 5,
+    "fresh_plan_ready": true,
+    "source_implementation_started": false,
+    "job_absent": true,
+    "requires_future_scheduled_prompt_and_fresh_gates": true
+  },
+  "running_leases": 0,
+  "production_db_mainmerge_deploy_billing_operations": false,
+  "baseline_log_views": {
+    "C-expectations-fixed-fail": {
+      "raw_sha256": "4cc29f7e7ba64db98d1b5dd47a52ba19566759d41c6930b5993f634d0cc1587f",
+      "published_view_sha256": "bf5914eeb479ad5211190712e8a1dd2233055ff4c85243328fe415c0662e176a",
+      "transformation": "trailing whitespace stripped only; original raw logs retained locally"
+    },
+    "B-rule-fields-fixed-fail": {
+      "raw_sha256": "a8ec1a407279816a70657e61b6fcaf04e81049a96d3b3abd85f9232027a99c66",
+      "published_view_sha256": "46976433ac5c5d695bbf5f4d192f97d6cd05ceda3ff5e58895dfeea8e9145de4",
+      "transformation": "trailing whitespace stripped only; original raw logs retained locally"
+    },
+    "C-chip-oracle-fixed-fail": {
+      "raw_sha256": "50f9d1df6c9671be3195a5181d72e9149892568f0d84072c05bdcdea26ea99ce",
+      "published_view_sha256": "02305c96867e56d62e4f07cba1262f6768acd20d2c209da52baca96a5a0b3f36",
+      "transformation": "trailing whitespace stripped only; original raw logs retained locally"
+    }
+  },
+  "documentation_check": "Initial diff --check flagged raw log trailing whitespace; published views normalized and original SHA retained. No source/test/acceptance changes."
+}

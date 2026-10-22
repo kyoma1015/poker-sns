@@ -1,0 +1,37 @@
+{
+  "id": "issue22-c-chip-oracle-types-v2",
+  "lane": "C",
+  "base_sha": "115adb8a6ec7aff591aaf90d479a1eb205c1d24b",
+  "executor": "host_session",
+  "host_agent_id": "/root/chip_oracle_impl",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "gto/native/settlement.py"
+  ],
+  "tested_source_sha256": {
+    "gto/native/settlement.py": "e8e31465465b0645c3b2e7f9e49f23b1e37b0963853c20bbf840dc3c63cfdece"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 29,
+      "output_sha256": "43307b243bb6a5a03d6f0e0179bbb1bc94bca1ff385d61c882b91e2e9187912b"
+    }
+  ],
+  "commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

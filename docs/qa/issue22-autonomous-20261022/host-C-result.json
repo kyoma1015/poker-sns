@@ -1,0 +1,37 @@
+{
+  "id": "issue22-c-coverage-mode-v1",
+  "lane": "C",
+  "base_sha": "1ba12af9c84c1cb6d499843c368553ff4d654f43",
+  "executor": "host_session",
+  "host_agent_id": "/root/c_budget_impl",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "gto/hand169.py"
+  ],
+  "tested_source_sha256": {
+    "gto/hand169.py": "3635e353e1cd193da154d1f9eaa93674fd329dcaee32c710528fe8432338fd78"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 34,
+      "output_sha256": "cc05ec460cef6798da06c9f928cdba175ca791fccee3ce3cbdaf4320e6d8eafe"
+    }
+  ],
+  "commit": "712a7fa57031f94413511ba0423353568e8b4e9c",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

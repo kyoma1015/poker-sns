@@ -2,9 +2,11 @@ name: Continuation recovery safety (fixture only)
 on:
   pull_request:
     paths:
+      - 'scripts/code_worker.py'
       - 'scripts/continuation_recovery.py'
       - 'scripts/pr_overlap.py'
       - 'tests/worker_acceptance/**'
+      - 'tests/automation/stress_lease_initialization.py'
       - 'docs/workers/CONTINUATION_RECOVERY.md'
       - '.github/workflows/continuation-recovery-check.yml'
   workflow_dispatch:
@@ -30,3 +32,11 @@ jobs:
         run: python -B tests/automation/test_code_worker.py
       - name: Existing queue safety
         run: python -B tests/automation/test_development_queue.py
+      - name: Repeated initialization and worker regressions (owned fixtures only)
+        run: |
+          for iteration in $(seq 1 10); do
+            python -B -m unittest discover -s tests/worker_acceptance -p test_lease_initialization.py -v
+            python -B tests/automation/test_code_worker.py
+          done
+      - name: Eight-process fresh SQLite startup, ten independent rounds
+        run: python -B tests/automation/stress_lease_initialization.py --rounds 10

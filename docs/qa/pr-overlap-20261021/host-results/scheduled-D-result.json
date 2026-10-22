@@ -1,0 +1,32 @@
+{
+  "id": "issue22-d-image-error-redaction-v1",
+  "lane": "D",
+  "base_sha": "3aa1a2ee02f442fd3983217e19d37607d7cb6a78",
+  "executor": "host_session",
+  "host_agent_id": "/root/scheduled_d_png",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "src/PlayerTypeDiagnosis.tsx"
+  ],
+  "tested_source_sha256": {
+    "src/PlayerTypeDiagnosis.tsx": "fa3ea3b066bea6e4b36e19d0c9ef12702f01352f5536e9f98b9180e554f6ae90"
+  },
+  "tests": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/worker-acceptance.test.mjs"
+      ],
+      "exit_code": 0,
+      "test_count": 6,
+      "output_sha256": "555a29ad9c563773ae3d558a7c939b19e8391b67f8fdfc44cde88c5bf20a36c4"
+    }
+  ],
+  "commit": "93d9948f8f829432fa66c5aafd294bf8924421fa",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

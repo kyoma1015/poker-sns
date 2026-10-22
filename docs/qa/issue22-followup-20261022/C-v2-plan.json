@@ -1,0 +1,29 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-c-chip-oracle-types-v2",
+        "lane": "C",
+        "base_sha": "115adb8a6ec7aff591aaf90d479a1eb205c1d24b",
+        "base_branch": "codex/c-chip-oracle-v2-input-20261022",
+        "branch": "codex/c-chip-oracle-v2-fix-20261022",
+        "test_profile": "python",
+        "allowed_paths": [
+          "gto/native/settlement.py"
+        ],
+        "protected_tests": [
+          "tests/worker_acceptance/test_checkpoint_budget.py",
+          "tests/worker_acceptance/test_chip_oracle_types.py",
+          "tests/worker_acceptance/test_nonempty_settlement.py",
+          "tests/worker_acceptance/test_rank7.py",
+          "tests/worker_acceptance/test_settlement_expectations.py"
+        ],
+        "instruction": "Correct reviewed vector contract: before reference/native execution present rake must have exact int type (not bool/float); present refund/net/pot_amounts/pot_rakes must be lists of exact ints. Negative integer net and partial expected fields remain supported. Preserve valid17/nonempty expected/rank7/checkpoint/other comparison behavior. Only gto/native/settlement.py source; fixed29 currently fails47 subtests, protected5 unchanged. No original fixture/reference/solver/checkpoint edits. This is the one corrective retry following blocked v1 with wrong scalar-refund descriptor, not a new scheduled invocation."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}
