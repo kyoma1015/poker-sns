@@ -1,0 +1,42 @@
+{
+  "observed_at": "2026-10-22T03:48:25.972195+00:00",
+  "original_tasks": [
+    {
+      "id": "issue22-host-a",
+      "status": "implemented",
+      "spec_hash_matches": true
+    },
+    {
+      "id": "issue22-host-b",
+      "status": "implemented",
+      "spec_hash_matches": true
+    },
+    {
+      "id": "issue22-host-c",
+      "status": "implemented",
+      "spec_hash_matches": true
+    },
+    {
+      "id": "issue22-host-d",
+      "status": "implemented",
+      "spec_hash_matches": true
+    }
+  ],
+  "new_tasks": [
+    {
+      "id": "issue22-a-sqlite-init-v1",
+      "lane": "A",
+      "status": "implemented"
+    },
+    {
+      "id": "issue22-c-exact-toy-metric-v1",
+      "lane": "C",
+      "status": "implemented"
+    }
+  ],
+  "running_count": 0,
+  "state_replaced": false,
+  "trigger": "explicit_user_instruction",
+  "independent_coldstart_proven": false,
+  "daemon_running": false
+}

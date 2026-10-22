@@ -1,0 +1,37 @@
+{
+  "id": "issue22-c-exact-toy-metric-v1",
+  "lane": "C",
+  "base_sha": "3eb08c4723ec3ef55faf0b86f6b54768c1cab738",
+  "executor": "host_session",
+  "host_agent_id": "/root/g11_convergence_audit",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "gto/convergence.py"
+  ],
+  "tested_source_sha256": {
+    "gto/convergence.py": "74a6c1ca42a387b8a3edb87f1aa22d72a56bd21ad79c74eccb3e64f403e10698"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 36,
+      "output_sha256": "cf09001a495d9031618e10bfa943f31fcee028290d0b29967b026f7dc211ded9"
+    }
+  ],
+  "commit": "8ed4e56ddaee8a57141de108f41d2915d326aabe",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

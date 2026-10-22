@@ -1,0 +1,81 @@
+{
+  "source": "/workspace/work/issue22-g11-current-audit.json",
+  "comparison_abs_tol": 1e-12,
+  "comparison_rel_tol": 0,
+  "status": "PASS",
+  "rows": [
+    {
+      "variant": "g12_next",
+      "iterations": 200,
+      "status": "PASS",
+      "nash_conv": 0.019921993558225992,
+      "exploitability": 0.009960996779112996,
+      "strategy_convergence_proof": false
+    },
+    {
+      "variant": "g12_next",
+      "iterations": 2000,
+      "status": "PASS",
+      "nash_conv": 0.04879930218327844,
+      "exploitability": 0.02439965109163922,
+      "strategy_convergence_proof": false
+    },
+    {
+      "variant": "g12_next",
+      "iterations": 20000,
+      "status": "PASS",
+      "nash_conv": 0.027491046854242696,
+      "exploitability": 0.013745523427121348,
+      "strategy_convergence_proof": false
+    },
+    {
+      "variant": "g12_p1_cache",
+      "iterations": 200,
+      "status": "PASS",
+      "nash_conv": 0.019921993558225992,
+      "exploitability": 0.009960996779112996,
+      "strategy_convergence_proof": false
+    },
+    {
+      "variant": "g12_p1_cache",
+      "iterations": 2000,
+      "status": "PASS",
+      "nash_conv": 0.04879930218327844,
+      "exploitability": 0.02439965109163922,
+      "strategy_convergence_proof": false
+    },
+    {
+      "variant": "g12_p1_cache",
+      "iterations": 20000,
+      "status": "PASS",
+      "nash_conv": 0.027491046854242696,
+      "exploitability": 0.013745523427121348,
+      "strategy_convergence_proof": false
+    },
+    {
+      "variant": "g12_p1_packed",
+      "iterations": 200,
+      "status": "PASS",
+      "nash_conv": 0.019921993558225992,
+      "exploitability": 0.009960996779112996,
+      "strategy_convergence_proof": false
+    },
+    {
+      "variant": "g12_p1_packed",
+      "iterations": 2000,
+      "status": "PASS",
+      "nash_conv": 0.04879930218327844,
+      "exploitability": 0.02439965109163922,
+      "strategy_convergence_proof": false
+    },
+    {
+      "variant": "g12_p1_packed",
+      "iterations": 20000,
+      "status": "PASS",
+      "nash_conv": 0.027491046854242696,
+      "exploitability": 0.013745523427121348,
+      "strategy_convergence_proof": false
+    }
+  ],
+  "poker_convergence_proof": false
+}

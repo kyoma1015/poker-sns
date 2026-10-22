@@ -1,0 +1,178 @@
+{
+  "schema": "pokerid-bd-readonly-evidence-v1",
+  "saved_at_utc": "2026-10-22T03:40:15.578386+00:00",
+  "evidence_observed_date_utc": "2026-10-22",
+  "exact_web_read_timestamp_utc": null,
+  "timestamp_note": "Exact web acquisition wall-clock time was not captured; saved_at is file serialization time, not a claimed acquisition timestamp.",
+  "source_modified": false,
+  "database_connected": false,
+  "credentials_accessed": false,
+  "scope": {
+    "B_checkout": "/workspace/work/issue22-b-search-data-inputs/issue22-b-rule-fields-v1",
+    "B_head": "be0fd9197bb17c0ff6de15ec9527a12ff49241c2",
+    "D_checkout": "/workspace/work/issue22-d-image-error-inputs/issue22-d-image-error-redaction-v1",
+    "D_head": "93d9948f8f829432fa66c5aafd294bf8924421fa",
+    "local_inventory": "Visible tracked/unignored workspace files and /tmp/codex-remote-attachments; no credentials/private state searched.",
+    "github_wide_absence_proven": false,
+    "remote_project_db_inspected": false
+  },
+  "B": {
+    "official_source_identity_verdict": "PASS",
+    "official_sources": [
+      {
+        "url": "https://www.pokertda.com/view-poker-tda-rules/",
+        "access_method": "legitimate search_service_web_run direct open",
+        "citation_ref": "turn879807view0",
+        "observed_heading": "2026 Rules, Version 1.1, Sept 21, 2026",
+        "heading_line": 13,
+        "content_type_reported": "text/html",
+        "tool_reported_total_lines": 418,
+        "tool_rendered_excerpt": "L13: # 2026 Rules, Version 1.1, Sept 21, 2026",
+        "excerpt_is_raw_html_or_original_pdf": false
+      },
+      {
+        "url": "https://www.pokertda.com/poker-tda-rules/",
+        "access_method": "legitimate search_service_web_run direct open",
+        "citation_ref": "turn879807view2",
+        "finding": "Official download page links 2026 Longform rules/recommended procedures/illustration addendum. Linked public folder rendered zero readable lines; no PDF bytes/hash recovered."
+      },
+      {
+        "url": "https://www.pokertda.com/forum/index.php?topic=1761.0",
+        "access_method": "official translations-board link through legitimate web tool",
+        "citation_ref": "turn552533view1",
+        "observed_title": "2026 Poker TDA Rules Ver1.0 / Japanese Translations",
+        "finding": "Topic title version observed only; actual translation file version/bytes and delta to English1.1 remain UNKNOWN."
+      },
+      {
+        "url": "https://www.pokertda.com/forum/index.php?topic=1759.0",
+        "access_method": "web search result; subsequent direct open timed out",
+        "search_citation_ref": "turn302199search1",
+        "direct_open_citation_ref": "turn879807view1",
+        "finding": "Search result describes v1.0 Sept6 and v1.1 Sept21. Do not treat timed-out direct open as received document."
+      }
+    ],
+    "longform_raw_pdf_received": false,
+    "longform_raw_pdf_sha256": null,
+    "html_scope_limitation": "Tool-rendered official rules page reaches Rule74 then footer; full RP/Addendum not verified in that rendering.",
+    "translation_v1_0_to_english_v1_1_parity": "UNKNOWN",
+    "published_350_snapshot_received": false,
+    "full_clause_review_ledger_received": false,
+    "question_correctness_verdict": "BLOCKED",
+    "underlying_accuracy": "UNKNOWN",
+    "existing_expected350_report": {
+      "path": "docs/qa/b-tda-continuous-20261020/audit-cli-expected350.json",
+      "question_count": 1,
+      "expected_count": 350,
+      "count_matches": false,
+      "meaning": "Synthetic one-question count mismatch, not a 350-question review."
+    },
+    "test_execution": {
+      "command": "node tests/tda-audit-cli.test.mjs",
+      "cwd": "/workspace/work/issue22-b-search-data-inputs/issue22-b-rule-fields-v1",
+      "tests": 18,
+      "pass": 18,
+      "fail": 0,
+      "exit_code": 0
+    },
+    "unverified_historical_claims": {
+      "path": "docs/Poker_ID_全実装予定_完全引継ぎ_20261017.txt",
+      "finding": "B19/B20/L12 mention 1007 answers/337 unique questions/267 corrections as historical reports; original audit results and application status were not recovered."
+    },
+    "verification_badge": {
+      "path": "src/TDA.tsx",
+      "line": 1958,
+      "fact": "VERIFIED is rendered unconditionally per search row in this UI source.",
+      "verdict": "UNKNOWN",
+      "limitation": "No backend RPC definition/export was inspected to establish whether it guarantees only verified rows; do not assert a production semantic violation from the mock UI alone."
+    },
+    "completion_requirements": [
+      "Versioned original official Longform/reference bytes and hash with provenance.",
+      "Immutable complete question/choices/correct-answer/explanation/clause/publication-state snapshot and hash; remeasure published count.",
+      "Question-ID clause review with scenario assumptions/reasons/reviewer/date/correction/approval/duplicate disposition.",
+      "No new publication approval for unresolved questions; live Auth/DB/mobile QA remains separate."
+    ]
+  },
+  "D": {
+    "structural_verdict": "PASS",
+    "semantic_verdict": "BLOCKED",
+    "semantic_accuracy": "UNKNOWN",
+    "offline_audit_execution": {
+      "command": "node scripts/audit-player-type.mjs",
+      "cwd": "/workspace/work/issue22-d-image-error-inputs/issue22-d-image-error-redaction-v1",
+      "exit_code": 0,
+      "status": "CONDITIONAL PASS",
+      "questions": 50,
+      "options": 222,
+      "dimensions": 32,
+      "animal_display_keys": 36,
+      "png_assets": 36,
+      "personas": 30,
+      "errors": [],
+      "warnings": [],
+      "classificationSemanticValidity": "UNKNOWN: fixture includes option scores/personas, not authoritative 36-animal classifier definitions or human-reviewed labels",
+      "liveSchemaAndQuestions": "NOT CHECKED"
+    },
+    "test_executions": [
+      {
+        "command": "node tests/player-type-audit.test.mjs",
+        "tests": 5,
+        "pass": 5,
+        "fail": 0,
+        "exit_code": 0
+      },
+      {
+        "command": "node tests/player-type.test.mjs",
+        "tests": 42,
+        "pass": 42,
+        "fail": 0,
+        "exit_code": 0
+      }
+    ],
+    "test_runner_note": "An earlier node --test file invocation exposed only file-level1PASS; direct node executions above independently displayed the individual5 and42 results.",
+    "fixture": {
+      "path": "tests/fixtures/player-type-v2.json",
+      "sha256": "ef15e04c485f090f72707656a9127c54a855c98e2453771ad86c68068cfe4d2c",
+      "source_commit": "88cbf26b6f839914a9f867868f03b4d77a991ce3",
+      "method": "Read-only snapshot; fixture and persona calculations are not live diagnosis executions.",
+      "persona_count": 30,
+      "animal_key_expected_labels": 0,
+      "expected_field_description": "Japanese trait/play-style descriptions, not expected 36-animal classification keys.",
+      "unique_expected_trait_descriptions": 30
+    },
+    "png_metadata": {
+      "path": "public/animals/*.png",
+      "count": 36,
+      "all_png_signatures_valid": true,
+      "unique_sha256_count": 36,
+      "duplicate_hash_groups": [],
+      "dimensions": {
+        "1254x1254": 36
+      },
+      "semantic_visual_identification_performed": false
+    },
+    "display_map": {
+      "path": "src/playerTypeAnimals.ts",
+      "meaning": "Display inventory only, explicitly not a classifier."
+    },
+    "actual_classifier_boundary": {
+      "client_path": "src/PlayerTypeDiagnosis.tsx",
+      "completion_rpc": "complete_player_type_v2_diagnosis",
+      "detail_rpc": "get_player_type_v2_result_detail",
+      "authoritative_classifier_definitions_received": false,
+      "live_rpc_executed": false
+    },
+    "completion_requirements": [
+      "Versioned authoritative36 classification definitions/thresholds/tie priorities.",
+      "Expert-reviewed animal-key labels covering all36 and meaningful boundaries; reproducible fixtures/confusion matrix.",
+      "Review names/descriptions/images against classifier meanings; PNG inventory alone is insufficient.",
+      "Real Auth/result save/public/private visibility remains a separate isolated-environment gate."
+    ]
+  },
+  "archive_limitation": {
+    "visible_zip_pdf_count_in_scoped_inventory": 0,
+    "ledger_path": "/workspace/work/SOURCE_REPORTS_READ_INDEX.csv",
+    "ledger_is_original_archive_receipt": false,
+    "note": "Index names/sizes/hashes do not establish access to original ZIP/report contents."
+  },
+  "definite_new_functional_failure_found": false
+}

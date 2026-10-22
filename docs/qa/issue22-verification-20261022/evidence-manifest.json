@@ -1,0 +1,116 @@
+[
+  {
+    "file": "issue22-bd-deep-audit-20261022.json",
+    "sha256": "96151dbf499da2e0b4e269086fd573b10d5dfd738efd6f293008ad031f879014",
+    "source_path": "/workspace/work/issue22-bd-deep-audit-20261022.json"
+  },
+  {
+    "file": "issue22-g11-current-audit.json",
+    "sha256": "4cc0f5417e3648dc1cda3ee35a96a775e357e82079c2f9a0727944407c39946f",
+    "source_path": "/workspace/work/issue22-g11-current-audit.json"
+  },
+  {
+    "file": "issue22-toy-metric-replay.json",
+    "sha256": "5d27657679ff2a8d7f41e70bef2ec2d0d95ffd0a350099b199de5b47cfda7b41",
+    "source_path": "/workspace/work/issue22-toy-metric-replay.json"
+  },
+  {
+    "file": "issue22-pr66-main-merge-tree.json",
+    "sha256": "209c3de4eba6faabbe389fa14a81008a6235760b535ddd6137f2488b42bd8321",
+    "source_path": "/workspace/work/issue22-pr66-main-merge-tree.json"
+  },
+  {
+    "file": "issue22-sqlite-ast-review.json",
+    "sha256": "6d8c894ed6ab3868f1e46ff8764e731fd7e6ca9fed461cdc31995cdc1a38ade8",
+    "source_path": "/workspace/work/issue22-sqlite-ast-review.json"
+  },
+  {
+    "file": "issue22-a-sqlite-init-candidate.json",
+    "sha256": "d81df929ff71932d544823fa3e6211bfe77f840780aa40cdedcf926264610ace",
+    "source_path": "/workspace/work/issue22-a-sqlite-init-candidate.json"
+  },
+  {
+    "file": "issue22-a-sqlite-init-plan.json",
+    "sha256": "70aff169345afed6503de22ccb9defb8dfce61ac67d3da047e07936378a9461d",
+    "source_path": "/workspace/work/issue22-a-sqlite-init-plan.json"
+  },
+  {
+    "file": "issue22-a-sqlite-init-snapshot.json",
+    "sha256": "d27e9ac723c42c63a0becec7ec10f077fb4086a53e70a7bd1a87d05d3faf333b",
+    "source_path": "/workspace/work/issue22-a-sqlite-init-snapshot.json"
+  },
+  {
+    "file": "issue22-convergence-candidate.json",
+    "sha256": "16980ab1f233cadd4907884b9a5c5d7d87b31a4a57d33024be53b3c4499f209e",
+    "source_path": "/workspace/work/issue22-convergence-candidate.json"
+  },
+  {
+    "file": "issue22-convergence-plan.json",
+    "sha256": "32b7ebb965670729f79eed7d89d2478c2ba8616aeafa7420ace49b49c683e7c8",
+    "source_path": "/workspace/work/issue22-convergence-plan.json"
+  },
+  {
+    "file": "issue22-convergence-snapshot.json",
+    "sha256": "58dfd20ca9f5915485d8a3533a8162fb7f8b24dd5c78596d355cf2870cb5c666",
+    "source_path": "/workspace/work/issue22-convergence-snapshot.json"
+  },
+  {
+    "file": "sqlite-A-result.json",
+    "sha256": "003a9126d9ad770958e7f58859923c31ef358d1d3cc47fc47bf170a8ab865635",
+    "source_path": "/workspace/work/issue22-host-controller/sqlite-A-result.json"
+  },
+  {
+    "file": "metric-C-result.json",
+    "sha256": "f6d2d344a98bc60f55fede0629ed005a1b336d8c9e6433afeb34d3251e6da2bf",
+    "source_path": "/workspace/work/issue22-host-controller/metric-C-result.json"
+  },
+  {
+    "file": "issue22-sqlite-init-baseline.log",
+    "source_sha256": "b81977878ec351a6a8f2a766177d461c56f9e73b54030ef53d8b2c0e99f0ef59",
+    "published_sha256": "b81977878ec351a6a8f2a766177d461c56f9e73b54030ef53d8b2c0e99f0ef59",
+    "normalization": "trailing whitespace removed; original retained",
+    "source_path": "/workspace/work/issue22-sqlite-init-baseline.log"
+  },
+  {
+    "file": "issue22-convergence-baseline.log",
+    "source_sha256": "5aec9074eadc3a2ecc9bc68601201d4d9f3d1cfb6678f6431d31c8aec47670dc",
+    "published_sha256": "5aec9074eadc3a2ecc9bc68601201d4d9f3d1cfb6678f6431d31c8aec47670dc",
+    "normalization": "trailing whitespace removed; original retained",
+    "source_path": "/workspace/work/issue22-convergence-baseline.log"
+  },
+  {
+    "file": "sqlite-init-acceptance.log",
+    "source_sha256": "32c1827ae6636d19a8a2b646b523db4bcc0232879609160abc398df8a298be19",
+    "published_sha256": "32c1827ae6636d19a8a2b646b523db4bcc0232879609160abc398df8a298be19",
+    "normalization": "trailing whitespace removed; original retained",
+    "source_path": "/tmp/sqlite-init-acceptance.log"
+  },
+  {
+    "file": "sqlite-init-worker.log",
+    "source_sha256": "afaf35014b14351e5a4a8579b7eb91e19cfbc3c04a10988781b47b2ae633f489",
+    "published_sha256": "afaf35014b14351e5a4a8579b7eb91e19cfbc3c04a10988781b47b2ae633f489",
+    "normalization": "trailing whitespace removed; original retained",
+    "source_path": "/tmp/sqlite-init-worker.log"
+  },
+  {
+    "file": "sqlite-init-queue.log",
+    "source_sha256": "c0660f42947fc898eea9e0b694f9373e0973c4bcf6edb3063fb07c56554cf408",
+    "published_sha256": "c0660f42947fc898eea9e0b694f9373e0973c4bcf6edb3063fb07c56554cf408",
+    "normalization": "trailing whitespace removed; original retained",
+    "source_path": "/tmp/sqlite-init-queue.log"
+  },
+  {
+    "file": "issue22-convergence-acceptance.log",
+    "source_sha256": "cade6e99dea54721ceff73a718c7867f1faa42b140029d7d2d3a1f8e5773bb12",
+    "published_sha256": "cade6e99dea54721ceff73a718c7867f1faa42b140029d7d2d3a1f8e5773bb12",
+    "normalization": "trailing whitespace removed; original retained",
+    "source_path": "/tmp/issue22-convergence-acceptance.log"
+  },
+  {
+    "file": "issue22-convergence-gto.log",
+    "source_sha256": "dbd52932aefb21d6f1c326773e3a9d25fd35b609905f32ac110e318eb2372aa9",
+    "published_sha256": "dbd52932aefb21d6f1c326773e3a9d25fd35b609905f32ac110e318eb2372aa9",
+    "normalization": "trailing whitespace removed; original retained",
+    "source_path": "/tmp/issue22-convergence-gto.log"
+  }
+]

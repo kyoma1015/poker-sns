@@ -1,0 +1,75 @@
+{
+  "task": {
+    "id": "issue22-a-sqlite-init-v1",
+    "lane": "A",
+    "base_sha": "0ce21f5885b8a5a0c5e20fe5befdf626d910b4ca",
+    "base_branch": "codex/a-sqlite-init-input-20261022",
+    "branch": "codex/a-sqlite-init-fix-20261022",
+    "test_profile": "python",
+    "allowed_paths": [
+      "scripts/code_worker.py"
+    ],
+    "protected_tests": [
+      "tests/worker_acceptance/test_continuation_recovery.py",
+      "tests/worker_acceptance/test_lease_initialization.py",
+      "tests/worker_acceptance/test_pr_overlap.py"
+    ],
+    "instruction": "Fix Leases startup WAL/schema concurrency and failed connection cleanup. Serialize opening/journal/schema initialization using existing bounded cross-process setup_lock; release on all paths and close connections on initialization failure. Preserve timeout bounds, lease claim/finish/expiry/replay/spec/hash/path/source/test/commit/executor/publication logic byte-for-byte outside minimal initializer/docstring change. No unbounded retries or sleep-based test workaround. Fixed27 baseline2FAIL. Run fixed27, existing22 worker and15 queue, git diffcheck. Only scripts/code_worker.py source. Tests only owned temp SQLite, never retained private state. No GitHub/Vercel/DB/CLI auth operations in source agent."
+  },
+  "purpose": "Eliminate reproduced Leases initialization WAL race using existing bounded shared setup exclusion and close leaked failed connections.",
+  "reviewed": true,
+  "risk": "medium",
+  "dependencies": [
+    "issue22-overlap-proof-v1"
+  ],
+  "execution_conditions": [
+    "Explicit safe fix authorization; same original state continuity and no live A lease",
+    "Fresh complete PR snapshot and exact source blob proof against PR26",
+    "Formal host prepare and actual collaboration source dispatch; Python stdlib temp fixtures only"
+  ],
+  "completion_conditions": [
+    "Immutable27 acceptance PASS; protected3 unchanged",
+    "Existing22 worker/15 queue PASS and no lease safety weakening",
+    "Root semantic diff/sourcehash/tamper/noop/commit review, Draft PR and CI"
+  ],
+  "references": [
+    "https://github.com/kyoma1015/poker-sns/issues/22",
+    "https://github.com/kyoma1015/poker-sns/actions/runs/39712373480",
+    "docs/qa/sqlite-init-input-20261022.md"
+  ],
+  "baseline": {
+    "base_sha": "0ce21f5885b8a5a0c5e20fe5befdf626d910b4ca",
+    "test_profile": "python",
+    "test_count": 27,
+    "failed": true,
+    "source": "trusted_host_verified",
+    "protected_sha256": {
+      "tests/worker_acceptance/test_continuation_recovery.py": "1d6d8d526006494d869921892dc3ff7d75f1f3cf18f8e0eeeb96a65aa47d8480",
+      "tests/worker_acceptance/test_lease_initialization.py": "f9957c370e68934dc4bf6caa4080c1672e08901a06c6f8d6de76c9a87aa793c0",
+      "tests/worker_acceptance/test_pr_overlap.py": "7a7d4988fbdca1bb720f59701973fee1975fe173b2d9006356a256c648129a0d"
+    }
+  },
+  "inherited_prs": {},
+  "overlap_reviews": {
+    "26": {
+      "reviewed": true,
+      "reason": "Whole code_worker source equals pinned input; reviewed distinct startup exclusion/cleanup regression, not a duplicate implementation.",
+      "candidate_base_sha": "0ce21f5885b8a5a0c5e20fe5befdf626d910b4ca",
+      "head_sha": "4fbfd95ef42292c91b6fe8573ea214371d759fda",
+      "pr_base_sha": "e2c88b15230407a3917795b605bf3b5dd76fdbca",
+      "files": {
+        "scripts/code_worker.py": {
+          "mode": "equivalent_blob",
+          "candidate_blob": "e45d66a236c407b458fb780db9fa199b5111b895",
+          "head_blob": "e45d66a236c407b458fb780db9fa199b5111b895"
+        }
+      }
+    }
+  },
+  "observed_baseline_summary": {
+    "tests": 27,
+    "failures": 2,
+    "errors": 0,
+    "log": "issue22-sqlite-init-baseline.log"
+  }
+}

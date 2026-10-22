@@ -1,0 +1,9 @@
+{
+  "main": "4a5129143e26697b172eb08afc05d52d0d15e201",
+  "head": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+  "exit_code": 1,
+  "output": "1d812726368740241e258112d9e043956566c7c2\ndocs/progress/MASTER.md\ndocs/progress/SNS_INTERACTIVE.md\nsrc/Timeline.tsx\nsrc/TimelineInteractive.tsx\nsrc/interactiveRequests.ts\ntests/browser/poll-only.mjs\ntests/poll-only.test.mjs\n\nAuto-merging docs/progress/MASTER.md\nCONFLICT (add/add): Merge conflict in docs/progress/MASTER.md\nAuto-merging docs/progress/SNS_INTERACTIVE.md\nCONFLICT (add/add): Merge conflict in docs/progress/SNS_INTERACTIVE.md\nAuto-merging package-lock.json\nAuto-merging package.json\nAuto-merging src/Notifications.tsx\nAuto-merging src/PostDetail.tsx\nAuto-merging src/Timeline.tsx\nCONFLICT (content): Merge conflict in src/Timeline.tsx\nAuto-merging src/TimelineInteractive.tsx\nCONFLICT (add/add): Merge conflict in src/TimelineInteractive.tsx\nAuto-merging src/interactiveRequests.ts\nCONFLICT (add/add): Merge conflict in src/interactiveRequests.ts\nAuto-merging tests/browser/poll-only.mjs\nCONFLICT (add/add): Merge conflict in tests/browser/poll-only.mjs\nAuto-merging tests/poll-only.test.mjs\nCONFLICT (add/add): Merge conflict in tests/poll-only.test.mjs\n",
+  "stderr": "",
+  "simulation_only": true,
+  "branch_index_worktree_changed": false
+}

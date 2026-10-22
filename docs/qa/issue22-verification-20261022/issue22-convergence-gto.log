@@ -1,0 +1,45 @@
+test_contract_mismatch (test_checkpoints.Checkpoints.test_contract_mismatch) ... ok
+test_digest_tamper_never_reaches_native (test_checkpoints.Checkpoints.test_digest_tamper_never_reaches_native) ... ok
+test_empty_truncated_or_extra_bytes_rejected (test_checkpoints.Checkpoints.test_empty_truncated_or_extra_bytes_rejected) ... ok
+test_invalid_header_after_valid_digest (test_checkpoints.Checkpoints.test_invalid_header_after_valid_digest) ... ok
+test_native_structural_validation_propagates (test_checkpoints.Checkpoints.test_native_structural_validation_propagates) ... ok
+test_size_limit (test_checkpoints.Checkpoints.test_size_limit) ... ok
+test_snapshot_is_separate_and_removed (test_checkpoints.Checkpoints.test_snapshot_is_separate_and_removed) ... ok
+test_verified_copy_survives_original_change (test_checkpoints.Checkpoints.test_verified_copy_survives_original_change) ... ok
+test_complete_deck_counts (test_hand169.Hand169.test_complete_deck_counts) ... ok
+test_complete_export_conserves_mass_policy_and_ev (test_hand169.Hand169.test_complete_export_conserves_mass_policy_and_ev) ... ok
+test_duplicate_combination_rejected_even_reversed (test_hand169.Hand169.test_duplicate_combination_rejected_even_reversed) ... ok
+test_invalid_cards (test_hand169.Hand169.test_invalid_cards) ... ok
+test_invalid_numeric_inputs (test_hand169.Hand169.test_invalid_numeric_inputs) ... ok
+test_large_finite_ev_avoids_multiplication_overflow (test_hand169.Hand169.test_large_finite_ev_avoids_multiplication_overflow) ... ok
+test_order_and_suit_invariance (test_hand169.Hand169.test_order_and_suit_invariance) ... ok
+test_partial_coverage_is_explicit_and_rejected_by_default (test_hand169.Hand169.test_partial_coverage_is_explicit_and_rejected_by_default) ... ok
+test_weighted_mean_not_unweighted_mean (test_hand169.Hand169.test_weighted_mean_not_unweighted_mean) ... ok
+test_zero_mass_and_unknown_ev_stay_unknown (test_hand169.Hand169.test_zero_mass_and_unknown_ev_stay_unknown) ... ok
+test_all_categories_match_explicit_expectations (test_rank7.Rank7Fixtures.test_all_categories_match_explicit_expectations) ... ok
+test_valid_card_input_is_copied (test_rank7.Rank7Fixtures.test_valid_card_input_is_copied) ... ok
+test_after_ante_stack_basis (test_settlement.SettlementFixtures.test_after_ante_stack_basis) ... ok
+test_folded_best_rank_cannot_win (test_settlement.SettlementFixtures.test_folded_best_rank_cannot_win) ... ok
+test_hu_fold_drop_enabled (test_settlement.SettlementFixtures.test_hu_fold_drop_enabled) ... ok
+test_hu_fold_no_flop_no_drop (test_settlement.SettlementFixtures.test_hu_fold_no_flop_no_drop) ... ok
+test_hu_showdown_no_rake (test_settlement.SettlementFixtures.test_hu_showdown_no_rake) ... ok
+test_per_pot_cap (test_settlement.SettlementFixtures.test_per_pot_cap) ... ok
+test_rake_excludes_dead_ante (test_settlement.SettlementFixtures.test_rake_excludes_dead_ante) ... ok
+test_rake_includes_dead_ante (test_settlement.SettlementFixtures.test_rake_includes_dead_ante) ... ok
+test_rejects_fixture_with_wrong_hand_derived_expected_result (test_settlement.SettlementFixtures.test_rejects_fixture_with_wrong_hand_derived_expected_result) ... ok
+test_rejects_illegal_fixture_actions (test_settlement.SettlementFixtures.test_rejects_illegal_fixture_actions) ... ok
+test_rejects_invalid_rule_profile (test_settlement.SettlementFixtures.test_rejects_invalid_rule_profile) ... ok
+test_rounding_ceil (test_settlement.SettlementFixtures.test_rounding_ceil) ... ok
+test_rounding_floor (test_settlement.SettlementFixtures.test_rounding_floor) ... ok
+test_rounding_nearest (test_settlement.SettlementFixtures.test_rounding_nearest) ... ok
+test_short_bb_ante_first_dead_pool (test_settlement.SettlementFixtures.test_short_bb_ante_first_dead_pool) ... ok
+test_short_bb_blind_first (test_settlement.SettlementFixtures.test_short_bb_blind_first) ... ok
+test_side_pots_short_wins_main_medium_wins_side (test_settlement.SettlementFixtures.test_side_pots_short_wins_main_medium_wins_side) ... ok
+test_split_pot_odd_chip_seat_order (test_settlement.SettlementFixtures.test_split_pot_odd_chip_seat_order) ... ok
+test_uncalled_refund_not_raked (test_settlement.SettlementFixtures.test_uncalled_refund_not_raked) ... ok
+test_whole_hand_cap (test_settlement.SettlementFixtures.test_whole_hand_cap) ... ok
+
+----------------------------------------------------------------------
+Ran 40 tests in 0.024s
+
+OK
