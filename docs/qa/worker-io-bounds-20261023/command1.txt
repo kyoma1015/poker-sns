@@ -1,0 +1,6 @@
+test_timed_out_command_does_not_leave_its_child_executing (__main__.CommandProcessCleanup.test_timed_out_command_does_not_leave_its_child_executing) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.626s
+
+OK

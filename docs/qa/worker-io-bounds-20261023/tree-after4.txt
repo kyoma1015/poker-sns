@@ -1,0 +1,9 @@
+test_detached_session_survives_and_is_explicitly_unknown (__main__.WorkerTreeBoundaries.test_detached_session_survives_and_is_explicitly_unknown) ... ok
+test_parent_death_during_stdin_retains_file_and_unknown_worker (__main__.WorkerTreeBoundaries.test_parent_death_during_stdin_retains_file_and_unknown_worker) ... ok
+test_real_wait_budget_under_injected_permission_failure (__main__.WorkerTreeBoundaries.test_real_wait_budget_under_injected_permission_failure) ... ok
+test_same_group_child_and_grandchild_terminated_and_fixture_reaped (__main__.WorkerTreeBoundaries.test_same_group_child_and_grandchild_terminated_and_fixture_reaped) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 2.616s
+
+OK
