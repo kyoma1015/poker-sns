@@ -77,4 +77,28 @@ psqlfile sql/poll_only/schedule_candidate.sql
 test "$(psqlq "select count(*) from cron.job where jobname='pokerid-poll-close-v1'")" = 1
 psqlfile sql/poll_only/disable_candidate.sql
 echo 'PASS: explicit re-enable and second emergency disable'
+# New boundary: a cron invocation that raises an exception must record failure,
+# preserve committed fixture data, and permit a deliberate idempotent retry.
+psqlq "create or replace function public.poll_synthetic_failing() returns integer language sql as 'select 1/0'" >/dev/null
+psqlq "select cron.schedule('poll-synthetic-fail-retry','5 seconds','select public.poll_synthetic_failing();')" >/dev/null
+failed=0
+for i in $(seq 1 25); do
+  n="$(psqlq "select count(*) from cron.job_run_details where status='failed' and command like '%poll_synthetic_failing%'")"
+  if test "$n" -gt 0; then failed=1; break; fi
+  sleep 1
+done
+test "$failed" -eq 1
+psqlq "select cron.unschedule('poll-synthetic-fail-retry')" >/dev/null
+test "$(psqlq 'select count(*) from poll_fixture.votes')" = 2
+test "$(psqlq 'select count(*) from poll_fixture.receipts')" = 1
+psqlq 'select poll_private.close_due_polls(); select poll_private.close_due_polls();' >/dev/null
+test "$(psqlq 'select count(*) from poll_fixture.receipts')" = 1
+echo 'PASS: cron failure recorded; fixture preserved; retry remains idempotent'
+# After emergency disable, no public/anon/authenticated EXECUTE on the private worker.
+for role in anon authenticated; do
+  test "$(psqlq "select has_function_privilege('$role','poll_private.close_due_polls()','EXECUTE')")" = f
+done
+test "$(psqlq "select has_schema_privilege('anon','poll_private','USAGE')")" = f
+test "$(psqlq "select has_schema_privilege('authenticated','poll_private','USAGE')")" = f
+echo 'PASS: private worker execution and schema usage remain denied after disable'
 echo 'BLOCKED: production scheduler drain, actual production keys, real backup and isolated restore'
