@@ -1,7 +1,7 @@
 name: Checkpoint budget acceptance
 on:
   pull_request:
-    branches: [codex/c-checkpoint-budget-input-20261021, codex/c-settlement-nonempty-input-20261021, codex/c-settlement-expected-input-20261022, codex/c-chip-oracle-input-20261022]
+    branches: [codex/c-checkpoint-budget-input-20261021, codex/c-settlement-nonempty-input-20261021, codex/c-settlement-expected-input-20261022, codex/c-chip-oracle-input-20261022, codex/c-chip-oracle-v2-input-20261022]
   workflow_dispatch:
 permissions:
   contents: read

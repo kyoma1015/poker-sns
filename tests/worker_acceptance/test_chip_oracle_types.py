@@ -44,7 +44,7 @@ class ChipOracleTypes(unittest.TestCase):
             self.run_owned(self.fixture)
 
     def test_scalar_chip_fields_are_checked_before_reference(self):
-        for field in ('rake', 'refund'):
+        for field in ('rake',):
             for invalid in (False, 0.0, '0', None, []):
                 with self.subTest(field=field, invalid=invalid):
                     fixture = copy.deepcopy(self.fixture)
@@ -52,8 +52,8 @@ class ChipOracleTypes(unittest.TestCase):
                     self.assert_rejected_before_reference(fixture)
 
     def test_vector_chip_fields_require_lists_of_exact_integers(self):
-        for field in ('net', 'pot_amounts', 'pot_rakes'):
-            for invalid in ([False], [0.0], ['0'], [None], '0', {}):
+        for field in ('refund', 'net', 'pot_amounts', 'pot_rakes'):
+            for invalid in ([False], [0.0], ['0'], [None], '0', {}, False, 0.0, 0, None):
                 with self.subTest(field=field, invalid=invalid):
                     fixture = copy.deepcopy(self.fixture)
                     fixture['cases'][-1]['expected'][field] = invalid
@@ -69,3 +69,12 @@ class ChipOracleTypes(unittest.TestCase):
         self.fixture['cases'][0]['expected']['rake'] = 999999
         with self.assertRaises(settlement.SettlementMismatch):
             self.run_owned(self.fixture)
+
+    def test_refund_vector_and_partial_expectations_remain_supported(self):
+        expected = self.fixture['cases'][0]['expected']['refund']
+        self.assertIsInstance(expected, list)
+        self.assertTrue(expected)
+        self.assertTrue(all(type(value) is int for value in expected))
+        self.fixture['cases'][0]['expected'] = {'refund': expected}
+        result = self.run_owned(self.fixture)
+        self.assertEqual((result['status'], result['case_count']), ('PASS', 17))
