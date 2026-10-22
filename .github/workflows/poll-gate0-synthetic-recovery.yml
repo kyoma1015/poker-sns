@@ -1,0 +1,25 @@
+name: Poll gate0 synthetic recovery policy QA
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/poll-gate0-synthetic-recovery.yml'
+      - 'tests/polls/verify_gate0_synthetic_recovery.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  synthetic-recovery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Synthetic retention RPO RTO and failure QA
+        run: |
+          python3 -m unittest -v tests/polls/verify_gate0_synthetic_recovery.py 2>&1 | tee gate0-synthetic-qa.log
+      - name: Save synthetic-only evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gate0-synthetic-recovery-evidence
+          path: gate0-synthetic-qa.log
+          retention-days: 7
