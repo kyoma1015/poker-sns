@@ -1,0 +1,141 @@
+✔ question validation sorts a copy without changing option identity or original input (4.896083ms)
+✔ malformed null fails closed (0.27784ms)
+✔ malformed object fails closed (0.968555ms)
+✔ malformed no options fails closed (0.160482ms)
+✔ malformed one option fails closed (0.121564ms)
+✔ malformed empty text fails closed (0.128364ms)
+✔ malformed missing metadata fails closed (0.1119ms)
+✔ malformed duplicate question ID fails closed (0.118469ms)
+✔ malformed duplicate option ID fails closed (0.184769ms)
+✔ malformed duplicate option order fails closed (0.29753ms)
+✔ malformed fractional order fails closed (0.193732ms)
+✔ malformed empty option text fails closed (0.0991ms)
+✔ malformed negative order fails closed (0.063466ms)
+✔ rejected and synchronous transport failures become recoverable errors without retries (0.378642ms)
+✔ successful save data and RPC permission errors are preserved without reinterpretation (0.246203ms)
+✔ offline audit flags normalized question and option duplicate candidates only (0.599517ms)
+✔ audit report flags missing expected count and never claims publication approval (0.308707ms)
+✔ sparse quiz input rejects empty sparse question bank (0.074593ms)
+✔ sparse quiz input rejects question followed by missing row (0.048003ms)
+✔ sparse quiz input rejects entirely missing options (0.037396ms)
+✔ sparse quiz input rejects one present option (0.031808ms)
+✔ frozen dense valid input and empty bank remain valid (0.404672ms)
+✔ reviewed PR28 empty-audit guard remains present (0.141604ms)
+✖ optional filters default invalid rows and fields to empty lists (0.26419ms)
+✖ optional filters exclude nonstring items and preserve valid sibling fields (0.175745ms)
+✖ optional filters preserve string values order and copy frozen arrays (0.134593ms)
+✖ optional filters densify sparse lists without inventing choices (0.09903ms)
+✖ optional filters render and preserve quiz requests in four mocked mobile scenarios (2341.197293ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 23
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2359.980084
+
+✖ failing tests:
+
+test at tests/tda-quiz-data.test.mjs:64:1
+✖ optional filters default invalid rows and fields to empty lists (0.26419ms)
+  TypeError: filterHelpers.normalizeQuizFilters is not a function
+      at TestContext.<anonymous> (file://<retained-workspace>/issue22-filter-values-worktrees/baseline/tests/tda-quiz-data.test.mjs:66:36)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/tda-quiz-data.test.mjs:69:1
+✖ optional filters exclude nonstring items and preserve valid sibling fields (0.175745ms)
+  TypeError: filterHelpers.normalizeQuizFilters is not a function
+      at TestContext.<anonymous> (file://<retained-workspace>/issue22-filter-values-worktrees/baseline/tests/tda-quiz-data.test.mjs:70:34)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/tda-quiz-data.test.mjs:75:1
+✖ optional filters preserve string values order and copy frozen arrays (0.134593ms)
+  TypeError: filterHelpers.normalizeQuizFilters is not a function
+      at TestContext.<anonymous> (file://<retained-workspace>/issue22-filter-values-worktrees/baseline/tests/tda-quiz-data.test.mjs:79:32)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/tda-quiz-data.test.mjs:84:1
+✖ optional filters densify sparse lists without inventing choices (0.09903ms)
+  TypeError: filterHelpers.normalizeQuizFilters is not a function
+      at TestContext.<anonymous> (file://<retained-workspace>/issue22-filter-values-worktrees/baseline/tests/tda-quiz-data.test.mjs:86:34)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/tda-quiz-data.test.mjs:89:1
+✖ optional filters render and preserve quiz requests in four mocked mobile scenarios (2341.197293ms)
+  AssertionError [ERR_ASSERTION]: browser filter acceptance failed:
+  11:04:25 AM [vite] (client) [Unhandled error] Error: Objects are not valid as a React child (found: object with keys {bad}). If you meant to render a collection of children, use an array instead.
+   > throwOnInvalidObjectTypeImpl ../node_modules/react-dom/cjs/react-dom-client.development.js:6461:12
+   > throwOnInvalidObjectType ../node_modules/react-dom/cjs/react-dom-client.development.js:6475:10
+   > reconcileChildFibersImpl ../node_modules/react-dom/cjs/react-dom-client.development.js:7416:10
+   > ../node_modules/react-dom/cjs/react-dom-client.development.js:7456:32
+   > reconcileChildren ../node_modules/react-dom/cjs/react-dom-client.development.js:10096:12
+   > beginWork ../node_modules/react-dom/cjs/react-dom-client.development.js:12468:12
+   > runWithFiberInDEV ../node_modules/react-dom/cjs/react-dom-client.development.js:1045:29
+   > performUnitOfWork ../node_modules/react-dom/cjs/react-dom-client.development.js:19176:21
+   > workLoopSync ../node_modules/react-dom/cjs/react-dom-client.development.js:19004:40
+   > renderRootSync ../node_modules/react-dom/cjs/react-dom-client.development.js:18985:10
+
+  11:04:25 AM [vite] (client) [console.warn] An error occurred in the <option> component.
+
+  Consider adding an error boundary to your tree to customize error handling behavior.
+  Visit https://react.dev/link/error-boundaries to learn more about error boundaries.
+
+  node:internal/modules/run_main:107
+      triggerUncaughtException(
+      ^
+
+  AssertionError [ERR_ASSERTION]: bad-difficulty must not crash React
+  + actual - expected
+
+  + [
+  +   'Objects are not valid as a React child (found: object with keys {bad}). If you meant to render a collection of children, use an array instead.'
+  + ]
+  - []
+
+      at file://<retained-workspace>/issue22-filter-values-worktrees/baseline/tests/browser/tda-filters.mjs:46:14 {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [
+      'Objects are not valid as a React child (found: object with keys {bad}). If you meant to render a collection of children, use an array instead.'
+    ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+  Node.js v24.19.0
+
+
+  1 !== 0
+
+      at TestContext.<anonymous> (file://<retained-workspace>/issue22-filter-values-worktrees/baseline/tests/tda-quiz-data.test.mjs:93:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

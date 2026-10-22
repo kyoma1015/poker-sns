@@ -1,5 +1,6 @@
 {
   "raw_sha256": "a8e8cb6fa81b5884a45e48da1ab7cc7e763469d1010219a53fc70dfd45fb73d1",
   "published_sha256": "f7ad47c48a5d9133f1e0ac73e146763097a8fbd955b79a3bccc7bac958ef3c3e",
-  "normalization": "Workspace absolute prefix only; original local log retained"
+  "normalization": "Workspace absolute prefix replaced; line trailing whitespace removed; original local raw log retained",
+  "published_file": "issue22-weighted-baseline.txt"
 }

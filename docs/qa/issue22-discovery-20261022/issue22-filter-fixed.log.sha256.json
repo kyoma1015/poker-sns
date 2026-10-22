@@ -1,5 +1,6 @@
 {
   "raw_sha256": "69e5e16d90882db880416f4de4ae0dc68cf3beea71d2f06d22922de3d4c4c7d0",
   "published_sha256": "69e5e16d90882db880416f4de4ae0dc68cf3beea71d2f06d22922de3d4c4c7d0",
-  "normalization": "Workspace absolute prefix only"
+  "normalization": "Workspace absolute prefix replaced; line trailing whitespace removed; original local raw log retained",
+  "published_file": "issue22-filter-fixed.txt"
 }

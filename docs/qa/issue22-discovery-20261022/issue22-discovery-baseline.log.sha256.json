@@ -1,5 +1,6 @@
 {
   "raw_sha256": "be3cfcb70c46e14cc595c9bbd9dc913866376d85e37fc9c14cf2e79dabbbef18",
   "published_sha256": "764a0adf465b8f13e2095d393a39d1842de87025bd29fd586d7a631a53c48ae0",
-  "normalization": "Workspace absolute prefix only; original local log retained"
+  "normalization": "Workspace absolute prefix replaced; line trailing whitespace removed; original local raw log retained",
+  "published_file": "issue22-discovery-baseline.txt"
 }
