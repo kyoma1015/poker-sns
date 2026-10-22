@@ -17,7 +17,7 @@ docker info --format 'Docker memory bytes={{.MemTotal}}' || true
 docker run -d --name "$c" --network none --memory 2g --memory-swap 2g \
   -e POSTGRES_PASSWORD=synthetic_only_not_a_secret \
   supabase/postgres:17.11.0.004 postgres -D /etc/postgresql \
-  -c shared_preload_libraries='' -c max_connections=25 \
+  -c max_connections=25 \
   -c shared_buffers=32MB -c work_mem=2MB -c maintenance_work_mem=16MB >/dev/null
 echo 'DIAG: container launched'
 ready=0
