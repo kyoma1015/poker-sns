@@ -6,5 +6,9 @@
   "fixed17": "4FAIL to17PASS",
   "old_hand16910": "PASS",
   "strategy_convergence": "UNVERIFIED",
-  "original_checkpoint_modified": false
+  "original_checkpoint_modified": false,
+  "historical_initial_transfer": true,
+  "latest_source_commit": "381059c799c55f4eb876cbf3f426527a0b09d97a",
+  "latest_sha256": "400c1f0b3683f1bdeaddab0d8e41e2a6e548fc910a068fddb0533ccbe7e8beb2",
+  "latest_fixed21": "4FAIL to21PASS"
 }
