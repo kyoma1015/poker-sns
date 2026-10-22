@@ -35,7 +35,7 @@ jobs:
             postgres -c shared_preload_libraries=pg_cron \
             -c cron.database_name=postgres -c cron.use_background_workers=on >/dev/null
           # Synthetic ephemeral root key for the isolated container only; never log its bytes.
-          docker exec "$c" sh -ec 'umask 077; openssl rand -hex 32 > /etc/postgresql-custom/pgsodium_root.key; chown postgres:postgres /etc/postgresql-custom/pgsodium_root.key; chmod 600 /etc/postgresql-custom/pgsodium_root.key'
+          openssl rand -hex 32 | docker exec -i "$c" sh -ec 'umask 077; cat > /etc/postgresql-custom/pgsodium_root.key; chown postgres:postgres /etc/postgresql-custom/pgsodium_root.key; chmod 600 /etc/postgresql-custom/pgsodium_root.key'
           docker restart "$c" >/dev/null
           ready=0
           for i in $(seq 1 90); do
