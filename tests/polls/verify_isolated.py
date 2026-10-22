@@ -128,6 +128,28 @@ def main():
         return {'is_anonymous':value}
     record('legacy_create_conservative_privacy', 'Old no-mode caller defaults to anonymous',legacy_privacy)
     record('legacy_vote_compatible', 'Old vote client uses stored poll mode', lambda: {'response':require_ok(rpc('submit_interactive_response', {'p_post_id':legacy,'p_option_index':1,'p_answer':None}, VOTER))})
+    # Additional adversarial identity/role matrix; actual PostgREST JWT roles,
+    # not catalog-only assertions. No production services or user records.
+    for label, user in [('anon', None), ('owner', OWNER), ('voter', VOTER), ('observer', OBSERVER)]:
+        record('identity_matrix_raw_vote_select_' + label,
+               'Raw vote rows are never exposed to any client identity',
+               lambda user=user: {'rows': require_ok(api('/post_interactive_responses?select=post_id,user_id,option_index&limit=10', user=user))}
+               if require_ok(api('/post_interactive_responses?select=post_id,user_id,option_index&limit=10', user=user)) == []
+               else (_ for _ in ()).throw(AssertionError('Raw voter identity disclosed')))
+        record('identity_matrix_private_close_' + label,
+               'No client can execute private close worker through PostgREST',
+               lambda user=user: reject(rpc('close_due_polls', {}, user), (401,403,404)))
+        record('identity_matrix_forged_close_' + label,
+               'No client can forge system poll_closed notification',
+               lambda user=user: reject(api('/notifications', {'user_id': OWNER,'actor_id': VOTER,'type':'poll_closed','post_id':anonymous}, user, prefer='return=minimal'), (401,403)))
+    record('identity_matrix_owner_anonymous_voters_empty',
+           'Poll owner cannot see anonymous voter profiles',
+           lambda: {'voters': result(anonymous, OWNER)['voters']}
+           if result(anonymous, OWNER)['voters'] == [] else (_ for _ in ()).throw(AssertionError('Owner identity disclosure')))
+    record('identity_matrix_observer_anonymous_voters_empty',
+           'Third-party viewer cannot see anonymous voter profiles',
+           lambda: {'voters': result(anonymous, OBSERVER)['voters']}
+           if result(anonymous, OBSERVER)['voters'] == [] else (_ for _ in ()).throw(AssertionError('Observer identity disclosure')))
     record('direct_vote_insert_denied', 'Raw INSERT never a voting API', lambda: reject(api('/post_interactive_responses', {'post_id':anonymous,'user_id':OBSERVER,'option_index':0}, OBSERVER), (401,403)))
     record('direct_question_table_insert_denied', 'Cannot bypass RPC to make question metadata', lambda: reject(api('/post_interactive', {'post_id':named,'kind':'question','options':[]}, OWNER), (401,403)))
     for user,label in ((OWNER,'owner'), (VOTER,'voter'), (OBSERVER,'observer'), (None,'anon')):
