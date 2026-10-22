@@ -1,0 +1,58 @@
+name: Poll Supabase PG17 extension compatibility (synthetic)
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/poll-supabase-pg17-extension-compat.yml'
+permissions:
+  contents: read
+jobs:
+  extensions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Inspect isolated Supabase PostgreSQL 17 extension versions
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          container=poll-supabase-extension-fixture
+          cleanup() {
+            local status=$?
+            trap - EXIT
+            docker rm -f "$container" >/dev/null 2>&1 || true
+            if docker container inspect "$container" >/dev/null 2>&1; then
+              echo '::error::Synthetic container cleanup failed'
+              status=1
+            else
+              echo 'PASS: isolated container removed'
+            fi
+            exit "$status"
+          }
+          trap cleanup EXIT
+          docker run -d --name "$container" --network none \
+            -e POSTGRES_PASSWORD=synthetic_only_not_a_secret \
+            supabase/postgres:17.11.0.004 >/dev/null
+          ready=0
+          for i in $(seq 1 60); do
+            if docker exec "$container" pg_isready -U postgres >/dev/null 2>&1; then ready=1; break; fi
+            sleep 1
+          done
+          test "$ready" -eq 1
+          docker exec "$container" psql -U postgres -d postgres -v ON_ERROR_STOP=1 -At <<'SQL'
+          select 'POSTGRES=' || current_setting('server_version');
+          select 'AVAILABLE=' || name || ':' || default_version from pg_available_extensions where name in ('pg_cron','supabase_vault') order by name;
+          do $$
+          declare v text;
+          begin
+            if current_setting('server_version_num')::integer / 10000 <> 17 then
+              raise exception 'PostgreSQL major version mismatch';
+            end if;
+            select default_version into v from pg_available_extensions where name='pg_cron';
+            if v is distinct from '1.6.4' then raise exception 'pg_cron default version expected 1.6.4, got %',v; end if;
+            select default_version into v from pg_available_extensions where name='supabase_vault';
+            if v is distinct from '0.3.1' then raise exception 'supabase_vault default version expected 0.3.1, got %',v; end if;
+          end $$;
+          SQL
+          echo 'PASS: PG17 and extension package default versions match requested versions'
+          echo 'BLOCKED: extension activation, cron scheduling, Vault encryption and production recovery parity not proven'
+          echo 'No secrets, no production DB connection, no data artifacts'
