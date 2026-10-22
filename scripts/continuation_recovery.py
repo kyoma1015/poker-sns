@@ -13,6 +13,10 @@ import time
 from code_worker import Leases, command, finite_lease_number, protected_hashes, validate_spec
 from pr_overlap import verify_overlap_review
 
+PUBLICATION_FIELDS = ('source_commit', 'head_commit', 'branch', 'pr_number',
+                      'ci_run_id', 'ci_attempt', 'ci_status', 'owner', 'run_id',
+                      'last_success', 'next_action', 'retry_count')
+
 
 def digest(value):
     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
@@ -67,9 +71,72 @@ class Continuation:
             id TEXT PRIMARY KEY, lane TEXT NOT NULL, reference TEXT NOT NULL,
             title TEXT NOT NULL, owner TEXT,
             status TEXT NOT NULL CHECK(status IN ('review_required','blocked','dismissed')))''')
+        self.db.execute('''CREATE TABLE IF NOT EXISTS continuation_publications (
+            task_id TEXT PRIMARY KEY, metadata TEXT NOT NULL,
+            revision INTEGER NOT NULL, updated_at REAL NOT NULL)''')
 
     def close(self):
         self.leases.close()
+
+    def record_publication(self, task_id, metadata, *, expected_revision, now=None):
+        """Record trusted host observations, not GitHub or approval attestations."""
+        if (not isinstance(task_id, str) or not re.fullmatch(r'[A-Za-z0-9_-]{1,80}', task_id)
+                or type(metadata) is not dict or set(metadata) != set(PUBLICATION_FIELDS)
+                or type(expected_revision) is not int or expected_revision < 0):
+            raise ValueError('invalid publication metadata')
+        data = {key: metadata[key] for key in PUBLICATION_FIELDS}
+        for key in ('source_commit', 'head_commit'):
+            if not isinstance(data[key], str) or not re.fullmatch(r'[a-f0-9]{40}', data[key]):
+                raise ValueError('invalid publication commit')
+        for key in ('pr_number', 'ci_run_id', 'ci_attempt'):
+            if type(data[key]) is not int or data[key] <= 0:
+                raise ValueError('invalid publication identifier')
+        branch = data['branch']
+        if (not isinstance(branch, str) or not re.fullmatch(r'[A-Za-z0-9._/-]{1,200}', branch)
+                or branch.startswith(('/', '.')) or branch.endswith(('/', '.'))
+                or '..' in branch or '//' in branch or '@{' in branch
+                or any(part.startswith('.') or part.endswith('.lock') for part in branch.split('/'))):
+            raise ValueError('invalid publication branch')
+        for key in ('owner', 'run_id'):
+            if not isinstance(data[key], str) or not re.fullmatch(r'[A-Za-z0-9_./@-]{1,100}', data[key]):
+                raise ValueError('invalid publication owner or run')
+        if (data['ci_status'] not in ('queued', 'in_progress', 'success', 'failure', 'cancelled',
+                                     'timed_out', 'action_required', 'neutral', 'skipped', 'unknown')
+                or data['last_success'] not in ('source_committed', 'draft_created', 'ci_observed', 'checkpoint_saved')
+                or data['next_action'] not in ('await_ci', 'review', 'discover_next', 'blocked')
+                or type(data['retry_count']) is not int or data['retry_count'] not in (0, 1)):
+            raise ValueError('invalid publication status')
+        now = float(finite_lease_number(time.time() if now is None else now, 'publication clock'))
+        self.db.execute('BEGIN IMMEDIATE')
+        try:
+            job = self.db.execute('SELECT status,attempts,evidence FROM development_jobs WHERE id=?',
+                                  (task_id,)).fetchone()
+            if not job or job[0] != 'implemented' or data['retry_count'] != job[1] - 1:
+                raise ValueError('implemented publication job required')
+            try:
+                evidence = json.loads(job[2])
+            except (TypeError, ValueError):
+                raise ValueError('implemented source evidence required') from None
+            if type(evidence) is not dict or evidence.get('commit') != data['source_commit']:
+                raise ValueError('publication source does not match job')
+            old = self.db.execute('SELECT metadata,revision,updated_at FROM continuation_publications WHERE task_id=?',
+                                  (task_id,)).fetchone()
+            if expected_revision != (old[1] if old else 0) or (old and now < old[2]):
+                raise ValueError('stale publication update')
+            if old:
+                previous = json.loads(old[0])
+                if any(previous[key] != data[key] for key in ('source_commit', 'branch', 'pr_number')):
+                    raise ValueError('immutable publication identity changed')
+            revision = expected_revision + 1
+            self.db.execute('''INSERT INTO continuation_publications VALUES(?,?,?,?)
+                ON CONFLICT(task_id) DO UPDATE SET metadata=excluded.metadata,
+                revision=excluded.revision,updated_at=excluded.updated_at''',
+                (task_id, json.dumps(data), revision, now))
+            self.db.execute('COMMIT')
+            return {'task_id': task_id, **data, 'revision': revision, 'updated_at': now}
+        except BaseException:
+            self.db.execute('ROLLBACK')
+            raise
 
     def discover(self, sources):
         """Persist bounded suggestions, never reviewed tasks or execution leases."""
@@ -332,7 +399,14 @@ class Continuation:
 
     def public_checkpoint(self):
         """Token/context-free progress for GitHub. Cannot replace private state."""
+        publications = []
+        for task_id, metadata, revision, updated_at in self.db.execute(
+                'SELECT task_id,metadata,revision,updated_at FROM continuation_publications ORDER BY task_id'):
+            data = json.loads(metadata)
+            publications.append({'task_id': task_id, **{key: data[key] for key in PUBLICATION_FIELDS},
+                                 'revision': revision, 'updated_at': updated_at})
         return {'version': 1, 'daemon_running': False, 'run_count': self.db.execute('SELECT COUNT(*) FROM continuation_runs').fetchone()[0],
                 'run_limit': self.db.execute('SELECT run_limit FROM continuation_limits WHERE id=1').fetchone()[0],
                 'jobs': [dict(zip(('id','lane','status','attempts'), row)) for row in self.db.execute('SELECT id,lane,status,attempts FROM development_jobs ORDER BY id')],
-                'failures': [dict(zip(('id','failure_class','retry_at'), row)) for row in self.db.execute('SELECT id,kind,not_before FROM continuation_failures ORDER BY id')]}
+                'failures': [dict(zip(('id','failure_class','retry_at'), row)) for row in self.db.execute('SELECT id,kind,not_before FROM continuation_failures ORDER BY id')],
+                'publications': publications}
