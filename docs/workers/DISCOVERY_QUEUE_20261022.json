@@ -8,8 +8,9 @@
       "lane": "A",
       "status": "review_required",
       "owner": null,
-      "reference": "PR96",
-      "title": "Review bounded per-invocation caller and persistence adoption; fixed FAIL and approved controller rollout required"
+      "reference": "PR96/102/104",
+      "title": "Review bounded per-invocation caller and persistence adoption; fixed FAIL and approved controller rollout required",
+      "next_action": "Offline preview verified; live controller/scheduler adoption remains forbidden"
     },
     {
       "id": "review-tda-350-official-evidence",
@@ -24,16 +25,19 @@
       "lane": "C",
       "status": "review_required",
       "owner": null,
-      "reference": "PR97",
-      "title": "Explore independent cancellation/scaling oracles; not ready without witnessed distinct FAIL"
+      "reference": "PR101/103/105",
+      "title": "Explore independent cancellation/scaling oracles; not ready without witnessed distinct FAIL",
+      "next_action": "Latest EV/policy corrections are in selected main candidate103; only review, do not duplicate source"
     },
     {
       "id": "reuse-pr30-persona-audit",
       "lane": "D",
       "status": "review_required",
       "owner": null,
-      "reference": "PR30, input65901ec",
-      "title": "Reuse exact existing persona audit patch in reviewed integration input; do not create duplicate source implementation"
+      "reference": "PR100",
+      "title": "Reuse exact existing persona audit patch in reviewed integration input; do not create duplicate source implementation",
+      "implementation_candidate": "PR100",
+      "next_action": "Review selective main candidate; do not rewrite PR30 source or replay original completed task"
     },
     {
       "id": "review-diagnosis-semantic-labels",

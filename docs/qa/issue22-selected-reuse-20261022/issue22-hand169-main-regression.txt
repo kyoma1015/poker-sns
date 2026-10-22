@@ -1,0 +1,15 @@
+test_complete_deck_counts (test_hand169.Hand169.test_complete_deck_counts) ... ok
+test_complete_export_conserves_mass_policy_and_ev (test_hand169.Hand169.test_complete_export_conserves_mass_policy_and_ev) ... ok
+test_duplicate_combination_rejected_even_reversed (test_hand169.Hand169.test_duplicate_combination_rejected_even_reversed) ... ok
+test_invalid_cards (test_hand169.Hand169.test_invalid_cards) ... ok
+test_invalid_numeric_inputs (test_hand169.Hand169.test_invalid_numeric_inputs) ... ok
+test_large_finite_ev_avoids_multiplication_overflow (test_hand169.Hand169.test_large_finite_ev_avoids_multiplication_overflow) ... ok
+test_order_and_suit_invariance (test_hand169.Hand169.test_order_and_suit_invariance) ... ok
+test_partial_coverage_is_explicit_and_rejected_by_default (test_hand169.Hand169.test_partial_coverage_is_explicit_and_rejected_by_default) ... ok
+test_weighted_mean_not_unweighted_mean (test_hand169.Hand169.test_weighted_mean_not_unweighted_mean) ... ok
+test_zero_mass_and_unknown_ev_stay_unknown (test_hand169.Hand169.test_zero_mass_and_unknown_ev_stay_unknown) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.011s
+
+OK

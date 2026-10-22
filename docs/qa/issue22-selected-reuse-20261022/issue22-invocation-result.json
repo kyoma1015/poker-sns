@@ -1,0 +1,37 @@
+{
+  "id": "issue22-a-invocation-clock-v1",
+  "lane": "A",
+  "base_sha": "5698d7796bacdc040e88f7705707d98f0c8c0dbe",
+  "executor": "host_session",
+  "host_agent_id": "/root/bd_evidence_audit",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "scripts/continuation_recovery.py"
+  ],
+  "tested_source_sha256": {
+    "scripts/continuation_recovery.py": "58146a3be421f3bb720ac03725f6ea96f065f5736bbac9bbf6cd9556a05b3165"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 58,
+      "output_sha256": "e6c094dace13a897f0753fb1fe7d6abb0fd69eb80c5285fdbb3a6520c7a4ebe2"
+    }
+  ],
+  "commit": "7e4e258a1be6e24634bf0c5e6535b3581f59dd9d",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

@@ -75,3 +75,6 @@ Read ISSUE22_AUTONOMOUS_SOURCE_20261022.md. New completed IDs: issue22-a-finite-
 
 ## 2026-10-22 discovery continuation
 A96/B98/C97 are three new formal host source completions with preserved original4/state (32implemented/2blocked). Old ready C57/B59/D60 IDs not replayed. D30 exact-source reuse pending; no new duplicate implementation. See ISSUE22_DISCOVERY_CONTINUATION_20261022.md and non-executable DISCOVERY_QUEUE_20261022.json; new discovery API not adopted in live controller, no scheduler/coldstart proof, no main/production operations.
+
+## Continuous selected reuse — 2026-10-22
+Latest: ISSUE22_SELECTED_REUSE_20261022.md. A102/A104/C101/C105 implemented; D100/C103 selected minimal main candidates. Original4 continuity;36implemented/2blocked. Preserve all old inputs/IDs; D30/old GTO fixes reused exactly, not rewritten. No controller switch/scheduler/main merge; next invocation must fresh-reconcile exact heads and tests.

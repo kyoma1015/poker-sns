@@ -1,0 +1,32 @@
+{
+  "100": {
+    "branch": "codex/d-persona-audit-main-20261022",
+    "head": "d89347092cfeb22b4ab8bc88e042f502df9d7798",
+    "url": "https://github.com/kyoma1015/poker-sns/pull/100"
+  },
+  "101": {
+    "branch": "codex/c-subnormal-ev-fix-20261022",
+    "head": "d0a5ae219ca2a094b2d700019fa7271b84cf4563",
+    "url": "https://github.com/kyoma1015/poker-sns/pull/101"
+  },
+  "102": {
+    "branch": "codex/a-invocation-clock-fix-20261022",
+    "head": "7e4e258a1be6e24634bf0c5e6535b3581f59dd9d",
+    "url": "https://github.com/kyoma1015/poker-sns/pull/102"
+  },
+  "103": {
+    "branch": "codex/c-hand169-main-20261022",
+    "head": "f929d17b9c37be6f224d391e4473eeab6868630b",
+    "url": "https://github.com/kyoma1015/poker-sns/pull/103"
+  },
+  "104": {
+    "branch": "codex/a-discovery-preview-fix-20261022",
+    "head": "960bd6a95e050206b43f356f0d90fb1ba2cfea80",
+    "url": "https://github.com/kyoma1015/poker-sns/pull/104"
+  },
+  "105": {
+    "branch": "codex/c-subnormal-policy-fix-20261022",
+    "head": "0f00e85ef54b8d7435e5f94d0f1e0480fc91984f",
+    "url": "https://github.com/kyoma1015/poker-sns/pull/105"
+  }
+}

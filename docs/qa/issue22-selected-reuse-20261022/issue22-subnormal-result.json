@@ -1,0 +1,37 @@
+{
+  "id": "issue22-c-subnormal-ev-v1",
+  "lane": "C",
+  "base_sha": "f170c02b6680fec6ba742be9088a7f55f6bf20a5",
+  "executor": "host_session",
+  "host_agent_id": "/root/c_budget_impl",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "gto/hand169.py"
+  ],
+  "tested_source_sha256": {
+    "gto/hand169.py": "b7957ce063c6064367d71a78a22a61ad94c3104f6f528fe766d5aca70b3f101e"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 46,
+      "output_sha256": "f08754fbeb2bb2d0d615e51166c21eb47810214f2767428d8f1f067d36bc61d5"
+    }
+  ],
+  "commit": "4bff6519c9b12d3d0eed162936085bd87b71c113",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

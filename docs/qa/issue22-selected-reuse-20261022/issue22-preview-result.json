@@ -1,0 +1,37 @@
+{
+  "id": "issue22-a-discovery-preview-v1",
+  "lane": "A",
+  "base_sha": "9bab2ff06be4b9fba7b9f3b1945c9a1c1dafb11d",
+  "executor": "host_session",
+  "host_agent_id": "/root/bd_evidence_audit",
+  "real_ai_implementation": true,
+  "production": false,
+  "receipt_source": "trusted_host_coordinator",
+  "daemon_running": false,
+  "changed_paths": [
+    "scripts/discover_review_queue.py"
+  ],
+  "tested_source_sha256": {
+    "scripts/discover_review_queue.py": "80b89fe00851c383667911970e66f358291d9b9bb66e121f66ead7305e24157f"
+  },
+  "tests": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/worker_acceptance",
+        "-v"
+      ],
+      "exit_code": 0,
+      "test_count": 67,
+      "output_sha256": "0219111dbe7c64aa5098f00d79b4cb296a77ff2ee88adfd99e11d8c826f670db"
+    }
+  ],
+  "commit": "1b0b8fa6503ec889506a165121478aaa48c6323e",
+  "status": "implemented_local",
+  "publication": "not_attempted"
+}

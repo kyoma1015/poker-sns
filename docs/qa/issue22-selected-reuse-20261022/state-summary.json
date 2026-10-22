@@ -1,0 +1,13 @@
+{
+  "original4_continuity": true,
+  "counts": {
+    "blocked": 2,
+    "implemented": 36
+  },
+  "new_discovery_schema_live": false,
+  "controller_switched": false,
+  "scheduler_enabled": false,
+  "main_merged": false,
+  "provider_run_id": "UNKNOWN",
+  "independent_coldstart": "UNVERIFIED"
+}

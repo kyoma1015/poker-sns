@@ -1,0 +1,108 @@
+test_default_and_true_reject_incomplete (test_coverage_flag.CoverageFlag.test_default_and_true_reject_incomplete) ... ok
+test_explicit_partial_retained (test_coverage_flag.CoverageFlag.test_explicit_partial_retained) ... ok
+test_invalid_flag_does_not_iterate_input (test_coverage_flag.CoverageFlag.test_invalid_flag_does_not_iterate_input) ... ok
+test_nonboolean_flags_rejected (test_coverage_flag.CoverageFlag.test_nonboolean_flags_rejected) ... ok
+test_prior_reviewed_mass_overflow_fix_retained (test_coverage_flag.CoverageFlag.test_prior_reviewed_mass_overflow_fix_retained) ... ok
+test_post_yield_mutation_cannot_introduce_unvalidated_nan (test_frequency_snapshot.FrequencySnapshot.test_post_yield_mutation_cannot_introduce_unvalidated_nan) ... ok
+test_stream_reused_buffer_preserves_each_validated_row (test_frequency_snapshot.FrequencySnapshot.test_stream_reused_buffer_preserves_each_validated_row) ... ok
+test_tuple_list_and_zero_mass_stay_supported (test_frequency_snapshot.FrequencySnapshot.test_tuple_list_and_zero_mass_stay_supported) ... ok
+test_negative_terms_not_individually_overrounded (test_subnormal_ev.SubnormalEV.test_negative_terms_not_individually_overrounded) ... ok
+test_negative_terms_round_up_only_after_sum (test_subnormal_ev.SubnormalEV.test_negative_terms_round_up_only_after_sum) ... ok
+test_positive_terms_not_individually_overrounded (test_subnormal_ev.SubnormalEV.test_positive_terms_not_individually_overrounded) ... ok
+test_positive_terms_round_up_only_after_sum (test_subnormal_ev.SubnormalEV.test_positive_terms_round_up_only_after_sum) ... ok
+test_three_overrounded_terms (test_subnormal_policy.SubnormalPolicy.test_three_overrounded_terms) ... FAIL
+test_three_small_terms (test_subnormal_policy.SubnormalPolicy.test_three_small_terms) ... FAIL
+test_two_overrounded_terms (test_subnormal_policy.SubnormalPolicy.test_two_overrounded_terms) ... FAIL
+test_two_small_terms (test_subnormal_policy.SubnormalPolicy.test_two_small_terms) ... FAIL
+test_large_product_no_overflow (test_weighted_ev.WeightedEV.test_large_product_no_overflow) ... ok
+test_negative_representable_contribution (test_weighted_ev.WeightedEV.test_negative_representable_contribution) ... ok
+test_positive_representable_contribution (test_weighted_ev.WeightedEV.test_positive_representable_contribution) ... ok
+test_small_weight_product_before_normalization (test_weighted_ev.WeightedEV.test_small_weight_product_before_normalization) ... ok
+test_zero_ev_and_zero_weight (test_weighted_ev.WeightedEV.test_zero_ev_and_zero_weight) ... ok
+
+======================================================================
+FAIL: test_three_overrounded_terms (test_subnormal_policy.SubnormalPolicy.test_three_overrounded_terms)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<retained-workspace>/issue22-hand169-main-candidate/tests/worker_acceptance/test_subnormal_policy.py", line 15, in test_three_overrounded_terms
+    def test_three_overrounded_terms(self):self.check(.6,3)
+                                           ^^^^^^^^^^^^^^^^
+  File "<retained-workspace>/issue22-hand169-main-candidate/tests/worker_acceptance/test_subnormal_policy.py", line 12, in check
+    result=aggregate(rows,2,require_complete=False)['hands']['AKs'];self.assertEqual(result['frequencies'],expected);self.assertEqual(result['ev'],0.)
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [1.0, 1.5e-323] != [1.0, 1e-323]
+
+First differing element 1:
+1.5e-323
+1e-323
+
+- [1.0, 1.5e-323]
+?        --
+
++ [1.0, 1e-323]
+
+======================================================================
+FAIL: test_three_small_terms (test_subnormal_policy.SubnormalPolicy.test_three_small_terms)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<retained-workspace>/issue22-hand169-main-candidate/tests/worker_acceptance/test_subnormal_policy.py", line 13, in test_three_small_terms
+    def test_three_small_terms(self):self.check(.4,3)
+                                     ^^^^^^^^^^^^^^^^
+  File "<retained-workspace>/issue22-hand169-main-candidate/tests/worker_acceptance/test_subnormal_policy.py", line 12, in check
+    result=aggregate(rows,2,require_complete=False)['hands']['AKs'];self.assertEqual(result['frequencies'],expected);self.assertEqual(result['ev'],0.)
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [1.0, 0.0] != [1.0, 5e-324]
+
+First differing element 1:
+0.0
+5e-324
+
+- [1.0, 0.0]
++ [1.0, 5e-324]
+
+======================================================================
+FAIL: test_two_overrounded_terms (test_subnormal_policy.SubnormalPolicy.test_two_overrounded_terms)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<retained-workspace>/issue22-hand169-main-candidate/tests/worker_acceptance/test_subnormal_policy.py", line 16, in test_two_overrounded_terms
+    def test_two_overrounded_terms(self):self.check(.6,2)
+                                         ^^^^^^^^^^^^^^^^
+  File "<retained-workspace>/issue22-hand169-main-candidate/tests/worker_acceptance/test_subnormal_policy.py", line 12, in check
+    result=aggregate(rows,2,require_complete=False)['hands']['AKs'];self.assertEqual(result['frequencies'],expected);self.assertEqual(result['ev'],0.)
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [1.0, 1e-323] != [1.0, 5e-324]
+
+First differing element 1:
+1e-323
+5e-324
+
+- [1.0, 1e-323]
+?       ^    ^
+
++ [1.0, 5e-324]
+?       ^    ^
+
+
+======================================================================
+FAIL: test_two_small_terms (test_subnormal_policy.SubnormalPolicy.test_two_small_terms)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<retained-workspace>/issue22-hand169-main-candidate/tests/worker_acceptance/test_subnormal_policy.py", line 14, in test_two_small_terms
+    def test_two_small_terms(self):self.check(.4,2)
+                                   ^^^^^^^^^^^^^^^^
+  File "<retained-workspace>/issue22-hand169-main-candidate/tests/worker_acceptance/test_subnormal_policy.py", line 12, in check
+    result=aggregate(rows,2,require_complete=False)['hands']['AKs'];self.assertEqual(result['frequencies'],expected);self.assertEqual(result['ev'],0.)
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [1.0, 0.0] != [1.0, 5e-324]
+
+First differing element 1:
+0.0
+5e-324
+
+- [1.0, 0.0]
++ [1.0, 5e-324]
+
+----------------------------------------------------------------------
+Ran 21 tests in 0.005s
+
+FAILED (failures=4)

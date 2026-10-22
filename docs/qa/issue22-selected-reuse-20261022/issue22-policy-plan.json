@@ -1,0 +1,34 @@
+{
+  "manifest": {
+    "version": 1,
+    "repository": "kyoma1015/poker-sns",
+    "tasks": [
+      {
+        "id": "issue22-c-subnormal-policy-v1",
+        "lane": "C",
+        "base_sha": "935d76a4ab9b39e2ace077ce5cc969f1726009f8",
+        "base_branch": "codex/c-subnormal-policy-input-20261022",
+        "branch": "codex/c-subnormal-policy-fix-20261022",
+        "test_profile": "python",
+        "allowed_paths": [
+          "gto/hand169.py"
+        ],
+        "protected_tests": [
+          "tests/worker_acceptance/test_checkpoint_budget.py",
+          "tests/worker_acceptance/test_chip_oracle_types.py",
+          "tests/worker_acceptance/test_coverage_flag.py",
+          "tests/worker_acceptance/test_frequency_snapshot.py",
+          "tests/worker_acceptance/test_nonempty_settlement.py",
+          "tests/worker_acceptance/test_rank7.py",
+          "tests/worker_acceptance/test_settlement_expectations.py",
+          "tests/worker_acceptance/test_subnormal_ev.py",
+          "tests/worker_acceptance/test_subnormal_policy.py",
+          "tests/worker_acceptance/test_weighted_ev.py"
+        ],
+        "instruction": "Fix action frequency weighted sum subnormal loss/overrounding using the same safe accumulation principle already used for EV. Only gto/hand169.py. Prefer reuse/generalization of existing private helper, preserve normalfastpath and existing exported float mass. Fixed50 baseline4FAIL (Decimalpolicyoracle). Keep EV fixes/strictcoverage/streamsnapshots/unknownEV/zeromass/overflow. No tests/fixture/commit changes. Run50+GTO40. No solverstrategy or convergence claim."
+      }
+    ]
+  },
+  "blocked": [],
+  "daemon_running": false
+}
