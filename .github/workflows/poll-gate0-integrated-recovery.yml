@@ -1,0 +1,38 @@
+name: Poll gate0 integrated synthetic age recovery QA
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/poll-gate0-integrated-recovery.yml'
+      - 'tests/polls/verify_gate0_integrated_recovery.py'
+      - 'docs/qa/poll-final-owner-approval-checklist-20261022.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  integrated-synthetic-recovery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install age (Ubuntu package)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y age
+      - name: End-to-end synthetic recovery QA
+        env:
+          GATE0_INTEGRATED_REPORT: gate0-integrated-evidence.json
+        run: python3 tests/polls/verify_gate0_integrated_recovery.py
+      - name: Evidence SHA-256
+        if: always()
+        run: |
+          if [ -f gate0-integrated-evidence.json ]; then
+            sha256sum gate0-integrated-evidence.json
+          fi
+      - name: Upload synthetic evidence only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: poll-gate0-integrated-synthetic-evidence
+          path: gate0-integrated-evidence.json
+          if-no-files-found: warn
+          retention-days: 7
