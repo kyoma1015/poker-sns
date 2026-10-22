@@ -1,0 +1,29 @@
+{
+  "stop_to_exit": {
+    "samples": 10,
+    "min_seconds": 0.00047291599912568927,
+    "max_seconds": 0.0011035299976356328
+  },
+  "executor_timeout": {
+    "samples": 10,
+    "min_seconds": 0.8036128770036157,
+    "max_seconds": 0.8206377640017308
+  },
+  "baseline": {
+    "tests": 8,
+    "failures": 2
+  },
+  "after": {
+    "tests": 8,
+    "failures": 0
+  },
+  "repeated": {
+    "rounds": 10,
+    "tests": 80,
+    "failures": 0
+  },
+  "protected_files": 12,
+  "real_ai_implementation": false,
+  "actual_controller_worker_APIs": true,
+  "controlled_executable_and_receipts": true
+}

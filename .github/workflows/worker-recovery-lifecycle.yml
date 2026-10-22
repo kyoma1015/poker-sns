@@ -1,0 +1,45 @@
+name: Worker interruption and bounded recovery QA
+on:
+  pull_request:
+    branches: [codex/a-controller-integration-qa-20261023]
+    paths:
+      - 'scripts/code_worker.py'
+      - 'scripts/continuation_recovery.py'
+      - 'tests/automation/test_worker_recovery_lifecycle.py'
+      - '.github/workflows/worker-recovery-lifecycle.yml'
+permissions:
+  contents: read
+concurrency:
+  group: worker-recovery-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+jobs:
+  isolated-lifecycle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Existing immutable acceptance
+        run: python -B -m unittest discover -s tests/worker_acceptance -v
+      - name: Worker queue and controller composition
+        run: |
+          python -B tests/automation/test_code_worker.py
+          python -B tests/automation/test_development_queue.py
+          python -B tests/automation/test_controller_integration.py -v
+      - name: Ten bounded lifecycle rounds with owned subprocesses and databases
+        run: |
+          for round in $(seq 1 10); do
+            ISSUE22_OWNED_QA_METRICS="$RUNNER_TEMP/owned-lifecycle.jsonl" python -B tests/automation/test_worker_recovery_lifecycle.py -v || exit 1
+          done
+      - name: Preserve fixture-only PID timing evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: owned-worker-lifecycle-metrics
+          path: ${{ runner.temp }}/owned-lifecycle.jsonl
+          retention-days: 7
+          if-no-files-found: warn
