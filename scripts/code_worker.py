@@ -263,9 +263,13 @@ class CodexExecutor:
                 return {'executor': self.name, 'exit_code': process.returncode,
                         'event_types': sorted(set(str(event) for event in events)), 'output_bytes': len(raw)}
             finally:
-                if process.poll() is None:
+                # A terminated leader may leave live descendants in its session.
+                # Always clean up the owned process group, even after leader exit.
+                try:
                     os.killpg(process.pid, signal.SIGKILL)
-                    process.wait()
+                except ProcessLookupError:
+                    pass
+                process.wait()
 
 
 @contextmanager
