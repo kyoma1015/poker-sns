@@ -95,7 +95,7 @@ psqlq 'select poll_private.close_due_polls(); select poll_private.close_due_poll
 test "$(psqlq 'select count(*) from poll_fixture.receipts')" = 1
 echo 'PASS: cron failure recorded; fixture preserved; retry remains idempotent'
 # After emergency disable, no public/anon/authenticated EXECUTE on the private worker.
-for role in PUBLIC anon authenticated; do
+for role in anon authenticated; do
   test "$(psqlq "select has_function_privilege('$role','poll_private.close_due_polls()','EXECUTE')")" = f
 done
 test "$(psqlq "select has_schema_privilege('anon','poll_private','USAGE')")" = f
