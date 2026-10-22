@@ -18,13 +18,29 @@ jobs:
         shell: bash
         run: |
           set -Eeuo pipefail
-          mkdir -p "$RUNNER_TEMP/poll-synthetic"
           work="$RUNNER_TEMP/poll-synthetic"
+          mkdir -p "$work"
           cleanup() {
-            docker rm -f poll-synth-src poll-synth-dst >/dev/null 2>&1 || true
-            rm -rf "$work"
+            local failed=0
+            trap - EXIT
+            for c in poll-synth-src poll-synth-dst; do
+              docker rm -f "$c" >/dev/null 2>&1 || true
+              if docker container inspect "$c" >/dev/null 2>&1; then
+                echo "::error::Synthetic container still exists: $c"
+                failed=1
+              fi
+            done
+            rm -rf -- "$work" || failed=1
+            if test -e "$work"; then
+              echo "::error::Synthetic temporary directory remains"
+              failed=1
+            fi
+            if test "$failed" -eq 0; then
+              echo 'PASS: containers absent and temporary dump directory removed'
+            fi
+            return "$failed"
           }
-          trap cleanup EXIT
+          trap 'status=$?; cleanup || status=1; exit "$status"' EXIT
           docker run -d --name poll-synth-src -e POSTGRES_PASSWORD="$PGPASSWORD" --network none postgres:17 >/dev/null
           docker run -d --name poll-synth-dst -e POSTGRES_PASSWORD="$PGPASSWORD" --network none postgres:17 >/dev/null
           for c in poll-synth-src poll-synth-dst; do
@@ -52,11 +68,11 @@ jobs:
           dst=$(docker exec poll-synth-dst psql -U postgres -Atc "select md5(string_agg(id||':'||poll_id||':'||choice,',' order by id)) from poll_fixture.responses")
           test "$src" = "$dst"
           test "$(docker exec poll-synth-dst psql -U postgres -Atc 'show server_version_num' | cut -c1-2)" = 17
+          echo 'PASS: PostgreSQL 17 synthetic dump/restore and digests'
+          echo 'BLOCKED: pg_cron 1.6.4 and supabase_vault 0.3.1 extension parity; vanilla postgres:17 does not establish it'
           {
             echo '## Synthetic restore result'
             echo 'PASS: PostgreSQL 17 fixture dump/restore; rows, references and digests match.'
-            echo 'NO production connection, credentials or user data.'
-            echo 'Compatibility gate: pg_cron and supabase_vault are NOT asserted compatible by this vanilla postgres:17 job.'
-            echo 'Production-equivalent Supabase PG17 image/extensions remain BLOCKED pending separate evidence.'
-            echo 'No raw database dumps or fixture files uploaded as artifacts.'
+            echo 'BLOCKED: pg_cron 1.6.4 and supabase_vault 0.3.1 production parity.'
+            echo 'No production connection, credentials, user data, or uploaded artifacts.'
           } >> "$GITHUB_STEP_SUMMARY"
