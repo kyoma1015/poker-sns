@@ -1,5 +1,6 @@
 import { createPollRequest, pollDisplayResult } from './interactiveRequests'
 import { useEffect, useRef, useState } from 'react'
+import { createVerifiedNotification } from './createVerifiedNotification'
 
 import { useNavigate } from 'react-router-dom'
 
@@ -1028,31 +1029,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
       ) {
 
-        const {
-
-          error:
-
-            notificationError,
-
-        } = await supabase
-
-          .from('notifications')
-
-          .insert({
-
-            user_id:
-
-              post.user_id,
-
-            actor_id:
-
-              currentUserId,
-
-            type: 'like',
-
-            post_id: post.id,
-
-          })
+        const notificationError = await createVerifiedNotification('like', post.id)
 
         if (
 

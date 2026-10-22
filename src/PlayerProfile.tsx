@@ -1,4 +1,5 @@
 import PokerIdCardEntry from './PokerIdCardEntry'
+import { createVerifiedNotification } from './createVerifiedNotification'
 import Timeline from './Timeline'
 import TournamentAchievementShowcase from './TournamentAchievementShowcase'
         import { useEffect, useRef, useState } from 'react'
@@ -374,16 +375,7 @@ import { usePullToRefresh } from './usePullToRefresh'
               console.error(error)
               return
             }
-            const {
-              error: notificationError,
-            } = await supabase
-              .from('notifications')
-              .insert({
-                user_id: id,
-                actor_id: user.id,
-                type: 'follow',
-                post_id: null,
-              })
+            const notificationError = await createVerifiedNotification('follow', id)
             if (notificationError) {
               console.error(
                 '通知作成エラー:',
