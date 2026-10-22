@@ -79,7 +79,7 @@ psqlfile sql/poll_only/disable_candidate.sql
 echo 'PASS: explicit re-enable and second emergency disable'
 # New boundary: a cron invocation that raises an exception must record failure,
 # preserve committed fixture data, and permit a deliberate idempotent retry.
-psqlq "create or replace function public.poll_synthetic_failing() returns void language plpgsql as \\\$\\\$ begin raise exception 'synthetic expected failure'; end \\\$\\\$" >/dev/null
+psqlq "create or replace function public.poll_synthetic_failing() returns integer language sql as 'select 1/0'" >/dev/null
 psqlq "select cron.schedule('poll-synthetic-fail-retry','5 seconds','select public.poll_synthetic_failing();')" >/dev/null
 failed=0
 for i in $(seq 1 25); do
