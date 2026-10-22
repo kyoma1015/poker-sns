@@ -10,7 +10,7 @@ import re
 import sqlite3
 import time
 
-from code_worker import Leases, command, protected_hashes, validate_spec
+from code_worker import Leases, command, finite_lease_number, protected_hashes, validate_spec
 from pr_overlap import verify_overlap_review
 
 
@@ -141,7 +141,7 @@ class Continuation:
         """Book one finite host invocation. Does not invoke an AI/scheduler."""
         if not isinstance(run_id, str) or not re.fullmatch(r'[A-Za-z0-9_-]{1,100}', run_id):
             raise ValueError('bounded immutable invocation ID required')
-        now = time.time() if now is None else now
+        now = finite_lease_number(time.time() if now is None else now, 'invocation clock')
         self.db.execute('BEGIN IMMEDIATE')
         try:
             used = self.db.execute('SELECT COUNT(*) FROM continuation_runs').fetchone()[0]
