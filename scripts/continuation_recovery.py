@@ -63,9 +63,67 @@ class Continuation:
         self.db.execute('''CREATE TABLE IF NOT EXISTS continuation_failures (
             id TEXT PRIMARY KEY, kind TEXT NOT NULL, not_before REAL NOT NULL,
             context TEXT NOT NULL, checkpoint TEXT NOT NULL)''')
+        self.db.execute('''CREATE TABLE IF NOT EXISTS continuation_discoveries (
+            id TEXT PRIMARY KEY, lane TEXT NOT NULL, reference TEXT NOT NULL,
+            title TEXT NOT NULL, owner TEXT,
+            status TEXT NOT NULL CHECK(status IN ('review_required','blocked','dismissed')))''')
 
     def close(self):
         self.leases.close()
+
+    def discover(self, sources):
+        """Persist bounded suggestions, never reviewed tasks or execution leases."""
+        batch = {}
+        for suggestion in extract_candidates(sources):
+            metadata = {key: suggestion[key] for key in ('lane', 'reference', 'title')}
+            batch[digest(metadata)] = metadata
+        if not batch:
+            return []
+        self.db.execute('BEGIN IMMEDIATE')
+        try:
+            existing = {row[0] for row in self.db.execute('SELECT id FROM continuation_discoveries')}
+            if len(existing | batch.keys()) > 1000:
+                raise ValueError('discovery capacity exceeded')
+            result = []
+            for ident, metadata in sorted(batch.items()):
+                self.db.execute('''INSERT OR IGNORE INTO continuation_discoveries
+                    (id,lane,reference,title,owner,status) VALUES(?,?,?,?,NULL,'review_required')''',
+                    (ident, metadata['lane'], metadata['reference'], metadata['title']))
+                row = self.db.execute('''SELECT id,lane,reference,title,owner,status
+                    FROM continuation_discoveries WHERE id=?''', (ident,)).fetchone()
+                result.append(dict(zip(('id','lane','reference','title','owner','status'), row)))
+            self.db.execute('COMMIT')
+            return result
+        except BaseException:
+            self.db.execute('ROLLBACK')
+            raise
+
+    def discoveries(self, lane=None):
+        """Private review metadata; does not promote suggestions or reveal tokens."""
+        if lane is not None and lane not in ('A', 'B', 'C', 'D'):
+            raise ValueError('invalid discovery lane')
+        query = 'SELECT id,lane,reference,title,owner,status FROM continuation_discoveries'
+        rows = self.db.execute(query + (' WHERE lane=?' if lane is not None else '') + ' ORDER BY id',
+                               (lane,) if lane is not None else ())
+        return [dict(zip(('id','lane','reference','title','owner','status'), row)) for row in rows]
+
+    def set_discovery(self, ident, owner, status):
+        """Coordinator assignment only; execution still requires a reviewed descriptor."""
+        if (not isinstance(ident, str) or not re.fullmatch(r'[a-f0-9]{64}', ident)
+                or status not in ('review_required', 'blocked', 'dismissed')
+                or (owner is not None and
+                    (not isinstance(owner, str) or not re.fullmatch(r'[A-Za-z0-9_./@-]{1,80}', owner)))):
+            raise ValueError('invalid discovery assignment')
+        self.db.execute('BEGIN IMMEDIATE')
+        try:
+            cursor = self.db.execute('UPDATE continuation_discoveries SET owner=?,status=? WHERE id=?',
+                                     (owner, status, ident))
+            if cursor.rowcount != 1:
+                raise ValueError('unknown discovery')
+            self.db.execute('COMMIT')
+        except BaseException:
+            self.db.execute('ROLLBACK')
+            raise
 
     def restrict_remaining_runs(self, remaining):
         """Import existing scheduler remainder. Never extend/reset its finite cap."""
