@@ -1,0 +1,200 @@
+test_default_and_true_reject_incomplete (test_coverage_flag.CoverageFlag.test_default_and_true_reject_incomplete) ... ok
+test_explicit_partial_retained (test_coverage_flag.CoverageFlag.test_explicit_partial_retained) ... ok
+test_invalid_flag_does_not_iterate_input (test_coverage_flag.CoverageFlag.test_invalid_flag_does_not_iterate_input) ... ok
+test_nonboolean_flags_rejected (test_coverage_flag.CoverageFlag.test_nonboolean_flags_rejected) ... ok
+test_prior_reviewed_mass_overflow_fix_retained (test_coverage_flag.CoverageFlag.test_prior_reviewed_mass_overflow_fix_retained) ... ok
+test_post_yield_mutation_cannot_introduce_unvalidated_nan (test_frequency_snapshot.FrequencySnapshot.test_post_yield_mutation_cannot_introduce_unvalidated_nan) ... ok
+test_stream_reused_buffer_preserves_each_validated_row (test_frequency_snapshot.FrequencySnapshot.test_stream_reused_buffer_preserves_each_validated_row) ... ok
+test_tuple_list_and_zero_mass_stay_supported (test_frequency_snapshot.FrequencySnapshot.test_tuple_list_and_zero_mass_stay_supported) ... ok
+test_negative_terms_not_individually_overrounded (test_subnormal_ev.SubnormalEV.test_negative_terms_not_individually_overrounded) ... ok
+test_negative_terms_round_up_only_after_sum (test_subnormal_ev.SubnormalEV.test_negative_terms_round_up_only_after_sum) ... ok
+test_positive_terms_not_individually_overrounded (test_subnormal_ev.SubnormalEV.test_positive_terms_not_individually_overrounded) ... ok
+test_positive_terms_round_up_only_after_sum (test_subnormal_ev.SubnormalEV.test_positive_terms_round_up_only_after_sum) ... ok
+test_three_overrounded_terms (test_subnormal_policy.SubnormalPolicy.test_three_overrounded_terms) ... ok
+test_three_small_terms (test_subnormal_policy.SubnormalPolicy.test_three_small_terms) ... ok
+test_two_overrounded_terms (test_subnormal_policy.SubnormalPolicy.test_two_overrounded_terms) ... ok
+test_two_small_terms (test_subnormal_policy.SubnormalPolicy.test_two_small_terms) ... ok
+test_existing_invalid_numbers (test_unrepresentable_numbers.FiniteNumberValidation.test_existing_invalid_numbers) ... ok
+test_negative_huge_ev (test_unrepresentable_numbers.FiniteNumberValidation.test_negative_huge_ev) ... ERROR
+test_negative_huge_frequency (test_unrepresentable_numbers.FiniteNumberValidation.test_negative_huge_frequency) ... ERROR
+test_negative_huge_weight (test_unrepresentable_numbers.FiniteNumberValidation.test_negative_huge_weight) ... ERROR
+test_ordinary_integer_input_preserved (test_unrepresentable_numbers.FiniteNumberValidation.test_ordinary_integer_input_preserved) ... ok
+test_positive_huge_ev (test_unrepresentable_numbers.FiniteNumberValidation.test_positive_huge_ev) ... ERROR
+test_positive_huge_frequency (test_unrepresentable_numbers.FiniteNumberValidation.test_positive_huge_frequency) ... ERROR
+test_positive_huge_weight (test_unrepresentable_numbers.FiniteNumberValidation.test_positive_huge_weight) ... ERROR
+test_large_product_no_overflow (test_weighted_ev.WeightedEV.test_large_product_no_overflow) ... ok
+test_negative_representable_contribution (test_weighted_ev.WeightedEV.test_negative_representable_contribution) ... ok
+test_positive_representable_contribution (test_weighted_ev.WeightedEV.test_positive_representable_contribution) ... ok
+test_small_weight_product_before_normalization (test_weighted_ev.WeightedEV.test_small_weight_product_before_normalization) ... ok
+test_zero_ev_and_zero_weight (test_weighted_ev.WeightedEV.test_zero_ev_and_zero_weight) ... ok
+test_negative_maximum_normal_weight (test_weighted_maximum.WeightedMaximum.test_negative_maximum_normal_weight) ... ERROR
+test_negative_maximum_subnormal_weight (test_weighted_maximum.WeightedMaximum.test_negative_maximum_subnormal_weight) ... ERROR
+test_positive_maximum_normal_weight (test_weighted_maximum.WeightedMaximum.test_positive_maximum_normal_weight) ... ERROR
+test_positive_maximum_subnormal_weight (test_weighted_maximum.WeightedMaximum.test_positive_maximum_subnormal_weight) ... ERROR
+
+======================================================================
+ERROR: test_negative_huge_ev (test_unrepresentable_numbers.FiniteNumberValidation.test_negative_huge_ev)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-hand169-followup-input/tests/worker_acceptance/test_unrepresentable_numbers.py", line 22, in test_negative_huge_ev
+    def test_negative_huge_ev(self): self.reject('ev', -(10**400))
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-hand169-followup-input/tests/worker_acceptance/test_unrepresentable_numbers.py", line 17, in reject
+    aggregate([row], 1, require_complete=False)
+  File "/workspace/work/issue22-hand169-followup-input/gto/hand169.py", line 76, in aggregate
+    if ev is not None and (isinstance(ev, bool) or not isinstance(ev, (int, float)) or not math.isfinite(ev)):
+                                                                                           ^^^^^^^^^^^^^^^^^
+OverflowError: int too large to convert to float
+
+======================================================================
+ERROR: test_negative_huge_frequency (test_unrepresentable_numbers.FiniteNumberValidation.test_negative_huge_frequency)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-hand169-followup-input/tests/worker_acceptance/test_unrepresentable_numbers.py", line 24, in test_negative_huge_frequency
+    def test_negative_huge_frequency(self): self.reject('frequencies', -(10**400))
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-hand169-followup-input/tests/worker_acceptance/test_unrepresentable_numbers.py", line 17, in reject
+    aggregate([row], 1, require_complete=False)
+  File "/workspace/work/issue22-hand169-followup-input/gto/hand169.py", line 73, in aggregate
+    if not isinstance(frequencies, (list, tuple)) or len(frequencies) != action_count or any(isinstance(x, bool) or not isinstance(x, (int, float)) or not math.isfinite(x) or x < 0 or x > 1 for x in frequencies):
+                                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-hand169-followup-input/gto/hand169.py", line 73, in <genexpr>
+    if not isinstance(frequencies, (list, tuple)) or len(frequencies) != action_count or any(isinstance(x, bool) or not isinstance(x, (int, float)) or not math.isfinite(x) or x < 0 or x > 1 for x in frequencies):
+                                                                                                                                                           ^^^^^^^^^^^^^^^^
+OverflowError: int too large to convert to float
+
+======================================================================
+ERROR: test_negative_huge_weight (test_unrepresentable_numbers.FiniteNumberValidation.test_negative_huge_weight)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-hand169-followup-input/tests/worker_acceptance/test_unrepresentable_numbers.py", line 20, in test_negative_huge_weight
+    def test_negative_huge_weight(self): self.reject('weight', -(10**400))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-hand169-followup-input/tests/worker_acceptance/test_unrepresentable_numbers.py", line 17, in reject
+    aggregate([row], 1, require_complete=False)
+  File "/workspace/work/issue22-hand169-followup-input/gto/hand169.py", line 71, in aggregate
+    if isinstance(weight, bool) or not isinstance(weight, (int, float)) or not math.isfinite(weight) or weight < 0:
+                                                                               ^^^^^^^^^^^^^^^^^^^^^
+OverflowError: int too large to convert to float
+
+======================================================================
+ERROR: test_positive_huge_ev (test_unrepresentable_numbers.FiniteNumberValidation.test_positive_huge_ev)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-hand169-followup-input/tests/worker_acceptance/test_unrepresentable_numbers.py", line 21, in test_positive_huge_ev
+    def test_positive_huge_ev(self): self.reject('ev', 10**400)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-hand169-followup-input/tests/worker_acceptance/test_unrepresentable_numbers.py", line 17, in reject
+    aggregate([row], 1, require_complete=False)
+  File "/workspace/work/issue22-hand169-followup-input/gto/hand169.py", line 76, in aggregate
+    if ev is not None and (isinstance(ev, bool) or not isinstance(ev, (int, float)) or not math.isfinite(ev)):
+                                                                                           ^^^^^^^^^^^^^^^^^
+OverflowError: int too large to convert to float
+
+======================================================================
+ERROR: test_positive_huge_frequency (test_unrepresentable_numbers.FiniteNumberValidation.test_positive_huge_frequency)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-hand169-followup-input/tests/worker_acceptance/test_unrepresentable_numbers.py", line 23, in test_positive_huge_frequency
+    def test_positive_huge_frequency(self): self.reject('frequencies', 10**400)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-hand169-followup-input/tests/worker_acceptance/test_unrepresentable_numbers.py", line 17, in reject
+    aggregate([row], 1, require_complete=False)
+  File "/workspace/work/issue22-hand169-followup-input/gto/hand169.py", line 73, in aggregate
+    if not isinstance(frequencies, (list, tuple)) or len(frequencies) != action_count or any(isinstance(x, bool) or not isinstance(x, (int, float)) or not math.isfinite(x) or x < 0 or x > 1 for x in frequencies):
+                                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-hand169-followup-input/gto/hand169.py", line 73, in <genexpr>
+    if not isinstance(frequencies, (list, tuple)) or len(frequencies) != action_count or any(isinstance(x, bool) or not isinstance(x, (int, float)) or not math.isfinite(x) or x < 0 or x > 1 for x in frequencies):
+                                                                                                                                                           ^^^^^^^^^^^^^^^^
+OverflowError: int too large to convert to float
+
+======================================================================
+ERROR: test_positive_huge_weight (test_unrepresentable_numbers.FiniteNumberValidation.test_positive_huge_weight)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-hand169-followup-input/tests/worker_acceptance/test_unrepresentable_numbers.py", line 19, in test_positive_huge_weight
+    def test_positive_huge_weight(self): self.reject('weight', 10**400)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-hand169-followup-input/tests/worker_acceptance/test_unrepresentable_numbers.py", line 17, in reject
+    aggregate([row], 1, require_complete=False)
+  File "/workspace/work/issue22-hand169-followup-input/gto/hand169.py", line 71, in aggregate
+    if isinstance(weight, bool) or not isinstance(weight, (int, float)) or not math.isfinite(weight) or weight < 0:
+                                                                               ^^^^^^^^^^^^^^^^^^^^^
+OverflowError: int too large to convert to float
+
+======================================================================
+ERROR: test_negative_maximum_normal_weight (test_weighted_maximum.WeightedMaximum.test_negative_maximum_normal_weight)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-hand169-followup-input/tests/worker_acceptance/test_weighted_maximum.py", line 25, in test_negative_maximum_normal_weight
+    def test_negative_maximum_normal_weight(self): self.check(1.0, -sys.float_info.max)
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-hand169-followup-input/tests/worker_acceptance/test_weighted_maximum.py", line 19, in check
+    result = aggregate(rows, 1, require_complete=False)['hands']['AKs']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-hand169-followup-input/gto/hand169.py", line 90, in aggregate
+    ev = _weighted_sum(((w, e) for w, _, e in rows), mass) if mass and all(e is not None for w, _, e in rows if w > 0) else None
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-hand169-followup-input/gto/hand169.py", line 50, in _weighted_sum
+    return math.fsum(terms)
+           ^^^^^^^^^^^^^^^^
+OverflowError: intermediate overflow in fsum
+
+======================================================================
+ERROR: test_negative_maximum_subnormal_weight (test_weighted_maximum.WeightedMaximum.test_negative_maximum_subnormal_weight)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-hand169-followup-input/tests/worker_acceptance/test_weighted_maximum.py", line 27, in test_negative_maximum_subnormal_weight
+    def test_negative_maximum_subnormal_weight(self): self.check(5e-324, -sys.float_info.max)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-hand169-followup-input/tests/worker_acceptance/test_weighted_maximum.py", line 19, in check
+    result = aggregate(rows, 1, require_complete=False)['hands']['AKs']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-hand169-followup-input/gto/hand169.py", line 90, in aggregate
+    ev = _weighted_sum(((w, e) for w, _, e in rows), mass) if mass and all(e is not None for w, _, e in rows if w > 0) else None
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-hand169-followup-input/gto/hand169.py", line 50, in _weighted_sum
+    return math.fsum(terms)
+           ^^^^^^^^^^^^^^^^
+OverflowError: intermediate overflow in fsum
+
+======================================================================
+ERROR: test_positive_maximum_normal_weight (test_weighted_maximum.WeightedMaximum.test_positive_maximum_normal_weight)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-hand169-followup-input/tests/worker_acceptance/test_weighted_maximum.py", line 24, in test_positive_maximum_normal_weight
+    def test_positive_maximum_normal_weight(self): self.check(1.0, sys.float_info.max)
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-hand169-followup-input/tests/worker_acceptance/test_weighted_maximum.py", line 19, in check
+    result = aggregate(rows, 1, require_complete=False)['hands']['AKs']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-hand169-followup-input/gto/hand169.py", line 90, in aggregate
+    ev = _weighted_sum(((w, e) for w, _, e in rows), mass) if mass and all(e is not None for w, _, e in rows if w > 0) else None
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-hand169-followup-input/gto/hand169.py", line 50, in _weighted_sum
+    return math.fsum(terms)
+           ^^^^^^^^^^^^^^^^
+OverflowError: intermediate overflow in fsum
+
+======================================================================
+ERROR: test_positive_maximum_subnormal_weight (test_weighted_maximum.WeightedMaximum.test_positive_maximum_subnormal_weight)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-hand169-followup-input/tests/worker_acceptance/test_weighted_maximum.py", line 26, in test_positive_maximum_subnormal_weight
+    def test_positive_maximum_subnormal_weight(self): self.check(5e-324, sys.float_info.max)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-hand169-followup-input/tests/worker_acceptance/test_weighted_maximum.py", line 19, in check
+    result = aggregate(rows, 1, require_complete=False)['hands']['AKs']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-hand169-followup-input/gto/hand169.py", line 90, in aggregate
+    ev = _weighted_sum(((w, e) for w, _, e in rows), mass) if mass and all(e is not None for w, _, e in rows if w > 0) else None
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-hand169-followup-input/gto/hand169.py", line 50, in _weighted_sum
+    return math.fsum(terms)
+           ^^^^^^^^^^^^^^^^
+OverflowError: intermediate overflow in fsum
+
+----------------------------------------------------------------------
+Ran 33 tests in 0.010s
+
+FAILED (errors=10)
