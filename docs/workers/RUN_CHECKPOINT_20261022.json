@@ -2,15 +2,15 @@
   "version": 1,
   "invocation_id": "issue22-restart-preparation-20261022T141010Z",
   "owner": "/root",
-  "updated_at": "2026-10-22T14:35:12.513566+00:00",
+  "updated_at": "2026-10-22T14:38:21.367951+00:00",
   "main": "781f038415503ece850c25a26e72ef67dee9c8a1",
   "original4_continuity": true,
   "counts": {
     "blocked": 2,
     "implemented": 38
   },
-  "last_success": "new source committed and Draft PR106/107 created; local acceptance passed",
-  "next_action": "verify queued CI without re-execution, then review disabled hourly readonly probe; activation requires approval",
+  "last_success": "PR106/107 component CI SUCCESS at verified source heads",
+  "next_action": "await explicit approval for disabled hourly COUNT2 readonly probe; no scheduler/controller activation before approval",
   "retry_count": 0,
   "scheduler_enabled_by_this_invocation": false,
   "controller_switched": false,
@@ -106,12 +106,12 @@
       "retry_count": 0,
       "source_commit": "f71e823ddffd147664bba0aee7062d991155745d",
       "owner": "/root/bd_evidence_audit",
-      "last_success": "source_committed",
-      "next_action": "do_not_reimplement; reconcile existing PR/CI",
+      "last_success": "ci_observed",
+      "next_action": "review; do not reimplement",
       "pr": 107,
       "branch": "codex/a-invocation-guard-fix-20261022",
       "ci_run_id": 39796232980,
-      "ci_status": "queued"
+      "ci_status": "success"
     },
     {
       "id": "issue22-a-main-controller-transplant-v1",
@@ -151,12 +151,12 @@
       "retry_count": 0,
       "source_commit": "3a9176c388707d8b4f7121cfc1b9f83ee2a23556",
       "owner": "/root/bd_evidence_audit",
-      "last_success": "source_committed",
-      "next_action": "do_not_reimplement; reconcile existing PR/CI",
+      "last_success": "ci_observed",
+      "next_action": "review; do not reimplement",
       "pr": 106,
       "branch": "codex/a-publication-checkpoint-fix-20261022",
       "ci_run_id": 39795238064,
-      "ci_status": "queued"
+      "ci_status": "success"
     },
     {
       "id": "issue22-a-sqlite-init-v1",
@@ -626,5 +626,5 @@
   ],
   "provider_run_id": null,
   "invocation_id_origin": "locally assigned manual host invocation, not provider runID",
-  "pending_ci_count": 2
+  "pending_ci_count": 0
 }

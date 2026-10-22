@@ -58,3 +58,5 @@ Poll remains NO-GO; no poll/backups feature edits, Supabase production connectio
 - Do not promote the disabled probe proposal into an implementation worker. Its two callbacks are read-only and cannot run source even if tools are present. Further controller activation/global breaker/cost review is separate.
 
 CI queue observation: both new component runs remain queued/runner unavailable at last check. Cause UNKNOWN; no retry/cancel/permission or billing operation. After the finite readonly probe, do not automatically re-enable the old reservation or extend the probe; obtain the next explicit approval.
+
+Final CI verification: source3a9176c388707d8b4f7121cfc1b9f83ee2a23556 /39795238064 SUCCESS (updated14:36:45UTC); guardhead6d2f4834d3a06abb61058fcebca952f360ec0f45 /39796232980 SUCCESS (updated14:35UTC). Earlier queued observations remain historical, not failures; no rerun was needed. Logs76+22+15 and85+22+15 are preserved in final-ci-evidence.json. Runtime adoption and independent scheduling remain unverified/unactivated.

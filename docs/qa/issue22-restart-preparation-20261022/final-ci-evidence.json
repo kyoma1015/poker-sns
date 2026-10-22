@@ -1,0 +1,47 @@
+{
+  "verified_runs": [
+    {
+      "id": 39795238064,
+      "head": "3a9176c388707d8b4f7121cfc1b9f83ee2a23556",
+      "status": "completed",
+      "conclusion": "success",
+      "updated_at": "2026-10-22T14:36:45Z"
+    },
+    {
+      "id": 39796232980,
+      "head": "6d2f4834d3a06abb61058fcebca952f360ec0f45",
+      "status": "completed",
+      "conclusion": "success",
+      "updated_at": "2026-10-22T14:35:00Z"
+    }
+  ],
+  "publication_jobs": [
+    {
+      "job": 119880785783,
+      "conclusion": "success",
+      "tests": [
+        "2026-10-22T14:23:33.1770842Z Ran 76 tests in 2.517s",
+        "2026-10-22T14:23:33.1771051Z OK",
+        "2026-10-22T14:23:34.3036730Z Ran 22 tests in 1.021s",
+        "2026-10-22T14:23:34.3036858Z OK",
+        "2026-10-22T14:23:34.4499751Z Ran 15 tests in 0.060s",
+        "2026-10-22T14:23:34.4499877Z OK"
+      ]
+    }
+  ],
+  "guard_jobs": [
+    {
+      "job": 119884020955,
+      "conclusion": null,
+      "tests": [
+        "2026-10-22T14:30:37.8698566Z Ran 85 tests in 2.532s",
+        "2026-10-22T14:30:37.8698700Z OK",
+        "2026-10-22T14:30:38.9684490Z Ran 22 tests in 0.993s",
+        "2026-10-22T14:30:38.9684628Z OK",
+        "2026-10-22T14:30:39.1138766Z Ran 15 tests in 0.060s",
+        "2026-10-22T14:30:39.1138962Z OK"
+      ]
+    }
+  ],
+  "ci_rerun_requested": false
+}
