@@ -1,0 +1,30 @@
+-- Isolated-only SQL contract: use psql with ON_ERROR_STOP=1 after
+-- storage_bootstrap.sql and isolated_finalize_db.sql.
+begin;
+do $$
+declare
+ owner uuid := '10000000-0000-0000-0000-000000000001';
+ path text := '10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.mp4';
+ first_id uuid;
+ second_id uuid;
+begin
+ insert into auth.users(id, instance_id, aud, role, email, encrypted_password, created_at, updated_at)
+ values(owner, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
+ 'video-qa@example.invalid', '', now(), now())
+ on conflict (id) do nothing;
+ first_id := public.video_qa_publish(owner,path,'test');
+ second_id := public.video_qa_publish(owner,path,'test');
+ if first_id <> second_id then raise exception 'idempotency failed'; end if;
+ begin
+   perform public.video_qa_publish(owner,path,'changed');
+   raise exception 'conflicting content unexpectedly accepted';
+ exception when raise_exception then
+   if sqlerrm = 'conflicting content unexpectedly accepted' then raise; end if;
+ end;
+ insert into public.video_cleanup_queue(owner_id, object_path)
+ values(owner,path) on conflict (object_path) do nothing;
+ if (select count(*) from public.video_cleanup_queue where object_path=path) <> 1 then
+   raise exception 'cleanup deduplication failed';
+ end if;
+end $$;
+rollback;
