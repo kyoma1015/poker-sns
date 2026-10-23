@@ -21,5 +21,24 @@ jobs:
       - run: npm ci
       - name: Install local PostgreSQL client
         run: sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client
+      - name: Restore pinned Supabase Docker image cache
+        id: image-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: /tmp/pokerid-supabase-images.tar
+          key: pokerid-supabase-cli-2.81.3-images-v1
+      - name: Load cached images
+        if: steps.image-cache.outputs.cache-hit == 'true'
+        run: docker load -i /tmp/pokerid-supabase-images.tar
       - name: Isolated Supabase Storage HTTP E2E
         run: bash tests/video/run_storage_http_isolated.sh
+      - name: Save local images to cache on success
+        if: success() && steps.image-cache.outputs.cache-hit != 'true'
+        run: |
+          docker images --format '{{.Repository}}:{{.Tag}}' | grep -E '(supabase|postgrest|kong)' | xargs -r docker save -o /tmp/pokerid-supabase-images.tar
+      - name: Cache pinned Supabase images
+        if: success() && steps.image-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: /tmp/pokerid-supabase-images.tar
+          key: pokerid-supabase-cli-2.81.3-images-v1
