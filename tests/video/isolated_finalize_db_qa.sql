@@ -15,6 +15,13 @@ begin
  first_id := public.video_qa_publish(owner,path,'test');
  second_id := public.video_qa_publish(owner,path,'test');
  if first_id <> second_id then raise exception 'idempotency failed'; end if;
+ if public.video_qa_reconcile(owner,path) is distinct from first_id then
+   raise exception 'committed post reconciliation failed';
+ end if;
+ if public.video_qa_reconcile(owner,
+   owner::text || '/99999999-9999-9999-9999-999999999999.mp4') is not null then
+   raise exception 'unknown path falsely reconciled';
+ end if;
  begin
    perform public.video_qa_publish(owner,path,'changed');
    raise exception 'conflicting content unexpectedly accepted';
