@@ -16,3 +16,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: Isolated PostgreSQL video schema and RLS
         run: bash tests/video/run_isolated.sh
+      - name: Trusted-server ffprobe duration validation prototype
+        run: bash tests/video/test_server_validate.sh
