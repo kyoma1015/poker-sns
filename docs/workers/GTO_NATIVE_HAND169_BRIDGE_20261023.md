@@ -74,3 +74,14 @@ side-pot/rake/ante boundaries, and design a justified native EV estimator. Keep
 context identity and explicit unknown values; do not replace missing evidence
 with uniform weights or a synthetic strategy claim. No production/main/controller
 or scheduler adoption is included.
+
+## Additional native rule-profile QA (not new bug fixes)
+Three more hand-derived actual-native fixed-policy oracles run per variant:
+- BBante2, stacks4/4:44 rivers yield[41/11,-41/11].
+- Cash10%floor rake, two10chip all-ins:44 rivers yield[79/11,-101/11],
+  sum=-2 chips, exactly the rake.
+- Three-player AA/KK/QQ stacks10/6/2: refund4 and main6+side8 pots,
+  42 rivers yield[148/21,-112/21,-12/7], sum=0.
+The expectations are derived explicitly in test_poker_oracle_profiles.py and are
+not generated from snapshots of the implementation under test. These9 cross-variant
+checks extend known-card policy/rule coverage, not GTO equilibrium claims.
