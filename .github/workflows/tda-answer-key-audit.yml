@@ -1,0 +1,31 @@
+name: Offline TDA answer-key audit
+on:
+  pull_request:
+    branches: [codex/b-filter-values-fix-20261022]
+    paths:
+      - src/tdaQuizAnswerAudit.ts
+      - tests/tda-answer-key-audit.test.mjs
+      - .github/workflows/tda-answer-key-audit.yml
+permissions:
+  contents: read
+jobs:
+  audit:
+    env:
+      CHROMIUM_PATH: /usr/bin/google-chrome
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - name: Fixed synthetic answer-key and existing regressions
+        run: |
+          set -eu
+          for test_file in tests/*.test.mjs; do node "$test_file"; done
+      - run: npm run build
+      - run: npm run lint

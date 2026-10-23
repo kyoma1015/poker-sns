@@ -1,0 +1,19 @@
+{
+  "fixture_only": true,
+  "not_published_question_bank": true,
+  "question_count": 350,
+  "duplicateQuestionCandidates": [],
+  "duplicateOptionCandidates": [],
+  "official_rule_accuracy": "UNVERIFIED",
+  "option_count": 1400,
+  "answer_key_count": 350,
+  "answer_position_counts": {
+    "1": 88,
+    "2": 88,
+    "3": 87,
+    "4": 87
+  },
+  "issues": [],
+  "verdict": "STRUCTURE_PASS",
+  "publication_approved": false
+}
