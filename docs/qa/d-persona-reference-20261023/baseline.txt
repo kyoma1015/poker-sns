@@ -1,0 +1,304 @@
+✖ all historical persona score references are explicitly verified without classifying animals (20.003481ms)
+✖ one altered reference score is rejected instead of silently passing the audit (10.790453ms)
+✖ malformed missing reference blocks evidence (9.420411ms)
+✖ malformed null reference blocks evidence (11.245252ms)
+✖ malformed array reference blocks evidence (18.268235ms)
+✖ malformed string reference blocks evidence (13.82257ms)
+✖ invalid missing dimension cannot masquerade as reference verification (11.269809ms)
+✖ invalid extra dimension cannot masquerade as reference verification (9.511889ms)
+✖ invalid nonfinite cannot masquerade as reference verification (13.792544ms)
+✖ invalid numeric string cannot masquerade as reference verification (9.691682ms)
+✖ invalid boolean cannot masquerade as reference verification (9.711371ms)
+✖ inherited score value cannot replace an own reference dimension (10.188703ms)
+✔ valid reference audit does not mutate fixture answers or scores (9.824863ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 1
+ℹ fail 12
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 170.186662
+
+✖ failing tests:
+
+test at ../issue22-d-persona-reference/tests/player-type-reference.test.mjs:9:1
+✖ all historical persona score references are explicitly verified without classifying animals (20.003481ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   classification: 'NOT VERIFIED',
+  -   comparedValues: 960,
+  -   dimensions: 32,
+  -   personas: 30,
+  -   sourceCommit: '88cbf26b6f839914a9f867868f03b4d77a991ce3',
+  -   status: 'PASS'
+  - }
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-persona-reference/tests/player-type-reference.test.mjs:11:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: [Object],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ../issue22-d-persona-reference/tests/player-type-reference.test.mjs:13:1
+✖ one altered reference score is rejected instead of silently passing the audit (10.790453ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-persona-reference/tests/player-type-reference.test.mjs:15:28)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../issue22-d-persona-reference/tests/player-type-reference.test.mjs:18:95
+✖ malformed missing reference blocks evidence (9.420411ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-persona-reference/tests/player-type-reference.test.mjs:20:28)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../issue22-d-persona-reference/tests/player-type-reference.test.mjs:18:95
+✖ malformed null reference blocks evidence (11.245252ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-persona-reference/tests/player-type-reference.test.mjs:20:28)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../issue22-d-persona-reference/tests/player-type-reference.test.mjs:18:95
+✖ malformed array reference blocks evidence (18.268235ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-persona-reference/tests/player-type-reference.test.mjs:20:28)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../issue22-d-persona-reference/tests/player-type-reference.test.mjs:18:95
+✖ malformed string reference blocks evidence (13.82257ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-persona-reference/tests/player-type-reference.test.mjs:20:28)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../issue22-d-persona-reference/tests/player-type-reference.test.mjs:23:248
+✖ invalid missing dimension cannot masquerade as reference verification (11.269809ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-persona-reference/tests/player-type-reference.test.mjs:25:28)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../issue22-d-persona-reference/tests/player-type-reference.test.mjs:23:248
+✖ invalid extra dimension cannot masquerade as reference verification (9.511889ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-persona-reference/tests/player-type-reference.test.mjs:25:28)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../issue22-d-persona-reference/tests/player-type-reference.test.mjs:23:248
+✖ invalid nonfinite cannot masquerade as reference verification (13.792544ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-persona-reference/tests/player-type-reference.test.mjs:25:28)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../issue22-d-persona-reference/tests/player-type-reference.test.mjs:23:248
+✖ invalid numeric string cannot masquerade as reference verification (9.691682ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-persona-reference/tests/player-type-reference.test.mjs:25:28)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../issue22-d-persona-reference/tests/player-type-reference.test.mjs:23:248
+✖ invalid boolean cannot masquerade as reference verification (9.711371ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-persona-reference/tests/player-type-reference.test.mjs:25:28)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../issue22-d-persona-reference/tests/player-type-reference.test.mjs:28:1
+✖ inherited score value cannot replace an own reference dimension (10.188703ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-persona-reference/tests/player-type-reference.test.mjs:30:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
