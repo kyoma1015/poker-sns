@@ -30,5 +30,7 @@ jobs:
         run: python3 -m unittest tests.video.test_storage_download_adapter -v
       - name: Cleanup worker safety unit tests
         run: python3 -m unittest tests.video.test_cleanup_worker_core -v
+      - name: Isolated DB RPC adapter tests
+        run: python3 -m unittest tests.video.test_isolated_db_adapter -v
       - name: Trusted-server ffprobe duration validation prototype
         run: bash -x tests/video/test_server_validate.sh
