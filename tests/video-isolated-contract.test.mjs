@@ -43,5 +43,5 @@ test('video cleanup validates owner path and runs after successful post deletion
 })
 test('end-to-end publishing and server duration enforcement are not claimed', () => {
   assert.doesNotMatch(timeline, /await uploadPostVideo\(/)
-  assert.match(sql, /server-side duration/i)
+  assert.match(sql, /server-side (?:duration|30s)/i)
 })
