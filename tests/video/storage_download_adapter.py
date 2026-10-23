@@ -6,7 +6,7 @@ Never wire this prototype to production until atomic object identity is proven.
 """
 from contextlib import contextmanager
 from tempfile import NamedTemporaryFile
-from urllib.parse import quote
+from urllib.parse import quote, urlparse
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 from uuid import UUID
@@ -18,6 +18,7 @@ MAX_BYTES = 20 * 1024 * 1024
 def download_private_staged(
     user_id: str, object_path: str, *,
     project_url: str, anon_key: str, access_token: str,
+    allow_local_isolated: bool = False,
 ):
     uid = str(UUID(user_id))
     parts = object_path.split("/")
@@ -28,7 +29,10 @@ def download_private_staged(
     if not dot or ext not in ("mp4", "webm"):
         raise ValueError("unsupported object path")
     ParseUUID(stem)
-    if not project_url.startswith("https://") or not anon_key or not access_token:
+    parsed = urlparse(project_url)
+    local_ok = allow_local_isolated and (parsed.scheme, parsed.hostname, parsed.port) == ("http", "127.0.0.1", 56321)
+    valid_url = (parsed.scheme == "https" or local_ok) and bool(parsed.hostname) and not (parsed.username or parsed.password or parsed.query or parsed.fragment) and parsed.path in ("", "/")
+    if not valid_url or not anon_key or not access_token:
         raise PermissionError("private storage credentials required")
     url = project_url.rstrip("/") + "/storage/v1/object/authenticated/post-videos/" + quote(object_path, safe="/")
     request = Request(url, headers={"Authorization": "Bearer " + access_token, "apikey": anon_key})
