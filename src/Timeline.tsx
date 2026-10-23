@@ -2,6 +2,7 @@ import { createPollRequest, pollDisplayResult } from './interactiveRequests'
 import { useEffect, useRef, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
+import { validateVideo } from './videoUpload'
 
 import { supabase } from './supabase'
 import { usePullToRefresh } from './usePullToRefresh'
@@ -161,6 +162,10 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const [availableResults, setAvailableResults] = useState<{id:string; type:'tournament'|'amusement'|'cash'; label:string; playedAt:string; data:any}[]>([])
   const [resultsLoading, setResultsLoading] = useState(false)
   const imageInputRef = useRef<HTMLInputElement>(null)
+  const videoInputRef = useRef<HTMLInputElement>(null)
+  const [videoFile, setVideoFile] = useState<File | null>(null)
+  const [videoPreview, setVideoPreview] = useState<string | null>(null)
+  useEffect(() => { if (!videoFile) { setVideoPreview(null); return }; const url = URL.createObjectURL(videoFile); setVideoPreview(url); return () => URL.revokeObjectURL(url) }, [videoFile])
   const [imageFiles, setImageFiles] = useState<File[]>([])
   const [imagePreviews, setImagePreviews] = useState<string[]>([])
   const [selectedDiagnosis, setSelectedDiagnosis] = useState<{ result_id: string; animal_name_ja: string; catchphrase: string; result_type_key: string; completed_at: string } | null>(null)
@@ -742,6 +747,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       {attachmentScreen === 'menu' ? <>
         <div style={{ fontSize: 12, color: '#aaa', marginBottom: 10 }}>添付するものを選択</div>
         <button type="button" style={optionStyle} onClick={() => { imageInputRef.current?.click(); setAttachmentsOpen(false) }}>▧　画像を添付（最大4枚・各5MB）</button>
+        <button type="button" style={optionStyle} onClick={() => { videoInputRef.current?.click(); setAttachmentsOpen(false) }}>▶　動画を選択（最大30秒・20MB）</button>
         <button type="button" style={optionStyle} onClick={() => { void loadDiagnoses() }}>♧　自己診断を添付　›</button>
         <button type="button" style={optionStyle} onClick={() => { void loadStyleSnapshot() }}>♙　自分への他者評価を添付（3人以上）</button>
         <button type="button" style={optionStyle} onClick={() => setAttachmentScreen('results')}>♠　戦績を添付　›</button>
@@ -785,7 +791,18 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     setMessage('')
   }
 
+  const chooseVideo = async (file: File | undefined) => {
+    if (!file) return
+    if (imageFiles.length || selectedResult || selectedDiagnosis || styleSnapshot || interactiveMode !== 'normal') { setMessage('動画は画像・戦績・診断・アンケートと同時に添付できません。'); return }
+    const error = await validateVideo(file)
+    if (error) { setMessage(error); return }
+    setVideoFile(file)
+    setMessage('動画のプレビューを確認できます。保存先の安全性が確認できるまで動画投稿は無効です。')
+  }
+
   const chooseImages = (files: FileList | null) => {
+    if (videoFile) { setMessage('動画と画像は同時に添付できません。'); return }
+
     if (!files) return
     const selected = Array.from(files)
     if (selected.some(file => !['image/jpeg','image/png','image/webp'].includes(file.type) || file.size > 5 * 1024 * 1024)) { setMessage('画像はJPEG・PNG・WebP、各5MB以内にしてください。'); return }
@@ -795,7 +812,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   }
 
   const choosePostMode = (mode: 'normal'|'poll') => {
-    if (mode !== 'normal' && (imageFiles.length || selectedResult || selectedDiagnosis || styleSnapshot)) {
+    if (mode !== 'normal' && (imageFiles.length || videoFile || selectedResult || selectedDiagnosis || styleSnapshot)) {
       setMessage('添付を外してからアンケートに切り替えてください。')
       return
     }
@@ -849,6 +866,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       return
     }
 
+
+    if (videoFile) { setMessage('動画投稿は安全な保存・配信の実装待ちです。動画を外して投稿してください。'); return }
 
     const trimmedContent =
 
@@ -2158,7 +2177,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const renderStyleSnapshot = (snapshot: { count: number; aggression: number; looseness: number; captured_at: string }) => <div style={{ padding: 16, border: '1px solid #555', borderRadius: 12, margin: '8px 0', background: '#171717' }}><strong>♙ 他者評価 · プレイスタイル</strong><div style={{ fontSize: 13, color: '#bbb', marginTop: 8 }}>匿名評価 {snapshot.count}人の集計（投稿時点）</div><div style={{ marginTop: 8 }}>攻撃性 {snapshot.aggression.toFixed(1)} / 100　·　ルース度 {snapshot.looseness.toFixed(1)} / 100</div></div>
 
   const renderSelectedResultPreview = () => {
-    if (!selectedResult && !selectedDiagnosis && !styleSnapshot && imageFiles.length === 0) return null
+    if (!selectedResult && !selectedDiagnosis && !styleSnapshot && imageFiles.length === 0 && !videoFile) return null
     const previewPost = {
       resultData: selectedResult?.type === 'tournament' ? selectedResult?.data : null,
       amusementResultData: selectedResult?.type === 'amusement' ? selectedResult?.data : null,
@@ -2167,13 +2186,14 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     return <div style={{ marginTop: 12 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 7 }}>
         <span style={{ fontSize: 12, color: '#aaa', fontWeight: 700 }}>添付プレビュー（投稿時の表示）</span>
-        <button type="button" onClick={() => { setSelectedResult(null); setSelectedDiagnosis(null); setStyleSnapshot(null); setImageFiles([]) }} aria-label="添付を解除" style={{ width: 'auto', padding: '4px 9px', background: '#292929', border: '1px solid #444', borderRadius: 8, color: '#ddd', fontSize: 12 }}>× 解除</button>
+        <button type="button" onClick={() => { setSelectedResult(null); setSelectedDiagnosis(null); setStyleSnapshot(null); setImageFiles([]); setVideoFile(null) }} aria-label="添付を解除" style={{ width: 'auto', padding: '4px 9px', background: '#292929', border: '1px solid #444', borderRadius: 8, color: '#ddd', fontSize: 12 }}>× 解除</button>
       </div>
       {selectedResult?.type === 'tournament' && renderTournamentResultCard(previewPost)}
       {selectedResult?.type === 'amusement' && renderAmusementResultCard(previewPost)}
       {selectedResult?.type === 'cash' && renderCashResultCard(previewPost)}
       {selectedDiagnosis && <div style={{ border: '1px solid #92733a', borderRadius: 12, padding: 16, color: '#f6e5bf' }}>♧ 自己診断：{playerTypeEmoji[selectedDiagnosis.result_type_key]} {selectedDiagnosis.animal_name_ja}<div style={{ fontSize: 12 }}>{selectedDiagnosis.catchphrase}</div></div>}
       {styleSnapshot && renderStyleSnapshot(styleSnapshot)}
+      {videoPreview && <video controls preload="metadata" src={videoPreview} style={{ width: '100%', maxHeight: 360, borderRadius: 10 }} />}
       {imagePreviews.length > 0 && <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,minmax(0,1fr))', gap: 8, marginTop: 8 }}>{imagePreviews.map((url, i) => <div key={url} style={{ position: 'relative' }}><img src={url} alt={`添付画像${i+1}`} style={{ width: '100%', maxHeight: 220, objectFit: 'cover', borderRadius: 8 }}/><button type="button" onClick={() => setImageFiles(files => files.filter((_, index) => index !== i))} style={{ position: 'absolute', right: 4, top: 4, width: 'auto', background: '#222', color: '#fff' }}>×</button></div>)}</div>}
     </div>
   }
@@ -2396,6 +2416,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
           {renderInteractiveFields()}
           <input ref={imageInputRef} type="file" accept="image/jpeg,image/png,image/webp" multiple hidden onChange={e => { chooseImages(e.target.files); e.target.value = '' }} />
+          <input ref={videoInputRef} type="file" accept="video/mp4,video/webm" hidden onChange={e => { void chooseVideo(e.target.files?.[0]); e.target.value = '' }} />
           {attachmentsOpen && renderAttachmentPicker()}
           {renderSelectedResultPreview()}
         </section>
