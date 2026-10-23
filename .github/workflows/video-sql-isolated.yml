@@ -20,5 +20,7 @@ jobs:
         run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
       - name: Trusted finalization core unit tests
         run: python3 -m unittest tests.video.test_finalize_core -v
+      - name: Authenticated finalize boundary unit tests
+        run: python3 -m unittest tests.video.test_finalize_boundary -v
       - name: Trusted-server ffprobe duration validation prototype
         run: bash -x tests/video/test_server_validate.sh
