@@ -26,5 +26,25 @@ begin
  if (select count(*) from public.video_cleanup_queue where object_path=path) <> 1 then
    raise exception 'cleanup deduplication failed';
  end if;
+
+ if (select count(*) from public.video_qa_claim_cleanup('50000000-0000-0000-0000-000000000001'::uuid,60)) <> 1 then
+   raise exception 'cleanup claim failed';
+ end if;
+ if (select count(*) from public.video_qa_claim_cleanup('50000000-0000-0000-0000-000000000002'::uuid,60)) <> 0 then
+   raise exception 'leased cleanup claimed twice';
+ end if;
+ if public.video_qa_finish_cleanup(
+   (select id from public.video_cleanup_queue where object_path=path),
+   '50000000-0000-0000-0000-000000000002'::uuid,true,'bad owner') then
+   raise exception 'wrong worker finalized lease';
+ end if;
+ if not public.video_qa_finish_cleanup(
+   (select id from public.video_cleanup_queue where object_path=path),
+   '50000000-0000-0000-0000-000000000001'::uuid,false,'retry') then
+   raise exception 'valid worker could not reschedule';
+ end if;
+ if (select completed_at from public.video_cleanup_queue where object_path=path) is not null then
+   raise exception 'retry incorrectly marked complete';
+ end if;
 end $$;
 rollback;
