@@ -95,3 +95,19 @@ begin
  return updated_count=1;
 end $$;
 revoke all on function public.video_qa_finish_cleanup(bigint,uuid,boolean,text) from public, anon, authenticated;
+
+-- Read-only reconciliation by owner and path. Use only after verifying
+-- the caller's identity in a trusted server; never expose to client roles.
+create or replace function public.video_qa_reconcile(
+ p_owner uuid, p_path text
+) returns uuid language plpgsql security invoker set search_path = '' as $$
+declare v_id uuid;
+begin
+ if current_user not in ('postgres', 'service_role') then
+   raise exception 'trusted server role required';
+ end if;
+ select p.id into v_id from public.posts p
+ where p.user_id = p_owner and p.video_path = p_path;
+ return v_id;
+end $$;
+revoke all on function public.video_qa_reconcile(uuid,text) from public,anon,authenticated;
