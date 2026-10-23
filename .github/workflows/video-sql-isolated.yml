@@ -34,5 +34,7 @@ jobs:
         run: python3 -m unittest tests.video.test_isolated_db_adapter -v
       - name: Isolated adapter composition tests
         run: python3 -m unittest tests.video.test_isolated_composition -v
+      - name: Isolated durable cleanup worker tests
+        run: python3 -m unittest tests.video.test_isolated_cleanup_worker -v
       - name: Trusted-server ffprobe duration validation prototype
         run: bash -x tests/video/test_server_validate.sh
