@@ -52,8 +52,10 @@ grant execute on function public.video_qa_publish(uuid,text,text) to service_rol
 alter table public.video_cleanup_queue
  add column if not exists lease_owner uuid,
  add column if not exists lease_until timestamptz;
+alter table public.video_cleanup_queue
+ add column if not exists expected_object_version text;
 create or replace function public.video_qa_claim_cleanup(p_worker uuid, p_lease_seconds integer default 60)
-returns table(id bigint, owner_id uuid, object_path text, attempts integer)
+returns table(id bigint, owner_id uuid, object_path text, attempts integer, expected_object_version text)
 language plpgsql security invoker set search_path = '' as $$
 begin
  if current_user not in ('postgres', 'service_role') then
@@ -75,7 +77,7 @@ begin
      lease_until=now() + make_interval(secs=>p_lease_seconds),
      attempts=q.attempts+1
  from picked where q.id=picked.id
- returning q.id,q.owner_id,q.object_path,q.attempts;
+ returning q.id,q.owner_id,q.object_path,q.attempts,q.expected_object_version;
 end $$;
 revoke all on function public.video_qa_claim_cleanup(uuid,integer) from public, anon, authenticated;
 grant execute on function public.video_qa_claim_cleanup(uuid,integer) to service_role;
