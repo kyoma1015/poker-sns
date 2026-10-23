@@ -1,7 +1,8 @@
 import { createPollRequest, pollDisplayResult } from './interactiveRequests'
 import { useEffect, useRef, useState } from 'react'
 
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { extractTags, normalizeTag } from './tagFollows'
 
 import { supabase } from './supabase'
 import { usePullToRefresh } from './usePullToRefresh'
@@ -1185,7 +1186,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
   }
 
+  const selectedTag = normalizeTag(new URLSearchParams(window.location.search).get('tag') || '')
   const visiblePosts = posts.filter(post => {
+    if (selectedTag && !extractTags(post.content).includes(selectedTag)) return false
     const actorId = post.feedActorId || post.user_id
     if (profileUserId) return actorId === profileUserId
     return timelineMode === 'all' || actorId === currentUserId || followingIds.includes(actorId)
@@ -2193,6 +2196,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         </div>
       )}
     <main ref={refreshContainerRef} className={profileUserId ? undefined : "app"}>
+      {!profileUserId && <div style={{ padding: "8px 16px" }}><Link to="/tags"># タグをフォロー・管理</Link>{selectedTag && <> · #{selectedTag} の投稿 <Link to="/timeline">解除</Link></>}</div>}
 
       <div
 
