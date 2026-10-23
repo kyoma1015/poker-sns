@@ -4,7 +4,7 @@ import re
 import sys
 import time
 
-from code_worker import finite_lease_number, setup_lock
+from code_worker import WorkerLivenessUnknown, finite_lease_number, setup_lock
 
 
 class InvocationGuard:
@@ -64,6 +64,50 @@ class InvocationGuard:
         self._check_stop()
         if finite_lease_number(time.monotonic(), 'invocation clock') >= self._deadline:
             raise TimeoutError('invocation deadline reached')
+
+    def call_host(self, dispatch, *, observe, preserve):
+        """Opt-in trusted synchronous boundary; never starts an agent or scheduler.
+
+        observe must positively attest this invocation's agent is stopped, before
+        and after dispatch. preserve must durably retain private local results and
+        partial work before this method can return or propagate a stop/deadline.
+        Callbacks are trusted host functions, not task-descriptor instructions.
+        They remain responsible for deadlines, identity, atomic persistence and
+        actual agent cancellation. This method cannot interrupt a blocked callback.
+        Existing prepare/finish, receipt and source/test checks remain mandatory.
+        """
+        if not all(callable(callback) for callback in (dispatch, observe, preserve)):
+            raise ValueError('trusted host callbacks required')
+        self.check()
+
+        def stopped():
+            try:
+                return observe() == 'stopped'
+            except BaseException:
+                return False
+
+        if not stopped():
+            raise WorkerLivenessUnknown('Host liveness unconfirmed; dispatch forbidden')
+        self.check()
+        result = None
+        error = None
+        try:
+            result = dispatch()
+        except BaseException as caught:
+            error = caught
+        confirmed = stopped()
+        status = {'outcome': 'raised' if error is not None else 'returned',
+                  'liveness': 'stopped' if confirmed else 'unknown'}
+        try:
+            preserve(result, status)
+        except BaseException:
+            raise WorkerLivenessUnknown('Host preservation unconfirmed; continuation forbidden') from None
+        if not confirmed:
+            raise WorkerLivenessUnknown('Host liveness unconfirmed; continuation forbidden') from None
+        self.check()
+        if error is not None:
+            raise error
+        return result
 
     def __exit__(self, exc_type, exc, traceback):
         lock = self._lock
