@@ -30,6 +30,8 @@ jobs:
       - name: Load cached images
         if: steps.image-cache.outputs.cache-hit == 'true'
         run: docker load -i /tmp/pokerid-supabase-images.tar
+      - name: Install ffmpeg for real media probe
+        run: sudo apt-get install -y -qq ffmpeg
       - name: Isolated Supabase Storage HTTP E2E
         run: bash tests/video/run_storage_http_isolated.sh
       - name: Save local images to cache on success
