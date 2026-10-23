@@ -1,0 +1,435 @@
+✖ valid offline export reports counts and 1-based displayed answer position without mutating input (8.534266ms)
+✖ missing answer row remains review required (0.558265ms)
+✖ duplicate answer rows do not select one answer silently (0.754021ms)
+✖ orphan answer row is identified (0.431703ms)
+✖ answer outside question options is rejected (0.306183ms)
+✖ missing or invalid explanation () needs review (0.33717ms)
+✖ missing or invalid explanation (null) needs review (0.259472ms)
+✖ missing or invalid explanation (42) needs review (0.411462ms)
+✖ invalid rule references [] need review (0.433996ms)
+✖ invalid rule references [0] need review (0.637615ms)
+✖ invalid rule references [true] need review (0.320124ms)
+✖ invalid rule references [1.5] need review (0.288197ms)
+✖ invalid rule references [1,1] need review (0.378672ms)
+✖ invalid rule references null need review (0.266754ms)
+✖ non-four-choice question is reported rather than counted as 1400 (0.263979ms)
+✖ empty corpus never passes (0.247354ms)
+✔ malformed and sparse key rows fail closed without echoing payload (1.575945ms)
+✔ malformed and sparse questions retain established parser rejection (0.279803ms)
+✖ balanced synthetic answers expose all four positions without a quality approval (0.335117ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 2
+ℹ fail 17
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30.94476
+
+✖ failing tests:
+
+test at tests/tda-answer-key-audit.test.mjs:11:1
+✖ valid offline export reports counts and 1-based displayed answer position without mutating input (8.534266ms)
+  AssertionError [ERR_ASSERTION]: offline answer-key audit is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at run (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:10:50)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:12:71)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-key-audit.test.mjs:17:1
+✖ missing answer row remains review required (0.558265ms)
+  AssertionError [ERR_ASSERTION]: offline answer-key audit is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at run (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:10:50)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:17:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-key-audit.test.mjs:18:1
+✖ duplicate answer rows do not select one answer silently (0.754021ms)
+  AssertionError [ERR_ASSERTION]: offline answer-key audit is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at run (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:10:50)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:18:77)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-key-audit.test.mjs:19:1
+✖ orphan answer row is identified (0.431703ms)
+  AssertionError [ERR_ASSERTION]: offline answer-key audit is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at run (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:10:50)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:19:55)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-key-audit.test.mjs:20:1
+✖ answer outside question options is rejected (0.306183ms)
+  AssertionError [ERR_ASSERTION]: offline answer-key audit is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at run (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:10:50)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:20:67)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-key-audit.test.mjs:21:34
+✖ missing or invalid explanation () needs review (0.33717ms)
+  AssertionError [ERR_ASSERTION]: offline answer-key audit is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at run (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:10:50)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:21:111)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-key-audit.test.mjs:21:34
+✖ missing or invalid explanation (null) needs review (0.259472ms)
+  AssertionError [ERR_ASSERTION]: offline answer-key audit is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at run (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:10:50)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:21:111)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-key-audit.test.mjs:21:34
+✖ missing or invalid explanation (42) needs review (0.411462ms)
+  AssertionError [ERR_ASSERTION]: offline answer-key audit is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at run (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:10:50)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:21:111)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-key-audit.test.mjs:22:54
+✖ invalid rule references [] need review (0.433996ms)
+  AssertionError [ERR_ASSERTION]: offline answer-key audit is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at run (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:10:50)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:22:137)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-key-audit.test.mjs:22:54
+✖ invalid rule references [0] need review (0.637615ms)
+  AssertionError [ERR_ASSERTION]: offline answer-key audit is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at run (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:10:50)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:22:137)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-key-audit.test.mjs:22:54
+✖ invalid rule references [true] need review (0.320124ms)
+  AssertionError [ERR_ASSERTION]: offline answer-key audit is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at run (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:10:50)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:22:137)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-key-audit.test.mjs:22:54
+✖ invalid rule references [1.5] need review (0.288197ms)
+  AssertionError [ERR_ASSERTION]: offline answer-key audit is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at run (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:10:50)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:22:137)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-key-audit.test.mjs:22:54
+✖ invalid rule references [1,1] need review (0.378672ms)
+  AssertionError [ERR_ASSERTION]: offline answer-key audit is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at run (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:10:50)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:22:137)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-key-audit.test.mjs:22:54
+✖ invalid rule references null need review (0.266754ms)
+  AssertionError [ERR_ASSERTION]: offline answer-key audit is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at run (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:10:50)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:22:137)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-key-audit.test.mjs:23:1
+✖ non-four-choice question is reported rather than counted as 1400 (0.263979ms)
+  AssertionError [ERR_ASSERTION]: offline answer-key audit is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at run (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:10:50)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:23:123)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-key-audit.test.mjs:24:1
+✖ empty corpus never passes (0.247354ms)
+  AssertionError [ERR_ASSERTION]: offline answer-key audit is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at run (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:10:50)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:24:52)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-key-audit.test.mjs:27:1
+✖ balanced synthetic answers expose all four positions without a quality approval (0.335117ms)
+  AssertionError [ERR_ASSERTION]: offline answer-key audit is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at run (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:10:50)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-key-audit/tests/tda-answer-key-audit.test.mjs:27:243)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
