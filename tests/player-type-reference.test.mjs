@@ -32,3 +32,9 @@ test('inherited score value cannot replace an own reference dimension',()=>{
 test('valid reference audit does not mutate fixture answers or scores',()=>{
  const before=JSON.stringify(fixture);assert.equal(report(fixture).status,'CONDITIONAL PASS');assert.equal(JSON.stringify(fixture),before)
 })
+test('empty persona input cannot produce a zero-comparison PASS',()=>{
+ const f=structuredClone(fixture);f.personas=[]
+ const r=report(f);assert.equal(r.status,'FAIL');assert.equal(r.scoreDistribution,null)
+ assert.equal(r.personaReferenceComparison.status,'FAIL')
+ assert.ok(r.errors.some(e=>e.code==='EMPTY_PERSONA_REFERENCES'))
+})

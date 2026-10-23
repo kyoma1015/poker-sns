@@ -1,0 +1,47 @@
+✔ all historical persona score references are explicitly verified without classifying animals (30.99541ms)
+✔ one altered reference score is rejected instead of silently passing the audit (19.766162ms)
+✔ malformed missing reference blocks evidence (14.650864ms)
+✔ malformed null reference blocks evidence (14.244199ms)
+✔ malformed array reference blocks evidence (19.498372ms)
+✔ malformed string reference blocks evidence (22.00574ms)
+✔ invalid missing dimension cannot masquerade as reference verification (16.32729ms)
+✔ invalid extra dimension cannot masquerade as reference verification (18.888996ms)
+✔ invalid nonfinite cannot masquerade as reference verification (23.000706ms)
+✔ invalid numeric string cannot masquerade as reference verification (28.582625ms)
+✔ invalid boolean cannot masquerade as reference verification (28.849473ms)
+✔ inherited score value cannot replace an own reference dimension (21.358993ms)
+✔ valid reference audit does not mutate fixture answers or scores (20.98727ms)
+✖ empty persona input cannot produce a zero-comparison PASS (14.31112ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 13
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 302.864297
+
+✖ failing tests:
+
+test at tests/player-type-reference.test.mjs:35:1
+✖ empty persona input cannot produce a zero-comparison PASS (14.31112ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-persona-reference/tests/player-type-reference.test.mjs:37:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
