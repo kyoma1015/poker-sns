@@ -39,8 +39,15 @@ const forbidden=await viewer.storage.from(bucket).upload(`${ownerId}/${randomUUI
 assert.ok(forbidden.error,'viewer wrote owner path')
 const oversized=await owner.storage.from(bucket).upload(`${ownerId}/${randomUUID()}.mp4`,Buffer.alloc(20971521),{contentType:'video/mp4'})
 assert.ok(oversized.error,'20MiB+1 upload was accepted')
+const viewerDelete=await viewer.storage.from(bucket).remove([path])
+assert.ifError(viewerDelete.error)
+const afterViewerDelete=await owner.storage.from(bucket).download(path)
+assert.ifError(afterViewerDelete.error)
+assert.equal(Buffer.compare(Buffer.from(await afterViewerDelete.data.arrayBuffer()),bytes),0,'viewer deleted owner object')
 const removed=await owner.storage.from(bucket).remove([path])
 assert.ifError(removed.error)
+const afterDeleteSigned=await fetch(sign.data.signedUrl)
+assert.notEqual(afterDeleteSigned.status,200,'signed URL still serves deleted object')
 const gone=await owner.storage.from(bucket).download(path)
 assert.ok(gone.error,'deleted object still available')
 const orphan=`${ownerId}/${randomUUID()}.mp4`
@@ -49,4 +56,4 @@ assert.ifError((await owner.storage.from(bucket).upload(orphan,bytes,{contentTyp
 const failedPublish=true
 if(failedPublish) assert.ifError((await owner.storage.from(bucket).remove([orphan])).error)
 assert.ok((await owner.storage.from(bucket).download(orphan)).error)
-console.log('PASS: isolated Supabase Storage HTTP owner upload/read, viewer deny, signed URL, 20MiB rejection, delete, simulated rollback')
+console.log('PASS: isolated Supabase Storage HTTP owner upload/read, viewer upload/read/sign/delete deny, signed URL, 20MiB rejection, delete invalidates URL, simulated rollback')
