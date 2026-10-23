@@ -12,9 +12,10 @@ from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 from uuid import UUID
 
-def authenticate_supabase_token(token: str, *, project_url: str, anon_key: str) -> str:
+def authenticate_supabase_token(token: str, *, project_url: str, anon_key: str, allow_local_isolated: bool = False) -> str:
     parsed = urlparse(project_url)
-    if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password or parsed.query or parsed.fragment or parsed.path not in ("", "/"):
+    local_ok = allow_local_isolated and (parsed.scheme, parsed.hostname, parsed.port) == ("http", "127.0.0.1", 56321)
+    if (not local_ok and parsed.scheme != "https") or not parsed.hostname or parsed.username or parsed.password or parsed.query or parsed.fragment or parsed.path not in ("", "/"):
         raise ValueError("invalid configured Supabase project URL")
     if not anon_key or not isinstance(token, str) or token.count(".") != 2 or len(token) > 8192:
         raise PermissionError("invalid token")
