@@ -1,5 +1,6 @@
 import unittest
 from unittest.mock import patch
+from contextlib import contextmanager
 from tests.video.finalize_boundary import ServerAdapters, finalize_authenticated
 from tests.video.finalize_core import PostCommitUnknown
 
@@ -10,10 +11,17 @@ POST = "40000000-0000-0000-0000-000000000001"
 class BoundaryTests(unittest.TestCase):
     def setUp(self):
         self.calls = []
+        @contextmanager
+        def download(user, path):
+            self.calls.append("download")
+            try:
+                yield "/tmp/test.mp4"
+            finally:
+                self.calls.append("temp-cleanup")
         self.adapters = ServerAdapters(
             authenticate_token=lambda token: USER if token == "verified" else (_ for _ in ()).throw(PermissionError()),
             verify_owner=lambda user, path: self.calls.append("owner") or (user == USER and path == PATH),
-            download_staged=lambda user, path: self.calls.append("download") or "/tmp/test.mp4",
+            download_staged=download,
             create_post=lambda user, path, content: self.calls.append("post") or POST,
             delete_staged=lambda path: self.calls.append("delete"),
             reconcile_post=lambda user, path: None,
@@ -39,7 +47,7 @@ class BoundaryTests(unittest.TestCase):
     @patch("tests.video.finalize_core.verify", return_value={"duration": 2})
     def test_success(self, verify):
         self.assertEqual(finalize_authenticated("Bearer verified", self.body, self.adapters), {"post_id": POST})
-        self.assertEqual(self.calls, ["owner", "download", "owner", "post"])
+        self.assertEqual(self.calls, ["owner", "download", "owner", "post", "temp-cleanup"])
 
     @patch("tests.video.finalize_core.verify", return_value={"duration": 2})
     def test_unknown_commit_never_deletes(self, verify):
@@ -48,6 +56,7 @@ class BoundaryTests(unittest.TestCase):
         with self.assertRaises(PostCommitUnknown):
             finalize_authenticated("Bearer verified", self.body, adapters)
         self.assertNotIn("delete", self.calls)
+        self.assertIn("temp-cleanup", self.calls)
 
 if __name__ == "__main__":
     unittest.main()
