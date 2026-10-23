@@ -91,6 +91,14 @@ assert.equal(otherClaim.data.length,0,'cleanup job claimed twice')
 const wrongFinish=await server.rpc('video_qa_finish_cleanup',{p_id:claim.data[0].id,p_worker:randomUUID(),p_success:true,p_reason:'wrong worker'})
 assert.ifError(wrongFinish.error)
 assert.equal(wrongFinish.data,false)
+// Real PostgREST cleanup consumer: referenced media must be retained.
+const { spawnSync } = await import('node:child_process')
+const worker = spawnSync('python3',['-m','tests.video.isolated_cleanup_worker_e2e'],{
+ env:{...process.env,VIDEO_QA_ENV:process.env.VIDEO_QA_ENV,VIDEO_QA_OWNER:ownerId,VIDEO_QA_PATH:publishPath},
+ encoding:'utf8'
+})
+assert.equal(worker.status,0,worker.stderr)
+assert.match(worker.stdout,/PASS: isolated durable cleanup worker/)
 const retry=await server.rpc('video_qa_finish_cleanup',{p_id:claim.data[0].id,p_worker:workerId,p_success:false,p_reason:'post committed: retain'})
 assert.ifError(retry.error)
 assert.equal(retry.data,true)
