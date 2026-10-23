@@ -23,6 +23,9 @@ create or replace function public.video_qa_publish(
 set search_path = '' as $$
 declare v_id uuid;
 begin
+ if current_user not in ('postgres', 'service_role') then
+   raise exception 'trusted server role required';
+ end if;
  if p_path !~ '^[0-9a-f-]{36}/[0-9a-f-]{36}[.](mp4|webm)$'
     or split_part(p_path, '/', 1) <> p_owner::text then
    raise exception 'invalid video ownership';
