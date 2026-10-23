@@ -1,0 +1,18 @@
+name: Video SQL isolated QA
+on:
+  pull_request:
+    paths:
+      - 'sql/post_short_videos_candidate.sql'
+      - 'tests/video/**'
+      - '.github/workflows/video-sql-isolated.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  video-sql-isolated:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Isolated PostgreSQL video schema and RLS
+        run: bash tests/video/run_isolated.sh
