@@ -48,7 +48,13 @@ class FinalizeCoreTests(unittest.TestCase):
         with self.assertRaises(PermissionError):
             finalize_video(self.request, verify_owner=lambda u,p:False,
                 create_post=self.create, delete_staged_object=self.cleanup)
-        self.assertEqual(self.calls, [])
+        self.assertEqual(self.calls, [('delete', PATH)])
+
+    def test_ownership_check_failure_reclaims(self):
+        with self.assertRaises(PermissionError):
+            finalize_video(self.request, verify_owner=lambda u,p:False,
+                create_post=self.create, delete_staged_object=self.cleanup)
+        self.assertEqual(self.calls, [('delete', PATH)])
 
 if __name__ == '__main__':
     unittest.main()
