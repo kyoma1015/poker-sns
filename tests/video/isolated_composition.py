@@ -15,14 +15,16 @@ def build_isolated_adapters(*, project_url: str, anon_key: str, service_key: str
     def authenticate(token: str) -> str:
         if token != access_token:
             raise PermissionError("request token differs from scoped token")
-        return authenticate_supabase_token(token, project_url=project_url, anon_key=anon_key)
+        return authenticate_supabase_token(token, project_url=project_url, anon_key=anon_key,
+                                           allow_local_isolated=True)
     def owner(user: str, path: str) -> bool:
         # This is a necessary path constraint, NOT proof of immutable ownership.
         # The Storage read itself must pass RLS with this user's verified JWT.
         return path.startswith(user + "/") and path.count("/") == 1
     def staged(user: str, path: str):
         return download_private_staged(user, path, project_url=project_url,
-                                       anon_key=anon_key, access_token=access_token)
+                                       anon_key=anon_key, access_token=access_token,
+                                       allow_local_isolated=True)
     def publish(user: str, path: str, content: str):
         return publish_post(project_url, service_key, user, path, content)
     def reconcile(user: str, path: str):
