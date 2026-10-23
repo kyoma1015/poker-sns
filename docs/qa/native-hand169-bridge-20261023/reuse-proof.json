@@ -61,6 +61,6 @@
     "path": "handoff/gto/g12_next/g11_native_state.h",
     "sha256": "9eaee82e4a42aca63ea30f2f80dae31ec4b4e28d58b72e0da355a048e6ca6988",
     "info_line": 23,
-    "card_encoding_evidence": "preserved g11_rules_embed.h five() card/4+2 and card%4; transferred reference docs c/d/h/s"
+    "card_encoding_evidence": "preserved g11_rules_embed.h five(): rank=card/4+2, suit=card%4; c/d/h/s labels are explicit bridge convention; 169 classification uses suit equality"
   }
 }

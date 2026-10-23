@@ -7,8 +7,10 @@ historical checkpoint or retained SQLite is changed.
 ## Evidence of format and exact reuse
 Preserved `handoff/gto/g12_next/g11_native_state.h:23` State::info emits JSON with
 betting_history, board, hand, public_config and seat. Hand is two integer card IDs;
-`g11_rules_embed.h` five() uses rank=card/4+2 and suit=card%4; reference documentation
-names suits c/d/h/s. No guessed hidden fields or substring/card-name parsing.
+`g11_rules_embed.h` five() uses rank=card/4+2 and suit=card%4. The bridge explicitly
+labels suit IDs0..3 as c/d/h/s for export; this is a declared naming convention,
+not a recovered original G11 naming claim. Suited/offsuit classification depends
+only on suit equality. No guessed hidden fields or substring/card-name parsing.
 
 The latest reviewed `gto/hand169.py` is reused exactly from PR103 commit
 24ccde5490225d52b9e8328d86fa425bca59a664, git blob

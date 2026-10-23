@@ -12,7 +12,8 @@ from gto.hand169 import aggregate
 
 
 def card_name(card):
-    # Header five(): rank=card/4+2, suit=card%4; reference docs name suits c/d/h/s.
+    # Header five(): rank=card/4+2 and suit=card%4. Export labels suit
+    # IDs 0..3 as c/d/h/s; classification depends only on suit equality.
     if type(card) is not int or not 0 <= card < 52:
         raise ValueError('native card must be integer 0..51')
     return '23456789TJQKA'[card//4] + 'cdhs'[card%4]
