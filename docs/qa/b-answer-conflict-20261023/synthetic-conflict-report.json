@@ -1,0 +1,34 @@
+{
+  "fixture_only": true,
+  "not_official_question_data": true,
+  "question_count": 2,
+  "duplicateQuestionCandidates": [
+    [
+      "s1",
+      "s2"
+    ]
+  ],
+  "duplicateOptionCandidates": [],
+  "official_rule_accuracy": "UNVERIFIED",
+  "option_count": 8,
+  "answer_key_count": 2,
+  "answer_position_counts": {
+    "1": 1,
+    "2": 1
+  },
+  "issues": [],
+  "duplicateAnswerConflictCandidates": [
+    {
+      "question_ids": [
+        "s1",
+        "s2"
+      ],
+      "correct_option_ids": [
+        "s1-A",
+        "s2-B"
+      ]
+    }
+  ],
+  "verdict": "REVIEW_REQUIRED",
+  "publication_approved": false
+}
