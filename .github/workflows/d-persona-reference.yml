@@ -1,0 +1,32 @@
+name: D historical persona reference QA
+on:
+  pull_request:
+    branches: [codex/d-score-distribution-20261023]
+    paths:
+      - 'scripts/audit-player-type.mjs'
+      - 'tests/player-type-reference.test.mjs'
+      - '.github/workflows/d-persona-reference.yml'
+permissions:
+  contents: read
+concurrency:
+  group: d-persona-reference-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node tests/player-type.test.mjs
+      - run: node tests/player-type-audit.test.mjs
+      - run: node tests/player-type-distribution.test.mjs
+      - run: node tests/player-type-reference.test.mjs
+      - run: node scripts/audit-player-type.mjs
+      - run: npm ci --cache "$RUNNER_TEMP/npm-cache"
+      - run: npm run build
+      - run: npm run lint

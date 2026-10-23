@@ -104,9 +104,33 @@ export function auditPlayerType(fixture, assets) {
     }
     if (errors.length) distribution = null
   }
+  const scoringInputValid = !errors.length
+  let comparedValues = 0
+  const dimensionKeys = Object.keys(traitPositiveMax)
+  for (const [personaIndex, persona] of fixture.personas.entries()) {
+    const reference = persona?.raw
+    if (!reference || typeof reference !== 'object' || Array.isArray(reference) ||
+        Object.keys(reference).length !== dimensionKeys.length ||
+        dimensionKeys.some(key => !Object.hasOwn(reference, key) || !Number.isFinite(reference[key]))) {
+      errors.push({ code: 'INVALID_PERSONA_REFERENCE', persona: personaIndex })
+      continue
+    }
+    // Only compare after the existing answer and score-bank validation succeeds.
+    if (!scoringInputValid) continue
+    const totals = Object.fromEntries(dimensionKeys.map(key => [key, questions.reduce((sum, question, index) => {
+      const option = question.options.find(option => persona.answers[index] === String.fromCharCode(64 + option.order))
+      return sum + scores.get(option.id)[key]
+    }, 0)]))
+    for (const key of dimensionKeys) {
+      comparedValues++
+      if (totals[key] !== reference[key]) errors.push({ code: 'PERSONA_REFERENCE_MISMATCH', persona: personaIndex, key })
+    }
+  }
+  if (errors.length) distribution = null
   const report = { status: errors.length ? 'FAIL' : 'CONDITIONAL PASS', source: 'checked-in historical fixture; not live DB', questions: questions.length, options: questions.reduce((n,q) => n + q.options.length, 0), scoreDimensions: Object.keys(traitPositiveMax).length,
     animalDisplayKeys: configured.length, pngAssets: assets.length, personas: fixture.personas.length, errors, warnings,
     scoreDistribution: distribution,
+    personaReferenceComparison: { status: comparedValues === fixture.personas.length * dimensionKeys.length && !errors.length ? 'PASS' : 'FAIL', personas: fixture.personas.length, dimensions: dimensionKeys.length, comparedValues, sourceCommit: fixture.source_commit, classification: 'NOT VERIFIED' },
     classificationSemanticValidity: 'UNKNOWN: fixture includes option scores/personas, not authoritative 36-animal classifier definitions or human-reviewed labels', liveSchemaAndQuestions: 'NOT CHECKED', scoringChanges: 'none', sqlExecuted: false }
   return report
 }
