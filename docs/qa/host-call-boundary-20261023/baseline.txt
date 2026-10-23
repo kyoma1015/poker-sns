@@ -1,0 +1,157 @@
+test_callbacks_required_and_inactive_guard_refuses (__main__.HostBoundary.test_callbacks_required_and_inactive_guard_refuses) ... ERROR
+test_deadline_after_dispatch_preserves_result (__main__.HostBoundary.test_deadline_after_dispatch_preserves_result) ... ERROR
+test_dispatch_exception_identity_and_partial_files_retained (__main__.HostBoundary.test_dispatch_exception_identity_and_partial_files_retained) ... ERROR
+test_new_boundary_contract_exists (__main__.HostBoundary.test_new_boundary_contract_exists) ... FAIL
+test_observation_error_refuses_without_leaking_error (__main__.HostBoundary.test_observation_error_refuses_without_leaking_error) ... ERROR
+test_preservation_failure_is_unknown_no_return (__main__.HostBoundary.test_preservation_failure_is_unknown_no_return) ... ERROR
+test_running_after_dispatch_preserves_and_refuses (__main__.HostBoundary.test_running_after_dispatch_preserves_and_refuses) ... ERROR
+test_stop_after_dispatch_preserves_result_before_refusing (__main__.HostBoundary.test_stop_after_dispatch_preserves_result_before_refusing) ... ERROR
+test_stop_before_dispatch_refuses (__main__.HostBoundary.test_stop_before_dispatch_refuses) ... ERROR
+test_success_preserves_before_return_and_does_not_reserve_again (__main__.HostBoundary.test_success_preserves_before_return_and_does_not_reserve_again) ... ERROR
+test_unknown_before_dispatch_does_not_call (__main__.HostBoundary.test_unknown_before_dispatch_does_not_call) ... ERROR
+test_candidates_promote_only_one_ready_task_per_lane (test_continuation_recovery.RecoveryAcceptance.test_candidates_promote_only_one_ready_task_per_lane) ... ok
+test_changed_candidate_id_spec_is_rejected_on_restart (test_continuation_recovery.RecoveryAcceptance.test_changed_candidate_id_spec_is_rejected_on_restart) ... ok
+test_completed_and_active_lane_are_not_replayed (test_continuation_recovery.RecoveryAcceptance.test_completed_and_active_lane_are_not_replayed) ... ok
+test_finite_run_budget_and_duplicate_run_survive_restart (test_continuation_recovery.RecoveryAcceptance.test_finite_run_budget_and_duplicate_run_survive_restart) ... ok
+test_imported_remaining_schedule_cap_only_reduces_and_never_resets (test_continuation_recovery.RecoveryAcceptance.test_imported_remaining_schedule_cap_only_reduces_and_never_resets) ... ok
+test_missing_state_and_changed_anchor_fail_closed (test_continuation_recovery.RecoveryAcceptance.test_missing_state_and_changed_anchor_fail_closed) ... ok
+test_one_retry_only_and_permission_errors_not_retried (test_continuation_recovery.RecoveryAcceptance.test_one_retry_only_and_permission_errors_not_retried) ... ok
+test_public_checkpoint_excludes_tokens_context_errors_and_secrets (test_continuation_recovery.RecoveryAcceptance.test_public_checkpoint_excludes_tokens_context_errors_and_secrets) ... ok
+test_quota_defer_restart_resume_same_worktree_and_commit (test_continuation_recovery.RecoveryAcceptance.test_quota_defer_restart_resume_same_worktree_and_commit) ... ok
+test_reference_extraction_never_turns_untrusted_text_into_tasks (test_continuation_recovery.RecoveryAcceptance.test_reference_extraction_never_turns_untrusted_text_into_tasks) ... ok
+test_resume_rejects_tampered_checkpoint_and_never_steals_expired_lease (test_continuation_recovery.RecoveryAcceptance.test_resume_rejects_tampered_checkpoint_and_never_steals_expired_lease) ... ok
+test_stale_incomplete_or_overlapping_pr_snapshot_blocks (test_continuation_recovery.RecoveryAcceptance.test_stale_incomplete_or_overlapping_pr_snapshot_blocks) ... ok
+test_unreviewed_bad_baseline_missing_tests_and_wildcards_cannot_run (test_continuation_recovery.RecoveryAcceptance.test_unreviewed_bad_baseline_missing_tests_and_wildcards_cannot_run) ... ok
+
+======================================================================
+ERROR: test_callbacks_required_and_inactive_guard_refuses (__main__.HostBoundary.test_callbacks_required_and_inactive_guard_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-host-stop-boundary/tests/automation/test_host_call_boundary.py", line 74, in test_callbacks_required_and_inactive_guard_refuses
+    with self.assertRaises(ValueError):self.call()
+                                       ^^^^^^^^^^^
+  File "/workspace/work/issue22-host-stop-boundary/tests/automation/test_host_call_boundary.py", line 22, in call
+    return self.guard.call_host(dispatch or self.dispatch,observe=self.observe,preserve=self.preserve)
+           ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'InvocationGuard' object has no attribute 'call_host'
+
+======================================================================
+ERROR: test_deadline_after_dispatch_preserves_result (__main__.HostBoundary.test_deadline_after_dispatch_preserves_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-host-stop-boundary/tests/automation/test_host_call_boundary.py", line 46, in test_deadline_after_dispatch_preserves_result
+    with self.assertRaises(TimeoutError):self.call(dispatch)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-host-stop-boundary/tests/automation/test_host_call_boundary.py", line 22, in call
+    return self.guard.call_host(dispatch or self.dispatch,observe=self.observe,preserve=self.preserve)
+           ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'InvocationGuard' object has no attribute 'call_host'
+
+======================================================================
+ERROR: test_dispatch_exception_identity_and_partial_files_retained (__main__.HostBoundary.test_dispatch_exception_identity_and_partial_files_retained)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-host-stop-boundary/tests/automation/test_host_call_boundary.py", line 67, in test_dispatch_exception_identity_and_partial_files_retained
+    with self.assertRaises(RuntimeError) as cm:self.call(dispatch)
+                                               ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-host-stop-boundary/tests/automation/test_host_call_boundary.py", line 22, in call
+    return self.guard.call_host(dispatch or self.dispatch,observe=self.observe,preserve=self.preserve)
+           ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'InvocationGuard' object has no attribute 'call_host'
+
+======================================================================
+ERROR: test_observation_error_refuses_without_leaking_error (__main__.HostBoundary.test_observation_error_refuses_without_leaking_error)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-host-stop-boundary/tests/automation/test_host_call_boundary.py", line 59, in test_observation_error_refuses_without_leaking_error
+    with self.assertRaises(WorkerLivenessUnknown) as cm:self.call()
+                                                        ^^^^^^^^^^^
+  File "/workspace/work/issue22-host-stop-boundary/tests/automation/test_host_call_boundary.py", line 22, in call
+    return self.guard.call_host(dispatch or self.dispatch,observe=self.observe,preserve=self.preserve)
+           ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'InvocationGuard' object has no attribute 'call_host'
+
+======================================================================
+ERROR: test_preservation_failure_is_unknown_no_return (__main__.HostBoundary.test_preservation_failure_is_unknown_no_return)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-host-stop-boundary/tests/automation/test_host_call_boundary.py", line 72, in test_preservation_failure_is_unknown_no_return
+    with self.assertRaises(WorkerLivenessUnknown):self.call()
+                                                  ^^^^^^^^^^^
+  File "/workspace/work/issue22-host-stop-boundary/tests/automation/test_host_call_boundary.py", line 22, in call
+    return self.guard.call_host(dispatch or self.dispatch,observe=self.observe,preserve=self.preserve)
+           ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'InvocationGuard' object has no attribute 'call_host'
+
+======================================================================
+ERROR: test_running_after_dispatch_preserves_and_refuses (__main__.HostBoundary.test_running_after_dispatch_preserves_and_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-host-stop-boundary/tests/automation/test_host_call_boundary.py", line 54, in test_running_after_dispatch_preserves_and_refuses
+    with self.guard,self.assertRaises(WorkerLivenessUnknown):self.call()
+                                                             ^^^^^^^^^^^
+  File "/workspace/work/issue22-host-stop-boundary/tests/automation/test_host_call_boundary.py", line 22, in call
+    return self.guard.call_host(dispatch or self.dispatch,observe=self.observe,preserve=self.preserve)
+           ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'InvocationGuard' object has no attribute 'call_host'
+
+======================================================================
+ERROR: test_stop_after_dispatch_preserves_result_before_refusing (__main__.HostBoundary.test_stop_after_dispatch_preserves_result_before_refusing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-host-stop-boundary/tests/automation/test_host_call_boundary.py", line 40, in test_stop_after_dispatch_preserves_result_before_refusing
+    with self.guard,self.assertRaises(RuntimeError):self.call(dispatch)
+                                                    ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-host-stop-boundary/tests/automation/test_host_call_boundary.py", line 22, in call
+    return self.guard.call_host(dispatch or self.dispatch,observe=self.observe,preserve=self.preserve)
+           ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'InvocationGuard' object has no attribute 'call_host'
+
+======================================================================
+ERROR: test_stop_before_dispatch_refuses (__main__.HostBoundary.test_stop_before_dispatch_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-host-stop-boundary/tests/automation/test_host_call_boundary.py", line 35, in test_stop_before_dispatch_refuses
+    with self.assertRaises(RuntimeError):self.call()
+                                         ^^^^^^^^^^^
+  File "/workspace/work/issue22-host-stop-boundary/tests/automation/test_host_call_boundary.py", line 22, in call
+    return self.guard.call_host(dispatch or self.dispatch,observe=self.observe,preserve=self.preserve)
+           ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'InvocationGuard' object has no attribute 'call_host'
+
+======================================================================
+ERROR: test_success_preserves_before_return_and_does_not_reserve_again (__main__.HostBoundary.test_success_preserves_before_return_and_does_not_reserve_again)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-host-stop-boundary/tests/automation/test_host_call_boundary.py", line 28, in test_success_preserves_before_return_and_does_not_reserve_again
+    self.assertEqual(self.call(),{'owned':'result'})
+                     ^^^^^^^^^^^
+  File "/workspace/work/issue22-host-stop-boundary/tests/automation/test_host_call_boundary.py", line 22, in call
+    return self.guard.call_host(dispatch or self.dispatch,observe=self.observe,preserve=self.preserve)
+           ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'InvocationGuard' object has no attribute 'call_host'
+
+======================================================================
+ERROR: test_unknown_before_dispatch_does_not_call (__main__.HostBoundary.test_unknown_before_dispatch_does_not_call)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-host-stop-boundary/tests/automation/test_host_call_boundary.py", line 50, in test_unknown_before_dispatch_does_not_call
+    with self.guard,self.assertRaises(WorkerLivenessUnknown):self.call()
+                                                             ^^^^^^^^^^^
+  File "/workspace/work/issue22-host-stop-boundary/tests/automation/test_host_call_boundary.py", line 22, in call
+    return self.guard.call_host(dispatch or self.dispatch,observe=self.observe,preserve=self.preserve)
+           ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'InvocationGuard' object has no attribute 'call_host'
+
+======================================================================
+FAIL: test_new_boundary_contract_exists (__main__.HostBoundary.test_new_boundary_contract_exists)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-host-stop-boundary/tests/automation/test_host_call_boundary.py", line 24, in test_new_boundary_contract_exists
+    self.assertTrue(callable(getattr(self.guard,'call_host',None)))
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 24 tests in 0.526s
+
+FAILED (failures=1, errors=10)
