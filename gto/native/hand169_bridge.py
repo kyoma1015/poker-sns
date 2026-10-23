@@ -33,7 +33,7 @@ def _object(raw):
     if not isinstance(value,dict) or set(value) != {'hand','board','betting_history','seat','public_config'}:
         raise ValueError('unknown native infoset format')
     hand=value['hand']; board=value['board']; history=value['betting_history']; seat=value['seat']
-    if (not isinstance(hand,list) or len(hand)!=2 or len(set(hand))!=2
+    if (not isinstance(hand,list) or len(hand)!=2
             or not isinstance(board,list) or len(board) not in (0,3,4,5)
             or any(type(x) is not int or not 0 <= x < 52 for x in hand+board)
             or len(set(hand+board)) != len(hand+board)):

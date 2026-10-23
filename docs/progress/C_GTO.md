@@ -64,3 +64,11 @@ Local native tests: eight per separate Next/Cache/Packed process, plus existing
 18 Python tests. Original G9 source, 20 owner stacks, G11 ABI and full poker
 convergence remain unproved; native exported EV remains null. No retained state,
 controller, scheduler or production changes.
+
+## Native hand169 wiring and finite real-poker oracle — 2026-10-23
+PR115 follow-up adds actual native infoset-context → 169 frequency export with
+mandatory caller mass and null EV. Exact native poker policy oracles cover fold,
+known river and all44 river chance outcomes. It reuses the exact PR103 hand169
+blob and33 original acceptance tests; these are not newly implemented fixes.
+See docs/workers/GTO_NATIVE_HAND169_BRIDGE_20261023.md. Complete coverage, authentic
+reach mass, original G9/G11 and full poker convergence remain unproved.

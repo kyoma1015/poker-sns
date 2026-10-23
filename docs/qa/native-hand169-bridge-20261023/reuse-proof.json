@@ -1,0 +1,66 @@
+{
+  "source_commit": "24ccde5490225d52b9e8328d86fa425bca59a664",
+  "reuse_not_new_implementation": true,
+  "files": [
+    {
+      "path": "gto/hand169.py",
+      "sha256": "11f19f9d6486f1368474b3a512128a07035ad4731ac8df116c74ad5569463ae0",
+      "git_blob": "e1757b99ff0d8c8072cc080c5427e42aa1107a33",
+      "exact_blob_match": true
+    },
+    {
+      "path": "gto/tests/test_hand169.py",
+      "sha256": "10ef8a33d33dda7e2f35cd311e9098d0e300cbeab9f6fd881cce75c7c1fb4d4d",
+      "git_blob": "db59172ee4e90966191f1b10482f0f8fe06c13ca",
+      "exact_blob_match": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_coverage_flag.py",
+      "sha256": "7fada2998bf186d5f828783ce4706a2633c9a8f195d3d480f350990214d9a0ca",
+      "git_blob": "a48a589d16f92f739532d66e88ecac841651c898",
+      "exact_blob_match": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_frequency_snapshot.py",
+      "sha256": "cae8f5e1980fdfce880f9b3539e40024cdce8c8d09b4278b788f85e0b30c585e",
+      "git_blob": "aef1dc842caed38bad4e52c926afeff393cd12e9",
+      "exact_blob_match": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_subnormal_ev.py",
+      "sha256": "f846b25044ce7c760e11ddf844ab21b438e6e308ad061bb897aa73378d7575f4",
+      "git_blob": "8582cd6814c923bfa6186baca138402b67586076",
+      "exact_blob_match": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_subnormal_policy.py",
+      "sha256": "bb4e4976489fd42380363283fa6aac3d06f154fe6878c725e93c2501fca51b22",
+      "git_blob": "40b9dba2796c4636b6b5ab14e46f8d8aaf72fbf2",
+      "exact_blob_match": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_unrepresentable_numbers.py",
+      "sha256": "efe50901d3a6b3ea7316399578396bc39c2d5c774d0312e5a25b3d3aef945778",
+      "git_blob": "82b9111e074cc8e35c9acc3a1bdb83539f03d8a0",
+      "exact_blob_match": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_weighted_ev.py",
+      "sha256": "2e1e12ca637ecbd870ee336c604c6850da5c1b0348562d1c9a0530d4dac2dfb7",
+      "git_blob": "9f96d35755101fb81b2f2dfecafddf798db8306d",
+      "exact_blob_match": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_weighted_maximum.py",
+      "sha256": "d2e19b79797eb6a47bb70614224798b0c3e30fc10e5c404d9db8323749ccaf73",
+      "git_blob": "cf32db6ec0a7bf188d2a46111b4244feec686abc",
+      "exact_blob_match": true
+    }
+  ],
+  "format_source": {
+    "path": "handoff/gto/g12_next/g11_native_state.h",
+    "sha256": "9eaee82e4a42aca63ea30f2f80dae31ec4b4e28d58b72e0da355a048e6ca6988",
+    "info_line": 23,
+    "card_encoding_evidence": "preserved g11_rules_embed.h five() card/4+2 and card%4; transferred reference docs c/d/h/s"
+  }
+}

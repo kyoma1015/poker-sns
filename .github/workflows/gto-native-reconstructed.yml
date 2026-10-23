@@ -1,7 +1,7 @@
 name: GTO reconstructed native verification
 on:
   pull_request:
-    branches: [main, codex/integration-poll-only-20261020, codex/c-gto-active-milestones-20261020]
+    branches: [main, codex/integration-poll-only-20261020, codex/c-gto-active-milestones-20261020, codex/c-native-training-batch-20261023]
     paths:
       - 'gto/**'
       - 'handoff/gto/**'
@@ -40,3 +40,11 @@ jobs:
           for variant in g12_next g12_p1_cache g12_p1_packed; do
             python -B gto/native/benchmark_training.py --module-dir "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant"
           done
+      - name: Native hand169 bridge and exact small-poker policy oracles
+        run: |
+          for variant in g12_next g12_p1_cache g12_p1_packed; do
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_hand169_bridge.py -v
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_hand169_bridge_boundaries.py -v
+          done
+      - name: Exact reused PR103 hand169 dependency acceptance
+        run: python -B -m unittest discover -s tests/worker_acceptance -v
