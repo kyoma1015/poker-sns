@@ -2,7 +2,8 @@ import { createPollRequest, pollDisplayResult } from './interactiveRequests'
 import { useEffect, useRef, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
-import { validateVideo } from './videoUpload'
+import { validateVideo, removePostVideo } from './videoUpload'
+import PostVideo from './PostVideo'
 
 import { supabase } from './supabase'
 import { usePullToRefresh } from './usePullToRefresh'
@@ -51,6 +52,7 @@ type Post = {
   result_type: 'tournament' | 'amusement' | 'cash' | 'player_type' | null
 
   result_id: string | null
+  video_path?: string | null
   image_urls?: string[]
   style_snapshot?: { count: number; aggression: number; looseness: number; captured_at: string } | null
 
@@ -1168,9 +1170,14 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         setMessage(`削除できませんでした：${error.message}`)
         return
       }
+      let videoCleanupFailed = false
+      if (target.video_path) {
+        try { await removePostVideo(user.id, target.video_path) }
+        catch (cleanupError) { console.error('動画削除の後片付けに失敗:', cleanupError); videoCleanupFailed = true }
+      }
       setDeleteTargetId(null)
       setPostMenuId(null)
-      setMessage('')
+      setMessage(videoCleanupFailed ? '投稿は削除しましたが、動画の削除に失敗しました。管理者へ連絡してください。' : '')
       await loadPosts()
     } finally {
       deletingRef.current = false
@@ -3251,6 +3258,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
                     )}
 
                     {post.style_snapshot && renderStyleSnapshot(post.style_snapshot)}
+                    {post.video_path && <PostVideo path={post.video_path} />}
                     {Array.isArray(post.image_urls) && post.image_urls.length > 0 && <div style={{ display: 'grid', gridTemplateColumns: post.image_urls.length > 1 ? 'repeat(2,minmax(0,1fr))' : '1fr', gap: 5, margin: '10px 0 14px' }}>{post.image_urls.map((url, i) => <a key={`${post.id}-${i}`} href={url} target="_blank" rel="noopener noreferrer"><img src={url} alt={`投稿画像${i+1}`} loading="lazy" style={{ width: '100%', maxHeight: 460, objectFit: 'cover', borderRadius: 10 }}/></a>)}</div>}
                     {/* アクション */}
                       <style>{`
