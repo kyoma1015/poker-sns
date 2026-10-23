@@ -34,7 +34,8 @@ BAD=[('malformed','{'),('null',None),('jsonnull','null'),('bool','true'),('numbe
      ('null_liveness','{"lease_evidence_version":1,"worker_liveness":null}'),
      ('flag_string','{"lease_evidence_version":1,"worker_liveness":"stopped","worker_liveness_unknown":"false"}'),
      ('duplicate','{"lease_evidence_version":1,"worker_liveness":"unknown","worker_liveness":"stopped"}'),
-     ('nan','{"lease_evidence_version":1,"worker_liveness":"stopped","other":NaN}')]
+     ('nan','{"lease_evidence_version":1,"worker_liveness":"stopped","other":NaN}'),
+     ('exponent','{"lease_evidence_version":1,"worker_liveness":"stopped","other":1e999}')]
 
 class CorruptEvidence(unittest.TestCase):
     def setUp(self):
@@ -44,8 +45,9 @@ class CorruptEvidence(unittest.TestCase):
     def inject(self,value):self.l.db.execute("update development_jobs set evidence=? where id='old'",(value,))
     def test_bad_evidence_refuses_same_and_other_lane_without_any_row_change(self):
         for name,value in BAD:
-            self.inject(value)
             for lane in ['A','B']:
+                self.l.db.execute("DELETE FROM development_jobs WHERE id<>'old'")
+                self.l.db.execute("UPDATE development_jobs SET status='running',attempts=1,token=?,expires=130,evidence=? WHERE id='old'",(self.token,value))
                 with self.subTest(value=name,lane=lane):
                     before=row(self.l.db)
                     claimed=self.l.claim(task('new-'+lane,lane),now=200)
