@@ -6,6 +6,10 @@ and supply adapters scoped to that identity. Never accept user_id from request b
 from __future__ import annotations
 from dataclasses import dataclass
 from typing import Callable
+
+class PostCommitUnknown(RuntimeError):
+    """The DB outcome is ambiguous: retain the video until reconciled."""
+
 from .server_validate import verify
 
 @dataclass(frozen=True)
@@ -42,6 +46,10 @@ def finalize_video(
     try:
         verify(request.local_staged_file)
         return create_post(user_id, request.object_path, request.content)
+    except PostCommitUnknown:
+        # A timeout after commit must not delete media referenced by a post.
+        # Reconciliation must check DB state before any cleanup.
+        raise
     except Exception:
         delete_staged_object(request.object_path)
         raise
