@@ -85,3 +85,10 @@ Three more hand-derived actual-native fixed-policy oracles run per variant:
 The expectations are derived explicitly in test_poker_oracle_profiles.py and are
 not generated from snapshots of the implementation under test. These9 cross-variant
 checks extend known-card policy/rule coverage, not GTO equilibrium claims.
+
+## Independent review correction
+Root review found that abs(NaN-1/N)>tolerance is false and therefore did not reject
+a NaN probability. Immutable input f4e48e9 reproduces1FAIL/3 tests using a tiny
+negative-distribution stub. Explicit math.isfinite makes3PASS. This is a stub
+contract test, distinct from the15 actual NativeState cases per variant. Existing
+protected/native acceptance is unchanged; no test gate is weakened.

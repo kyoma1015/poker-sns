@@ -18,6 +18,6 @@ test_weighted_mean_not_unweighted_mean (test_hand169.Hand169.test_weighted_mean_
 test_zero_mass_and_unknown_ev_stay_unknown (test_hand169.Hand169.test_zero_mass_and_unknown_ev_stay_unknown) ... ok
 
 ----------------------------------------------------------------------
-Ran 18 tests in 0.011s
+Ran 18 tests in 0.013s
 
 OK

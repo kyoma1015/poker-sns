@@ -9,6 +9,6 @@ test_real_poker_fold_oracle (__main__.BridgeTests.test_real_poker_fold_oracle) .
 test_real_poker_river_oracle (__main__.BridgeTests.test_real_poker_river_oracle) ... ok
 
 ----------------------------------------------------------------------
-Ran 9 tests in 0.041s
+Ran 9 tests in 0.042s
 
 OK

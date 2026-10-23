@@ -26,7 +26,7 @@ def exact_policy_value(state, policy, *, max_nodes=10000):
             outcomes=node.chance_outcomes()
             if not outcomes:raise ValueError('empty chance distribution')
             # NativeState::chances is exactly uniform over the remaining deck.
-            if len({a for a,_ in outcomes})!=len(outcomes) or any(abs(p-1/len(outcomes))>1e-12 for _,p in outcomes):
+            if len({a for a,_ in outcomes})!=len(outcomes) or any(not math.isfinite(p) or abs(p-1/len(outcomes))>1e-12 for _,p in outcomes):
                 raise ValueError('oracle only supports native uniform-card chance')
             probabilities={a:Fraction(1,len(outcomes)) for a,_ in outcomes}
         else:
