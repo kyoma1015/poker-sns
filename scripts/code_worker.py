@@ -234,10 +234,16 @@ def running_evidence_state(raw):
     def invalid_constant(value):
         raise ValueError('nonfinite evidence constant')
 
+    def finite_float(value):
+        parsed = float(value)
+        if not math.isfinite(parsed):
+            raise ValueError('nonfinite evidence number')
+        return parsed
+
     if not isinstance(raw, str) or len(raw) > 1024 * 1024:
         return 'unknown'
     try:
-        prior = json.loads(raw, object_pairs_hook=unique, parse_constant=invalid_constant)
+        prior = json.loads(raw, object_pairs_hook=unique, parse_constant=invalid_constant, parse_float=finite_float)
     except (TypeError, ValueError, RecursionError):
         return 'unknown'
     if (type(prior) is not dict or type(prior.get('lease_evidence_version')) is not int
@@ -248,6 +254,10 @@ def running_evidence_state(raw):
                 and prior['worker_liveness_unknown'] is not False)):
         return 'unknown'
     return prior['worker_liveness']
+
+
+class LeaseActivationRefused(ValueError):
+    lease_state_preserved = True
 
 
 class Leases:
@@ -303,6 +313,31 @@ class Leases:
                 self.db.execute("INSERT INTO development_jobs(id,lane,spec_hash,status,attempts,token,expires,evidence) VALUES(?,?,?,'running',1,?,?,?)", (task['id'], task['lane'], digest, token, expires, initial))
             self.db.execute('COMMIT')
             return token
+        except BaseException:
+            self.db.execute('ROLLBACK')
+            raise
+
+    def activate(self, task_id, token, evidence, now=None):
+        """CAS a known never-dispatched owner to possible execution before dispatch.
+
+        Expiry, replaced ownership or corrupt context is never repaired/finalized
+        by this transition. The caller must not dispatch after this exception.
+        """
+        context = dict(evidence)
+        context.update(lease_evidence_version=1, worker_liveness='running')
+        encoded = json.dumps(context, allow_nan=False)
+        if running_evidence_state(encoded) != 'running':
+            raise LeaseActivationRefused('activation evidence requires review')
+        self.db.execute('BEGIN IMMEDIATE')
+        try:
+            current = finite_lease_number(time.time() if now is None else now, 'activation clock')
+            row = self.db.execute("SELECT evidence FROM development_jobs WHERE id=? AND token=? AND status='running' AND expires>?", (task_id, token, current)).fetchone()
+            if row is None or running_evidence_state(row[0]) != 'not_started':
+                raise LeaseActivationRefused('activation ownership, expiry or evidence requires review')
+            cursor = self.db.execute("UPDATE development_jobs SET evidence=? WHERE id=? AND token=? AND status='running' AND expires>?", (encoded, task_id, token, current))
+            if cursor.rowcount != 1:
+                raise LeaseActivationRefused('activation compare-and-swap refused')
+            self.db.execute('COMMIT')
         except BaseException:
             self.db.execute('ROLLBACK')
             raise
@@ -545,8 +580,7 @@ def run_task(repository, work_root, state, task, executor, timeout=180):
             command(['git', 'worktree', 'add', '-b', task['branch'], str(worktree), base], repository)
         before = protected_hashes(worktree, task['protected_tests'])
         evidence.update(lease_evidence_version=1, worker_liveness='running')
-        leases.db.execute("UPDATE development_jobs SET evidence=? WHERE id=? AND token=? AND status='running'",
-                          (json.dumps(evidence), task['id'], token))
+        leases.activate(task['id'], token, evidence)
         evidence['execution'] = executor(task, worktree, timeout)
         validate_and_commit(task, worktree, base, before, evidence)
         evidence['status'] = 'implemented_local'
@@ -556,7 +590,9 @@ def run_task(repository, work_root, state, task, executor, timeout=180):
     except Exception as error:
         evidence.update(status='blocked', error=scrub(error))
         # Failed output/worktree retained for review, never reset/deleted automatically.
-        if getattr(error, 'worker_liveness_unknown', False):
+        if getattr(error, 'lease_state_preserved', False):
+            evidence['lease_status'] = 'activation refused; original row preserved'
+        elif getattr(error, 'worker_liveness_unknown', False):
             evidence.update(worker_liveness='unknown', lease_status='running; termination unconfirmed')
             leases.db.execute("UPDATE development_jobs SET evidence=? WHERE id=? AND token=? AND status='running'",
                               (json.dumps(evidence), task['id'], token))
@@ -590,13 +626,13 @@ def prepare_host_session(repository, work_root, state, task, now=None):
         context = {'task': task, 'worktree': str(worktree), 'before': protected_hashes(worktree, task['protected_tests']),
                    'base_sha': base, 'prepared_for': 'host_session',
                    'lease_evidence_version': 1, 'worker_liveness': 'running'}
-        leases.db.execute('UPDATE development_jobs SET evidence=? WHERE id=? AND token=?',
-                          (json.dumps(context), task['id'], token))
+        leases.activate(task['id'], token, context, now=now)
         return {'id': task['id'], 'lane': task['lane'], 'status': 'prepared', 'worktree': str(worktree),
                 'lease_token': token, 'executor': 'host_session', 'real_ai_implementation': False,
                 'next': 'Trusted coordinator dispatches a formal collaboration agent; never treat preparation as execution.'}
     except Exception as error:
-        leases.finish(task['id'], token, 'blocked', {'error': scrub(error)}, now=now)
+        if not getattr(error, 'lease_state_preserved', False):
+            leases.finish(task['id'], token, 'blocked', {'error': scrub(error)}, now=now)
         raise
     finally:
         leases.close()

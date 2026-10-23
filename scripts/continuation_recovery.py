@@ -398,8 +398,7 @@ class Continuation:
         token = self.leases.claim(context['task'], seconds=360, now=now)
         if token is None:
             return None
-        self.db.execute("UPDATE development_jobs SET evidence=? WHERE id=? AND token=? AND status='running'",
-                        (json.dumps(context), task_id, token))
+        self.leases.activate(task_id, token, context, now=now)
         return {'id': task_id, 'status': 'prepared', 'executor': 'host_session',
                 'worktree': context['worktree'], 'lease_token': token,
                 'real_ai_implementation': False, 'recovered_checkpoint': True}
