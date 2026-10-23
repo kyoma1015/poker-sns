@@ -1,0 +1,13 @@
+test_bad_active_evidence_refuses_other_lane_before_expiry (__main__.CorruptEvidence.test_bad_active_evidence_refuses_other_lane_before_expiry) ... ok
+test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) ... ok
+test_expired_known_running_is_not_a_death_certificate (__main__.CorruptEvidence.test_expired_known_running_is_not_a_death_certificate) ... ok
+test_host_boundary_unknown_with_corrupt_context_refuses_new_claim (__main__.CorruptEvidence.test_host_boundary_unknown_with_corrupt_context_refuses_new_claim) ... ok
+test_multiprocess_corrupt_expiry_has_zero_winners_and_preserves_row (__main__.CorruptEvidence.test_multiprocess_corrupt_expiry_has_zero_winners_and_preserves_row) ... ok
+test_normal_claim_has_explicit_nonexecuting_evidence (__main__.CorruptEvidence.test_normal_claim_has_explicit_nonexecuting_evidence) ... ok
+test_normal_nonstarted_expiry_completion_and_retry_remain_bounded (__main__.CorruptEvidence.test_normal_nonstarted_expiry_completion_and_retry_remain_bounded) ... ok
+test_rollback_after_later_claim_validation_error_keeps_expired_row (__main__.CorruptEvidence.test_rollback_after_later_claim_validation_error_keeps_expired_row) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.382s
+
+OK
