@@ -1,0 +1,658 @@
+✖ matching exact bytes and counts retains non-provenance and no-publication contract (2.446323ms)
+✖ mismatched question_sha256 fails before structural interpretation (1.205455ms)
+✖ mismatched answer_key_sha256 fails before structural interpretation (0.28393ms)
+✖ semantically identical reserialization is not the pinned original bytes (0.292993ms)
+✖ mismatched expected_question_count cannot pass (0.315488ms)
+✖ mismatched expected_option_count cannot pass (0.176997ms)
+✖ invalid manifest count 0 fails before reading question source (0.228816ms)
+✖ invalid manifest count -1 fails before reading question source (0.252823ms)
+✖ invalid manifest count 1.5 fails before reading question source (0.236989ms)
+✖ invalid manifest count true fails before reading question source (0.312623ms)
+✖ invalid manifest count "350" fails before reading question source (0.181185ms)
+✖ invalid manifest count 9007199254740992 fails before reading question source (0.225662ms)
+✖ invalid SHA256 ledger field is rejected (0.146622ms)
+✖ invalid SHA256 ledger field is rejected (0.098589ms)
+✖ invalid SHA256 ledger field is rejected (0.143898ms)
+✖ invalid SHA256 ledger field is rejected (0.172892ms)
+✖ missing or unsupported manifest version fails closed (0.298452ms)
+✖ invalid manifest JSON and UTF8 never echo parser fragments (0.194915ms)
+✖ invalid question JSON with a matching hash remains invalid (0.140643ms)
+✖ invalid key UTF8 with a matching hash remains invalid (0.151709ms)
+✖ hash-matched malformed question structure does not pass (0.137408ms)
+✖ hash-matched orphan answer key still requires review (0.272522ms)
+✖ read failure never exposes path or error text (0.21792ms)
+✖ argument count validation occurs before any file read (0.288097ms)
+✖ non-byte reads and oversized inputs fail closed (0.154504ms)
+✖ source bytes remain unchanged by auditing (0.214064ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 0
+ℹ fail 26
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17.406406
+
+✖ failing tests:
+
+test at tests/tda-snapshot-integrity.test.mjs:11:1
+✖ matching exact bytes and counts retains non-provenance and no-publication contract (2.446323ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:11:116)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:12:123
+✖ mismatched question_sha256 fails before structural interpretation (1.205455ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:12:246)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:12:123
+✖ mismatched answer_key_sha256 fails before structural interpretation (0.28393ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:12:246)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:13:1
+✖ semantically identical reserialization is not the pinned original bytes (0.292993ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:13:153)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:14:71
+✖ mismatched expected_question_count cannot pass (0.315488ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:14:154)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:14:71
+✖ mismatched expected_option_count cannot pass (0.176997ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:14:154)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:15:58
+✖ invalid manifest count 0 fails before reading question source (0.228816ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:15:215)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:15:58
+✖ invalid manifest count -1 fails before reading question source (0.252823ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:15:215)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:15:58
+✖ invalid manifest count 1.5 fails before reading question source (0.236989ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:15:215)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:15:58
+✖ invalid manifest count true fails before reading question source (0.312623ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:15:215)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:15:58
+✖ invalid manifest count "350" fails before reading question source (0.181185ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:15:215)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:15:58
+✖ invalid manifest count 9007199254740992 fails before reading question source (0.225662ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:15:215)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:16:59
+✖ invalid SHA256 ledger field is rejected (0.146622ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:16:168)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:16:59
+✖ invalid SHA256 ledger field is rejected (0.098589ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:16:168)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:16:59
+✖ invalid SHA256 ledger field is rejected (0.143898ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:16:168)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:16:59
+✖ invalid SHA256 ledger field is rejected (0.172892ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:16:168)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:17:1
+✖ missing or unsupported manifest version fails closed (0.298452ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:17:153)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:18:1
+✖ invalid manifest JSON and UTF8 never echo parser fragments (0.194915ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:18:162)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:19:1
+✖ invalid question JSON with a matching hash remains invalid (0.140643ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:19:170)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:20:1
+✖ invalid key UTF8 with a matching hash remains invalid (0.151709ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:20:154)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:21:1
+✖ hash-matched malformed question structure does not pass (0.137408ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:21:172)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:22:1
+✖ hash-matched orphan answer key still requires review (0.272522ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:22:224)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:23:1
+✖ read failure never exposes path or error text (0.21792ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:23:67)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:24:1
+✖ argument count validation occurs before any file read (0.288097ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:24:149)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:25:1
+✖ non-byte reads and oversized inputs fail closed (0.154504ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:25:74)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-snapshot-integrity.test.mjs:26:1
+✖ source bytes remain unchanged by auditing (0.214064ms)
+  AssertionError [ERR_ASSERTION]: offline byte-level snapshot verification is required
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at invoke (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:10:102)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-snapshot-integrity.test.mjs:26:116)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
