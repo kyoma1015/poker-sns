@@ -30,3 +30,6 @@ New phased fixed baselines5/4FAIL +1/1FAIL +4/1FAIL +5/4FAIL, then15PASS/ten rou
 
 ## Trusted host stop boundary — 2026-10-23
 PR113-based opt-in InvocationGuard.call_host preparation: pre/post stop/deadline, positive liveness, preserve-before-return. Eleven missing-capability cases1FAIL/10ERROR ->11PASS, ten rounds110PASS; old85/22/15/9/8/1/5PASS. Temporary callbacks/DB only, no actual formalhost or scheduler connection. Source-only finite guard reuse, retained45jobs untouched. See docs/workers/HOST_CALL_BOUNDARY_20261023.md. Hard watchdog/containment and real cancellation remain gates; pollNO-GO.
+
+## Corrupt running evidence fail-closed — 2026-10-23
+PR117 follow-up: exact-parent corrected8test/37failure observations →8PASS; activation race4FAIL→4PASS, supporting2CAS/resumePASS, ten rounds140PASS. Existing156PASS. All running malformed/legacy/missing evidence preserved and blocks all lanes; new typed not_started leases plus token/status/expiry activationCAS preserve normal expiry/retry while refusing old-owner dispatch. No heldstate mutation or host activation. Evidence docs/workers/CORRUPT_EVIDENCE_20261023.md and docs/qa/corrupt-evidence-20261023/. Independent read-only review conditional, formalhost/watchdog incomplete, pollNO-GO.

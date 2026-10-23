@@ -1,0 +1,20 @@
+# Running evidence security and dispatch activation — 2026-10-23
+
+Base PR117 c373286fbe402144148d7862465c2c0ba49d1bea. Isolated manual work only.
+
+## Fixed evidence, no substitution
+Initial harness input14c73d4 observed8testmethods/7failures but reused mutated rows between matrix cases. It is preserved as preliminary evidence, not complete matrix proof. Corrected input93a7ccc resets every private row before every case: exact parent source8testmethods/37failure observations (subtests included), unsafe same/other-lane claims witnessed. The corrected unchanged matrix includes malformed JSON, SQL NULL, JSON null/bool/number/string/array, missing version/liveness, unknown values/invalid flags, duplicate keys, NaN and1e999. Full original rows (evidence/token/expiry/attempts/status/spec) are compared privately; tokens are never printed. Tests now8PASS; repeated ten rounds80PASS.
+
+Source8e35e46 adds fail-closed typed evidence and writer initialization. Independent review found the not_started→running activation race and exponent overflow; fixed activation input4da5842/source8e35e46:4FAIL. Final111f03e adds activation CAS and parse_float finite checking:4PASS×10. Supporting2tests verify one winner among8process activators and actual resume_host refusing corrupted evidence without overwriting context;2PASS×10. New14methods×10=140executions; existing protected/worker/queue/controller/recovery/host/restart/expiry85+22+15+9+8+11+1+5=156PASS. Dedicated CI expects296executions/0FAIL. Baselines and actual logs are in docs/qa/corrupt-evidence-20261023/.
+
+## State transition and compatibility
+Running evidence must be an unambiguous JSON object with integer lease_evidence_version1 and explicit worker_liveness not_started/running/stopped. NULL, legacy missing fields, malformed/duplicate/nonfinite JSON, invalid flags/version/value are UNKNOWN. Claim checks all running rows under BEGIN IMMEDIATE before any expiry UPDATE. UNKNOWN causes a no-mutation refusal across every lane, even expired. Expired running is also not proof of death. No automatic repair or migration of old live state is attempted.
+
+A new/retry lease now atomically writes known not_started metadata. Such never-dispatched leases, or positively stopped valid evidence, may expire normally; completed jobs and the existing at-most-two retry policy remain unchanged. All in-tree model/host entry paths (run_task/prepare_host_session/resume_host) use Leases.activate before any dispatch/prepared return. It atomically checks original token/status/not_started/expiry and exactly one update; time is read after obtaining the SQL write lock. Replaced, expired or corrupt ownership refuses dispatch and preserves original state. Worker files/worktrees remain retained. Running evidence is not a cryptographic agent attestation; trusted coordinators must still positively establish actual liveness.
+
+## Integration QA and limits
+Actual temporary SQLite, multiprocess WAL/claim/activation, real worker/controller classes and local Git fixtures are used. Existing protected suites cover publication CAS/revision/rollback and initializer races. call_host UNKNOWN+NULL refuses later claim and next invocation; private checkpoint/restart/stop/finite cap regression remains passing. No actual formal agent, independent provider start, hard OS watchdog, production adoption or real quota recovery is proved. A blocking trusted callback is still not preempted by this patch.
+
+Read-only retained state:45total/43implemented/2blocked/running0, original4hashes/logicaldigest/checkpoint unchanged. No new retained job/lease/reservation, no counters reset, no controller/main/production/billing changes. Independent startupUNKNOWN; unattendedOFF; pollNO-GO. Legacy running state without the new version must be reviewed manually rather than silently upgraded. Old BLOCKED2 remain unchanged.
+
+Next: exact code review/isolated CI, then authenticated host adapter/outer containment review before separately approved adoption. New security patch is not automatically applied to the live controller. Original blocked work must not be reexecuted.

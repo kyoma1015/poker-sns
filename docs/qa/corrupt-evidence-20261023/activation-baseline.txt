@@ -1,0 +1,57 @@
+test_corrupted_preparation_is_not_overwritten (__main__.EvidenceActivation.test_corrupted_preparation_is_not_overwritten) ... FAIL
+test_expired_host_preparation_never_returns_prepared_token (__main__.EvidenceActivation.test_expired_host_preparation_never_returns_prepared_token) ... FAIL
+test_expired_preparation_never_dispatches_executor (__main__.EvidenceActivation.test_expired_preparation_never_dispatches_executor) ... FAIL
+test_unreclaimed_expiry_never_dispatches (__main__.EvidenceActivation.test_unreclaimed_expiry_never_dispatches) ... FAIL
+
+======================================================================
+FAIL: test_corrupted_preparation_is_not_overwritten (__main__.EvidenceActivation.test_corrupted_preparation_is_not_overwritten)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_evidence_activation.py", line 49, in test_corrupted_preparation_is_not_overwritten
+    with self.assertRaises(ValueError):w.prepare_host_session(self.f.repo,self.f.work,self.f.state,self.f.task(),now=100)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_expired_host_preparation_never_returns_prepared_token (__main__.EvidenceActivation.test_expired_host_preparation_never_returns_prepared_token)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_evidence_activation.py", line 35, in test_expired_host_preparation_never_returns_prepared_token
+    with self.assertRaises(ValueError):w.prepare_host_session(self.f.repo,self.f.work,self.f.state,self.f.task(),now=100)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_expired_preparation_never_dispatches_executor (__main__.EvidenceActivation.test_expired_preparation_never_dispatches_executor)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_evidence_activation.py", line 27, in test_expired_preparation_never_dispatches_executor
+    self.assertEqual(called,[],'old owner dispatched after expiry/replacement')
+AssertionError: Lists differ: [True] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+True
+
+- [True]
++ [] : old owner dispatched after expiry/replacement
+
+======================================================================
+FAIL: test_unreclaimed_expiry_never_dispatches (__main__.EvidenceActivation.test_unreclaimed_expiry_never_dispatches)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_evidence_activation.py", line 43, in test_unreclaimed_expiry_never_dispatches
+    self.assertEqual(called,[])
+AssertionError: Lists differ: [True] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+True
+
+- [True]
++ []
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.095s
+
+FAILED (failures=4)
