@@ -4,6 +4,7 @@ Run only against the fixed local Supabase API on loopback. Does not activate
 video posting. The test creates and deletes its own local user/media.
 """
 import json
+from concurrent.futures import ThreadPoolExecutor
 import os
 import subprocess
 import sys
@@ -67,6 +68,17 @@ def main():
                                         {"object_path": path, "content": "real E2E"}, adapters)
         if first != second:
             raise AssertionError("non-idempotent full finalization")
+        from tests.video.isolated_db_adapter import publish_post, reconcile_post
+        with ThreadPoolExecutor(max_workers=8) as pool:
+            results = list(pool.map(
+                lambda unused: publish_post(API, service, owner, path, "real E2E"),
+                range(16),
+            ))
+        if set(results) != {first["post_id"]}:
+            raise AssertionError("concurrent publish returned conflicting post IDs")
+        if reconcile_post(API, service, owner, path) != first["post_id"]:
+            raise AssertionError("committed post reconciliation mismatch")
+        print("PASS: isolated concurrent PostgREST publish and reconciliation")
         print("PASS: real isolated Auth -> private Storage -> ffprobe -> DB publish -> idempotent retry")
 if __name__ == "__main__":
     main()
