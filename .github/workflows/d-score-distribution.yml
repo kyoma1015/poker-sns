@@ -1,0 +1,31 @@
+name: D score distribution offline QA
+on:
+  pull_request:
+    branches: [codex/d-persona-audit-main-20261022]
+    paths:
+      - 'scripts/audit-player-type.mjs'
+      - 'tests/player-type-distribution.test.mjs'
+      - '.github/workflows/d-score-distribution.yml'
+permissions:
+  contents: read
+concurrency:
+  group: d-score-distribution-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node tests/player-type.test.mjs
+      - run: node tests/player-type-audit.test.mjs
+      - run: node tests/player-type-distribution.test.mjs
+      - run: node scripts/audit-player-type.mjs
+      - run: npm ci --cache "$RUNNER_TEMP/npm-cache"
+      - run: npm run build
+      - run: npm run lint

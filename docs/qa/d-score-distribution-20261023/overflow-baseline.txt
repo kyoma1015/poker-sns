@@ -1,0 +1,39 @@
+✔ score audit measures all 50 questions and 32 axes without claiming a classifier (24.24216ms)
+✔ exact reachable extrema equal sums of per-question extrema including negative scores (10.615856ms)
+✔ seeded samples are reproducible, complete and do not mutate historical source (46.969065ms)
+✔ historical persona totals remain within exact bounds without invented animal labels (17.032612ms)
+✔ invalid scores cannot generate apparently valid distribution evidence (4.863786ms)
+✖ finite individual weights cannot produce nonfinite aggregate evidence (62.098486ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 178.229035
+
+✖ failing tests:
+
+test at tests/player-type-distribution.test.mjs:69:1
+✖ finite individual weights cannot produce nonfinite aggregate evidence (62.098486ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-score-distribution/tests/player-type-distribution.test.mjs:78:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
