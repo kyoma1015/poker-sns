@@ -27,3 +27,6 @@ Stacked on PR1119068971e8571e3bd162b8173a42d735be0c969b9. Two new fixed failures
 
 ## PR112 IO/cleanup continuation —2026-10-23 JST
 New phased fixed baselines5/4FAIL +1/1FAIL +4/1FAIL +5/4FAIL, then15PASS/ten rounds150PASS; existing85/22/15/9/8/1PASS. Code_worker only: bounded nonblocking stdin/cleanup, explicitUNKNOWN running/context retention across expiry, process observation denial not confused with exit, observed escaped descendants refuse continuation. No retained45state changes/new jobs/leases; no controller/main/scheduler adoption. Software wait budgets are not a hard all-kernel wall-clock guarantee; snapshots do not prove all descendants. Formal-host boundary callback wiring and independent automatic launch remain unproved. Evidence docs/workers/WORKER_IO_BOUNDS_20261023.md and docs/qa/worker-io-bounds-20261023/. PollNO-GO.
+
+## Trusted host stop boundary — 2026-10-23
+PR113-based opt-in InvocationGuard.call_host preparation: pre/post stop/deadline, positive liveness, preserve-before-return. Eleven missing-capability cases1FAIL/10ERROR ->11PASS, ten rounds110PASS; old85/22/15/9/8/1/5PASS. Temporary callbacks/DB only, no actual formalhost or scheduler connection. Source-only finite guard reuse, retained45jobs untouched. See docs/workers/HOST_CALL_BOUNDARY_20261023.md. Hard watchdog/containment and real cancellation remain gates; pollNO-GO.

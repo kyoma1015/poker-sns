@@ -1,0 +1,16 @@
+# Issue22 trusted host stop boundary — isolated preparation
+
+Base PR113 `d6c7d7e20514a3f9684fd9539cf8c36f888bf88c`. No runtime adoption.
+
+## Contract and evidence
+New opt-in `InvocationGuard.call_host` uses the existing active guard's stop/deadline and finite reservation. It never reserves another invocation, claims a task, starts an agent, schedules a run, or publishes. Trusted callbacks must (1) dispatch/wait for the approved formal host operation, (2) positively observe this operation's liveness as `stopped` before/after, and (3) durably preserve its private local result/partial work before a post-call stop/deadline can propagate. An inactive guard, missing callbacks, unknown/running liveness or failed persistence rejects continuation. Original dispatch exceptions are preserved when safely stopped. Returned result is not a trusted receipt and does not bypass prepare/finish, source hashes, immutable tests or PR overlap gates.
+
+Fixed acceptance input ecf6d0a: 11 new cases, 1 assertionFAIL/10 missing-API ERROR. This is an explicitly requested missing capability, not eleven proven old bugs. The preliminary harness accidentally also imported thirteen existing fixture tests; the immutable corrected input isolates the eleven intended cases. After source eaa60de: 11PASS, repeated ten times110PASS. Existing acceptance85/worker22/queue15/controller9/recovery8/host-unknown1/expiry5 allPASS. Test callbacks and temporary SQLite only: not real host cancellation, real receipt, quota/coldstart or unattended development evidence. npm build/lint do not apply to this Python-only addition.
+
+## Limits and integration gates
+The synchronous callback must implement actual bounded waiting/cancellation itself. No outer watchdog, stronger process containment or hard callback/OS wallclock guarantee is claimed. Observation identity, authenticated formal-agent completion and atomic private persistence remain responsibilities of the trusted coordinator; a boolean attestation is not independently verified. Existing prepare/finish dispatch is deliberately NOT wired to this method. Before runtime adoption, use reviewed descriptors/allowed paths/PR snapshots, actual liveness/stop evidence, source/protected hashes, finite budget, and explicit operator approval. Never force an UNKNOWN lease or reset a consumed run.
+
+## Existing state and overlap
+Only prior PR107 changes `scripts/invocation_guard.py` among the complete 66-open-PR file snapshot; its exact head is an ancestor of this PR113-based branch. PR111–113 code_worker/process fixes are inherited unchanged. No other lane source files changed. Retained SQLite is opened mode=ro only: 45total/43implemented/2blocked/running0; original four hashes and logical digest unchanged. No held job/lease/reservation added. Main/controller/schedulers/production remain untouched. Independent automatic startup UNKNOWN, unattended development OFF, poll NO-GO.
+
+Next: independent review plus isolated adapter integration with authenticated real-host cancellation and private atomic checkpoint, followed by bounded watchdog design. Runtime connection/independent startup requires separate approval; do not enable scheduling to prove this fixture.
