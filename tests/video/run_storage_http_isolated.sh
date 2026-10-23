@@ -19,3 +19,4 @@ psql "$dburl" -v ON_ERROR_STOP=1 -f sql/post_short_videos_candidate.sql
 psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/isolated_finalize_db.sql
 psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/isolated_finalize_db_qa.sql
 VIDEO_QA_ENV="$qa/local.env" node tests/video/storage_http_e2e.mjs
+VIDEO_QA_ENV="$qa/local.env" python3 -m tests.video.isolated_finalize_http_e2e
