@@ -16,6 +16,8 @@ create table if not exists public.video_cleanup_queue (
 );
 alter table public.video_cleanup_queue enable row level security;
 revoke all on public.video_cleanup_queue from anon, authenticated;
+grant select, insert, update on public.video_cleanup_queue to service_role;
+grant usage, select on sequence public.video_cleanup_queue_id_seq to service_role;
 -- No user-facing policy: only a reviewed trusted server can enqueue/claim.
 create or replace function public.video_qa_publish(
  p_owner uuid, p_path text, p_content text
@@ -42,6 +44,7 @@ begin
  return v_id;
 end $$;
 revoke all on function public.video_qa_publish(uuid,text,text) from public, anon, authenticated;
+grant execute on function public.video_qa_publish(uuid,text,text) to service_role;
 -- Trusted server may explicitly grant EXECUTE to its isolated server role.
 
 -- Isolated queue worker primitives. Transaction-scoped row locking prevents
@@ -75,6 +78,7 @@ begin
  returning q.id,q.owner_id,q.object_path,q.attempts;
 end $$;
 revoke all on function public.video_qa_claim_cleanup(uuid,integer) from public, anon, authenticated;
+grant execute on function public.video_qa_claim_cleanup(uuid,integer) to service_role;
 create or replace function public.video_qa_finish_cleanup(
  p_id bigint,p_worker uuid,p_success boolean,p_reason text
 ) returns boolean language plpgsql security invoker set search_path = '' as $$
@@ -95,6 +99,7 @@ begin
  return updated_count=1;
 end $$;
 revoke all on function public.video_qa_finish_cleanup(bigint,uuid,boolean,text) from public, anon, authenticated;
+grant execute on function public.video_qa_finish_cleanup(bigint,uuid,boolean,text) to service_role;
 
 -- Read-only reconciliation by owner and path. Use only after verifying
 -- the caller's identity in a trusted server; never expose to client roles.
@@ -111,3 +116,4 @@ begin
  return v_id;
 end $$;
 revoke all on function public.video_qa_reconcile(uuid,text) from public,anon,authenticated;
+grant execute on function public.video_qa_reconcile(uuid,text) to service_role;
