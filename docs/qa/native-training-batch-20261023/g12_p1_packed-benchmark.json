@@ -1,0 +1,57 @@
+{
+  "module_sha256": "05d5f04b4436ed339ef48ad54638c34f03a55e192b21a5cca8f7fc128a2596c6",
+  "historical_checkpoint_used": false,
+  "poker_strategy_convergence": "UNKNOWN",
+  "poker": [
+    {
+      "players": 2,
+      "synthetic_stack_chips": 4,
+      "iterations": 100,
+      "infosets": 191,
+      "seconds": 0.004241671995259821,
+      "iterations_per_second": 23575.608890020867,
+      "checkpoint_sha256_payload": "3be3dfbc57ff53e52afdb29cd066ccb61b6774557741a07ac73115d0572a11e2"
+    },
+    {
+      "players": 6,
+      "synthetic_stack_chips": 4,
+      "iterations": 100,
+      "infosets": 3476,
+      "seconds": 0.04820988900610246,
+      "iterations_per_second": 2074.26322818005,
+      "checkpoint_sha256_payload": "1bfc77053d2b451f28e27500e0d965b2833dc08bd8b93278600a5a41ffc6a358"
+    },
+    {
+      "players": 9,
+      "synthetic_stack_chips": 4,
+      "iterations": 100,
+      "infosets": 7879,
+      "seconds": 0.11578560300404206,
+      "iterations_per_second": 863.6652347572868,
+      "checkpoint_sha256_payload": "14c93e326538ad69ed2eac0eb493e72bb4ee17f9631a2b21ecde0d3ab41a9627"
+    }
+  ],
+  "toy_matching_pennies": [
+    {
+      "iteration": 200,
+      "p0": 0.5075669503339953,
+      "p1": 0.5023940464451176,
+      "nash_conv": 0.019921993558225992,
+      "scope": "two-action hidden-move toy only; not full poker exploitability"
+    },
+    {
+      "iteration": 2000,
+      "p0": 0.5142484849247426,
+      "p1": 0.5101511661668966,
+      "nash_conv": 0.04879930218327844,
+      "scope": "two-action hidden-move toy only; not full poker exploitability"
+    },
+    {
+      "iteration": 20000,
+      "p0": 0.5098757494074779,
+      "p1": 0.49613022598035655,
+      "nash_conv": 0.02749104685424275,
+      "scope": "two-action hidden-move toy only; not full poker exploitability"
+    }
+  ]
+}

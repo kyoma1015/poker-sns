@@ -55,3 +55,12 @@ Hand169 component validates all 1326 distinct combinations, 13 pairs/78 suited/7
 Existing backend regressions 34 PASS; app regressions 89 PASS; npm ci/build/lint PASS with existing warnings. Browser/UI source was unchanged. Evidence and exact run commands under docs/qa/gto-active-20261020/ and gto/README.md. Dedicated PR CI runs the native reconstruction; it is a finite verifier, not a permanent worker.
 
 Remaining: genuine vendor 1,588-file bundle, G11 expected data/settings, exact target stack/bet configurations, historical checkpoint and ABI checks, settlement/parity/convergence/representative benchmarks. No original ZIP bytes/checkpoint appeared in current handoff Git tree. No canonical solver selected, no old checkpoint opened, no production/main/DB operations. Next tasks: expected-value settlement fixtures, checkpoint format/compatibility inventory on copies, and connecting verified 169 export to actual native row output without inventing EV.
+
+## Native batch lifecycle — 2026-10-23
+New finite native training/verified checkpoint continuation is described in
+`docs/workers/GTO_NATIVE_TRAINING_BATCH_20261023.md`. This is a PR20 follow-up,
+not a replay of existing settlement/hand169 patches or recovered G9 baseline.
+Local native tests: eight per separate Next/Cache/Packed process, plus existing
+18 Python tests. Original G9 source, 20 owner stacks, G11 ABI and full poker
+convergence remain unproved; native exported EV remains null. No retained state,
+controller, scheduler or production changes.

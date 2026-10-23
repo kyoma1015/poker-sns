@@ -15,3 +15,8 @@
 
 詳細: INTEGRATION_VERIFICATION_20261020.md、各系列の進捗ファイル、docs/qa/integration-20261020/。
 本番マージ・デプロイ・本番DB変更・課金は禁止。CI PASSは本番DBや実機QAの完了証明ではない。
+
+2026-10-23 C: finite actual native training batches and verified exact checkpoint
+continuation added in a separate PR20 follow-up. See
+`docs/workers/GTO_NATIVE_TRAINING_BATCH_20261023.md`; original G9/G11 and strategy
+convergence are still blocked. No autonomous launch or production adoption.
