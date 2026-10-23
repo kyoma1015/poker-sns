@@ -28,6 +28,10 @@ class ActivationBinding(unittest.TestCase):
         changed=dict(self.t,instruction='different');self.refuse({'task':changed})
     def test_incoming_claimed_hash_cannot_replace_acquired_identity(self):
         self.refuse({'claimed_spec_hash':'b'*64})
+    def test_mismatched_running_spec_blocks_other_lane_without_mutation(self):
+        self.l.db.execute("update development_jobs set spec_hash=? where id='owned'",('b'*64,));before=snapshot(self.l.db)
+        self.assertTrue(self.l.claim(task('other','B'),now=10000) is None,'mismatched task metadata was expired/taken over')
+        self.assertTrue(snapshot(self.l.db)==before)
     def test_wrong_token_never_changes_row(self):self.refuse({},token='wrong-token')
     def test_retry_spec_mismatch_rolls_back(self):
         self.l.finish('owned',self.token,'retry_wait',{},now=101);before=snapshot(self.l.db)
