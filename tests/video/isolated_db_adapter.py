@@ -6,11 +6,13 @@ publish raises PostCommitUnknown; the caller must reconcile, never delete.
 import json
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
+from urllib.parse import urlparse
 from uuid import UUID
 from .finalize_core import PostCommitUnknown
 
 def _rpc(base_url: str, service_key: str, name: str, payload: dict):
-    if not base_url.startswith("http://127.0.0.1:56321"):
+    parsed = urlparse(base_url)
+    if (parsed.scheme, parsed.hostname, parsed.port, parsed.path, parsed.query, parsed.fragment, parsed.username, parsed.password) != ("http", "127.0.0.1", 56321, "", "", "", None, None):
         raise ValueError("isolated Supabase URL required")
     if not service_key:
         raise PermissionError("isolated service credential missing")
