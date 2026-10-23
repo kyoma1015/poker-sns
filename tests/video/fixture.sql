@@ -13,7 +13,7 @@ create table storage.objects(id uuid primary key default gen_random_uuid(), buck
 create or replace function auth.uid() returns uuid language sql stable as $$
  select nullif(current_setting('request.jwt.claim.sub', true),'')::uuid $$;
 create or replace function storage.foldername(p text) returns text[] language sql immutable as $$
- select string_to_array(p, '/')[:array_length(string_to_array(p, '/'),1)-1] $$;
+ select (string_to_array(p, '/'))[1:array_length(string_to_array(p, '/'),1)-1] $$;
 -- Only in disposable fixture: map authenticated to a real login role.
 create role authenticated nologin;
 grant authenticated to video_owner, video_viewer;
