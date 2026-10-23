@@ -26,5 +26,7 @@ jobs:
         run: python3 -m unittest tests.video.test_local_http -v
       - name: Supabase Auth JWT adapter unit tests
         run: python3 -m unittest tests.video.test_supabase_auth_adapter -v
+      - name: Private Storage download adapter unit tests
+        run: python3 -m unittest tests.video.test_storage_download_adapter -v
       - name: Trusted-server ffprobe duration validation prototype
         run: bash -x tests/video/test_server_validate.sh
