@@ -32,5 +32,7 @@ jobs:
         run: python3 -m unittest tests.video.test_cleanup_worker_core -v
       - name: Isolated DB RPC adapter tests
         run: python3 -m unittest tests.video.test_isolated_db_adapter -v
+      - name: Isolated adapter composition tests
+        run: python3 -m unittest tests.video.test_isolated_composition -v
       - name: Trusted-server ffprobe duration validation prototype
         run: bash -x tests/video/test_server_validate.sh
