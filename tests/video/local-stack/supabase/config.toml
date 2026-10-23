@@ -1,0 +1,21 @@
+project_id = "pokerid-video-isolated"
+[api]
+enabled = true
+port = 56321
+schemas = ["public", "graphql_public"]
+[db]
+port = 56322
+shadow_port = 56320
+major_version = 17
+[studio]
+enabled = false
+[auth]
+enabled = true
+site_url = "http://127.0.0.1:56321"
+enable_signup = true
+[auth.email]
+enable_signup = true
+enable_confirmations = false
+[storage]
+enabled = true
+file_size_limit = "25MiB"
