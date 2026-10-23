@@ -36,9 +36,10 @@ def finalize_video(
     if not dot or ext not in ("mp4", "webm"):
         raise ValueError("invalid object extension")
     UUID(stem)
+    # Ownership must be proven before any destructive cleanup.
+    if not verify_owner(user_id, request.object_path):
+        raise PermissionError("staged object not owned by authenticated user")
     try:
-        if not verify_owner(user_id, request.object_path):
-            raise PermissionError("staged object not owned by authenticated user")
         verify(request.local_staged_file)
         return create_post(user_id, request.object_path, request.content)
     except Exception:
