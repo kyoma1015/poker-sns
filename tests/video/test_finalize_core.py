@@ -2,7 +2,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
-from tests.video.finalize_core import FinalizeRequest, finalize_video
+from tests.video.finalize_core import FinalizeRequest, finalize_video, PostCommitUnknown
 
 USER = '10000000-0000-0000-0000-000000000001'
 OTHER = '10000000-0000-0000-0000-000000000002'
@@ -36,6 +36,15 @@ class FinalizeCoreTests(unittest.TestCase):
             finalize_video(self.request, verify_owner=self.owner,
                 create_post=fail, delete_staged_object=self.cleanup)
         self.assertEqual(self.calls, [('delete', PATH)])
+
+    @patch('tests.video.finalize_core.verify', return_value={'duration': 2})
+    def test_ambiguous_db_commit_never_deletes_video(self, verify):
+        def uncertain(*args):
+            raise PostCommitUnknown('commit may have succeeded')
+        with self.assertRaises(PostCommitUnknown):
+            finalize_video(self.request, verify_owner=self.owner,
+                create_post=uncertain, delete_staged_object=self.cleanup)
+        self.assertEqual(self.calls, [])
 
     def test_reject_other_user_path_without_side_effect(self):
         with self.assertRaises(ValueError):
