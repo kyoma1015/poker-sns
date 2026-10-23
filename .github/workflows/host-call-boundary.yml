@@ -1,0 +1,41 @@
+name: Trusted host call boundary (isolated only)
+on:
+  pull_request:
+    branches: [codex/a-worker-io-bounds-20261023]
+    paths:
+      - 'scripts/invocation_guard.py'
+      - 'tests/automation/test_host_call_boundary.py'
+      - 'tests/automation/test_host_boundary_restart.py'
+      - '.github/workflows/host-call-boundary.yml'
+permissions:
+  contents: read
+concurrency:
+  group: host-call-boundary-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+jobs:
+  isolated-boundary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Immutable acceptance and worker regressions
+        run: |
+          python -B -m unittest discover -s tests/worker_acceptance -v
+          python -B tests/automation/test_code_worker.py
+          python -B tests/automation/test_development_queue.py
+          python -B tests/automation/test_controller_integration.py
+          python -B tests/automation/test_worker_recovery_lifecycle.py
+          python -B tests/automation/test_host_unknown_liveness.py
+          python -B tests/automation/test_unknown_liveness_expiry.py
+      - name: Fresh process checkpoint and finite restart
+        run: python -B tests/automation/test_host_boundary_restart.py -v
+      - name: Ten trusted boundary rounds with temporary state
+        run: |
+          for round in $(seq 1 10); do
+            python -B tests/automation/test_host_call_boundary.py -v || exit 1
+          done
