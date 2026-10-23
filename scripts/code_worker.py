@@ -221,6 +221,35 @@ def finite_lease_number(value, label):
     return value
 
 
+def running_evidence_state(raw):
+    """Fail closed on legacy/corrupt/ambiguous running state; never repair it here."""
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError('duplicate evidence key')
+            result[key] = value
+        return result
+
+    def invalid_constant(value):
+        raise ValueError('nonfinite evidence constant')
+
+    if not isinstance(raw, str) or len(raw) > 1024 * 1024:
+        return 'unknown'
+    try:
+        prior = json.loads(raw, object_pairs_hook=unique, parse_constant=invalid_constant)
+    except (TypeError, ValueError, RecursionError):
+        return 'unknown'
+    if (type(prior) is not dict or type(prior.get('lease_evidence_version')) is not int
+            or prior.get('lease_evidence_version') != 1
+            or type(prior.get('worker_liveness')) is not str
+            or prior.get('worker_liveness') not in ('not_started', 'running', 'stopped')
+            or ('worker_liveness_unknown' in prior
+                and prior['worker_liveness_unknown'] is not False)):
+        return 'unknown'
+    return prior['worker_liveness']
+
+
 class Leases:
     def __init__(self, path):
         with setup_lock(path):
@@ -248,13 +277,14 @@ class Leases:
         digest = hashlib.sha256(json.dumps(task, sort_keys=True).encode()).hexdigest()
         self.db.execute('BEGIN IMMEDIATE')
         try:
-            for (raw,) in self.db.execute("SELECT evidence FROM development_jobs WHERE status='running'"):
-                try:
-                    prior = json.loads(raw)
-                except (TypeError, ValueError):
-                    continue
-                if isinstance(prior, dict) and (prior.get('worker_liveness_unknown') is True
-                                                or prior.get('worker_liveness') == 'unknown'):
+            for raw, expiry in self.db.execute("SELECT evidence,expires FROM development_jobs WHERE status='running'"):
+                liveness = running_evidence_state(raw)
+                # A deadline is not positive evidence that an executing worker died.
+                # A fresh never-dispatched lease may expire normally; executing or
+                # legacy/corrupt context requires ownership/liveness review first.
+                if (liveness == 'unknown' or type(expiry) not in (int, float)
+                        or not math.isfinite(expiry)
+                        or (liveness == 'running' and expiry <= now)):
                     self.db.execute('COMMIT')
                     return None
             self.db.execute("UPDATE development_jobs SET status='blocked', token=NULL, evidence='lease expired; review required' WHERE status='running' AND expires<=?", (now,))
@@ -266,10 +296,11 @@ class Leases:
                 self.db.execute('COMMIT')
                 return None
             token = uuid.uuid4().hex
+            initial = json.dumps({'lease_evidence_version': 1, 'worker_liveness': 'not_started'})
             if old:
-                self.db.execute("UPDATE development_jobs SET status='running',attempts=attempts+1,token=?,expires=? WHERE id=?", (token, expires, task['id']))
+                self.db.execute("UPDATE development_jobs SET status='running',attempts=attempts+1,token=?,expires=?,evidence=? WHERE id=?", (token, expires, initial, task['id']))
             else:
-                self.db.execute("INSERT INTO development_jobs(id,lane,spec_hash,status,attempts,token,expires) VALUES(?,?,?,'running',1,?,?)", (task['id'], task['lane'], digest, token, expires))
+                self.db.execute("INSERT INTO development_jobs(id,lane,spec_hash,status,attempts,token,expires,evidence) VALUES(?,?,?,'running',1,?,?,?)", (task['id'], task['lane'], digest, token, expires, initial))
             self.db.execute('COMMIT')
             return token
         except BaseException:
@@ -513,6 +544,9 @@ def run_task(repository, work_root, state, task, executor, timeout=180):
         with setup_lock(state):
             command(['git', 'worktree', 'add', '-b', task['branch'], str(worktree), base], repository)
         before = protected_hashes(worktree, task['protected_tests'])
+        evidence.update(lease_evidence_version=1, worker_liveness='running')
+        leases.db.execute("UPDATE development_jobs SET evidence=? WHERE id=? AND token=? AND status='running'",
+                          (json.dumps(evidence), task['id'], token))
         evidence['execution'] = executor(task, worktree, timeout)
         validate_and_commit(task, worktree, base, before, evidence)
         evidence['status'] = 'implemented_local'
@@ -554,7 +588,8 @@ def prepare_host_session(repository, work_root, state, task, now=None):
         with setup_lock(state):
             command(['git', 'worktree', 'add', '-b', task['branch'], str(worktree), base], repository)
         context = {'task': task, 'worktree': str(worktree), 'before': protected_hashes(worktree, task['protected_tests']),
-                   'base_sha': base, 'prepared_for': 'host_session'}
+                   'base_sha': base, 'prepared_for': 'host_session',
+                   'lease_evidence_version': 1, 'worker_liveness': 'running'}
         leases.db.execute('UPDATE development_jobs SET evidence=? WHERE id=? AND token=?',
                           (json.dumps(context), task['id'], token))
         return {'id': task['id'], 'lane': task['lane'], 'status': 'prepared', 'worktree': str(worktree),
