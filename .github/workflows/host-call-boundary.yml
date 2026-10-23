@@ -5,6 +5,7 @@ on:
     paths:
       - 'scripts/invocation_guard.py'
       - 'tests/automation/test_host_call_boundary.py'
+      - 'tests/automation/test_host_boundary_restart.py'
       - '.github/workflows/host-call-boundary.yml'
 permissions:
   contents: read
@@ -31,6 +32,8 @@ jobs:
           python -B tests/automation/test_worker_recovery_lifecycle.py
           python -B tests/automation/test_host_unknown_liveness.py
           python -B tests/automation/test_unknown_liveness_expiry.py
+      - name: Fresh process checkpoint and finite restart
+        run: python -B tests/automation/test_host_boundary_restart.py -v
       - name: Ten trusted boundary rounds with temporary state
         run: |
           for round in $(seq 1 10); do

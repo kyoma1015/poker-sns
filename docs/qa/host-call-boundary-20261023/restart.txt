@@ -1,0 +1,6 @@
+test_post_call_stop_keeps_private_checkpoint_and_rejects_same_run_after_restart (__main__.HostBoundaryRestart.test_post_call_stop_keeps_private_checkpoint_and_rejects_same_run_after_restart) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.123s
+
+OK
