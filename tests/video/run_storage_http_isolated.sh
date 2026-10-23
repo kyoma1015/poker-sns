@@ -16,4 +16,6 @@ dburl="$(grep '^DB_URL=' "$qa/local.env" | cut -d= -f2- | tr -d '"')"
 [[ "$dburl" == *"127.0.0.1:56322"* ]] || { echo 'BLOCKED: unexpected DB endpoint'; exit 2; }
 psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/storage_bootstrap.sql
 psql "$dburl" -v ON_ERROR_STOP=1 -f sql/post_short_videos_candidate.sql
+psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/isolated_finalize_db.sql
+psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/isolated_finalize_db_qa.sql
 VIDEO_QA_ENV="$qa/local.env" node tests/video/storage_http_e2e.mjs
