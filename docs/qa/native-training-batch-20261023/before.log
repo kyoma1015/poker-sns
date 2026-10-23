@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-native-training-batch/gto/native/test_training_batch.py", line 14, in <module>
+    from gto.native.training import NativeGame, checkpoint, train_batch, contract_for
+ModuleNotFoundError: No module named 'gto.native.training'

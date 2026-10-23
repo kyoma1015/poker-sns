@@ -1,7 +1,7 @@
 name: GTO reconstructed native verification
 on:
   pull_request:
-    branches: [main, codex/integration-poll-only-20261020]
+    branches: [main, codex/integration-poll-only-20261020, codex/c-gto-active-milestones-20261020]
     paths:
       - 'gto/**'
       - 'handoff/gto/**'
@@ -30,3 +30,13 @@ jobs:
           python -B handoff/gto/g12_next/g12_p1_live_backend_tests.py
       - name: Pinned reconstruction (not original G11 vendor)
         run: python -B gto/native/build_reconstructed.py --work-root "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID"
+      - name: Actual native finite batches and exact checkpoint continuation
+        run: |
+          for variant in g12_next g12_p1_cache g12_p1_packed; do
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_training_batch.py -v
+          done
+      - name: Native poker throughput and toy-only NashConv observations
+        run: |
+          for variant in g12_next g12_p1_cache g12_p1_packed; do
+            python -B gto/native/benchmark_training.py --module-dir "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant"
+          done
