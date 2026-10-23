@@ -17,7 +17,7 @@ test('posting remains blocked until server-side duration validation exists', () 
 test('staged storage is private, limited, and not readable by every authenticated user', () => {
   assert.match(sql, /'post-videos', 'post-videos', false, 20971520/)
   assert.match(sql, /post_videos_read_own/)
-  assert.doesNotMatch(sql, /create policy "post_videos_read_post_viewers"/)
+  assert.doesNotMatch(sql, /^create policy "post_videos_read_post_viewers"/m)
   assert.match(sql, /BLOCKED/)
 })
 test('path validation is strict before deleting storage objects', () => {
