@@ -90,5 +90,8 @@ checks extend known-card policy/rule coverage, not GTO equilibrium claims.
 Root review found that abs(NaN-1/N)>tolerance is false and therefore did not reject
 a NaN probability. Immutable input f4e48e9 reproduces1FAIL/3 tests using a tiny
 negative-distribution stub. Explicit math.isfinite makes3PASS. This is a stub
-contract test, distinct from the15 actual NativeState cases per variant. Existing
+contract test, distinct from the15-case per-variant suite. That suite has8
+actual solver/NativeState integration methods and7 format/row-fixture boundaries;
+loading the extension for a suite does not make every fixture an end-to-end native
+strategy test. Existing
 protected/native acceptance is unchanged; no test gate is weakened.
