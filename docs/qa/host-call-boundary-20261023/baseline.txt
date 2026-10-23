@@ -9,19 +9,6 @@ test_stop_after_dispatch_preserves_result_before_refusing (__main__.HostBoundary
 test_stop_before_dispatch_refuses (__main__.HostBoundary.test_stop_before_dispatch_refuses) ... ERROR
 test_success_preserves_before_return_and_does_not_reserve_again (__main__.HostBoundary.test_success_preserves_before_return_and_does_not_reserve_again) ... ERROR
 test_unknown_before_dispatch_does_not_call (__main__.HostBoundary.test_unknown_before_dispatch_does_not_call) ... ERROR
-test_candidates_promote_only_one_ready_task_per_lane (test_continuation_recovery.RecoveryAcceptance.test_candidates_promote_only_one_ready_task_per_lane) ... ok
-test_changed_candidate_id_spec_is_rejected_on_restart (test_continuation_recovery.RecoveryAcceptance.test_changed_candidate_id_spec_is_rejected_on_restart) ... ok
-test_completed_and_active_lane_are_not_replayed (test_continuation_recovery.RecoveryAcceptance.test_completed_and_active_lane_are_not_replayed) ... ok
-test_finite_run_budget_and_duplicate_run_survive_restart (test_continuation_recovery.RecoveryAcceptance.test_finite_run_budget_and_duplicate_run_survive_restart) ... ok
-test_imported_remaining_schedule_cap_only_reduces_and_never_resets (test_continuation_recovery.RecoveryAcceptance.test_imported_remaining_schedule_cap_only_reduces_and_never_resets) ... ok
-test_missing_state_and_changed_anchor_fail_closed (test_continuation_recovery.RecoveryAcceptance.test_missing_state_and_changed_anchor_fail_closed) ... ok
-test_one_retry_only_and_permission_errors_not_retried (test_continuation_recovery.RecoveryAcceptance.test_one_retry_only_and_permission_errors_not_retried) ... ok
-test_public_checkpoint_excludes_tokens_context_errors_and_secrets (test_continuation_recovery.RecoveryAcceptance.test_public_checkpoint_excludes_tokens_context_errors_and_secrets) ... ok
-test_quota_defer_restart_resume_same_worktree_and_commit (test_continuation_recovery.RecoveryAcceptance.test_quota_defer_restart_resume_same_worktree_and_commit) ... ok
-test_reference_extraction_never_turns_untrusted_text_into_tasks (test_continuation_recovery.RecoveryAcceptance.test_reference_extraction_never_turns_untrusted_text_into_tasks) ... ok
-test_resume_rejects_tampered_checkpoint_and_never_steals_expired_lease (test_continuation_recovery.RecoveryAcceptance.test_resume_rejects_tampered_checkpoint_and_never_steals_expired_lease) ... ok
-test_stale_incomplete_or_overlapping_pr_snapshot_blocks (test_continuation_recovery.RecoveryAcceptance.test_stale_incomplete_or_overlapping_pr_snapshot_blocks) ... ok
-test_unreviewed_bad_baseline_missing_tests_and_wildcards_cannot_run (test_continuation_recovery.RecoveryAcceptance.test_unreviewed_bad_baseline_missing_tests_and_wildcards_cannot_run) ... ok
 
 ======================================================================
 ERROR: test_callbacks_required_and_inactive_guard_refuses (__main__.HostBoundary.test_callbacks_required_and_inactive_guard_refuses)
@@ -152,6 +139,6 @@ Traceback (most recent call last):
 AssertionError: False is not true
 
 ----------------------------------------------------------------------
-Ran 24 tests in 0.526s
+Ran 11 tests in 0.149s
 
 FAILED (failures=1, errors=10)

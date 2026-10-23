@@ -7,11 +7,11 @@ ROOT=Path(__file__).resolve().parents[2]
 sys.path[:0]=[str(ROOT/'scripts'),str(ROOT/'tests/worker_acceptance')]
 from invocation_guard import InvocationGuard
 from code_worker import WorkerLivenessUnknown
-from test_continuation_recovery import RecoveryAcceptance
+import test_continuation_recovery as fixture
 
 class HostBoundary(unittest.TestCase):
     def setUp(self):
-        self.f=RecoveryAcceptance();self.f.setUp()
+        self.f=fixture.RecoveryAcceptance();self.f.setUp()
         self.guard=InvocationGuard(self.f.store,'boundary-run','/fixture',enabled=True)
         self.events=[];self.states=iter(['stopped','stopped']);self.saved=[]
     def tearDown(self):self.f.tearDown()
