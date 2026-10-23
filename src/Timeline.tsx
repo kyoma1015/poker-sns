@@ -1191,7 +1191,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     if (selectedTag && !extractTags(post.content).includes(selectedTag)) return false
     const actorId = post.feedActorId || post.user_id
     if (profileUserId) return actorId === profileUserId
-    return timelineMode === 'all' || actorId === currentUserId || followingIds.includes(actorId)
+    return Boolean(selectedTag) || timelineMode === 'all' || actorId === currentUserId || followingIds.includes(actorId)
   })
 
   const formatPostTime = (
