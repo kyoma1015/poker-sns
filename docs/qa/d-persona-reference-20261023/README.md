@@ -1,6 +1,6 @@
 # D historical persona reference integrity — 2026-10-23
 
-Base PR114: 69472d70be3dcea70fcaffaf301b2d4e32fb672a. Existing PR30/82/100/114 functionality reused, no double application. New fixed13 input tests reproduce12FAIL/1PASS: missing report and incorrect historical raw-score references silently pass the audit. Final13PASS plus prior53+5+6PASS, total77. No protected test, source fixture, scoring, UI or DB change.
+Base PR114: 69472d70be3dcea70fcaffaf301b2d4e32fb672a. Existing PR30/82/100/114 functionality reused, no double application. New fixed13 input tests reproduce12FAIL/1PASS: missing report and incorrect historical raw-score references silently pass the audit. Additional empty-reference fixture reproduces1FAIL/14 at input727ca6e; empty references now reject zero-comparisonPASS. Final14PASS plus prior53+5+6PASS, total78. No protected test, source fixture, scoring, UI or DB change.
 
 The historical30personas carry32rawscore references each. All960 values match recomputation from exactly one valid option per each of50 questions. This is consistency with a checked-in historical calculation, not independent expert validation, not a live diagnosis execution, and not36animal classification. The reference audit rejects missing/malformed raw objects, missing/extra dimensions, inherited dimensions, nonfinite/non-number values and numeric mismatch. Any error suppresses downstream score-distribution evidence.
 

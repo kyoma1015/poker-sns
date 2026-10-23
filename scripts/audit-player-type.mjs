@@ -104,6 +104,7 @@ export function auditPlayerType(fixture, assets) {
     }
     if (errors.length) distribution = null
   }
+  if (!fixture.personas.length) errors.push({ code: 'EMPTY_PERSONA_REFERENCES' })
   const scoringInputValid = !errors.length
   let comparedValues = 0
   const dimensionKeys = Object.keys(traitPositiveMax)
