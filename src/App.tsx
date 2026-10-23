@@ -20,6 +20,7 @@ import FollowList from './FollowList'
 import FollowerList from './FollowerList'
 import StyleRating from './StyleRating'
 import Timeline from './Timeline'
+import TagFollows from './TagFollows'
 import PostDetail from './PostDetail'
 import DirectMessages from './DirectMessages'
 import DirectMessageChat from './DirectMessageChat'
@@ -179,6 +180,7 @@ function AppLayout() {
         <Route path="/home" element={<Navigate to="/timeline" replace />} />
 
         <Route path="/timeline" element={<Timeline />} />
+          <Route path="/tags" element={<TagFollows />} />
         <Route path="/tools" element={<PokerTools />} />
         <Route path="/results" element={<PokerResults />} />
         <Route path="/admin/reports" element={<AdminReports />} />
