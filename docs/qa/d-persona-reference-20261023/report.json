@@ -1,0 +1,1924 @@
+{
+  "status": "CONDITIONAL PASS",
+  "source": "checked-in historical fixture; not live DB",
+  "questions": 50,
+  "options": 222,
+  "scoreDimensions": 32,
+  "animalDisplayKeys": 36,
+  "pngAssets": 36,
+  "personas": 30,
+  "errors": [],
+  "warnings": [],
+  "scoreDistribution": {
+    "sampling": "uniform independent option choices; synthetic stress evidence, not player prevalence",
+    "seed": 5261636,
+    "samples": 1000,
+    "traits": {
+      "initiative": {
+        "minimum": 0,
+        "maximum": 19,
+        "sampleMinimum": 0,
+        "sampleMaximum": 14,
+        "mean": 4.5560000000000045,
+        "variance": 9.124863999999997
+      },
+      "risk_tolerance": {
+        "minimum": 0,
+        "maximum": 4,
+        "sampleMinimum": 0,
+        "sampleMaximum": 4,
+        "mean": 0.7520000000000001,
+        "variance": 1.2504959999999998
+      },
+      "patience": {
+        "minimum": 0,
+        "maximum": 23,
+        "sampleMinimum": 0,
+        "sampleMaximum": 16,
+        "mean": 4.968999999999996,
+        "variance": 10.652038999999997
+      },
+      "analytical": {
+        "minimum": 0,
+        "maximum": 26,
+        "sampleMinimum": 0,
+        "sampleMaximum": 21,
+        "mean": 6.297000000000004,
+        "variance": 12.572791000000013
+      },
+      "player_read": {
+        "minimum": 0,
+        "maximum": 14,
+        "sampleMinimum": 0,
+        "sampleMaximum": 14,
+        "mean": 2.9220000000000037,
+        "variance": 6.299916000000003
+      },
+      "adaptability": {
+        "minimum": 0,
+        "maximum": 28,
+        "sampleMinimum": 0,
+        "sampleMaximum": 22,
+        "mean": 6.593000000000001,
+        "variance": 13.82735099999999
+      },
+      "deception": {
+        "minimum": -3,
+        "maximum": 10,
+        "sampleMinimum": -3,
+        "sampleMaximum": 10,
+        "mean": 1.2710000000000001,
+        "variance": 8.287558999999993
+      },
+      "value_directness": {
+        "minimum": 0,
+        "maximum": 10,
+        "sampleMinimum": 0,
+        "sampleMaximum": 9,
+        "mean": 2.2260000000000018,
+        "variance": 5.112923999999999
+      },
+      "threat_sensitivity": {
+        "minimum": 0,
+        "maximum": 20,
+        "sampleMinimum": 0,
+        "sampleMaximum": 17,
+        "mean": 4.029999999999998,
+        "variance": 9.423100000000005
+      },
+      "novelty": {
+        "minimum": -3,
+        "maximum": 16,
+        "sampleMinimum": -3,
+        "sampleMaximum": 12,
+        "mean": 2.5740000000000025,
+        "variance": 9.752524000000001
+      },
+      "stability": {
+        "minimum": -5,
+        "maximum": 28,
+        "sampleMinimum": -5,
+        "sampleMaximum": 18,
+        "mean": 5.206000000000003,
+        "variance": 16.895564
+      },
+      "confidence": {
+        "minimum": -2,
+        "maximum": 11,
+        "sampleMinimum": -2,
+        "sampleMaximum": 9,
+        "mean": 1.9540000000000006,
+        "variance": 4.683884000000003
+      },
+      "exploit": {
+        "minimum": -3,
+        "maximum": 48,
+        "sampleMinimum": -3,
+        "sampleMaximum": 27,
+        "mean": 10.775000000000002,
+        "variance": 26.372375000000016
+      },
+      "tempo": {
+        "minimum": -3,
+        "maximum": 12,
+        "sampleMinimum": -3,
+        "sampleMaximum": 10,
+        "mean": 1.944,
+        "variance": 8.614864000000004
+      },
+      "learning_receptivity": {
+        "minimum": 0,
+        "maximum": 7,
+        "sampleMinimum": 0,
+        "sampleMaximum": 7,
+        "mean": 1.7899999999999983,
+        "variance": 3.1599000000000017
+      },
+      "overview": {
+        "minimum": 0,
+        "maximum": 14,
+        "sampleMinimum": 0,
+        "sampleMaximum": 12,
+        "mean": 2.671,
+        "variance": 6.310759000000005
+      },
+      "planning_horizon": {
+        "minimum": 0,
+        "maximum": 12,
+        "sampleMinimum": 0,
+        "sampleMaximum": 9,
+        "mean": 2.4119999999999964,
+        "variance": 5.684256
+      },
+      "history_use": {
+        "minimum": -3,
+        "maximum": 25,
+        "sampleMinimum": -3,
+        "sampleMaximum": 19,
+        "mean": 4.836999999999998,
+        "variance": 16.498430999999993
+      },
+      "small_edge_accumulation": {
+        "minimum": -3,
+        "maximum": 11,
+        "sampleMinimum": -3,
+        "sampleMaximum": 11,
+        "mean": 2.025000000000002,
+        "variance": 9.224374999999995
+      },
+      "action_efficiency": {
+        "minimum": -3,
+        "maximum": 20,
+        "sampleMinimum": -3,
+        "sampleMaximum": 17,
+        "mean": 3.430000000000001,
+        "variance": 13.535099999999996
+      },
+      "interaction_read": {
+        "minimum": 0,
+        "maximum": 25,
+        "sampleMinimum": 0,
+        "sampleMaximum": 19,
+        "mean": 5.459,
+        "variance": 11.318318999999995
+      },
+      "pressure_resistance": {
+        "minimum": -3,
+        "maximum": 10,
+        "sampleMinimum": -3,
+        "sampleMaximum": 10,
+        "mean": 1.5459999999999994,
+        "variance": 7.3478840000000005
+      },
+      "independent_judgment": {
+        "minimum": -3,
+        "maximum": 8,
+        "sampleMinimum": -3,
+        "sampleMaximum": 8,
+        "mean": 1.0530000000000015,
+        "variance": 6.990191000000005
+      },
+      "selective_burst": {
+        "minimum": -6,
+        "maximum": 9,
+        "sampleMinimum": -6,
+        "sampleMaximum": 9,
+        "mean": 0.6989999999999987,
+        "variance": 10.886399000000008
+      },
+      "pot_size_comfort": {
+        "minimum": -5,
+        "maximum": 9,
+        "sampleMinimum": -5,
+        "sampleMaximum": 9,
+        "mean": 0.8970000000000002,
+        "variance": 9.044391000000008
+      },
+      "fun_orientation": {
+        "minimum": -3,
+        "maximum": 27,
+        "sampleMinimum": -3,
+        "sampleMaximum": 16,
+        "mean": 4.980000000000001,
+        "variance": 16.027600000000014
+      },
+      "attack_momentum": {
+        "minimum": -6,
+        "maximum": 15,
+        "sampleMinimum": -6,
+        "sampleMaximum": 15,
+        "mean": 1.7720000000000005,
+        "variance": 14.798016000000016
+      },
+      "balance_awareness": {
+        "minimum": -3,
+        "maximum": 19,
+        "sampleMinimum": -3,
+        "sampleMaximum": 14,
+        "mean": 3.431999999999999,
+        "variance": 12.631376000000019
+      },
+      "retreat_response": {
+        "minimum": -6,
+        "maximum": 9,
+        "sampleMinimum": -6,
+        "sampleMaximum": 9,
+        "mean": 0.6449999999999997,
+        "variance": 11.690974999999982
+      },
+      "improvisation": {
+        "minimum": 0,
+        "maximum": 8,
+        "sampleMinimum": 0,
+        "sampleMaximum": 8,
+        "mean": 1.788000000000002,
+        "variance": 5.427055999999994
+      },
+      "stimulus_orientation": {
+        "minimum": -3,
+        "maximum": 6,
+        "sampleMinimum": -3,
+        "sampleMaximum": 6,
+        "mean": 0.6340000000000011,
+        "variance": 6.134043999999997
+      },
+      "collision_avoidance": {
+        "minimum": -3,
+        "maximum": 7,
+        "sampleMinimum": -3,
+        "sampleMaximum": 7,
+        "mean": 0.8219999999999993,
+        "variance": 7.884316000000003
+      }
+    },
+    "questions": [
+      {
+        "order": 1,
+        "optionCounts": [
+          250,
+          264,
+          232,
+          254
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 2,
+        "optionCounts": [
+          264,
+          257,
+          222,
+          257
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 3,
+        "optionCounts": [
+          247,
+          233,
+          260,
+          260
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 4,
+        "optionCounts": [
+          224,
+          259,
+          251,
+          266
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 5,
+        "optionCounts": [
+          270,
+          253,
+          240,
+          237
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 6,
+        "optionCounts": [
+          232,
+          259,
+          259,
+          250
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 7,
+        "optionCounts": [
+          269,
+          237,
+          247,
+          247
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 8,
+        "optionCounts": [
+          250,
+          256,
+          260,
+          234
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 9,
+        "optionCounts": [
+          223,
+          255,
+          271,
+          251
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 10,
+        "optionCounts": [
+          231,
+          250,
+          281,
+          238
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 11,
+        "optionCounts": [
+          252,
+          242,
+          240,
+          266
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 12,
+        "optionCounts": [
+          248,
+          257,
+          260,
+          235
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 13,
+        "optionCounts": [
+          245,
+          241,
+          240,
+          274
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 14,
+        "optionCounts": [
+          251,
+          251,
+          271,
+          227
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 15,
+        "optionCounts": [
+          251,
+          248,
+          244,
+          257
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 16,
+        "optionCounts": [
+          256,
+          268,
+          232,
+          244
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 17,
+        "optionCounts": [
+          261,
+          248,
+          249,
+          242
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 18,
+        "optionCounts": [
+          260,
+          266,
+          231,
+          243
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 19,
+        "optionCounts": [
+          270,
+          238,
+          245,
+          247
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 20,
+        "optionCounts": [
+          253,
+          270,
+          230,
+          247
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 21,
+        "optionCounts": [
+          254,
+          251,
+          237,
+          258
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 22,
+        "optionCounts": [
+          192,
+          205,
+          193,
+          198,
+          212
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 23,
+        "optionCounts": [
+          211,
+          182,
+          217,
+          191,
+          199
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 24,
+        "optionCounts": [
+          215,
+          200,
+          198,
+          197,
+          190
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 25,
+        "optionCounts": [
+          199,
+          198,
+          218,
+          211,
+          174
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 26,
+        "optionCounts": [
+          194,
+          215,
+          194,
+          196,
+          201
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 27,
+        "optionCounts": [
+          208,
+          203,
+          179,
+          199,
+          211
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 28,
+        "optionCounts": [
+          193,
+          195,
+          211,
+          201,
+          200
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 29,
+        "optionCounts": [
+          187,
+          204,
+          206,
+          225,
+          178
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 30,
+        "optionCounts": [
+          255,
+          266,
+          255,
+          224
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 31,
+        "optionCounts": [
+          221,
+          184,
+          191,
+          214,
+          190
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 32,
+        "optionCounts": [
+          200,
+          201,
+          198,
+          194,
+          207
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 33,
+        "optionCounts": [
+          203,
+          211,
+          210,
+          187,
+          189
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 34,
+        "optionCounts": [
+          207,
+          205,
+          200,
+          189,
+          199
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 35,
+        "optionCounts": [
+          202,
+          201,
+          220,
+          193,
+          184
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 36,
+        "optionCounts": [
+          199,
+          185,
+          221,
+          209,
+          186
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 37,
+        "optionCounts": [
+          208,
+          215,
+          179,
+          173,
+          225
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 38,
+        "optionCounts": [
+          262,
+          241,
+          248,
+          249
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 39,
+        "optionCounts": [
+          251,
+          255,
+          253,
+          241
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 40,
+        "optionCounts": [
+          212,
+          199,
+          208,
+          179,
+          202
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 41,
+        "optionCounts": [
+          269,
+          242,
+          242,
+          247
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 42,
+        "optionCounts": [
+          189,
+          181,
+          192,
+          220,
+          218
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 43,
+        "optionCounts": [
+          194,
+          196,
+          201,
+          202,
+          207
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 44,
+        "optionCounts": [
+          245,
+          239,
+          263,
+          253
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 45,
+        "optionCounts": [
+          249,
+          265,
+          255,
+          231
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 46,
+        "optionCounts": [
+          230,
+          276,
+          248,
+          246
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 47,
+        "optionCounts": [
+          210,
+          222,
+          207,
+          179,
+          182
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 48,
+        "optionCounts": [
+          205,
+          201,
+          199,
+          201,
+          194
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 49,
+        "optionCounts": [
+          216,
+          200,
+          202,
+          185,
+          197
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 50,
+        "optionCounts": [
+          187,
+          198,
+          218,
+          190,
+          207
+        ],
+        "distinctScoreVectors": 5
+      }
+    ],
+    "personas": [
+      {
+        "index": 0,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 17,
+          "analytical": 1,
+          "player_read": 6,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 17,
+          "novelty": -3,
+          "stability": 10,
+          "confidence": -2,
+          "exploit": 0,
+          "tempo": -3,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -1,
+          "small_edge_accumulation": 1,
+          "action_efficiency": 11,
+          "interaction_read": 0,
+          "pressure_resistance": -3,
+          "independent_judgment": -3,
+          "selective_burst": 1,
+          "pot_size_comfort": -5,
+          "fun_orientation": -3,
+          "attack_momentum": -6,
+          "balance_awareness": -1,
+          "retreat_response": 6,
+          "improvisation": 0,
+          "stimulus_orientation": -3,
+          "collision_avoidance": 7
+        }
+      },
+      {
+        "index": 1,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 17,
+          "analytical": 4,
+          "player_read": 6,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 11,
+          "novelty": -3,
+          "stability": 18,
+          "confidence": -2,
+          "exploit": 0,
+          "tempo": -3,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -1,
+          "small_edge_accumulation": 1,
+          "action_efficiency": 11,
+          "interaction_read": 0,
+          "pressure_resistance": -2,
+          "independent_judgment": -3,
+          "selective_burst": 1,
+          "pot_size_comfort": -5,
+          "fun_orientation": -3,
+          "attack_momentum": -6,
+          "balance_awareness": -1,
+          "retreat_response": 2,
+          "improvisation": 0,
+          "stimulus_orientation": -3,
+          "collision_avoidance": 3
+        }
+      },
+      {
+        "index": 2,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 16,
+          "analytical": 6,
+          "player_read": 0,
+          "adaptability": 0,
+          "deception": 2,
+          "value_directness": 7,
+          "threat_sensitivity": 0,
+          "novelty": -3,
+          "stability": 21,
+          "confidence": 2,
+          "exploit": 1,
+          "tempo": -1,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": 15,
+          "small_edge_accumulation": 1,
+          "action_efficiency": 4,
+          "interaction_read": 4,
+          "pressure_resistance": 2,
+          "independent_judgment": 3,
+          "selective_burst": -3,
+          "pot_size_comfort": -3,
+          "fun_orientation": -3,
+          "attack_momentum": -2,
+          "balance_awareness": 4,
+          "retreat_response": 6,
+          "improvisation": 0,
+          "stimulus_orientation": -1,
+          "collision_avoidance": 1
+        }
+      },
+      {
+        "index": 3,
+        "scores": {
+          "initiative": 8,
+          "risk_tolerance": 0,
+          "patience": 13,
+          "analytical": 13,
+          "player_read": 0,
+          "adaptability": 0,
+          "deception": -1,
+          "value_directness": 4,
+          "threat_sensitivity": 0,
+          "novelty": -3,
+          "stability": 25,
+          "confidence": 4,
+          "exploit": 0,
+          "tempo": 1,
+          "learning_receptivity": 6,
+          "overview": 0,
+          "planning_horizon": 3,
+          "history_use": 4,
+          "small_edge_accumulation": 3,
+          "action_efficiency": 4,
+          "interaction_read": 0,
+          "pressure_resistance": 2,
+          "independent_judgment": 3,
+          "selective_burst": 9,
+          "pot_size_comfort": 1,
+          "fun_orientation": -3,
+          "attack_momentum": 2,
+          "balance_awareness": 6,
+          "retreat_response": 6,
+          "improvisation": 0,
+          "stimulus_orientation": -1,
+          "collision_avoidance": 1
+        }
+      },
+      {
+        "index": 4,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 2,
+          "patience": 14,
+          "analytical": 1,
+          "player_read": 6,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 14,
+          "novelty": -1,
+          "stability": 11,
+          "confidence": -2,
+          "exploit": -2,
+          "tempo": -3,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -1,
+          "small_edge_accumulation": 7,
+          "action_efficiency": 5,
+          "interaction_read": 0,
+          "pressure_resistance": -1,
+          "independent_judgment": -1,
+          "selective_burst": -6,
+          "pot_size_comfort": 7,
+          "fun_orientation": 4,
+          "attack_momentum": -6,
+          "balance_awareness": -3,
+          "retreat_response": 1,
+          "improvisation": 0,
+          "stimulus_orientation": 1,
+          "collision_avoidance": -1
+        }
+      },
+      {
+        "index": 5,
+        "scores": {
+          "initiative": 18,
+          "risk_tolerance": 2,
+          "patience": 0,
+          "analytical": 3,
+          "player_read": 8,
+          "adaptability": 4,
+          "deception": 6,
+          "value_directness": 3,
+          "threat_sensitivity": 0,
+          "novelty": 2,
+          "stability": 4,
+          "confidence": 6,
+          "exploit": 21,
+          "tempo": 8,
+          "learning_receptivity": 0,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": 1,
+          "small_edge_accumulation": 11,
+          "action_efficiency": -3,
+          "interaction_read": 5,
+          "pressure_resistance": 7,
+          "independent_judgment": 6,
+          "selective_burst": 2,
+          "pot_size_comfort": 6,
+          "fun_orientation": 1,
+          "attack_momentum": 12,
+          "balance_awareness": -1,
+          "retreat_response": 5,
+          "improvisation": 4,
+          "stimulus_orientation": 6,
+          "collision_avoidance": -3
+        }
+      },
+      {
+        "index": 6,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 2,
+          "patience": 13,
+          "analytical": 1,
+          "player_read": 6,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 9,
+          "novelty": -1,
+          "stability": 11,
+          "confidence": 3,
+          "exploit": -2,
+          "tempo": -3,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -1,
+          "small_edge_accumulation": 7,
+          "action_efficiency": 5,
+          "interaction_read": 0,
+          "pressure_resistance": 3,
+          "independent_judgment": 1,
+          "selective_burst": -6,
+          "pot_size_comfort": 9,
+          "fun_orientation": 4,
+          "attack_momentum": -6,
+          "balance_awareness": -3,
+          "retreat_response": -3,
+          "improvisation": 0,
+          "stimulus_orientation": 1,
+          "collision_avoidance": -3
+        }
+      },
+      {
+        "index": 7,
+        "scores": {
+          "initiative": 18,
+          "risk_tolerance": 4,
+          "patience": 0,
+          "analytical": 3,
+          "player_read": 9,
+          "adaptability": 1,
+          "deception": 2,
+          "value_directness": 3,
+          "threat_sensitivity": 0,
+          "novelty": 7,
+          "stability": 0,
+          "confidence": 6,
+          "exploit": 9,
+          "tempo": 8,
+          "learning_receptivity": 0,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -3,
+          "small_edge_accumulation": 11,
+          "action_efficiency": -3,
+          "interaction_read": 2,
+          "pressure_resistance": 6,
+          "independent_judgment": 6,
+          "selective_burst": 2,
+          "pot_size_comfort": 6,
+          "fun_orientation": 3,
+          "attack_momentum": 12,
+          "balance_awareness": -3,
+          "retreat_response": -3,
+          "improvisation": 4,
+          "stimulus_orientation": 6,
+          "collision_avoidance": -3
+        }
+      },
+      {
+        "index": 8,
+        "scores": {
+          "initiative": 2,
+          "risk_tolerance": 0,
+          "patience": 0,
+          "analytical": 22,
+          "player_read": 0,
+          "adaptability": 11,
+          "deception": 3,
+          "value_directness": 3,
+          "threat_sensitivity": 3,
+          "novelty": 0,
+          "stability": 10,
+          "confidence": 0,
+          "exploit": 10,
+          "tempo": -1,
+          "learning_receptivity": 3,
+          "overview": 3,
+          "planning_horizon": 0,
+          "history_use": 6,
+          "small_edge_accumulation": 6,
+          "action_efficiency": 11,
+          "interaction_read": 5,
+          "pressure_resistance": 4,
+          "independent_judgment": 3,
+          "selective_burst": 1,
+          "pot_size_comfort": -3,
+          "fun_orientation": -3,
+          "attack_momentum": -2,
+          "balance_awareness": 10,
+          "retreat_response": 6,
+          "improvisation": 8,
+          "stimulus_orientation": -1,
+          "collision_avoidance": 7
+        }
+      },
+      {
+        "index": 9,
+        "scores": {
+          "initiative": 12,
+          "risk_tolerance": 2,
+          "patience": 0,
+          "analytical": 12,
+          "player_read": 3,
+          "adaptability": 23,
+          "deception": 3,
+          "value_directness": 0,
+          "threat_sensitivity": 0,
+          "novelty": 2,
+          "stability": 3,
+          "confidence": 5,
+          "exploit": 15,
+          "tempo": 6,
+          "learning_receptivity": 0,
+          "overview": 9,
+          "planning_horizon": 0,
+          "history_use": 4,
+          "small_edge_accumulation": 5,
+          "action_efficiency": -1,
+          "interaction_read": 19,
+          "pressure_resistance": 3,
+          "independent_judgment": 3,
+          "selective_burst": 2,
+          "pot_size_comfort": 6,
+          "fun_orientation": -1,
+          "attack_momentum": 2,
+          "balance_awareness": 3,
+          "retreat_response": 9,
+          "improvisation": 8,
+          "stimulus_orientation": 1,
+          "collision_avoidance": -1
+        }
+      },
+      {
+        "index": 10,
+        "scores": {
+          "initiative": 2,
+          "risk_tolerance": 0,
+          "patience": 6,
+          "analytical": 26,
+          "player_read": 0,
+          "adaptability": 11,
+          "deception": 3,
+          "value_directness": 9,
+          "threat_sensitivity": 0,
+          "novelty": 0,
+          "stability": 7,
+          "confidence": 0,
+          "exploit": 8,
+          "tempo": 1,
+          "learning_receptivity": 3,
+          "overview": 3,
+          "planning_horizon": 3,
+          "history_use": 3,
+          "small_edge_accumulation": 6,
+          "action_efficiency": 4,
+          "interaction_read": 5,
+          "pressure_resistance": 4,
+          "independent_judgment": 3,
+          "selective_burst": 9,
+          "pot_size_comfort": 1,
+          "fun_orientation": -3,
+          "attack_momentum": -2,
+          "balance_awareness": 13,
+          "retreat_response": 6,
+          "improvisation": 8,
+          "stimulus_orientation": -1,
+          "collision_avoidance": 1
+        }
+      },
+      {
+        "index": 11,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 16,
+          "analytical": 10,
+          "player_read": 0,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 0,
+          "novelty": -3,
+          "stability": 25,
+          "confidence": 2,
+          "exploit": 0,
+          "tempo": -1,
+          "learning_receptivity": 6,
+          "overview": 0,
+          "planning_horizon": 3,
+          "history_use": 4,
+          "small_edge_accumulation": 3,
+          "action_efficiency": 4,
+          "interaction_read": 0,
+          "pressure_resistance": 2,
+          "independent_judgment": 3,
+          "selective_burst": 9,
+          "pot_size_comfort": 1,
+          "fun_orientation": -3,
+          "attack_momentum": -2,
+          "balance_awareness": 4,
+          "retreat_response": 6,
+          "improvisation": 0,
+          "stimulus_orientation": -1,
+          "collision_avoidance": 1
+        }
+      },
+      {
+        "index": 12,
+        "scores": {
+          "initiative": 19,
+          "risk_tolerance": 2,
+          "patience": 0,
+          "analytical": 3,
+          "player_read": 8,
+          "adaptability": 4,
+          "deception": 6,
+          "value_directness": 3,
+          "threat_sensitivity": 0,
+          "novelty": 2,
+          "stability": 1,
+          "confidence": 6,
+          "exploit": 21,
+          "tempo": 11,
+          "learning_receptivity": 0,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": 1,
+          "small_edge_accumulation": 11,
+          "action_efficiency": -3,
+          "interaction_read": 8,
+          "pressure_resistance": 6,
+          "independent_judgment": 6,
+          "selective_burst": 2,
+          "pot_size_comfort": 6,
+          "fun_orientation": -1,
+          "attack_momentum": 9,
+          "balance_awareness": 1,
+          "retreat_response": 5,
+          "improvisation": 4,
+          "stimulus_orientation": 6,
+          "collision_avoidance": -3
+        }
+      },
+      {
+        "index": 13,
+        "scores": {
+          "initiative": 7,
+          "risk_tolerance": 2,
+          "patience": 0,
+          "analytical": 0,
+          "player_read": 9,
+          "adaptability": 3,
+          "deception": 1,
+          "value_directness": 3,
+          "threat_sensitivity": 0,
+          "novelty": 10,
+          "stability": 4,
+          "confidence": 3,
+          "exploit": 3,
+          "tempo": 5,
+          "learning_receptivity": 2,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -1,
+          "small_edge_accumulation": 5,
+          "action_efficiency": -3,
+          "interaction_read": 3,
+          "pressure_resistance": 5,
+          "independent_judgment": 1,
+          "selective_burst": -2,
+          "pot_size_comfort": 9,
+          "fun_orientation": 24,
+          "attack_momentum": 5,
+          "balance_awareness": -3,
+          "retreat_response": -3,
+          "improvisation": 4,
+          "stimulus_orientation": 3,
+          "collision_avoidance": -3
+        }
+      },
+      {
+        "index": 14,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 14,
+          "analytical": 7,
+          "player_read": 3,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 17,
+          "novelty": -3,
+          "stability": 13,
+          "confidence": 0,
+          "exploit": 0,
+          "tempo": -3,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": 4,
+          "small_edge_accumulation": 3,
+          "action_efficiency": 14,
+          "interaction_read": 0,
+          "pressure_resistance": -3,
+          "independent_judgment": 1,
+          "selective_burst": 1,
+          "pot_size_comfort": -5,
+          "fun_orientation": -3,
+          "attack_momentum": -6,
+          "balance_awareness": 1,
+          "retreat_response": 6,
+          "improvisation": 0,
+          "stimulus_orientation": -3,
+          "collision_avoidance": 7
+        }
+      },
+      {
+        "index": 15,
+        "scores": {
+          "initiative": 2,
+          "risk_tolerance": 0,
+          "patience": 0,
+          "analytical": 23,
+          "player_read": 0,
+          "adaptability": 11,
+          "deception": 3,
+          "value_directness": 3,
+          "threat_sensitivity": 0,
+          "novelty": 2,
+          "stability": 8,
+          "confidence": 0,
+          "exploit": 10,
+          "tempo": 1,
+          "learning_receptivity": 6,
+          "overview": 3,
+          "planning_horizon": 3,
+          "history_use": 4,
+          "small_edge_accumulation": 4,
+          "action_efficiency": 4,
+          "interaction_read": 5,
+          "pressure_resistance": 2,
+          "independent_judgment": 1,
+          "selective_burst": 5,
+          "pot_size_comfort": 1,
+          "fun_orientation": -1,
+          "attack_momentum": 2,
+          "balance_awareness": 11,
+          "retreat_response": 5,
+          "improvisation": 8,
+          "stimulus_orientation": 1,
+          "collision_avoidance": 1
+        }
+      },
+      {
+        "index": 16,
+        "scores": {
+          "initiative": 3,
+          "risk_tolerance": 0,
+          "patience": 0,
+          "analytical": 5,
+          "player_read": 12,
+          "adaptability": 17,
+          "deception": 3,
+          "value_directness": 0,
+          "threat_sensitivity": 0,
+          "novelty": 2,
+          "stability": 3,
+          "confidence": 3,
+          "exploit": 25,
+          "tempo": 7,
+          "learning_receptivity": 0,
+          "overview": 3,
+          "planning_horizon": 3,
+          "history_use": 7,
+          "small_edge_accumulation": 5,
+          "action_efficiency": -1,
+          "interaction_read": 16,
+          "pressure_resistance": 3,
+          "independent_judgment": 1,
+          "selective_burst": 2,
+          "pot_size_comfort": 1,
+          "fun_orientation": -1,
+          "attack_momentum": 2,
+          "balance_awareness": 1,
+          "retreat_response": 9,
+          "improvisation": 8,
+          "stimulus_orientation": 1,
+          "collision_avoidance": -1
+        }
+      },
+      {
+        "index": 17,
+        "scores": {
+          "initiative": 19,
+          "risk_tolerance": 4,
+          "patience": 3,
+          "analytical": 3,
+          "player_read": 8,
+          "adaptability": 1,
+          "deception": 2,
+          "value_directness": 3,
+          "threat_sensitivity": 0,
+          "novelty": 2,
+          "stability": -3,
+          "confidence": 6,
+          "exploit": 14,
+          "tempo": 8,
+          "learning_receptivity": 0,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -1,
+          "small_edge_accumulation": 11,
+          "action_efficiency": -3,
+          "interaction_read": 2,
+          "pressure_resistance": 9,
+          "independent_judgment": 6,
+          "selective_burst": 2,
+          "pot_size_comfort": 6,
+          "fun_orientation": 1,
+          "attack_momentum": 9,
+          "balance_awareness": -3,
+          "retreat_response": -3,
+          "improvisation": 4,
+          "stimulus_orientation": 6,
+          "collision_avoidance": -3
+        }
+      },
+      {
+        "index": 18,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 20,
+          "analytical": 5,
+          "player_read": 3,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 11,
+          "novelty": -3,
+          "stability": 17,
+          "confidence": -2,
+          "exploit": 0,
+          "tempo": -3,
+          "learning_receptivity": 3,
+          "overview": 3,
+          "planning_horizon": 0,
+          "history_use": 1,
+          "small_edge_accumulation": 1,
+          "action_efficiency": 11,
+          "interaction_read": 0,
+          "pressure_resistance": -2,
+          "independent_judgment": 1,
+          "selective_burst": 5,
+          "pot_size_comfort": -5,
+          "fun_orientation": -3,
+          "attack_momentum": -6,
+          "balance_awareness": 3,
+          "retreat_response": 6,
+          "improvisation": 0,
+          "stimulus_orientation": -3,
+          "collision_avoidance": 3
+        }
+      },
+      {
+        "index": 19,
+        "scores": {
+          "initiative": 19,
+          "risk_tolerance": 2,
+          "patience": 0,
+          "analytical": 3,
+          "player_read": 5,
+          "adaptability": 13,
+          "deception": 6,
+          "value_directness": 3,
+          "threat_sensitivity": 0,
+          "novelty": 2,
+          "stability": 6,
+          "confidence": 6,
+          "exploit": 15,
+          "tempo": 11,
+          "learning_receptivity": 0,
+          "overview": 12,
+          "planning_horizon": 0,
+          "history_use": 1,
+          "small_edge_accumulation": 11,
+          "action_efficiency": -3,
+          "interaction_read": 5,
+          "pressure_resistance": 7,
+          "independent_judgment": 6,
+          "selective_burst": 2,
+          "pot_size_comfort": 6,
+          "fun_orientation": -1,
+          "attack_momentum": 6,
+          "balance_awareness": 1,
+          "retreat_response": 6,
+          "improvisation": 4,
+          "stimulus_orientation": 6,
+          "collision_avoidance": 5
+        }
+      },
+      {
+        "index": 20,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 7,
+          "analytical": 13,
+          "player_read": 0,
+          "adaptability": 0,
+          "deception": -1,
+          "value_directness": 10,
+          "threat_sensitivity": 0,
+          "novelty": -3,
+          "stability": 22,
+          "confidence": 2,
+          "exploit": 0,
+          "tempo": -1,
+          "learning_receptivity": 6,
+          "overview": 0,
+          "planning_horizon": 3,
+          "history_use": 4,
+          "small_edge_accumulation": 3,
+          "action_efficiency": 15,
+          "interaction_read": 0,
+          "pressure_resistance": 2,
+          "independent_judgment": 3,
+          "selective_burst": 9,
+          "pot_size_comfort": 1,
+          "fun_orientation": -3,
+          "attack_momentum": -2,
+          "balance_awareness": 6,
+          "retreat_response": 6,
+          "improvisation": 0,
+          "stimulus_orientation": -1,
+          "collision_avoidance": 1
+        }
+      },
+      {
+        "index": 21,
+        "scores": {
+          "initiative": 7,
+          "risk_tolerance": 2,
+          "patience": 0,
+          "analytical": 0,
+          "player_read": 9,
+          "adaptability": 3,
+          "deception": -3,
+          "value_directness": 3,
+          "threat_sensitivity": 0,
+          "novelty": 9,
+          "stability": 2,
+          "confidence": 3,
+          "exploit": 1,
+          "tempo": 5,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -3,
+          "small_edge_accumulation": 5,
+          "action_efficiency": -3,
+          "interaction_read": 3,
+          "pressure_resistance": 3,
+          "independent_judgment": -1,
+          "selective_burst": -2,
+          "pot_size_comfort": 9,
+          "fun_orientation": 24,
+          "attack_momentum": 5,
+          "balance_awareness": -3,
+          "retreat_response": -3,
+          "improvisation": 4,
+          "stimulus_orientation": 3,
+          "collision_avoidance": -3
+        }
+      },
+      {
+        "index": 22,
+        "scores": {
+          "initiative": 3,
+          "risk_tolerance": 0,
+          "patience": 0,
+          "analytical": 12,
+          "player_read": 0,
+          "adaptability": 23,
+          "deception": 3,
+          "value_directness": 0,
+          "threat_sensitivity": 0,
+          "novelty": 2,
+          "stability": 3,
+          "confidence": 3,
+          "exploit": 25,
+          "tempo": 7,
+          "learning_receptivity": 3,
+          "overview": 9,
+          "planning_horizon": 3,
+          "history_use": 4,
+          "small_edge_accumulation": 5,
+          "action_efficiency": -1,
+          "interaction_read": 16,
+          "pressure_resistance": 3,
+          "independent_judgment": 3,
+          "selective_burst": 2,
+          "pot_size_comfort": 1,
+          "fun_orientation": -1,
+          "attack_momentum": 2,
+          "balance_awareness": 3,
+          "retreat_response": 9,
+          "improvisation": 8,
+          "stimulus_orientation": 1,
+          "collision_avoidance": -1
+        }
+      },
+      {
+        "index": 23,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 14,
+          "analytical": 1,
+          "player_read": 6,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 17,
+          "novelty": -3,
+          "stability": 15,
+          "confidence": -2,
+          "exploit": 0,
+          "tempo": -3,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -1,
+          "small_edge_accumulation": -1,
+          "action_efficiency": 9,
+          "interaction_read": 0,
+          "pressure_resistance": -3,
+          "independent_judgment": -3,
+          "selective_burst": 1,
+          "pot_size_comfort": -5,
+          "fun_orientation": -1,
+          "attack_momentum": -6,
+          "balance_awareness": -1,
+          "retreat_response": 9,
+          "improvisation": 0,
+          "stimulus_orientation": -3,
+          "collision_avoidance": 1
+        }
+      },
+      {
+        "index": 24,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 16,
+          "analytical": 10,
+          "player_read": 0,
+          "adaptability": 0,
+          "deception": -1,
+          "value_directness": 10,
+          "threat_sensitivity": 0,
+          "novelty": -3,
+          "stability": 25,
+          "confidence": 2,
+          "exploit": 0,
+          "tempo": -1,
+          "learning_receptivity": 6,
+          "overview": 0,
+          "planning_horizon": 3,
+          "history_use": 4,
+          "small_edge_accumulation": 3,
+          "action_efficiency": 4,
+          "interaction_read": 0,
+          "pressure_resistance": 2,
+          "independent_judgment": 3,
+          "selective_burst": 9,
+          "pot_size_comfort": 1,
+          "fun_orientation": -3,
+          "attack_momentum": -2,
+          "balance_awareness": 4,
+          "retreat_response": 6,
+          "improvisation": 0,
+          "stimulus_orientation": -1,
+          "collision_avoidance": 1
+        }
+      },
+      {
+        "index": 25,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 16,
+          "analytical": 6,
+          "player_read": 0,
+          "adaptability": 0,
+          "deception": 6,
+          "value_directness": 7,
+          "threat_sensitivity": 0,
+          "novelty": -3,
+          "stability": 21,
+          "confidence": 5,
+          "exploit": 1,
+          "tempo": -1,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": 15,
+          "small_edge_accumulation": 1,
+          "action_efficiency": 2,
+          "interaction_read": 4,
+          "pressure_resistance": 2,
+          "independent_judgment": 3,
+          "selective_burst": 5,
+          "pot_size_comfort": 1,
+          "fun_orientation": -3,
+          "attack_momentum": -2,
+          "balance_awareness": 4,
+          "retreat_response": 6,
+          "improvisation": 0,
+          "stimulus_orientation": -1,
+          "collision_avoidance": 1
+        }
+      },
+      {
+        "index": 26,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 2,
+          "patience": 14,
+          "analytical": 1,
+          "player_read": 6,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 14,
+          "novelty": -1,
+          "stability": 11,
+          "confidence": -2,
+          "exploit": 2,
+          "tempo": -3,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -1,
+          "small_edge_accumulation": 7,
+          "action_efficiency": 5,
+          "interaction_read": 0,
+          "pressure_resistance": -1,
+          "independent_judgment": -1,
+          "selective_burst": 2,
+          "pot_size_comfort": 7,
+          "fun_orientation": 6,
+          "attack_momentum": -4,
+          "balance_awareness": -3,
+          "retreat_response": 1,
+          "improvisation": 0,
+          "stimulus_orientation": 1,
+          "collision_avoidance": -1
+        }
+      },
+      {
+        "index": 27,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 14,
+          "analytical": 1,
+          "player_read": 6,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 17,
+          "novelty": -1,
+          "stability": 14,
+          "confidence": -2,
+          "exploit": -2,
+          "tempo": -3,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -1,
+          "small_edge_accumulation": 7,
+          "action_efficiency": 7,
+          "interaction_read": 0,
+          "pressure_resistance": -1,
+          "independent_judgment": -1,
+          "selective_burst": -6,
+          "pot_size_comfort": 0,
+          "fun_orientation": -1,
+          "attack_momentum": -6,
+          "balance_awareness": -3,
+          "retreat_response": -2,
+          "improvisation": 0,
+          "stimulus_orientation": -1,
+          "collision_avoidance": 1
+        }
+      },
+      {
+        "index": 28,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 2,
+          "patience": 13,
+          "analytical": 1,
+          "player_read": 6,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 9,
+          "novelty": -1,
+          "stability": 11,
+          "confidence": 3,
+          "exploit": -2,
+          "tempo": -3,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -1,
+          "small_edge_accumulation": 7,
+          "action_efficiency": 5,
+          "interaction_read": 0,
+          "pressure_resistance": 3,
+          "independent_judgment": 1,
+          "selective_burst": -6,
+          "pot_size_comfort": 9,
+          "fun_orientation": 6,
+          "attack_momentum": -6,
+          "balance_awareness": -3,
+          "retreat_response": -3,
+          "improvisation": 0,
+          "stimulus_orientation": 3,
+          "collision_avoidance": -3
+        }
+      },
+      {
+        "index": 29,
+        "scores": {
+          "initiative": 2,
+          "risk_tolerance": 0,
+          "patience": 0,
+          "analytical": 26,
+          "player_read": 0,
+          "adaptability": 11,
+          "deception": 3,
+          "value_directness": 3,
+          "threat_sensitivity": 0,
+          "novelty": 0,
+          "stability": 10,
+          "confidence": 0,
+          "exploit": 10,
+          "tempo": 1,
+          "learning_receptivity": 3,
+          "overview": 3,
+          "planning_horizon": 3,
+          "history_use": 6,
+          "small_edge_accumulation": 6,
+          "action_efficiency": 4,
+          "interaction_read": 5,
+          "pressure_resistance": 4,
+          "independent_judgment": 3,
+          "selective_burst": 5,
+          "pot_size_comfort": 1,
+          "fun_orientation": -3,
+          "attack_momentum": -2,
+          "balance_awareness": 13,
+          "retreat_response": 9,
+          "improvisation": 8,
+          "stimulus_orientation": -1,
+          "collision_avoidance": 1
+        }
+      }
+    ],
+    "classification": "BLOCKED: authoritative classifier and expert labels unavailable"
+  },
+  "personaReferenceComparison": {
+    "status": "PASS",
+    "personas": 30,
+    "dimensions": 32,
+    "comparedValues": 960,
+    "sourceCommit": "88cbf26b6f839914a9f867868f03b4d77a991ce3",
+    "classification": "NOT VERIFIED"
+  },
+  "classificationSemanticValidity": "UNKNOWN: fixture includes option scores/personas, not authoritative 36-animal classifier definitions or human-reviewed labels",
+  "liveSchemaAndQuestions": "NOT CHECKED",
+  "scoringChanges": "none",
+  "sqlExecuted": false
+}
