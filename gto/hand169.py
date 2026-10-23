@@ -5,6 +5,8 @@ Input weights are caller-supplied reach mass, never inferred from frequencies.
 """
 from itertools import combinations
 import math
+from fractions import Fraction
+import sys
 
 RANKS = 'AKQJT98765432'
 SUITS = 'shdc'
@@ -22,6 +24,48 @@ def hand_class(cards):
     return a[0] + b[0] + ('' if a[0] == b[0] else 's' if a[1] == b[1] else 'o')
 
 
+def _weighted_ev_term(weight, value, mass):
+    """Scale mantissas first so neither the product nor ratio loses range."""
+    if value == 0 or weight == 0:
+        return 0.0
+    if weight == mass:
+        return value
+    weight_mantissa, weight_exponent = math.frexp(weight)
+    value_mantissa, value_exponent = math.frexp(value)
+    mass_mantissa, mass_exponent = math.frexp(mass)
+    return math.ldexp((weight_mantissa * value_mantissa) / mass_mantissa,
+                      weight_exponent + value_exponent - mass_exponent)
+
+
+def _weighted_sum(weighted_values, mass, *, policy=False):
+    values = [(weight, value) for weight, value in weighted_values if weight > 0]
+    terms = [(w / mass) * value if policy else _weighted_ev_term(w, value, mass)
+             for w, value in values]
+    if any(value != 0 and abs(term) < sys.float_info.min
+           for (_, value), term in zip(values, terms)):
+        # Round once after summation when individual terms lose subnormal bits.
+        # Keep the exported float mass as the denominator of the exact fallback.
+        return float(sum((Fraction(w) * Fraction(value) for w, value in values),
+                         Fraction(0)) / Fraction(mass))
+    try:
+        return math.fsum(terms)
+    except OverflowError:
+        # Rounded terms can overflow even when their exact mean is finite.
+        # Keep the exported mass and round once, as in the subnormal fallback.
+        return float(sum((Fraction(w) * Fraction(value) for w, value in values),
+                         Fraction(0)) / Fraction(mass))
+
+
+def _finite_number(value):
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return False
+    try:
+        return math.isfinite(value)
+    except OverflowError:
+        # Python integers may exceed the finite binary64 input domain.
+        return False
+
+
 def aggregate(records, action_count, *, require_complete=True):
     """Validate and aggregate reach-weighted strategy/EV without hiding gaps.
 
@@ -29,6 +73,8 @@ def aggregate(records, action_count, *, require_complete=True):
     Complete export requires all 1,326 distinct concrete combinations. Zero-mass
     classes report None (unknown), never a fabricated all-zero strategy or EV.
     """
+    if type(require_complete) is not bool:
+        raise ValueError('boolean require_complete required')
     if type(action_count) is not int or action_count < 1:
         raise ValueError('positive integer action_count required')
     buckets = {label: [] for label in CLASSES}
@@ -38,22 +84,26 @@ def aggregate(records, action_count, *, require_complete=True):
         if key in seen: raise ValueError('duplicate concrete combination')
         seen.add(key)
         weight = record['weight']; frequencies = record['frequencies']; ev = record.get('ev')
-        if isinstance(weight, bool) or not isinstance(weight, (int, float)) or not math.isfinite(weight) or weight < 0:
+        if not _finite_number(weight) or weight < 0:
             raise ValueError('finite nonnegative reach weight required')
-        if not isinstance(frequencies, (list, tuple)) or len(frequencies) != action_count or any(isinstance(x, bool) or not isinstance(x, (int, float)) or not math.isfinite(x) or x < 0 or x > 1 for x in frequencies):
+        if not isinstance(frequencies, (list, tuple)) or len(frequencies) != action_count or any(not _finite_number(x) or x < 0 or x > 1 for x in frequencies):
             raise ValueError('invalid action frequencies')
         if abs(math.fsum(frequencies) - 1) > 1e-9: raise ValueError('frequencies must sum to one')
-        if ev is not None and (isinstance(ev, bool) or not isinstance(ev, (int, float)) or not math.isfinite(ev)):
+        if ev is not None and not _finite_number(ev):
             raise ValueError('EV must be finite or explicitly unknown')
-        buckets[label].append((weight, frequencies, ev))
+        # Export iterators may reuse a mutable buffer for their next row.
+        buckets[label].append((weight, tuple(frequencies), ev))
     if require_complete and len(seen) != 1326: raise ValueError('incomplete concrete hand coverage')
     output = {}
     for label, rows in buckets.items():
-        mass = math.fsum(row[0] for row in rows)
+        try:
+            mass = math.fsum(row[0] for row in rows)
+        except OverflowError as error:
+            raise ValueError('reach mass overflow') from error
         if not math.isfinite(mass): raise ValueError('reach mass overflow')
         # Divide weights before multiplying to avoid finite-input overflow.
-        policy = [math.fsum((w / mass) * f[action] for w, f, _ in rows) for action in range(action_count)] if mass else None
-        ev = math.fsum((w / mass) * e for w, _, e in rows if w > 0) if mass and all(e is not None for w, _, e in rows if w > 0) else None
+        policy = [_weighted_sum(((w, f[action]) for w, f, _ in rows), mass, policy=True) for action in range(action_count)] if mass else None
+        ev = _weighted_sum(((w, e) for w, _, e in rows), mass) if mass and all(e is not None for w, _, e in rows if w > 0) else None
         if ev is not None and not math.isfinite(ev): raise ValueError('aggregate EV overflow')
         output[label] = {'combinations': len(rows), 'reach_mass': mass, 'frequencies': policy, 'ev': ev}
     return {'schema': 'pokerid-hand169-v1', 'complete': len(seen) == 1326, 'concrete_combinations': len(seen), 'hands': output}

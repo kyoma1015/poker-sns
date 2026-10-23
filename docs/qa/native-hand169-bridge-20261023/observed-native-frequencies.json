@@ -1,0 +1,1663 @@
+{
+  "schema": "pokerid-hand169-v1",
+  "complete": false,
+  "concrete_combinations": 348,
+  "hands": {
+    "AA": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "AKs": {
+      "combinations": 0,
+      "reach_mass": 0.0,
+      "frequencies": null,
+      "ev": null
+    },
+    "AQs": {
+      "combinations": 0,
+      "reach_mass": 0.0,
+      "frequencies": null,
+      "ev": null
+    },
+    "AJs": {
+      "combinations": 0,
+      "reach_mass": 0.0,
+      "frequencies": null,
+      "ev": null
+    },
+    "ATs": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "A9s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "A8s": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.2500000000000192,
+        0.2500000000000192,
+        0.4999999999999615
+      ],
+      "ev": null
+    },
+    "A7s": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "A6s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "A5s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "A4s": {
+      "combinations": 0,
+      "reach_mass": 0.0,
+      "frequencies": null,
+      "ev": null
+    },
+    "A3s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "A2s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "AKo": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "KK": {
+      "combinations": 3,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "KQs": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "KJs": {
+      "combinations": 0,
+      "reach_mass": 0.0,
+      "frequencies": null,
+      "ev": null
+    },
+    "KTs": {
+      "combinations": 0,
+      "reach_mass": 0.0,
+      "frequencies": null,
+      "ev": null
+    },
+    "K9s": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "K8s": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "K7s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "K6s": {
+      "combinations": 3,
+      "reach_mass": 4.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "K5s": {
+      "combinations": 0,
+      "reach_mass": 0.0,
+      "frequencies": null,
+      "ev": null
+    },
+    "K4s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "K3s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "K2s": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "AQo": {
+      "combinations": 5,
+      "reach_mass": 6.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "KQo": {
+      "combinations": 3,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "QQ": {
+      "combinations": 0,
+      "reach_mass": 0.0,
+      "frequencies": null,
+      "ev": null
+    },
+    "QJs": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "QTs": {
+      "combinations": 1,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "Q9s": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "Q8s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "Q7s": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "Q6s": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "Q5s": {
+      "combinations": 0,
+      "reach_mass": 0.0,
+      "frequencies": null,
+      "ev": null
+    },
+    "Q4s": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "Q3s": {
+      "combinations": 1,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "Q2s": {
+      "combinations": 0,
+      "reach_mass": 0.0,
+      "frequencies": null,
+      "ev": null
+    },
+    "AJo": {
+      "combinations": 2,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "KJo": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "QJo": {
+      "combinations": 5,
+      "reach_mass": 6.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "JJ": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "JTs": {
+      "combinations": 2,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "J9s": {
+      "combinations": 0,
+      "reach_mass": 0.0,
+      "frequencies": null,
+      "ev": null
+    },
+    "J8s": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "J7s": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "J6s": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "J5s": {
+      "combinations": 3,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "J4s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "J3s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "J2s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "ATo": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "KTo": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "QTo": {
+      "combinations": 6,
+      "reach_mass": 7.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "JTo": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "TT": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "T9s": {
+      "combinations": 3,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "T8s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "T7s": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "T6s": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "T5s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "T4s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "T3s": {
+      "combinations": 3,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "T2s": {
+      "combinations": 0,
+      "reach_mass": 0.0,
+      "frequencies": null,
+      "ev": null
+    },
+    "A9o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "K9o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "Q9o": {
+      "combinations": 6,
+      "reach_mass": 6.0,
+      "frequencies": [
+        0.31944444444444764,
+        0.31944444444444764,
+        0.36111111111110467
+      ],
+      "ev": null
+    },
+    "J9o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "T9o": {
+      "combinations": 3,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "99": {
+      "combinations": 0,
+      "reach_mass": 0.0,
+      "frequencies": null,
+      "ev": null
+    },
+    "98s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.4166666666666474,
+        0.16666666666670513,
+        0.4166666666666474
+      ],
+      "ev": null
+    },
+    "97s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "96s": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "95s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "94s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "93s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "92s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "A8o": {
+      "combinations": 4,
+      "reach_mass": 4.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "K8o": {
+      "combinations": 4,
+      "reach_mass": 4.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "Q8o": {
+      "combinations": 4,
+      "reach_mass": 4.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "J8o": {
+      "combinations": 4,
+      "reach_mass": 4.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "T8o": {
+      "combinations": 4,
+      "reach_mass": 4.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "98o": {
+      "combinations": 4,
+      "reach_mass": 4.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "88": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "87s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "86s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "85s": {
+      "combinations": 0,
+      "reach_mass": 0.0,
+      "frequencies": null,
+      "ev": null
+    },
+    "84s": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "83s": {
+      "combinations": 0,
+      "reach_mass": 0.0,
+      "frequencies": null,
+      "ev": null
+    },
+    "82s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "A7o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "K7o": {
+      "combinations": 3,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "Q7o": {
+      "combinations": 4,
+      "reach_mass": 4.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "J7o": {
+      "combinations": 3,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "T7o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "97o": {
+      "combinations": 5,
+      "reach_mass": 5.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "87o": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "77": {
+      "combinations": 2,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "76s": {
+      "combinations": 0,
+      "reach_mass": 0.0,
+      "frequencies": null,
+      "ev": null
+    },
+    "75s": {
+      "combinations": 1,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "74s": {
+      "combinations": 1,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "73s": {
+      "combinations": 1,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "72s": {
+      "combinations": 3,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "A6o": {
+      "combinations": 4,
+      "reach_mass": 4.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "K6o": {
+      "combinations": 5,
+      "reach_mass": 5.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "Q6o": {
+      "combinations": 3,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "J6o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "T6o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "96o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.2500000000000192,
+        0.2500000000000192,
+        0.4999999999999615
+      ],
+      "ev": null
+    },
+    "86o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "76o": {
+      "combinations": 4,
+      "reach_mass": 4.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "66": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "65s": {
+      "combinations": 2,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "64s": {
+      "combinations": 1,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "63s": {
+      "combinations": 3,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "62s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "A5o": {
+      "combinations": 3,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "K5o": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "Q5o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "J5o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.2500000000000192,
+        0.37499999999999034,
+        0.37499999999999034
+      ],
+      "ev": null
+    },
+    "T5o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "95o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "85o": {
+      "combinations": 0,
+      "reach_mass": 0.0,
+      "frequencies": null,
+      "ev": null
+    },
+    "75o": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.4166666666666474,
+        0.4166666666666474,
+        0.16666666666670513
+      ],
+      "ev": null
+    },
+    "65o": {
+      "combinations": 2,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "55": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "54s": {
+      "combinations": 0,
+      "reach_mass": 0.0,
+      "frequencies": null,
+      "ev": null
+    },
+    "53s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "52s": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "A4o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "K4o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "Q4o": {
+      "combinations": 7,
+      "reach_mass": 7.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "J4o": {
+      "combinations": 5,
+      "reach_mass": 5.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "T4o": {
+      "combinations": 3,
+      "reach_mass": 4.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "94o": {
+      "combinations": 3,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "84o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "74o": {
+      "combinations": 5,
+      "reach_mass": 5.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "64o": {
+      "combinations": 2,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "54o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "44": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "43s": {
+      "combinations": 1,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "42s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "A3o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "K3o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "Q3o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "J3o": {
+      "combinations": 5,
+      "reach_mass": 5.0,
+      "frequencies": [
+        0.3000000000000077,
+        0.34999999999999615,
+        0.34999999999999615
+      ],
+      "ev": null
+    },
+    "T3o": {
+      "combinations": 4,
+      "reach_mass": 5.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "93o": {
+      "combinations": 4,
+      "reach_mass": 4.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "83o": {
+      "combinations": 2,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "73o": {
+      "combinations": 3,
+      "reach_mass": 5.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "63o": {
+      "combinations": 4,
+      "reach_mass": 5.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "53o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "43o": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "33": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "32s": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "A2o": {
+      "combinations": 4,
+      "reach_mass": 4.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "K2o": {
+      "combinations": 4,
+      "reach_mass": 5.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "Q2o": {
+      "combinations": 5,
+      "reach_mass": 5.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "J2o": {
+      "combinations": 4,
+      "reach_mass": 4.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "T2o": {
+      "combinations": 3,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "92o": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "82o": {
+      "combinations": 5,
+      "reach_mass": 6.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "72o": {
+      "combinations": 3,
+      "reach_mass": 3.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "62o": {
+      "combinations": 4,
+      "reach_mass": 4.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "52o": {
+      "combinations": 2,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "42o": {
+      "combinations": 1,
+      "reach_mass": 1.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "32o": {
+      "combinations": 6,
+      "reach_mass": 6.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    },
+    "22": {
+      "combinations": 1,
+      "reach_mass": 2.0,
+      "frequencies": [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "ev": null
+    }
+  },
+  "actions": [
+    0,
+    1,
+    6
+  ],
+  "context": {
+    "board": [],
+    "betting_history": [],
+    "public_config": {
+      "fixture": null,
+      "rules": {
+        "ante_order": "ante_first",
+        "bb": 2,
+        "bba": 0,
+        "cap_scope": "whole_hand",
+        "collection": "terminal",
+        "dead_eligibility": "all_live",
+        "no_flop_no_drop": true,
+        "rake_ante": true,
+        "rake_cap": null,
+        "rake_rate": "0",
+        "rounding": "floor",
+        "stack_basis": "before_ante",
+        "version": "pokerid-nlhe-reference-1"
+      },
+      "schema": 1,
+      "stacks": [
+        4,
+        4
+      ]
+    },
+    "seat": 0
+  },
+  "observed_infosets": 374,
+  "weight_provenance": "explicit caller-supplied infoset reach weights",
+  "ev_status": "not estimated by native outcome MCCFR table",
+  "strategy_convergence": "UNKNOWN",
+  "fixture_weight_note": "Synthetic caller explicitly supplies mass=1 per observed ordered infoset; these are not recovered poker reach probabilities."
+}
