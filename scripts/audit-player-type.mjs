@@ -97,9 +97,16 @@ export function auditPlayerType(fixture, assets) {
     if (!assets.includes(key) || !configured.includes(key)) errors.push({ code: 'ANIMAL_ASSET_MISMATCH', key })
   }
   if (configured.length !== 36) errors.push({ code: 'ANIMAL_COUNT', actual: configured.length })
+  let distribution = errors.length ? null : scoreDistribution(questions, scores, fixture.personas)
+  if (distribution) {
+    for (const [key, metrics] of Object.entries(distribution.traits)) {
+      if (Object.values(metrics).some(value => !Number.isFinite(value))) errors.push({ code: 'NONFINITE_SCORE_AGGREGATE', key })
+    }
+    if (errors.length) distribution = null
+  }
   const report = { status: errors.length ? 'FAIL' : 'CONDITIONAL PASS', source: 'checked-in historical fixture; not live DB', questions: questions.length, options: questions.reduce((n,q) => n + q.options.length, 0), scoreDimensions: Object.keys(traitPositiveMax).length,
     animalDisplayKeys: configured.length, pngAssets: assets.length, personas: fixture.personas.length, errors, warnings,
-    scoreDistribution: errors.length ? null : scoreDistribution(questions, scores, fixture.personas),
+    scoreDistribution: distribution,
     classificationSemanticValidity: 'UNKNOWN: fixture includes option scores/personas, not authoritative 36-animal classifier definitions or human-reviewed labels', liveSchemaAndQuestions: 'NOT CHECKED', scoringChanges: 'none', sqlExecuted: false }
   return report
 }
