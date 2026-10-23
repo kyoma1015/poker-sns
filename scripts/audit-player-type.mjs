@@ -4,6 +4,54 @@ import { pathToFileURL } from 'node:url'
 import { parseQuestions } from '../src/playerTypeQuestions.ts'
 import { animalEmoji } from '../src/playerTypeAnimals.ts'
 import { traitPositiveMax } from '../src/playerTypePresentation.ts'
+// Uniform independent option sampling is a reproducible stress fixture, not a
+// model of real players and not evidence for animal meaning or prevalence.
+function scoreDistribution(questions, scores, personas) {
+  const keys = Object.keys(traitPositiveMax)
+  const samples = 1000, seed = 0x504944
+  let state = seed
+  const random = () => {
+    state ^= state << 13; state ^= state >>> 17; state ^= state << 5
+    return (state >>> 0) / 0x100000000
+  }
+  const vectors = questions.map(question => question.options.map(option => keys.map(key => scores.get(option.id)[key])))
+  const traits = Object.fromEntries(keys.map((key, axis) => [key, {
+    minimum: vectors.reduce((sum, options) => sum + Math.min(...options.map(v => v[axis])), 0),
+    maximum: vectors.reduce((sum, options) => sum + Math.max(...options.map(v => v[axis])), 0),
+    sampleMinimum: Infinity, sampleMaximum: -Infinity, mean: 0, variance: 0,
+  }]))
+  const questionEvidence = questions.map((question, index) => ({
+    order: question.order,
+    optionCounts: question.options.map(() => 0),
+    distinctScoreVectors: new Set(vectors[index].map(vector => JSON.stringify(vector))).size,
+  }))
+  const sumAnswers = choices => keys.map((_, axis) => vectors.reduce((sum, options, index) => sum + options[choices[index]][axis], 0))
+  for (let sample = 1; sample <= samples; sample++) {
+    const choices = vectors.map((options, index) => {
+      const choice = Math.floor(random() * options.length)
+      questionEvidence[index].optionCounts[choice]++
+      return choice
+    })
+    const totals = sumAnswers(choices)
+    keys.forEach((key, axis) => {
+      const item = traits[key], value = totals[axis], delta = value - item.mean
+      item.sampleMinimum = Math.min(item.sampleMinimum, value)
+      item.sampleMaximum = Math.max(item.sampleMaximum, value)
+      item.mean += delta / sample
+      item.variance += delta * (value - item.mean)
+    })
+  }
+  for (const item of Object.values(traits)) item.variance /= samples
+  return {
+    sampling: 'uniform independent option choices; synthetic stress evidence, not player prevalence',
+    seed, samples, traits, questions: questionEvidence,
+    personas: personas.map((persona, index) => {
+      const totals = sumAnswers(persona.answers.map((answer, question) => questions[question].options.findIndex(option => answer === String.fromCharCode(64 + option.order))))
+      return { index, scores: Object.fromEntries(keys.map((key, axis) => [key, totals[axis]])) }
+    }),
+    classification: 'BLOCKED: authoritative classifier and expert labels unavailable',
+  }
+}
 export function auditPlayerType(fixture, assets) {
   const questions = parseQuestions(fixture.rows)
   const errors = []
@@ -51,6 +99,7 @@ export function auditPlayerType(fixture, assets) {
   if (configured.length !== 36) errors.push({ code: 'ANIMAL_COUNT', actual: configured.length })
   const report = { status: errors.length ? 'FAIL' : 'CONDITIONAL PASS', source: 'checked-in historical fixture; not live DB', questions: questions.length, options: questions.reduce((n,q) => n + q.options.length, 0), scoreDimensions: Object.keys(traitPositiveMax).length,
     animalDisplayKeys: configured.length, pngAssets: assets.length, personas: fixture.personas.length, errors, warnings,
+    scoreDistribution: errors.length ? null : scoreDistribution(questions, scores, fixture.personas),
     classificationSemanticValidity: 'UNKNOWN: fixture includes option scores/personas, not authoritative 36-animal classifier definitions or human-reviewed labels', liveSchemaAndQuestions: 'NOT CHECKED', scoringChanges: 'none', sqlExecuted: false }
   return report
 }

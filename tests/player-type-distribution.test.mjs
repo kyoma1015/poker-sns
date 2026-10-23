@@ -49,8 +49,14 @@ test('historical persona totals remain within exact bounds without invented anim
   const d=distribution()
   assert.ok(d)
   assert.equal(d.personas.length, fixture.personas.length)
+  const questions=parseQuestions(fixture.rows), scores=new Map(fixture.scores.map(x=>[x.option_id,x]))
   for (const persona of d.personas) for (const [key,value] of Object.entries(persona.scores)) {
     assert.ok(value>=d.traits[key].minimum && value<=d.traits[key].maximum)
+    const expected=questions.reduce((total,q,index)=>{
+      const option=q.options.find(o=>String.fromCharCode(64+o.order)===fixture.personas[persona.index].answers[index])
+      return total+scores.get(option.id)[key]
+    },0)
+    assert.equal(value,expected)
   }
 })
 test('invalid scores cannot generate apparently valid distribution evidence', () => {
@@ -59,4 +65,17 @@ test('invalid scores cannot generate apparently valid distribution evidence', ()
   const report=auditPlayerType(invalid,assets)
   assert.equal(report.status,'FAIL')
   assert.equal(report.scoreDistribution,null)
+})
+test('finite individual weights cannot produce nonfinite aggregate evidence', () => {
+  const invalid=structuredClone(fixture)
+  const questions=parseQuestions(invalid.rows)
+  const scores=new Map(invalid.scores.map(x=>[x.option_id,x]))
+  for (const q of questions.slice(0,2)) {
+    const option=q.options.reduce((best,o)=>scores.get(o.id).initiative<scores.get(best.id).initiative?o:best)
+    scores.get(option.id).initiative=-Number.MAX_VALUE
+  }
+  const report=auditPlayerType(invalid,assets)
+  assert.equal(report.status,'FAIL')
+  assert.equal(report.scoreDistribution,null)
+  assert.ok(report.errors.some(e=>e.code==='NONFINITE_SCORE_AGGREGATE'))
 })
