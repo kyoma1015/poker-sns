@@ -1,0 +1,142 @@
+✖ strategy review pack exposes literal evidence and retains semantic BLOCKED (36.227389ms)
+✖ all strategy term matches are traceable to exact question and option text (18.458677ms)
+✖ every contrast reconstructs original option weights without changing axes or their meaning (19.956804ms)
+✖ added literal terms never upgrade semantic validity or execute a classifier (31.517059ms)
+✖ invalid score/reference evidence suppresses strategy pack (18.655209ms)
+✖ evidence generation preserves source fixture and all 960 historical reference values (17.848648ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 0
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 156.351206
+
+✖ failing tests:
+
+test at ../issue22-d-strategy-evidence/tests/player-type-strategy-evidence.test.mjs:12:1
+✖ strategy review pack exposes literal evidence and retains semantic BLOCKED (36.227389ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(pack)
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-strategy-evidence.test.mjs:13:59)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at ../issue22-d-strategy-evidence/tests/player-type-strategy-evidence.test.mjs:18:1
+✖ all strategy term matches are traceable to exact question and option text (18.458677ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(pack)
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-strategy-evidence.test.mjs:19:58)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at ../issue22-d-strategy-evidence/tests/player-type-strategy-evidence.test.mjs:29:1
+✖ every contrast reconstructs original option weights without changing axes or their meaning (19.956804ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(pack)
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-strategy-evidence.test.mjs:30:58)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at ../issue22-d-strategy-evidence/tests/player-type-strategy-evidence.test.mjs:43:1
+✖ added literal terms never upgrade semantic validity or execute a classifier (31.517059ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(pack)
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-strategy-evidence.test.mjs:45:52)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at ../issue22-d-strategy-evidence/tests/player-type-strategy-evidence.test.mjs:50:1
+✖ invalid score/reference evidence suppresses strategy pack (18.655209ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - null
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-strategy-evidence.test.mjs:52:56)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ../issue22-d-strategy-evidence/tests/player-type-strategy-evidence.test.mjs:54:1
+✖ evidence generation preserves source fixture and all 960 historical reference values (17.848648ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(r.strategyReviewEvidence)
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-strategy-evidence.test.mjs:56:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
