@@ -36,3 +36,6 @@ Stacked on PR98, source-only new module `src/tdaQuizAnswerAudit.ts` adds questio
 
 ## PR116 continuation — duplicate answer-conflict candidates (2026-10-23 UTC)
 Offline audit now distinguishes same normalized prompt/option-set with contradictory answer meanings from harmless ID/order differences; only candidate IDs are returned, never an official correctness decision. Orphan duplicate key rows retain both referential findings. Fixed11FAIL->11PASS and inherited19PASS; UI/RPC/parser unchanged. Main and handoff full trees had no named complete350 export/official text candidate; scoped source-search evidence does not prove global absence. Official rule accuracy remains UNVERIFIED, publication false. Evidence:docs/qa/b-answer-conflict-20261023/.
+
+## Interrupted snapshot-integrity work resumed — 2026-10-24 UTC
+Preserved test input5ca250f/sourcecf130fd from the interrupted PR119 follow-up; clean before resume, no source reimplementation. Offline exact-byte hash/count/UTF8/structural audit CLI,26fixedFAIL->26PASS; source/test hash retained. Full resumed regression/build/lint and exact-headCI are recorded in docs/qa/b-snapshot-integrity-20261023/ and the follow-up Draft. Hash match is not provenance/official accuracy; official350/key/text/clause evidence remainsBLOCKED, publicationfalse. No UI/RPC/grading or retainedstate/production changes.

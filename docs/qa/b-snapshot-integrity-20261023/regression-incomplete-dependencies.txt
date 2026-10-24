@@ -1,0 +1,278 @@
+(node:1017) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ notification entry points use verified events and the saved comment ID (6.137313ms)
+✔ successful verified event returns null once (3.951957ms)
+✔ authorization/validation 401/unauthorized is never retried (0.770924ms)
+✔ authorization/validation 403/denied is never retried (0.994843ms)
+✔ authorization/validation 400/22023 is never retried (2.042855ms)
+✔ authorization/validation 200/42501 is never retried (0.981362ms)
+✔ HTTP 429 retries with the same event and recovers (1.477501ms)
+✔ HTTP 500 retries with the same event and recovers (0.795771ms)
+✔ HTTP 503 retries with the same event and recovers (4.274033ms)
+✔ network failure is retried at most three times (1.975793ms)
+✔ transport ignoring abort still finishes and aborts each of three attempts (7.243087ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 132.122551
+✔ named poll request matches the disclosed named mode (2.027742ms)
+✔ anonymous poll remains anonymous (0.162134ms)
+✔ invalid option null cannot produce a request (0.266302ms)
+✔ invalid option -1 cannot produce a request (0.172651ms)
+✔ invalid option 2 cannot produce a request (0.091298ms)
+✔ invalid option 0.5 cannot produce a request (0.117878ms)
+✔ invalid option NaN cannot produce a request (0.071318ms)
+✔ a previously rendered open card cannot vote at or after the deadline (0.130457ms)
+✔ missing or invalid deadline fails closed (0.292031ms)
+✔ question boxes cannot use the poll write contract (0.263067ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16.58329
+✔ all 32 positive ceilings equal the sum of per-question attainable maxima (3.088093ms)
+✔ negative, zero, unknown and nonfinite values do not become top tendencies (0.598234ms)
+✔ normalization compares proportions rather than raw totals (0.281205ms)
+✔ one incidental selective-burst point must not assert attacking ability (0.444702ms)
+✔ noticing danger must not imply that a calling station folds (0.280964ms)
+✔ attack wording needs both initiative and sustained attack at the threshold (0.164909ms)
+✔ fixed persona replay (not live): 超弱気な初心者 (0.828792ms)
+✔ fixed persona replay (not live): 超タイトな初心者 (0.638594ms)
+✔ fixed persona replay (not live): タイト・パッシブ (0.561017ms)
+✔ fixed persona replay (not live): タイト・アグレッシブ (0.832728ms)
+✔ fixed persona replay (not live): ルース・パッシブ (0.454136ms)
+✔ fixed persona replay (not live): ルース・アグレッシブ (0.306182ms)
+✔ fixed persona replay (not live): コーリングステーション (0.343298ms)
+✔ fixed persona replay (not live): マニアック (1.419393ms)
+✔ fixed persona replay (not live): 超慎重な上級者 (0.295326ms)
+✔ fixed persona replay (not live): 熟練したLAG (0.769482ms)
+✔ fixed persona replay (not live): 熟練したTAG (33.352221ms)
+✔ fixed persona replay (not live): ブラフ嫌い (0.214103ms)
+✔ fixed persona replay (not live): ブラフ多用型 (0.467967ms)
+✔ fixed persona replay (not live): ギャンブラー (0.191209ms)
+✔ fixed persona replay (not live): リスク回避型 (0.17861ms)
+✔ fixed persona replay (not live): バランス型 (0.216958ms)
+✔ fixed persona replay (not live): 相手依存型 (0.234394ms)
+✔ fixed persona replay (not live): 感情的なティルト型 (0.276738ms)
+✔ fixed persona replay (not live): トーナメント生存重視型 (0.41072ms)
+✔ fixed persona replay (not live): トーナメント攻撃型 (0.176737ms)
+✔ fixed persona replay (not live): キャッシュゲーム堅実派 (0.17893ms)
+✔ fixed persona replay (not live): 初心者の無謀型 (0.160503ms)
+✔ fixed persona replay (not live): 上級者の柔軟型 (0.200903ms)
+✔ fixed persona replay (not live): フィット・オア・フォールド型 (0.162586ms)
+✔ fixed persona replay (not live): バリュー重視型 (0.161354ms)
+✔ fixed persona replay (not live): トラップ好き (0.183698ms)
+✔ fixed persona replay (not live): プリフロップ超ルース型 (0.383158ms)
+✔ fixed persona replay (not live): ポストフロップ消極型 (0.176065ms)
+✔ fixed persona replay (not live): 勝負好きだがブラフしない型 (0.183327ms)
+✔ fixed persona replay (not live): 理論重視の冷静型 (0.214854ms)
+✔ question bank validation rejects incomplete or contradictory data (0.997877ms)
+✔ a late result cannot win after a new request, restart or unmount (0.102204ms)
+✔ audit wording corrections apply only to the displayed copy, without mutating saved data (0.235756ms)
+✔ wording correction leaves unrelated copy unchanged (0.089955ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 60.032358
+✔ stale or forged question mode is rejected before RPC (1.183206ms)
+✔ stale or forged normal mode is rejected before RPC (0.109035ms)
+✔ stale or forged  mode is rejected before RPC (0.069695ms)
+✔ stale or forged QUESTION mode is rejected before RPC (0.067242ms)
+✔ 2 poll choices and privacy mode produce poll-only contract (0.754129ms)
+✔ 3 poll choices and privacy mode produce poll-only contract (0.097788ms)
+✔ 4 poll choices and privacy mode produce poll-only contract (0.270518ms)
+✔ invalid poll parameters [["A"],24] fail closed (0.128413ms)
+✔ invalid poll parameters [["A","B","C","D","E"],24] fail closed (0.13299ms)
+✔ invalid poll parameters [["A"," a "],24] fail closed (1.237368ms)
+✔ invalid poll parameters [["","B"],24] fail closed (0.223707ms)
+✔ invalid poll parameters [["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx","B"],24] fail closed (0.557211ms)
+✔ invalid poll parameters [["A","B"],0] fail closed (0.069606ms)
+✔ invalid poll parameters [["A","B"],null] fail closed (0.07903ms)
+✔ empty and overlong content fail closed (0.11899ms)
+✔ anonymous presentation drops identities even in unexpected server payload without mutating it (0.312392ms)
+✔ both composers use guarded creation; public card cannot mount historical question thread (1.664494ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35.638773
+✔ same prompt and option text set with different correct meanings yields a conflict candidate (5.21241ms)
+✔ option ID differences alone are not a conflicting answer (0.310709ms)
+✔ different display order does not change an answer meaning (0.2578ms)
+✔ different option text set is not falsely matched (1.03325ms)
+✔ different prompt is not falsely matched (0.265951ms)
+✔ existing NFKC whitespace case normalization only produces review candidates (0.42349ms)
+✔ duplicate option meanings are not used to invent a definite cross-question conflict (0.220323ms)
+✔ invalid or ambiguous answer keys do not produce conflict candidates (0.421447ms)
+✔ one three-question conflict group preserves all candidate IDs deterministically (0.332351ms)
+✔ orphan duplicate answer rows retain both independent referential issues (0.365182ms)
+✔ candidate report does not echo full private prompt or explanation text (0.306262ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17.541236
+✔ valid offline export reports counts and 1-based displayed answer position without mutating input (2.324621ms)
+✔ missing answer row remains review required (0.204038ms)
+✔ duplicate answer rows do not select one answer silently (0.716933ms)
+✔ orphan answer row is identified (1.310969ms)
+✔ answer outside question options is rejected (0.248265ms)
+✔ missing or invalid explanation () needs review (0.360815ms)
+✔ missing or invalid explanation (null) needs review (0.153963ms)
+✔ missing or invalid explanation (42) needs review (0.14572ms)
+✔ invalid rule references [] need review (0.215075ms)
+✔ invalid rule references [0] need review (0.253543ms)
+✔ invalid rule references [true] need review (0.141583ms)
+✔ invalid rule references [1.5] need review (0.127402ms)
+✔ invalid rule references [1,1] need review (0.144758ms)
+✔ invalid rule references null need review (0.077547ms)
+✔ non-four-choice question is reported rather than counted as 1400 (0.196157ms)
+✔ empty corpus never passes (0.095504ms)
+✔ malformed and sparse key rows fail closed without echoing payload (0.511693ms)
+✔ malformed and sparse questions retain established parser rejection (0.082444ms)
+✔ balanced synthetic answers expose all four positions without a quality approval (2.822011ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22.47704
+✔ malformed JSON never echoes payload fragments or parser details (2.611464ms)
+✔ malformed JSON never echoes payload fragments or parser details (0.505493ms)
+✔ malformed JSON never echoes payload fragments or parser details (0.183678ms)
+✔ read failures do not reveal paths or untrusted error text (0.175184ms)
+✔ invalid question shape has a stable failure code without raw data (1.853039ms)
+✔ invalid arguments fail before reading ([]) (0.197418ms)
+✔ invalid arguments fail before reading ([""]) (0.261395ms)
+✔ invalid arguments fail before reading (["export.json","1","ignored-before"]) (0.106861ms)
+✔ invalid arguments fail before reading (["export.json","0"]) (0.150287ms)
+✔ invalid arguments fail before reading (["export.json","-1"]) (0.169326ms)
+✔ invalid arguments fail before reading (["export.json","1.5"]) (0.261455ms)
+✔ invalid arguments fail before reading (["export.json","1e3"]) (0.331ms)
+✔ invalid arguments fail before reading (["export.json","01"]) (0.065118ms)
+✔ invalid arguments fail before reading (["export.json","NaN"]) (0.053811ms)
+✔ invalid arguments fail before reading (["export.json","9007199254740992"]) (0.24489ms)
+✔ invalid arguments fail before reading (["export.json","999999999999999999999999999999999999999999999999999999999999999999999999999999999999) (0.062895ms)
+✔ valid report and count mismatch preserve the non-publication contract (1.011007ms)
+✔ safe integer upper boundary is accepted as a count, without rounding (0.188775ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17.845566
+✔ guest cannot start and does not make a user lookup (1.560456ms)
+✔ valid session and verified user can answer (0.700377ms)
+✔ user lookup transport error {"status":0} keeps retry guidance (0.232201ms)
+✔ user lookup transport error {"status":503} keeps retry guidance (0.103376ms)
+✔ user lookup transport error {"name":"AuthRetryableFetchError"} keeps retry guidance (0.096126ms)
+✔ expired authentication {"status":401} asks for login (0.123607ms)
+✔ expired authentication {"code":"session_not_found"} asks for login (0.13896ms)
+✔ expired authentication {"name":"AuthSessionMissingError"} asks for login (0.360114ms)
+✔ session transport error does not claim expiry (0.247063ms)
+✔ thrown transport error does not escape the UI action (0.615419ms)
+✔ missing verified user asks for login (0.170978ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14.331299
+✔ question validation sorts a copy without changing option identity or original input (2.283027ms)
+✔ malformed null fails closed (0.270739ms)
+✔ malformed object fails closed (0.11277ms)
+✔ malformed no options fails closed (1.109866ms)
+✔ malformed one option fails closed (0.102855ms)
+✔ malformed empty text fails closed (0.194904ms)
+✔ malformed missing metadata fails closed (0.15943ms)
+✔ malformed duplicate question ID fails closed (0.128033ms)
+✔ malformed duplicate option ID fails closed (0.093731ms)
+✔ malformed duplicate option order fails closed (0.133691ms)
+✔ malformed fractional order fails closed (0.075273ms)
+✔ malformed empty option text fails closed (0.064037ms)
+✔ malformed negative order fails closed (0.063796ms)
+✔ rejected and synchronous transport failures become recoverable errors without retries (0.454206ms)
+✔ successful save data and RPC permission errors are preserved without reinterpretation (0.11306ms)
+✔ offline audit flags normalized question and option duplicate candidates only (25.548552ms)
+✔ audit report flags missing expected count and never claims publication approval (0.359062ms)
+✔ sparse quiz input rejects empty sparse question bank (0.077217ms)
+✔ sparse quiz input rejects question followed by missing row (0.053902ms)
+✔ sparse quiz input rejects entirely missing options (0.0398ms)
+✔ sparse quiz input rejects one present option (0.067792ms)
+✔ frozen dense valid input and empty bank remain valid (0.153822ms)
+✔ reviewed PR28 empty-audit guard remains present (0.095685ms)
+✔ optional filters default invalid rows and fields to empty lists (0.206181ms)
+✔ optional filters exclude nonstring items and preserve valid sibling fields (0.124638ms)
+✔ optional filters preserve string values order and copy frozen arrays (0.121634ms)
+✔ optional filters densify sparse lists without inventing choices (0.087312ms)
+✖ optional filters render and preserve quiz requests in four mocked mobile scenarios (43.638713ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 27
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 83.330341
+
+✖ failing tests:
+
+test at tests/tda-quiz-data.test.mjs:89:1
+✖ optional filters render and preserve quiz requests in four mocked mobile scenarios (43.638713ms)
+  AssertionError [ERR_ASSERTION]: browser filter acceptance failed:
+  node:internal/modules/package_json_reader:301
+    throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+          ^
+  
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'vite' imported from /workspace/work/issue22-b-snapshot-integrity-audit/tests/browser/tda-filters.mjs
+      at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+      at packageResolve (node:internal/modules/esm/resolve:768:81)
+      at moduleResolve (node:internal/modules/esm/resolve:859:18)
+      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+      at #resolve (node:internal/modules/esm/loader:683:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+      at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+    code: 'ERR_MODULE_NOT_FOUND'
+  }
+  
+  Node.js v24.19.0
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-quiz-data.test.mjs:93:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
