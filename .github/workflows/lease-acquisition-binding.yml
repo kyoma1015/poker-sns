@@ -4,6 +4,11 @@ on:
     branches: [codex/a-corrupt-evidence-20261023]
     paths:
       - 'scripts/code_worker.py'
+      - 'scripts/prepared_host_boundary.py'
+      - 'tests/automation/test_prepared_host_boundary.py'
+      - 'tests/automation/test_prepared_boundary_race.py'
+      - 'tests/automation/test_prepared_commit_stop.py'
+      - 'tests/automation/test_prepared_durable_resume.py'
       - 'tests/automation/test_activation_binding.py'
       - 'tests/automation/test_finish_binding.py'
       - 'tests/automation/test_lease_integration_matrix.py'
@@ -37,4 +42,8 @@ jobs:
             python -B tests/automation/test_activation_binding.py -v || exit 1
             python -B tests/automation/test_finish_binding.py -v || exit 1
             python -B tests/automation/test_lease_integration_matrix.py -v || exit 1
+            python -B tests/automation/test_prepared_host_boundary.py -v || exit 1
+            python -B tests/automation/test_prepared_boundary_race.py -v || exit 1
+            python -B tests/automation/test_prepared_commit_stop.py -v || exit 1
+            python -B tests/automation/test_prepared_durable_resume.py -v || exit 1
           done

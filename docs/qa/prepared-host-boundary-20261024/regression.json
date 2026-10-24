@@ -1,0 +1,82 @@
+[
+  {
+    "suite": "test_code_worker",
+    "exit": 0,
+    "tests": 22
+  },
+  {
+    "suite": "test_development_queue",
+    "exit": 0,
+    "tests": 15
+  },
+  {
+    "suite": "test_controller_integration",
+    "exit": 0,
+    "tests": 9
+  },
+  {
+    "suite": "test_worker_recovery_lifecycle",
+    "exit": 0,
+    "tests": 8
+  },
+  {
+    "suite": "test_host_call_boundary",
+    "exit": 0,
+    "tests": 11
+  },
+  {
+    "suite": "test_host_boundary_restart",
+    "exit": 0,
+    "tests": 1
+  },
+  {
+    "suite": "test_unknown_liveness_expiry",
+    "exit": 0,
+    "tests": 5
+  },
+  {
+    "suite": "test_corrupt_evidence",
+    "exit": 0,
+    "tests": 8
+  },
+  {
+    "suite": "test_evidence_activation",
+    "exit": 0,
+    "tests": 4
+  },
+  {
+    "suite": "test_activation_cas",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "suite": "test_worker_io_bounds",
+    "exit": 0,
+    "tests": 5
+  },
+  {
+    "suite": "test_worker_tree_boundaries",
+    "exit": 0,
+    "tests": 4
+  },
+  {
+    "suite": "test_command_process_cleanup",
+    "exit": 0,
+    "tests": 1
+  },
+  {
+    "suite": "test_activation_binding",
+    "exit": 0,
+    "tests": 7
+  },
+  {
+    "suite": "test_finish_binding",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "suite": "test_lease_integration_matrix",
+    "exit": 0,
+    "tests": 2
+  }
+]

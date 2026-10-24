@@ -36,3 +36,6 @@ PR117 follow-up: exact-parent corrected8test/37failure observations →8PASS; ac
 
 ## Quota recovery and acquired identity —2026-10-24
 Resumed existing WIP on PR121 base, fixed7/4FAIL→7PASS. Independent completion-binding reproduction2FAIL→2PASS; actual temporary SQLite/Git plus source-pinned32pair and8processWAL QA. Local191PASS +new11×10=110PASS. No oldtests modified. Draft/CI not attempted after new-PR automatic approval rejection in parallel lanes; branch evidence only, not CI PASS. See docs/workers/LEASE_IDENTITY_RESUME_20261024.md. No retainedstate/controller/main/production operation.
+
+## Prepared boundary integration —2026-10-24
+Preserved spec binding; new opt-in same-state prepared adapter with pre-dispatch identity recheck, UNKNOWN CAS retention and cooperative stop through acceptance/staging/commit. Missing API1importERROR/0methods ->8PASS; observation races2FAIL→2PASS; independent stop gap3FAIL→3PASS. Final205PASS, old110/new140 repeatedPASS; actual temp SQLite/Git/private-file/fresh-Python only, no real host/coldstart. Source/limits/blocked2 review in docs/workers/PREPARED_HOST_BOUNDARY_20261024.md. No new PR/CI dispatch/runtime/main/production adoption.

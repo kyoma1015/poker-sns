@@ -8,6 +8,6 @@ test_unknown_after_dispatch_retains_context_and_blocks_other_lane (__main__.Prep
 test_wrong_token_never_dispatches (__main__.PreparedBoundary.test_wrong_token_never_dispatches) ... ok
 
 ----------------------------------------------------------------------
-Ran 8 tests in 0.331s
+Ran 8 tests in 0.392s
 
 OK
