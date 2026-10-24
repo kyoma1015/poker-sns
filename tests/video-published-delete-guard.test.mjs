@@ -10,7 +10,7 @@ test('published video deletion remains blocked before legacy unversioned Storage
   assert.ok(guard>0 && deleteCall>guard)
   assert.match(timeline.slice(guard,deleteCall),/return/)
 })
-test('video upload remains disabled for production',()=>{
-  assert.match(videoApi,/VIDEO_SERVER_ENABLED = false as boolean/)
+test('video upload is opt-in and remains disabled without the release flag',()=>{
+  assert.match(videoApi,/VIDEO_SERVER_ENABLED = import\.meta\.env\.VITE_VIDEO_SERVER_ENABLED === 'true'/)
   assert.match(timeline,/if \(!VIDEO_SERVER_ENABLED\)/)
 })
