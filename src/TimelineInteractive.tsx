@@ -57,6 +57,7 @@ export function InteractiveCard({item,result,onUpdated,isOwner=false,ownerName: 
   const [choice,setChoice]=useState<number|null>(null)
   const [busy,setBusy]=useState(false)
   const submitting = useRef(false)
+  const voteAccepted = useRef(false)
   const [error,setError]=useState('')
   const [voterOption,setVoterOption]=useState<number|null>(null)
   const mine=result?.has_responded ?? false
@@ -64,12 +65,13 @@ export function InteractiveCard({item,result,onUpdated,isOwner=false,ownerName: 
   const deadline = item.closes_at ? Date.parse(item.closes_at) : NaN
   const closed = item.kind === 'poll' && (!Number.isFinite(deadline) || deadline <= Date.now())
   const submit=async()=>{
-    if(submitting.current||mine||closed||choice===null) return
+    if(submitting.current||voteAccepted.current||mine||closed||choice===null) return
     submitting.current=true
     setBusy(true);setError('')
     try {
       const {error:failure}=await supabase.rpc('submit_interactive_response_v2',pollVoteRequest(item, choice))
       if(failure) throw failure
+      voteAccepted.current=true
       await onUpdated()
     } catch(e){setError(e instanceof Error?e.message:'回答に失敗しました')}
     finally{submitting.current=false;setBusy(false)}
@@ -92,7 +94,7 @@ export function InteractiveCard({item,result,onUpdated,isOwner=false,ownerName: 
       })}</div>
       {voterOption!==null&&!item.is_anonymous&&<div role="dialog" aria-modal="true" aria-label="投票者一覧" style={{position:'fixed',inset:0,zIndex:10000,background:'rgba(0,0,0,.78)',display:'flex',alignItems:'center',justifyContent:'center',padding:16}} onClick={()=>setVoterOption(null)}><div onClick={e=>e.stopPropagation()} style={{background:'#20242b',color:'#fff',border:'1px solid #505b68',borderRadius:14,padding:18,width:'min(100%,460px)',maxHeight:'80vh',overflowY:'auto'}}><div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:12,marginBottom:12}}><strong>投票者一覧</strong><button type="button" onClick={()=>setVoterOption(null)} style={{width:'auto',background:'#343b45',color:'#fff',border:'1px solid #667085',borderRadius:8,padding:'6px 12px'}}>閉じる</button></div><div role="tablist" aria-label="選択肢" style={{display:'grid',gridTemplateColumns:'repeat('+item.options.length+',minmax(0,1fr))',gap:6,marginBottom:12}}>{item.options.map((option,i)=><button key={i} type="button" role="tab" aria-label={String.fromCharCode(65+i)+'：'+option} aria-selected={voterOption===i} onClick={()=>setVoterOption(i)} style={{minWidth:0,width:'100%',padding:'9px 4px',borderRadius:8,background:voterOption===i?'#405367':'#292e35',color:'#fff',border:'1px solid '+(voterOption===i?'#8b9bad':'#464d57')}}><strong style={{display:'block'}}>{String.fromCharCode(65+i)}</strong><span style={{fontSize:12}}>{result?.total_votes?Math.round((result?.vote_counts?.[String(i)]??0)/result.total_votes*100):0}%</span></button>)}</div><div style={{padding:'10px 12px',marginBottom:10,background:'#292e35',borderRadius:8,overflowWrap:'anywhere'}}><strong>{String.fromCharCode(65+voterOption)}：{item.options[voterOption]}</strong><div style={{fontSize:12,color:'#b8c2cf',marginTop:4}}>{result?.vote_counts?.[String(voterOption)]??0}票 · {result?.total_votes?Math.round((result?.vote_counts?.[String(voterOption)]??0)/result.total_votes*100):0}%</div></div>{(result?.voters??[]).filter(v=>v.option_index===voterOption).map((v,j)=><div key={j} style={{padding:'10px 2px',borderBottom:'1px solid #373d46'}}><strong>{v.display_name||v.poker_id||'ユーザー'}</strong>{v.poker_id&&<span style={{fontSize:12,color:'#aab5c2'}}> @{v.poker_id}</span>}</div>)}{!(result?.voters??[]).some(v=>v.option_index===voterOption)&&<p style={{fontSize:13,color:'#aaa'}}>まだ投票者はいません。</p>}</div></div>}
       <p style={{fontSize:12,color:'#aaa'}}>{result?.total_votes ?? 0}票 · {closed?'終了または期限を確認できません':`締切 ${new Date(deadline).toLocaleString('ja-JP')}`}</p>
-      {!mine&&!closed&&<button type="button" disabled={choice===null||busy} onClick={submit} style={{width:'auto',padding:'8px 18px',borderRadius:20,background:'#303b49',color:'#eee',border:'1px solid #64748b'}}>投票する</button>}
+      {!mine&&!closed&&<button type="button" disabled={choice===null||busy||voteAccepted.current} onClick={submit} style={{width:'auto',padding:'8px 18px',borderRadius:20,background:'#303b49',color:'#eee',border:'1px solid #64748b'}}>投票する</button>}
       {isOwner&&!item.is_anonymous&&<div style={{marginTop:8,display:'flex',flexDirection:'column',alignItems:'flex-start',gap:6}}><button type="button" onClick={()=>setVoterOption(0)} style={{width:'auto',background:'#303b49',color:'#fff',border:'1px solid #64748b',borderRadius:9,padding:'8px 14px'}}>回答者一覧を見る</button><span style={{fontSize:12,color:'#aaa'}}>投稿主も投票できます。投票後は選択肢を押すと回答者一覧が開きます。</span></div>}
       {mine&&<p style={{fontSize:12,color:'#aaa'}}>投票済み（変更不可）{!item.is_anonymous?' · 選択肢を押すと投票者一覧を表示':''}</p>}
     </>
