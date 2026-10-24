@@ -102,13 +102,8 @@ assert.equal(retry.data,true)
 const workerPath=`${ownerId}/${randomUUID()}.mp4`
 assert.ifError((await server.rpc('video_qa_publish',{p_owner:ownerId,p_path:workerPath,p_content:'retained by cleanup worker'})).error)
 assert.ifError((await server.from('video_cleanup_queue').insert({owner_id:ownerId,object_path:workerPath})).error)
-const { spawnSync } = await import('node:child_process')
-const worker = spawnSync('python3',['-m','tests.video.isolated_cleanup_worker_e2e'],{
- env:{...process.env,VIDEO_QA_ENV:process.env.VIDEO_QA_ENV},
- encoding:'utf8'
-})
-assert.equal(worker.status,0,worker.stderr)
-assert.match(worker.stdout,/PASS: isolated durable cleanup worker retained posted object/)
+// Cleanup worker E2E is executed once by run_storage_http_isolated.sh,
+// after finalize E2E; do not invoke it here or assert an obsolete output.
 
 assert.ifError((await owner.storage.from(bucket).remove([publishPath])).error)
 console.log('PASS: isolated PostgREST publish idempotency, reconciliation, RLS, cleanup lease/fencing/retry')
