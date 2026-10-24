@@ -1,0 +1,12 @@
+test_context_task_cannot_change_reviewed_instruction (__main__.ActivationBinding.test_context_task_cannot_change_reviewed_instruction) ... ok
+test_corrupt_row_spec_hash_refuses (__main__.ActivationBinding.test_corrupt_row_spec_hash_refuses) ... ok
+test_incoming_claimed_hash_cannot_replace_acquired_identity (__main__.ActivationBinding.test_incoming_claimed_hash_cannot_replace_acquired_identity) ... ok
+test_matching_task_context_and_normal_completion (__main__.ActivationBinding.test_matching_task_context_and_normal_completion) ... ok
+test_mismatched_running_spec_blocks_other_lane_without_mutation (__main__.ActivationBinding.test_mismatched_running_spec_blocks_other_lane_without_mutation) ... ok
+test_retry_spec_mismatch_rolls_back (__main__.ActivationBinding.test_retry_spec_mismatch_rolls_back) ... ok
+test_wrong_token_never_changes_row (__main__.ActivationBinding.test_wrong_token_never_changes_row) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.004s
+
+OK

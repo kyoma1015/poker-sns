@@ -287,12 +287,14 @@ class Leases:
         digest = hashlib.sha256(json.dumps(task, sort_keys=True).encode()).hexdigest()
         self.db.execute('BEGIN IMMEDIATE')
         try:
-            for raw, expiry in self.db.execute("SELECT evidence,expires FROM development_jobs WHERE status='running'"):
+            for raw, expiry, stored_spec in self.db.execute("SELECT evidence,expires,spec_hash FROM development_jobs WHERE status='running'"):
                 liveness = running_evidence_state(raw)
                 # A deadline is not positive evidence that an executing worker died.
                 # A fresh never-dispatched lease may expire normally; executing or
                 # legacy/corrupt context requires ownership/liveness review first.
-                if (liveness == 'unknown' or type(expiry) not in (int, float)
+                bound = json.loads(raw).get('claimed_spec_hash') if liveness != 'unknown' else None
+                if (not isinstance(bound, str) or not re.fullmatch(r'[0-9a-f]{64}', bound)
+                        or bound != stored_spec or liveness == 'unknown' or type(expiry) not in (int, float)
                         or not math.isfinite(expiry)
                         or (liveness == 'running' and expiry <= now)):
                     self.db.execute('COMMIT')
@@ -306,7 +308,8 @@ class Leases:
                 self.db.execute('COMMIT')
                 return None
             token = uuid.uuid4().hex
-            initial = json.dumps({'lease_evidence_version': 1, 'worker_liveness': 'not_started'})
+            initial = json.dumps({'lease_evidence_version': 1, 'worker_liveness': 'not_started',
+                                  'claimed_spec_hash': digest})
             if old:
                 self.db.execute("UPDATE development_jobs SET status='running',attempts=attempts+1,token=?,expires=?,evidence=? WHERE id=?", (token, expires, initial, task['id']))
             else:
@@ -318,23 +321,36 @@ class Leases:
             raise
 
     def activate(self, task_id, token, evidence, now=None):
-        """CAS a known never-dispatched owner to possible execution before dispatch.
+        """CAS known ownership/specification to possible execution before dispatch.
 
-        Expiry, replaced ownership or corrupt context is never repaired/finalized
-        by this transition. The caller must not dispatch after this exception.
+        Unknown/legacy/acquired-task mismatch never repairs the original row.
+        A lease token authorizes only the exact immutable specification acquired.
         """
-        context = dict(evidence)
-        context.update(lease_evidence_version=1, worker_liveness='running')
-        encoded = json.dumps(context, allow_nan=False)
-        if running_evidence_state(encoded) != 'running':
-            raise LeaseActivationRefused('activation evidence requires review')
+        try:
+            context = dict(evidence)
+        except (TypeError, ValueError):
+            raise LeaseActivationRefused('activation context requires review') from None
         self.db.execute('BEGIN IMMEDIATE')
         try:
             current = finite_lease_number(time.time() if now is None else now, 'activation clock')
-            row = self.db.execute("SELECT evidence FROM development_jobs WHERE id=? AND token=? AND status='running' AND expires>?", (task_id, token, current)).fetchone()
+            row = self.db.execute("SELECT evidence,spec_hash FROM development_jobs WHERE id=? AND token=? AND status='running' AND expires>?", (task_id, token, current)).fetchone()
             if row is None or running_evidence_state(row[0]) != 'not_started':
                 raise LeaseActivationRefused('activation ownership, expiry or evidence requires review')
-            cursor = self.db.execute("UPDATE development_jobs SET evidence=? WHERE id=? AND token=? AND status='running' AND expires>?", (encoded, task_id, token, current))
+            acquired = json.loads(row[0]).get('claimed_spec_hash')
+            if (not isinstance(acquired, str) or not re.fullmatch(r'[0-9a-f]{64}', acquired)
+                    or acquired != row[1]
+                    or ('claimed_spec_hash' in context and context['claimed_spec_hash'] != acquired)):
+                raise LeaseActivationRefused('activation specification binding requires review')
+            if 'task' in context:
+                reviewed = context['task']
+                if (type(reviewed) is not dict or reviewed.get('id') != task_id
+                        or hashlib.sha256(json.dumps(reviewed, sort_keys=True).encode()).hexdigest() != acquired):
+                    raise LeaseActivationRefused('activation task differs from acquired specification')
+            context.update(lease_evidence_version=1, worker_liveness='running', claimed_spec_hash=acquired)
+            encoded = json.dumps(context, allow_nan=False)
+            if running_evidence_state(encoded) != 'running':
+                raise LeaseActivationRefused('activation evidence requires review')
+            cursor = self.db.execute("UPDATE development_jobs SET evidence=? WHERE id=? AND token=? AND spec_hash=? AND status='running' AND expires>?", (encoded, task_id, token, acquired, current))
             if cursor.rowcount != 1:
                 raise LeaseActivationRefused('activation compare-and-swap refused')
             self.db.execute('COMMIT')
@@ -579,7 +595,8 @@ def run_task(repository, work_root, state, task, executor, timeout=180):
         with setup_lock(state):
             command(['git', 'worktree', 'add', '-b', task['branch'], str(worktree), base], repository)
         before = protected_hashes(worktree, task['protected_tests'])
-        evidence.update(lease_evidence_version=1, worker_liveness='running')
+        evidence.update(lease_evidence_version=1, worker_liveness='running',
+                        claimed_spec_hash=hashlib.sha256(json.dumps(task, sort_keys=True).encode()).hexdigest())
         leases.activate(task['id'], token, evidence)
         evidence['execution'] = executor(task, worktree, timeout)
         validate_and_commit(task, worktree, base, before, evidence)
