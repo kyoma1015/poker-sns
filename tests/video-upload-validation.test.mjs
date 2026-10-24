@@ -11,11 +11,11 @@ test('video candidate declares required limits and MIME types', () => {
   assert.match(source, /video\/webm/)
   assert.match(source, /URL\.revokeObjectURL\(url\)/)
 })
-test('posting remains blocked until server-side duration validation exists', () => {
+test('posting is gated by explicit default-off production readiness', () => {
   assert.match(timeline, /if \(!VIDEO_SERVER_ENABLED\)/)
   assert.match(timeline, /await uploadPostVideo\(user\.id, videoFile\)/)
   const api = readFileSync(new URL('../src/videoApi.ts', import.meta.url), 'utf8')
-  assert.match(api, /VIDEO_SERVER_ENABLED = false/)
+  assert.match(api, /VIDEO_SERVER_ENABLED = import\.meta\.env\.VITE_VIDEO_SERVER_ENABLED === 'true'/)
   assert.match(api, /if \(!VIDEO_SERVER_ENABLED\) throw new Error/)
 })
 test('staged storage is private, limited, and not readable by every authenticated user', () => {
