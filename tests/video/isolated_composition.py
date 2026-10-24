@@ -10,6 +10,12 @@ from .storage_download_adapter import download_private_staged
 from .isolated_db_adapter import publish_post, reconcile_post
 
 def build_isolated_adapters(*, project_url: str, anon_key: str, service_key: str, access_token: str):
+    # Fail closed before constructing privileged adapters for any remote API.
+    # Production deployment requires a separately reviewed composition.
+    if project_url != "http://127.0.0.1:56321":
+        raise PermissionError("isolated composition requires fixed loopback Supabase")
+    if not anon_key or not service_key or not access_token:
+        raise PermissionError("isolated credentials and caller JWT required")
     # The per-request access token must be the same token verified by Auth.
     # Never instantiate a shared adapter for multiple callers.
     def authenticate(token: str) -> str:
