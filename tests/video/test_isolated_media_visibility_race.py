@@ -33,7 +33,7 @@ class MediaRaceTests(unittest.TestCase):
                      Response(b"media"),
                      Response(json.dumps([private]).encode())]
         with patch("tests.video.isolated_authorized_media_proxy.authenticate_supabase_token",
-                   return_value=OWNER), \\
+                   return_value=OWNER), \
              patch("tests.video.isolated_authorized_media_proxy.urlopen",
                    side_effect=responses):
             self.assertEqual(
@@ -42,7 +42,7 @@ class MediaRaceTests(unittest.TestCase):
     def test_other_user_private_post_denied_before_storage(self):
         private = {"user_id": OWNER, "video_path": PATH, "is_public": False}
         with patch("tests.video.isolated_authorized_media_proxy.authenticate_supabase_token",
-                   return_value=VIEWER), \\
+                   return_value=VIEWER), \
              patch("tests.video.isolated_authorized_media_proxy.urlopen",
                    side_effect=[Response(json.dumps([private]).encode())]) as fetch:
             with self.assertRaises(PermissionError):
