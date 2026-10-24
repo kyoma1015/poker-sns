@@ -42,5 +42,21 @@ class MediaRaceTests(unittest.TestCase):
     def test_unchanged_public_post(self):
         self.assertEqual(self.run_case([{"user_id": OWNER, "video_path": PATH, "is_public": True}]), b"media")
 
+
+    def test_malformed_acl_rows_fail_closed(self):
+        responses = [Response(json.dumps({"not": "a list"}).encode())]
+        with patch("tests.video.isolated_authorized_media_proxy.authenticate_supabase_token", return_value=VIEWER), \
+             patch("tests.video.isolated_authorized_media_proxy.urlopen", side_effect=responses):
+            with self.assertRaises(PermissionError):
+                fetch_visible_video(API, "anon", "service", "jwt", POST)
+
+    def test_viewer_identity_drift_fails_closed(self):
+        first = {"user_id": OWNER, "video_path": PATH, "is_public": True}
+        responses = [Response(json.dumps([first]).encode()), Response(b"media")]
+        with patch("tests.video.isolated_authorized_media_proxy.authenticate_supabase_token", side_effect=[VIEWER, OWNER]), \
+             patch("tests.video.isolated_authorized_media_proxy.urlopen", side_effect=responses):
+            with self.assertRaises(PermissionError):
+                fetch_visible_video(API, "anon", "service", "jwt", POST)
+
 if __name__ == "__main__":
     unittest.main()
