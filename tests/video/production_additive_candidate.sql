@@ -29,6 +29,18 @@ with check(bucket_id='post-videos' and
  name ~ '^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}[.](mp4|webm)$');
 create policy poker_post_videos_read_own on storage.objects for select to authenticated
 using(bucket_id='post-videos' and split_part(name,'/',1)=(select auth.uid())::text);
+-- A permissive policy for ALL or UPDATE/DELETE can override bucket-specific
+-- policy assumptions. Reject broad policies unless explicitly bucket-scoped away.
+-- Production inspection on 2026-10-25 found only bucket-scoped mutations.
+do $
+begin
+ if exists(
+  select 1 from pg_policies where schemaname='storage' and tablename='objects'
+   and cmd in ('ALL','UPDATE','DELETE')
+   and (coalesce(qual,'') not like '%bucket_id%'
+     or (cmd in ('ALL','UPDATE') and coalesce(with_check,'') not like '%bucket_id%'))
+ ) then raise exception 'unscoped Storage mutation policy blocks video release'; end if;
+end $;
 -- No authenticated UPDATE/DELETE policy for post-videos. No public read policy.
 create or replace function public.video_production_storage_generation(p_owner uuid,p_path text)
 returns uuid language plpgsql security invoker set search_path='' as $$
