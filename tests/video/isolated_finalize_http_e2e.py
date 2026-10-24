@@ -108,6 +108,30 @@ def main():
                 assert json.load(response) == fresh_post
             from tests.video.isolated_db_adapter import reconcile_post as reconcile_http_post
             assert reconcile_http_post(API, service, owner, fresh_path) == fresh_post["post_id"]
+            # Playback of the HTTP-first post must use the same server and
+            # re-check authorization; the endpoint must not return a signed URL.
+            from urllib.parse import urlencode as encode_fresh_query
+            fresh_video_url = (
+                "http://127.0.0.1:" + str(finalize_server.server_port)
+                + "/video?" + encode_fresh_query({"post_id": fresh_post["post_id"]}))
+            with urlopen(Request(
+                fresh_video_url, headers={"Authorization": "Bearer " + session}),
+                timeout=20) as response:
+                assert response.status == 200
+                assert response.read() == media.read_bytes()
+                assert response.headers.get("Cache-Control") == "no-store, private"
+                assert response.headers.get("Vary") == "Authorization"
+                assert response.headers.get("Location") is None
+            try:
+                urlopen(Request(fresh_video_url), timeout=10)
+            except HTTPError as exc:
+                try:
+                    assert exc.code in (401, 403)
+                finally:
+                    exc.close()
+            else:
+                raise AssertionError("HTTP-first post playback bypassed JWT")
+            print("PASS: HTTP-first post -> same-origin authorized GET bytes; no redirect")
             print("PASS: real HTTP POST creates a NEW isolated video post and idempotent retry")
             for headers, payload in (
                 ({"Content-Type": "application/json"}, {"object_path": path, "content": "real E2E"}),
