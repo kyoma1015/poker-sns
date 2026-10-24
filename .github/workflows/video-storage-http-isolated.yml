@@ -4,6 +4,7 @@ on:
     paths:
       - 'tests/video/**'
       - 'sql/post_short_videos_candidate.sql'
+      - 'sql/post_short_videos_immutable_review_only.sql'
       - '.github/workflows/video-storage-http-isolated.yml'
   workflow_dispatch:
 permissions:
