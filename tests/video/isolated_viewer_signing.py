@@ -44,4 +44,4 @@ def issue_owner_video_url(project_url: str, anon_key: str, access_token: str,
     signed = result.get("signedURL") or result.get("signedUrl")
     if not isinstance(signed, str) or not signed.startswith("/"):
         raise RuntimeError("unexpected signed URL response")
-    return project_url + signed
+    return project_url + (signed if signed.startswith("/storage/v1/") else "/storage/v1" + signed)
