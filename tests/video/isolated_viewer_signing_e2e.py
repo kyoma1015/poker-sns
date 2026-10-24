@@ -45,6 +45,34 @@ def main():
         pass
     else:
         raise AssertionError("other user obtained owner signed URL")
+    from tests.video.isolated_visible_signing import issue_visible_video_url
+    from tests.video.isolated_db_adapter import _rpc
+    from urllib.request import Request
+    def set_visibility(is_public):
+        req = Request(API + "/rest/v1/posts?id=eq." + post_id,
+                      data=json.dumps({"is_public": is_public}).encode(),
+                      headers={"apikey": service, "Authorization": "Bearer " + service,
+                               "Content-Type": "application/json"}, method="PATCH")
+        with urlopen(req, timeout=10) as response:
+            assert response.status in (200, 204)
+    try:
+        issue_visible_video_url(API, key, service, viewer_token, post_id)
+    except (PermissionError, HTTPError):
+        pass
+    else:
+        raise AssertionError("private post exposed to other viewer")
+    set_visibility(True)
+    public_url = issue_visible_video_url(API, key, service, viewer_token, post_id)
+    with urlopen(public_url, timeout=10) as response:
+        assert response.read() == media
+    set_visibility(False)
+    try:
+        issue_visible_video_url(API, key, service, viewer_token, post_id)
+    except (PermissionError, HTTPError):
+        pass
+    else:
+        raise AssertionError("private transition not enforced")
+    print("PASS: isolated public viewer JWT + RLS signed URL and private denial")
     print("PASS: isolated owner JWT + RLS signed URL issuance, viewer denied")
 
 if __name__ == "__main__":
