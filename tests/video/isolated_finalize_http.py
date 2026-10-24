@@ -47,6 +47,10 @@ def make_handler(anon_key: str, service_key: str):
                 return
             try:
                 body = json.loads(self.rfile.read(length))
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                self.send_error(400)
+                return
+            try:
                 adapters = build_isolated_adapters(
                     project_url=API, anon_key=anon_key, service_key=service_key,
                     access_token=authorization[7:])
