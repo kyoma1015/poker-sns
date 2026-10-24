@@ -1,5 +1,5 @@
 import { createPollRequest, pollDisplayResult, pollVoteRequest } from './interactiveRequests'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { supabase } from './supabase'
 
 export type InteractiveItem = {
@@ -19,9 +19,11 @@ export function InteractiveComposer({ onCreated }: { onCreated: () => Promise<vo
   const [hours, setHours] = useState(24)
   const [pollAnonymous, setPollAnonymous] = useState(false)
   const [busy, setBusy] = useState(false)
+  const submitting = useRef(false)
   const [error, setError] = useState('')
   const submit = async () => {
-    if (busy) return
+    if (submitting.current) return
+    submitting.current = true
     setBusy(true); setError('')
     try {
       const request = createPollRequest(kind, content, options, hours, pollAnonymous)
@@ -30,7 +32,7 @@ export function InteractiveComposer({ onCreated }: { onCreated: () => Promise<vo
       setContent(''); setOptions(['',''])
       await onCreated()
     } catch (e) { setError(e instanceof Error ? e.message : '投稿に失敗しました') }
-    finally { setBusy(false) }
+    finally { submitting.current = false; setBusy(false) }
   }
   const inputStyle = { width:'100%', boxSizing:'border-box' as const, padding:10, borderRadius:8, background:'#202020', color:'#fff', border:'1px solid #444' }
   return <section style={{padding:16,border:'1px solid #333',borderRadius:12,marginBottom:16,color:'#fff'}}>
@@ -54,6 +56,7 @@ export function InteractiveComposer({ onCreated }: { onCreated: () => Promise<vo
 export function InteractiveCard({item,result,onUpdated,isOwner=false,ownerName: _ownerName='募集者'}:{item:InteractiveItem;result:InteractiveResult|undefined;onUpdated:()=>Promise<void>;isOwner?:boolean;ownerName?:string}) {
   const [choice,setChoice]=useState<number|null>(null)
   const [busy,setBusy]=useState(false)
+  const submitting = useRef(false)
   const [error,setError]=useState('')
   const [voterOption,setVoterOption]=useState<number|null>(null)
   const mine=result?.has_responded ?? false
@@ -61,14 +64,15 @@ export function InteractiveCard({item,result,onUpdated,isOwner=false,ownerName: 
   const deadline = item.closes_at ? Date.parse(item.closes_at) : NaN
   const closed = item.kind === 'poll' && (!Number.isFinite(deadline) || deadline <= Date.now())
   const submit=async()=>{
-    if(busy||mine||closed||choice===null) return
+    if(submitting.current||mine||closed||choice===null) return
+    submitting.current=true
     setBusy(true);setError('')
     try {
       const {error:failure}=await supabase.rpc('submit_interactive_response_v2',pollVoteRequest(item, choice))
       if(failure) throw failure
       await onUpdated()
     } catch(e){setError(e instanceof Error?e.message:'回答に失敗しました')}
-    finally{setBusy(false)}
+    finally{submitting.current=false;setBusy(false)}
   }
   // Historical question code/data is retained, but never mounted publicly.
   if (item.kind !== 'poll') return null
