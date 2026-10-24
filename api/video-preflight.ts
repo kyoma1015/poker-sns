@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto'
-import { probeVideoBytes, type VideoExtension, MAX_VIDEO_BYTES } from './video-ffprobe.js'
+import { probeVideoBytes, type VideoExtension, MAX_VIDEO_BYTES } from './video-ffprobe.ts'
 
 /** Candidate read-only preflight. Does not authorize publication or cleanup.
  * Storage immutability and a transactionally fenced object identity remain
