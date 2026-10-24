@@ -61,7 +61,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt }) {
     await new Promise(resolve => server.listen(0, '127.0.0.1', resolve))
     const address = server.address()
     assert.ok(address && typeof address !== 'string')
-    browser = await chromium.launch({ executablePath: '/usr/bin/chromium',
+    browser = await chromium.launch({
       headless: true, args: ['--no-sandbox', '--autoplay-policy=no-user-gesture-required'] })
     const origin = 'http://127.0.0.1:' + address.port
     const page = await browser.newPage()
