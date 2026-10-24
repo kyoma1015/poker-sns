@@ -109,3 +109,98 @@ def native_average_policy(native, solver):
         if not total:raise ValueError('unvisited native row has no estimated policy')
         return {a:p/total for a,p in zip(actions,values)}
     return policy
+
+
+def immutable_average_policy(native, solver, *, max_rows=100000):
+    """Copy observed rows; later training cannot alter this finite policy.
+
+    Construction requires exclusive access by the caller. Pre/post iteration,
+    RNG and key checks detect ordinary concurrent training, not synchronization.
+    Missing rows never receive an invented policy.
+    """
+    if type(max_rows) is not int or not 1<=max_rows<=1000000:
+        raise ValueError('bounded snapshot row limit required')
+    native_average_policy(native,solver)
+    iteration=solver.iteration;rng=solver.rng_state();keys=tuple(solver.keys());rows={}
+    if len(keys)>max_rows:raise ValueError('snapshot exceeds row budget')
+    for key in keys:
+        row=solver.row(key);actions=tuple(row['actions']);values=tuple(row['average'])
+        if (not actions or len(actions)!=len(values) or len(set(actions))!=len(actions)
+                or any(type(a) is not int for a in actions)
+                or any(type(v) not in (int,float) or not math.isfinite(v) or v<0 for v in values)):
+            raise ValueError('invalid snapshot row')
+        total=sum(Fraction(v) for v in values)
+        if total:rows[key]=(actions,tuple(Fraction(v)/total for v in values))
+    if solver.iteration!=iteration or solver.rng_state()!=rng or tuple(solver.keys())!=keys:
+        raise ValueError('solver changed during snapshot')
+    def policy(node):
+        if node.is_terminal() or node.is_chance_node():raise ValueError('decision required')
+        key=node.information_state_string(node.current_player())
+        if key not in rows:raise ValueError('snapshot row unknown; EV remains null')
+        actions,values=rows[key]
+        if list(actions)!=list(node.legal_actions()):raise ValueError('snapshot action mismatch')
+        return dict(zip(actions,values))
+    return policy
+
+
+def bounded_belief_value(native, game, hero_cards, deals, history, policy, *,
+                         max_deals=128,max_nodes=10000,counterfactual_player=None):
+    """Heads-up finite explicit conditional belief, not a native infoset EV.
+
+    Hero is seat0. Priors are normalized conditional on the supplied support and
+    hero blockers, never asserted to represent all legal opponent hands. Private
+    deal chance is already conditioned in priors; it is NOT multiplied twice.
+    Callback is an explicit full-state policy; no information-set consistency or
+    equilibrium is inferred. Counterfactual mass excludes only one actor's path
+    strategy factor, keeping prior and public chance factors.
+    """
+    if (type(max_deals) is not int or not 1<=max_deals<=10000
+            or type(max_nodes) is not int or not 1<=max_nodes<=1000000
+            or not isinstance(deals,(list,tuple)) or not 1<=len(deals)<=max_deals
+            or not isinstance(hero_cards,(list,tuple)) or len(hero_cards)!=2
+            or any(type(c) is not int or not 0<=c<52 for c in hero_cards)
+            or len(set(hero_cards))!=2
+            or counterfactual_player is not None and
+               (type(counterfactual_player) is not int or counterfactual_player not in (0,1))):
+        raise ValueError('bounded heads-up explicit conditional belief required')
+    root=native.NativeState(game)
+    if root.audit().get('n')!=2:raise ValueError('belief oracle currently heads-up only')
+    checked=[];seen=set()
+    for item in deals:
+        if not isinstance(item,(list,tuple)) or len(item)!=2:raise ValueError('cards/prior pair required')
+        cards,prior=item
+        if (not isinstance(cards,(list,tuple)) or len(cards)!=2
+                or any(type(c) is not int or not 0<=c<52 for c in cards)
+                or len(set(cards))!=2 or set(cards)&set(hero_cards)
+                or not isinstance(prior,Fraction) or prior<0):
+            raise ValueError('valid disjoint cards and exact nonnegative prior required')
+        identity=tuple(sorted(cards))
+        if identity in seen:raise ValueError('duplicate unordered opponent hand')
+        seen.add(identity);checked.append((tuple(cards),prior))
+    if sum(p for _,p in checked)!=1:raise ValueError('conditional prior must sum exactly to one')
+    records=[];total=Fraction(0);cf=Fraction(0);used=0
+    for cards,prior in checked:
+        state=root.clone()
+        for action in list(hero_cards)+list(cards):state.apply_action(action)
+        traced=trace_history(state,history,policy)
+        reach=traced['joint_reach'];mass=prior*reach
+        cf_mass=(prior*traced['chance_reach']*math.prod(
+            p for actor,p in enumerate(traced['strategy_reach']) if actor!=counterfactual_player)
+            if counterfactual_player is not None else None)
+        if mass:
+            if used>=max_nodes:raise ValueError('aggregate EV budget exceeded')
+            ev=exact_policy_value(traced['state'],lambda node:_strategy(node,policy),max_nodes=max_nodes-used)
+            used+=ev['nodes'];values=ev['values']
+        else:values=None
+        records.append({'opponent_cards':list(cards),'prior':prior,'chance_reach':traced['chance_reach'],
+                        'strategy_reach':traced['strategy_reach'],'mass':mass,'values':values})
+        total+=mass
+        if cf_mass is not None:cf+=cf_mass
+    values=([sum(r['mass']*r['values'][p] for r in records if r['values'] is not None)/total
+             for p in range(2)] if total else None)
+    return {'support':records,'evidence_mass':total,
+            'posterior':[r['mass']/total for r in records] if total else None,
+            'conditional_ev':values,'counterfactual_mass':cf if counterfactual_player is not None else None,
+            'nodes':used,'native_infoset_ev':None,'hand169_ev':None,
+            'scope':'heads-up explicit support conditional belief and full-state policy; not equilibrium',
+            'support_complete':False,'strategy_convergence':'UNKNOWN'}

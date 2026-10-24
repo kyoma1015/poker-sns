@@ -65,4 +65,5 @@ jobs:
           for variant in g12_next g12_p1_cache g12_p1_packed; do
             GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_history_reach.py -v
             GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_history_ev_integration.py -v
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_belief_reach.py -v
           done
