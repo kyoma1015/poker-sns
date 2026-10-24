@@ -100,6 +100,7 @@ test('accepted vote cannot be resubmitted when refresh fails', () => {
   const card = readFileSync(new URL('../src/TimelineInteractive.tsx', import.meta.url), 'utf8')
   assert.match(card, /const voteAccepted = useRef\(false\)/)
   assert.match(card, /if\(submitting\.current\|\|voteAccepted\.current\|\|mine\|\|closed\|\|choice===null\) return/)
-  assert.match(card, /if\(failure\) throw failure\s+voteAccepted\.current=true\s+await onUpdated\(\)/)
+  assert.match(card, /if\(failure\) throw failure\s+voteAccepted\.current=true\s+try \{\s+await onUpdated\(\)/)
+  assert.match(card, /投票は受け付けられましたが、結果を更新できませんでした/ )
   assert.match(card, /disabled=\{choice===null\|\|busy\|\|voteAccepted\.current\}/)
 })
