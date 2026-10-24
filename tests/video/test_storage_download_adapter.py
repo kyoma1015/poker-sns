@@ -17,7 +17,8 @@ class StorageDownloadTests(unittest.TestCase):
     @patch("tests.video.storage_download_adapter.urlopen", return_value=Response(b"media"))
     def test_download_and_temp_cleanup(self, opener):
         with download_private_staged(USER, PATH, **KW) as filename:
-            self.assertEqual(open(filename, "rb").read(), b"media")
+            with open(filename, "rb") as media_file:
+                self.assertEqual(media_file.read(), b"media")
             self.assertTrue(os.path.exists(filename))
         self.assertFalse(os.path.exists(filename))
         self.assertIn("/storage/v1/object/authenticated/post-videos/", opener.call_args.args[0].full_url)
