@@ -56,14 +56,14 @@ export function createIsolatedSupabaseVideoAdapters(
       const generation = await metadata(ownerId, path)
       // Bounded HTTP stream: SDK .download() materializes a Blob before a
       // size check, so it cannot enforce a strict 20 MiB receive cap.
-      const response = await fetch(url.replace(/\\/$/, '') +
+      const response = await fetch((url.endsWith('/') ? url.slice(0, -1) : url) +
         '/storage/v1/object/authenticated/post-videos/' + path, {
         headers: { apikey: anonKey, Authorization: 'Bearer ' + accessToken },
         signal: AbortSignal.timeout(30000),
       })
       if (!response.ok || !response.body) throw new Error('private Storage read denied')
       const declared = response.headers.get('content-length')
-      if (declared && (!/^\\d+$/.test(declared) || Number(declared) > MAX_VIDEO_BYTES)) {
+      if (declared && (!Number.isSafeInteger(Number(declared)) || Number(declared) < 0 || Number(declared) > MAX_VIDEO_BYTES)) {
         await response.body.cancel()
         throw new Error('media exceeds 20 MiB')
       }
