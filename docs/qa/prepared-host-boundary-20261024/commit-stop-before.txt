@@ -1,0 +1,44 @@
+test_stop_after_acceptance (__main__.CommitStop.test_stop_after_acceptance) ... FAIL
+test_stop_after_staging_before_commit (__main__.CommitStop.test_stop_after_staging_before_commit) ... FAIL
+test_stop_at_validation_entry (__main__.CommitStop.test_stop_at_validation_entry) ... FAIL
+
+======================================================================
+FAIL: test_stop_after_acceptance (__main__.CommitStop.test_stop_after_acceptance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_prepared_commit_stop.py", line 31, in test_stop_after_acceptance
+    def test_stop_after_acceptance(self):self.run_stop('tests')
+                                         ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_prepared_commit_stop.py", line 24, in run_stop
+    with self.assertRaises(RuntimeError):f.call(g)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_stop_after_staging_before_commit (__main__.CommitStop.test_stop_after_staging_before_commit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_prepared_commit_stop.py", line 32, in test_stop_after_staging_before_commit
+    def test_stop_after_staging_before_commit(self):self.run_stop('staging')
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_prepared_commit_stop.py", line 24, in run_stop
+    with self.assertRaises(RuntimeError):f.call(g)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_stop_at_validation_entry (__main__.CommitStop.test_stop_at_validation_entry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_prepared_commit_stop.py", line 30, in test_stop_at_validation_entry
+    def test_stop_at_validation_entry(self):self.run_stop('entry')
+                                            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_prepared_commit_stop.py", line 24, in run_stop
+    with self.assertRaises(RuntimeError):f.call(g)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.333s
+
+FAILED (failures=3)
