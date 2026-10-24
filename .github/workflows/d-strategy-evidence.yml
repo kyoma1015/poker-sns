@@ -1,0 +1,39 @@
+name: D strategy review evidence QA
+on:
+  pull_request:
+    branches: [codex/d-persona-reference-20261023]
+    paths:
+      - 'scripts/audit-player-type.mjs'
+      - 'scripts/player-type-strategy-evidence.mjs'
+      - 'tests/player-type-strategy-evidence.test.mjs'
+      - '.github/workflows/d-strategy-evidence.yml'
+permissions:
+  contents: read
+concurrency:
+  group: d-strategy-evidence-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node tests/player-type.test.mjs
+      - run: node tests/player-type-audit.test.mjs
+      - run: node tests/player-type-distribution.test.mjs
+      - run: node tests/player-type-reference.test.mjs
+      - run: node tests/player-type-strategy-evidence.test.mjs
+      - run: node scripts/audit-player-type.mjs > "$RUNNER_TEMP/d-strategy-report.json"
+      - run: npm ci --cache "$RUNNER_TEMP/npm-cache"
+      - run: npm run build
+      - run: npm run lint
+      - uses: actions/upload-artifact@v4
+        with:
+          name: d-strategy-review-evidence
+          path: ${{ runner.temp }}/d-strategy-report.json
+          retention-days: 7

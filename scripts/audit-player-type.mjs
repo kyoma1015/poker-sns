@@ -4,6 +4,7 @@ import { pathToFileURL } from 'node:url'
 import { parseQuestions } from '../src/playerTypeQuestions.ts'
 import { animalEmoji } from '../src/playerTypeAnimals.ts'
 import { traitPositiveMax } from '../src/playerTypePresentation.ts'
+import { buildStrategyReviewEvidence } from './player-type-strategy-evidence.mjs'
 // Uniform independent option sampling is a reproducible stress fixture, not a
 // model of real players and not evidence for animal meaning or prevalence.
 function scoreDistribution(questions, scores, personas) {
@@ -131,6 +132,7 @@ export function auditPlayerType(fixture, assets) {
   const report = { status: errors.length ? 'FAIL' : 'CONDITIONAL PASS', source: 'checked-in historical fixture; not live DB', questions: questions.length, options: questions.reduce((n,q) => n + q.options.length, 0), scoreDimensions: Object.keys(traitPositiveMax).length,
     animalDisplayKeys: configured.length, pngAssets: assets.length, personas: fixture.personas.length, errors, warnings,
     scoreDistribution: distribution,
+    strategyReviewEvidence: errors.length ? null : buildStrategyReviewEvidence(questions, scores, dimensionKeys),
     personaReferenceComparison: { status: comparedValues === fixture.personas.length * dimensionKeys.length && !errors.length ? 'PASS' : 'FAIL', personas: fixture.personas.length, dimensions: dimensionKeys.length, comparedValues, sourceCommit: fixture.source_commit, classification: 'NOT VERIFIED' },
     classificationSemanticValidity: 'UNKNOWN: fixture includes option scores/personas, not authoritative 36-animal classifier definitions or human-reviewed labels', liveSchemaAndQuestions: 'NOT CHECKED', scoringChanges: 'none', sqlExecuted: false }
   return report
