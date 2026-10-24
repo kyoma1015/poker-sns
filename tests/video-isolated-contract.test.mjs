@@ -52,3 +52,15 @@ test('client upload and finalize remain behind disabled server gate', () => {
   assert.match(api, /VIDEO_SERVER_ENABLED = false/)
   assert.match(sql, /server-side (?:duration|30s)/i)
 })
+
+test('Vercel media route enforces JWT, post RLS and private byte delivery', () => {
+  const handler = read('../api/video-media.ts')
+  const routing = read('../vercel.json')
+  assert.match(routing, /\\/internal\\/video\\/media\\/:post_id/)
+  assert.match(handler, /viewer\\.auth\\.getUser\\(token\\)/)
+  assert.match(handler, /\\.from\\('posts'\\)/)
+  assert.match(handler, /\\.select\\('user_id,video_path,is_public'\\)/)
+  assert.match(handler, /await visible\\(\\) !== path/)
+  assert.match(handler, /Cache-Control', 'no-store, private/)
+  assert.doesNotMatch(handler, /createSignedUrl|getPublicUrl|\\.remove\\(/)
+})
