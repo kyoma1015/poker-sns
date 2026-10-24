@@ -5,8 +5,11 @@ import { createServer as createHttpServer } from 'node:http'
 import { createServer as createViteServer } from 'vite'
 import { chromium } from 'playwright-core'
 import { createVideoMediaHandler } from '../../api/video-media.ts'
+import { createVideoFinalizeHandler } from '../../api/video-finalize.ts'
+import { createIsolatedSupabaseVideoAdapters } from '../../api/video-isolated-supabase-adapters.ts'
 
-export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon }) {
+export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, service, bytes }) {
+  assert.ok(service && bytes?.length,'isolated full upload test credentials and media required')
   assert.ok(anon,'isolated anon key required')
   assert.equal(process.env.VITE_SUPABASE_URL, 'http://127.0.0.1:56321')
   const vite = await createViteServer({
@@ -54,7 +57,28 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon }
     }],
   })
   const handler = createVideoMediaHandler({ isolatedLocalOnly: true })
+  const finalize = createVideoFinalizeHandler(createIsolatedSupabaseVideoAdapters('http://127.0.0.1:56321',anon,service,jwt),{isolatedLocalOnly:true})
   const server = createHttpServer((req, res) => {
+    if (req.url === '/internal/video/finalize') {
+      void (async () => {
+        const chunks=[]
+        for await (const chunk of req) {
+          chunks.push(chunk)
+          if (Buffer.concat(chunks).length > 12288) {res.writeHead(413);res.end();return}
+        }
+        const raw=Buffer.concat(chunks)
+        let body
+        try {body=JSON.parse(raw.toString('utf8'))} catch {res.writeHead(400);res.end();return}
+        const response={
+          setHeader:(name,value)=>{res.setHeader(name,value);return response},
+          status:code=>{res.statusCode=code;return response},
+          json:value=>{res.setHeader('Content-Type','application/json');res.end(JSON.stringify(value));return response},
+          end:()=>{res.end();return response},
+        }
+        await finalize({method:req.method,headers:{...req.headers,'content-length':String(raw.length)},body},response)
+      })().catch(()=>{if(!res.headersSent)res.statusCode=503;if(!res.writableEnded)res.end()})
+      return
+    }
     const match = /^\/internal\/video\/media\/([0-9a-f-]{36})$/.exec(req.url || '')
     if (match) {
       const response = {
@@ -139,6 +163,39 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon }
     await actualVideo.evaluate(el=>el.play())
     await timelinePage.waitForFunction(() => document.querySelector('article video')?.currentTime>0,
       null,{timeout:15000})
+    // Full real Timeline UI flow: file picker -> local Storage -> HTTP finalize
+    // -> RLS PostgREST feed refresh -> real PostVideo Chromium playback.
+    const uploadText='isolated timeline browser upload '+Date.now()
+    await timelinePage.evaluate(() => window.dispatchEvent(new Event('poker-id-open-compose')))
+    const composer=timelinePage.getByRole('dialog',{name:'新しい投稿'})
+    await composer.waitFor({timeout:15000})
+    await composer.getByPlaceholder('ポーカーについて何を投稿する？').fill(uploadText)
+    await timelinePage.locator('input[accept="video/mp4,video/webm"]').setInputFiles({
+      name:'timeline-e2e.webm',mimeType:'video/webm',buffer:bytes,
+    })
+    await composer.getByRole('button',{name:'投稿する'}).click({timeout:20000})
+    try {
+      await timelinePage.getByText(uploadText,{exact:true}).waitFor({timeout:45000})
+    } catch(error) {
+      throw new Error('Full Timeline upload/finalize/feed failed: '+JSON.stringify({
+        body:(await timelinePage.locator('body').allTextContents()).slice(0,2).map(t=>t.slice(0,1200)),
+        errors:timelineErrors
+      }),{cause:error})
+    }
+    const uploadedArticle=timelinePage.locator('article').filter({hasText:uploadText})
+    const uploadedVideo=uploadedArticle.locator('video')
+    await uploadedVideo.waitFor({timeout:20000})
+    await timelinePage.waitForFunction(text => {
+      const article=[...document.querySelectorAll('article')].find(a=>a.textContent?.includes(text))
+      const el=article?.querySelector('video')
+      return el && el.readyState>=2 && el.videoWidth>0
+    },uploadText,{timeout:20000})
+    await uploadedVideo.evaluate(el=>el.play())
+    await timelinePage.waitForFunction(text => {
+      const article=[...document.querySelectorAll('article')].find(a=>a.textContent?.includes(text))
+      return article?.querySelector('video')?.currentTime>0
+    },uploadText,{timeout:15000})
+    console.log('PASS: FULL ACTUAL Timeline.tsx UI video file selection -> real isolated Storage HTTP upload -> real finalize HTTP -> RLS PostgREST feed -> Chromium playback')
     console.log('PASS: ACTUAL Timeline.tsx renders real RLS PostgREST video and Chromium plays it (social dependencies isolated)')
     await timelinePage.close()
     const denied = await browser.newPage()
