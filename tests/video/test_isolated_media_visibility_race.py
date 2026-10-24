@@ -49,6 +49,19 @@ class MediaRaceTests(unittest.TestCase):
                 fetch_visible_video(API, "anon", "service", "jwt", POST)
             self.assertEqual(fetch.call_count, 1)
 
+    def test_private_post_becomes_public_during_owner_read(self):
+        initial = {"user_id": OWNER, "video_path": PATH, "is_public": False}
+        refreshed = {"user_id": OWNER, "video_path": PATH, "is_public": True}
+        responses = [Response(json.dumps([initial]).encode()),
+                     Response(b"media"),
+                     Response(json.dumps([refreshed]).encode())]
+        with patch("tests.video.isolated_authorized_media_proxy.authenticate_supabase_token",
+                   return_value=OWNER), patch(
+                       "tests.video.isolated_authorized_media_proxy.urlopen",
+                       side_effect=responses):
+            self.assertEqual(
+                fetch_visible_video(API, "anon", "service", "jwt", POST), b"media")
+
     def test_visibility_revoked_during_storage_read(self):
         with self.assertRaises(PermissionError):
             self.run_case([{"user_id": OWNER, "video_path": PATH, "is_public": False}])
