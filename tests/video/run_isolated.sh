@@ -54,6 +54,11 @@ create table storage.objects(id uuid primary key default gen_random_uuid(),
  bucket_id text references storage.buckets(id),name text not null,owner_id text);
 create function auth.uid() returns uuid language sql stable as 'select nullif(current_setting(''request.jwt.claim.sub'',true),'''')::uuid';
 grant usage on schema public to video_owner;
+-- Model production's service_role with BYPASSRLS, but only in this disposable cluster.
+alter role service_role bypassrls;
+grant usage on schema public,storage to service_role;
+grant select,insert on public.posts to service_role;
+grant select,update on storage.objects to service_role;
 SQL
 docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 <<'SQL'
 create unique index storage_objects_bucket_name_unique on storage.objects(bucket_id,name);
