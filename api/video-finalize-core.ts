@@ -49,12 +49,26 @@ export async function finalizeImmutableCandidate(
   const inspected = await inspectStagedVideo(snapshot.bytes, match[3] as VideoExtension, snapshot.size)
   requireImmutableGeneration(generation, await adapters.currentGeneration(owner, path))
   if (!generation) throw new Error('missing immutable generation')
+  // A second pre-publish check is only a detection mechanism. The adapter's
+  // publish operation MUST enforce the generation inside the DB transaction.
+  requireImmutableGeneration(generation, await adapters.currentGeneration(owner, path))
+  let published: string
   try {
-    return await adapters.publish(owner, path, generation, inspected.sha256, inspected.duration, content)
+    published = await adapters.publish(owner, path, generation, inspected.sha256, inspected.duration, content)
   } catch {
-    // The commit may have succeeded despite transport failure. Never delete.
-    const reconciled = await adapters.reconcile(owner, path, generation)
-    if (reconciled) return reconciled
+    // An ambiguous write may already have committed. Reconciliation errors
+    // must preserve the unknown outcome; never delete or republish blindly.
+    let reconciled: string | null = null
+    try {
+      reconciled = await adapters.reconcile(owner, path, generation)
+    } catch {
+      throw new Error('video commit outcome unknown; reconciliation unavailable')
+    }
+    if (reconciled && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(reconciled)) return reconciled
     throw new Error('video commit outcome unknown; retry with same object')
   }
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(published)) {
+    throw new Error('invalid published post identity; retain staged object')
+  }
+  return published
 }
