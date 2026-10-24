@@ -1,0 +1,58 @@
+name: Video SQL isolated QA
+on:
+  pull_request:
+    paths:
+      - 'sql/post_short_videos_candidate.sql'
+      - 'tests/video/**'
+      - '.github/workflows/video-sql-isolated.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  video-sql-isolated:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Isolated PostgreSQL video schema and RLS
+        run: bash tests/video/run_isolated.sh
+      - name: Install ffmpeg for isolated media validation
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - name: Trusted finalization core unit tests
+        run: python3 -m unittest tests.video.test_finalize_core -v
+      - name: Authenticated finalize boundary unit tests
+        run: python3 -m unittest tests.video.test_finalize_boundary -v
+      - name: Local HTTP finalize contract tests
+        run: python3 -m unittest tests.video.test_local_http -v
+      - name: Combined video HTTP header ambiguity regression tests
+        run: python3 -m unittest tests.video.test_isolated_video_http_headers -v
+      - name: Supabase Auth JWT adapter unit tests
+        run: python3 -m unittest tests.video.test_supabase_auth_adapter -v
+      - name: Private Storage download adapter unit tests
+        run: python3 -m unittest tests.video.test_storage_download_adapter -v
+      - name: Cleanup worker safety unit tests
+        run: python3 -m unittest tests.video.test_cleanup_worker_core -v
+      - name: Isolated DB RPC adapter tests
+        run: python3 -m unittest tests.video.test_isolated_db_adapter -v
+      - name: Isolated adapter composition tests
+        run: python3 -m unittest tests.video.test_isolated_composition -v
+      - name: Isolated durable cleanup worker tests
+        run: python3 -m unittest tests.video.test_isolated_cleanup_worker -v
+      - name: Conditional Storage delete fail-closed tests
+        run: python3 -m unittest tests.video.test_isolated_storage_conditional_delete -v
+      - name: Storage ABA guard tests
+        run: python3 -m unittest tests.video.test_isolated_aba_guard -v
+      - name: Orphan recovery quarantine policy tests
+        run: python3 -m unittest tests.video.test_isolated_orphan_recovery_policy -v
+      - name: Storage replacement and orphan recovery guard tests
+        run: python3 -m unittest tests.video.test_isolated_storage_replacement_guard -v
+      - name: Storage production policy release blocker test
+        run: python3 -m unittest tests.video.test_storage_policy_release_blocker -v
+      - name: Video media visibility race tests
+        run: python3 -m unittest tests.video.test_isolated_media_visibility_race -v
+      - name: Immutable Storage guard static tests
+        run: python3 -m unittest tests.video.test_isolated_immutable_storage_guard -v
+      - name: Media HTTP response body regression test
+        run: python3 -m unittest tests.video.test_isolated_media_http_body -v
+      - name: Trusted-server ffprobe duration validation prototype
+        run: bash -x tests/video/test_server_validate.sh
