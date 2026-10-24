@@ -2,6 +2,8 @@
 const qa = {
   holdBlocks: false, holdInsert: false, rejectInsert: false,
   errorInsert: false, blockError: false, rejectReload: false,
+  holdOldMessages: false,
+  oldMessages: [] as Array<(x: unknown) => void>,
   checks: [] as Array<(x: unknown) => void>, inserts: [] as unknown[],
   insertWaiters: [] as Array<(x: unknown) => void>,
   release() { this.holdBlocks = false; this.checks.splice(0).forEach(done => done({ data: [], error: null })) },
@@ -9,10 +11,15 @@ const qa = {
 }
 ;(window as any).dmQA = qa
 function query(table: string) {
+  let peer = ''
+  let filter = ''
   const chain: any = {
-    select() { return chain }, eq() { return chain }, is() { return chain }, or() { return chain }, update() { return chain },
-    maybeSingle() { return Promise.resolve({ data: { display_name: 'Synthetic player', poker_id: 'synthetic', avatar_url: null }, error: null }) },
-    order() { return Promise.resolve({ data: [], error: null }) },
+    select() { return chain }, eq(key: string, value: string) { if (key === 'id') peer = value; return chain }, is() { return chain }, or(value: string) { filter = value; return chain }, update() { return chain },
+    maybeSingle() { return Promise.resolve({ data: { display_name: peer === 'third' ? 'Another synthetic player' : 'Synthetic player', poker_id: 'synthetic', avatar_url: null }, error: null }) },
+    order() {
+      if (qa.holdOldMessages && filter.includes('other')) return new Promise(done => qa.oldMessages.push(done))
+      return Promise.resolve({ data: filter.includes('third') ? [{ id: 'third-message', sender_id: 'third', receiver_id: 'me', content: 'THIRD_SYNTHETIC', created_at: '2026-10-24T00:00:00Z', read_at: null }] : [], error: null })
+    },
     insert(value: unknown) {
       qa.inserts.push(value)
       if (qa.rejectInsert) { qa.rejectInsert = false; return Promise.reject(new Error('SYNTHETIC_PRIVATE_ERROR')) }
