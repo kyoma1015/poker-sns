@@ -113,7 +113,19 @@ def main():
                     raise AssertionError("authenticated HTTP playback may be cached")
                 if response.headers.get("Vary") != "Authorization":
                     raise AssertionError("authenticated HTTP playback missing Vary")
-            print("PASS: integrated finalized post -> real authenticated HTTP playback")
+            from urllib.error import HTTPError
+            for invalid_header in ({}, {"Authorization": "Bearer invalid"}):
+                try:
+                    urlopen(Request(playback_url, headers=invalid_header), timeout=10)
+                except HTTPError as exc:
+                    try:
+                        if exc.code not in (401, 403):
+                            raise AssertionError("HTTP playback returned unexpected auth status")
+                    finally:
+                        exc.close()
+                else:
+                    raise AssertionError("finalized video exposed without valid JWT")
+            print("PASS: integrated finalized post -> real authenticated HTTP playback and unauthorized denial")
         finally:
             server.shutdown()
             server.server_close()
