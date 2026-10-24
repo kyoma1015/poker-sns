@@ -11,6 +11,8 @@ export function pollVoteRequest(item: Poll, choice: number | null, now = Date.no
   if (!item || item.kind !== 'poll' || !Array.isArray(item.options) ||
       item.options.length < 2 || item.options.length > 4 ||
       typeof item.is_anonymous !== 'boolean' ||
+      typeof item.post_id !== 'string' || !item.post_id.trim() ||
+      typeof item.closes_at !== 'string' || !item.closes_at.trim() ||
       !Number.isInteger(choice) || choice === null ||
       choice < 0 || choice >= item.options.length) {
     throw new Error('投票する選択肢を選び直してください。')
