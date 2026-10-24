@@ -1,10 +1,32 @@
 {
   "rewrites": [
-    { "source": "/share/poker-id/:id", "destination": "/api/share?type=poker-id&id=:id" },
-    { "source": "/share/player-type/:id", "destination": "/api/share?type=player-type&id=:id" },
-    { "source": "/share/tournament/:id", "destination": "/api/share?type=tournament&id=:id" },
-    { "source": "/share/amusement/:id", "destination": "/api/share?type=amusement&id=:id" },
-    { "source": "/share/cash/:id", "destination": "/api/share?type=cash&id=:id" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/internal/video/media/:post_id",
+      "destination": "/api/video-media?post_id=:post_id"
+    },
+    {
+      "source": "/share/poker-id/:id",
+      "destination": "/api/share?type=poker-id&id=:id"
+    },
+    {
+      "source": "/share/player-type/:id",
+      "destination": "/api/share?type=player-type&id=:id"
+    },
+    {
+      "source": "/share/tournament/:id",
+      "destination": "/api/share?type=tournament&id=:id"
+    },
+    {
+      "source": "/share/amusement/:id",
+      "destination": "/api/share?type=amusement&id=:id"
+    },
+    {
+      "source": "/share/cash/:id",
+      "destination": "/api/share?type=cash&id=:id"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }
