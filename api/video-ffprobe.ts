@@ -1,4 +1,7 @@
 import { spawn } from 'node:child_process'
+import { mkdtemp, writeFile, rm } from 'node:fs/promises'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 
 export const MAX_VIDEO_BYTES = 20 * 1024 * 1024
 export const MAX_VIDEO_SECONDS = 30
@@ -26,9 +29,15 @@ export async function probeVideoBytes(bytes: Buffer, extension: VideoExtension):
   if (!Buffer.isBuffer(bytes) || bytes.length === 0 || bytes.length > MAX_VIDEO_BYTES) {
     throw new Error('invalid video size')
   }
-  const metadata = await new Promise<ProbeResult>((resolve, reject) => {
+  // A seekable temporary file supports MP4 moov atoms stored at the end.
+  const directory = await mkdtemp(join(tmpdir(), 'poker-video-probe-'))
+  const filename = join(directory, `upload.${extension}`)
+  let metadata: ProbeResult
+  try {
+    await writeFile(filename, bytes, { flag: 'wx', mode: 0o600 })
+    metadata = await new Promise<ProbeResult>((resolve, reject) => {
     const child = spawn('ffprobe', [
-      '-v', 'error', '-show_format', '-show_streams', '-of', 'json', '-i', 'pipe:0',
+      '-v', 'error', '-show_format', '-show_streams', '-of', 'json', '-i', filename,
     ], { stdio: ['pipe', 'pipe', 'pipe'], shell: false })
     let stdout = ''
     let stderrSize = 0
@@ -57,9 +66,11 @@ export async function probeVideoBytes(bytes: Buffer, extension: VideoExtension):
       try { finish(undefined, JSON.parse(stdout) as ProbeResult) }
       catch { finish(new Error('invalid ffprobe JSON')) }
     })
-    child.stdin.on('error', () => { /* ffprobe may close stdin after rejecting bytes */ })
-    child.stdin.end(bytes)
-  })
+    child.stdin.end()
+    })
+  } finally {
+    await rm(directory, { recursive: true, force: true })
+  }
   const streams = metadata.streams
   if (!Array.isArray(streams)) throw new Error('missing streams')
   const videos = streams.filter(s => s.codec_type === 'video')
