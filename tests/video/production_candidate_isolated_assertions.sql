@@ -22,12 +22,13 @@ begin
  then raise exception 'client can call privileged publish RPC'; end if;
 end $$;
 reset role;
--- Exercise idempotency, owner, generation and payload fencing with the trusted role.
+-- Exercise idempotency, owner, generation and payload fencing as the actual service_role.
 insert into storage.objects(id,bucket_id,name,owner_id) values
  ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa','post-videos',
  '10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.webm',
  '10000000-0000-0000-0000-000000000001');
-do $$
+set role service_role;
+do $
 declare
  a uuid; b uuid;
  p text:='10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.webm';
@@ -53,5 +54,6 @@ begin
  exception when raise_exception then
   if sqlerrm='conflicting replay accepted' then raise; end if;
  end;
-end $$;
+end $;
+reset role;
 select 'PASS: production candidate isolated preservation, private bucket, RPC grants, generation and replay' as result;
