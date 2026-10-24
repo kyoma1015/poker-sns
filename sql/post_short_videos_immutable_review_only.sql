@@ -36,3 +36,6 @@ create policy "post_videos_immutable_read_own" on storage.objects
 -- permissive policy, privileged role, API upsert path, and worker. A path/hash
 -- alone is not an immutability proof until those invariants are demonstrated.
 -- Audit query: sql/video_storage_policy_audit_read_only.sql
+
+-- ABA replacement remains a release blocker until every policy and privileged
+-- path is proven unable to replace an existing object generation.
