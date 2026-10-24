@@ -72,7 +72,11 @@ export function InteractiveCard({item,result,onUpdated,isOwner=false,ownerName: 
       const {error:failure}=await supabase.rpc('submit_interactive_response_v2',pollVoteRequest(item, choice))
       if(failure) throw failure
       voteAccepted.current=true
-      await onUpdated()
+      try {
+        await onUpdated()
+      } catch {
+        setError('投票は受け付けられましたが、結果を更新できませんでした。画面を再読み込みしてください。')
+      }
     } catch(e){setError(e instanceof Error?e.message:'回答に失敗しました')}
     finally{submitting.current=false;setBusy(false)}
   }
