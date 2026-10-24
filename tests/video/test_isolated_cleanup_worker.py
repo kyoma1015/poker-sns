@@ -114,6 +114,32 @@ class CleanupWorkerTests(unittest.TestCase):
                     lambda *_: self.fail("posted video deleted"))
 
     @patch("tests.video.isolated_cleanup_worker._rpc")
+    def test_inspection_error_never_invokes_delete(self, rpc):
+        rpc.side_effect = [[{"id": 7, "owner_id": OWNER, "object_path": PATH,
+                             "expected_object_version": "v1"}], None, True]
+        def inspection_failed(*_):
+            raise TimeoutError("Storage metadata unavailable")
+        deleted = []
+        self.assertEqual(
+            run_one(URL, "isolated", inspection_failed,
+                    lambda *args: deleted.append(args)), "retry")
+        self.assertEqual(deleted, [])
+        self.assertFalse(rpc.call_args.args[3]["p_success"])
+
+    @patch("tests.video.isolated_cleanup_worker._rpc")
+    def test_reconciliation_error_never_invokes_storage(self, rpc):
+        rpc.side_effect = [[{"id": 8, "owner_id": OWNER, "object_path": PATH,
+                             "expected_object_version": "v1"}],
+                           TimeoutError("PostgREST unavailable"), True]
+        touched = []
+        self.assertEqual(
+            run_one(URL, "isolated",
+                    lambda *args: touched.append(args),
+                    lambda *args: touched.append(args)), "retry")
+        self.assertEqual(touched, [])
+        self.assertFalse(rpc.call_args.args[3]["p_success"])
+
+    @patch("tests.video.isolated_cleanup_worker._rpc")
     def test_changed_object_is_retained(self, rpc):
         rpc.side_effect = [[{"id": 1, "owner_id": OWNER, "object_path": PATH,
                              "expected_object_version": "v1"}], None, True]
