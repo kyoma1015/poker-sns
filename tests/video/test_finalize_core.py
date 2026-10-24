@@ -127,5 +127,28 @@ class FinalizeCoreTests(unittest.TestCase):
         self.assertEqual(status, 403)
         self.assertEqual(self.calls, [])
 
+
+    def test_http_jwt_verifier_outage_fails_closed(self):
+        def broken_jwks(token):
+            raise RuntimeError('JWKS unavailable')
+        status, _ = finalize_http_request(
+            {'authorization': 'Bearer isolated-token'}, b'{}',
+            authenticate_jwt=broken_jwks,
+            download_staged=lambda *args: self.fail('download called'),
+            verify_owner=self.owner, create_post=self.create,
+            delete_staged_object=self.cleanup)
+        self.assertEqual(status, 401)
+        self.assertEqual(self.calls, [])
+
+    def test_http_nonstring_auth_header_fails_closed(self):
+        status, _ = finalize_http_request(
+            {'authorization': ['Bearer', 'unsafe']}, b'{}',
+            authenticate_jwt=lambda token: self.fail('auth called'),
+            download_staged=lambda *args: self.fail('download called'),
+            verify_owner=self.owner, create_post=self.create,
+            delete_staged_object=self.cleanup)
+        self.assertEqual(status, 401)
+        self.assertEqual(self.calls, [])
+
 if __name__ == '__main__':
     unittest.main()
