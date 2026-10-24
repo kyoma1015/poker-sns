@@ -53,7 +53,10 @@ class HttpContractTests(unittest.TestCase):
             with urlopen(request, timeout=3) as response:
                 return response.status, json.load(response)
         except HTTPError as error:
-            return error.code, json.load(error)
+            try:
+                return error.code, json.load(error)
+            finally:
+                error.close()
 
     @patch("tests.video.finalize_core.verify", return_value={"duration": 2})
     def test_valid_request(self, verify):
