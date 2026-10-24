@@ -34,6 +34,8 @@ jobs:
         run: python3 -m unittest tests.video.test_cleanup_worker_core -v
       - name: Isolated DB RPC adapter tests
         run: python3 -m unittest tests.video.test_isolated_db_adapter -v
+      - name: Live isolated HTTP Auth Storage ffprobe RPC integration
+        run: python3 -m unittest tests.video.test_isolated_live_http_integration -v
       - name: Insert-once immutable Storage and finalize composition E2E
         run: python3 -m unittest tests.video.test_isolated_insert_once_e2e -v
       - name: Isolated adapter composition tests
