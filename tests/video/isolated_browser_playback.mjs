@@ -118,8 +118,18 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon }
       window.__VIDEO_QA_ANON=anon
     },{jwt,anon})
     await timelinePage.goto(origin+'/tests/video/browser-real-timeline.html')
-    await timelinePage.getByRole('button',{name:'おすすめ'}).click({timeout:20000})
-    await timelinePage.getByText('real isolated end-to-end',{exact:true}).waitFor({timeout:20000})
+    const timelineErrors=[]
+    timelinePage.on('pageerror',error=>timelineErrors.push(String(error)))
+    timelinePage.on('console',message=>{if(message.type()==='error')timelineErrors.push(message.text())})
+    try {
+      await timelinePage.getByRole('button',{name:'おすすめ'}).click({timeout:20000})
+      await timelinePage.getByText('real isolated end-to-end',{exact:true}).waitFor({timeout:20000})
+    } catch(error) {
+      throw new Error('Actual Timeline mount/feed failed: '+JSON.stringify({
+        body:(await timelinePage.locator('body').allTextContents()).slice(0,2).map(t=>t.slice(0,900)),
+        errors:timelineErrors
+      }),{cause:error})
+    }
     const actualVideo=timelinePage.locator('article video').first()
     await actualVideo.waitFor({timeout:20000})
     await timelinePage.waitForFunction(() => {
