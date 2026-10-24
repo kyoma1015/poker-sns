@@ -71,7 +71,7 @@ grant execute on function public.video_qa_reconcile_fenced(uuid,text,uuid)
 create or replace function public.video_qa_storage_generation(
  p_owner uuid,p_path text
 ) returns uuid language plpgsql security invoker
-set search_path='' as $
+set search_path='' as $$
 declare v_generation uuid;
 begin
  if current_user not in ('postgres','service_role') then
