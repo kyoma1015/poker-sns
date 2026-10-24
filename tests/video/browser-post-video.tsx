@@ -18,6 +18,7 @@ if (!postId || !window.__VIDEO_QA_JWT || !window.__VIDEO_QA_ANON) {
 function Feed() {
   const [posts, setPosts] = useState<Array<{id:string;content:string;video_path:string|null}>>([])
   const [error, setError] = useState('')
+  const [loaded, setLoaded] = useState(false)
   useEffect(() => {
     const supabase = createClient('http://127.0.0.1:56321', window.__VIDEO_QA_ANON!, {
       global: {headers: {Authorization: 'Bearer ' + window.__VIDEO_QA_JWT}},
@@ -27,9 +28,10 @@ function Feed() {
       .then(({data,error}) => {
         if(error) setError(error.message)
         else setPosts(data || [])
+        setLoaded(true)
       })
   },[])
-  return <main><h1>隔離タイムライン動画</h1>
+  return <main data-feed-loaded={loaded ? 'true' : 'false'}><h1>隔離タイムライン動画</h1>
     {error && <p role="alert">{error}</p>}
     {posts.map(post => <article key={post.id} data-testid="timeline-post" data-post-id={post.id}>
       <p>{post.content}</p>
