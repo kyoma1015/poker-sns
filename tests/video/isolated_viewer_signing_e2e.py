@@ -66,6 +66,11 @@ def main():
     with urlopen(public_url, timeout=10) as response:
         assert response.read() == media
     set_visibility(False)
+    # A previously issued signed URL is a bearer capability. The privacy
+    # transition blocks NEW issuance, not the existing token.
+    with urlopen(public_url, timeout=10) as response:
+        assert response.read() == media
+    print("PASS: existing signed URL survives privacy transition; immediate revocation BLOCKED")
     try:
         issue_visible_video_url(API, key, service, viewer_token, post_id)
     except (PermissionError, HTTPError):
