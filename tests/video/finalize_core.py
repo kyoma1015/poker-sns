@@ -45,14 +45,17 @@ def finalize_video(
         raise PermissionError("staged object not owned by authenticated user")
     try:
         verify(request.local_staged_file)
-        return create_post(user_id, request.object_path, request.content)
-    except PostCommitUnknown:
-        # A timeout after commit must not delete media referenced by a post.
-        # Reconciliation must check DB state before any cleanup.
-        raise
     except Exception:
+        # Reclaim only known-unpublished invalid media. The injected delete
+        # adapter MUST atomically verify that no post references this object.
         delete_staged_object(request.object_path)
         raise
+    # Once the DB write begins, ANY error may mean a committed post whose
+    # acknowledgement was lost. Never delete until durable reconciliation.
+    try:
+        return create_post(user_id, request.object_path, request.content)
+    except Exception as exc:
+        raise PostCommitUnknown("post commit must be reconciled") from exc
 
 
 def finalize_http_request(headers, body, *, authenticate_jwt, download_staged,
