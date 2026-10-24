@@ -107,7 +107,7 @@ class LiveHttpVideoIntegration(unittest.TestCase):
                     with self.assertRaises(PermissionError):
                         finalize_authenticated("Bearer wrong",
                             {"object_path": PATH, "content": "hello"}, adapters)
-                    with self.assertRaises(PermissionError):
+                    with self.assertRaises(RuntimeError):
                         adapters.delete_staged(PATH)
                 finally:
                     server.shutdown()
