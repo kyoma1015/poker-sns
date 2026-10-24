@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { createClient } from '@supabase/supabase-js'
 import { finalizeImmutableCandidate, type FinalizeCandidateAdapters } from './video-finalize-core.ts'
+import { createProductionSupabaseVideoAdapters } from './video-production-supabase-adapters.ts'
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
 const VIDEO_PATH = /^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\.(mp4|webm)$/
@@ -39,10 +40,12 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
   const anon = process.env.VITE_SUPABASE_ANON_KEY
   if (!url || !anon || !(/^https:\/\/[^/]+\/?$/.test(url) ||
     (options.isolatedLocalOnly === true && url === 'http://127.0.0.1:56321'))) return res.status(503).end()
-  // Reject disabled/remote adapter configurations before any outbound request.
-  if (adapters && (options.isolatedLocalOnly !== true || url !== 'http://127.0.0.1:56321')) {
-    return res.status(503).json({ error: 'video_finalize_not_enabled' })
-  }
+  const isolated = options.isolatedLocalOnly === true && url === 'http://127.0.0.1:56321'
+  const production = options.isolatedLocalOnly !== true &&
+    /^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/.test(url) &&
+    process.env.VIDEO_PRODUCTION_FENCED_READY === 'true'
+  if (!isolated && !production) return res.status(503).json({ error: 'video_finalize_not_enabled' })
+  if (adapters && !isolated) return res.status(503).json({ error: 'video_finalize_not_enabled' })
   try {
     const viewer = createClient(url, anon, {
       global: { headers: { Authorization: authorization } },
@@ -51,14 +54,22 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
     const { data, error } = await viewer.auth.getUser(authorization.slice(7))
     if (error || !data.user || !UUID.test(data.user.id)) return res.status(401).end()
     if (match[1] !== data.user.id) return res.status(403).end()
-    // Production remains disabled until immutable Storage fencing and an atomic
-    // generation-aware DB RPC are proven. Injected adapters are isolated QA only.
-    if (!adapters || options.isolatedLocalOnly !== true || url !== 'http://127.0.0.1:56321') {
+    let activeAdapters: FinalizeCandidateAdapters
+    try {
+      if (isolated) {
+        if (!adapters) return res.status(503).json({ error: 'video_finalize_not_enabled' })
+        activeAdapters = adapters
+      } else {
+        const service = process.env.SUPABASE_SERVICE_ROLE_KEY
+        if (!service) return res.status(503).json({ error: 'video_finalize_not_enabled' })
+        activeAdapters = createProductionSupabaseVideoAdapters(url, anon, service, authorization.slice(7))
+      }
+    } catch {
       return res.status(503).json({ error: 'video_finalize_not_enabled' })
     }
     try {
       const postId = await finalizeImmutableCandidate(authorization.slice(7), object_path, content, {
-        ...adapters,
+        ...activeAdapters,
         authenticate: async () => data.user!.id,
       })
       return res.status(201).json({ post_id: postId })
