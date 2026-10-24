@@ -95,6 +95,29 @@ def main():
         delivered = fetch_visible_video(API, key, service, session, first["post_id"])
         if delivered != media.read_bytes():
             raise AssertionError("authorized playback bytes differ from uploaded media")
+        # Verify the finalized post via the actual authenticated HTTP boundary.
+        from tests.video.isolated_authorized_media_http import make_local_server
+        from threading import Thread
+        server = make_local_server(key, service)
+        thread = Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        try:
+            playback_url = ("http://127.0.0.1:" + str(server.server_port)
+                            + "/video?" + urlencode({"post_id": first["post_id"]}))
+            playback_request = Request(
+                playback_url, headers={"Authorization": "Bearer " + session})
+            with urlopen(playback_request, timeout=20) as response:
+                if response.read() != media.read_bytes():
+                    raise AssertionError("HTTP playback bytes differ from uploaded media")
+                if response.headers.get("Cache-Control") != "no-store, private":
+                    raise AssertionError("authenticated HTTP playback may be cached")
+                if response.headers.get("Vary") != "Authorization":
+                    raise AssertionError("authenticated HTTP playback missing Vary")
+            print("PASS: integrated finalized post -> real authenticated HTTP playback")
+        finally:
+            server.shutdown()
+            server.server_close()
+            thread.join(timeout=5)
         print("PASS: integrated video journey upload -> ffprobe -> authenticated DB publish -> owner feed/detail -> authorized media playback")
         print("PASS: isolated concurrent PostgREST publish and reconciliation")
         print("PASS: real isolated Auth -> private Storage -> ffprobe -> DB publish -> idempotent retry")
