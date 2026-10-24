@@ -3,6 +3,7 @@ create table if not exists public.posts (
  id uuid primary key default gen_random_uuid(),
  user_id uuid not null references auth.users(id),
  content text not null default '',
+ created_at timestamptz not null default now(),
  image_urls text[] not null default '{}'
 );
 alter table public.posts enable row level security;
