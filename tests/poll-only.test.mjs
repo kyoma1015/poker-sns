@@ -61,3 +61,21 @@ for (const malformed of [null, {}, [null, 'B'], [42, 'B']]) {
     assert.throws(() => createPollRequest('poll', 'content', malformed, 24, false))
   })
 }
+
+for (const overrides of [
+  { post_id: '' }, { post_id: null }, { closes_at: null },
+  { closes_at: '' }, { closes_at: 'not-a-date' },
+  { options: ['A'] }, { options: ['A','B','C','D','E'] },
+]) {
+  test('vote refuses incomplete or invalid stored poll metadata', () => {
+    const poll = { post_id: 'poll-1', kind: 'poll', options: ['A', 'B'],
+      closes_at: '2099-01-01T00:00:00Z', is_anonymous: false, ...overrides }
+    assert.throws(() => pollVoteRequest(poll, 0))
+  })
+}
+test('valid vote retains anonymous flag and poll-only RPC arguments', () => {
+  const poll = { post_id: 'poll-1', kind: 'poll', options: ['A', 'B'],
+    closes_at: '2099-01-01T00:00:00Z', is_anonymous: true }
+  assert.deepEqual(pollVoteRequest(poll, 1, Date.parse('2026-10-24T00:00:00Z')),
+    { p_post_id: 'poll-1', p_option_index: 1, p_answer: null, p_is_anonymous: true })
+})
