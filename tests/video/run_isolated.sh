@@ -41,11 +41,22 @@ echo 'NOT TESTED: Supabase Storage API, signed URLs, media duration, upload clea
 
 # Production-compatible candidate on a separate disposable database in the same container.
 docker exec "$name" createdb -U postgres video_production_candidate
-docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 < tests/video/fixture.sql
 docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 <<'SQL'
-alter table public.posts add column content text not null default '';
-alter table public.posts add column post_type text not null default 'normal';
-alter table public.posts alter column id set default gen_random_uuid();
+create extension if not exists pgcrypto;
+create schema auth;
+create schema storage;
+create table public.posts(id uuid primary key default gen_random_uuid(),
+ user_id uuid not null, content text not null default '',
+ post_type text not null default 'normal',image_urls text[] not null default '{}');
+create table storage.buckets(id text primary key,name text not null,public boolean not null,
+ file_size_limit bigint,allowed_mime_types text[]);
+create table storage.objects(id uuid primary key default gen_random_uuid(),
+ bucket_id text references storage.buckets(id),name text not null,owner_id text);
+create function auth.uid() returns uuid language sql stable as $
+ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $;
+grant usage on schema public to video_owner;
+SQL
+docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 <<'SQL'
 create unique index storage_objects_bucket_name_unique on storage.objects(bucket_id,name);
 insert into public.posts(id,user_id,content) values
  ('11111111-1111-1111-1111-111111111111',
