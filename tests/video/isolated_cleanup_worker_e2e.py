@@ -94,6 +94,59 @@ def main():
     with urlopen(clear, timeout=10) as response:
         assert response.status in (200, 204)
     print("PASS: isolated cleanup E2E queue reset")
+    # Real DB reconciliation must protect a committed post even when a
+    # cleanup job has a pinned version. No Storage inspection or deletion.
+    from tests.video.isolated_db_adapter import publish_post, reconcile_post
+    posted_owner = owner
+    posted_path = posted_owner + "/" + str(uuid4()) + ".mp4"
+    # Isolated-only fixture: create an Auth user to satisfy posts.user_id FK.
+    anon = env.get("ANON_KEY") or env.get("PUBLISHABLE_KEY")
+    if not anon:
+        raise RuntimeError("isolated anon key missing")
+    signup = Request(
+        "http://127.0.0.1:56321/auth/v1/signup",
+        data=json.dumps({"email": "video-cleanup-" + str(uuid4()) + "@example.invalid",
+                         "password": "video-isolated-test-Password1!"}).encode(),
+        headers={"apikey": anon, "Content-Type": "application/json"},
+        method="POST")
+    with urlopen(signup, timeout=20) as response:
+        signup_result = json.load(response)
+    posted_owner = signup_result["user"]["id"]
+    posted_path = posted_owner + "/" + str(uuid4()) + ".mp4"
+    published_id = publish_post("http://127.0.0.1:56321", service,
+                                posted_owner, posted_path, "cleanup retention E2E")
+    assert reconcile_post("http://127.0.0.1:56321", service,
+                          posted_owner, posted_path) == published_id
+    posted_queue = Request(
+        "http://127.0.0.1:56321/rest/v1/video_cleanup_queue",
+        data=json.dumps({"owner_id": posted_owner, "object_path": posted_path,
+                         "expected_object_version": "pinned-posted-v1"}).encode(),
+        headers={"apikey": service, "Authorization": "Bearer " + service,
+                 "Content-Type": "application/json", "Prefer": "return=representation"},
+        method="POST")
+    with urlopen(posted_queue, timeout=10) as response:
+        posted_job = json.load(response)[0]
+    posted_storage_calls = []
+    def forbidden_posted_storage(*args):
+        posted_storage_calls.append(args)
+        raise AssertionError("committed post must not touch Storage")
+    assert run_one("http://127.0.0.1:56321", service,
+                   forbidden_posted_storage, forbidden_posted_storage) == "complete"
+    assert not posted_storage_calls, posted_storage_calls
+    posted_status = Request(
+        "http://127.0.0.1:56321/rest/v1/video_cleanup_queue?id=eq."
+        + str(posted_job["id"])
+        + "&select=attempts,last_error,completed_at,lease_owner,lease_until",
+        headers={"apikey": service, "Authorization": "Bearer " + service})
+    with urlopen(posted_status, timeout=10) as response:
+        saved_posted = json.load(response)[0]
+    assert saved_posted["completed_at"] is not None, saved_posted
+    assert saved_posted["lease_owner"] is None and saved_posted["lease_until"] is None
+    assert saved_posted["attempts"] == 1 and "retain" in saved_posted["last_error"]
+    assert reconcile_post("http://127.0.0.1:56321", service,
+                          posted_owner, posted_path) == published_id
+    print("PASS: real isolated committed post retained; queue acknowledged; zero Storage access")
+
     # A pinned but already-absent object can be acknowledged without delete.
     # This exercises the real claim/reconcile/finish RPC chain and lease release.
     absent_path = owner + "/" + str(uuid4()) + ".mp4"
