@@ -46,7 +46,7 @@ return async function handler(req: VercelRequest, res: VercelResponse) {
     // Bound storage fetch and response processing to reduce resource exhaustion.
     // Stream from the private bucket through a bounded trusted-server read.
     // The Storage SDK's download() would buffer an unbounded Blob first.
-    const media = await fetch(url.replace(/\\/$/, '') +
+    const media = await fetch((url.endsWith('/') ? url.slice(0, -1) : url) +
       '/storage/v1/object/authenticated/post-videos/' + path, {
       headers: { apikey: service, Authorization: 'Bearer ' + service },
       signal: AbortSignal.timeout(30000),
