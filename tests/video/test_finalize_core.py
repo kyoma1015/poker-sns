@@ -2,7 +2,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
-from tests.video.finalize_core import FinalizeRequest, finalize_video, PostCommitUnknown
+from tests.video.finalize_core import FinalizeRequest, finalize_video, finalize_http_request, PostCommitUnknown
 
 USER = '10000000-0000-0000-0000-000000000001'
 OTHER = '10000000-0000-0000-0000-000000000002'
@@ -76,6 +76,56 @@ class FinalizeCoreTests(unittest.TestCase):
                         create_post=self.create,
                         delete_staged_object=self.cleanup)
                 self.assertEqual(self.calls, [])
+
+
+    def test_http_missing_bearer_rejects_without_io(self):
+        status, data = finalize_http_request({}, b'{}',
+            authenticate_jwt=lambda token: self.fail('auth called'),
+            download_staged=lambda *args: self.fail('download called'),
+            verify_owner=self.owner, create_post=self.create,
+            delete_staged_object=self.cleanup)
+        self.assertEqual(status, 401)
+        self.assertEqual(self.calls, [])
+
+    def test_http_cross_user_path_rejects_without_io(self):
+        import json
+        status, data = finalize_http_request(
+            {'authorization': 'Bearer isolated-token'},
+            json.dumps({'object_path': OTHER + '/30000000-0000-0000-0000-000000000001.mp4',
+                        'content': 'hello'}).encode(),
+            authenticate_jwt=lambda token: USER,
+            download_staged=lambda *args: self.fail('download called'),
+            verify_owner=self.owner, create_post=self.create,
+            delete_staged_object=self.cleanup)
+        self.assertEqual(status, 400)
+        self.assertEqual(self.calls, [])
+
+    @patch('tests.video.finalize_core.verify', return_value={'duration': 2})
+    def test_http_authenticated_owner_finalizes(self, verify):
+        import json
+        from contextlib import nullcontext
+        status, data = finalize_http_request(
+            {'authorization': 'Bearer isolated-token'},
+            json.dumps({'object_path': PATH, 'content': 'hello'}).encode(),
+            authenticate_jwt=lambda token: USER,
+            download_staged=lambda user, path: nullcontext('/tmp/unused.mp4'),
+            verify_owner=self.owner, create_post=self.create,
+            delete_staged_object=self.cleanup)
+        self.assertEqual(status, 201)
+        self.assertEqual(data['post_id'], 'post-id')
+        self.assertEqual([x[0] for x in self.calls], ['post'])
+
+    def test_http_rejects_truthy_nonboolean_owner_without_download(self):
+        import json
+        status, data = finalize_http_request(
+            {'authorization': 'Bearer isolated-token'},
+            json.dumps({'object_path': PATH, 'content': 'hello'}).encode(),
+            authenticate_jwt=lambda token: USER,
+            download_staged=lambda *args: self.fail('download called'),
+            verify_owner=lambda u, p: 'yes',
+            create_post=self.create, delete_staged_object=self.cleanup)
+        self.assertEqual(status, 403)
+        self.assertEqual(self.calls, [])
 
 if __name__ == '__main__':
     unittest.main()
