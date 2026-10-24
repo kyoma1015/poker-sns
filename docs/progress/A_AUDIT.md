@@ -47,3 +47,7 @@ See `docs/workers/PRIVATE_JOURNAL_20261024.md`: private append-only hash-chain p
 ## 2026-10-24 trusted-pin recovery follow-up
 
 `JOURNAL_CHECKPOINT_20261024.md` records the opt-in external trusted intent/CAS lifecycle, crash recovery, operation-ID deduplication and temporary queue/finite-budget integration. No formal store/controller adoption; authenticated external callback implementation remains an integration gate. Inherited tree-fixture timing failures and bounded retry are retained in QA evidence.
+
+## 2026-10-24 process-fixture timing root causes
+
+Two fixed fixture failures now pass after bounded topology readiness and atomic generated-source publication. See `TREE_FIXTURE_READINESS_20261024.md`; automation142 + worker85 =227PASS. Assertions/timeouts retained; two existing fixture files intentionally changed and original SHA references retained. Runtime adoption and independent startup remain unproved.
