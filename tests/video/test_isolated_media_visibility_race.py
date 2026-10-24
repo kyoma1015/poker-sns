@@ -58,5 +58,24 @@ class MediaRaceTests(unittest.TestCase):
             with self.assertRaises(PermissionError):
                 fetch_visible_video(API, "anon", "service", "jwt", POST)
 
+
+    def test_nonboolean_visibility_rejected_before_media_fetch(self):
+        first = {"user_id": OWNER, "video_path": PATH, "is_public": "true"}
+        with patch("tests.video.isolated_authorized_media_proxy.authenticate_supabase_token", return_value=VIEWER), \
+             patch("tests.video.isolated_authorized_media_proxy.urlopen", side_effect=[Response(json.dumps([first]).encode())]) as fetch:
+            with self.assertRaises(PermissionError):
+                fetch_visible_video(API, "anon", "service", "jwt", POST)
+            self.assertEqual(fetch.call_count, 1)
+
+    def test_nonboolean_refreshed_visibility_rejected(self):
+        first = {"user_id": OWNER, "video_path": PATH, "is_public": True}
+        refreshed = {"user_id": OWNER, "video_path": PATH, "is_public": 1}
+        with patch("tests.video.isolated_authorized_media_proxy.authenticate_supabase_token", return_value=VIEWER), \
+             patch("tests.video.isolated_authorized_media_proxy.urlopen", side_effect=[
+                 Response(json.dumps([first]).encode()), Response(b"media"),
+                 Response(json.dumps([refreshed]).encode())]):
+            with self.assertRaises(PermissionError):
+                fetch_visible_video(API, "anon", "service", "jwt", POST)
+
 if __name__ == "__main__":
     unittest.main()
