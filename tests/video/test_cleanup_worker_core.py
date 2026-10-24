@@ -51,5 +51,18 @@ class CleanupWorkerTests(unittest.TestCase):
                                  reschedule=lambda *a: calls.append("retry"))
         self.assertEqual((result, calls), ("RETRY", ["retry"]))
 
+    def test_missing_or_nonstring_version_never_reaches_storage(self):
+        for bad_version in ("", "  ", None, 123):
+            with self.subTest(version=bad_version):
+                calls = []
+                job = CleanupJob(JOB.owner_id, JOB.object_path, bad_version)
+                result = process_cleanup(
+                    job, find_post=lambda *a: calls.append("lookup"),
+                    get_object_version=lambda *a: calls.append("read"),
+                    delete_if_version=lambda *a: calls.append("delete"),
+                    mark_complete=lambda *a: calls.append("complete"),
+                    reschedule=lambda *a: calls.append("retry"))
+                self.assertEqual((result, calls), ("RETRY", ["retry"]))
+
 if __name__ == "__main__":
     unittest.main()
