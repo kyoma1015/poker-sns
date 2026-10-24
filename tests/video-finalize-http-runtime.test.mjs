@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import handler from '../api/video-finalize.ts'
+import handler, { createVideoFinalizeHandler } from '../api/video-finalize.ts'
 
 function response() {
   return {
@@ -39,4 +39,28 @@ test('default finalize route rejects unconfigured backend without mutation', asy
   const res = response()
   await handler(request(), res)
   assert.equal(res.statusCode, 503)
+})
+
+test('injected finalize adapter cannot enable publishing against a production origin', async () => {
+  const previousUrl = process.env.VITE_SUPABASE_URL
+  const previousAnon = process.env.VITE_SUPABASE_ANON_KEY
+  process.env.VITE_SUPABASE_URL = 'https://example.supabase.co'
+  process.env.VITE_SUPABASE_ANON_KEY = 'test-anon'
+  const adapters = {
+    authenticate: async () => { throw new Error('must never be invoked') },
+    snapshot: async () => { throw new Error('must never be invoked') },
+    currentGeneration: async () => { throw new Error('must never be invoked') },
+    publish: async () => { throw new Error('must never be invoked') },
+    reconcile: async () => { throw new Error('must never be invoked') },
+  }
+  try {
+    const res = response()
+    await createVideoFinalizeHandler(adapters, { isolatedLocalOnly: true })(request(), res)
+    assert.notEqual(res.statusCode, 201)
+  } finally {
+    if (previousUrl === undefined) delete process.env.VITE_SUPABASE_URL
+    else process.env.VITE_SUPABASE_URL = previousUrl
+    if (previousAnon === undefined) delete process.env.VITE_SUPABASE_ANON_KEY
+    else process.env.VITE_SUPABASE_ANON_KEY = previousAnon
+  }
 })
