@@ -55,7 +55,7 @@ class IsolatedVideoEndToEnd(unittest.TestCase):
             self.assertEqual(result["post_id"], POST)
             self.assertEqual(storage.read(PATH), b"isolated-video")
             with self.assertRaises(RuntimeError):
-                adapters.delete(PATH)
+                adapters.delete_staged(PATH)
 
 if __name__ == "__main__":
     unittest.main()
