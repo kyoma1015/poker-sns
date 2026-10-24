@@ -24,8 +24,26 @@ def verify(path: str) -> dict:
     )
     meta = json.loads(result.stdout)
     streams = meta.get("streams") or []
-    if not any(s.get("codec_type") == "video" for s in streams):
-        raise ValueError("no video stream")
+    video_streams = [stream for stream in streams if stream.get("codec_type") == "video"]
+    if len(video_streams) != 1:
+        raise ValueError("expected exactly one video stream")
+    allowed_video_codecs = {".mp4": {"h264", "hevc", "av1"},
+                            ".webm": {"vp8", "vp9", "av1"}}
+    if video_streams[0].get("codec_name") not in allowed_video_codecs[ext]:
+        raise ValueError("unsupported video codec for container")
+    if not isinstance(video_streams[0].get("width"), int) or not isinstance(video_streams[0].get("height"), int):
+        raise ValueError("missing video dimensions")
+    if not 1 <= video_streams[0]["width"] <= 4096 or not 1 <= video_streams[0]["height"] <= 4096:
+        raise ValueError("video dimensions out of range")
+    audio_streams = [stream for stream in streams if stream.get("codec_type") == "audio"]
+    if len(audio_streams) > 1:
+        raise ValueError("multiple audio streams")
+    allowed_audio_codecs = {".mp4": {"aac", "mp3", "opus"},
+                            ".webm": {"opus", "vorbis"}}
+    if audio_streams and audio_streams[0].get("codec_name") not in allowed_audio_codecs[ext]:
+        raise ValueError("unsupported audio codec for container")
+    if any(stream.get("codec_type") not in ("video", "audio") for stream in streams):
+        raise ValueError("unexpected auxiliary stream")
     fmt = (meta.get("format") or {}).get("format_name", "")
     if ext == ".mp4" and not any(x in fmt.split(",") for x in ("mp4", "mov")):
         raise ValueError("not an MP4 container")
