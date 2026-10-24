@@ -1,0 +1,67 @@
+[
+  {
+    "file": "tests/f03-notification.test.mjs",
+    "exit": 0,
+    "tests": 11
+  },
+  {
+    "file": "tests/interactive-requests.test.mjs",
+    "exit": 0,
+    "tests": 10
+  },
+  {
+    "file": "tests/player-type.test.mjs",
+    "exit": 0,
+    "tests": 40
+  },
+  {
+    "file": "tests/poll-only.test.mjs",
+    "exit": 0,
+    "tests": 17
+  },
+  {
+    "file": "tests/tda-answer-conflict-audit.test.mjs",
+    "exit": 0,
+    "tests": 11
+  },
+  {
+    "file": "tests/tda-answer-key-audit.test.mjs",
+    "exit": 0,
+    "tests": 19
+  },
+  {
+    "file": "tests/tda-audit-cli.test.mjs",
+    "exit": 0,
+    "tests": 18
+  },
+  {
+    "file": "tests/tda-json-ambiguity.test.mjs",
+    "exit": 0,
+    "tests": 16
+  },
+  {
+    "file": "tests/tda-quiz-auth.test.mjs",
+    "exit": 0,
+    "tests": 11
+  },
+  {
+    "file": "tests/tda-quiz-data.test.mjs",
+    "exit": 0,
+    "tests": 28
+  },
+  {
+    "file": "tests/tda-saved-answer.test.mjs",
+    "exit": 0,
+    "tests": 14
+  },
+  {
+    "file": "tests/tda-snapshot-integrity.test.mjs",
+    "exit": 0,
+    "tests": 26
+  },
+  {
+    "file": "tests/worker-acceptance.test.mjs",
+    "exit": 0,
+    "tests": 16
+  }
+]

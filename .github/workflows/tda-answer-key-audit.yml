@@ -7,6 +7,8 @@ on:
       - tests/tda-answer-key-audit.test.mjs
       - tests/tda-answer-conflict-audit.test.mjs
       - scripts/tda-snapshot-audit.mjs
+      - scripts/strict-json.mjs
+      - tests/tda-json-ambiguity.test.mjs
       - tests/tda-snapshot-integrity.test.mjs
       - .github/workflows/tda-answer-key-audit.yml
 permissions:

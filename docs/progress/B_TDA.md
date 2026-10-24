@@ -39,3 +39,6 @@ Offline audit now distinguishes same normalized prompt/option-set with contradic
 
 ## Interrupted snapshot-integrity work resumed — 2026-10-24 UTC
 Preserved test input5ca250f/sourcecf130fd from the interrupted PR119 follow-up; clean before resume, no source reimplementation. Offline exact-byte hash/count/UTF8/structural audit CLI,26fixedFAIL->26PASS; source/test hash retained. Full resumed regression/build/lint and exact-headCI are recorded in docs/qa/b-snapshot-integrity-20261023/ and the follow-up Draft. Hash match is not provenance/official accuracy; official350/key/text/clause evidence remainsBLOCKED, publicationfalse. No UI/RPC/grading or retainedstate/production changes.
+
+## Strict snapshot JSON —2026-10-24 batch
+Continue saved ec826a8 branch without a new PR. Fixed snapshot ambiguity16tests14FAIL/2PASS→16PASS: duplicate decoded object keys (escaped alias too), nonfinite exponent and overdepth rejected with redacted existing reason codes; normal strings/distinct objects pass. New helper/scripts only, no UI/RPC/grading change. Existing26snapshot acceptance retained. Full local evidence docs/qa/b-json-ambiguity-20261024/. Official350/source/translation/clause-review remainsBLOCKED; concrete receipt contract there. No PR/CI activation or main/production/controller/state changes.
