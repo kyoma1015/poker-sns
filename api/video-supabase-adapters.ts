@@ -1,6 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
 import type { FinalizeCandidateAdapters, ImmutableStagedSnapshot } from './video-finalize-core.ts'
-import { MAX_VIDEO_BYTES } from './video-ffprobe.ts'
 
 /**
  * Server-only Supabase adapter candidate. Intentionally never grants a
@@ -48,4 +47,3 @@ export function createSupabaseVideoAdapters(
   }
 }
 
-export { MAX_VIDEO_BYTES }
