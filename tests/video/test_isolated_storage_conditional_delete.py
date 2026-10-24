@@ -28,5 +28,13 @@ class AtomicDeletionTests(unittest.TestCase):
         with self.assertRaises(PermissionError):
             delete_if_exact_version(owner, owner + "/40000000-0000-0000-0000-000000000004.txt", "v1")
 
+    def test_noncanonical_object_uuid_rejected(self):
+        owner = "10000000-0000-0000-0000-000000000001"
+        for name in ("40000000000000000000000000000004.mp4",
+                     "40000000-0000-0000-0000-000000000004.MP4"):
+            with self.subTest(name=name):
+                with self.assertRaises(PermissionError):
+                    delete_if_exact_version(owner, owner + "/" + name, "v1")
+
 if __name__ == "__main__":
     unittest.main()
