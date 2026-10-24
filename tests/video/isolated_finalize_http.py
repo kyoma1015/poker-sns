@@ -19,6 +19,9 @@ def _reject_duplicate_json_keys(pairs):
         result[key] = value
     return result
 
+def _reject_nonstandard_json_constant(value):
+    raise ValueError("nonstandard JSON constant: " + value)
+
 def make_handler(anon_key: str, service_key: str):
     if not anon_key or not service_key:
         raise PermissionError("isolated server credentials required")
@@ -55,7 +58,8 @@ def make_handler(anon_key: str, service_key: str):
                 return
             try:
                 body = json.loads(self.rfile.read(length),
-                                  object_pairs_hook=_reject_duplicate_json_keys)
+                                  object_pairs_hook=_reject_duplicate_json_keys,
+                                  parse_constant=_reject_nonstandard_json_constant)
             except (json.JSONDecodeError, UnicodeDecodeError, ValueError):
                 self.send_error(400)
                 return
