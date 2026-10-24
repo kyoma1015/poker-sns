@@ -34,6 +34,16 @@ class BoundaryTests(unittest.TestCase):
             finalize_authenticated("", self.body, self.adapters)
         self.assertEqual(self.calls, [])
 
+    def test_noncanonical_verified_user_rejected_before_storage(self):
+        from dataclasses import replace
+        for bad_user in (USER.upper(), USER.replace("-", "")):
+            with self.subTest(bad_user=bad_user):
+                self.calls.clear()
+                adapters = replace(self.adapters, authenticate_token=lambda token, value=bad_user: value)
+                with self.assertRaises(PermissionError):
+                    finalize_authenticated("Bearer verified", self.body, adapters)
+                self.assertEqual(self.calls, [])
+
     def test_body_user_id_rejected(self):
         with self.assertRaises(ValueError):
             finalize_authenticated("Bearer verified", {**self.body, "user_id": USER}, self.adapters)
