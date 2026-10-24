@@ -49,7 +49,9 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
     if (match[1] !== data.user.id) return res.status(403).end()
     // Production remains disabled until immutable Storage fencing and an atomic
     // generation-aware DB RPC are proven. Injected adapters are isolated QA only.
-    if (!adapters) return res.status(503).json({ error: 'video_finalize_not_enabled' })
+    if (!adapters || options.isolatedLocalOnly !== true || url !== 'http://127.0.0.1:56321') {
+      return res.status(503).json({ error: 'video_finalize_not_enabled' })
+    }
     try {
       const postId = await finalizeImmutableCandidate(authorization.slice(7), object_path, content, {
         ...adapters,
