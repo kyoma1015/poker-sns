@@ -60,10 +60,15 @@ export function InteractiveCard({item,result,onUpdated,isOwner=false,ownerName: 
   const voteAccepted = useRef(false)
   const [error,setError]=useState('')
   const [voterOption,setVoterOption]=useState<number|null>(null)
+  const [clockNow,setClockNow]=useState(()=>Date.now())
+  useEffect(()=>{
+    const timer=setInterval(()=>setClockNow(Date.now()),1000)
+    return ()=>clearInterval(timer)
+  },[])
   const mine=result?.has_responded ?? false
 
   const deadline = item.closes_at ? Date.parse(item.closes_at) : NaN
-  const closed = item.kind === 'poll' && (!Number.isFinite(deadline) || deadline <= Date.now())
+  const closed = item.kind === 'poll' && (!Number.isFinite(deadline) || deadline <= clockNow)
   const submit=async()=>{
     if(submitting.current||voteAccepted.current||mine||closed||choice===null) return
     submitting.current=true
