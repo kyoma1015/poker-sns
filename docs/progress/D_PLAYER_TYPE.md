@@ -16,3 +16,6 @@ Existing PR124 continued. Fixed18schema tests reproduce9PASS/9FAIL before and18P
 
 ## Result presentation finite numeric boundary —2026-10-24
 PR124 follows the previous102PASS checkpoint with8fixed display-only regressions: before1PASS/7FAIL ->8PASS. Numeric strings/bools/arrays/valueOf-backed scores no longer become top tendencies/advice; null payloads safely fallback; accessors/valueOf are not evaluated. Existing102PASS retained, total110PASS. ExistingPR30/100 lineage has the same coercion; navigation/PNG/UI/DB/scoring/classifier are not reapplied or changed. Evidence docs/qa/d-presentation-values-20261024/. Formal36animal semantics remainBLOCKED.
+
+## PNG download exception cleanup —2026-10-24
+PR124 continues with5fixed real-function DOMfault cases:1PASS/4FAIL ->5PASS. createElement/append/click/remove failure no longer bypasses objectURL revocation scheduling; filename/success path/30second delay preserved. Existing110PASS retained, total115. Tests extract the actual component function with isolated DOM/URL/timer stubs; not browser/React E2E or PNG-render verification. PriorPR24/30/100 source has same cleanup gap; unrelated patches not reapplied. No scores/classifier/DB changes. Evidence docs/qa/d-png-cleanup-20261024/.

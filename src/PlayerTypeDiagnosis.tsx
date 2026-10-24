@@ -658,13 +658,27 @@ function PlayerTypeDiagnosis() {
   function downloadShareImage(blob: Blob) {
     if (!result) return
     const url = URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.href = url
-    link.download = `PokerID_${result.result_type_key}_${result.result_id.slice(0, 8)}.png`
-    document.body.appendChild(link)
-    link.click()
-    link.remove()
-    window.setTimeout(() => URL.revokeObjectURL(url), 30000)
+    let link: HTMLAnchorElement | null = null
+    let downloadFailed = false
+    try {
+      link = document.createElement('a')
+      link.href = url
+      link.download = `PokerID_${result.result_type_key}_${result.result_id.slice(0, 8)}.png`
+      document.body.appendChild(link)
+      link.click()
+    } catch (error) {
+      downloadFailed = true
+      throw error
+    } finally {
+      try {
+        link?.remove()
+      } catch (error) {
+        // Preserve the original download error if cleanup also fails.
+        if (!downloadFailed) throw error
+      } finally {
+        window.setTimeout(() => URL.revokeObjectURL(url), 30000)
+      }
+    }
   }
 
   async function saveShareImage() {
