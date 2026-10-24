@@ -1194,6 +1194,12 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         setMessage('自分の投稿以外は削除できません。')
         return
       }
+      // A published video must not be deleted until a generation-fenced
+      // cleanup transaction is proven. The legacy remove() has no ABA fence.
+      if (target.video_path) {
+        setMessage('動画付き投稿の削除は安全な回収処理の検証待ちです。')
+        return
+      }
       const { error } = await supabase
         .from('posts')
         .delete()
