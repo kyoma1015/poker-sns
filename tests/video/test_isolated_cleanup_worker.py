@@ -80,6 +80,40 @@ class CleanupWorkerTests(unittest.TestCase):
                          "worker operation failed; retry")
 
     @patch("tests.video.isolated_cleanup_worker._rpc")
+    def test_pinned_already_absent_object_acknowledged_without_delete(self, rpc):
+        rpc.side_effect = [[{"id": 4, "owner_id": OWNER, "object_path": PATH,
+                             "expected_object_version": "v1"}], None, True]
+        deleted = []
+        outcome = run_one(URL, "isolated", lambda *_: None,
+                          lambda *args: deleted.append(args))
+        self.assertEqual(outcome, "complete")
+        self.assertEqual(deleted, [])
+        self.assertTrue(rpc.call_args.args[3]["p_success"])
+        self.assertEqual(rpc.call_args.args[3]["p_reason"],
+                         "object already absent")
+
+    @patch("tests.video.isolated_cleanup_worker._rpc")
+    def test_invalid_queued_path_never_reaches_storage(self, rpc):
+        rpc.side_effect = [[{"id": 5, "owner_id": OWNER,
+                             "object_path": OWNER + "/../foreign.mp4",
+                             "expected_object_version": "v1"}], True]
+        touched = []
+        outcome = run_one(URL, "isolated",
+                          lambda *args: touched.append(args),
+                          lambda *args: touched.append(args))
+        self.assertEqual(outcome, "retry")
+        self.assertEqual(touched, [])
+        self.assertFalse(rpc.call_args.args[3]["p_success"])
+
+    @patch("tests.video.isolated_cleanup_worker._rpc")
+    def test_lost_cleanup_lease_does_not_report_completion(self, rpc):
+        rpc.side_effect = [[{"id": 6, "owner_id": OWNER, "object_path": PATH,
+                             "expected_object_version": "v1"}], "post-id", False]
+        with self.assertRaisesRegex(RuntimeError, "lease lost"):
+            run_one(URL, "isolated", lambda *_: "v1",
+                    lambda *_: self.fail("posted video deleted"))
+
+    @patch("tests.video.isolated_cleanup_worker._rpc")
     def test_changed_object_is_retained(self, rpc):
         rpc.side_effect = [[{"id": 1, "owner_id": OWNER, "object_path": PATH,
                              "expected_object_version": "v1"}], None, True]
