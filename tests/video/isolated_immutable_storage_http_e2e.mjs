@@ -23,6 +23,8 @@ const update=await bucket.update(path,Buffer.from('overwrite'),{contentType:'vid
 assert.ok(update.error,'owner UPDATE must fail')
 const remove=await bucket.remove([path])
 assert.ok(remove.error || !remove.data?.length,'owner DELETE reported deletion')
+// A successful empty Storage delete response is not proof of authorization;
+// the subsequent owner download is the definitive persistence check.
 const after=await bucket.download(path)
 assert.ifError(after.error)
 assert.equal(Buffer.compare(Buffer.from(await after.data.arrayBuffer()),original),0)
