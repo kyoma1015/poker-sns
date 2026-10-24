@@ -39,6 +39,10 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
   const anon = process.env.VITE_SUPABASE_ANON_KEY
   if (!url || !anon || !(/^https:\/\/[^/]+\/?$/.test(url) ||
     (options.isolatedLocalOnly === true && url === 'http://127.0.0.1:56321'))) return res.status(503).end()
+  // Reject disabled/remote adapter configurations before any outbound request.
+  if (adapters && (options.isolatedLocalOnly !== true || url !== 'http://127.0.0.1:56321')) {
+    return res.status(503).json({ error: 'video_finalize_not_enabled' })
+  }
   try {
     const viewer = createClient(url, anon, {
       global: { headers: { Authorization: authorization } },
