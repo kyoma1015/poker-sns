@@ -53,3 +53,61 @@ def finalize_video(
     except Exception:
         delete_staged_object(request.object_path)
         raise
+
+
+def finalize_http_request(headers, body, *, authenticate_jwt, download_staged,
+                          verify_owner, create_post, delete_staged_object):
+    """Transport-independent HTTP finalize handler for a trusted server.
+
+    All injected adapters must be server-side. authenticate_jwt MUST validate
+    signature, issuer, audience, expiry and subject against the Supabase JWKS.
+    create_post MUST be an atomic, owner-scoped, idempotent DB operation.
+    download_staged MUST return a trusted local copy of the exact Storage object.
+    delete_staged_object MUST use an atomic conditional delete, never a blind
+    path-only delete. This adapter is NOT production-wired.
+    """
+    import json
+    import re
+    from uuid import UUID
+    if not isinstance(headers, dict) or not isinstance(body, (bytes, bytearray)):
+        return 400, {"error": "invalid_request"}
+    if len(body) > 4096:
+        return 413, {"error": "request_too_large"}
+    authorization = headers.get("authorization", "")
+    match = re.fullmatch(r"Bearer ([A-Za-z0-9_\\-.]+)", authorization)
+    if match is None:
+        return 401, {"error": "unauthorized"}
+    try:
+        user_id = str(UUID(authenticate_jwt(match.group(1))))
+    except (ValueError, TypeError, PermissionError):
+        return 401, {"error": "unauthorized"}
+    try:
+        payload = json.loads(body)
+        if not isinstance(payload, dict) or set(payload) != {"object_path", "content"}:
+            raise ValueError("invalid fields")
+        object_path, content = payload["object_path"], payload["content"]
+        if not isinstance(object_path, str) or not isinstance(content, str):
+            raise ValueError("invalid field type")
+        if len(content) > 5000:
+            raise ValueError("content too long")
+        if not object_path.startswith(user_id + "/"):
+            raise PermissionError("owner mismatch")
+    except (ValueError, TypeError, UnicodeDecodeError, PermissionError):
+        return 400, {"error": "invalid_request"}
+    # Prove ownership BEFORE downloading; do not trust caller-provided file paths.
+    try:
+        if verify_owner(user_id, object_path) is not True:
+            return 403, {"error": "forbidden"}
+        with download_staged(user_id, object_path) as local_file:
+            post_id = finalize_video(
+                FinalizeRequest(user_id, object_path, str(local_file), content),
+                verify_owner=verify_owner, create_post=create_post,
+                delete_staged_object=delete_staged_object)
+        return 201, {"post_id": str(post_id)}
+    except PostCommitUnknown:
+        return 503, {"error": "commit_unknown_retry_with_same_object"}
+    except (PermissionError, ValueError):
+        return 403, {"error": "forbidden_or_invalid_media"}
+    except Exception:
+        # Never expose Storage, database, or authentication internals.
+        return 503, {"error": "temporarily_unavailable"}
