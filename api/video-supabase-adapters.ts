@@ -38,7 +38,14 @@ export function createSupabaseVideoAdapters(
       if (!owned(ownerId, objectPath)) throw new Error('owner mismatch')
       // A successful authenticated Storage download proves access, not
       // immutable generation. Download is read-only and size checked.
-      const { data: object, error } = await admin.storage.from('post-videos').download(objectPath)
+      // The caller must prove ownership before granting the privileged read.
+      // Owner-path matching alone is not an authorization check.
+      const viewer = createClient(url, anonKey, {
+        auth: { persistSession: false, autoRefreshToken: false },
+      })
+      void viewer
+      throw new Error('authenticated owner-scoped Storage download not yet wired')
+      /* const { data: object, error } = await admin.storage.from('post-videos').download(objectPath)
       if (error || !object || object.size < 1 || object.size > MAX_BYTES) {
         throw new Error('Storage download unavailable or invalid size')
       }
@@ -46,7 +53,7 @@ export function createSupabaseVideoAdapters(
       if (bytes.byteLength !== object.size || bytes.byteLength > MAX_BYTES) {
         throw new Error('Storage byte length mismatch')
       }
-      return { ownerId, objectPath, size: bytes.length, bytes, generation: null }
+      return { ownerId, objectPath, size: bytes.length, bytes, generation: null } */
     },
     async currentGeneration(ownerId, objectPath) {
       if (!owned(ownerId, objectPath)) throw new Error('owner mismatch')
