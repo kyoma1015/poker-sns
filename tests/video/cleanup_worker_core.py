@@ -32,7 +32,7 @@ def process_cleanup(
     except (ValueError, TypeError, AttributeError):
         reschedule(job, "invalid owner or object path")
         return "RETRY"
-    if not job.expected_object_version:
+    if not isinstance(job.expected_object_version, str) or not job.expected_object_version.strip():
         reschedule(job, "missing immutable object identity")
         return "RETRY"
     if find_post(job.owner_id, job.object_path) is not None:
