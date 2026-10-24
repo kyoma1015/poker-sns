@@ -9,6 +9,7 @@ import { join } from 'node:path'
 import { createIsolatedSupabaseVideoAdapters } from '../../api/video-isolated-supabase-adapters.ts'
 import { finalizeImmutableCandidate } from '../../api/video-finalize-core.ts'
 import { createVideoMediaHandler } from '../../api/video-media.ts'
+import { createVideoFinalizeHandler } from '../../api/video-finalize.ts'
 
 const env=Object.fromEntries(readFileSync(process.env.VIDEO_QA_ENV,'utf8').split('\n')
   .filter(x=>x.includes('=')).map(x=>{const i=x.indexOf('=');return [x.slice(0,i),x.slice(i+1).replace(/^["']|["']$/g,'')]}))
@@ -98,6 +99,29 @@ assert.equal(hidden.length,0,'other user must not see private post')
 process.env.VITE_SUPABASE_URL=url
 process.env.VITE_SUPABASE_ANON_KEY=anon
 process.env.SUPABASE_SERVICE_ROLE_KEY=service
+const finalizeHandler=createVideoFinalizeHandler(adapters,{isolatedLocalOnly:true})
+async function invokeFinalize(token, body) {
+ const headers={}
+ const res={
+   statusCode:200,body:null,
+   setHeader(name,value){headers[name.toLowerCase()]=value;return this},
+   status(code){this.statusCode=code;return this},
+   json(data){this.body=data;return this},
+   end(){return this},
+ }
+ const encoded=JSON.stringify(body)
+ await finalizeHandler({method:'POST',
+   headers:{authorization:'Bearer '+token,'content-length':String(Buffer.byteLength(encoded)),
+     'content-type':'application/json'},body},res)
+ return {status:res.statusCode,body:res.body,headers}
+}
+const viaHttp=await invokeFinalize(jwt,{object_path:path,content:'real isolated end-to-end'})
+assert.equal(viaHttp.status,201,'actual finalize API boundary must succeed')
+assert.equal(viaHttp.body.post_id,first)
+const unauthorizedFinalize=await invokeFinalize(
+ (await other.auth.getSession()).data.session.access_token,
+ {object_path:path,content:'real isolated end-to-end'})
+assert.equal(unauthorizedFinalize.status,403,'other user must not finalize owner media')
 const mediaHandler=createVideoMediaHandler({isolatedLocalOnly:true})
 async function invokeMedia(token) {
  const headers={}
