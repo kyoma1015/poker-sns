@@ -4,7 +4,10 @@
 -- Requires schema/security review, authenticated E2E and release approval.
 --
 -- Production read-only audit (2026-10-24): post-videos bucket absent; existing
--- storage.objects policies are scoped to avatars, comment-images, post-images,\n-- and poker-id-card-og. This is a point-in-time observation, NOT approval.\n-- Re-run a full policy/role/bucket audit before any future release.\n-- Assumes bucket post-videos already exists and is private. No client
+-- storage.objects policies are scoped to avatars, comment-images, post-images,
+-- and poker-id-card-og. This is a point-in-time observation, NOT approval.
+-- Re-run a full policy/role/bucket audit before any future release.
+-- Assumes bucket post-videos already exists and is private. No client
 -- UPDATE or DELETE policies are created. Existing permissive policies
 -- must be audited and revoked before this can be considered safe.
 create policy "post_videos_immutable_insert_own" on storage.objects
@@ -28,6 +31,8 @@ create policy "post_videos_immutable_read_own" on storage.objects
 -- REVIEW GATE: forbid permissive UPDATE/DELETE policies on post-videos;
 -- storage.objects RLS policies are OR-combined, so this policy alone cannot
 -- prove immutability if any other permissive policy allows mutation.
--- Storage object identity must be fenced by an immutable generation token
--- during read, verification and transactional publish; a path/hash alone
--- cannot prove absence of ABA replacement.
+-- An alternate design can prohibit all updates/deletes for the entire object
+-- lifetime and enforce insert-once UUID paths. That requires auditing every
+-- permissive policy, privileged role, API upsert path, and worker. A path/hash
+-- alone is not an immutability proof until those invariants are demonstrated.
+-- Audit query: sql/video_storage_policy_audit_read_only.sql
