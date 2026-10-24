@@ -61,6 +61,10 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt }) {
       headless: true, args: ['--no-sandbox', '--autoplay-policy=no-user-gesture-required'] })
     const origin = 'http://127.0.0.1:' + address.port
     const page = await browser.newPage()
+    const errors = []
+    page.on('pageerror', error => errors.push(String(error)))
+    page.on('console', message => { if (message.type() === 'error') errors.push(message.text()) })
+    page.on('response', response => { if (response.url().includes('/internal/video/media/')) console.log('Chromium media HTTP status:',response.status()) })
     await page.addInitScript(({postId,jwt}) => {
       window.__VIDEO_QA_POST_ID=postId
       window.__VIDEO_QA_JWT=jwt
@@ -68,10 +72,17 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt }) {
     await page.goto(origin+'/tests/video/browser-post-video.html')
     const video = page.locator('[data-testid="timeline-post"] video')
     await video.waitFor({timeout:20000})
-    await page.waitForFunction(() => {
-      const el=document.querySelector('video')
-      return el && el.readyState>=2 && el.videoWidth>0 && el.duration>0
-    },null,{timeout:20000})
+    try {
+      await page.waitForFunction(() => {
+        const el=document.querySelector('video')
+        return el && el.readyState>=2 && el.videoWidth>0 && el.duration>0
+      },null,{timeout:20000})
+    } catch (error) {
+      const diagnostic = await video.evaluate(el => ({readyState:el.readyState, networkState:el.networkState,
+        mediaError:el.error?.code, canPlayWebm:el.canPlayType('video/webm; codecs="vp8"'),
+        currentSrc:el.currentSrc.slice(0,80)})).catch(e=>({evaluationError:String(e)}))
+      throw new Error('Chromium media readiness failed: '+JSON.stringify({diagnostic,errors}),{cause:error})
+    }
     await video.evaluate(el=>el.play())
     await page.waitForFunction(() => document.querySelector('video')?.currentTime>0,
       null,{timeout:15000})
