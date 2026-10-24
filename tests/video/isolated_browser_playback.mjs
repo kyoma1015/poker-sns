@@ -92,7 +92,9 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon }
     }, {postId,jwt,anon})
     await page.goto(origin+'/tests/video/browser-post-video.html')
     const video = page.locator('[data-testid="timeline-post"][data-post-id="'+postId+'"] video')
-    await video.waitFor({timeout:20000})
+    try { await video.waitFor({timeout:20000}) } catch(error) {
+      throw new Error('Browser feed did not render owner video: '+JSON.stringify({html:(await page.locator('main').allTextContents()).slice(0,3),errors}),{cause:error})
+    }
     try {
       await page.waitForFunction(() => {
         const el=document.querySelector('video')
