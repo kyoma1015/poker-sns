@@ -41,14 +41,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
     const path = await visible()
     if (!path) return res.status(404).end()
-    // Bound storage fetch and response processing to reduce resource exhaustion.\n    const { data: blob, error: storageError } = await admin.storage.from('post-videos').download(path)
+    // Bound storage fetch and response processing to reduce resource exhaustion.
+    const { data: blob, error: storageError } = await admin.storage.from('post-videos').download(path)
     if (storageError || !blob || blob.size === 0 || blob.size > MAX_BYTES) return res.status(503).end()
     // Re-check RLS and identity before returning any media bytes.
     const { data: refreshed, error: refreshedError } = await viewer.auth.getUser(token)
     if (refreshedError || refreshed.user?.id !== identity.user.id || await visible() !== path) {
       return res.status(403).end()
     }
-    const bytes = Buffer.from(await blob.arrayBuffer())\n    // A second authorization check closes the gap between async byte materialization and response.\n    const { data: finalIdentity, error: finalAuthError } = await viewer.auth.getUser(token)\n    if (finalAuthError || finalIdentity.user?.id !== identity.user.id || await visible() !== path) {\n      return res.status(403).end()\n    }
+    const bytes = Buffer.from(await blob.arrayBuffer())
+    // A second authorization check closes the gap between async byte materialization and response.
+    const { data: finalIdentity, error: finalAuthError } = await viewer.auth.getUser(token)
+    if (finalAuthError || finalIdentity.user?.id !== identity.user.id || await visible() !== path) {
+      return res.status(403).end()
+    }
     if (bytes.byteLength === 0 || bytes.byteLength > MAX_BYTES) return res.status(503).end()
     res.setHeader('Content-Type', path.endsWith('.mp4') ? 'video/mp4' : 'video/webm')
     res.setHeader('Content-Length', String(bytes.byteLength))
