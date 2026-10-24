@@ -56,3 +56,5 @@ jobs:
         run: python3 -m unittest tests.video.test_isolated_media_http_body -v
       - name: Trusted-server ffprobe duration validation prototype
         run: bash -x tests/video/test_server_validate.sh
+      - name: Real Node.js ffprobe adapter regression tests
+        run: node --experimental-strip-types --test tests/video-ffprobe-runtime.test.mjs
