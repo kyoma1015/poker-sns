@@ -104,7 +104,8 @@ def main():
                     exc.close()
             else:
                 raise AssertionError("unauthenticated media request accepted")
-        for bad_id in ("not-a-uuid", "00000000-0000-0000-0000-000000000000"):
+        for bad_id in ("not-a-uuid", "00000000-0000-0000-0000-000000000000",
+                       post_id.upper() if any(ch in "abcdef" for ch in post_id) else post_id.replace("-", "")):
             bad_url = "http://127.0.0.1:" + str(http_server.server_port) + "/video?" + urlencode({"post_id": bad_id})
             try:
                 urlopen(Request(bad_url, headers={"Authorization": "Bearer " + viewer_token}), timeout=10)
