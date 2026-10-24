@@ -68,6 +68,48 @@ def main():
                                         {"object_path": path, "content": "real E2E"}, adapters)
         if first != second:
             raise AssertionError("non-idempotent full finalization")
+        # Exercise the actual isolated POST endpoint, not only its Python function.
+        from tests.video.isolated_finalize_http import make_local_server as make_finalize_server
+        from threading import Thread as FinalizeThread
+        from urllib.error import HTTPError
+        finalize_server = make_finalize_server(key, service)
+        finalize_thread = FinalizeThread(target=finalize_server.serve_forever, daemon=True)
+        finalize_thread.start()
+        try:
+            finalize_url = ("http://127.0.0.1:" + str(finalize_server.server_port)
+                            + "/video/finalize")
+            def post_finalize(headers, body):
+                return Request(finalize_url, data=json.dumps(body).encode(),
+                               headers=headers, method="POST")
+            valid_headers = {"Authorization": "Bearer " + session,
+                             "Content-Type": "application/json"}
+            with urlopen(post_finalize(valid_headers,
+                                      {"object_path": path, "content": "real E2E"}),
+                         timeout=20) as response:
+                assert json.load(response) == first
+                assert response.headers.get("Cache-Control") == "no-store, private"
+            for headers, payload in (
+                ({"Content-Type": "application/json"}, {"object_path": path, "content": "real E2E"}),
+                ({"Authorization": "Bearer invalid", "Content-Type": "application/json"},
+                 {"object_path": path, "content": "real E2E"}),
+                (valid_headers, {"object_path": path, "content": "real E2E", "user_id": owner}),
+                (valid_headers, {"object_path": "20000000-0000-0000-0000-000000000002/"
+                                 + path.split("/", 1)[1], "content": "real E2E"}),
+            ):
+                try:
+                    urlopen(post_finalize(headers, payload), timeout=20)
+                except HTTPError as exc:
+                    try:
+                        assert exc.code in (401, 403), exc.code
+                    finally:
+                        exc.close()
+                else:
+                    raise AssertionError("isolated HTTP finalize accepted unauthorized input")
+            print("PASS: isolated HTTP POST finalization is idempotent and rejects unauthorized requests")
+        finally:
+            finalize_server.shutdown()
+            finalize_server.server_close()
+            finalize_thread.join(timeout=5)
         from tests.video.isolated_db_adapter import publish_post, reconcile_post
         with ThreadPoolExecutor(max_workers=8) as pool:
             results = list(pool.map(
