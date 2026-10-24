@@ -27,6 +27,7 @@ docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 < tests/video/asserti
 docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 < tests/video/isolated_insert_once_storage.sql
 docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 <<'SQL'
 create role service_role nologin;
+update public.posts set video_path=null;
 alter table public.posts add column if not exists content text not null default '';
 alter table public.posts alter column id set default gen_random_uuid();
 create unique index if not exists video_qa_posts_video_path_unique
