@@ -25,5 +25,14 @@ docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 < tests/video/fixture
 docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 < sql/post_short_videos_candidate.sql
 docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 < tests/video/assertions.sql
 docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 < tests/video/isolated_insert_once_storage.sql
+docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 <<'SQL'
+create role service_role nologin;
+alter table public.posts add column if not exists content text not null default '';
+alter table public.posts alter column id set default gen_random_uuid();
+create unique index if not exists video_qa_posts_video_path_unique
+ on public.posts(video_path) where video_path is not null;
+SQL
+docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 < tests/video/isolated_fenced_publish.sql
+docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 < tests/video/isolated_fenced_rpc_assertions.sql
 echo 'PASS: isolated PostgreSQL schema, owner-only RLS, legacy delete and insert-once mutation denial'
 echo 'NOT TESTED: Supabase Storage API, signed URLs, media duration, upload cleanup'
