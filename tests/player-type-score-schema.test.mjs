@@ -37,3 +37,33 @@ test('null score row produces auditFAIL rather than crashing',()=>{
 test('non-number score payload remains invalid without emitting evidence',()=>{
  const f=structuredClone(fixture);f.scores[0].initiative='1';reject(f)
 })
+for (const [name, value] of [['null',null],['object',{}],['string','scores'],['number',222],['boolean',true]]) {
+ test(`invalid ${name} score container fails closed without throwing`,()=>{
+  const f=structuredClone(fixture);f.scores=value;reject(f)
+ })
+}
+test('sparse score array fails closed without emitting evidence',()=>{
+ const f=structuredClone(fixture);delete f.scores[0];reject(f)
+})
+test('inherited array entry cannot supply an exported score row',()=>{
+ const f=structuredClone(fixture),row=f.scores[0],proto=Object.create(Array.prototype)
+ proto[0]=row;delete f.scores[0];Object.setPrototypeOf(f.scores,proto);reject(f)
+})
+test('polluted score-row prototype cannot hide unreviewed metadata',()=>{
+ const f=structuredClone(fixture);Object.setPrototypeOf(f.scores[0],{unreviewed_axis:123});reject(f)
+})
+test('JSON own __proto__ payload is rejected without global prototype mutation',()=>{
+ const f=structuredClone(fixture),before=Object.getPrototypeOf({})
+ Object.defineProperty(f.scores[0],'__proto__',{value:{polluted:true},enumerable:true})
+ reject(f);assert.equal(Object.getPrototypeOf({}),before);assert.equal({}.polluted,undefined)
+})
+test('hidden and symbol score fields cannot escape exact schema validation',()=>{
+ for (const key of ['hidden',Symbol('hidden')]) {
+  const f=structuredClone(fixture);Object.defineProperty(f.scores[0],key,{value:1});reject(f)
+ }
+})
+test('score accessor is rejected without executing user code',()=>{
+ const f=structuredClone(fixture);let calls=0
+ Object.defineProperty(f.scores[0],'initiative',{get(){calls++;throw new Error('must not execute')},enumerable:true})
+ reject(f);assert.equal(calls,0)
+})
