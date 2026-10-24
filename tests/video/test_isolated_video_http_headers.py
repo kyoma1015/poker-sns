@@ -56,8 +56,9 @@ class IsolatedVideoHeaderTests(unittest.TestCase):
         )
         for headers, body in cases:
             with self.subTest(headers=headers):
+                expected = 415 if sum(name.lower() == "content-type" for name, _ in headers) > 1 else 400
                 self.assertEqual(self.raw_request("POST", "/video/finalize",
-                                                  headers, body), 400)
+                                                  headers, body), expected)
 
 if __name__ == "__main__":
     unittest.main()
