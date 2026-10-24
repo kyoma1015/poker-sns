@@ -8,7 +8,6 @@ import type { FinalizeCandidateAdapters, ImmutableStagedSnapshot } from './video
  */
 const UUID = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
 const PATH = new RegExp('^(' + UUID + ')/(' + UUID + ')\\.(mp4|webm)$')
-const MAX_BYTES = 20 * 1024 * 1024
 function owned(owner: string, path: string): boolean {
   const m = PATH.exec(path)
   return Boolean(m && m[1] === owner)
@@ -21,9 +20,6 @@ export function createSupabaseVideoAdapters(
   if (!/^https:\/\/[^/]+\/?$/.test(url) || !anonKey || !serviceRoleKey) {
     throw new Error('missing trusted Supabase configuration')
   }
-  const admin = createClient(url, serviceRoleKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  })
   return {
     async authenticate(token) {
       const viewer = createClient(url, anonKey, {
@@ -36,24 +32,9 @@ export function createSupabaseVideoAdapters(
     },
     async snapshot(ownerId, objectPath): Promise<ImmutableStagedSnapshot> {
       if (!owned(ownerId, objectPath)) throw new Error('owner mismatch')
-      // A successful authenticated Storage download proves access, not
-      // immutable generation. Download is read-only and size checked.
-      // The caller must prove ownership before granting the privileged read.
-      // Owner-path matching alone is not an authorization check.
-      const viewer = createClient(url, anonKey, {
-        auth: { persistSession: false, autoRefreshToken: false },
-      })
-      void viewer
-      throw new Error('authenticated owner-scoped Storage download not yet wired')
-      /* const { data: object, error } = await admin.storage.from('post-videos').download(objectPath)
-      if (error || !object || object.size < 1 || object.size > MAX_BYTES) {
-        throw new Error('Storage download unavailable or invalid size')
-      }
-      const bytes = Buffer.from(await object.arrayBuffer())
-      if (bytes.byteLength !== object.size || bytes.byteLength > MAX_BYTES) {
-        throw new Error('Storage byte length mismatch')
-      }
-      return { ownerId, objectPath, size: bytes.length, bytes, generation: null } */
+      // A path prefix is not sufficient authorization for a service-role read.
+      // Require an authenticated owner-scoped read and a version-pinned object.
+      throw new Error('authenticated immutable Storage snapshot unavailable')
     },
     async currentGeneration(ownerId, objectPath) {
       if (!owned(ownerId, objectPath)) throw new Error('owner mismatch')
