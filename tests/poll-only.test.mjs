@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
-import { createPollRequest, pollDisplayResult } from '../src/interactiveRequests.ts'
+import { createPollRequest, pollVoteRequest, pollDisplayResult } from '../src/interactiveRequests.ts'
 
 for (const mode of ['question', 'normal', '', 'QUESTION']) {
   test(`stale or forged ${mode} mode is rejected before RPC`, () => {
@@ -49,3 +49,15 @@ test('both composers use guarded creation; public card cannot mount historical q
   assert.match(detail, /interactiveRow\?\.kind === 'question'/)
   for (const source of [timeline, detail, card]) assert.match(source, /pollDisplayResult\(/)
 })
+
+for (const malformed of [null, {}, { kind: 'poll', options: null },
+  { kind: 'poll', options: ['A', 'B'], closes_at: '2099-01-01T00:00:00Z', is_anonymous: 'false' }]) {
+  test('malformed legacy vote payload fails closed before RPC', () => {
+    assert.throws(() => pollVoteRequest(malformed, 0))
+  })
+}
+for (const malformed of [null, {}, [null, 'B'], [42, 'B']]) {
+  test('malformed poll creation options fail closed before RPC', () => {
+    assert.throws(() => createPollRequest('poll', 'content', malformed, 24, false))
+  })
+}
