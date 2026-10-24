@@ -112,6 +112,18 @@ def main():
                     exc.close()
             else:
                 raise AssertionError("invalid or nonexistent post served")
+        # Reject query ambiguity and extra parameters before any media lookup.
+        for suffix in ("&post_id=" + post_id, "&unexpected=1", "&post_id="):
+            try:
+                urlopen(Request(url + suffix, headers={"Authorization": "Bearer " + viewer_token}), timeout=10)
+            except HTTPError as exc:
+                try:
+                    assert exc.code in (400, 401, 403), (suffix, exc.code)
+                finally:
+                    exc.close()
+            else:
+                raise AssertionError("ambiguous media query accepted: " + suffix)
+        print("PASS: isolated HTTP proxy rejects duplicate, extra and blank query parameters")
         print("PASS: isolated HTTP proxy rejects invalid and missing post IDs")
         set_visibility(False)
         try:
