@@ -50,5 +50,7 @@ jobs:
         run: python3 -m unittest tests.video.test_isolated_media_visibility_race -v
       - name: Immutable Storage guard static tests
         run: python3 -m unittest tests.video.test_isolated_immutable_storage_guard -v
+      - name: Media HTTP response body regression test
+        run: python3 -m unittest tests.video.test_isolated_media_http_body -v
       - name: Trusted-server ffprobe duration validation prototype
         run: bash -x tests/video/test_server_validate.sh
