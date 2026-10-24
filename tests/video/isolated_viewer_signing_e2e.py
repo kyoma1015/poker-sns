@@ -67,7 +67,33 @@ def main():
         assert response.read() == media
     from tests.video.isolated_authorized_media_proxy import fetch_visible_video
     assert fetch_visible_video(API, key, service, viewer_token, post_id) == media
-    set_visibility(False)
+    from tests.video.isolated_authorized_media_http import make_local_server
+    from threading import Thread
+    from urllib.parse import urlencode
+    http_server = make_local_server(key, service)
+    thread = Thread(target=http_server.serve_forever, daemon=True)
+    thread.start()
+    url = "http://127.0.0.1:" + str(http_server.server_port) + "/video?" + urlencode({"post_id": post_id})
+    def media_request(token):
+        return Request(url, headers={"Authorization": "Bearer " + token})
+    try:
+        with urlopen(media_request(viewer_token), timeout=10) as response:
+            assert response.read() == media
+            assert response.headers.get("Cache-Control") == "no-store, private"
+        set_visibility(False)
+        try:
+            urlopen(media_request(viewer_token), timeout=10)
+        except HTTPError as exc:
+            assert exc.code == 403
+        else:
+            raise AssertionError("HTTP endpoint served revoked viewer")
+        with urlopen(media_request(owner_token), timeout=10) as response:
+            assert response.read() == media
+        print("PASS: isolated HTTP media endpoint enforces JWT/RLS after privacy change")
+    finally:
+        http_server.shutdown()
+        http_server.server_close()
+        thread.join(timeout=5)
     try:
         fetch_visible_video(API, key, service, viewer_token, post_id)
     except (PermissionError, HTTPError):
