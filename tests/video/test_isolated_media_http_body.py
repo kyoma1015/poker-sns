@@ -66,7 +66,7 @@ class HttpResponseBodyRegression(unittest.TestCase):
         worker = threading.Thread(target=server.serve_forever, daemon=True)
         worker.start()
         try:
-            webm = b"\\x1aE\\xdf\\xa3" + b"webm-payload"
+            webm = bytes.fromhex("1a45dfa3") + b"webm-payload"
             with patch("tests.video.isolated_authorized_media_http.fetch_visible_video", return_value=webm):
                 req = Request("http://127.0.0.1:%d/video?post_id=post" % server.server_port,
                               headers={"Authorization": "Bearer jwt"})
