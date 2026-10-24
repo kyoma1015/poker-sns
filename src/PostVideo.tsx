@@ -6,7 +6,7 @@ export default function PostVideo({ postId }: { postId: string }) {
   const [url, setUrl] = useState('')
   const [error, setError] = useState('')
   useEffect(() => {
-    if (!VIDEO_SERVER_ENABLED) { setError('動画再生は安全なサーバー接続の準備中です。'); return }
+    if (!VIDEO_SERVER_ENABLED) { setUrl(''); setError('動画再生は安全なサーバー接続の準備中です。'); return }
     let active = true
     let objectUrl = ''
     setUrl('')
@@ -22,6 +22,6 @@ export default function PostVideo({ postId }: { postId: string }) {
   }, [postId])
   if (error) return <p role="status">{error}</p>
   if (!url) return <p role="status">動画を読み込み中...</p>
-  return <video controls playsInline preload="metadata" src={url}
+  return <video key={postId} controls playsInline preload="metadata" src={url}
     style={{ width: '100%', maxHeight: 480, borderRadius: 12, margin: '10px 0 14px' }} />
 }
