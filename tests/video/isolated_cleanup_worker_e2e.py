@@ -70,10 +70,15 @@ def main():
             rows = json.load(response)
         assert len(rows) == 1, (name, rows)
         # Earlier failed jobs have backoff; this new row is claimable.
+        storage_calls = []
+        def deny_storage(*args):
+            storage_calls.append(args)
+            raise AssertionError("Storage must not be accessed for " + name)
         result = run_one("http://127.0.0.1:56321", service,
-                         no_storage, no_storage)
+                         deny_storage, deny_storage)
         assert result == "retry", (name, result)
-        print("PASS: real isolated PostgREST cleanup queue rejects " + name)
+        assert not storage_calls, (name, storage_calls)
+        print("PASS: real isolated PostgREST cleanup queue rejects " + name + " without Storage access")
 
 if __name__ == "__main__":
     main()
