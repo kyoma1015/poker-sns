@@ -27,6 +27,28 @@ class MediaRaceTests(unittest.TestCase):
              patch("tests.video.isolated_authorized_media_proxy.urlopen", side_effect=responses):
             return fetch_visible_video(API, "anon", "service", "jwt", POST)
 
+    def test_owner_may_read_private_post(self):
+        private = {"user_id": OWNER, "video_path": PATH, "is_public": False}
+        responses = [Response(json.dumps([private]).encode()),
+                     Response(b"media"),
+                     Response(json.dumps([private]).encode())]
+        with patch("tests.video.isolated_authorized_media_proxy.authenticate_supabase_token",
+                   return_value=OWNER), \\
+             patch("tests.video.isolated_authorized_media_proxy.urlopen",
+                   side_effect=responses):
+            self.assertEqual(
+                fetch_visible_video(API, "anon", "service", "jwt", POST), b"media")
+
+    def test_other_user_private_post_denied_before_storage(self):
+        private = {"user_id": OWNER, "video_path": PATH, "is_public": False}
+        with patch("tests.video.isolated_authorized_media_proxy.authenticate_supabase_token",
+                   return_value=VIEWER), \\
+             patch("tests.video.isolated_authorized_media_proxy.urlopen",
+                   side_effect=[Response(json.dumps([private]).encode())]) as fetch:
+            with self.assertRaises(PermissionError):
+                fetch_visible_video(API, "anon", "service", "jwt", POST)
+            self.assertEqual(fetch.call_count, 1)
+
     def test_visibility_revoked_during_storage_read(self):
         with self.assertRaises(PermissionError):
             self.run_case([{"user_id": OWNER, "video_path": PATH, "is_public": False}])
