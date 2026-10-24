@@ -1,0 +1,148 @@
+{
+  "comparison_sha256": "6358ebc651c3dbabab83b5839fe4f270b776c660b9172715cc7b07d7991cd83a",
+  "conditional_result": {
+    "branch_ev_contribution": [
+      {
+        "denominator": 97671421781612839,
+        "numerator": -4651020084840547
+      },
+      {
+        "denominator": 97671421781612839,
+        "numerator": 4651020084840547
+      }
+    ],
+    "conditional_ev": [
+      {
+        "denominator": 1,
+        "numerator": -1
+      },
+      {
+        "denominator": 1,
+        "numerator": 1
+      }
+    ],
+    "ev_scope": "explicit-policy complete-state subtree; unknown infoset EV stays null",
+    "historical_compatibility": "UNKNOWN",
+    "native_infoset_ev": null,
+    "nodes": 1,
+    "reach": {
+      "chance_reach": {
+        "denominator": 1,
+        "numerator": 1
+      },
+      "joint_reach": {
+        "denominator": 97671421781612839,
+        "numerator": 4651020084840547
+      },
+      "scope": "full-state path conditional on supplied starting state; not infoset reach",
+      "steps": [
+        {
+          "action": 0,
+          "actor": 0,
+          "kind": "strategy",
+          "probability": {
+            "denominator": 97671421781612839,
+            "numerator": 4651020084840547
+          }
+        }
+      ],
+      "strategy_reach": [
+        {
+          "denominator": 97671421781612839,
+          "numerator": 4651020084840547
+        },
+        {
+          "denominator": 1,
+          "numerator": 1
+        }
+      ]
+    },
+    "strategy_convergence": "UNKNOWN",
+    "terminal_nodes": 1
+  },
+  "full_deal_path_reach": {
+    "chance_reach": {
+      "denominator": 6497400,
+      "numerator": 1
+    },
+    "joint_reach": {
+      "denominator": 6497400,
+      "numerator": 1
+    },
+    "scope": "full-state path conditional on supplied starting state; not infoset reach",
+    "steps": [
+      {
+        "action": 0,
+        "actor": null,
+        "kind": "chance",
+        "probability": {
+          "denominator": 52,
+          "numerator": 1
+        }
+      },
+      {
+        "action": 5,
+        "actor": null,
+        "kind": "chance",
+        "probability": {
+          "denominator": 51,
+          "numerator": 1
+        }
+      },
+      {
+        "action": 48,
+        "actor": null,
+        "kind": "chance",
+        "probability": {
+          "denominator": 50,
+          "numerator": 1
+        }
+      },
+      {
+        "action": 49,
+        "actor": null,
+        "kind": "chance",
+        "probability": {
+          "denominator": 49,
+          "numerator": 1
+        }
+      }
+    ],
+    "strategy_reach": [
+      {
+        "denominator": 1,
+        "numerator": 1
+      },
+      {
+        "denominator": 1,
+        "numerator": 1
+      }
+    ]
+  },
+  "inputs": {
+    "bb": 2,
+    "bba": 0,
+    "iterations": 20000,
+    "known_holes": [
+      0,
+      5,
+      48,
+      49
+    ],
+    "rake": 0,
+    "seed": 17,
+    "stacks": [
+      4,
+      4
+    ]
+  },
+  "learned_fold_probability": {
+    "denominator": 97671421781612839,
+    "numerator": 4651020084840547
+  },
+  "native_infoset_ev": null,
+  "native_module_sha256": "05d5f04b4436ed339ef48ad54638c34f03a55e192b21a5cca8f7fc128a2596c6",
+  "scope": "actual trained serialized row policy, complete-state finite fold subtree; not hidden-information equilibrium",
+  "seconds": 1.0514102910001384,
+  "variant": "g12_p1_packed"
+}

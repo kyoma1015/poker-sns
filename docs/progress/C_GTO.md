@@ -82,3 +82,12 @@ checkpoint/RNG/policy equality and1326/169 coverage included. Wrong incomplete
 local artifact path failure is retained, not a source fix. See
 GTO_INITIAL_CHANCE_REACH_20261024.md. General action reach, native EV, G9/G11 and
 poker convergence remain unproved; no state/controller/scheduler adoption.
+
+## Finite history reach / conditional EV — 2026-10-24
+Saved initial-chance branch retained. New history_reach.py separates exact chance
+mass and per-player explicit strategy mass on finite NativeState paths, then
+connects the existing oracle to conditional complete-state chip EV and branch
+contribution. Learned-row adapter refuses missing/unvisited policy; infoset EV
+remains null. Local232PASS (old187+45 across3variants), no PR/CI started.
+See GTO_HISTORY_REACH_EV_20261024.md. General belief/infoset reach, justified169EV,
+originalG9/G11 and full poker convergence remain gates. No specification shrink.
