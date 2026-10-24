@@ -61,6 +61,18 @@ class BoundaryTests(unittest.TestCase):
                     finalize_authenticated("Bearer verified", self.body, adapters)
                 self.assertEqual(self.calls, [])
 
+    def test_malformed_authenticated_identity_denied_before_storage(self):
+        from dataclasses import replace
+        for bad_user in (None, 1, {}, [], "not-a-uuid", "", "{" + USER + "}"):
+            with self.subTest(bad_user=bad_user):
+                self.calls.clear()
+                adapters = replace(
+                    self.adapters,
+                    authenticate_token=lambda token, value=bad_user: value)
+                with self.assertRaises(PermissionError):
+                    finalize_authenticated("Bearer verified", self.body, adapters)
+                self.assertEqual(self.calls, [])
+
     def test_body_user_id_rejected(self):
         with self.assertRaises(ValueError):
             finalize_authenticated("Bearer verified", {**self.body, "user_id": USER}, self.adapters)
