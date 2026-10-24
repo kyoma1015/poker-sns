@@ -19,15 +19,21 @@ def make_handler(anon_key: str, service_key: str):
             if self.path != "/video/finalize":
                 self.send_error(404)
                 return
-            authorization = self.headers.get("Authorization", "")
+            auth_headers = self.headers.get_all("Authorization", [])
+            if len(auth_headers) != 1:
+                self.send_error(401)
+                return
+            authorization = auth_headers[0]
             if (not authorization.startswith("Bearer ") or
                     not authorization[7:] or authorization[7:].strip() != authorization[7:]):
                 self.send_error(401)
                 return
-            if self.headers.get("Transfer-Encoding") or self.headers.get_all("Content-Length", []) and len(self.headers.get_all("Content-Length", [])) != 1:
+            lengths = self.headers.get_all("Content-Length", [])
+            if self.headers.get_all("Transfer-Encoding", []) or len(lengths) != 1:
                 self.send_error(400)
                 return
-            if self.headers.get("Content-Type", "").lower() != "application/json":
+            content_types = self.headers.get_all("Content-Type", [])
+            if len(content_types) != 1 or content_types[0].lower() != "application/json":
                 self.send_error(415)
                 return
             raw_length = self.headers.get("Content-Length")
