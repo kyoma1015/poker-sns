@@ -28,7 +28,7 @@ insert into storage.objects(id,bucket_id,name,owner_id) values
  '10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.webm',
  '10000000-0000-0000-0000-000000000001');
 set role service_role;
-do $
+do $service_test$
 declare
  a uuid; b uuid;
  p text:='10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.webm';
@@ -54,6 +54,6 @@ begin
  exception when raise_exception then
   if sqlerrm='conflicting replay accepted' then raise; end if;
  end;
-end $;
+end $service_test$;
 reset role;
 select 'PASS: production candidate isolated preservation, private bucket, RPC grants, generation and replay' as result;
