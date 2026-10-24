@@ -36,5 +36,29 @@ class AtomicDeletionTests(unittest.TestCase):
                 with self.assertRaises(PermissionError):
                     delete_if_exact_version(owner, owner + "/" + name, "v1")
 
+    def test_all_canonical_video_keys_remain_fail_closed(self):
+        owner = "10000000-0000-0000-0000-000000000001"
+        stem = "40000000-0000-0000-0000-000000000004"
+        for extension in ("mp4", "webm"):
+            for version in ("v1", "etag:123", "version-with-spaces"):
+                with self.subTest(extension=extension, version=version):
+                    with self.assertRaises(ConditionalDeleteUnavailable):
+                        delete_if_exact_version(
+                            owner, owner + "/" + stem + "." + extension, version)
+
+    def test_mismatched_canonical_owner_rejected(self):
+        owner = "10000000-0000-0000-0000-000000000001"
+        other = "10000000-0000-0000-0000-000000000002"
+        stem = "40000000-0000-0000-0000-000000000004"
+        with self.assertRaises(PermissionError):
+            delete_if_exact_version(owner, other + "/" + stem + ".mp4", "v1")
+
+    def test_noncanonical_owner_rejected(self):
+        owner = "10000000-0000-0000-0000-000000000001"
+        stem = "40000000-0000-0000-0000-000000000004"
+        with self.assertRaises(PermissionError):
+            delete_if_exact_version(owner.upper(),
+                                    owner.upper() + "/" + stem + ".mp4", "v1")
+
 if __name__ == "__main__":
     unittest.main()
