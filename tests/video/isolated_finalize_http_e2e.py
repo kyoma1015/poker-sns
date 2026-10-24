@@ -171,6 +171,22 @@ def main():
                     exc.close()
             else:
                 raise AssertionError("another authenticated user finalized owner's video")
+            # Reject a different user's attempt to finalize the newly
+            # committed object; the DB mapping must remain unchanged.
+            try:
+                urlopen(post_finalize(
+                    {"Authorization": "Bearer " + other_token,
+                     "Content-Type": "application/json"},
+                    {"object_path": fresh_path, "content": "cross-owner retry"}), timeout=20)
+            except HTTPError as exc:
+                try:
+                    assert exc.code == 403, exc.code
+                finally:
+                    exc.close()
+            else:
+                raise AssertionError("cross-owner retry finalized HTTP-first object")
+            assert reconcile_http_post(API, service, owner, fresh_path) == fresh_post["post_id"]
+            print("PASS: cross-owner HTTP-first finalize retry denied; DB post unchanged")
             # A valid JWT from another account must not read the HTTP-first
             # private video, even though its post ID is known.
             try:
