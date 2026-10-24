@@ -3258,7 +3258,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
                     )}
 
                     {post.style_snapshot && renderStyleSnapshot(post.style_snapshot)}
-                    {post.video_path && <PostVideo path={post.video_path} />}
+                    {post.video_path && <PostVideo postId={post.id} />}
                     {Array.isArray(post.image_urls) && post.image_urls.length > 0 && <div style={{ display: 'grid', gridTemplateColumns: post.image_urls.length > 1 ? 'repeat(2,minmax(0,1fr))' : '1fr', gap: 5, margin: '10px 0 14px' }}>{post.image_urls.map((url, i) => <a key={`${post.id}-${i}`} href={url} target="_blank" rel="noopener noreferrer"><img src={url} alt={`投稿画像${i+1}`} loading="lazy" style={{ width: '100%', maxHeight: 460, objectFit: 'cover', borderRadius: 10 }}/></a>)}</div>}
                     {/* アクション */}
                       <style>{`
