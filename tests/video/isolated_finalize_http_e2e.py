@@ -78,6 +78,24 @@ def main():
             raise AssertionError("concurrent publish returned conflicting post IDs")
         if reconcile_post(API, service, owner, path) != first["post_id"]:
             raise AssertionError("committed post reconciliation mismatch")
+        # Full journey: the finalized post is visible to its authenticated owner,
+        # its video path is the uploaded immutable object, and the playback
+        # proxy returns the exact original media bytes after a fresh RLS check.
+        from urllib.parse import urlencode
+        from tests.video.isolated_authorized_media_proxy import fetch_visible_video
+        query = urlencode({"id": "eq." + first["post_id"],
+                           "select": "id,user_id,content,video_path"})
+        owner_view = Request(API + "/rest/v1/posts?" + query,
+                             headers={"apikey": key,
+                                      "Authorization": "Bearer " + session})
+        with urlopen(owner_view, timeout=10) as response:
+            rows = json.load(response)
+        if len(rows) != 1 or rows[0]["user_id"] != owner or rows[0]["video_path"] != path:
+            raise AssertionError("finalized video not visible in owner timeline/detail")
+        delivered = fetch_visible_video(API, key, service, session, first["post_id"])
+        if delivered != media.read_bytes():
+            raise AssertionError("authorized playback bytes differ from uploaded media")
+        print("PASS: integrated video journey upload -> ffprobe -> authenticated DB publish -> owner feed/detail -> authorized media playback")
         print("PASS: isolated concurrent PostgREST publish and reconciliation")
         print("PASS: real isolated Auth -> private Storage -> ffprobe -> DB publish -> idempotent retry")
 if __name__ == "__main__":
