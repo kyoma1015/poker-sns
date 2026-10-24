@@ -9,7 +9,7 @@ POST = "40000000-0000-0000-0000-000000000001"
 
 class IsolatedCompositionTests(unittest.TestCase):
     def test_cross_request_token_rejected(self):
-        adapters = build_isolated_adapters(project_url="https://isolated-test.supabase.co",
+        adapters = build_isolated_adapters(project_url="http://127.0.0.1:56321",
             anon_key="key",service_key="service",access_token="token-one")
         with self.assertRaises(PermissionError):
             finalize_authenticated("Bearer token-two",{"object_path":PATH,"content":""},adapters)
@@ -24,7 +24,7 @@ class IsolatedCompositionTests(unittest.TestCase):
         def local_file(*args,**kwargs):
             yield "/tmp/test-video.mp4"
         download.side_effect=local_file
-        adapters = build_isolated_adapters(project_url="https://isolated-test.supabase.co",
+        adapters = build_isolated_adapters(project_url="http://127.0.0.1:56321",
             anon_key="key",service_key="service",access_token="token-one")
         result=finalize_authenticated("Bearer token-one",{"object_path":PATH,"content":"hello"},adapters)
         self.assertEqual(result,{"post_id":POST})
