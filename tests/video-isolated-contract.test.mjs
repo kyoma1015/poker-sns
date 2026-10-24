@@ -68,3 +68,19 @@ test('Vercel media route enforces JWT, post RLS and private byte delivery', () =
     assert.ok(!handler.includes(unsafe), unsafe)
   }
 })
+
+test('Vercel finalize boundary rejects unsafe requests and cannot publish', () => {
+  const handler = read('../api/video-finalize.ts')
+  const routing = read('../vercel.json')
+  assert.ok(routing.includes('/internal/video/finalize'))
+  assert.ok(routing.includes('/api/video-finalize'))
+  assert.match(handler, /req.method !== 'POST'/)
+  assert.match(handler, /MAX_BODY_BYTES = 12 \* 1024/)
+  assert.match(handler, /viewer.auth.getUser\(authorization.slice\(7\)\)/)
+  assert.match(handler, /match\[1\] !== data.user.id/)
+  assert.match(handler, /video_finalize_not_enabled/)
+  for (const unsafe of [".from('posts').insert", '.upload(', '.remove(', 'createSignedUrl', 'service_role']) {
+    assert.ok(!handler.includes(unsafe), unsafe)
+  }
+  assert.match(api, /VIDEO_SERVER_ENABLED = false/)
+})
