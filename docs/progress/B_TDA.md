@@ -45,3 +45,6 @@ Continue saved ec826a8 branch without a new PR. Fixed snapshot ambiguity16tests1
 
 ## Strict JSON exact-boundary QA —2026-10-24 continuation
 Continued b00466d after exact GitHub HEAD verification. Added20 permanent tests, including deterministic10000-value valid JSON compatibility, depth127/128/129, malformedUTF8, duplicate decoded aliases, and generic reason/UNVERIFIED/no-publication invariants. All20PASS on existing source: no new source bug invented. Existing13 root testfiles unchanged; local build/lintPASS. Full regression and one environment-only sandbox retry are recorded in docs/qa/b-json-boundaries-20261024/. Official350/source/translation/逐条review remainsBLOCKED; no newPR/manualCI/production/retainedstate/controller operations.
+
+## Legacy offline CLI strict parser inheritance —2026-10-24 continuation
+Found a concrete uncopied repair: old scripts/tda-audit-cli.mjs still normalized duplicate JSON/overflow/invalidUTF8 while new snapshot CLI rejected them. Fixed input8tests6FAIL/2PASS→8PASS using existingstrict helper and rawbyte reads; genericINVALID_JSON/UNVERIFIED/publicationfalse maintained. No UI/RPC/grading change or duplicated parser. Evidence docs/qa/b-legacy-strict-json-20261024/. Official350 evidence remainsBLOCKED; no newPR/manualCI/heldstate/production operation.

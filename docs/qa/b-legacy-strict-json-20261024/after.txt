@@ -1,0 +1,16 @@
+✔ legacy CLI fails closed for duplicate question text (2.157011ms)
+✔ legacy CLI fails closed for escaped duplicate question id (0.289358ms)
+✔ legacy CLI fails closed for duplicate option id (0.184238ms)
+✔ legacy CLI fails closed for nonfinite ignored metadata (0.183467ms)
+✔ legacy CLI fails closed for excess depth metadata (0.333915ms)
+✔ legacy CLI fails closed for invalid UTF8 inside string (0.31757ms)
+✔ legacy CLI accepts valid string transport without publication approval (1.626449ms)
+✔ legacy CLI accepts valid object transport without publication approval (0.148705ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12.952584
