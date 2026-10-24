@@ -25,4 +25,7 @@ VIDEO_QA_ENV="$qa/local.env" python3 -m tests.video.isolated_viewer_signing_e2e
 
 # Isolated QA mutation policy is removed only after all cleanup tests complete.
 psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/isolated_immutable_storage_guard.sql
+# Compose the production-oriented immutable policy with existing isolated QA
+# INSERT/SELECT policies; no client UPDATE or DELETE should become possible.
+psql "$dburl" -v ON_ERROR_STOP=1 -f sql/post_short_videos_immutable_review_only.sql
 VIDEO_QA_ENV="$qa/local.env" node tests/video/isolated_immutable_storage_http_e2e.mjs
