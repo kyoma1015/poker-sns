@@ -49,7 +49,7 @@ def main():
     with tempfile.TemporaryDirectory() as tmp:
         media = Path(tmp) / "clip.mp4"
         subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-f", "lavfi",
-                        "-i", "color=c=black:s=64x64:r=5:d=1", "-c:v", "mpeg4",
+                        "-i", "color=c=black:s=64x64:r=5:d=1", "-c:v", "libx264", "-pix_fmt", "yuv420p",
                         "-y", str(media)], check=True, timeout=20)
         path = owner + "/" + str(uuid4()) + ".mp4"
         upload = Request(API + "/storage/v1/object/post-videos/" + path,
