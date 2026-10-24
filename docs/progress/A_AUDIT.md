@@ -39,3 +39,7 @@ Resumed existing WIP on PR121 base, fixed7/4FAIL→7PASS. Independent completion
 
 ## Prepared boundary integration —2026-10-24
 Preserved spec binding; new opt-in same-state prepared adapter with pre-dispatch identity recheck, UNKNOWN CAS retention and cooperative stop through acceptance/staging/commit. Missing API1importERROR/0methods ->8PASS; observation races2FAIL→2PASS; independent stop gap3FAIL→3PASS. Final205PASS, old110/new140 repeatedPASS; actual temp SQLite/Git/private-file/fresh-Python only, no real host/coldstart. Source/limits/blocked2 review in docs/workers/PREPARED_HOST_BOUNDARY_20261024.md. No new PR/CI dispatch/runtime/main/production adoption.
+
+## 2026-10-24 isolated private journal follow-up
+
+See `docs/workers/PRIVATE_JOURNAL_20261024.md`: private append-only hash-chain primitive and fixed temporary crash/integrity acceptance added, with external pinned-head requirement. No formal host/controller connection. Actual temporary Git reproduction confirms cooperative stop cannot atomically prevent a commit after the final check; this remains an explicit limitation. Retained state and production untouched; no new PR/manual CI.

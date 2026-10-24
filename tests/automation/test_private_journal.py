@@ -1,5 +1,5 @@
 """Owned temporary journal only; no real receipts or retained state."""
-import os,subprocess,sys,tempfile,unittest
+import fcntl,os,subprocess,sys,tempfile,time,unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT/'scripts'))
 class JournalTests(unittest.TestCase):
@@ -26,6 +26,23 @@ class JournalTests(unittest.TestCase):
   code="import os,sys;from pathlib import Path;p=Path(sys.argv[1])/'.pending-crash';f=os.open(p,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600);os.write(f,b'{partial');os.fsync(f);os._exit(23)"
   r=subprocess.run([sys.executable,'-B','-c',code,str(self.root)],timeout=5);self.assertEqual(r.returncode,23)
   self.assertEqual(self.j.read(expected_head=digest),[{'n':0}]);self.assertTrue((self.root/'.pending-crash').exists())
+ def test_processdeath_after_publish_requires_external_reconciliation(self):
+  code="import os,sys;sys.path.insert(0,sys.argv[1]);from private_journal import PrivateJournal;j=PrivateJournal(sys.argv[2]);os.unlink=lambda *a,**k:os._exit(24);j.append({'n':1},expected_head=None)"
+  result=subprocess.run([sys.executable,'-B','-c',code,str(ROOT/'scripts'),str(self.root)],timeout=5)
+  self.assertEqual(result.returncode,24)
+  with self.assertRaises(ValueError):self.j.read(expected_head=None)
+  self.assertEqual(len(list(self.root.glob('[0-9]*.json'))),1)
+  self.assertEqual(len(list(self.root.glob('.pending-*'))),1)
+ def test_lock_timeout_is_bounded_and_permissions_rechecked(self):
+  fd=os.open(self.root/'.lock',os.O_RDWR|os.O_CREAT,0o600);fcntl.flock(fd,fcntl.LOCK_EX)
+  try:
+   started=time.monotonic()
+   with self.assertRaises(TimeoutError):self.j.append({'n':0},expected_head=None,lock_timeout=0.02)
+   self.assertLess(time.monotonic()-started,0.5)
+  finally:os.close(fd)
+  self.root.chmod(0o755)
+  with self.assertRaises(ValueError):self.j.read(expected_head=None)
+  self.root.chmod(0o700)
  def test_crossprocess_same_head_one_winner(self):
   code="import sys;sys.path.insert(0,sys.argv[1]);from private_journal import PrivateJournal;j=PrivateJournal(sys.argv[2]);j.append({'n':1},expected_head=None)"
   workers=[subprocess.Popen([sys.executable,'-B','-c',code,str(ROOT/'scripts'),str(self.root)],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL) for _ in range(4)]
