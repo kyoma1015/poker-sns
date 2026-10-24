@@ -21,6 +21,16 @@ class CleanupWorkerTests(unittest.TestCase):
         rpc.assert_not_called()
 
     @patch("tests.video.isolated_cleanup_worker._rpc")
+    def test_missing_storage_adapters_rejected_before_claim(self, rpc):
+        for inspector, deleter in ((None, lambda *_: True),
+                                   (lambda *_: "v1", None),
+                                   (None, None)):
+            with self.subTest(inspector=inspector, deleter=deleter):
+                with self.assertRaises(PermissionError):
+                    run_one(URL, "isolated", inspector, deleter)
+        rpc.assert_not_called()
+
+    @patch("tests.video.isolated_cleanup_worker._rpc")
     def test_unpinned_object_is_never_deleted(self, rpc):
         rpc.side_effect = [[{"id": 1, "owner_id": OWNER, "object_path": PATH,
                              "expected_object_version": None}], None, True]
