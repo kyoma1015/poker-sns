@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { createClient } from '@supabase/supabase-js'
+import { finalizeImmutableCandidate, type FinalizeCandidateAdapters } from './video-finalize-core.ts'
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
 const VIDEO_PATH = /^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\.(mp4|webm)$/
@@ -10,7 +11,8 @@ const MAX_BODY_BYTES = 12 * 1024
  * immutable Storage identity, ffprobe, atomic DB commit and cleanup exist.
  * This handler performs no Storage or database mutations.
  */
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters) {
+  return async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Cache-Control', 'no-store, private')
   res.setHeader('Vary', 'Authorization')
   res.setHeader('X-Content-Type-Options', 'nosniff')
@@ -44,9 +46,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const { data, error } = await viewer.auth.getUser(authorization.slice(7))
     if (error || !data.user || !UUID.test(data.user.id)) return res.status(401).end()
     if (match[1] !== data.user.id) return res.status(403).end()
-    // No read of mutable bytes and no write before version fencing exists.
-    return res.status(503).json({ error: 'video_finalize_not_enabled' })
+    // Production remains disabled until immutable Storage fencing and an atomic
+    // generation-aware DB RPC are proven. Injected adapters are isolated QA only.
+    if (!adapters) return res.status(503).json({ error: 'video_finalize_not_enabled' })
+    try {
+      const postId = await finalizeImmutableCandidate(authorization.slice(7), object_path, content, {
+        ...adapters,
+        authenticate: async () => data.user!.id,
+      })
+      return res.status(201).json({ post_id: postId })
+    } catch {
+      return res.status(503).json({ error: 'video_finalize_unavailable' })
+    }
   } catch {
     return res.status(503).end()
   }
 }
+
+}
+
+export default createVideoFinalizeHandler()
