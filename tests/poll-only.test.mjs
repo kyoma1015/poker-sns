@@ -91,7 +91,7 @@ test('poll composer and vote card lock synchronously against duplicate submissio
   const card = readFileSync(new URL('../src/TimelineInteractive.tsx', import.meta.url), 'utf8')
   assert.match(card, /import \{ useEffect, useRef, useState \} from 'react'/)
   assert.match(card, /if \(submitting\.current\) return/)
-  assert.match(card, /if\(submitting\.current\|\|mine\|\|closed\|\|choice===null\) return/)
+  assert.match(card, /if\(submitting\.current\|\|voteAccepted\.current\|\|mine\|\|closed\|\|choice===null\) return/)
   assert.match(card, /finally \{ submitting\.current = false; setBusy\(false\) \}/)
   assert.match(card, /finally\{submitting\.current=false;setBusy\(false\)\}/)
 })
