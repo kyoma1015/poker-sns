@@ -58,6 +58,29 @@ def main():
                          ["video_qa_claim_cleanup", "video_qa_reconcile", "video_qa_finish_cleanup"]), (name, calls)
         print("PASS: isolated cleanup worker fail-closed " + name)
 
+    # Real PostgREST queue E2E: insert malformed jobs in isolated DB and
+    # verify the worker retries without invoking either Storage callback.
+    from uuid import uuid4
+    from tests.video.isolated_db_adapter import _rpc
+    from urllib.request import Request, urlopen
+    import json
+    for name, path, version in cases:
+        payload = {"owner_id": owner, "object_path": owner + "/" + str(uuid4()) + ".mp4" if name == "unpinned_version" else path,
+                   "expected_object_version": version}
+        request = Request("http://127.0.0.1:56321/rest/v1/video_cleanup_queue",
+                          data=json.dumps(payload).encode(),
+                          headers={"apikey": service, "Authorization": "Bearer " + service,
+                                   "Content-Type": "application/json", "Prefer": "return=representation"},
+                          method="POST")
+        with urlopen(request, timeout=10) as response:
+            rows = json.load(response)
+        assert len(rows) == 1, (name, rows)
+        # Only the new queue item should be immediately claimable; earlier
+        # failed jobs have backoff and posted jobs were acknowledged.
+        result = run_one("http://127.0.0.1:56321", service,
+                         no_storage, no_storage)
+        assert result == "retry", (name, result)
+        print("PASS: real isolated PostgREST cleanup queue rejects " + name)
 
 if __name__ == "__main__":
     main()
