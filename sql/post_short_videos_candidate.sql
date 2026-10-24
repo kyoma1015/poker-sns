@@ -15,11 +15,13 @@ create policy "post_videos_insert_own" on storage.objects for insert to authenti
 with check (bucket_id = 'post-videos' and (storage.foldername(name))[1] = (select auth.uid())::text);
 create policy "post_videos_read_own" on storage.objects for select to authenticated
 using (bucket_id = 'post-videos' and (storage.foldername(name))[1] = (select auth.uid())::text);
--- No owner DELETE policy: clients must not remove or replace objects after upload.
--- The isolated cleanup worker retains orphan bytes until atomic CAS deletion
--- and global publication/write fencing have been proven.
--- BLOCKED: the upload path also requires explicit x-upsert:false enforcement
--- and a no-overwrite E2E before production use.
+create policy "post_videos_delete_own" on storage.objects for delete to authenticated
+using (bucket_id = 'post-videos' and (storage.foldername(name))[1] = (select auth.uid())::text);
+
+-- SECURITY BLOCKER: this isolated QA policy permits owner DELETE.
+-- Production migration MUST NOT grant client DELETE or overwrite; this
+-- fixture is used by cleanup E2E and is not an acceptable release policy.
+-- Production release also requires no-overwrite enforcement and isolated E2E.
 
 -- BLOCKED: non-owner playback must not be enabled until reviewed RLS and signed URL delivery.
 -- BLOCKED: 30s duration cannot be enforced by MIME or file size alone.
