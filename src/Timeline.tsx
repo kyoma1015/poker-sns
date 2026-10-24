@@ -2,7 +2,8 @@ import { createPollRequest, pollDisplayResult } from './interactiveRequests'
 import { useEffect, useRef, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
-import { validateVideo, removePostVideo } from './videoUpload'
+import { validateVideo, uploadPostVideo, removePostVideo } from './videoUpload'
+import { finalizeUploadedVideo, VIDEO_SERVER_ENABLED } from './videoApi'
 import PostVideo from './PostVideo'
 
 import { supabase } from './supabase'
@@ -799,7 +800,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     const error = await validateVideo(file)
     if (error) { setMessage(error); return }
     setVideoFile(file)
-    setMessage('動画のプレビューを確認できます。保存先の安全性が確認できるまで動画投稿は無効です。')
+    setMessage(VIDEO_SERVER_ENABLED ? '' : '動画のプレビューを確認できます。サーバーAPIの安全確認が終わるまで投稿は無効です。')
   }
 
   const chooseImages = (files: FileList | null) => {
@@ -869,7 +870,40 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     }
 
 
-    if (videoFile) { setMessage('動画投稿は安全な保存・配信の実装待ちです。動画を外して投稿してください。'); return }
+    if (videoFile) {
+      if (isPosting) return
+      if (!VIDEO_SERVER_ENABLED) {
+        setMessage('動画投稿はサーバーAPIの安全確認待ちです。')
+        return
+      }
+      if (imageFiles.length || selectedResult || selectedDiagnosis || styleSnapshot) {
+        setMessage('動画は他の添付と同時に投稿できません。')
+        return
+      }
+      setIsPosting(true)
+      setMessage('動画を検証・投稿中...')
+      try {
+        const { data: { user }, error: authError } = await supabase.auth.getUser()
+        if (authError || !user) throw new Error('ログイン情報を確認してください。')
+        const videoError = await validateVideo(videoFile)
+        if (videoError) throw new Error(videoError)
+        const path = await uploadPostVideo(user.id, videoFile)
+        // Unknown server outcome must remain recoverable; never issue an
+        // unversioned Storage remove after upload or finalization failure.
+        await finalizeUploadedVideo(path, content.trim())
+        setVideoFile(null)
+        setContent('')
+        setComposeOpen(false)
+        setAttachmentsOpen(false)
+        setMessage('')
+        await loadPosts()
+      } catch (error) {
+        setMessage(`動画を投稿できませんでした：${error instanceof Error ? error.message : '不明なエラー'}。アップロード済みファイルは安全な回収対象として保持されます。`)
+      } finally {
+        setIsPosting(false)
+      }
+      return
+    }
 
     const trimmedContent =
 
