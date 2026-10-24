@@ -59,7 +59,9 @@ def fetch_visible_video(project_url: str, anon_key: str, service_key: str,
         fresh_rows = json.load(response)
     if not isinstance(fresh_rows, list) or len(fresh_rows) != 1 or not isinstance(fresh_rows[0], dict) or fresh_rows[0].get("user_id") != owner or fresh_rows[0].get("video_path") != path:
         raise PermissionError("post changed during media retrieval")
-    if type(fresh_rows[0].get("is_public")) is not bool:\n        raise PermissionError("invalid refreshed visibility state")\n    if viewer != owner and fresh_rows[0].get("is_public") is not True:
+    if type(fresh_rows[0].get("is_public")) is not bool:
+        raise PermissionError("invalid refreshed visibility state")
+    if viewer != owner and fresh_rows[0].get("is_public") is not True:
         raise PermissionError("post became private during media retrieval")
     return data
 
