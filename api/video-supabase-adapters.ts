@@ -15,9 +15,6 @@ export function createSupabaseVideoAdapters(
   if (!/^https:\/\/[^/]+\/?$/.test(url) || !anonKey || !serviceRoleKey) {
     throw new Error('missing trusted Supabase configuration')
   }
-  const admin = createClient(url, serviceRoleKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  })
   return {
     async authenticate(token) {
       const viewer = createClient(url, anonKey, {
