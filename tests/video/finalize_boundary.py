@@ -44,7 +44,7 @@ def finalize_authenticated(
     segments = path.split("/")
     if len(segments) != 2 or segments[0] != user_id:
         raise PermissionError("owner path mismatch")
-    if not adapters.verify_owner(user_id, path):
+    if adapters.verify_owner(user_id, path) is not True:
         raise PermissionError("staged object not owned")
     # The adapter must return a context manager that removes temporary bytes.
     with adapters.download_staged(user_id, path) as local_file:
