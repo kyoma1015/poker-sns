@@ -16,7 +16,10 @@ class HistoryReach(unittest.TestCase):
   s=self.native.NativeState(self.game(n))
   for a in [48,49,0,1] if n==2 else range(2*n):s.apply_action(a)
   return s
- def mixed(self,node):return {0:Fraction(2,3),1:Fraction(1,3)} if node.current_player()==0 else {0:Fraction(1,2),1:Fraction(1,2)}
+ def mixed(self,node):
+  # Free checks cannot fold. Put residual mass on an actually legal non-call action.
+  other=next(a for a in node.legal_actions() if a!=1)
+  return {other:Fraction(2,3),1:Fraction(1,3)} if node.current_player()==0 else {other:Fraction(1,2),1:Fraction(1,2)}
  def test_full_deal_path_reach_is_not_own_hand_marginal(self):
   s=self.native.NativeState(self.game());before=s.audit()
   r=trace_history(s,[48,49,0,1],self.mixed)
