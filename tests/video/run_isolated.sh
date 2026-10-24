@@ -52,8 +52,7 @@ create table storage.buckets(id text primary key,name text not null,public boole
  file_size_limit bigint,allowed_mime_types text[]);
 create table storage.objects(id uuid primary key default gen_random_uuid(),
  bucket_id text references storage.buckets(id),name text not null,owner_id text);
-create function auth.uid() returns uuid language sql stable as $
- select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $;
+create function auth.uid() returns uuid language sql stable as 'select nullif(current_setting(''request.jwt.claim.sub'',true),'''')::uuid';
 grant usage on schema public to video_owner;
 SQL
 docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 <<'SQL'
