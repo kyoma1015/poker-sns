@@ -9,7 +9,6 @@ alter table public.posts add column if not exists content text not null default 
 alter table public.posts alter column id set default gen_random_uuid();
 create unique index if not exists video_qa_posts_video_path_unique
  on public.posts(video_path) where video_path is not null;
-\i tests/video/isolated_fenced_publish.sql
 do $$
 declare
  owner uuid := '10000000-0000-0000-0000-000000000001';
