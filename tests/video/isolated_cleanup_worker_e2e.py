@@ -5,6 +5,7 @@ delete/version fencing API has been established.
 """
 import os
 from pathlib import Path
+from datetime import datetime, timezone
 from tests.video.isolated_cleanup_worker import run_one
 
 def main():
@@ -92,7 +93,7 @@ def main():
         job_id = rows[0]["id"]
         status_request = Request(
             "http://127.0.0.1:56321/rest/v1/video_cleanup_queue?id=eq." + str(job_id)
-            + "&select=id,attempts,last_error,completed_at,lease_owner,lease_until",
+            + "&select=id,attempts,last_error,next_attempt_at,completed_at,lease_owner,lease_until",
             headers={"apikey": service, "Authorization": "Bearer " + service})
         with urlopen(status_request, timeout=10) as response:
             persisted = json.load(response)
@@ -101,6 +102,8 @@ def main():
         assert saved["id"] == job_id and saved["attempts"] == 1, (name, saved)
         assert saved["completed_at"] is None and saved["last_error"], (name, saved)
         assert saved["lease_owner"] is None and saved["lease_until"] is None, (name, saved)
+        retry_at = datetime.fromisoformat(saved["next_attempt_at"].replace("Z", "+00:00"))
+        assert retry_at > datetime.now(timezone.utc), (name, saved)
         print("PASS: real isolated PostgREST cleanup queue rejects " + name + " without Storage access; retry persisted")
 
 if __name__ == "__main__":
