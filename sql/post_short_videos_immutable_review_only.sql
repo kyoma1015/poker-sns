@@ -13,7 +13,7 @@ create policy "post_videos_immutable_insert_own" on storage.objects
     bucket_id = 'post-videos'
     and (storage.foldername(name))[1] = (select auth.uid())::text
     and name ~ ('^' || (select auth.uid())::text ||
-                '/[0-9a-f-]{36}[.](mp4|webm)$')
+                '/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}[.](mp4|webm)$')
   );
 create policy "post_videos_immutable_read_own" on storage.objects
   for select to authenticated
