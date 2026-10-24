@@ -24,7 +24,9 @@ test('client validates duration and type but does not enable publishing', () => 
   assert.match(upload, /MAX_VIDEO_BYTES = 20 \* 1024 \* 1024/)
   assert.match(upload, /video\/mp4/)
   assert.match(upload, /video\/webm/)
-  assert.match(timeline, /if \(videoFile\) \{ setMessage\('動画投稿は安全な保存・配信の実装待ちです/)
+  assert.match(timeline, /if \(!VIDEO_SERVER_ENABLED\)/)
+  assert.match(api, /VIDEO_SERVER_ENABLED = false/)
+  assert.match(api, /if \(!VIDEO_SERVER_ENABLED\) throw new Error/)
 })
 test('playback is gated behind an authenticated server API', () => {
   assert.match(api, /VIDEO_SERVER_ENABLED = false/)
