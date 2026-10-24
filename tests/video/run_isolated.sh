@@ -8,7 +8,15 @@ if docker inspect "$name" >/dev/null 2>&1; then echo "BLOCKED: container collisi
 cleanup() { docker rm -f "$name" >/dev/null 2>&1 || true; }
 trap cleanup EXIT
 docker run -d --name "$name" -e POSTGRES_PASSWORD=video-fixture-only postgres:17 >/dev/null
-for i in $(seq 1 60); do if docker exec "$name" pg_isready -U postgres >/dev/null 2>&1; then break; fi; sleep 1; done
+ready=0
+for i in $(seq 1 90); do
+  if docker exec "$name" psql -U postgres -d postgres -Atqc 'select 1' 2>/dev/null | grep -qx 1; then
+    ready=1
+    break
+  fi
+  sleep 1
+done
+if [[ "$ready" != 1 ]]; then echo 'BLOCKED: isolated PostgreSQL not ready'; exit 2; fi
 docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 < tests/video/fixture.sql
 docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 < sql/post_short_videos_candidate.sql
 docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 < tests/video/assertions.sql
