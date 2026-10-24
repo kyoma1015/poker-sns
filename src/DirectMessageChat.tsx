@@ -53,6 +53,9 @@ function DirectMessageChat() {
   // React state alone cannot exclude overlapping key/click handlers before
   // their first await or a subsequent render.
   const sendingRef = useRef(false)
+  const activePeerRef = useRef(userId)
+  const loadRequestRef = useRef(0)
+  activePeerRef.current = userId
 
   const bottomRef =
     useRef<HTMLDivElement | null>(null)
@@ -61,6 +64,7 @@ function DirectMessageChat() {
     behavior: ScrollBehavior = 'smooth'
   ) => {
     setTimeout(() => {
+      if (activePeerRef.current !== userId) return
       bottomRef.current?.scrollIntoView({
         behavior,
       })
@@ -96,6 +100,9 @@ function DirectMessageChat() {
   }
 
   const loadMessages = async () => {
+    if (activePeerRef.current !== userId) return
+    const request = ++loadRequestRef.current
+    const isCurrent = () => activePeerRef.current === userId && request === loadRequestRef.current
     if (!userId) {
       setStatusMessage(
         '相手が見つかりませんでした。'
@@ -106,6 +113,7 @@ function DirectMessageChat() {
     const {
       data: { user },
     } = await supabase.auth.getUser()
+    if (!isCurrent()) return
 
     if (!user) {
       navigate('/login')
@@ -116,6 +124,7 @@ function DirectMessageChat() {
     const { data: blockRows, error: blockError } = await supabase.from('user_blocks')
       .select('blocker_id')
       .or(`and(blocker_id.eq.${user.id},blocked_id.eq.${userId}),and(blocker_id.eq.${userId},blocked_id.eq.${user.id})`)
+    if (!isCurrent()) return
     if (blockError) { setIsBlocked(true); setMessages([]); setStatusMessage('ブロック状態を確認できませんでした。'); return }
     if ((blockRows || []).length > 0) {
       setIsBlocked(true)
@@ -142,6 +151,7 @@ function DirectMessageChat() {
       )
       .eq('id', userId)
       .maybeSingle()
+    if (!isCurrent()) return
 
     if (profileError) {
       console.error(profileError)
@@ -176,6 +186,7 @@ function DirectMessageChat() {
       user.id,
       userId
     )
+    if (!isCurrent()) return
 
     const {
       data: dmData,
@@ -189,6 +200,7 @@ function DirectMessageChat() {
       .order('created_at', {
         ascending: true,
       })
+    if (!isCurrent()) return
 
     if (dmError) {
       console.error(dmError)
@@ -207,7 +219,15 @@ function DirectMessageChat() {
   }
 
   useEffect(() => {
+    setMessages([])
+    setPlayerName('')
+    setPokerId('')
+    setAvatarUrl(null)
+    setInput('')
+    setIsBlocked(false)
+    setStatusMessage('読み込み中...')
     loadMessages()
+    return () => { loadRequestRef.current++ }
   }, [userId])
 
   useEffect(() => {
@@ -231,6 +251,7 @@ function DirectMessageChat() {
             'direct_messages',
         },
         async (payload) => {
+          if (activePeerRef.current !== userId) return
           if (
             payload.eventType ===
             'INSERT'
@@ -362,6 +383,7 @@ function DirectMessageChat() {
       const { data: currentBlocks, error: blockCheckError } = await supabase.from('user_blocks')
         .select('blocker_id')
         .or(`and(blocker_id.eq.${currentUserId},blocked_id.eq.${userId}),and(blocker_id.eq.${userId},blocked_id.eq.${currentUserId})`)
+      if (activePeerRef.current !== userId) return
       if (blockCheckError || (currentBlocks || []).length > 0) {
         setIsBlocked(true)
         setStatusMessage('ブロック中のためメッセージを送信できません。')
@@ -372,6 +394,7 @@ function DirectMessageChat() {
         receiver_id: userId,
         content: trimmedInput,
       })
+      if (activePeerRef.current !== userId) return
       if (error) {
         setStatusMessage('DMを送信できませんでした。もう一度お試しください。')
         return
@@ -382,6 +405,7 @@ function DirectMessageChat() {
       await loadMessages()
       scrollToBottom()
     } catch {
+      if (activePeerRef.current !== userId) return
       setStatusMessage(sent
         ? '送信しましたが、表示の更新に失敗しました。ページを再読み込みしてください。'
         : 'DMを送信できませんでした。もう一度お試しください。')
