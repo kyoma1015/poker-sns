@@ -35,7 +35,10 @@ def finalize_authenticated(
     token = authorization[7:]
     if not token or token.strip() != token:
         raise PermissionError("invalid Bearer token")
-    user_id = str(UUID(adapters.authenticate_token(token)))
+    verified_user = adapters.authenticate_token(token)
+    user_id = str(UUID(verified_user))
+    if verified_user != user_id:
+        raise PermissionError("noncanonical authenticated user ID")
     if not isinstance(body, dict) or set(body) != {"object_path", "content"}:
         raise ValueError("unexpected request fields")
     path, content = body["object_path"], body["content"]
