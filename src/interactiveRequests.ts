@@ -8,7 +8,9 @@ type Poll = {
 
 // Revalidate at click time: a card can remain open past its closing time.
 export function pollVoteRequest(item: Poll, choice: number | null, now = Date.now()) {
-  if (item.kind !== 'poll' || item.options.length < 2 || item.options.length > 4 ||
+  if (!item || item.kind !== 'poll' || !Array.isArray(item.options) ||
+      item.options.length < 2 || item.options.length > 4 ||
+      typeof item.is_anonymous !== 'boolean' ||
       !Number.isInteger(choice) || choice === null ||
       choice < 0 || choice >= item.options.length) {
     throw new Error('投票する選択肢を選び直してください。')
@@ -28,6 +30,10 @@ export function pollVoteRequest(item: Poll, choice: number | null, now = Date.no
 // Reject stale/forged question mode at the RPC boundary, not just in the UI.
 export function createPollRequest(mode: string, content: string, options: string[], hours: number, anonymous: boolean) {
   if (mode !== 'poll') throw new Error('作成できるのはアンケートのみです。')
+  if (typeof content !== 'string' || !Array.isArray(options) ||
+      options.some(option => typeof option !== 'string')) {
+    throw new Error('アンケートの内容・選択肢・期限を確認してください。')
+  }
   const normalized = options.map(option => option.trim())
   if (!content.trim() || content.trim().length > 500 || normalized.length < 2 || normalized.length > 4 ||
       normalized.some(option => !option || option.length > 80) ||
