@@ -51,6 +51,35 @@ class CleanupWorkerTests(unittest.TestCase):
         self.assertFalse(deleted)
 
     @patch("tests.video.isolated_cleanup_worker._rpc")
+    def test_matching_version_without_atomic_delete_stays_queued(self, rpc):
+        rpc.side_effect = [[{"id": 2, "owner_id": OWNER, "object_path": PATH,
+                             "expected_object_version": "v1"}], None, True]
+        inspected = []
+        deletion_attempts = []
+        outcome = run_one(
+            URL, "isolated",
+            lambda *args: inspected.append(args) or "v1",
+            lambda *args: deletion_attempts.append(args) or False)
+        self.assertEqual(outcome, "retry")
+        self.assertEqual(inspected, [(OWNER, PATH)])
+        self.assertEqual(deletion_attempts, [(OWNER, PATH, "v1")])
+        self.assertEqual(rpc.call_args.args[2], "video_qa_finish_cleanup")
+        self.assertFalse(rpc.call_args.args[3]["p_success"])
+        self.assertIn("unsupported", rpc.call_args.args[3]["p_reason"])
+
+    @patch("tests.video.isolated_cleanup_worker._rpc")
+    def test_atomic_delete_exception_keeps_job_for_retry(self, rpc):
+        rpc.side_effect = [[{"id": 3, "owner_id": OWNER, "object_path": PATH,
+                             "expected_object_version": "v1"}], None, True]
+        def unavailable(*_):
+            raise RuntimeError("atomic delete unavailable")
+        self.assertEqual(run_one(URL, "isolated", lambda *_: "v1", unavailable),
+                         "retry")
+        self.assertFalse(rpc.call_args.args[3]["p_success"])
+        self.assertEqual(rpc.call_args.args[3]["p_reason"],
+                         "worker operation failed; retry")
+
+    @patch("tests.video.isolated_cleanup_worker._rpc")
     def test_changed_object_is_retained(self, rpc):
         rpc.side_effect = [[{"id": 1, "owner_id": OWNER, "object_path": PATH,
                              "expected_object_version": "v1"}], None, True]
