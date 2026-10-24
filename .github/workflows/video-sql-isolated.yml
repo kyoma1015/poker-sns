@@ -57,4 +57,4 @@ jobs:
       - name: Trusted-server ffprobe duration validation prototype
         run: bash -x tests/video/test_server_validate.sh
       - name: Real Node.js ffprobe adapter regression tests
-        run: node --experimental-strip-types --test tests/video-ffprobe-runtime.test.mjs tests/video-preflight-runtime.test.mjs
+        run: node --experimental-strip-types --test tests/video-ffprobe-runtime.test.mjs tests/video-preflight-runtime.test.mjs tests/video-finalize-core-runtime.test.mjs
