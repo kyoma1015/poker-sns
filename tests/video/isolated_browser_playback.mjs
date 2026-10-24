@@ -85,7 +85,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon }
     page.on('pageerror', error => errors.push(String(error)))
     page.on('console', message => { if (message.type() === 'error') errors.push(message.text()) })
     page.on('response', response => { if (response.url().includes('/internal/video/media/')) console.log('Chromium media HTTP status:',response.status()) })
-    await page.addInitScript(({postId,jwt}) => {
+    await page.addInitScript(({postId,jwt,anon}) => {
       window.__VIDEO_QA_POST_ID=postId
       window.__VIDEO_QA_JWT=jwt
       window.__VIDEO_QA_ANON=anon
@@ -132,7 +132,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon }
     console.log('PASS: ACTUAL Timeline.tsx renders real RLS PostgREST video and Chromium plays it (social dependencies isolated)')
     await timelinePage.close()
     const denied = await browser.newPage()
-    await denied.addInitScript(({postId,jwt}) => {
+    await denied.addInitScript(({postId,jwt,anon}) => {
       window.__VIDEO_QA_POST_ID=postId
       window.__VIDEO_QA_JWT=jwt
       window.__VIDEO_QA_ANON=anon
