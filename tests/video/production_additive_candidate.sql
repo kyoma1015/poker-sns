@@ -6,6 +6,10 @@ alter table public.posts add column if not exists video_generation uuid;
 alter table public.posts add column if not exists video_sha256 text;
 alter table public.posts add column if not exists video_duration_seconds double precision;
 create unique index if not exists poker_posts_video_path_unique on public.posts(video_path) where video_path is not null;
+-- The live posts table does not currently grant service_role SELECT/INSERT.
+-- Required by SECURITY INVOKER fenced RPCs; do not grant UPDATE/DELETE.
+grant usage on schema public to service_role;
+grant select,insert on public.posts to service_role;
 insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types)
 values ('post-videos','post-videos',false,20971520,array['video/mp4','video/webm']::text[])
 on conflict (id) do nothing;
