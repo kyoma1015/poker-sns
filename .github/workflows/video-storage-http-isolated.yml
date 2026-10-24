@@ -5,6 +5,8 @@ on:
       - 'tests/video/**'
       - 'api/video-*.ts'
       - 'src/PostVideo.tsx'
+      - 'src/Timeline.tsx'
+      - 'tests/video-published-delete-guard.test.mjs'
       - 'src/videoApi.ts'
       - 'sql/post_short_videos_candidate.sql'
       - 'sql/post_short_videos_immutable_review_only.sql'
