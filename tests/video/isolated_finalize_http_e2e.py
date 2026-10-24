@@ -105,6 +105,28 @@ def main():
                         exc.close()
                 else:
                     raise AssertionError("isolated HTTP finalize accepted unauthorized input")
+            # The same authenticated caller can finalize a staged clip only;
+            # a different verified user must not publish the owner's object.
+            other_auth = request_json("/auth/v1/signup", {
+                "email": "video-other-" + str(uuid4()) + "@example.invalid",
+                "password": "video-isolated-test-Password1!"
+            }, key)
+            other_token = other_auth.get("access_token") or (
+                other_auth.get("session") or {}).get("access_token")
+            assert other_token
+            try:
+                urlopen(post_finalize(
+                    {"Authorization": "Bearer " + other_token,
+                     "Content-Type": "application/json"},
+                    {"object_path": path, "content": "cross-owner denied"}), timeout=20)
+            except HTTPError as exc:
+                try:
+                    assert exc.code == 403, exc.code
+                finally:
+                    exc.close()
+            else:
+                raise AssertionError("another authenticated user finalized owner's video")
+            print("PASS: isolated HTTP POST denies cross-account staged object finalization")
             print("PASS: isolated HTTP POST finalization is idempotent and rejects unauthorized requests")
         finally:
             finalize_server.shutdown()
