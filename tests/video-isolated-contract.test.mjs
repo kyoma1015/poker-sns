@@ -115,3 +115,14 @@ test('server ffprobe adapter bounds resource use and rejects malformed streams',
   assert.doesNotMatch(validator, /storage\.from|\.remove\(|\.insert\(/)
   assert.match(api, /VIDEO_SERVER_ENABLED = false/)
 })
+
+test('read-only preflight cannot publish or delete objects', () => {
+  const preflight = read('../api/video-preflight.ts')
+  assert.match(preflight, /probeVideoBytes\(bytes, extension\)/)
+  assert.match(preflight, /createHash\('sha256'\)/)
+  assert.match(preflight, /before !== after/)
+  for (const unsafe of ['createClient(', '.insert(', '.update(', '.delete(', '.remove(', '.upload(', 'service_role']) {
+    assert.ok(!preflight.includes(unsafe), unsafe)
+  }
+  assert.match(api, /VIDEO_SERVER_ENABLED = false/)
+})
