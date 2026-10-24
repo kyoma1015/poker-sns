@@ -33,6 +33,7 @@ alter table public.posts alter column id set default gen_random_uuid();
 create unique index if not exists video_qa_posts_video_path_unique
  on public.posts(video_path) where video_path is not null;
 SQL
+docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 -c 'create role anon nologin'
 docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 < tests/video/isolated_fenced_publish.sql
 docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 < tests/video/isolated_fenced_rpc_assertions.sql
 echo 'PASS: isolated PostgreSQL schema, owner-only RLS, legacy delete and insert-once mutation denial'
