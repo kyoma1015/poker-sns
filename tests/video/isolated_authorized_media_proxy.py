@@ -41,6 +41,15 @@ def fetch_visible_video(project_url: str, anon_key: str, service_key: str,
     path = post.get("video_path")
     if not isinstance(path, str) or not path.startswith(owner + "/") or path.count("/") != 1:
         raise PermissionError("invalid storage path")
+    # A post may reference only a staged video object, never arbitrary Storage keys.
+    name = path.split("/", 1)[1]
+    stem, separator, extension = name.rpartition(".")
+    if not separator or extension not in ("mp4", "webm"):
+        raise PermissionError("invalid video object")
+    try:
+        UUID(stem)
+    except (ValueError, TypeError):
+        raise PermissionError("invalid video object") from None
     req = Request(API + "/storage/v1/object/authenticated/post-videos/" +
                   quote(path, safe="/"),
                   headers={"apikey": service_key,
