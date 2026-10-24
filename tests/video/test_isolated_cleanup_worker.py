@@ -140,6 +140,30 @@ class CleanupWorkerTests(unittest.TestCase):
         self.assertFalse(rpc.call_args.args[3]["p_success"])
 
     @patch("tests.video.isolated_cleanup_worker._rpc")
+    def test_empty_queue_does_not_touch_storage_or_finish(self, rpc):
+        rpc.return_value = []
+        touched = []
+        self.assertEqual(
+            run_one(URL, "isolated",
+                    lambda *args: touched.append(args),
+                    lambda *args: touched.append(args)), "idle")
+        self.assertEqual(touched, [])
+        self.assertEqual(rpc.call_count, 1)
+        self.assertEqual(rpc.call_args.args[2], "video_qa_claim_cleanup")
+
+    @patch("tests.video.isolated_cleanup_worker._rpc")
+    def test_reconcile_returns_false_and_unpinned_never_inspects(self, rpc):
+        rpc.side_effect = [[{"id": 9, "owner_id": OWNER, "object_path": PATH,
+                             "expected_object_version": ""}], None, True]
+        touched = []
+        self.assertEqual(
+            run_one(URL, "isolated",
+                    lambda *args: touched.append(args),
+                    lambda *args: touched.append(args)), "retry")
+        self.assertEqual(touched, [])
+        self.assertFalse(rpc.call_args.args[3]["p_success"])
+
+    @patch("tests.video.isolated_cleanup_worker._rpc")
     def test_changed_object_is_retained(self, rpc):
         rpc.side_effect = [[{"id": 1, "owner_id": OWNER, "object_path": PATH,
                              "expected_object_version": "v1"}], None, True]
