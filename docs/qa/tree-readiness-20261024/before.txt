@@ -1,0 +1,28 @@
+F
+======================================================================
+FAIL: test_startup_slower_than_runtime_timeout_is_not_cleanup_failure (__main__.TreeReadiness.test_startup_slower_than_runtime_timeout_is_not_cleanup_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_tree_readiness.py", line 11, in test_startup_slower_than_runtime_timeout_is_not_cleanup_failure
+    out,err=p.communicate(timeout=6);self.assertEqual(p.returncode,0,err);data=json.loads(out)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/owned_tree_probe.py", line 87, in <module>
+    else:probe(Path(sys.argv[1]),sys.argv[2]=='1',float(sys.argv[3]) if len(sys.argv)>3 else 0)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-lease-integration/tests/automation/owned_tree_probe.py", line 68, in probe
+    ids=json.loads(path.read_text())
+                   ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/owned-tree-qa-xu5si8ev/ids.json'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.482s
+
+FAILED (failures=1)

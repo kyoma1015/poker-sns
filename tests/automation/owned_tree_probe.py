@@ -30,7 +30,8 @@ def reap(pid):
     return None
 
 
-def role(name,path,escaped):
+def role(name,path,escaped,setup_delay=0):
+    if name=='parent':time.sleep(setup_delay)
     signal.signal(signal.SIGTERM,signal.SIG_IGN)
     if name=='grand':
         print('READY',flush=True)
@@ -49,7 +50,7 @@ def role(name,path,escaped):
     time.sleep(30)
 
 
-def probe(path,escaped):
+def probe(path,escaped,setup_delay=0):
     path=path.resolve()
     if (not path.is_relative_to(Path(tempfile.gettempdir()).resolve())
             or not path.parent.name.startswith('owned-tree-qa-')):
@@ -60,7 +61,7 @@ def probe(path,escaped):
     try:
         started=time.monotonic()
         try:
-            worker.command([sys.executable,'-B',__file__,'--role','parent',str(path),str(int(escaped))],path.parent,timeout=.4)
+            worker.command([sys.executable,'-B',__file__,'--role','parent',str(path),str(int(escaped)),str(setup_delay)],path.parent,timeout=.4)
             raise AssertionError('fixture must timeout')
         except subprocess.TimeoutExpired as error:
             unknown=getattr(error,'worker_liveness_unknown',False)
@@ -82,5 +83,5 @@ def probe(path,escaped):
 
 
 if __name__=='__main__':
-    if sys.argv[1]=='--role':role(sys.argv[2],Path(sys.argv[3]),sys.argv[4]=='1')
-    else:probe(Path(sys.argv[1]),sys.argv[2]=='1')
+    if sys.argv[1]=='--role':role(sys.argv[2],Path(sys.argv[3]),sys.argv[4]=='1',float(sys.argv[5]) if len(sys.argv)>5 else 0)
+    else:probe(Path(sys.argv[1]),sys.argv[2]=='1',float(sys.argv[3]) if len(sys.argv)>3 else 0)
