@@ -3,7 +3,7 @@
 -- sql/post_short_videos_candidate.sql with an owner DELETE test fixture.
 -- Requires schema/security review, authenticated E2E and release approval.
 --
--- Assumes bucket post-videos already exists and is private. No client
+-- Production read-only audit (2026-10-24): post-videos bucket absent; existing\n-- storage.objects policies are scoped to avatars, comment-images, post-images,\n-- and poker-id-card-og. This is a point-in-time observation, NOT approval.\n-- Re-run a full policy/role/bucket audit before any future release.\n-- Assumes bucket post-videos already exists and is private. No client
 -- UPDATE or DELETE policies are created. Existing permissive policies
 -- must be audited and revoked before this can be considered safe.
 create policy "post_videos_immutable_insert_own" on storage.objects
