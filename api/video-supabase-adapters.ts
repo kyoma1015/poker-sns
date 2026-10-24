@@ -25,7 +25,7 @@ export function createSupabaseVideoAdapters(
       return data.user.id
     },
     async snapshot(ownerId, objectPath): Promise<ImmutableStagedSnapshot> {
-      if (!objectPath.startsWith(ownerId + '/')) throw new Error('owner mismatch')
+      if (!isCanonicalOwnedVideoPath(ownerId, objectPath)) throw new Error('owner mismatch')
       // A Storage listing is insufficient to prove immutability or ownership.
       // Never download by mutable path before the object is version-fenced.
       throw new Error('immutable Storage snapshot API unavailable')
@@ -39,7 +39,7 @@ export function createSupabaseVideoAdapters(
       throw new Error('atomic generation-aware publish RPC unavailable')
     },
     async reconcile(ownerId, objectPath) {
-      if (!objectPath.startsWith(ownerId + '/')) throw new Error('owner mismatch')
+      if (!isCanonicalOwnedVideoPath(ownerId, objectPath)) throw new Error('owner mismatch')
       // Read-only, but cannot prove a specific immutable generation yet.
       // Preserve the object and surface an uncertain commit outcome.
       return null
@@ -47,3 +47,9 @@ export function createSupabaseVideoAdapters(
   }
 }
 
+
+const VIDEO_PATH = /^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\.(mp4|webm)$/
+function isCanonicalOwnedVideoPath(owner: string, path: string): boolean {
+  const match = VIDEO_PATH.exec(path)
+  return Boolean(match && match[1] === owner)
+}
