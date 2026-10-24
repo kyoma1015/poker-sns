@@ -65,7 +65,17 @@ def main():
     public_url = issue_visible_video_url(API, key, service, viewer_token, post_id)
     with urlopen(public_url, timeout=10) as response:
         assert response.read() == media
+    from tests.video.isolated_authorized_media_proxy import fetch_visible_video
+    assert fetch_visible_video(API, key, service, viewer_token, post_id) == media
     set_visibility(False)
+    try:
+        fetch_visible_video(API, key, service, viewer_token, post_id)
+    except (PermissionError, HTTPError):
+        pass
+    else:
+        raise AssertionError("private video still served after privacy transition")
+    assert fetch_visible_video(API, key, service, owner_token, post_id) == media
+    print("PASS: isolated JWT/RLS media proxy denies revoked viewer on next request")
     # A previously issued signed URL is a bearer capability. The privacy
     # transition blocks NEW issuance, not the existing token.
     with urlopen(public_url, timeout=10) as response:
