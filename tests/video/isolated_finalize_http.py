@@ -11,6 +11,14 @@ from .isolated_composition import build_isolated_adapters
 API = "http://127.0.0.1:56321"
 MAX_JSON_BYTES = 12 * 1024
 
+def _reject_duplicate_json_keys(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError("duplicate JSON key")
+        result[key] = value
+    return result
+
 def make_handler(anon_key: str, service_key: str):
     if not anon_key or not service_key:
         raise PermissionError("isolated server credentials required")
@@ -46,8 +54,9 @@ def make_handler(anon_key: str, service_key: str):
                 self.send_error(413)
                 return
             try:
-                body = json.loads(self.rfile.read(length))
-            except (json.JSONDecodeError, UnicodeDecodeError):
+                body = json.loads(self.rfile.read(length),
+                                  object_pairs_hook=_reject_duplicate_json_keys)
+            except (json.JSONDecodeError, UnicodeDecodeError, ValueError):
                 self.send_error(400)
                 return
             try:
