@@ -45,4 +45,23 @@ def fetch_visible_video(project_url: str, anon_key: str, service_key: str,
         data = response.read(MAX_BYTES + 1)
     if not data or len(data) > MAX_BYTES:
         raise ValueError("invalid media size")
+    # Re-check authorization AFTER Storage retrieval and BEFORE handing bytes
+    # to the HTTP response. This closes the obvious visibility-flip window
+    # during a slow download; it cannot revoke an already-sent response.
+    authenticate_supabase_token(
+        viewer_token, project_url=API, anon_key=anon_key,
+        allow_local_isolated=True)
+    with urlopen(req_for_visibility(post_id, anon_key, viewer_token), timeout=10) as response:
+        fresh_rows = json.load(response)
+    if len(fresh_rows) != 1 or fresh_rows[0].get("user_id") != owner or fresh_rows[0].get("video_path") != path:
+        raise PermissionError("post changed during media retrieval")
+    if viewer != owner and fresh_rows[0].get("is_public") is not True:
+        raise PermissionError("post became private during media retrieval")
     return data
+
+def req_for_visibility(post_id: str, anon_key: str, viewer_token: str):
+    query = urlencode({"id": "eq." + str(UUID(post_id)),
+                       "select": "user_id,video_path,is_public"})
+    return Request(API + "/rest/v1/posts?" + query,
+                   headers={"apikey": anon_key,
+                            "Authorization": "Bearer " + viewer_token})
