@@ -256,6 +256,21 @@ def running_evidence_state(raw):
     return prior['worker_liveness']
 
 
+def bound_evidence_spec(raw, stored_spec, task_id):
+    if running_evidence_state(raw) == 'unknown':
+        return None
+    prior = json.loads(raw)
+    bound = prior.get('claimed_spec_hash')
+    if not isinstance(bound, str) or not re.fullmatch(r'[0-9a-f]{64}', bound) or bound != stored_spec:
+        return None
+    if 'task' in prior:
+        reviewed = prior['task']
+        if (type(reviewed) is not dict or reviewed.get('id') != task_id
+                or hashlib.sha256(json.dumps(reviewed, sort_keys=True).encode()).hexdigest() != bound):
+            return None
+    return bound
+
+
 class LeaseActivationRefused(ValueError):
     lease_state_preserved = True
 
@@ -287,12 +302,12 @@ class Leases:
         digest = hashlib.sha256(json.dumps(task, sort_keys=True).encode()).hexdigest()
         self.db.execute('BEGIN IMMEDIATE')
         try:
-            for raw, expiry, stored_spec in self.db.execute("SELECT evidence,expires,spec_hash FROM development_jobs WHERE status='running'"):
+            for raw, expiry, stored_spec, ident in self.db.execute("SELECT evidence,expires,spec_hash,id FROM development_jobs WHERE status='running'"):
                 liveness = running_evidence_state(raw)
                 # A deadline is not positive evidence that an executing worker died.
                 # A fresh never-dispatched lease may expire normally; executing or
                 # legacy/corrupt context requires ownership/liveness review first.
-                bound = json.loads(raw).get('claimed_spec_hash') if liveness != 'unknown' else None
+                bound = bound_evidence_spec(raw, stored_spec, ident)
                 if (not isinstance(bound, str) or not re.fullmatch(r'[0-9a-f]{64}', bound)
                         or bound != stored_spec or liveness == 'unknown' or type(expiry) not in (int, float)
                         or not math.isfinite(expiry)
@@ -336,7 +351,7 @@ class Leases:
             row = self.db.execute("SELECT evidence,spec_hash FROM development_jobs WHERE id=? AND token=? AND status='running' AND expires>?", (task_id, token, current)).fetchone()
             if row is None or running_evidence_state(row[0]) != 'not_started':
                 raise LeaseActivationRefused('activation ownership, expiry or evidence requires review')
-            acquired = json.loads(row[0]).get('claimed_spec_hash')
+            acquired = bound_evidence_spec(row[0], row[1], task_id)
             if (not isinstance(acquired, str) or not re.fullmatch(r'[0-9a-f]{64}', acquired)
                     or acquired != row[1]
                     or ('claimed_spec_hash' in context and context['claimed_spec_hash'] != acquired)):
@@ -362,8 +377,13 @@ class Leases:
         if status not in ('implemented', 'blocked', 'failed', 'retry_wait'):
             raise ValueError('invalid terminal status')
         now = finite_lease_number(time.time() if now is None else now, 'clock')
-        cursor = self.db.execute("UPDATE development_jobs SET status=?,token=NULL,expires=NULL,evidence=? WHERE id=? AND token=? AND status='running' AND expires>?",
-                                 (status, json.dumps(evidence), task_id, token, now))
+        row = self.db.execute("SELECT evidence,spec_hash FROM development_jobs WHERE id=? AND token=? AND status='running' AND expires>?", (task_id, token, now)).fetchone()
+        if row is None or bound_evidence_spec(row[0], row[1], task_id) is None:
+            raise LeaseActivationRefused('completion ownership or specification requires review')
+        # A single conditional write works both in autocommit and defer_host's
+        # existing transaction; evidence changes between read/write refuse too.
+        cursor = self.db.execute("UPDATE development_jobs SET status=?,token=NULL,expires=NULL,evidence=? WHERE id=? AND token=? AND spec_hash=? AND evidence=? AND status='running' AND expires>?",
+                                 (status, json.dumps(evidence), task_id, token, row[1], row[0], now))
         if cursor.rowcount != 1:
             raise ValueError('invalid/expired lease; cannot publish completion')
 
@@ -667,10 +687,13 @@ def finish_host_session(state, task_id, token, receipt, now=None):
         raise ValueError('trusted coordinator collaboration receipt required')
     leases = Leases(state)
     current = time.time() if now is None else now
-    row = leases.db.execute("SELECT evidence FROM development_jobs WHERE id=? AND token=? AND status='running' AND expires>?", (task_id, token, current)).fetchone()
+    row = leases.db.execute("SELECT evidence,spec_hash FROM development_jobs WHERE id=? AND token=? AND status='running' AND expires>?", (task_id, token, current)).fetchone()
     if row is None:
         leases.close()
         raise ValueError('host lease missing, expired or replayed')
+    if bound_evidence_spec(row[0], row[1], task_id) is None:
+        leases.close()
+        raise LeaseActivationRefused('host completion specification requires review')
     context = json.loads(row[0])
     if context.get('prepared_for') != 'host_session':
         leases.close()
