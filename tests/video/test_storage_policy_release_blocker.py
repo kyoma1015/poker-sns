@@ -14,5 +14,12 @@ class ProductionPolicyBoundary(unittest.TestCase):
         self.assertIn("SECURITY BLOCKER", sql)
         self.assertIn("Production migration MUST NOT grant client DELETE", sql)
 
+    def test_production_review_candidate_has_no_update_delete_grants(self):
+        sql = Path("sql/post_short_videos_immutable_review_only.sql").read_text()
+        self.assertIn("DO NOT APPLY to production", sql)
+        self.assertNotIn("for delete to authenticated", sql.lower())
+        self.assertNotIn("for update to authenticated", sql.lower())
+        self.assertIn("x-upsert:false", sql)
+
 if __name__ == "__main__":
     unittest.main()
