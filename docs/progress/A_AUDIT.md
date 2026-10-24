@@ -33,3 +33,6 @@ PR113-based opt-in InvocationGuard.call_host preparation: pre/post stop/deadline
 
 ## Corrupt running evidence fail-closed — 2026-10-23
 PR117 follow-up: exact-parent corrected8test/37failure observations →8PASS; activation race4FAIL→4PASS, supporting2CAS/resumePASS, ten rounds140PASS. Existing156PASS. All running malformed/legacy/missing evidence preserved and blocks all lanes; new typed not_started leases plus token/status/expiry activationCAS preserve normal expiry/retry while refusing old-owner dispatch. No heldstate mutation or host activation. Evidence docs/workers/CORRUPT_EVIDENCE_20261023.md and docs/qa/corrupt-evidence-20261023/. Independent read-only review conditional, formalhost/watchdog incomplete, pollNO-GO.
+
+## Quota recovery and acquired identity —2026-10-24
+Resumed existing WIP on PR121 base, fixed7/4FAIL→7PASS. Independent completion-binding reproduction2FAIL→2PASS; actual temporary SQLite/Git plus source-pinned32pair and8processWAL QA. Local191PASS +new11×10=110PASS. No oldtests modified. Draft/CI not attempted after new-PR automatic approval rejection in parallel lanes; branch evidence only, not CI PASS. See docs/workers/LEASE_IDENTITY_RESUME_20261024.md. No retainedstate/controller/main/production operation.

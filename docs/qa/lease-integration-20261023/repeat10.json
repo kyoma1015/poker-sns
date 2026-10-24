@@ -1,0 +1,182 @@
+[
+  {
+    "round": 1,
+    "suite": "test_activation_binding.py",
+    "exit": 0,
+    "log": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.006s\n\nOK\n"
+  },
+  {
+    "round": 1,
+    "suite": "test_finish_binding.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.024s\n\nOK\n"
+  },
+  {
+    "round": 1,
+    "suite": "test_lease_integration_matrix.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.582s\n\nOK\n"
+  },
+  {
+    "round": 2,
+    "suite": "test_activation_binding.py",
+    "exit": 0,
+    "log": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.004s\n\nOK\n"
+  },
+  {
+    "round": 2,
+    "suite": "test_finish_binding.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.024s\n\nOK\n"
+  },
+  {
+    "round": 2,
+    "suite": "test_lease_integration_matrix.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.533s\n\nOK\n"
+  },
+  {
+    "round": 3,
+    "suite": "test_activation_binding.py",
+    "exit": 0,
+    "log": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.005s\n\nOK\n"
+  },
+  {
+    "round": 3,
+    "suite": "test_finish_binding.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.021s\n\nOK\n"
+  },
+  {
+    "round": 3,
+    "suite": "test_lease_integration_matrix.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.579s\n\nOK\n"
+  },
+  {
+    "round": 4,
+    "suite": "test_activation_binding.py",
+    "exit": 0,
+    "log": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.004s\n\nOK\n"
+  },
+  {
+    "round": 4,
+    "suite": "test_finish_binding.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.020s\n\nOK\n"
+  },
+  {
+    "round": 4,
+    "suite": "test_lease_integration_matrix.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.528s\n\nOK\n"
+  },
+  {
+    "round": 5,
+    "suite": "test_activation_binding.py",
+    "exit": 0,
+    "log": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.004s\n\nOK\n"
+  },
+  {
+    "round": 5,
+    "suite": "test_finish_binding.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.021s\n\nOK\n"
+  },
+  {
+    "round": 5,
+    "suite": "test_lease_integration_matrix.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.515s\n\nOK\n"
+  },
+  {
+    "round": 6,
+    "suite": "test_activation_binding.py",
+    "exit": 0,
+    "log": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.005s\n\nOK\n"
+  },
+  {
+    "round": 6,
+    "suite": "test_finish_binding.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.021s\n\nOK\n"
+  },
+  {
+    "round": 6,
+    "suite": "test_lease_integration_matrix.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.574s\n\nOK\n"
+  },
+  {
+    "round": 7,
+    "suite": "test_activation_binding.py",
+    "exit": 0,
+    "log": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.005s\n\nOK\n"
+  },
+  {
+    "round": 7,
+    "suite": "test_finish_binding.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.025s\n\nOK\n"
+  },
+  {
+    "round": 7,
+    "suite": "test_lease_integration_matrix.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.532s\n\nOK\n"
+  },
+  {
+    "round": 8,
+    "suite": "test_activation_binding.py",
+    "exit": 0,
+    "log": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.004s\n\nOK\n"
+  },
+  {
+    "round": 8,
+    "suite": "test_finish_binding.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.025s\n\nOK\n"
+  },
+  {
+    "round": 8,
+    "suite": "test_lease_integration_matrix.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.534s\n\nOK\n"
+  },
+  {
+    "round": 9,
+    "suite": "test_activation_binding.py",
+    "exit": 0,
+    "log": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.004s\n\nOK\n"
+  },
+  {
+    "round": 9,
+    "suite": "test_finish_binding.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.021s\n\nOK\n"
+  },
+  {
+    "round": 9,
+    "suite": "test_lease_integration_matrix.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.531s\n\nOK\n"
+  },
+  {
+    "round": 10,
+    "suite": "test_activation_binding.py",
+    "exit": 0,
+    "log": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.004s\n\nOK\n"
+  },
+  {
+    "round": 10,
+    "suite": "test_finish_binding.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.021s\n\nOK\n"
+  },
+  {
+    "round": 10,
+    "suite": "test_lease_integration_matrix.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.516s\n\nOK\n"
+  }
+]
