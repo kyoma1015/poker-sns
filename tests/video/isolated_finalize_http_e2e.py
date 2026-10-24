@@ -147,6 +147,19 @@ def main():
                     exc.close()
             else:
                 raise AssertionError("combined HTTP server exposed video without JWT")
+            # A real second JWT is not sufficient to read a private post.
+            try:
+                urlopen(Request(
+                    same_origin_video,
+                    headers={"Authorization": "Bearer " + other_token}), timeout=20)
+            except HTTPError as exc:
+                try:
+                    assert exc.code == 403, exc.code
+                finally:
+                    exc.close()
+            else:
+                raise AssertionError("private finalized video exposed to another JWT")
+            print("PASS: same-origin HTTP playback rejects a different valid JWT")
             print("PASS: same isolated HTTP origin finalizes and serves freshly JWT-authorized video")
             print("PASS: isolated HTTP POST denies cross-account staged object finalization")
             print("PASS: isolated HTTP POST finalization is idempotent and rejects unauthorized requests")
