@@ -561,7 +561,13 @@ class GitHubPublisher:
         return {'draft_pr': pr['html_url'], 'head': evidence['commit'], 'state': 'draft'}
 
 
-def validate_and_commit(task, worktree, base, before, evidence):
+def validate_and_commit(task, worktree, base, before, evidence, *, stop_check=None):
+    if stop_check is not None and not callable(stop_check):
+        raise ValueError('trusted stop check must be callable')
+    def check_stop():
+        if stop_check is not None:
+            stop_check()
+    check_stop()
     if command(['git', 'rev-parse', 'HEAD'], worktree) != base:
         raise ValueError('executor changed git HEAD; publish forbidden')
     paths = checked_changes(worktree, task['allowed_paths'])
@@ -573,7 +579,9 @@ def validate_and_commit(task, worktree, base, before, evidence):
     evidence['tested_source_sha256'] = tested_source_hashes
     evidence['tests'] = []
     for argv in PROFILES[task['test_profile']]:
+        check_stop()
         output = command(list(argv), worktree, timeout=60, env=child_env(), include_stderr=True)
+        check_stop()
         count = acceptance_count(output)
         if count < 1:
             raise ValueError('acceptance command reported no executed tests')
@@ -586,10 +594,12 @@ def validate_and_commit(task, worktree, base, before, evidence):
     if protected_hashes(worktree, paths) != tested_source_hashes:
         raise ValueError('source changed during tests; no tested commit can be produced')
     command(['git', 'diff', '--check'], worktree)
+    check_stop()
     command(['git', 'add', '--', *paths], worktree)
     for path, blob in tested_git_blobs.items():
         if command(['git', 'rev-parse', ':' + path], worktree) != blob:
             raise ValueError('staged source differs from tested source')
+    check_stop()
     command(['git', '-c', 'user.name=Poker ID worker', '-c', 'user.email=worker@users.noreply.github.com',
              'commit', '-m', 'worker(' + task['lane'] + '): ' + task['id']], worktree)
     evidence['commit'] = command(['git', 'rev-parse', 'HEAD'], worktree)
@@ -675,7 +685,7 @@ def prepare_host_session(repository, work_root, state, task, now=None):
         leases.close()
 
 
-def finish_host_session(state, task_id, token, receipt, now=None):
+def finish_host_session(state, task_id, token, receipt, now=None, *, stop_check=None):
     """Verify host-agent changes and commit. Receipt must come from trusted coordinator.
 
     This is not an API that cryptographically verifies a collaboration identity.
@@ -704,12 +714,17 @@ def finish_host_session(state, task_id, token, receipt, now=None):
                 'real_ai_implementation': False, 'production': False,
                 'receipt_source': 'trusted_host_coordinator', 'daemon_running': False}
     try:
-        validate_and_commit(task, Path(context['worktree']), context['base_sha'], context['before'], evidence)
+        if stop_check is None:
+            validate_and_commit(task, Path(context['worktree']), context['base_sha'], context['before'], evidence)
+        else:
+            validate_and_commit(task, Path(context['worktree']), context['base_sha'], context['before'], evidence, stop_check=stop_check)
         evidence['status'] = 'implemented_local'
         evidence['real_ai_implementation'] = receipt.get('test_fixture') is not True
         evidence['publication'] = 'not_attempted'
         leases.finish(task_id, token, 'implemented', evidence, now=now)
     except Exception as error:
+        if getattr(error, 'host_boundary_stopped', False):
+            raise  # retain original prepared context and uncommitted/staged work
         evidence.update(status='blocked', error=scrub(error))
         if getattr(error, 'worker_liveness_unknown', False):
             evidence.update(worker_liveness='unknown', lease_status='running; termination unconfirmed')

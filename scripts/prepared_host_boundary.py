@@ -70,10 +70,17 @@ def complete_prepared(guard, state, task_id, token, *, dispatch, observe, preser
         guard.check()
         return dispatch()
 
+    def finish_stop_check():
+        try:
+            guard.check()
+        except BaseException as error:
+            error.host_boundary_stopped = True
+            raise
+
     try:
         receipt = guard.call_host(checked_dispatch,observe=observe,preserve=preserve)
         guard.check()
-        return worker.finish_host_session(state,task_id,token,receipt,now=now)
+        return worker.finish_host_session(state,task_id,token,receipt,now=now,stop_check=finish_stop_check)
     except BaseException as error:
         if getattr(error,'worker_liveness_unknown',False):
             try:
