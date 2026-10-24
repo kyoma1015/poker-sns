@@ -6,7 +6,8 @@ const VIDEO_PATH = /^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{1
 const MAX_BYTES = 20 * 1024 * 1024
 
 /** Candidate Vercel route: no public URLs, no redirect, and no Storage mutation. */
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export function createVideoMediaHandler(options: { isolatedLocalOnly?: boolean } = {}) {
+return async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Cache-Control', 'no-store, private')
   res.setHeader('Vary', 'Authorization')
   res.setHeader('X-Content-Type-Options', 'nosniff')
@@ -18,7 +19,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const url = process.env.VITE_SUPABASE_URL
   const anon = process.env.VITE_SUPABASE_ANON_KEY
   const service = process.env.SUPABASE_SERVICE_ROLE_KEY
-  if (!url || !anon || !service || !/^https:\/\/[^/]+\/?$/.test(url)) return res.status(503).end()
+  if (!url || !anon || !service || !(/^https:\/\/[^/]+\/?$/.test(url) ||
+    (options.isolatedLocalOnly === true && url === 'http://127.0.0.1:56321'))) return res.status(503).end()
   const token = rawAuth.slice(7)
   const viewer = createClient(url, anon, {
     global: { headers: { Authorization: rawAuth } },
@@ -42,16 +44,40 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const path = await visible()
     if (!path) return res.status(404).end()
     // Bound storage fetch and response processing to reduce resource exhaustion.
-    const { data: blob, error: storageError } = await admin.storage.from('post-videos').download(path)
-    if (storageError || !blob || blob.size === 0 || blob.size > MAX_BYTES) return res.status(503).end()
+    // Stream from the private bucket through a bounded trusted-server read.
+    // The Storage SDK's download() would buffer an unbounded Blob first.
+    const media = await fetch(url.replace(/\\/$/, '') +
+      '/storage/v1/object/authenticated/post-videos/' + path, {
+      headers: { apikey: service, Authorization: 'Bearer ' + service },
+      signal: AbortSignal.timeout(30000),
+    })
+    if (!media.ok || !media.body) return res.status(503).end()
+    const declared = media.headers.get('content-length')
+    if (declared && (!Number.isSafeInteger(Number(declared)) ||
+      Number(declared) < 1 || Number(declared) > MAX_BYTES)) {
+      await media.body.cancel()
+      return res.status(503).end()
+    }
+    const chunks: Buffer[] = []
+    let received = 0
+    const reader = media.body.getReader()
+    try {
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        received += value.byteLength
+        if (received > MAX_BYTES) throw new Error('oversized media')
+        chunks.push(Buffer.from(value))
+      }
+    } finally {
+      await reader.cancel().catch(() => undefined)
+    }
+    if (!received || (declared && Number(declared) !== received)) return res.status(503).end()
+    const bytes = Buffer.concat(chunks, received)
     // Re-check RLS and identity before returning any media bytes.
     const { data: refreshed, error: refreshedError } = await viewer.auth.getUser(token)
     if (refreshedError || refreshed.user?.id !== identity.user.id || await visible() !== path) {
       return res.status(403).end()
-    }
-    const bytes = Buffer.from(await blob.arrayBuffer())
-    if (bytes.byteLength !== blob.size || bytes.byteLength === 0 || bytes.byteLength > MAX_BYTES) {
-      return res.status(503).end()
     }
     // A second authorization check closes the gap between async byte materialization and response.
     const { data: finalIdentity, error: finalAuthError } = await viewer.auth.getUser(token)
@@ -66,3 +92,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(503).end()
   }
 }
+}
+
+export default createVideoMediaHandler()
