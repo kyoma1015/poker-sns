@@ -91,7 +91,9 @@ test('Vercel finalize boundary rejects unsafe requests and cannot publish', () =
 
 test('media permission is checked after asynchronous byte materialization', () => {
   const handler = read('../api/video-media.ts')
-  assert.match(handler, /const bytes = Buffer\.from\(await blob\.arrayBuffer\(\)\)/)
+  assert.match(handler, /const bytes = Buffer\\.concat\\(chunks, received\\)/)
+  assert.match(handler, /received > MAX_BYTES/)
+  assert.match(handler, /const reader = media\\.body\\.getReader\\(\\)/)
   assert.match(handler, /finalIdentity\.user\?\.id !== identity\.user\.id/)
   assert.match(handler, /await visible\(\) !== path/)
   assert.match(handler, /return res\.status\(403\)\.end\(\)/)
