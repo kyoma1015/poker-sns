@@ -66,3 +66,25 @@ revoke all on function public.video_qa_reconcile_fenced(uuid,text,uuid)
  from public,anon,authenticated;
 grant execute on function public.video_qa_reconcile_fenced(uuid,text,uuid)
  to service_role;
+
+-- Metadata lookup for the trusted server; Storage schema stays unexposed.
+create or replace function public.video_qa_storage_generation(
+ p_owner uuid,p_path text
+) returns uuid language plpgsql security definer
+set search_path='' as $$
+declare v_generation uuid;
+begin
+ if auth.role() is distinct from 'service_role' and current_user <> 'postgres' then
+  raise exception 'trusted role required';
+ end if;
+ if split_part(p_path,'/',1) <> p_owner::text then
+  raise exception 'invalid owner path';
+ end if;
+ select s.id into v_generation from storage.objects s
+ where s.bucket_id='post-videos' and s.name=p_path and s.owner_id=p_owner::text;
+ return v_generation;
+end $$;
+revoke all on function public.video_qa_storage_generation(uuid,text)
+ from public,anon,authenticated;
+grant execute on function public.video_qa_storage_generation(uuid,text)
+ to service_role;
