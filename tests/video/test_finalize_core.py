@@ -65,5 +65,17 @@ class FinalizeCoreTests(unittest.TestCase):
                 create_post=self.create, delete_staged_object=self.cleanup)
         self.assertEqual(self.calls, [])
 
+
+    def test_reject_truthy_nonboolean_ownership_proof(self):
+        for unsafe_proof in ('yes', 1, ['owned'], {'owned': True}):
+            with self.subTest(unsafe_proof=unsafe_proof):
+                self.calls.clear()
+                with self.assertRaises(PermissionError):
+                    finalize_video(self.request,
+                        verify_owner=lambda u, p, value=unsafe_proof: value,
+                        create_post=self.create,
+                        delete_staged_object=self.cleanup)
+                self.assertEqual(self.calls, [])
+
 if __name__ == '__main__':
     unittest.main()
