@@ -87,7 +87,21 @@ def main():
                          deny_storage, deny_storage)
         assert result == "retry", (name, result)
         assert not storage_calls, (name, storage_calls)
-        print("PASS: real isolated PostgREST cleanup queue rejects " + name + " without Storage access")
+        # Confirm the real queue acknowledged this exact job as a failed
+        # attempt, with durable retry metadata and no completed deletion.
+        job_id = rows[0]["id"]
+        status_request = Request(
+            "http://127.0.0.1:56321/rest/v1/video_cleanup_queue?id=eq." + str(job_id)
+            + "&select=id,attempts,last_error,completed_at,lease_owner,lease_until",
+            headers={"apikey": service, "Authorization": "Bearer " + service})
+        with urlopen(status_request, timeout=10) as response:
+            persisted = json.load(response)
+        assert len(persisted) == 1, (name, persisted)
+        saved = persisted[0]
+        assert saved["id"] == job_id and saved["attempts"] == 1, (name, saved)
+        assert saved["completed_at"] is None and saved["last_error"], (name, saved)
+        assert saved["lease_owner"] is None and saved["lease_until"] is None, (name, saved)
+        print("PASS: real isolated PostgREST cleanup queue rejects " + name + " without Storage access; retry persisted")
 
 if __name__ == "__main__":
     main()
