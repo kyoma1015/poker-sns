@@ -91,7 +91,10 @@ def main():
                     return response.read()
             assert all(result == media for result in pool.map(fetch_once, range(16)))
         print("PASS: 16 concurrent authorized HTTP media reads with no-store")
-        for headers in ({}, {"Authorization": "Bearer invalid"}):
+        for headers in ({}, {"Authorization": "Bearer invalid"},
+                        {"Authorization": "Bearer "},
+                        {"Authorization": "Bearer  "},
+                        {"Authorization": "Bearer " + viewer_token + " "}):
             try:
                 urlopen(Request(url, headers=headers), timeout=10)
             except HTTPError as exc:
