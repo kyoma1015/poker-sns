@@ -36,7 +36,7 @@ class BoundaryTests(unittest.TestCase):
 
     def test_noncanonical_verified_user_rejected_before_storage(self):
         from dataclasses import replace
-        for bad_user in (USER.upper(), USER.replace("-", "")):
+        for bad_user in ("A0000000-0000-0000-0000-000000000001", USER.replace("-", "")):
             with self.subTest(bad_user=bad_user):
                 self.calls.clear()
                 adapters = replace(self.adapters, authenticate_token=lambda token, value=bad_user: value)
