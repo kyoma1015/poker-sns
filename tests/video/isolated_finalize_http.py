@@ -24,6 +24,9 @@ def make_handler(anon_key: str, service_key: str):
                     not authorization[7:] or authorization[7:].strip() != authorization[7:]):
                 self.send_error(401)
                 return
+            if self.headers.get("Transfer-Encoding") or self.headers.get_all("Content-Length", []) and len(self.headers.get_all("Content-Length", [])) != 1:
+                self.send_error(400)
+                return
             if self.headers.get("Content-Type", "").lower() != "application/json":
                 self.send_error(415)
                 return
