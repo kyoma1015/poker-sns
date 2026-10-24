@@ -127,3 +127,12 @@ test('read-only preflight cannot publish or delete objects', () => {
   }
   assert.match(api, /VIDEO_SERVER_ENABLED = false/)
 })
+
+test('review-only immutable Storage policy requires full UUID and no delete grants', () => {
+  const candidate = read('../sql/post_short_videos_immutable_review_only.sql')
+  assert.match(candidate, /\[0-9a-f\]\{8\}-\[0-9a-f\]\{4\}-\[0-9a-f\]\{4\}-\[0-9a-f\]\{4\}-\[0-9a-f\]\{12\}/)
+  assert.match(candidate, /No orphan cleanup without proven atomic conditional delete/)
+  assert.match(candidate, /ABA replacement/)
+  assert.doesNotMatch(candidate, /create policy[^\n]*delete/i)
+  assert.doesNotMatch(candidate, /create policy[^\n]*update/i)
+})
