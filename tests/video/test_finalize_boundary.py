@@ -58,5 +58,16 @@ class BoundaryTests(unittest.TestCase):
         self.assertNotIn("delete", self.calls)
         self.assertIn("temp-cleanup", self.calls)
 
+
+    def test_truthy_nonboolean_owner_proof_rejected_before_download(self):
+        from dataclasses import replace
+        for proof in ("yes", 1, ["owned"], {"owned": True}):
+            with self.subTest(proof=proof):
+                self.calls.clear()
+                adapters = replace(self.adapters, verify_owner=lambda user, path, value=proof: value)
+                with self.assertRaises(PermissionError):
+                    finalize_authenticated("Bearer verified", self.body, adapters)
+                self.assertEqual(self.calls, [])
+
 if __name__ == "__main__":
     unittest.main()
