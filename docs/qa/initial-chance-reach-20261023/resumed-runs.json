@@ -1,0 +1,20 @@
+[
+  {
+    "variant": "g12_next",
+    "exit": 1,
+    "tests": 10,
+    "module_sha256": "ceb1bbf7c42d0dc0a9f5675e42ae29f6da2a1c597cefd1df9e80192d23e7446f"
+  },
+  {
+    "variant": "g12_p1_cache",
+    "exit": 1,
+    "tests": 10,
+    "module_sha256": "9f80b5a73a264f06ca00cf60d56db2c661bc22bf1ac09713c8033e13e7fff8d1"
+  },
+  {
+    "variant": "g12_p1_packed",
+    "exit": 1,
+    "tests": 10,
+    "module_sha256": "db73edc93cfdcf9476bf11de14b8c55c569e3371203b20d7a06a9bc81892cae5"
+  }
+]

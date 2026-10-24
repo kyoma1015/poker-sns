@@ -72,3 +72,13 @@ known river and all44 river chance outcomes. It reuses the exact PR103 hand169
 blob and33 original acceptance tests; these are not newly implemented fixes.
 See docs/workers/GTO_NATIVE_HAND169_BRIDGE_20261023.md. Complete coverage, authentic
 reach mass, original G9/G11 and full poker convergence remain unproved.
+
+## Initial chance marginal — resumed 2026-10-24
+Preserved interruption input cca4c0e and uncommitted module resumed. New source
+proves initial uniform-card own ordered-hand probability1/2652 for2..9 players,
+only exact first preflop actor/no history/fixture/prefix, with native/context hash
+evidence. Next/Cache/Packed10cases each pass with complete verified local modules;
+checkpoint/RNG/policy equality and1326/169 coverage included. Wrong incomplete
+local artifact path failure is retained, not a source fix. See
+GTO_INITIAL_CHANCE_REACH_20261024.md. General action reach, native EV, G9/G11 and
+poker convergence remain unproved; no state/controller/scheduler adoption.
