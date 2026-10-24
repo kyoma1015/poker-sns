@@ -95,3 +95,11 @@ test('poll composer and vote card lock synchronously against duplicate submissio
   assert.match(card, /finally \{ submitting\.current = false; setBusy\(false\) \}/)
   assert.match(card, /finally\{submitting\.current=false;setBusy\(false\)\}/)
 })
+
+test('accepted vote cannot be resubmitted when refresh fails', () => {
+  const card = readFileSync(new URL('../src/TimelineInteractive.tsx', import.meta.url), 'utf8')
+  assert.match(card, /const voteAccepted = useRef\(false\)/)
+  assert.match(card, /if\(submitting\.current\|\|voteAccepted\.current\|\|mine\|\|closed\|\|choice===null\) return/)
+  assert.match(card, /if\(failure\) throw failure\s+voteAccepted\.current=true\s+await onUpdated\(\)/)
+  assert.match(card, /disabled=\{choice===null\|\|busy\|\|voteAccepted\.current\}/)
+})
