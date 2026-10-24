@@ -45,7 +45,10 @@ test('video cleanup validates owner path but fails closed without atomic delete'
   assert.match(deleteHandler, /\.from\('posts'\)/)
   assert.match(deleteHandler, /removePostVideo\(user\.id, target\.video_path\)/)
 })
-test('end-to-end publishing and server duration enforcement are not claimed', () => {
-  assert.doesNotMatch(timeline, /await uploadPostVideo\(/)
+test('client upload and finalize remain behind disabled server gate', () => {
+  assert.match(timeline, /if \(!VIDEO_SERVER_ENABLED\)/)
+  assert.match(timeline, /await uploadPostVideo\(user\.id, videoFile\)/)
+  assert.match(timeline, /await finalizeUploadedVideo\(path, content\.trim\(\)\)/)
+  assert.match(api, /VIDEO_SERVER_ENABLED = false/)
   assert.match(sql, /server-side (?:duration|30s)/i)
 })
