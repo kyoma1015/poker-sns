@@ -54,12 +54,37 @@ export function createIsolatedSupabaseVideoAdapters(
       ownerPath(ownerId, path)
       if (await authenticate(accessToken) !== ownerId) throw new Error('unauthorized owner')
       const generation = await metadata(ownerId, path)
-      const { data, error } = await viewer.storage.from('post-videos').download(path)
-      if (error || !data || data.size <= 0 || data.size > MAX_VIDEO_BYTES) {
-        throw new Error('private Storage read unavailable or size invalid')
+      // Bounded HTTP stream: SDK .download() materializes a Blob before a
+      // size check, so it cannot enforce a strict 20 MiB receive cap.
+      const response = await fetch(url.replace(/\\/$/, '') +
+        '/storage/v1/object/authenticated/post-videos/' + path, {
+        headers: { apikey: anonKey, Authorization: 'Bearer ' + accessToken },
+        signal: AbortSignal.timeout(30000),
+      })
+      if (!response.ok || !response.body) throw new Error('private Storage read denied')
+      const declared = response.headers.get('content-length')
+      if (declared && (!/^\\d+$/.test(declared) || Number(declared) > MAX_VIDEO_BYTES)) {
+        await response.body.cancel()
+        throw new Error('media exceeds 20 MiB')
       }
-      const bytes = Buffer.from(await data.arrayBuffer())
-      if (bytes.length !== data.size || bytes.length > MAX_VIDEO_BYTES) throw new Error('invalid media bytes')
+      const chunks: Buffer[] = []
+      let received = 0
+      const reader = response.body.getReader()
+      try {
+        while (true) {
+          const { done, value } = await reader.read()
+          if (done) break
+          received += value.byteLength
+          if (received > MAX_VIDEO_BYTES) throw new Error('media exceeds 20 MiB')
+          chunks.push(Buffer.from(value))
+        }
+      } finally {
+        await reader.cancel().catch(() => undefined)
+      }
+      if (received === 0 || (declared && received !== Number(declared))) {
+        throw new Error('incomplete Storage object')
+      }
+      const bytes = Buffer.concat(chunks, received)
       if (generation !== await metadata(ownerId, path)) throw new Error('Storage generation changed during read')
       return { ownerId, objectPath: path, generation, size: bytes.length, bytes }
     },
