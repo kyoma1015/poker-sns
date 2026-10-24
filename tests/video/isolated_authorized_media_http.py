@@ -38,7 +38,9 @@ def make_handler(anon_key: str, service_key: str):
             self.send_header("Vary", "Authorization")
             self.send_header("X-Content-Type-Options", "nosniff")
             self.end_headers()
-            # Authorization is checked before headers. Once bytes are sent,\n            # in-flight revocation cannot be guaranteed.\n            self.wfile.write(data)
+            # Authorization is checked before headers. Once bytes are sent,
+            # in-flight revocation cannot be guaranteed.
+            self.wfile.write(data)
         def log_message(self, *args):
             pass
     return Handler
