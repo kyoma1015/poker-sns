@@ -59,5 +59,37 @@ class HttpResponseBodyRegression(unittest.TestCase):
             server.shutdown()
             server.server_close()
 
+
+    def test_actual_http_webm_media_type(self):
+        server = make_local_server("anon", "service")
+        worker = threading.Thread(target=server.serve_forever, daemon=True)
+        worker.start()
+        try:
+            webm = b"\\x1aE\\xdf\\xa3" + b"webm-payload"
+            with patch("tests.video.isolated_authorized_media_http.fetch_visible_video", return_value=webm):
+                req = Request("http://127.0.0.1:%d/video?post_id=post" % server.server_port,
+                              headers={"Authorization": "Bearer jwt"})
+                with urlopen(req, timeout=5) as response:
+                    self.assertEqual(response.status, 200)
+                    self.assertEqual(response.headers["Content-Type"], "video/webm")
+                    self.assertEqual(response.read(), webm)
+        finally:
+            server.shutdown()
+            server.server_close()
+
+    def test_actual_http_requires_bearer(self):
+        server = make_local_server("anon", "service")
+        worker = threading.Thread(target=server.serve_forever, daemon=True)
+        worker.start()
+        try:
+            with patch("tests.video.isolated_authorized_media_http.fetch_visible_video") as fetch:
+                with self.assertRaises(HTTPError) as raised:
+                    urlopen("http://127.0.0.1:%d/video?post_id=post" % server.server_port, timeout=5)
+                self.assertEqual(raised.exception.code, 401)
+                fetch.assert_not_called()
+        finally:
+            server.shutdown()
+            server.server_close()
+
 if __name__ == "__main__":
     unittest.main()
