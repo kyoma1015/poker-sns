@@ -18,7 +18,9 @@ def make_handler(anon_key: str, service_key: str):
             params = parse_qs(parsed.query, keep_blank_values=True)
             post_ids = params.get("post_id", [])
             authorization = self.headers.get("Authorization", "")
-            if set(params) != {"post_id"} or len(post_ids) != 1 or not authorization.startswith("Bearer "):
+            if (set(params) != {"post_id"} or len(post_ids) != 1
+                    or not post_ids[0] or not authorization.startswith("Bearer ")
+                    or not authorization[7:] or authorization[7:].strip() != authorization[7:]):
                 self.send_error(401)
                 return
             try:
