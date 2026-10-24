@@ -3,7 +3,9 @@ import { supabase } from './supabase'
 /** Candidate client/server contract. Not enabled until a trusted endpoint is reviewed. */
 export const VIDEO_FINALIZE_ROUTE = '/internal/video/finalize'
 export const VIDEO_MEDIA_ROUTE = '/internal/video/media'
-export const VIDEO_SERVER_ENABLED = false as boolean
+// Build-time feature gate: keep disabled until production DB, runtime and API smoke QA pass.
+// Never infer readiness from the presence of Supabase credentials.
+export const VIDEO_SERVER_ENABLED = import.meta.env.VITE_VIDEO_SERVER_ENABLED === 'true'
 
 async function authHeader(): Promise<string> {
   const { data: { session }, error } = await supabase.auth.getSession()
