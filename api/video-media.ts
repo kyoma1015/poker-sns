@@ -34,9 +34,11 @@ return async function handler(req: VercelRequest, res: VercelResponse) {
     if (authError || !identity.user || !UUID.test(identity.user.id)) return res.status(401).end()
     const visible = async () => {
       const { data, error } = await viewer.from('posts')
-        .select('user_id,video_path,is_public').eq('id', rawId).maybeSingle()
+        .select('user_id,video_path').eq('id', rawId).maybeSingle()
       if (error) throw error
-      if (!data || (data.user_id !== identity.user!.id && data.is_public !== true)) return null
+      // Existing posts SELECT RLS is the visibility authority. Do not require
+      // is_public: that column does not exist in the production posts schema.
+      if (!data) return null
       const match = typeof data.video_path === 'string' ? VIDEO_PATH.exec(data.video_path) : null
       if (!match || match[1] !== data.user_id) return null
       return data.video_path as string
