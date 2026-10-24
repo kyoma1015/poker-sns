@@ -29,6 +29,23 @@ class BoundaryTests(unittest.TestCase):
         )
         self.body = {"object_path": PATH, "content": "hello"}
 
+    def test_isolated_composition_rejects_remote_project_before_adapters(self):
+        from tests.video.isolated_composition import build_isolated_adapters
+        for project in ("https://example.supabase.co",
+                        "http://localhost:56321",
+                        "http://127.0.0.1:56321/"):
+            with self.subTest(project=project):
+                with self.assertRaises(PermissionError):
+                    build_isolated_adapters(project_url=project, anon_key="anon",
+                                            service_key="service", access_token="jwt")
+        for missing in ("anon_key", "service_key", "access_token"):
+            with self.subTest(missing=missing):
+                kwargs = dict(project_url="http://127.0.0.1:56321",
+                              anon_key="anon", service_key="service", access_token="jwt")
+                kwargs[missing] = ""
+                with self.assertRaises(PermissionError):
+                    build_isolated_adapters(**kwargs)
+
     def test_no_bearer_rejected_before_storage(self):
         with self.assertRaises(PermissionError):
             finalize_authenticated("", self.body, self.adapters)
