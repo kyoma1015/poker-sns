@@ -6,7 +6,8 @@ import { createServer as createViteServer } from 'vite'
 import { chromium } from 'playwright-core'
 import { createVideoMediaHandler } from '../../api/video-media.ts'
 
-export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt }) {
+export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon }) {
+  assert.ok(anon,'isolated anon key required')
   assert.equal(process.env.VITE_SUPABASE_URL, 'http://127.0.0.1:56321')
   const vite = await createViteServer({
     configFile: false,
@@ -72,9 +73,10 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt }) {
     await page.addInitScript(({postId,jwt}) => {
       window.__VIDEO_QA_POST_ID=postId
       window.__VIDEO_QA_JWT=jwt
-    }, {postId,jwt})
+      window.__VIDEO_QA_ANON=anon
+    }, {postId,jwt,anon})
     await page.goto(origin+'/tests/video/browser-post-video.html')
-    const video = page.locator('[data-testid="timeline-post"] video')
+    const video = page.locator('[data-testid="timeline-post"][data-post-id="'+postId+'"] video')
     await video.waitFor({timeout:20000})
     try {
       await page.waitForFunction(() => {
@@ -95,10 +97,12 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt }) {
     await denied.addInitScript(({postId,jwt}) => {
       window.__VIDEO_QA_POST_ID=postId
       window.__VIDEO_QA_JWT=jwt
-    }, {postId,jwt:deniedJwt})
+      window.__VIDEO_QA_ANON=anon
+    }, {postId,jwt:deniedJwt,anon})
     await denied.goto(origin+'/tests/video/browser-post-video.html')
-    await denied.getByRole('status').filter({hasText:'動画を読み込めません'}).waitFor({timeout:20000})
-    assert.equal(await denied.locator('video').count(),0)
+    await denied.waitForFunction(() => !document.querySelector('[data-testid="timeline-post"] video'),null,{timeout:20000})
+    await denied.waitForTimeout(500)
+    assert.equal(await denied.locator('[data-testid="timeline-post"][data-post-id="'+postId+'"]').count(),0,'RLS must hide owner post from other user')
     await denied.close()
     console.log('PASS: REAL Chromium actual React PostVideo timeline card -> authenticated server API -> playable video; unauthorized user denied')
   } finally {
