@@ -62,12 +62,12 @@ export function isOwnedVideoPath(path: string, userId: string): boolean {
   return /^[0-9a-f-]{36}\/[0-9a-f-]{36}\.(mp4|webm)$/i.test(path) && path.split('/')[0] === userId
 }
 
+/** Fail closed: Storage remove(path) cannot guarantee version-fenced deletion. */
 export async function removePostVideo(userId: string, path: string): Promise<void> {
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   if (authError || !user || user.id !== userId) throw new Error('ログイン情報を確認してください。')
   if (!isOwnedVideoPath(path, user.id)) throw new Error('動画パスの権限を確認できません。')
-  const { error } = await supabase.storage.from(VIDEO_BUCKET).remove([path])
-  if (error) throw error
+  throw new Error('動画ファイルの削除は安全な条件付き削除が実装されるまで停止しています。')
 }
 
 export async function createPostVideoPlaybackUrl(path: string): Promise<string> {
