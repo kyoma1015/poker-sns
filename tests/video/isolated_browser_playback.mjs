@@ -100,8 +100,8 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon }
       window.__VIDEO_QA_ANON=anon
     }, {postId,jwt:deniedJwt,anon})
     await denied.goto(origin+'/tests/video/browser-post-video.html')
-    await denied.waitForFunction(() => !document.querySelector('[data-testid="timeline-post"] video'),null,{timeout:20000})
-    await denied.waitForTimeout(500)
+    await denied.locator('main[data-feed-loaded="true"]').waitFor({timeout:20000})
+    assert.equal(await denied.getByRole('alert').count(),0,'denied feed must complete without query error')
     assert.equal(await denied.locator('[data-testid="timeline-post"][data-post-id="'+postId+'"]').count(),0,'RLS must hide owner post from other user')
     await denied.close()
     console.log('PASS: REAL Chromium actual React PostVideo timeline card -> authenticated server API -> playable video; unauthorized user denied')
