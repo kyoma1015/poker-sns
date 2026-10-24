@@ -54,6 +54,8 @@ class IsolatedVideoEndToEnd(unittest.TestCase):
                 {"object_path": PATH, "content": "test"}, adapters)
             self.assertEqual(result["post_id"], POST)
             self.assertEqual(storage.read(PATH), b"isolated-video")
+            # This only models authorized playback; it is NOT an HTTP media E2E.
+            self.assertEqual(storage.read(PATH), b"isolated-video")
             with self.assertRaises(RuntimeError):
                 adapters.delete_staged(PATH)
 
