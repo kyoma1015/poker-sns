@@ -2,7 +2,7 @@ import { createPollRequest, pollDisplayResult } from './interactiveRequests'
 import { useEffect, useRef, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
-import { validateVideo, uploadPostVideo, removePostVideo } from './videoUpload'
+import { validateVideo, uploadPostVideo } from './videoUpload'
 import { finalizeUploadedVideo, VIDEO_SERVER_ENABLED } from './videoApi'
 import PostVideo from './PostVideo'
 
@@ -1210,14 +1210,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         setMessage(`削除できませんでした：${error.message}`)
         return
       }
-      let videoCleanupFailed = false
-      if (target.video_path) {
-        try { await removePostVideo(user.id, target.video_path) }
-        catch (cleanupError) { console.error('動画削除の後片付けに失敗:', cleanupError); videoCleanupFailed = true }
-      }
       setDeleteTargetId(null)
       setPostMenuId(null)
-      setMessage(videoCleanupFailed ? '投稿は削除しましたが、動画の削除に失敗しました。管理者へ連絡してください。' : '')
+      setMessage('')
       await loadPosts()
     } finally {
       deletingRef.current = false
