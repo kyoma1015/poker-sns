@@ -175,7 +175,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     })
     await composer.getByRole('button',{name:'投稿する'}).click({timeout:20000})
     try {
-      await timelinePage.getByText(uploadText,{exact:true}).waitFor({timeout:45000})
+      await timelinePage.locator('article').filter({hasText:uploadText}).waitFor({timeout:45000})
     } catch(error) {
       throw new Error('Full Timeline upload/finalize/feed failed: '+JSON.stringify({
         body:(await timelinePage.locator('body').allTextContents()).slice(0,2).map(t=>t.slice(0,1200)),
