@@ -19,6 +19,8 @@ def fetch_visible_video(project_url: str, anon_key: str, service_key: str,
     viewer = authenticate_supabase_token(
         viewer_token, project_url=API, anon_key=anon_key,
         allow_local_isolated=True)
+    if str(UUID(post_id)) != post_id:
+        raise PermissionError("noncanonical post UUID")
     query = urlencode({"id": "eq." + str(UUID(post_id)),
                        "select": "user_id,video_path,is_public"})
     req = Request(API + "/rest/v1/posts?" + query,
