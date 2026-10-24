@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
-import type { FinalizeCandidateAdapters, ImmutableStagedSnapshot } from './video-finalize-core.ts'
+import type { FinalizeCandidateAdapters } from './video-finalize-core.ts'
 
 /**
  * Server-only candidate. Supabase Storage metadata / ETag alone cannot
@@ -30,7 +30,7 @@ export function createSupabaseVideoAdapters(
       if (error || !data.user) throw new Error('unauthorized')
       return data.user.id
     },
-    async snapshot(ownerId, objectPath): Promise<ImmutableStagedSnapshot> {
+    async snapshot(ownerId, objectPath) {
       if (!owned(ownerId, objectPath)) throw new Error('owner mismatch')
       // A path prefix is not sufficient authorization for a service-role read.
       // Require an authenticated owner-scoped read and a version-pinned object.
