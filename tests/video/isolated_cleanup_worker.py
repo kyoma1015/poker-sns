@@ -10,6 +10,8 @@ def run_one(base_url: str, service_key: str, inspect_object, delete_if_version):
     worker = str(uuid4())
     if base_url != "http://127.0.0.1:56321" or not service_key:
         raise PermissionError("isolated cleanup requires fixed loopback API and service key")
+    if not callable(inspect_object) or not callable(delete_if_version):
+        raise PermissionError("isolated cleanup requires explicit safe Storage adapters")
     jobs = _rpc(base_url, service_key, "video_qa_claim_cleanup",
                 {"p_worker": worker, "p_lease_seconds": 120})
     if not jobs:
