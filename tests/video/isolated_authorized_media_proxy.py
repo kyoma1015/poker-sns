@@ -47,7 +47,8 @@ def fetch_visible_video(project_url: str, anon_key: str, service_key: str,
     if not separator or extension not in ("mp4", "webm"):
         raise PermissionError("invalid video object")
     try:
-        UUID(stem)
+        if str(UUID(stem)) != stem:
+            raise ValueError("noncanonical video object UUID")
     except (ValueError, TypeError):
         raise PermissionError("invalid video object") from None
     req = Request(API + "/storage/v1/object/authenticated/post-videos/" +
