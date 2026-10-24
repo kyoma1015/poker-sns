@@ -32,9 +32,10 @@ test('playback is a short-lived private signed URL and not a public URL', () => 
   assert.match(timeline, /<PostVideo path=\{post\.video_path\}/)
   assert.match(detail, /<PostVideo path=\{post\.video_path\}/)
 })
-test('video cleanup validates owner path and runs after successful post deletion', () => {
+test('video cleanup validates owner path but fails closed without atomic delete', () => {
   assert.match(upload, /isOwnedVideoPath\(path, user\.id\)/)
-  assert.match(upload, /\.remove\(\[path\]\)/)
+  assert.doesNotMatch(upload, /\.remove\(\[path\]\)/)
+  assert.match(upload, /throw new Error\('動画ファイルの削除は安全な条件付き削除/)
   const deleteStart = timeline.indexOf("const handleDelete = async")
   const deleteEnd = timeline.indexOf("\n  const ", deleteStart + 10)
   const deleteHandler = timeline.slice(deleteStart, deleteStart + 2400)
