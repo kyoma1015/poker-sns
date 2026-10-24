@@ -27,7 +27,7 @@ insert into storage.objects(id,bucket_id,name,owner_id) values
  ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa','post-videos',
  '10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.webm',
  '10000000-0000-0000-0000-000000000001');
-set role service_role;\ndo $service_privileges$\nbegin\n if not has_table_privilege(current_user,'public.posts','SELECT') or not has_table_privilege(current_user,'public.posts','INSERT')\n or has_table_privilege(current_user,'public.posts','DELETE') then\n raise exception 'service_role posts privilege mismatch'; end if;\nend $service_privileges$;\ndo $service_test$
+set role service_role;\ndo $service_privileges$\nbegin\n if not has_table_privilege(current_user,'public.posts','SELECT') or not has_table_privilege(current_user,'public.posts','INSERT')\n or not has_table_privilege(current_user,'storage.objects','SELECT')\n or not has_table_privilege(current_user,'storage.objects','UPDATE') then\n raise exception 'service_role posts privilege mismatch'; end if;\nend $service_privileges$;\ndo $service_test$
 declare
  a uuid; b uuid;
  p text:='10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.webm';
