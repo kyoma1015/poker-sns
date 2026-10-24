@@ -106,3 +106,11 @@ test('accepted vote cannot be resubmitted when refresh fails', () => {
   assert.match(card, /投票は受け付けられましたが、結果を更新できませんでした/ )
   assert.match(card, /disabled=\{choice===null\|\|busy\|\|voteAccepted\.current\}/)
 })
+
+test('accepted vote immediately hides submit action even if refresh has not completed', () => {
+  const card = readFileSync(new URL('../src/TimelineInteractive.tsx', import.meta.url), 'utf8')
+  assert.match(card, /const \[voteConfirmed,setVoteConfirmed\]=useState\(false\)/)
+  assert.match(card, /voteAccepted\.current=true\s+setVoteConfirmed\(true\)/)
+  assert.match(card, /!mine&&!closed&&!voteConfirmed&&<button/)
+  assert.match(card, /\(mine\|\|voteConfirmed\)&&<p/)
+})
