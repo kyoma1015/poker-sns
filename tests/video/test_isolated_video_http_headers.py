@@ -44,6 +44,20 @@ class IsolatedVideoHeaderTests(unittest.TestCase):
                 self.assertEqual(self.raw_request(method, path, headers,
                                                   b"{}" if method == "POST" else b""), 401)
 
+    def test_get_rejects_ambiguous_query_before_media_lookup(self):
+        cases = (
+            "/video?post_id=a&post_id=b",
+            "/video?post_id=a&extra=b",
+            "/video?post_id=",
+            "/video?post_id=a;b=c",
+            "/video?post_id=a#fragment",
+        )
+        for path in cases:
+            with self.subTest(path=path):
+                status = self.raw_request(
+                    "GET", path, [("Authorization", "Bearer invalid")])
+                self.assertIn(status, (400, 401))
+
     def test_ambiguous_post_framing_rejected_before_auth_lookup(self):
         common = [("Authorization", "Bearer invalid"),
                   ("Content-Type", "application/json")]
