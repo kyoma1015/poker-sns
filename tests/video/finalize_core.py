@@ -74,12 +74,15 @@ def finalize_http_request(headers, body, *, authenticate_jwt, download_staged,
     if len(body) > 4096:
         return 413, {"error": "request_too_large"}
     authorization = headers.get("authorization", "")
+    if not isinstance(authorization, str):
+        return 401, {"error": "unauthorized"}
     match = re.fullmatch(r"Bearer ([A-Za-z0-9_.-]+)", authorization)
     if match is None:
         return 401, {"error": "unauthorized"}
     try:
         user_id = str(UUID(authenticate_jwt(match.group(1))))
-    except (ValueError, TypeError, PermissionError):
+    except Exception:
+        # JWT/JWKS verification failures must never reach Storage or DB.
         return 401, {"error": "unauthorized"}
     try:
         payload = json.loads(body)
