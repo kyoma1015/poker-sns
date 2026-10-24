@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-10-24T15:52:06.600263+00:00",
+  "repository": "kyoma1015/poker-sns",
+  "issue": 22,
+  "record_kind": "non-executable development continuation index, not controller jobs",
+  "main_sha": "781f038415503ece850c25a26e72ef67dee9c8a1",
+  "github_snapshot": {
+    "open_prs": 77,
+    "non_pr_open_issues": [
+      22
+    ]
+  },
+  "lanes": [
+    {
+      "lane": "A",
+      "branch": "codex/a-lease-integration-20261023",
+      "source_sha": "d2332d380e320e7ab84360e4f59a1a536b5356d3",
+      "controller_source_sha": "df0e31150ae9f1b68c337eecad9b7bfb36dc3a3f",
+      "tests": {
+        "controller": 225,
+        "javascript": 98,
+        "browser_dm": 9
+      },
+      "ci": "NOT RUN",
+      "evidence": [
+        "docs/qa/journal-checkpoint-20261024/",
+        "docs/qa/autonomous-dm-20261024/"
+      ],
+      "next": "isolated account/realtime generation and server-uncertainty fixtures; external-pin caller guarantees; no runtime adoption"
+    },
+    {
+      "lane": "B",
+      "branch": "codex/b-snapshot-integrity-audit-20261023",
+      "published_sha": "438ece5c78d171b3b07a408ce9c688acbe6d3acc",
+      "tests": {
+        "local": 265
+      },
+      "ci": "NOT RUN",
+      "evidence": [
+        "docs/qa/b-legacy-strict-json-20261024/"
+      ],
+      "next": "authoritative350 snapshot/key/source/translation/review receipt; unknown schema uniqueness must not be invented"
+    },
+    {
+      "lane": "C",
+      "branch": "codex/c-initial-chance-reach-20261023",
+      "published_sha": "8be36e0eda3b8e40bfbc67adc8854de2302680a9",
+      "retained_local_sha": "ec6de1321e901a46f1876c7d0992c3b2f9c5566e",
+      "verified_tree": "f9d5b99eace9eda577bb9623f0990825c801f77a",
+      "publication_note": "one git push auth failure, no retry; existing official GitHub tools created identical-tree non-force fast-forward publication; local original history retained and therefore local/remote commits differ",
+      "tests": {
+        "local_three_variants": 310
+      },
+      "ci": "NOT RUN",
+      "evidence": [
+        "docs/qa/belief-observation-20261024/"
+      ],
+      "next": "verify both heads and identical tree before work; do not force-push divergent local history; new detached workspace based on remote is safe after read-only review; bounded common-infoset action comparison before169EV"
+    },
+    {
+      "lane": "D",
+      "branch": "codex/d-strategy-evidence-20261023",
+      "published_sha": "df91a23ccca19a2047aed50ec22808dc5613f678",
+      "pr": 124,
+      "tests": {
+        "local_and_CI": 110
+      },
+      "ci": {
+        "id": 40107356291,
+        "job": 120911697851,
+        "result": "SUCCESS",
+        "head": "df91a23ccca19a2047aed50ec22808dc5613f678"
+      },
+      "evidence": [
+        "docs/qa/d-presentation-values-20261024/"
+      ],
+      "next": "isolated save/share/PNG lifecycle fixtures without score/classifier/v2 DB changes; semantics blocked pending authoritative labels"
+    }
+  ],
+  "retained_state_readonly": {
+    "at": "2026-10-24T15:29:26.458446+00:00",
+    "total": 45,
+    "counts": {
+      "blocked": 2,
+      "implemented": 43
+    },
+    "full_rows_digest": "1c8a7b5ce1da677398154490f6f4c74545efd11ec64a8ec69a1db6b2ad002f65",
+    "run_count": 1,
+    "run_limit": 28,
+    "original4": [
+      {
+        "id": "issue22-host-a",
+        "match": true,
+        "status": "implemented"
+      },
+      {
+        "id": "issue22-host-b",
+        "match": true,
+        "status": "implemented"
+      },
+      {
+        "id": "issue22-host-c",
+        "match": true,
+        "status": "implemented"
+      },
+      {
+        "id": "issue22-host-d",
+        "match": true,
+        "status": "implemented"
+      }
+    ],
+    "checkpoint_sha256": "b8afdc9feb93d142f723c41850d5806c0efc5917cafe6cd2324255cdab2555c0"
+  },
+  "runtime": {
+    "independent_startup": "UNKNOWN",
+    "unattended_enabled": false,
+    "current_trigger": "explicit user conversation; not scheduler evidence"
+  },
+  "gates": {
+    "new_pr": false,
+    "manual_ci": false,
+    "main_merge": false,
+    "production": false,
+    "paid_services": false,
+    "host_controller_connection": false,
+    "schedule_changes": false,
+    "poll_publication": "NO-GO"
+  },
+  "resume": [
+    "Read docs/progress/DEVELOPMENT_MASTER_20261024.md and relevant lane evidence",
+    "Recheck fresh GitHub branch/PR/CI once; distinguish source blob/tree equality from commit identity",
+    "Read held SQLite mode=ro and compare45-row digest/original4 hashes/run1-limit28/checkpoint; never mutate or recreate it",
+    "Keep incomplete artifacts and fixed baselines; do not replay completed IDs or old BLOCKED rows",
+    "Select objective independent defects, preserve fixedFAIL, minimal source change, local regression/build/lint, existing-branch publication and updated evidence",
+    "No runtime/scheduler/production activation without separate explicit approval"
+  ],
+  "blocked": [
+    "Official TDA350 provenance and clause reviewer evidence unavailable",
+    "Authoritative36-animal classifier thresholds ties expert labels unavailable",
+    "G9/G11 original ABI/historicalcheckpoint and real-poker convergence unproved",
+    "Formal external journal-store auth/durability/deadlines and host adoption unproved",
+    "Git transport write authentication failed once for C; official GitHub connection remains usable; no credential copying or bypass"
+  ]
+}
