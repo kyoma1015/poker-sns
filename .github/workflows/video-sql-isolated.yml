@@ -40,5 +40,7 @@ jobs:
         run: python3 -m unittest tests.video.test_isolated_storage_conditional_delete -v
       - name: Storage ABA guard tests
         run: python3 -m unittest tests.video.test_isolated_aba_guard -v
+      - name: Orphan recovery quarantine policy tests
+        run: python3 -m unittest tests.video.test_isolated_orphan_recovery_policy -v
       - name: Trusted-server ffprobe duration validation prototype
         run: bash -x tests/video/test_server_validate.sh
