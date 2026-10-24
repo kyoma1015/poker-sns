@@ -50,6 +50,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(403).end()
     }
     const bytes = Buffer.from(await blob.arrayBuffer())
+    if (bytes.byteLength !== blob.size || bytes.byteLength === 0 || bytes.byteLength > MAX_BYTES) {
+      return res.status(503).end()
+    }
     // A second authorization check closes the gap between async byte materialization and response.
     const { data: finalIdentity, error: finalAuthError } = await viewer.auth.getUser(token)
     if (finalAuthError || finalIdentity.user?.id !== identity.user.id || await visible() !== path) {
