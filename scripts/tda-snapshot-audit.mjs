@@ -5,6 +5,7 @@ import {readFileSync} from 'node:fs'
 import {createHash} from 'node:crypto'
 import {pathToFileURL} from 'node:url'
 import {auditQuizAnswerKey} from '../src/tdaQuizAnswerAudit.ts'
+import {parseUnambiguousJSON} from './strict-json.mjs'
 
 const MAX_INPUT_BYTES = 5 * 1024 * 1024
 const defaultIo = {readFile:file=>readFileSync(file),stdout:line=>console.log(line),stderr:line=>console.error(line)}
@@ -12,7 +13,7 @@ const hash = bytes=>createHash('sha256').update(bytes).digest('hex')
 const plain = value=>typeof value==='object'&&value!==null&&!Array.isArray(value)
 const positive = value=>typeof value==='number'&&Number.isSafeInteger(value)&&value>0
 const digest = value=>typeof value==='string'&&/^[a-f0-9]{64}$/.test(value)
-const parse = bytes=>JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes))
+const parse = parseUnambiguousJSON
 class InputFailure extends Error { constructor(code){super(code);this.code=code} }
 
 export function runQuizSnapshotAudit(args,io=defaultIo) {
