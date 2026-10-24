@@ -54,6 +54,32 @@ def main():
                          ["video_qa_claim_cleanup", "video_qa_reconcile", "video_qa_finish_cleanup"]), (name, calls)
         print("PASS: isolated cleanup worker fail-closed " + name)
 
+    # A posted object must be retained even when a cleanup job is queued.
+    # Reconciliation wins over inspection and deletion, including a pinned job.
+    retained_calls = []
+    retained_job = {"id": 98765, "owner_id": owner, "object_path": good_path,
+                    "expected_object_version": "pinned-posted-v1"}
+    def posted_rpc(base, key, fn, payload):
+        retained_calls.append(fn)
+        if fn == "video_qa_claim_cleanup":
+            return [retained_job]
+        if fn == "video_qa_reconcile":
+            return "40000000-0000-0000-0000-000000000001"
+        if fn == "video_qa_finish_cleanup":
+            assert payload["p_success"] is True
+            assert "retain" in payload["p_reason"]
+            return True
+        raise AssertionError("unexpected RPC " + fn)
+    def posted_no_storage(*args):
+        raise AssertionError("posted object must not reach Storage")
+    with patch.object(worker_module, "_rpc", side_effect=posted_rpc):
+        retained = run_one("http://127.0.0.1:56321", service,
+                           posted_no_storage, posted_no_storage)
+    assert retained == "complete", retained
+    assert retained_calls == ["video_qa_claim_cleanup",
+                              "video_qa_reconcile", "video_qa_finish_cleanup"], retained_calls
+    print("PASS: isolated cleanup retains posted video without Storage inspection or deletion")
+
     # Real PostgREST queue E2E: insert malformed jobs in isolated DB and
     # verify the worker retries without invoking either Storage callback.
     from uuid import uuid4
