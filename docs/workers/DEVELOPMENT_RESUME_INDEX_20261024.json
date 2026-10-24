@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-24T15:52:06.600263+00:00",
+  "updated_at": "2026-10-24T15:54:32.007335+00:00",
   "repository": "kyoma1015/poker-sns",
   "issue": 22,
   "record_kind": "non-executable development continuation index, not controller jobs",
@@ -45,10 +45,10 @@
     {
       "lane": "C",
       "branch": "codex/c-initial-chance-reach-20261023",
-      "published_sha": "8be36e0eda3b8e40bfbc67adc8854de2302680a9",
+      "published_sha": "4fd276bb4ed23f1d4ea02ba1b81855ffcf87f932",
       "retained_local_sha": "ec6de1321e901a46f1876c7d0992c3b2f9c5566e",
       "verified_tree": "f9d5b99eace9eda577bb9623f0990825c801f77a",
-      "publication_note": "one git push auth failure, no retry; existing official GitHub tools created identical-tree non-force fast-forward publication; local original history retained and therefore local/remote commits differ",
+      "publication_note": "One child git push auth failure was not repeated. Official GitHub tools saved the identical tested tree as8be36e0. After the root publisher independently succeeded on A, it fetched that public commit, verified identical trees and merged the two C histories without source changes, then normally pushed the resulting fast-forward. Original local commits and API publication are both ancestors; no force/reset/rebase.",
       "tests": {
         "local_three_variants": 310
       },
@@ -56,7 +56,7 @@
       "evidence": [
         "docs/qa/belief-observation-20261024/"
       ],
-      "next": "verify both heads and identical tree before work; do not force-push divergent local history; new detached workspace based on remote is safe after read-only review; bounded common-infoset action comparison before169EV"
+      "next": "Recheck published head and tested tree, then bounded common-infoset action comparison before169EV; complete support and equilibrium remain unproved"
     },
     {
       "lane": "D",
@@ -139,7 +139,8 @@
     "Official TDA350 provenance and clause reviewer evidence unavailable",
     "Authoritative36-animal classifier thresholds ties expert labels unavailable",
     "G9/G11 original ABI/historicalcheckpoint and real-poker convergence unproved",
-    "Formal external journal-store auth/durability/deadlines and host adoption unproved",
-    "Git transport write authentication failed once for C; official GitHub connection remains usable; no credential copying or bypass"
-  ]
+    "Formal external journal-store auth/durability/deadlines and host adoption unproved"
+  ],
+  "last_successful_step": "All four implementations preserved; C publication histories reconciled on identical tested tree; next remote and retained-state final checks",
+  "last_C_publish_issue": "Recovered through existing authorized publishers; no credential copying, connection or permission changes"
 }
