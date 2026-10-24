@@ -842,7 +842,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     </div>
   ) : null
 
-  const canSubmitPost = Boolean(content.trim() || (interactiveMode==='normal' && (selectedResult || selectedDiagnosis || styleSnapshot || imageFiles.length)))
+  const canSubmitPost = Boolean(content.trim() || (interactiveMode==='normal' && (selectedResult || selectedDiagnosis || styleSnapshot || imageFiles.length || videoFile)))
     && (interactiveMode!=='poll'||(pollOptions.every(o=>o.trim()) && new Set(pollOptions.map(o=>o.trim().toLowerCase())).size===pollOptions.length))
 
   const handlePost = async () => {
