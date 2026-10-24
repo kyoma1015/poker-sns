@@ -13,7 +13,7 @@ begin
    (coalesce(qual,'') ilike '%post-videos%' or coalesce(with_check,'') ilike '%post-videos%'))
  then raise exception 'video mutation policy exists'; end if;
 end $$;
--- Service RPC must not be executable by regular authenticated users.
+-- Verify real client roles cannot execute the privileged RPCs.\nset role authenticated;\ndo $client_grants$\nbegin\n if has_function_privilege(current_user, 'public.video_production_publish_fenced(uuid,text,uuid,text,double precision,text)','EXECUTE')\n or has_function_privilege(current_user, 'public.video_production_storage_generation(uuid,text)','EXECUTE')\n or has_function_privilege(current_user, 'public.video_production_reconcile_fenced(uuid,text,uuid)','EXECUTE')\n then raise exception 'authenticated role can execute privileged video RPC'; end if;\nend $client_grants$;\nreset role;\n-- Service RPC must not be executable by regular authenticated users.
 set role video_owner;
 do $$
 begin
@@ -27,8 +27,7 @@ insert into storage.objects(id,bucket_id,name,owner_id) values
  ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa','post-videos',
  '10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.webm',
  '10000000-0000-0000-0000-000000000001');
-set role service_role;
-do $service_test$
+set role service_role;\ndo $service_privileges$\nbegin\n if not has_table_privilege(current_user,'public.posts','SELECT') or not has_table_privilege(current_user,'public.posts','INSERT')\n or has_table_privilege(current_user,'public.posts','DELETE') then\n raise exception 'service_role posts privilege mismatch'; end if;\nend $service_privileges$;\ndo $service_test$
 declare
  a uuid; b uuid;
  p text:='10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.webm';
