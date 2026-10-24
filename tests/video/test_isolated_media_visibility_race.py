@@ -77,5 +77,24 @@ class MediaRaceTests(unittest.TestCase):
             with self.assertRaises(PermissionError):
                 fetch_visible_video(API, "anon", "service", "jwt", POST)
 
+
+    def test_rejects_non_uuid_storage_key_before_media_fetch(self):
+        first = {"user_id": OWNER, "video_path": OWNER + "/../../private.mp4", "is_public": True}
+        with patch("tests.video.isolated_authorized_media_proxy.authenticate_supabase_token", return_value=VIEWER), \
+             patch("tests.video.isolated_authorized_media_proxy.urlopen",
+                   side_effect=[Response(json.dumps([first]).encode())]) as fetch:
+            with self.assertRaises(PermissionError):
+                fetch_visible_video(API, "anon", "service", "jwt", POST)
+            self.assertEqual(fetch.call_count, 1)
+
+    def test_rejects_non_video_storage_extension_before_media_fetch(self):
+        first = {"user_id": OWNER, "video_path": OWNER + "/40000000-0000-0000-0000-000000000004.txt", "is_public": True}
+        with patch("tests.video.isolated_authorized_media_proxy.authenticate_supabase_token", return_value=VIEWER), \
+             patch("tests.video.isolated_authorized_media_proxy.urlopen",
+                   side_effect=[Response(json.dumps([first]).encode())]) as fetch:
+            with self.assertRaises(PermissionError):
+                fetch_visible_video(API, "anon", "service", "jwt", POST)
+            self.assertEqual(fetch.call_count, 1)
+
 if __name__ == "__main__":
     unittest.main()
