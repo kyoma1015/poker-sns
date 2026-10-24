@@ -15,6 +15,11 @@ def make_handler(anon_key: str, service_key: str):
             if parsed.path != "/video":
                 self.send_error(404)
                 return
+            # Reject URL fragments and semicolon query separators rather than
+            # accepting ambiguous representations of a privileged media request.
+            if parsed.fragment or ";" in parsed.query:
+                self.send_error(400)
+                return
             params = parse_qs(parsed.query, keep_blank_values=True)
             post_ids = params.get("post_id", [])
             authorization = self.headers.get("Authorization", "")
