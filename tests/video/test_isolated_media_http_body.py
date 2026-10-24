@@ -4,6 +4,7 @@ Previous source accidentally embedded literal \\n in a comment and commented
 out self.wfile.write(data), yielding HTTP 200 + Content-Length but empty body.
 """
 import inspect
+import textwrap
 import unittest
 from tests.video.isolated_authorized_media_http import make_handler
 
@@ -13,7 +14,7 @@ class HttpResponseBodyRegression(unittest.TestCase):
         self.assertNotIn(r"\\n            self.wfile.write(data)", source)
         self.assertIn("self.wfile.write(data)", source)
         import ast
-        tree = ast.parse(source)
+        tree = ast.parse(textwrap.dedent(source))
         calls = [n for n in ast.walk(tree) if isinstance(n, ast.Call)
                  and isinstance(n.func, ast.Attribute)
                  and n.func.attr == "write"]
