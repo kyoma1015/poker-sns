@@ -25,3 +25,9 @@ create policy "post_videos_immutable_read_own" on storage.objects
 -- Upload client MUST use x-upsert:false. Storage rejects collisions.
 -- Do not permit other permissive UPDATE/DELETE policies on this bucket.
 -- No orphan cleanup without proven atomic conditional delete.
+-- REVIEW GATE: forbid permissive UPDATE/DELETE policies on post-videos;
+-- storage.objects RLS policies are OR-combined, so this policy alone cannot
+-- prove immutability if any other permissive policy allows mutation.
+-- Storage object identity must be fenced by an immutable generation token
+-- during read, verification and transactional publish; a path/hash alone
+-- cannot prove absence of ABA replacement.
