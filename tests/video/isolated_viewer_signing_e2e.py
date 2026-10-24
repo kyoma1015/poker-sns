@@ -95,14 +95,32 @@ def main():
             try:
                 urlopen(Request(url, headers=headers), timeout=10)
             except HTTPError as exc:
-                assert exc.code in (401, 403)
+                try:
+                    assert exc.code in (401, 403)
+                finally:
+                    exc.close()
             else:
                 raise AssertionError("unauthenticated media request accepted")
+        for bad_id in ("not-a-uuid", "00000000-0000-0000-0000-000000000000"):
+            bad_url = "http://127.0.0.1:" + str(http_server.server_port) + "/video?" + urlencode({"post_id": bad_id})
+            try:
+                urlopen(Request(bad_url, headers={"Authorization": "Bearer " + viewer_token}), timeout=10)
+            except HTTPError as exc:
+                try:
+                    assert exc.code == 403
+                finally:
+                    exc.close()
+            else:
+                raise AssertionError("invalid or nonexistent post served")
+        print("PASS: isolated HTTP proxy rejects invalid and missing post IDs")
         set_visibility(False)
         try:
             urlopen(media_request(viewer_token), timeout=10)
         except HTTPError as exc:
-            assert exc.code == 403
+            try:
+                assert exc.code == 403
+            finally:
+                exc.close()
         else:
             raise AssertionError("HTTP endpoint served revoked viewer")
         with urlopen(media_request(owner_token), timeout=10) as response:
