@@ -11,7 +11,7 @@ const MAX_BODY_BYTES = 12 * 1024
  * immutable Storage identity, ffprobe, atomic DB commit and cleanup exist.
  * This handler performs no Storage or database mutations.
  */
-export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters) {
+export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters, options: { isolatedLocalOnly?: boolean } = {}) {
   return async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Cache-Control', 'no-store, private')
   res.setHeader('Vary', 'Authorization')
@@ -37,7 +37,8 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters)
   if (!match) return res.status(400).end()
   const url = process.env.VITE_SUPABASE_URL
   const anon = process.env.VITE_SUPABASE_ANON_KEY
-  if (!url || !anon || !/^https:\/\/[^/]+\/?$/.test(url)) return res.status(503).end()
+  if (!url || !anon || !(/^https:\/\/[^/]+\/?$/.test(url) ||
+    (options.isolatedLocalOnly === true && url === 'http://127.0.0.1:56321'))) return res.status(503).end()
   try {
     const viewer = createClient(url, anon, {
       global: { headers: { Authorization: authorization } },
