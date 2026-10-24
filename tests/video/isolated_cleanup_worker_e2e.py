@@ -16,13 +16,8 @@ def main():
     service = env.get("SERVICE_ROLE_KEY")
     if not service:
         raise RuntimeError("isolated service key missing")
-    def forbidden_delete(*args):
-        raise AssertionError("referenced video must never be deleted")
-    result = run_one("http://127.0.0.1:56321", service,
-                     lambda *args: "unknown", forbidden_delete)
-    if result != "complete":
-        raise AssertionError("referenced queued object not acknowledged")
-    print("PASS: isolated durable cleanup worker retained posted object")
+    # The SQL contract QA rolls back its seeded posted queue row. Do not
+    # assume it persists into this independently executed HTTP test.
     from unittest.mock import patch
     from tests.video import isolated_cleanup_worker as worker_module
     owner = "10000000-0000-0000-0000-000000000001"
@@ -61,7 +56,6 @@ def main():
     # Real PostgREST queue E2E: insert malformed jobs in isolated DB and
     # verify the worker retries without invoking either Storage callback.
     from uuid import uuid4
-    from tests.video.isolated_db_adapter import _rpc
     from urllib.request import Request, urlopen
     import json
     for name, path, version in cases:
@@ -75,8 +69,7 @@ def main():
         with urlopen(request, timeout=10) as response:
             rows = json.load(response)
         assert len(rows) == 1, (name, rows)
-        # Only the new queue item should be immediately claimable; earlier
-        # failed jobs have backoff and posted jobs were acknowledged.
+        # Earlier failed jobs have backoff; this new row is claimable.
         result = run_one("http://127.0.0.1:56321", service,
                          no_storage, no_storage)
         assert result == "retry", (name, result)
