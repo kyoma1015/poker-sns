@@ -55,6 +55,7 @@ class HttpResponseBodyRegression(unittest.TestCase):
                 with self.assertRaises(HTTPError) as raised:
                     urlopen(req, timeout=5)
                 self.assertEqual(raised.exception.code, 403)
+                raised.exception.close()
         finally:
             server.shutdown()
             server.server_close()
@@ -86,6 +87,7 @@ class HttpResponseBodyRegression(unittest.TestCase):
                 with self.assertRaises(HTTPError) as raised:
                     urlopen("http://127.0.0.1:%d/video?post_id=post" % server.server_port, timeout=5)
                 self.assertEqual(raised.exception.code, 401)
+                raised.exception.close()
                 fetch.assert_not_called()
         finally:
             server.shutdown()
