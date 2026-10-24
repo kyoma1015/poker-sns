@@ -8,6 +8,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { createIsolatedSupabaseVideoAdapters } from '../../api/video-isolated-supabase-adapters.ts'
 import { finalizeImmutableCandidate } from '../../api/video-finalize-core.ts'
+import { createVideoMediaHandler } from '../../api/video-media.ts'
 
 const env=Object.fromEntries(readFileSync(process.env.VIDEO_QA_ENV,'utf8').split('\n')
   .filter(x=>x.includes('=')).map(x=>{const i=x.indexOf('=');return [x.slice(0,i),x.slice(i+1).replace(/^["']|["']$/g,'')]}))
@@ -92,4 +93,30 @@ assert.equal(visible.id,first)
 const {data:hidden,error:hiddenError}=await other.from('posts').select('id').eq('id',first)
 assert.ifError(hiddenError)
 assert.equal(hidden.length,0,'other user must not see private post')
+// Execute the actual server media handler with a Vercel-compatible response
+// recorder, backed by the real local Supabase Auth, PostgREST and Storage.
+process.env.VITE_SUPABASE_URL=url
+process.env.VITE_SUPABASE_ANON_KEY=anon
+process.env.SUPABASE_SERVICE_ROLE_KEY=service
+const mediaHandler=createVideoMediaHandler({isolatedLocalOnly:true})
+async function invokeMedia(token) {
+ const headers={}
+ const res={
+   statusCode:200, body:null,
+   setHeader(name,value){headers[name.toLowerCase()]=value;return this},
+   status(code){this.statusCode=code;return this},
+   send(data){this.body=data;return this},
+   end(){return this},
+ }
+ await mediaHandler({method:'GET',headers:{authorization:'Bearer '+token},
+   query:{post_id:first}},res)
+ return {status:res.statusCode,body:res.body,headers}
+}
+const ownerPlayback=await invokeMedia(jwt)
+assert.equal(ownerPlayback.status,200,'authorized server media handler')
+assert.deepEqual(ownerPlayback.body,bytes)
+assert.equal(ownerPlayback.headers['content-type'],'video/mp4')
+const otherJwt=(await other.auth.getSession()).data.session.access_token
+const deniedPlayback=await invokeMedia(otherJwt)
+assert.equal(deniedPlayback.status,404,'unauthorized server media handler')
 console.log('PASS: REAL isolated Supabase Auth JWT -> Storage HTTP immutable read -> ffprobe -> fenced PostgREST RPC -> idempotent timeline SELECT -> authorized video bytes; other user denied')
