@@ -158,6 +158,6 @@ const {data:otherFeed,error:otherFeedError}=await other.from('posts').select('*'
   .order('created_at',{ascending:false})
 assert.ifError(otherFeedError)
 assert.ok(!otherFeed.some(row=>row.id===first),'RLS must exclude video from other user feed')
-await verifyRealBrowserPlayback({postId:feedPost.id,jwt,deniedJwt:otherJwt})
+await verifyRealBrowserPlayback({postId:feedPost.id,jwt,deniedJwt:otherJwt,anon})
 console.log('PASS: REAL PostgREST Timeline posts feed includes video for owner and excludes it for other user')
 console.log('PASS: REAL isolated Supabase Auth JWT -> Storage HTTP immutable read -> ffprobe -> fenced PostgREST RPC -> idempotent timeline SELECT -> authorized video bytes; other user denied')
