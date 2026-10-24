@@ -1,21 +1,25 @@
 import { useEffect, useState } from 'react'
-import { createPostVideoPlaybackUrl } from './videoUpload'
+import { loadAuthorizedVideo, VIDEO_SERVER_ENABLED } from './videoApi'
 
-/** A private video is loaded only after Storage RLS approves a short-lived signed URL. */
-export default function PostVideo({ path }: { path: string }) {
+/** Playback is gated until the server verifies JWT and post visibility per request. */
+export default function PostVideo({ postId }: { postId: string }) {
   const [url, setUrl] = useState('')
   const [error, setError] = useState('')
   useEffect(() => {
+    if (!VIDEO_SERVER_ENABLED) { setError('動画再生は安全なサーバー接続の準備中です。'); return }
     let active = true
+    let objectUrl = ''
     setUrl('')
     setError('')
-    void createPostVideoPlaybackUrl(path).then(value => {
+    void loadAuthorizedVideo(postId).then(value => {
+      objectUrl = value
       if (active) setUrl(value)
+      else URL.revokeObjectURL(value)
     }).catch(() => {
-      if (active) setError('動画を読み込めません。権限または有効期限を確認してください。')
+      if (active) setError('動画を読み込めません。権限を確認してください。')
     })
-    return () => { active = false }
-  }, [path])
+    return () => { active = false; if (objectUrl) URL.revokeObjectURL(objectUrl) }
+  }, [postId])
   if (error) return <p role="status">{error}</p>
   if (!url) return <p role="status">動画を読み込み中...</p>
   return <video controls playsInline preload="metadata" src={url}
