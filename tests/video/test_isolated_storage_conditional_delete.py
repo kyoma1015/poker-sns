@@ -54,7 +54,7 @@ class AtomicDeletionTests(unittest.TestCase):
             delete_if_exact_version(owner, other + "/" + stem + ".mp4", "v1")
 
     def test_noncanonical_owner_rejected(self):
-        owner = "10000000-0000-0000-0000-000000000001"
+        owner = "abcdef00-0000-0000-0000-000000000001"
         stem = "40000000-0000-0000-0000-000000000004"
         with self.assertRaises(PermissionError):
             delete_if_exact_version(owner.upper(),
