@@ -33,7 +33,7 @@ test('real server ffprobe accepts H264 and rejects invalid video', { skip: !hasB
   }
 })
 
-test('ffprobe missing input is rejected without executing a shell', async () => {
+test('invalid ffprobe inputs are rejected without executing a shell', async () => {
   await assert.rejects(probeVideoBytes(Buffer.alloc(0), 'mp4'), /size/)
   await assert.rejects(probeVideoBytes(Buffer.from('invalid'), 'avi'), /extension/)
 })
