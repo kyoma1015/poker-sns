@@ -72,3 +72,9 @@ Next safe component: exact finite infoset-action value comparison sharing the
 same public observation across hero actions; preserve explicit support provenance,
 hero consistency, zero-evidence null and aggregate resource bounds. Independent
 small river oracle must precede any aggregation/export claim.
+
+Policy callback contract: callbacks must be deterministic and pure for the same
+native information/state. evaluate_observation performs a preliminary board
+validation trace and then the finite belief evaluation, so nodes may be queried
+more than once. State mutation is refused, and differing queried hero policies
+are refused; arbitrary external callback side effects are not sandboxed here.
