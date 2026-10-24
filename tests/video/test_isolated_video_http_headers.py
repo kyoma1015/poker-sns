@@ -58,6 +58,16 @@ class IsolatedVideoHeaderTests(unittest.TestCase):
                     "GET", path, [("Authorization", "Bearer invalid")])
                 self.assertIn(status, (400, 401))
 
+    def test_malformed_json_rejected_before_auth_adapters(self):
+        headers = [("Authorization", "Bearer invalid"),
+                   ("Content-Type", "application/json")]
+        for body in (b"{", b"not-json", b'{"object_path":'):
+            with self.subTest(body=body):
+                self.assertEqual(
+                    self.raw_request("POST", "/video/finalize",
+                                     headers + [("Content-Length", str(len(body)))],
+                                     body), 400)
+
     def test_ambiguous_post_framing_rejected_before_auth_lookup(self):
         common = [("Authorization", "Bearer invalid"),
                   ("Content-Type", "application/json")]
