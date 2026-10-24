@@ -57,7 +57,6 @@ grant usage on schema public to video_owner;
 -- Model production's service_role with BYPASSRLS, but only in this disposable cluster.
 alter role service_role bypassrls;
 grant usage on schema public,storage to service_role;
-grant select,insert on public.posts to service_role;
 grant select,update on storage.objects to service_role;
 SQL
 docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 <<'SQL'
