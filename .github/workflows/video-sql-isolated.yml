@@ -46,5 +46,7 @@ jobs:
         run: python3 -m unittest tests.video.test_isolated_storage_replacement_guard -v
       - name: Storage production policy release blocker test
         run: python3 -m unittest tests.video.test_storage_policy_release_blocker -v
+      - name: Video media visibility race tests
+        run: python3 -m unittest tests.video.test_isolated_media_visibility_race -v
       - name: Trusted-server ffprobe duration validation prototype
         run: bash -x tests/video/test_server_validate.sh
