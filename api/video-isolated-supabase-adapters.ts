@@ -1,3 +1,4 @@
+import { DefinitivePublishRejection } from './video-finalize-core.ts'
 import { createClient } from '@supabase/supabase-js'
 import type { FinalizeCandidateAdapters, ImmutableStagedSnapshot } from './video-finalize-core.ts'
 import { MAX_VIDEO_BYTES } from './video-ffprobe.ts'
@@ -99,6 +100,9 @@ export function createIsolatedSupabaseVideoAdapters(
         p_owner: ownerId, p_path: path, p_generation: generation,
         p_sha256: sha256, p_duration: duration, p_content: content,
       })
+      if (error?.code === 'P0001' && /conflicting prior video publication|Storage generation mismatch|invalid fenced publication/.test(error.message)) {
+        throw new DefinitivePublishRejection('fenced publication rejected')
+      }
       if (error || typeof data !== 'string') throw new Error('fenced publish outcome unknown')
       return data
     },
