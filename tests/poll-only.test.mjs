@@ -114,3 +114,10 @@ test('accepted vote immediately hides submit action even if refresh has not comp
   assert.match(card, /!mine&&!closed&&!voteConfirmed&&<button/)
   assert.match(card, /\(mine\|\|voteConfirmed\)&&<p/)
 })
+
+test('confirmed vote locks option selection while preserving named voter list', () => {
+  const card = readFileSync(new URL('../src/TimelineInteractive.tsx', import.meta.url), 'utf8')
+  assert.match(card, /disabled=\{busy\|\|\(item\.is_anonymous&&\(mine\|\|voteConfirmed\|\|closed\)\)\}/)
+  assert.match(card, /!item\.is_anonymous&&\(mine\|\|voteConfirmed\|\|closed\)/)
+  assert.match(card, /!mine&&!voteConfirmed&&!closed/)
+})
