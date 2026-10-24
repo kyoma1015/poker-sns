@@ -17,7 +17,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') return res.status(405).end()
   const authorization = req.headers.authorization
   if (typeof authorization !== 'string' || !/^Bearer [A-Za-z0-9_.-]+$/.test(authorization)) return res.status(401).end()
-  const size = Number(req.headers['content-length'])
+  const rawLength = req.headers['content-length']
+  if (typeof rawLength !== 'string' || !/^[1-9][0-9]{0,4}$/.test(rawLength)) return res.status(413).end()
+  const size = Number(rawLength)
   if (!Number.isSafeInteger(size) || size < 1 || size > MAX_BODY_BYTES) return res.status(413).end()
   if (!/^application\/json(?:;\s*charset=utf-8)?$/i.test(String(req.headers['content-type'] || ''))) return res.status(415).end()
   const body: unknown = req.body
