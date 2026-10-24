@@ -24,5 +24,6 @@ done
 docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 < tests/video/fixture.sql
 docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 < sql/post_short_videos_candidate.sql
 docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 < tests/video/assertions.sql
-echo 'PASS: isolated PostgreSQL schema, owner-only RLS and owner delete'
+docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 < tests/video/isolated_insert_once_storage.sql
+echo 'PASS: isolated PostgreSQL schema, owner-only RLS, legacy delete and insert-once mutation denial'
 echo 'NOT TESTED: Supabase Storage API, signed URLs, media duration, upload cleanup'
