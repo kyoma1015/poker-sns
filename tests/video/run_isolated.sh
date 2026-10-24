@@ -43,8 +43,6 @@ echo 'NOT TESTED: Supabase Storage API, signed URLs, media duration, upload clea
 docker exec "$name" createdb -U postgres video_production_candidate
 docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 < tests/video/fixture.sql
 docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 <<'SQL'
-create role service_role nologin;
-create role anon nologin;
 alter table public.posts add column content text not null default '';
 alter table public.posts add column post_type text not null default 'normal';
 alter table public.posts alter column id set default gen_random_uuid();
