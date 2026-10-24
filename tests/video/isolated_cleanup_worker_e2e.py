@@ -58,6 +58,15 @@ def main():
     from uuid import uuid4
     from urllib.request import Request, urlopen
     import json
+    # This local-stack test runs after finalize E2E, which can leave queued
+    # posted-object jobs. Clear only the ephemeral isolated QA queue so that
+    # each worker claim is deterministically the job inserted below.
+    clear = Request("http://127.0.0.1:56321/rest/v1/video_cleanup_queue",
+                    headers={"apikey": service, "Authorization": "Bearer " + service},
+                    method="DELETE")
+    with urlopen(clear, timeout=10) as response:
+        assert response.status in (200, 204)
+    print("PASS: isolated cleanup E2E queue reset")
     for name, path, version in cases:
         payload = {"owner_id": owner, "object_path": owner + "/" + str(uuid4()) + ".mp4" if name == "unpinned_version" else path,
                    "expected_object_version": version}
