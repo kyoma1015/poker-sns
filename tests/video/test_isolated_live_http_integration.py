@@ -95,6 +95,15 @@ class LiveHttpVideoIntegration(unittest.TestCase):
                     self.assertEqual(second, first)
                     self.assertEqual(SupabaseFixture.published[PATH], "hello")
                     self.assertEqual(adapters.reconcile_post(OWNER, PATH), POST)
+                    # Authorized Storage media delivery is a live HTTP GET;
+                    # this is NOT the Vercel post-visibility media endpoint.
+                    media_url = URL + "/storage/v1/object/authenticated/post-videos/" + PATH
+                    with urlopen(Request(media_url, headers={"Authorization": "Bearer " + server.token}), timeout=5) as media_response:
+                        self.assertEqual(media_response.status, 200)
+                        self.assertEqual(media_response.read(), SupabaseFixture.media)
+                    with self.assertRaises(HTTPError) as denied:
+                        urlopen(Request(media_url, headers={"Authorization": "Bearer invalid"}), timeout=5)
+                    self.assertEqual(denied.exception.code, 401)
                     with self.assertRaises(PermissionError):
                         finalize_authenticated("Bearer wrong",
                             {"object_path": PATH, "content": "hello"}, adapters)
