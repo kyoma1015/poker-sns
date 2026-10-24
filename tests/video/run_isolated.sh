@@ -38,3 +38,21 @@ docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 < tests/video/isolate
 docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 < tests/video/isolated_fenced_rpc_assertions.sql
 echo 'PASS: isolated PostgreSQL schema, owner-only RLS, legacy delete and insert-once mutation denial'
 echo 'NOT TESTED: Supabase Storage API, signed URLs, media duration, upload cleanup'
+
+# Production-compatible candidate on a separate disposable database in the same container.
+docker exec "$name" createdb -U postgres video_production_candidate
+docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 < tests/video/fixture.sql
+docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 <<'SQL'
+create role service_role nologin;
+create role anon nologin;
+alter table public.posts add column content text not null default '';
+alter table public.posts add column post_type text not null default 'normal';
+alter table public.posts alter column id set default gen_random_uuid();
+create unique index storage_objects_bucket_name_unique on storage.objects(bucket_id,name);
+insert into public.posts(id,user_id,content) values
+ ('11111111-1111-1111-1111-111111111111',
+  '10000000-0000-0000-0000-000000000001','preserved existing post');
+SQL
+docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 < tests/video/production_additive_candidate.sql
+docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 < tests/video/production_candidate_isolated_assertions.sql
+echo 'PASS: isolated production-schema-compatible additive migration and fenced RPC assertions'
