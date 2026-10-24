@@ -26,10 +26,13 @@ def fetch_visible_video(project_url: str, anon_key: str, service_key: str,
                            "Authorization": "Bearer " + viewer_token})
     with urlopen(req, timeout=10) as response:
         rows = json.load(response)
-    if len(rows) != 1:
+    if not isinstance(rows, list) or len(rows) != 1 or not isinstance(rows[0], dict):
         raise PermissionError("post hidden by RLS")
     post = rows[0]
-    owner = post["user_id"]
+    try:
+        owner = str(UUID(post["user_id"]))
+    except (KeyError, ValueError, TypeError):
+        raise PermissionError("invalid post owner") from None
     if viewer != owner and post.get("is_public") is not True:
         raise PermissionError("private post")
     path = post.get("video_path")
@@ -48,12 +51,13 @@ def fetch_visible_video(project_url: str, anon_key: str, service_key: str,
     # Re-check authorization AFTER Storage retrieval and BEFORE handing bytes
     # to the HTTP response. This closes the obvious visibility-flip window
     # during a slow download; it cannot revoke an already-sent response.
-    authenticate_supabase_token(
+    if authenticate_supabase_token(
         viewer_token, project_url=API, anon_key=anon_key,
-        allow_local_isolated=True)
+        allow_local_isolated=True) != viewer:
+        raise PermissionError("viewer identity changed")
     with urlopen(req_for_visibility(post_id, anon_key, viewer_token), timeout=10) as response:
         fresh_rows = json.load(response)
-    if len(fresh_rows) != 1 or fresh_rows[0].get("user_id") != owner or fresh_rows[0].get("video_path") != path:
+    if not isinstance(fresh_rows, list) or len(fresh_rows) != 1 or not isinstance(fresh_rows[0], dict) or fresh_rows[0].get("user_id") != owner or fresh_rows[0].get("video_path") != path:
         raise PermissionError("post changed during media retrieval")
     if viewer != owner and fresh_rows[0].get("is_public") is not True:
         raise PermissionError("post became private during media retrieval")
