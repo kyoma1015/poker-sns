@@ -74,7 +74,8 @@ export async function probeVideoBytes(bytes: Buffer, extension: VideoExtension):
     throw new Error('unsupported codec')
   }
   const { width, height } = videos[0]
-  if (!Number.isInteger(width) || !Number.isInteger(height) ||
+  if (typeof width !== 'number' || typeof height !== 'number' ||
+      !Number.isInteger(width) || !Number.isInteger(height) ||
       !width || !height || width > 4096 || height > 4096) {
     throw new Error('invalid video dimensions')
   }
