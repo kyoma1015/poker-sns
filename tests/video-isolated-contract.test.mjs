@@ -7,6 +7,7 @@ const timeline = read('../src/Timeline.tsx')
 const detail = read('../src/PostDetail.tsx')
 const playback = read('../src/PostVideo.tsx')
 const upload = read('../src/videoUpload.ts')
+const api = read('../src/videoApi.ts')
 const sql = read('../sql/post_short_videos_candidate.sql')
 
 test('video schema is staged and storage bucket is private with 20MiB cap', () => {
@@ -25,12 +26,14 @@ test('client validates duration and type but does not enable publishing', () => 
   assert.match(upload, /video\/webm/)
   assert.match(timeline, /if \(videoFile\) \{ setMessage\('動画投稿は安全な保存・配信の実装待ちです/)
 })
-test('playback is a short-lived private signed URL and not a public URL', () => {
-  assert.match(upload, /createSignedUrl\(path, 300\)/)
+test('playback is gated behind an authenticated server API', () => {
+  assert.match(api, /VIDEO_SERVER_ENABLED = false/)
+  assert.match(api, /loadAuthorizedVideo\(postId/)
+  assert.match(api, /Authorization: await authHeader\(\)/)
   assert.doesNotMatch(upload, /getPublicUrl/)
-  assert.match(playback, /createPostVideoPlaybackUrl\(path\)/)
-  assert.match(timeline, /<PostVideo path=\{post\.video_path\}/)
-  assert.match(detail, /<PostVideo path=\{post\.video_path\}/)
+  assert.match(playback, /loadAuthorizedVideo\(postId\)/)
+  assert.match(timeline, /<PostVideo postId=\{post\.id\}/)
+  assert.match(detail, /<PostVideo postId=\{post\.id\}/)
 })
 test('video cleanup validates owner path but fails closed without atomic delete', () => {
   assert.match(upload, /isOwnedVideoPath\(path, user\.id\)/)
