@@ -61,8 +61,7 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters)
   } catch {
     return res.status(503).end()
   }
-}
-
+  }
 }
 
 export default createVideoFinalizeHandler()
