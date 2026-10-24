@@ -24,6 +24,8 @@ jobs:
         run: python3 -m unittest tests.video.test_finalize_boundary -v
       - name: Local HTTP finalize contract tests
         run: python3 -m unittest tests.video.test_local_http -v
+      - name: Combined video HTTP header ambiguity regression tests
+        run: python3 -m unittest tests.video.test_isolated_video_http_headers -v
       - name: Supabase Auth JWT adapter unit tests
         run: python3 -m unittest tests.video.test_supabase_auth_adapter -v
       - name: Private Storage download adapter unit tests
