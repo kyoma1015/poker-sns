@@ -12,5 +12,7 @@ def make_local_server(anon_key: str, service_key: str):
     # the combined server is bound exclusively to loopback.
     post = finalize_handler(anon_key, service_key)
     get = media_handler(anon_key, service_key)
-    handler = type("IsolatedVideoHandler", (post, get), {})
+    # Keep GET and POST dispatch explicit rather than depending on inherited
+    # method-resolution order when the underlying handlers evolve.
+    handler = type("IsolatedVideoHandler", (post,), {"do_GET": get.do_GET})
     return ThreadingHTTPServer(("127.0.0.1", 0), handler)
