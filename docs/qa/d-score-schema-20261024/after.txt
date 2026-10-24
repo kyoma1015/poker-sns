@@ -1,0 +1,15 @@
+✔ historical score schema remains valid and all960 references remain unchanged (30.108067ms)
+✔ inherited score dimension cannot masquerade as an own exported value (5.632097ms)
+✔ inherited option identifier cannot supply a score-row join key (3.936462ms)
+✔ unknown extra score dimension cannot be silently ignored (3.288262ms)
+✔ array decorated as a complete score object is rejected (3.487954ms)
+✔ null score row produces auditFAIL rather than crashing (3.866987ms)
+✔ non-number score payload remains invalid without emitting evidence (3.298497ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 67.689685
