@@ -13,7 +13,17 @@ begin
    (coalesce(qual,'') ilike '%post-videos%' or coalesce(with_check,'') ilike '%post-videos%'))
  then raise exception 'video mutation policy exists'; end if;
 end $$;
--- Verify real client roles cannot execute the privileged RPCs.\nset role authenticated;\ndo $client_grants$\nbegin\n if has_function_privilege(current_user, 'public.video_production_publish_fenced(uuid,text,uuid,text,double precision,text)','EXECUTE')\n or has_function_privilege(current_user, 'public.video_production_storage_generation(uuid,text)','EXECUTE')\n or has_function_privilege(current_user, 'public.video_production_reconcile_fenced(uuid,text,uuid)','EXECUTE')\n then raise exception 'authenticated role can execute privileged video RPC'; end if;\nend $client_grants$;\nreset role;\n-- Service RPC must not be executable by regular authenticated users.
+-- Verify real client roles cannot execute the privileged RPCs.
+set role authenticated;
+do $client_grants$
+begin
+ if has_function_privilege(current_user, 'public.video_production_publish_fenced(uuid,text,uuid,text,double precision,text)','EXECUTE')
+ or has_function_privilege(current_user, 'public.video_production_storage_generation(uuid,text)','EXECUTE')
+ or has_function_privilege(current_user, 'public.video_production_reconcile_fenced(uuid,text,uuid)','EXECUTE')
+ then raise exception 'authenticated role can execute privileged video RPC'; end if;
+end $client_grants$;
+reset role;
+-- Service RPC must not be executable by regular authenticated users.
 set role video_owner;
 do $$
 begin
@@ -28,7 +38,14 @@ insert into storage.objects(id,bucket_id,name,owner_id) values
  '10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.webm',
  '10000000-0000-0000-0000-000000000001');
 set role service_role;
-do $service_privileges$\nbegin\n if not has_table_privilege(current_user,'public.posts','SELECT') or not has_table_privilege(current_user,'public.posts','INSERT')\n or not has_table_privilege(current_user,'storage.objects','SELECT')\n or not has_table_privilege(current_user,'storage.objects','UPDATE') then\n raise exception 'service_role posts privilege mismatch'; end if;\nend $service_privileges$;\ndo $service_test$
+do $service_privileges$
+begin
+ if not has_table_privilege(current_user,'public.posts','SELECT') or not has_table_privilege(current_user,'public.posts','INSERT')
+ or not has_table_privilege(current_user,'storage.objects','SELECT')
+ or not has_table_privilege(current_user,'storage.objects','UPDATE') then
+ raise exception 'service_role posts privilege mismatch'; end if;
+end $service_privileges$;
+do $service_test$
 declare
  a uuid; b uuid;
  p text:='10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.webm';
