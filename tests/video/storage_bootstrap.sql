@@ -11,3 +11,8 @@ create policy video_qa_posts_owner_insert on public.posts for insert to authenti
 create policy video_qa_posts_owner_select on public.posts for select to authenticated
  using ((select auth.uid()) = user_id);
 grant select, insert on public.posts to authenticated;
+
+-- Isolated visibility test policy; not a production authorization migration.
+alter table public.posts add column if not exists is_public boolean not null default false;
+create policy video_qa_posts_public_select on public.posts for select to authenticated
+ using (is_public = true);
