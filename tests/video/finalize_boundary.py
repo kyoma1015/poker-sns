@@ -56,7 +56,12 @@ def finalize_authenticated(
                 delete_staged_object=adapters.delete_staged,
             )
         except PostCommitUnknown:
-            existing = adapters.reconcile_post(user_id, path)
+            # Reconciliation can fail independently of the DB write. Preserve
+            # the original uncertain outcome and NEVER trigger a delete.
+            try:
+                existing = adapters.reconcile_post(user_id, path)
+            except Exception:
+                raise PostCommitUnknown("reconciliation unavailable") from None
             if existing is None:
                 # Do not delete while commit state is uncertain.
                 raise
