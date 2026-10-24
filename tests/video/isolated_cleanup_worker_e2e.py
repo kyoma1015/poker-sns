@@ -61,7 +61,7 @@ def main():
     # This local-stack test runs after finalize E2E, which can leave queued
     # posted-object jobs. Clear only the ephemeral isolated QA queue so that
     # each worker claim is deterministically the job inserted below.
-    clear = Request("http://127.0.0.1:56321/rest/v1/video_cleanup_queue",
+    clear = Request("http://127.0.0.1:56321/rest/v1/video_cleanup_queue?id=gt.0",
                     headers={"apikey": service, "Authorization": "Bearer " + service},
                     method="DELETE")
     with urlopen(clear, timeout=10) as response:
