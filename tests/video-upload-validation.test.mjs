@@ -12,7 +12,11 @@ test('video candidate declares required limits and MIME types', () => {
   assert.match(source, /URL\.revokeObjectURL\(url\)/)
 })
 test('posting remains blocked until server-side duration validation exists', () => {
-  assert.match(timeline, /if \(videoFile\) \{ setMessage\('動画投稿は安全な保存・配信の実装待ちです/)
+  assert.match(timeline, /if \(!VIDEO_SERVER_ENABLED\)/)
+  assert.match(timeline, /await uploadPostVideo\(user\.id, videoFile\)/)
+  const api = readFileSync(new URL('../src/videoApi.ts', import.meta.url), 'utf8')
+  assert.match(api, /VIDEO_SERVER_ENABLED = false/)
+  assert.match(api, /if \(!VIDEO_SERVER_ENABLED\) throw new Error/)
 })
 test('staged storage is private, limited, and not readable by every authenticated user', () => {
   assert.match(sql, /'post-videos', 'post-videos', false, 20971520/)
