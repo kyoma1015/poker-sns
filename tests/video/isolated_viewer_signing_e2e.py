@@ -80,6 +80,8 @@ def main():
         with urlopen(media_request(viewer_token), timeout=10) as response:
             assert response.read() == media
             assert response.headers.get("Cache-Control") == "no-store, private"
+            assert response.headers.get("Vary") == "Authorization"
+            assert response.headers.get("Pragma") == "no-cache"
         from concurrent.futures import ThreadPoolExecutor
         with ThreadPoolExecutor(max_workers=8) as pool:
             def fetch_once(_):
