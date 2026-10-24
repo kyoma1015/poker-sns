@@ -14,22 +14,26 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt }) {
     plugins: [{
       name: 'isolated-video-api-test-only',
       enforce: 'pre',
-      transform(_source, id) {
-        if (!id.split('?')[0].endsWith('/src/videoApi.ts')) return null
-        return `
-          export const VIDEO_SERVER_ENABLED = true
-          export async function loadAuthorizedVideo(postId) {
-            const response = await fetch('/internal/video/media/' + encodeURIComponent(postId), {
-              headers: { Authorization: 'Bearer ' + window.__VIDEO_QA_JWT },
-              cache: 'no-store',
-            })
-            if (!response.ok) throw new Error('unauthorized')
-            const blob = await response.blob()
-            if (!blob.size || blob.size > 20 * 1024 * 1024 ||
-                !['video/mp4','video/webm'].includes(blob.type)) throw new Error('invalid media')
-            return URL.createObjectURL(blob)
-          }
-        `
+      transform(source, id) {
+        const filename=id.split('?')[0]
+        if (filename.endsWith('/src/supabase.ts')) {
+          // Only the session source is injected. The real videoApi.ts
+          // loadAuthorizedVideo implementation and PostVideo component run.
+          return `export const supabase = {
+            auth: { getSession: async () => ({
+              data: { session: { access_token: window.__VIDEO_QA_JWT } },
+              error: null,
+            }) },
+          }`
+        }
+        if (filename.endsWith('/src/videoApi.ts')) {
+          assert.ok(source.includes('VIDEO_SERVER_ENABLED = false as boolean'),
+            'production video feature gate unexpectedly changed')
+          return source.replace('VIDEO_SERVER_ENABLED = false as boolean',
+            'VIDEO_SERVER_ENABLED = true as boolean')
+        }
+        return null
+
       },
     }],
   })
