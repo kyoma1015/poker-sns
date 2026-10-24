@@ -35,7 +35,10 @@ def fetch_visible_video(project_url: str, anon_key: str, service_key: str,
         raise PermissionError("invalid post owner") from None
     if viewer != owner and post.get("is_public") is not True:
         raise PermissionError("private post")
-    # A valid RLS row must have an explicit boolean visibility state.\n    # Reject malformed metadata even for the owner, not only public viewers.\n    if type(post.get("is_public")) is not bool:\n        raise PermissionError("invalid visibility state")\n    path = post.get("video_path")
+    # Require a strict boolean even for the owner.
+    if type(post.get("is_public")) is not bool:
+        raise PermissionError("invalid visibility state")
+    path = post.get("video_path")
     if not isinstance(path, str) or not path.startswith(owner + "/") or path.count("/") != 1:
         raise PermissionError("invalid storage path")
     req = Request(API + "/storage/v1/object/authenticated/post-videos/" +
