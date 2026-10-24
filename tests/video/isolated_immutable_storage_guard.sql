@@ -5,6 +5,7 @@ the QA DELETE grant. Never run against production.
 """
 drop policy if exists "post_videos_delete_own" on storage.objects;
 drop policy if exists "post_videos_update_own" on storage.objects;
+-- QA read and insert policies remain, so uploads/downloads still work.
 -- No UPDATE or DELETE grants should remain for authenticated users.
 do $$
 begin
