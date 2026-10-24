@@ -49,8 +49,8 @@ export function createIsolatedSupabaseVideoAdapters(
   return {
     authenticate,
     async snapshot(ownerId, path): Promise<ImmutableStagedSnapshot> {
-      if (await authenticate(accessToken) !== ownerId) throw new Error('unauthorized owner')
       ownerPath(ownerId, path)
+      if (await authenticate(accessToken) !== ownerId) throw new Error('unauthorized owner')
       const generation = await metadata(ownerId, path)
       const { data, error } = await viewer.storage.from('post-videos').download(path)
       if (error || !data || data.size <= 0 || data.size > MAX_VIDEO_BYTES) {
