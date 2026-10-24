@@ -1,0 +1,332 @@
+✖ manifest duplicate version is ambiguous even when last value is valid (4.45867ms)
+✖ manifest duplicate question hash is ambiguous even when last value is valid (0.599546ms)
+✖ manifest duplicate expected count is ambiguous even when last value is valid (0.503892ms)
+✖ manifest duplicate escaped alias is ambiguous even when last value is valid (0.462269ms)
+✖ hash-matched source duplicate question text is rejected (0.483831ms)
+✖ hash-matched source duplicate question id is rejected (0.428898ms)
+✖ hash-matched source duplicate nested option id is rejected (0.328697ms)
+✖ hash-matched source duplicate correct answer is rejected (0.342177ms)
+✖ hash-matched source duplicate explanation is rejected (0.403751ms)
+✖ hash-matched source duplicate references is rejected (0.477441ms)
+✖ nonfinite exponent 1e999 in manifest is rejected (4.817358ms)
+✖ nonfinite exponent -1e999 in manifest is rejected (0.405352ms)
+✖ nonfinite exponent in hash-matched source is rejected (0.486275ms)
+✖ depth outside the explicit bounded JSON contract is rejected (0.431172ms)
+✔ same member names in distinct nested objects are valid (0.430431ms)
+✔ escaped quotes braces and numeric-looking strings remain ordinary text (0.360344ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 2
+ℹ fail 14
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25.020812
+
+✖ failing tests:
+
+test at tests/tda-json-ambiguity.test.mjs:21:3
+✖ manifest duplicate version is ambiguous even when last value is valid (4.45867ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at refused (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:15:40)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:21:84)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-json-ambiguity.test.mjs:21:3
+✖ manifest duplicate question hash is ambiguous even when last value is valid (0.599546ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at refused (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:15:40)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:21:84)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-json-ambiguity.test.mjs:21:3
+✖ manifest duplicate expected count is ambiguous even when last value is valid (0.503892ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at refused (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:15:40)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:21:84)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-json-ambiguity.test.mjs:21:3
+✖ manifest duplicate escaped alias is ambiguous even when last value is valid (0.462269ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at refused (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:15:40)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:21:84)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-json-ambiguity.test.mjs:29:3
+✖ hash-matched source duplicate question text is rejected (0.483831ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at refused (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:15:40)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:29:64)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-json-ambiguity.test.mjs:29:3
+✖ hash-matched source duplicate question id is rejected (0.428898ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at refused (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:15:40)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:29:64)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-json-ambiguity.test.mjs:29:3
+✖ hash-matched source duplicate nested option id is rejected (0.328697ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at refused (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:15:40)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:29:64)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-json-ambiguity.test.mjs:29:3
+✖ hash-matched source duplicate correct answer is rejected (0.342177ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at refused (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:15:40)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:29:64)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-json-ambiguity.test.mjs:29:3
+✖ hash-matched source duplicate explanation is rejected (0.403751ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at refused (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:15:40)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:29:64)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-json-ambiguity.test.mjs:29:3
+✖ hash-matched source duplicate references is rejected (0.477441ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at refused (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:15:40)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:29:64)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-json-ambiguity.test.mjs:30:38
+✖ nonfinite exponent 1e999 in manifest is rejected (4.817358ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at refused (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:15:40)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:30:101)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-json-ambiguity.test.mjs:30:38
+✖ nonfinite exponent -1e999 in manifest is rejected (0.405352ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at refused (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:15:40)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:30:101)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-json-ambiguity.test.mjs:31:1
+✖ nonfinite exponent in hash-matched source is rejected (0.486275ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at refused (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:15:40)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:31:66)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-json-ambiguity.test.mjs:32:1
+✖ depth outside the explicit bounded JSON contract is rejected (0.431172ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at refused (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:15:40)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-json-ambiguity.test.mjs:32:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
