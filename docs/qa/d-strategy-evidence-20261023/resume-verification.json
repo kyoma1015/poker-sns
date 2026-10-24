@@ -1,0 +1,13 @@
+{
+  "resumed_at": "2026-10-24T06:18:31.061876+00:00",
+  "base": "f07b65135f43f413c41c9b124e37062d20e5197a",
+  "input_commit": "9cc2fe3",
+  "source_changed_since_interruption": false,
+  "new_acceptance_pass": 6,
+  "existing_local_regression_results_reused": 78,
+  "lint_exit_code": 0,
+  "classifier": "BLOCKED",
+  "main_merge": false,
+  "production_operations": false,
+  "fixed_test_sha256": "45a98b39f5c49c7fe2ec142ab71e654e56e3d654ecd770eba293672947dd57b5"
+}

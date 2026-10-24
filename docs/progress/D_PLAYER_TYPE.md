@@ -4,3 +4,9 @@ PR100 reused without reapplying PR30/82. New offline audit calculates exact per-
 
 ## Historical persona-reference integrity — 2026-10-23
 PR114 extended in isolated follow-up: all30persona x32rawreference values (960) match recomputation, while tampered/missing/extra/inherited/nonfinite/non-number references nowFAIL. Fixed13 cases reproduce12FAIL/1PASS then13PASS; empty-reference0-comparisonPASS additionally1FAIL/14 then14PASS; prior64 regressionsPASS. No scoring/reference fixture mutation. Classifier source absent in inspected current/historical/handoff Git trees; D ZIP2/8 actualbytes unavailable in bounded search, not confirmed receipt.36-animal reachability/boundary/frequencies/meaning remainBLOCKED pending authoritative classifier/tables/ties and expert labels. Evidence docs/qa/d-persona-reference-20261023/.
+
+## Strategy-review evidence, not invented semantics — 2026-10-23
+PR118 reused. New offline pack traces50questions/222optionIDs and196 varying question-axis contrasts; eight exact requested-term searches retain question/option origins. New6FAIL→6PASS, old78PASS, total84.960historical references and source fixture remain unchanged. Lexical absence/presence is not conceptual/strategic validity; classifierNOTEXECUTED and semanticBLOCKED retained. No new classifier or expert artifact supplied, so prior discovery is referenced rather than repeated. Evidence docs/qa/d-strategy-evidence-20261023/ and generated7dayCIartifact.
+
+## Score export own-field contract —2026-10-24
+PR124 branch continues without a newPR. New seven-test input1PASS/6FAIL ->7PASS after audit-only schema guard. All222 score rows must provide own option_id and all32 own finite dimensions with no unknown fields; malformed rows fail with indexed diagnostic and suppress evidence. Existing84 regressions unchanged/PASS; total91. No scoring/question/animal/UI/DB changes. Formal classifier and semantic validity remainBLOCKED. Evidence docs/qa/d-score-schema-20261024/.
