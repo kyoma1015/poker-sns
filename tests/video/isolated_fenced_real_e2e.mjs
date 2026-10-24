@@ -10,6 +10,7 @@ import { createIsolatedSupabaseVideoAdapters } from '../../api/video-isolated-su
 import { finalizeImmutableCandidate } from '../../api/video-finalize-core.ts'
 import { createVideoMediaHandler } from '../../api/video-media.ts'
 import { createVideoFinalizeHandler } from '../../api/video-finalize.ts'
+import { verifyRealBrowserPlayback } from './isolated_browser_playback.mjs'
 
 const env=Object.fromEntries(readFileSync(process.env.VIDEO_QA_ENV,'utf8').split('\n')
   .filter(x=>x.includes('=')).map(x=>{const i=x.indexOf('=');return [x.slice(0,i),x.slice(i+1).replace(/^["']|["']$/g,'')]}))
@@ -143,4 +144,5 @@ assert.equal(ownerPlayback.headers['content-type'],'video/mp4')
 const otherJwt=(await other.auth.getSession()).data.session.access_token
 const deniedPlayback=await invokeMedia(otherJwt)
 assert.equal(deniedPlayback.status,404,'unauthorized server media handler')
+await verifyRealBrowserPlayback({postId:first,jwt,deniedJwt:otherJwt})
 console.log('PASS: REAL isolated Supabase Auth JWT -> Storage HTTP immutable read -> ffprobe -> fenced PostgREST RPC -> idempotent timeline SELECT -> authorized video bytes; other user denied')
