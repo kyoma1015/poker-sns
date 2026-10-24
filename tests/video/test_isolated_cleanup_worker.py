@@ -8,6 +8,19 @@ PATH = OWNER + "/30000000-0000-0000-0000-000000000001.mp4"
 
 class CleanupWorkerTests(unittest.TestCase):
     @patch("tests.video.isolated_cleanup_worker._rpc")
+    def test_remote_worker_rejected_before_any_rpc_or_storage(self, rpc):
+        for url in ("https://example.supabase.co", "http://localhost:56321",
+                    "http://127.0.0.1:56321/"):
+            with self.subTest(url=url):
+                with self.assertRaises(PermissionError):
+                    run_one(url, "isolated", lambda *_: self.fail("inspected"),
+                            lambda *_: self.fail("deleted"))
+        with self.assertRaises(PermissionError):
+            run_one(URL, "", lambda *_: self.fail("inspected"),
+                    lambda *_: self.fail("deleted"))
+        rpc.assert_not_called()
+
+    @patch("tests.video.isolated_cleanup_worker._rpc")
     def test_unpinned_object_is_never_deleted(self, rpc):
         rpc.side_effect = [[{"id": 1, "owner_id": OWNER, "object_path": PATH,
                              "expected_object_version": None}], None, True]
