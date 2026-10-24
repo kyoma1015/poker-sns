@@ -62,6 +62,16 @@ const {data:reconciled,error:recError}=await admin.rpc('video_qa_reconcile_fence
   {p_owner:owner,p_path:path,p_generation:generation})
 assert.ifError(recError)
 assert.equal(reconciled,first)
+const {error:clientPublish}=await client.rpc('video_qa_publish_fenced',{
+ p_owner:owner,p_path:path,p_generation:generation,p_sha256:post.video_sha256,
+ p_duration:post.video_duration_seconds,p_content:'forged client publish',
+})
+assert.ok(clientPublish,'authenticated browser must not execute trusted publish RPC')
+const {error:badGeneration}=await admin.rpc('video_qa_publish_fenced',{
+ p_owner:owner,p_path:path,p_generation:randomUUID(),p_sha256:post.video_sha256,
+ p_duration:post.video_duration_seconds,p_content:'real isolated end-to-end',
+})
+assert.ok(badGeneration,'trusted RPC must reject stale or forged generation')
 const {data:wrong,error:wrongError}=await admin.rpc('video_qa_reconcile_fenced',
   {p_owner:owner,p_path:path,p_generation:randomUUID()})
 assert.ifError(wrongError)
