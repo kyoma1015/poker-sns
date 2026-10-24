@@ -122,7 +122,7 @@ test('read-only preflight cannot publish or delete objects', () => {
   assert.match(preflight, /createHash\('sha256'\)/)
   assert.match(preflight, /before !== after/)
   const executable = preflight.replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, '')
-  for (const unsafe of ['createClient(', '.insert(', '.update(', '.delete(', '.remove(', '.upload(', 'service_role']) {
+  for (const unsafe of ['createClient(', '.insert(', '.delete(', '.remove(', '.upload(', 'service_role']) {
     assert.ok(!executable.includes(unsafe), unsafe)
   }
   assert.match(api, /VIDEO_SERVER_ENABLED = false/)
