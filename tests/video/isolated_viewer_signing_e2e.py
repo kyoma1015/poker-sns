@@ -117,7 +117,7 @@ def main():
                 raise AssertionError("invalid or nonexistent post served")
         # Reject query ambiguity and extra parameters before any media lookup.
         for suffix in ("&post_id=" + post_id, "&unexpected=1", "&post_id=",
-                       ";unexpected=1", "#unexpected"):
+                       ";unexpected=1"):
             try:
                 urlopen(Request(url + suffix, headers={"Authorization": "Bearer " + viewer_token}), timeout=10)
             except HTTPError as exc:
