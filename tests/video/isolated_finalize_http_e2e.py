@@ -88,6 +88,27 @@ def main():
                          timeout=20) as response:
                 assert json.load(response) == first
                 assert response.headers.get("Cache-Control") == "no-store, private"
+            # Finalize a NEW staged object via HTTP, not via direct Python
+            # invocation. This proves the endpoint can commit a fresh post.
+            fresh_path = owner + "/" + str(uuid4()) + ".mp4"
+            fresh_upload = Request(
+                API + "/storage/v1/object/post-videos/" + fresh_path,
+                data=media.read_bytes(),
+                headers={"Authorization": "Bearer " + session,
+                         "apikey": key, "Content-Type": "video/mp4",
+                         "x-upsert": "false"}, method="POST")
+            with urlopen(fresh_upload, timeout=20) as response:
+                assert response.status in (200, 201)
+            fresh_body = {"object_path": fresh_path, "content": "HTTP-first publish"}
+            with urlopen(post_finalize(valid_headers, fresh_body), timeout=20) as response:
+                fresh_post = json.load(response)
+                assert response.headers.get("Cache-Control") == "no-store, private"
+            assert fresh_post["post_id"] != first["post_id"]
+            with urlopen(post_finalize(valid_headers, fresh_body), timeout=20) as response:
+                assert json.load(response) == fresh_post
+            from tests.video.isolated_db_adapter import reconcile_post as reconcile_http_post
+            assert reconcile_http_post(API, service, owner, fresh_path) == fresh_post["post_id"]
+            print("PASS: real HTTP POST creates a NEW isolated video post and idempotent retry")
             for headers, payload in (
                 ({"Content-Type": "application/json"}, {"object_path": path, "content": "real E2E"}),
                 ({"Authorization": "Bearer invalid", "Content-Type": "application/json"},
