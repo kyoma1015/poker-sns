@@ -1,6 +1,9 @@
 import { inspectStagedVideo, requireImmutableGeneration } from './video-preflight.ts'
 import type { VideoExtension } from './video-ffprobe.ts'
 
+/** A confirmed RPC rejection is not an ambiguous commit and must never reconcile to an older post. */
+export class DefinitivePublishRejection extends Error {}
+
 export type ImmutableStagedSnapshot = {
   ownerId: string
   objectPath: string
@@ -55,7 +58,8 @@ export async function finalizeImmutableCandidate(
   let published: string
   try {
     published = await adapters.publish(owner, path, generation, inspected.sha256, inspected.duration, content)
-  } catch {
+  } catch (error) {
+    if (error instanceof DefinitivePublishRejection) throw error
     // An ambiguous write may already have committed. Reconciliation errors
     // must preserve the unknown outcome; never delete or republish blindly.
     let reconciled: string | null = null
