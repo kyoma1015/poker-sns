@@ -12,7 +12,7 @@ begin
     where schemaname='storage' and tablename='objects'
       and cmd in ('UPDATE','DELETE','ALL')
       and (roles @> array['authenticated']::name[] or roles @> array['public']::name[])
-      and (qual ilike '%post-videos%' or with_check ilike '%post-videos%')
+      and (coalesce(qual, '') ilike '%post-videos%' or coalesce(with_check, '') ilike '%post-videos%')
   ) then
     raise exception 'unsafe Storage policy grants update/delete on post-videos';
   end if;
