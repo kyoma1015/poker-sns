@@ -43,3 +43,7 @@ Preserved spec binding; new opt-in same-state prepared adapter with pre-dispatch
 ## 2026-10-24 isolated private journal follow-up
 
 See `docs/workers/PRIVATE_JOURNAL_20261024.md`: private append-only hash-chain primitive and fixed temporary crash/integrity acceptance added, with external pinned-head requirement. No formal host/controller connection. Actual temporary Git reproduction confirms cooperative stop cannot atomically prevent a commit after the final check; this remains an explicit limitation. Retained state and production untouched; no new PR/manual CI.
+
+## 2026-10-24 trusted-pin recovery follow-up
+
+`JOURNAL_CHECKPOINT_20261024.md` records the opt-in external trusted intent/CAS lifecycle, crash recovery, operation-ID deduplication and temporary queue/finite-budget integration. No formal store/controller adoption; authenticated external callback implementation remains an integration gate. Inherited tree-fixture timing failures and bounded retry are retained in QA evidence.

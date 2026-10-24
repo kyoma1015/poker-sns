@@ -1,0 +1,54 @@
+......................................................................................................................................F..F
+======================================================================
+FAIL: test_detached_session_survives_and_is_explicitly_unknown (test_worker_tree_boundaries.WorkerTreeBoundaries.test_detached_session_survives_and_is_explicitly_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_worker_tree_boundaries.py", line 83, in test_detached_session_survives_and_is_explicitly_unknown
+    self.probe(True)
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_worker_tree_boundaries.py", line 61, in probe
+    self.assertEqual(p.returncode,0,err)
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/owned_tree_probe.py", line 86, in <module>
+    else:probe(Path(sys.argv[1]),sys.argv[2]=='1')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-lease-integration/tests/automation/owned_tree_probe.py", line 67, in probe
+    ids=json.loads(path.read_text())
+                   ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/owned-tree-qa-80npb0i6/ids.json'
+
+
+======================================================================
+FAIL: test_same_group_child_and_grandchild_terminated_and_fixture_reaped (test_worker_tree_boundaries.WorkerTreeBoundaries.test_same_group_child_and_grandchild_terminated_and_fixture_reaped)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_worker_tree_boundaries.py", line 80, in test_same_group_child_and_grandchild_terminated_and_fixture_reaped
+    self.probe(False)
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_worker_tree_boundaries.py", line 61, in probe
+    self.assertEqual(p.returncode,0,err)
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/owned_tree_probe.py", line 86, in <module>
+    else:probe(Path(sys.argv[1]),sys.argv[2]=='1')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-lease-integration/tests/automation/owned_tree_probe.py", line 67, in probe
+    ids=json.loads(path.read_text())
+                   ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/owned-tree-qa-fpuezdm5/ids.json'
+
+
+----------------------------------------------------------------------
+Ran 138 tests in 13.625s
+
+FAILED (failures=2)
+Independent comparison: original32/32 unsafe; current0/32; all32 rows retained
