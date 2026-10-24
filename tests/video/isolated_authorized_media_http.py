@@ -34,9 +34,11 @@ def make_handler(anon_key: str, service_key: str):
             self.send_header("Content-Type", "video/mp4")
             self.send_header("Content-Length", str(len(data)))
             self.send_header("Cache-Control", "no-store, private")
+            self.send_header("Pragma", "no-cache")
+            self.send_header("Vary", "Authorization")
             self.send_header("X-Content-Type-Options", "nosniff")
             self.end_headers()
-            self.wfile.write(data)
+            # Authorization is checked before headers; once bytes start being\n            # transmitted, in-flight revocation cannot be guaranteed.\n            self.wfile.write(data)
         def log_message(self, *args):
             pass
     return Handler
