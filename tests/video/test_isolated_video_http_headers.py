@@ -68,6 +68,20 @@ class IsolatedVideoHeaderTests(unittest.TestCase):
                                      headers + [("Content-Length", str(len(body)))],
                                      body), 400)
 
+    def test_duplicate_json_keys_rejected_before_auth_adapters(self):
+        headers = [("Authorization", "Bearer invalid"),
+                   ("Content-Type", "application/json")]
+        for body in (
+            b'{"object_path":"first","object_path":"second"}',
+            b'{"content":"a","content":"b"}',
+            b'{"nested":{"x":1,"x":2}}',
+        ):
+            with self.subTest(body=body):
+                self.assertEqual(
+                    self.raw_request("POST", "/video/finalize",
+                                     headers + [("Content-Length", str(len(body)))],
+                                     body), 400)
+
     def test_ambiguous_post_framing_rejected_before_auth_lookup(self):
         common = [("Authorization", "Bearer invalid"),
                   ("Content-Type", "application/json")]
