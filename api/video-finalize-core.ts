@@ -22,7 +22,7 @@ export type FinalizeCandidateAdapters = {
   /** MUST atomically fence generation and publish once. No path-only insert. */
   publish(ownerId: string, path: string, generation: string, sha256: string, duration: number, content: string): Promise<string>
   /** MUST be owner scoped and read only. Never delete on uncertainty. */
-  reconcile(ownerId: string, path: string, generation: string): Promise<string | null>
+  reconcile(ownerId: string, path: string, generation: string, sha256?: string, duration?: number, content?: string): Promise<string | null>
 }
 
 const UUID = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
@@ -64,7 +64,7 @@ export async function finalizeImmutableCandidate(
     // must preserve the unknown outcome; never delete or republish blindly.
     let reconciled: string | null = null
     try {
-      reconciled = await adapters.reconcile(owner, path, generation)
+      reconciled = await adapters.reconcile(owner, path, generation, inspected.sha256, inspected.duration, content)
     } catch {
       throw new Error('video commit outcome unknown; reconciliation unavailable')
     }
