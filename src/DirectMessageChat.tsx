@@ -1,5 +1,6 @@
 import {
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from 'react'
@@ -20,6 +21,10 @@ type DirectMessage = {
 
 function DirectMessageChat() {
   const { userId } = useParams()
+  return <DirectMessageConversation key={userId ?? 'missing'} userId={userId} />
+}
+
+function DirectMessageConversation({ userId }: { userId: string | undefined }) {
   const navigate = useNavigate()
 
   const [currentUserId, setCurrentUserId] =
@@ -53,9 +58,12 @@ function DirectMessageChat() {
   // React state alone cannot exclude overlapping key/click handlers before
   // their first await or a subsequent render.
   const sendingRef = useRef(false)
-  const activePeerRef = useRef(userId)
-  const loadRequestRef = useRef(0)
-  activePeerRef.current = userId
+  const lifecycleRef = useRef({ active: false, request: 0 })
+  useLayoutEffect(() => {
+    const lifecycle = lifecycleRef.current
+    lifecycle.active = true
+    return () => { lifecycle.active = false; lifecycle.request++ }
+  }, [])
 
   const bottomRef =
     useRef<HTMLDivElement | null>(null)
@@ -63,8 +71,9 @@ function DirectMessageChat() {
   const scrollToBottom = (
     behavior: ScrollBehavior = 'smooth'
   ) => {
+    const lifecycle = lifecycleRef.current
     setTimeout(() => {
-      if (activePeerRef.current !== userId) return
+      if (!lifecycle.active) return
       bottomRef.current?.scrollIntoView({
         behavior,
       })
@@ -100,9 +109,10 @@ function DirectMessageChat() {
   }
 
   const loadMessages = async () => {
-    if (activePeerRef.current !== userId) return
-    const request = ++loadRequestRef.current
-    const isCurrent = () => activePeerRef.current === userId && request === loadRequestRef.current
+    const lifecycle = lifecycleRef.current
+    if (!lifecycle.active) return
+    const request = ++lifecycle.request
+    const isCurrent = () => lifecycle.active && request === lifecycle.request
     if (!userId) {
       setStatusMessage(
         '相手が見つかりませんでした。'
@@ -219,15 +229,7 @@ function DirectMessageChat() {
   }
 
   useEffect(() => {
-    setMessages([])
-    setPlayerName('')
-    setPokerId('')
-    setAvatarUrl(null)
-    setInput('')
-    setIsBlocked(false)
-    setStatusMessage('読み込み中...')
     loadMessages()
-    return () => { loadRequestRef.current++ }
   }, [userId])
 
   useEffect(() => {
@@ -251,7 +253,7 @@ function DirectMessageChat() {
             'direct_messages',
         },
         async (payload) => {
-          if (activePeerRef.current !== userId) return
+          if (!lifecycleRef.current.active) return
           if (
             payload.eventType ===
             'INSERT'
@@ -350,6 +352,8 @@ function DirectMessageChat() {
 
   const handleSend = async () => {
     if (sendingRef.current) return
+    const lifecycle = lifecycleRef.current
+    const isCurrent = () => lifecycle.active
     const trimmedInput =
       input.trim()
 
@@ -383,7 +387,7 @@ function DirectMessageChat() {
       const { data: currentBlocks, error: blockCheckError } = await supabase.from('user_blocks')
         .select('blocker_id')
         .or(`and(blocker_id.eq.${currentUserId},blocked_id.eq.${userId}),and(blocker_id.eq.${userId},blocked_id.eq.${currentUserId})`)
-      if (activePeerRef.current !== userId) return
+      if (!isCurrent()) return
       if (blockCheckError || (currentBlocks || []).length > 0) {
         setIsBlocked(true)
         setStatusMessage('ブロック中のためメッセージを送信できません。')
@@ -394,7 +398,7 @@ function DirectMessageChat() {
         receiver_id: userId,
         content: trimmedInput,
       })
-      if (activePeerRef.current !== userId) return
+      if (!isCurrent()) return
       if (error) {
         setStatusMessage('DMを送信できませんでした。もう一度お試しください。')
         return
@@ -405,13 +409,13 @@ function DirectMessageChat() {
       await loadMessages()
       scrollToBottom()
     } catch {
-      if (activePeerRef.current !== userId) return
+      if (!isCurrent()) return
       setStatusMessage(sent
         ? '送信しましたが、表示の更新に失敗しました。ページを再読み込みしてください。'
         : 'DMを送信できませんでした。もう一度お試しください。')
     } finally {
       sendingRef.current = false
-      setIsSending(false)
+      if (isCurrent()) setIsSending(false)
     }
   }
 

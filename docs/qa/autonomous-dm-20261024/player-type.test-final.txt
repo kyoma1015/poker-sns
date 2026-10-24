@@ -1,0 +1,48 @@
+✔ all 32 positive ceilings equal the sum of per-question attainable maxima (3.127419ms)
+✔ negative, zero, unknown and nonfinite values do not become top tendencies (0.609382ms)
+✔ normalization compares proportions rather than raw totals (0.261555ms)
+✔ one incidental selective-burst point must not assert attacking ability (0.37035ms)
+✔ noticing danger must not imply that a calling station folds (0.258331ms)
+✔ attack wording needs both initiative and sustained attack at the threshold (0.193603ms)
+✔ fixed persona replay (not live): 超弱気な初心者 (1.085802ms)
+✔ fixed persona replay (not live): 超タイトな初心者 (0.508669ms)
+✔ fixed persona replay (not live): タイト・パッシブ (0.706318ms)
+✔ fixed persona replay (not live): タイト・アグレッシブ (1.116639ms)
+✔ fixed persona replay (not live): ルース・パッシブ (0.387406ms)
+✔ fixed persona replay (not live): ルース・アグレッシブ (0.270328ms)
+✔ fixed persona replay (not live): コーリングステーション (0.352282ms)
+✔ fixed persona replay (not live): マニアック (0.313133ms)
+✔ fixed persona replay (not live): 超慎重な上級者 (0.480086ms)
+✔ fixed persona replay (not live): 熟練したLAG (0.353605ms)
+✔ fixed persona replay (not live): 熟練したTAG (0.618785ms)
+✔ fixed persona replay (not live): ブラフ嫌い (0.212562ms)
+✔ fixed persona replay (not live): ブラフ多用型 (0.216217ms)
+✔ fixed persona replay (not live): ギャンブラー (0.316489ms)
+✔ fixed persona replay (not live): リスク回避型 (0.292833ms)
+✔ fixed persona replay (not live): バランス型 (0.263298ms)
+✔ fixed persona replay (not live): 相手依存型 (0.191039ms)
+✔ fixed persona replay (not live): 感情的なティルト型 (0.176206ms)
+✔ fixed persona replay (not live): トーナメント生存重視型 (0.378262ms)
+✔ fixed persona replay (not live): トーナメント攻撃型 (0.204929ms)
+✔ fixed persona replay (not live): キャッシュゲーム堅実派 (0.1851ms)
+✔ fixed persona replay (not live): 初心者の無謀型 (0.160913ms)
+✔ fixed persona replay (not live): 上級者の柔軟型 (0.160082ms)
+✔ fixed persona replay (not live): フィット・オア・フォールド型 (0.155375ms)
+✔ fixed persona replay (not live): バリュー重視型 (0.163838ms)
+✔ fixed persona replay (not live): トラップ好き (0.247805ms)
+✔ fixed persona replay (not live): プリフロップ超ルース型 (0.364041ms)
+✔ fixed persona replay (not live): ポストフロップ消極型 (0.3174ms)
+✔ fixed persona replay (not live): 勝負好きだがブラフしない型 (0.229877ms)
+✔ fixed persona replay (not live): 理論重視の冷静型 (0.35719ms)
+✔ question bank validation rejects incomplete or contradictory data (1.076437ms)
+✔ a late result cannot win after a new request, restart or unmount (0.139541ms)
+✔ audit wording corrections apply only to the displayed copy, without mutating saved data (0.250538ms)
+✔ wording correction leaves unrelated copy unchanged (0.092149ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26.707153

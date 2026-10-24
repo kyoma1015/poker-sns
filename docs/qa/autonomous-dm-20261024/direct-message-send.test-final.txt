@@ -1,0 +1,17 @@
+✔ DM repeated Enter during block verification sends exactly once (1354.571277ms)
+✔ DM repeated Enter while insert is pending cannot create another message (1125.944033ms)
+✔ DM rejected transport unlocks retry and does not display backend details (1269.576069ms)
+✔ DM returned insert error preserves draft, redacts details and permits explicit retry (1091.741774ms)
+✔ DM block verification error fails closed without writing (1039.603735ms)
+✔ DM accepted write followed by reload failure is reported as sent without restoring draft (1160.437596ms)
+✔ DM whitespace and IME composition never write a message (1073.229005ms)
+✔ DM a late response from the previous conversation cannot replace the current messages (1194.666521ms)
+✔ DM leaving and returning to the same peer cannot let an old send clear a new draft (1247.536945ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10563.874423
