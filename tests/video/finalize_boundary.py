@@ -36,7 +36,12 @@ def finalize_authenticated(
     if not token or token.strip() != token:
         raise PermissionError("invalid Bearer token")
     verified_user = adapters.authenticate_token(token)
-    user_id = str(UUID(verified_user))
+    if not isinstance(verified_user, str):
+        raise PermissionError("invalid authenticated user ID")
+    try:
+        user_id = str(UUID(verified_user))
+    except (ValueError, TypeError, AttributeError):
+        raise PermissionError("invalid authenticated user ID") from None
     if verified_user != user_id:
         raise PermissionError("noncanonical authenticated user ID")
     if not isinstance(body, dict) or set(body) != {"object_path", "content"}:
