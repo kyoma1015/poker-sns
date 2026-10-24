@@ -48,3 +48,6 @@ Continued b00466d after exact GitHub HEAD verification. Added20 permanent tests,
 
 ## Legacy offline CLI strict parser inheritance —2026-10-24 continuation
 Found a concrete uncopied repair: old scripts/tda-audit-cli.mjs still normalized duplicate JSON/overflow/invalidUTF8 while new snapshot CLI rejected them. Fixed input8tests6FAIL/2PASS→8PASS using existingstrict helper and rawbyte reads; genericINVALID_JSON/UNVERIFIED/publicationfalse maintained. No UI/RPC/grading change or duplicated parser. Evidence docs/qa/b-legacy-strict-json-20261024/. Official350 evidence remainsBLOCKED; no newPR/manualCI/heldstate/production operation.
+
+## Real offline CLI process/file QA —2026-10-24 continuation
+Added8 execution-boundary tests for actual old/snapshot CLI subprocesses and own temporary files: valid bytes, duplicateJSON, hash-matched invalidUTF8 and empty files. Generic reasons/channel/exitcode/UNVERIFIED/publicationfalse verified. All8PASS on existing repaired source; no invented source patch. Full evidence docs/qa/b-real-offline-entrypoints-20261024/. Official350 and逐条evidence remainBLOCKED. No PR/manualCI/production/heldstate changes.
