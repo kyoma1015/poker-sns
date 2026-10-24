@@ -31,7 +31,7 @@ def make_handler(anon_key: str, service_key: str):
                 self.send_error(503)
                 return
             self.send_response(200)
-            self.send_header("Content-Type", "video/mp4")
+            self.send_header("Content-Type", "video/webm" if data[:4] == b"\x1aE\xdf\xa3" else "video/mp4")
             self.send_header("Content-Length", str(len(data)))
             self.send_header("Cache-Control", "no-store, private")
             self.send_header("Pragma", "no-cache")
