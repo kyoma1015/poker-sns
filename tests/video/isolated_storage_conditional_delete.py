@@ -21,7 +21,8 @@ def delete_if_exact_version(owner: str, path: str, expected_version: str) -> boo
         stem, dot, ext = segments[1].rpartition(".")
         if not dot or ext not in ("mp4", "webm"):
             raise ValueError("invalid extension")
-        UUID(stem)
+        if str(UUID(stem)) != stem:
+            raise ValueError("noncanonical object UUID")
         if not isinstance(expected_version, str) or not expected_version.strip():
             raise ValueError("missing version")
     except (ValueError, TypeError, AttributeError):
