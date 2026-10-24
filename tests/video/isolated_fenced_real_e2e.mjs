@@ -29,18 +29,19 @@ const owner=(await client.auth.getUser()).data.user.id
 const otherId=(await other.auth.getUser()).data.user.id
 assert.notEqual(owner,otherId)
 const jwt=(await client.auth.getSession()).data.session.access_token
-const path=`${owner}/${randomUUID()}.mp4`
+// Chromium on Linux runners may lack proprietary H.264 decoders; use supported VP8/WebM.
+const path=`${owner}/${randomUUID()}.webm`
 const dir=mkdtempSync(join(tmpdir(),'video-real-e2e-'))
 let bytes
 try {
- const output=join(dir,'video.mp4')
+ const output=join(dir,'video.webm')
  execFileSync('ffmpeg',['-hide_banner','-loglevel','error','-f','lavfi','-i','color=c=black:s=64x64:r=10',
-   '-t','2','-c:v','libx264','-pix_fmt','yuv420p','-movflags','+faststart','-y',output],{timeout:30000})
+   '-t','2','-c:v','libvpx','-b:v','150k','-pix_fmt','yuv420p','-y',output],{timeout:30000})
  bytes=readFileSync(output)
 } finally {rmSync(dir,{recursive:true,force:true})}
 assert.ok(bytes.length>0&&bytes.length<20*1024*1024)
 const storage=client.storage.from('post-videos')
-assert.ifError((await storage.upload(path,bytes,{contentType:'video/mp4',upsert:false})).error)
+assert.ifError((await storage.upload(path,bytes,{contentType:'video/webm',upsert:false})).error)
 const adapters=createIsolatedSupabaseVideoAdapters(url,anon,service,jwt)
 const first=await finalizeImmutableCandidate(jwt,path,'real isolated end-to-end',adapters)
 assert.match(first,/^[0-9a-f-]{36}$/)
@@ -140,7 +141,7 @@ async function invokeMedia(token) {
 const ownerPlayback=await invokeMedia(jwt)
 assert.equal(ownerPlayback.status,200,'authorized server media handler')
 assert.deepEqual(ownerPlayback.body,bytes)
-assert.equal(ownerPlayback.headers['content-type'],'video/mp4')
+assert.equal(ownerPlayback.headers['content-type'],'video/webm')
 const otherJwt=(await other.auth.getSession()).data.session.access_token
 const deniedPlayback=await invokeMedia(otherJwt)
 assert.equal(deniedPlayback.status,404,'unauthorized server media handler')
