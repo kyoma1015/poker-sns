@@ -1,7 +1,7 @@
 import { spawn } from 'node:child_process'
 import { mkdtemp, writeFile, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
-import { join } from 'node:path'
+import { isAbsolute, join } from 'node:path'
 
 export const MAX_VIDEO_BYTES = 20 * 1024 * 1024
 export const MAX_VIDEO_SECONDS = 30
@@ -35,8 +35,13 @@ export async function probeVideoBytes(bytes: Buffer, extension: VideoExtension):
   let metadata: ProbeResult
   try {
     await writeFile(filename, bytes, { flag: 'wx', mode: 0o600 })
+    // Production must supply an audited executable path bundled into the Vercel function.
+    // Never accept a relative path or a shell command. Missing binaries fail closed.
+    const configured = process.env.FFPROBE_BINARY_PATH
+    if (configured && !isAbsolute(configured)) throw new Error('ffprobe binary path must be absolute')
+    const executable = configured || 'ffprobe'
     metadata = await new Promise<ProbeResult>((resolve, reject) => {
-    const child = spawn('ffprobe', [
+    const child = spawn(executable, [
       '-v', 'error', '-show_format', '-show_streams', '-of', 'json', '-i', filename,
     ], { stdio: ['pipe', 'pipe', 'pipe'], shell: false })
     let stdout = ''
