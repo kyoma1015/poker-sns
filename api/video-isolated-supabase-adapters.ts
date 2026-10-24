@@ -43,7 +43,12 @@ export function createIsolatedSupabaseVideoAdapters(
     const { data, error } = await admin.rpc('video_qa_storage_generation', {
       p_owner: owner, p_path: path,
     })
-    if (error || typeof data !== 'string' || !new RegExp('^' + UUID + '
+    if (error || typeof data !== 'string' || data.length !== 36) {
+      throw new Error('immutable Storage identity unavailable')
+    }
+    return data
+  }
+  return {
     authenticate,
     async snapshot(ownerId, path): Promise<ImmutableStagedSnapshot> {
       ownerPath(ownerId, path)
