@@ -21,6 +21,17 @@ def process_cleanup(
     mark_complete: Callable[[CleanupJob, str], None],
     reschedule: Callable[[CleanupJob, str], None],
 ) -> str:
+    from uuid import UUID
+    try:
+        if str(UUID(job.owner_id)) != job.owner_id:
+            raise ValueError("noncanonical owner")
+        owner, name = job.object_path.split("/")
+        stem, dot, extension = name.rpartition(".")
+        if owner != job.owner_id or not dot or extension not in ("mp4", "webm") or str(UUID(stem)) != stem:
+            raise ValueError("invalid object path")
+    except (ValueError, TypeError, AttributeError):
+        reschedule(job, "invalid owner or object path")
+        return "RETRY"
     if not job.expected_object_version:
         reschedule(job, "missing immutable object identity")
         return "RETRY"
