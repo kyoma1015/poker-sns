@@ -61,8 +61,17 @@ def complete_prepared(guard, state, task_id, token, *, dispatch, observe, preser
     current = worker.finite_lease_number(time.time() if now is None else now,'prepared clock')
     original, spec, context = _prepared(guard,state,task_id,token,current)
     guard.check()
+    def checked_dispatch():
+        # observe() may block/change context; never dispatch on its earlier read.
+        latest = worker.finite_lease_number(time.time() if now is None else now,'dispatch clock')
+        raw, latest_spec, _ = _prepared(guard,state,task_id,token,latest)
+        if raw != original or latest_spec != spec:
+            raise worker.LeaseActivationRefused('prepared context changed before dispatch')
+        guard.check()
+        return dispatch()
+
     try:
-        receipt = guard.call_host(dispatch,observe=observe,preserve=preserve)
+        receipt = guard.call_host(checked_dispatch,observe=observe,preserve=preserve)
         guard.check()
         return worker.finish_host_session(state,task_id,token,receipt,now=now)
     except BaseException as error:
