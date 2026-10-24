@@ -82,6 +82,21 @@ class IsolatedVideoHeaderTests(unittest.TestCase):
                                      headers + [("Content-Length", str(len(body)))],
                                      body), 400)
 
+    def test_nonstandard_json_constants_rejected_before_auth_adapters(self):
+        headers = [("Authorization", "Bearer invalid"),
+                   ("Content-Type", "application/json")]
+        for body in (
+            b'{"content":NaN}',
+            b'{"content":Infinity}',
+            b'{"content":-Infinity}',
+            b'{"nested":[NaN]}',
+        ):
+            with self.subTest(body=body):
+                self.assertEqual(
+                    self.raw_request("POST", "/video/finalize",
+                                     headers + [("Content-Length", str(len(body)))],
+                                     body), 400)
+
     def test_ambiguous_post_framing_rejected_before_auth_lookup(self):
         common = [("Authorization", "Bearer invalid"),
                   ("Content-Type", "application/json")]
