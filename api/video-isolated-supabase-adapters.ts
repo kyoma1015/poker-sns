@@ -106,13 +106,24 @@ export function createIsolatedSupabaseVideoAdapters(
       if (error || typeof data !== 'string') throw new Error('fenced publish outcome unknown')
       return data
     },
-    async reconcile(ownerId, path, generation) {
+    async reconcile(ownerId, path, generation, sha256, duration, content) {
       if (await authenticate(accessToken) !== ownerId) throw new Error('unauthorized owner')
       ownerPath(ownerId, path)
       const { data, error } = await admin.rpc('video_qa_reconcile_fenced', {
         p_owner: ownerId, p_path: path, p_generation: generation,
       })
       if (error || (data !== null && typeof data !== 'string')) throw new Error('reconciliation unavailable')
+      if (!data) return null
+      if (!sha256 || duration === undefined || content === undefined) return null
+      const { data: post, error: readError } = await admin.from('posts')
+        .select('id,user_id,video_path,video_generation,video_sha256,video_duration_seconds,content')
+        .eq('id', data).maybeSingle()
+      if (readError || !post) throw new Error('reconciliation fingerprint unavailable')
+      if (post.user_id !== ownerId || post.video_path !== path ||
+          post.video_generation !== generation || post.video_sha256 !== sha256 ||
+          post.video_duration_seconds !== duration || post.content !== content) {
+        throw new DefinitivePublishRejection('reconciled post content differs from request')
+      }
       return data
     },
   }
