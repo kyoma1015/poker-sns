@@ -68,6 +68,41 @@ def main():
     with urlopen(clear, timeout=10) as response:
         assert response.status in (200, 204)
     print("PASS: isolated cleanup E2E queue reset")
+    # A pinned but already-absent object can be acknowledged without delete.
+    # This exercises the real claim/reconcile/finish RPC chain and lease release.
+    absent_path = owner + "/" + str(uuid4()) + ".mp4"
+    absent_payload = {"owner_id": owner, "object_path": absent_path,
+                      "expected_object_version": "pinned-absent-v1"}
+    absent_request = Request(
+        "http://127.0.0.1:56321/rest/v1/video_cleanup_queue",
+        data=json.dumps(absent_payload).encode(),
+        headers={"apikey": service, "Authorization": "Bearer " + service,
+                 "Content-Type": "application/json", "Prefer": "return=representation"},
+        method="POST")
+    with urlopen(absent_request, timeout=10) as response:
+        absent_job = json.load(response)[0]
+    inspected = []
+    def absent_inspection(checked_owner, checked_path):
+        inspected.append((checked_owner, checked_path))
+        return None
+    def deny_delete(*args):
+        raise AssertionError("absent object must never be deleted")
+    absent_result = run_one("http://127.0.0.1:56321", service,
+                            absent_inspection, deny_delete)
+    assert absent_result == "complete", absent_result
+    assert inspected == [(owner, absent_path)], inspected
+    absent_status = Request(
+        "http://127.0.0.1:56321/rest/v1/video_cleanup_queue?id=eq."
+        + str(absent_job["id"])
+        + "&select=id,attempts,last_error,completed_at,lease_owner,lease_until",
+        headers={"apikey": service, "Authorization": "Bearer " + service})
+    with urlopen(absent_status, timeout=10) as response:
+        saved_absent = json.load(response)[0]
+    assert saved_absent["completed_at"] is not None, saved_absent
+    assert saved_absent["lease_owner"] is None and saved_absent["lease_until"] is None, saved_absent
+    assert saved_absent["attempts"] == 1, saved_absent
+    print("PASS: real isolated cleanup queue acknowledges pinned absent object without deletion")
+
     for name, path, version in cases:
         payload = {"owner_id": owner, "object_path": owner + "/" + str(uuid4()) + ".mp4" if name == "unpinned_version" else path,
                    "expected_object_version": version}
