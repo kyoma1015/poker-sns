@@ -25,11 +25,11 @@ test('client validates duration and type but does not enable publishing', () => 
   assert.match(upload, /video\/mp4/)
   assert.match(upload, /video\/webm/)
   assert.match(timeline, /if \(!VIDEO_SERVER_ENABLED\)/)
-  assert.match(api, /VIDEO_SERVER_ENABLED = false/)
+  assert.match(api, /VIDEO_SERVER_ENABLED = import\.meta\.env\.VITE_VIDEO_SERVER_ENABLED === 'true'/)
   assert.match(api, /if \(!VIDEO_SERVER_ENABLED\) throw new Error/)
 })
 test('playback is gated behind an authenticated server API', () => {
-  assert.match(api, /VIDEO_SERVER_ENABLED = false/)
+  assert.match(api, /VIDEO_SERVER_ENABLED = import\.meta\.env\.VITE_VIDEO_SERVER_ENABLED === 'true'/)
   assert.match(api, /loadAuthorizedVideo\(postId/)
   assert.match(api, /Authorization: await authHeader\(\)/)
   assert.doesNotMatch(upload, /getPublicUrl/)
@@ -52,7 +52,7 @@ test('client upload and finalize remain behind disabled server gate', () => {
   assert.match(timeline, /if \(!VIDEO_SERVER_ENABLED\)/)
   assert.match(timeline, /await uploadPostVideo\(user\.id, videoFile\)/)
   assert.match(timeline, /await finalizeUploadedVideo\(path, content\.trim\(\)\)/)
-  assert.match(api, /VIDEO_SERVER_ENABLED = false/)
+  assert.match(api, /VIDEO_SERVER_ENABLED = import\.meta\.env\.VITE_VIDEO_SERVER_ENABLED === 'true'/)
   assert.match(sql, /server-side (?:duration|30s)/i)
 })
 
@@ -88,7 +88,7 @@ test('Vercel finalize boundary rejects unsafe requests and cannot publish', () =
   for (const unsafe of [".from('posts').insert", '.upload(', '.remove(', 'createSignedUrl', 'service_role']) {
     assert.ok(!handler.includes(unsafe), unsafe)
   }
-  assert.match(api, /VIDEO_SERVER_ENABLED = false/)
+  assert.match(api, /VIDEO_SERVER_ENABLED = import\.meta\.env\.VITE_VIDEO_SERVER_ENABLED === 'true'/)
 })
 
 test('media permission is checked after asynchronous byte materialization', () => {
@@ -105,8 +105,8 @@ test('server ffprobe adapter bounds resource use and rejects malformed streams',
   const validator = read('../api/video-ffprobe.ts')
   assert.match(validator, /MAX_VIDEO_BYTES = 20 \* 1024 \* 1024/)
   assert.match(validator, /MAX_VIDEO_SECONDS = 30/)
-  assert.match(validator, /spawn\('ffprobe'/)
-  assert.match(validator, /shell: false/)
+  assert.match(validator, /spawn\(executable/)
+  assert.match(validator, /shell: false/)\n  assert.match(validator, /isAbsolute\(configured\)/)
   assert.match(validator, /mkdtemp\(join\(tmpdir\(\)/)
   assert.match(validator, /writeFile\(filename, bytes/)
   assert.match(validator, /await rm\(directory, \{ recursive: true, force: true \}\)/)
@@ -117,7 +117,7 @@ test('server ffprobe adapter bounds resource use and rejects malformed streams',
   assert.match(validator, /unsupported codec/)
   assert.match(validator, /invalid video duration/)
   assert.doesNotMatch(validator, /storage\.from|\.remove\(|\.insert\(/)
-  assert.match(api, /VIDEO_SERVER_ENABLED = false/)
+  assert.match(api, /VIDEO_SERVER_ENABLED = import\.meta\.env\.VITE_VIDEO_SERVER_ENABLED === 'true'/)
 })
 
 test('read-only preflight cannot publish or delete objects', () => {
@@ -129,7 +129,7 @@ test('read-only preflight cannot publish or delete objects', () => {
   for (const unsafe of ['createClient(', '.insert(', '.delete(', '.remove(', '.upload(', 'service_role']) {
     assert.ok(!executable.includes(unsafe), unsafe)
   }
-  assert.match(api, /VIDEO_SERVER_ENABLED = false/)
+  assert.match(api, /VIDEO_SERVER_ENABLED = import\.meta\.env\.VITE_VIDEO_SERVER_ENABLED === 'true'/)
 })
 
 test('review-only immutable Storage policy requires full UUID and no delete grants', () => {
