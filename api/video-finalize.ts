@@ -24,10 +24,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!/^application\/json(?:;\s*charset=utf-8)?$/i.test(String(req.headers['content-type'] || ''))) return res.status(415).end()
   const body: unknown = req.body
   if (!body || typeof body !== 'object' || Array.isArray(body)) return res.status(400).end()
+  // Reject inherited fields and exotic prototypes at the HTTP trust boundary.
+  if (Object.getPrototypeOf(body) !== Object.prototype && Object.getPrototypeOf(body) !== null) return res.status(400).end()
   const fields = Object.keys(body)
   if (fields.length !== 2 || !fields.includes('object_path') || !fields.includes('content')) return res.status(400).end()
   const { object_path, content } = body as { object_path: unknown; content: unknown }
   if (typeof object_path !== 'string' || typeof content !== 'string' || content.length > 10000) return res.status(400).end()
+  if (Buffer.byteLength(JSON.stringify(body), 'utf8') > MAX_BODY_BYTES) return res.status(413).end()
   const match = VIDEO_PATH.exec(object_path)
   if (!match) return res.status(400).end()
   const url = process.env.VITE_SUPABASE_URL
