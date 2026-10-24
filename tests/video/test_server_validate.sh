@@ -15,4 +15,11 @@ printf 'not a video' > "$work/bad.mp4"
 if python3 tests/video/server_validate.py "$work/bad.mp4"; then echo "FAIL: malformed MP4 accepted"; exit 1; fi
 truncate -s 20971521 "$work/oversize.mp4"
 if python3 tests/video/server_validate.py "$work/oversize.mp4"; then echo "FAIL: oversize accepted"; exit 1; fi
-echo 'PASS: isolated ffprobe 2s accept, 31s reject, spoofed/malformed/oversize reject'
+# Matroska containers can masquerade as WebM; reject incompatible codecs.
+ffmpeg -hide_banner -loglevel error -f lavfi -i color=c=black:s=32x32:r=1 -t 2 -c:v libx264 -y "$work/h264.mkv"
+cp "$work/h264.mkv" "$work/fake-codec.webm"
+if python3 tests/video/server_validate.py "$work/fake-codec.webm"; then echo "FAIL: incompatible WebM codec accepted"; exit 1; fi
+# No audio/video stream should be accepted without an actual video track.
+ffmpeg -hide_banner -loglevel error -f lavfi -i sine=frequency=440:duration=2 -c:a aac -y "$work/audio-only.mp4"
+if python3 tests/video/server_validate.py "$work/audio-only.mp4"; then echo "FAIL: audio-only accepted"; exit 1; fi
+echo 'PASS: isolated ffprobe duration, codec, video stream, spoofed/malformed/oversize reject'
