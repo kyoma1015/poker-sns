@@ -99,3 +99,10 @@ immutable copied native rows survive later training. Local271PASS (old232+39),
 3separate variants, no new PR/CI. See GTO_BOUNDED_BELIEF_20261024.md. Conditional
 full-state policy is NOT information-set strategy proof; native169EV remainsnull.
 No originalG9/G11/history compatibility or convergence success claimed.
+
+## Public observation conditioning / queried hero consistency — 2026-10-24
+Cycle2 adds explicit blocker-conditioned support with exact compatible/removed
+prior mass, native history/advertised-board equality and queried hero-infoset
+policy consistency. Local310PASS (old271+39),3variant exact canonical output match;
+see GTO_BELIEF_OBSERVATION_20261024.md. Null remains for native169EV and impossible
+observation, no equilibrium or originalG9/G11 claim. No PR/CI/production adoption.

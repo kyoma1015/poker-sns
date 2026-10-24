@@ -1,0 +1,38 @@
+test_default_and_true_reject_incomplete (test_coverage_flag.CoverageFlag.test_default_and_true_reject_incomplete) ... ok
+test_explicit_partial_retained (test_coverage_flag.CoverageFlag.test_explicit_partial_retained) ... ok
+test_invalid_flag_does_not_iterate_input (test_coverage_flag.CoverageFlag.test_invalid_flag_does_not_iterate_input) ... ok
+test_nonboolean_flags_rejected (test_coverage_flag.CoverageFlag.test_nonboolean_flags_rejected) ... ok
+test_prior_reviewed_mass_overflow_fix_retained (test_coverage_flag.CoverageFlag.test_prior_reviewed_mass_overflow_fix_retained) ... ok
+test_post_yield_mutation_cannot_introduce_unvalidated_nan (test_frequency_snapshot.FrequencySnapshot.test_post_yield_mutation_cannot_introduce_unvalidated_nan) ... ok
+test_stream_reused_buffer_preserves_each_validated_row (test_frequency_snapshot.FrequencySnapshot.test_stream_reused_buffer_preserves_each_validated_row) ... ok
+test_tuple_list_and_zero_mass_stay_supported (test_frequency_snapshot.FrequencySnapshot.test_tuple_list_and_zero_mass_stay_supported) ... ok
+test_negative_terms_not_individually_overrounded (test_subnormal_ev.SubnormalEV.test_negative_terms_not_individually_overrounded) ... ok
+test_negative_terms_round_up_only_after_sum (test_subnormal_ev.SubnormalEV.test_negative_terms_round_up_only_after_sum) ... ok
+test_positive_terms_not_individually_overrounded (test_subnormal_ev.SubnormalEV.test_positive_terms_not_individually_overrounded) ... ok
+test_positive_terms_round_up_only_after_sum (test_subnormal_ev.SubnormalEV.test_positive_terms_round_up_only_after_sum) ... ok
+test_three_overrounded_terms (test_subnormal_policy.SubnormalPolicy.test_three_overrounded_terms) ... ok
+test_three_small_terms (test_subnormal_policy.SubnormalPolicy.test_three_small_terms) ... ok
+test_two_overrounded_terms (test_subnormal_policy.SubnormalPolicy.test_two_overrounded_terms) ... ok
+test_two_small_terms (test_subnormal_policy.SubnormalPolicy.test_two_small_terms) ... ok
+test_existing_invalid_numbers (test_unrepresentable_numbers.FiniteNumberValidation.test_existing_invalid_numbers) ... ok
+test_negative_huge_ev (test_unrepresentable_numbers.FiniteNumberValidation.test_negative_huge_ev) ... ok
+test_negative_huge_frequency (test_unrepresentable_numbers.FiniteNumberValidation.test_negative_huge_frequency) ... ok
+test_negative_huge_weight (test_unrepresentable_numbers.FiniteNumberValidation.test_negative_huge_weight) ... ok
+test_ordinary_integer_input_preserved (test_unrepresentable_numbers.FiniteNumberValidation.test_ordinary_integer_input_preserved) ... ok
+test_positive_huge_ev (test_unrepresentable_numbers.FiniteNumberValidation.test_positive_huge_ev) ... ok
+test_positive_huge_frequency (test_unrepresentable_numbers.FiniteNumberValidation.test_positive_huge_frequency) ... ok
+test_positive_huge_weight (test_unrepresentable_numbers.FiniteNumberValidation.test_positive_huge_weight) ... ok
+test_large_product_no_overflow (test_weighted_ev.WeightedEV.test_large_product_no_overflow) ... ok
+test_negative_representable_contribution (test_weighted_ev.WeightedEV.test_negative_representable_contribution) ... ok
+test_positive_representable_contribution (test_weighted_ev.WeightedEV.test_positive_representable_contribution) ... ok
+test_small_weight_product_before_normalization (test_weighted_ev.WeightedEV.test_small_weight_product_before_normalization) ... ok
+test_zero_ev_and_zero_weight (test_weighted_ev.WeightedEV.test_zero_ev_and_zero_weight) ... ok
+test_negative_maximum_normal_weight (test_weighted_maximum.WeightedMaximum.test_negative_maximum_normal_weight) ... ok
+test_negative_maximum_subnormal_weight (test_weighted_maximum.WeightedMaximum.test_negative_maximum_subnormal_weight) ... ok
+test_positive_maximum_normal_weight (test_weighted_maximum.WeightedMaximum.test_positive_maximum_normal_weight) ... ok
+test_positive_maximum_subnormal_weight (test_weighted_maximum.WeightedMaximum.test_positive_maximum_subnormal_weight) ... ok
+
+----------------------------------------------------------------------
+Ran 33 tests in 0.006s
+
+OK
