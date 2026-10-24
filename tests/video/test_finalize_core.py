@@ -30,12 +30,12 @@ class FinalizeCoreTests(unittest.TestCase):
         self.assertEqual(self.calls, [('delete', PATH)])
 
     @patch('tests.video.finalize_core.verify', return_value={'duration':2})
-    def test_failed_db_publish_reclaims(self, verify):
+    def test_failed_db_publish_retains_until_reconciled(self, verify):
         def fail(*args): raise RuntimeError('DB down')
-        with self.assertRaisesRegex(RuntimeError,'DB down'):
+        with self.assertRaises(PostCommitUnknown):
             finalize_video(self.request, verify_owner=self.owner,
                 create_post=fail, delete_staged_object=self.cleanup)
-        self.assertEqual(self.calls, [('delete', PATH)])
+        self.assertEqual(self.calls, [])
 
     @patch('tests.video.finalize_core.verify', return_value={'duration': 2})
     def test_ambiguous_db_commit_never_deletes_video(self, verify):
