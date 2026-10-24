@@ -680,7 +680,7 @@ function PostDetail() {
                 <QuoteSourcePreview source={post.quotePreview} onOpen={post.quotePreview ? () => navigate(`/post/${post.quotePreview!.id}`) : undefined} />
               )}
 
-              {post.video_path && <PostVideo path={post.video_path} />}
+              {post.video_path && <PostVideo postId={post.id} />}
               {Array.isArray(post.image_urls) && post.image_urls.length > 0 && (
                 <div
                   style={{
