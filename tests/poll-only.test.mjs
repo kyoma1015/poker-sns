@@ -82,7 +82,9 @@ test('valid vote retains anonymous flag and poll-only RPC arguments', () => {
 
 test('poll card fails closed when deadline is missing or invalid', () => {
   const card = readFileSync(new URL('../src/TimelineInteractive.tsx', import.meta.url), 'utf8')
-  assert.match(card, /!Number\.isFinite\(deadline\) \|\| deadline <= Date\.now\(\)/)
+  assert.match(card, /!Number\.isFinite\(deadline\) \|\| deadline <= clockNow/)
+  assert.match(card, /setInterval\(\(\)=>setClockNow\(Date\.now\(\)\),1000\)/)
+  assert.match(card, /clearInterval\(timer\)/)
   assert.match(card, /終了または期限を確認できません/)
   assert.doesNotMatch(card, /new Date\(item\.closes_at!\)/)
 })
