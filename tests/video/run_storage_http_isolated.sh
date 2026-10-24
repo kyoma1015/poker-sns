@@ -30,3 +30,8 @@ psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/isolated_immutable_storage_guard
 # INSERT/SELECT policies; no client UPDATE or DELETE should become possible.
 psql "$dburl" -v ON_ERROR_STOP=1 -f sql/post_short_videos_immutable_review_only.sql
 VIDEO_QA_ENV="$qa/local.env" node tests/video/isolated_immutable_storage_http_e2e.mjs
+
+# Real isolated Auth + Storage HTTP + PostgREST RPC + ffprobe composition.
+# The immutable Storage guard is active before the generation-fenced RPC runs.
+psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/isolated_fenced_publish.sql
+VIDEO_QA_ENV="$qa/local.env" node tests/video/isolated_fenced_real_e2e.mjs
