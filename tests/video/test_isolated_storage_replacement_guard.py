@@ -11,7 +11,7 @@ from tests.video.isolated_storage_conditional_delete import (
 class ObjectReplacementSafety(unittest.TestCase):
     def test_replacement_still_blocks_deletion(self):
         owner = "10000000-0000-0000-0000-000000000001"
-        path = owner + "/clip.mp4"
+        path = owner + "/40000000-0000-0000-0000-000000000004.mp4"
         for token in ("etag-a", "etag-b", "etag-a"):
             with self.assertRaises(ConditionalDeleteUnavailable):
                 delete_if_exact_version(owner, path, token)
