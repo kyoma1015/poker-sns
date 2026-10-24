@@ -70,11 +70,11 @@ grant execute on function public.video_qa_reconcile_fenced(uuid,text,uuid)
 -- Metadata lookup for the trusted server; Storage schema stays unexposed.
 create or replace function public.video_qa_storage_generation(
  p_owner uuid,p_path text
-) returns uuid language plpgsql security definer
-set search_path='' as $$
+) returns uuid language plpgsql security invoker
+set search_path='' as $
 declare v_generation uuid;
 begin
- if auth.role() is distinct from 'service_role' and current_user <> 'postgres' then
+ if current_user not in ('postgres','service_role') then
   raise exception 'trusted role required';
  end if;
  if split_part(p_path,'/',1) <> p_owner::text then
