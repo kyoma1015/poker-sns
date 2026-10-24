@@ -74,7 +74,7 @@ def finalize_http_request(headers, body, *, authenticate_jwt, download_staged,
     if len(body) > 4096:
         return 413, {"error": "request_too_large"}
     authorization = headers.get("authorization", "")
-    match = re.fullmatch(r"Bearer ([A-Za-z0-9_\\-.]+)", authorization)
+    match = re.fullmatch(r"Bearer ([A-Za-z0-9_.-]+)", authorization)
     if match is None:
         return 401, {"error": "unauthorized"}
     try:
