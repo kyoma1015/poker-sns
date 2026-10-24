@@ -1,0 +1,643 @@
+tests/f03-notification.test.mjs
+✔ notification entry points use verified events and the saved comment ID (3.003828ms)
+✔ successful verified event returns null once (3.062446ms)
+✔ authorization/validation 401/unauthorized is never retried (0.722867ms)
+✔ authorization/validation 403/denied is never retried (0.649487ms)
+✔ authorization/validation 400/22023 is never retried (0.942608ms)
+✔ authorization/validation 200/42501 is never retried (0.920365ms)
+✔ HTTP 429 retries with the same event and recovers (1.335729ms)
+✔ HTTP 500 retries with the same event and recovers (0.719873ms)
+✔ HTTP 503 retries with the same event and recovers (0.928517ms)
+✔ network failure is retried at most three times (1.70199ms)
+✔ transport ignoring abort still finishes and aborts each of three attempts (4.256131ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 57.593927
+(node:907) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+tests/interactive-requests.test.mjs
+✔ named poll request matches the disclosed named mode (1.419024ms)
+✔ anonymous poll remains anonymous (0.137277ms)
+✔ invalid option null cannot produce a request (0.210176ms)
+✔ invalid option -1 cannot produce a request (0.096906ms)
+✔ invalid option 2 cannot produce a request (0.079419ms)
+✔ invalid option 0.5 cannot produce a request (0.077477ms)
+✔ invalid option NaN cannot produce a request (0.067551ms)
+✔ a previously rendered open card cannot vote at or after the deadline (0.124758ms)
+✔ missing or invalid deadline fails closed (0.170887ms)
+✔ question boxes cannot use the poll write contract (0.207583ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10.636497
+
+tests/player-type.test.mjs
+✔ all 32 positive ceilings equal the sum of per-question attainable maxima (3.094284ms)
+✔ negative, zero, unknown and nonfinite values do not become top tendencies (0.615716ms)
+✔ normalization compares proportions rather than raw totals (0.223096ms)
+✔ one incidental selective-burst point must not assert attacking ability (0.306691ms)
+✔ noticing danger must not imply that a calling station folds (0.270657ms)
+✔ attack wording needs both initiative and sustained attack at the threshold (0.158739ms)
+✔ fixed persona replay (not live): 超弱気な初心者 (0.896168ms)
+✔ fixed persona replay (not live): 超タイトな初心者 (0.543958ms)
+✔ fixed persona replay (not live): タイト・パッシブ (0.57873ms)
+✔ fixed persona replay (not live): タイト・アグレッシブ (0.847775ms)
+✔ fixed persona replay (not live): ルース・パッシブ (0.407103ms)
+✔ fixed persona replay (not live): ルース・アグレッシブ (0.313722ms)
+✔ fixed persona replay (not live): コーリングステーション (0.57823ms)
+✔ fixed persona replay (not live): マニアック (0.29916ms)
+✔ fixed persona replay (not live): 超慎重な上級者 (0.434253ms)
+✔ fixed persona replay (not live): 熟練したLAG (0.760284ms)
+✔ fixed persona replay (not live): 熟練したTAG (0.510378ms)
+✔ fixed persona replay (not live): ブラフ嫌い (0.209725ms)
+✔ fixed persona replay (not live): ブラフ多用型 (0.171668ms)
+✔ fixed persona replay (not live): ギャンブラー (0.166661ms)
+✔ fixed persona replay (not live): リスク回避型 (0.161222ms)
+✔ fixed persona replay (not live): バランス型 (0.339941ms)
+✔ fixed persona replay (not live): 相手依存型 (0.229605ms)
+✔ fixed persona replay (not live): 感情的なティルト型 (0.16647ms)
+✔ fixed persona replay (not live): トーナメント生存重視型 (0.371098ms)
+✔ fixed persona replay (not live): トーナメント攻撃型 (0.168233ms)
+✔ fixed persona replay (not live): キャッシュゲーム堅実派 (0.167362ms)
+✔ fixed persona replay (not live): 初心者の無謀型 (0.157046ms)
+✔ fixed persona replay (not live): 上級者の柔軟型 (0.197997ms)
+✔ fixed persona replay (not live): フィット・オア・フォールド型 (0.156155ms)
+✔ fixed persona replay (not live): バリュー重視型 (0.158017ms)
+✔ fixed persona replay (not live): トラップ好き (0.183576ms)
+✔ fixed persona replay (not live): プリフロップ超ルース型 (0.446551ms)
+✔ fixed persona replay (not live): ポストフロップ消極型 (0.170116ms)
+✔ fixed persona replay (not live): 勝負好きだがブラフしない型 (0.209065ms)
+✔ fixed persona replay (not live): 理論重視の冷静型 (0.317337ms)
+✔ question bank validation rejects incomplete or contradictory data (1.649932ms)
+✔ a late result cannot win after a new request, restart or unmount (0.109865ms)
+✔ audit wording corrections apply only to the displayed copy, without mutating saved data (0.247902ms)
+✔ wording correction leaves unrelated copy unchanged (0.09337ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26.160606
+
+tests/poll-only.test.mjs
+✔ stale or forged question mode is rejected before RPC (1.030269ms)
+✔ stale or forged normal mode is rejected before RPC (0.105008ms)
+✔ stale or forged  mode is rejected before RPC (0.071007ms)
+✔ stale or forged QUESTION mode is rejected before RPC (0.063135ms)
+✔ 2 poll choices and privacy mode produce poll-only contract (0.670318ms)
+✔ 3 poll choices and privacy mode produce poll-only contract (0.19278ms)
+✔ 4 poll choices and privacy mode produce poll-only contract (0.138548ms)
+✔ invalid poll parameters [["A"],24] fail closed (0.139129ms)
+✔ invalid poll parameters [["A","B","C","D","E"],24] fail closed (0.877349ms)
+✔ invalid poll parameters [["A"," a "],24] fail closed (0.299801ms)
+✔ invalid poll parameters [["","B"],24] fail closed (0.105539ms)
+✔ invalid poll parameters [["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx","B"],24] fail closed (0.096205ms)
+✔ invalid poll parameters [["A","B"],0] fail closed (0.185259ms)
+✔ invalid poll parameters [["A","B"],null] fail closed (0.068493ms)
+✔ empty and overlong content fail closed (0.152219ms)
+✔ anonymous presentation drops identities even in unexpected server payload without mutating it (0.306871ms)
+✔ both composers use guarded creation; public card cannot mount historical question thread (1.300486ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12.604057
+
+tests/tda-answer-conflict-audit.test.mjs
+✔ same prompt and option text set with different correct meanings yields a conflict candidate (2.071866ms)
+✔ option ID differences alone are not a conflicting answer (0.268503ms)
+✔ different display order does not change an answer meaning (0.848616ms)
+✔ different option text set is not falsely matched (0.242024ms)
+✔ different prompt is not falsely matched (0.269596ms)
+✔ existing NFKC whitespace case normalization only produces review candidates (0.271188ms)
+✔ duplicate option meanings are not used to invent a definite cross-question conflict (0.20624ms)
+✔ invalid or ambiguous answer keys do not produce conflict candidates (0.264448ms)
+✔ one three-question conflict group preserves all candidate IDs deterministically (0.342184ms)
+✔ orphan duplicate answer rows retain both independent referential issues (0.328804ms)
+✔ candidate report does not echo full private prompt or explanation text (0.250838ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11.190951
+
+tests/tda-answer-key-audit.test.mjs
+✔ valid offline export reports counts and 1-based displayed answer position without mutating input (2.171716ms)
+✔ missing answer row remains review required (0.20006ms)
+✔ duplicate answer rows do not select one answer silently (0.25953ms)
+✔ orphan answer row is identified (0.829698ms)
+✔ answer outside question options is rejected (0.260111ms)
+✔ missing or invalid explanation () needs review (0.288103ms)
+✔ missing or invalid explanation (null) needs review (0.176525ms)
+✔ missing or invalid explanation (42) needs review (0.114792ms)
+✔ invalid rule references [] need review (0.235024ms)
+✔ invalid rule references [0] need review (0.21306ms)
+✔ invalid rule references [true] need review (0.142985ms)
+✔ invalid rule references [1.5] need review (0.128403ms)
+✔ invalid rule references [1,1] need review (0.090155ms)
+✔ invalid rule references null need review (0.072649ms)
+✔ non-four-choice question is reported rather than counted as 1400 (0.185539ms)
+✔ empty corpus never passes (0.107021ms)
+✔ malformed and sparse key rows fail closed without echoing payload (0.501234ms)
+✔ malformed and sparse questions retain established parser rejection (0.081883ms)
+✔ balanced synthetic answers expose all four positions without a quality approval (0.19224ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12.541793
+
+tests/tda-audit-cli.test.mjs
+✔ malformed JSON never echoes payload fragments or parser details (1.6487ms)
+✔ malformed JSON never echoes payload fragments or parser details (0.205129ms)
+✔ malformed JSON never echoes payload fragments or parser details (0.111258ms)
+✔ read failures do not reveal paths or untrusted error text (0.167251ms)
+✔ invalid question shape has a stable failure code without raw data (1.223951ms)
+✔ invalid arguments fail before reading ([]) (0.144086ms)
+✔ invalid arguments fail before reading ([""]) (0.164898ms)
+✔ invalid arguments fail before reading (["export.json","1","ignored-before"]) (0.109966ms)
+✔ invalid arguments fail before reading (["export.json","0"]) (0.129465ms)
+✔ invalid arguments fail before reading (["export.json","-1"]) (0.162134ms)
+✔ invalid arguments fail before reading (["export.json","1.5"]) (0.081683ms)
+✔ invalid arguments fail before reading (["export.json","1e3"]) (0.097957ms)
+✔ invalid arguments fail before reading (["export.json","01"]) (0.051357ms)
+✔ invalid arguments fail before reading (["export.json","NaN"]) (0.080591ms)
+✔ invalid arguments fail before reading (["export.json","9007199254740992"]) (0.063215ms)
+✔ invalid arguments fail before reading (["export.json","999999999999999999999999999999999999999999999999999999999999999999999999999999999999) (0.043796ms)
+✔ valid report and count mismatch preserve the non-publication contract (0.537208ms)
+✔ safe integer upper boundary is accepted as a count, without rounding (0.220622ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11.649921
+
+tests/tda-json-ambiguity.test.mjs
+✔ manifest duplicate version is ambiguous even when last value is valid (2.151296ms)
+✔ manifest duplicate question hash is ambiguous even when last value is valid (0.321563ms)
+✔ manifest duplicate expected count is ambiguous even when last value is valid (0.255955ms)
+✔ manifest duplicate escaped alias is ambiguous even when last value is valid (0.194612ms)
+✔ hash-matched source duplicate question text is rejected (0.411159ms)
+✔ hash-matched source duplicate question id is rejected (0.301964ms)
+✔ hash-matched source duplicate nested option id is rejected (0.317397ms)
+✔ hash-matched source duplicate correct answer is rejected (0.269355ms)
+✔ hash-matched source duplicate explanation is rejected (0.336696ms)
+✔ hash-matched source duplicate references is rejected (0.41889ms)
+✔ nonfinite exponent 1e999 in manifest is rejected (0.29262ms)
+✔ nonfinite exponent -1e999 in manifest is rejected (0.122925ms)
+✔ nonfinite exponent in hash-matched source is rejected (0.240101ms)
+✔ depth outside the explicit bounded JSON contract is rejected (0.392411ms)
+✔ same member names in distinct nested objects are valid (0.982568ms)
+✔ escaped quotes braces and numeric-looking strings remain ordinary text (0.351959ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14.854901
+
+tests/tda-quiz-auth.test.mjs
+✔ guest cannot start and does not make a user lookup (0.901396ms)
+✔ valid session and verified user can answer (0.682447ms)
+✔ user lookup transport error {"status":0} keeps retry guidance (0.228744ms)
+✔ user lookup transport error {"status":503} keeps retry guidance (0.102234ms)
+✔ user lookup transport error {"name":"AuthRetryableFetchError"} keeps retry guidance (0.095874ms)
+✔ expired authentication {"status":401} asks for login (0.120091ms)
+✔ expired authentication {"code":"session_not_found"} asks for login (0.1262ms)
+✔ expired authentication {"name":"AuthSessionMissingError"} asks for login (0.087983ms)
+✔ session transport error does not claim expiry (0.173501ms)
+✔ thrown transport error does not escape the UI action (0.222775ms)
+✔ missing verified user asks for login (0.251037ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11.769281
+
+tests/tda-quiz-data.test.mjs
+✔ question validation sorts a copy without changing option identity or original input (2.257856ms)
+✔ malformed null fails closed (1.051982ms)
+✔ malformed object fails closed (0.137067ms)
+✔ malformed no options fails closed (0.109174ms)
+✔ malformed one option fails closed (0.127762ms)
+✔ malformed empty text fails closed (0.086259ms)
+✔ malformed missing metadata fails closed (0.103365ms)
+✔ malformed duplicate question ID fails closed (0.116595ms)
+✔ malformed duplicate option ID fails closed (0.158889ms)
+✔ malformed duplicate option order fails closed (0.138618ms)
+✔ malformed fractional order fails closed (0.107802ms)
+✔ malformed empty option text fails closed (0.124747ms)
+✔ malformed negative order fails closed (0.117447ms)
+✔ rejected and synchronous transport failures become recoverable errors without retries (0.384919ms)
+✔ successful save data and RPC permission errors are preserved without reinterpretation (0.19953ms)
+✔ offline audit flags normalized question and option duplicate candidates only (0.550618ms)
+✔ audit report flags missing expected count and never claims publication approval (0.35231ms)
+✔ sparse quiz input rejects empty sparse question bank (0.085368ms)
+✔ sparse quiz input rejects question followed by missing row (0.050977ms)
+✔ sparse quiz input rejects entirely missing options (0.155053ms)
+✔ sparse quiz input rejects one present option (0.047241ms)
+✔ frozen dense valid input and empty bank remain valid (0.183877ms)
+✔ reviewed PR28 empty-audit guard remains present (0.150567ms)
+✔ optional filters default invalid rows and fields to empty lists (0.183096ms)
+✔ optional filters exclude nonstring items and preserve valid sibling fields (0.369817ms)
+✔ optional filters preserve string values order and copy frozen arrays (0.28558ms)
+✔ optional filters densify sparse lists without inventing choices (0.097647ms)
+✖ optional filters render and preserve quiz requests in four mocked mobile scenarios (436.999498ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 27
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 452.827665
+
+✖ failing tests:
+
+test at tests/tda-quiz-data.test.mjs:89:1
+✖ optional filters render and preserve quiz requests in four mocked mobile scenarios (436.999498ms)
+  AssertionError [ERR_ASSERTION]: browser process must finish within bounded time
+  + actual - expected
+  
+  + Error: spawnSync /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node EPERM
+  +     at Object.spawnSync (node:internal/child_process:1160:20)
+  +     at spawnSync (node:child_process:928:24)
+  +     at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-quiz-data.test.mjs:91:18)
+  +     at async Test.run (node:internal/test_runner/test:1389:7)
+  +     at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+  +   code: 'EPERM',
+  +   errno: -1,
+  +   path: '/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node',
+  +   spawnargs: [
+  +     'tests/browser/tda-filters.mjs'
+  +   ],
+  +   syscall: 'spawnSync /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node'
+  + }
+  - undefined
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-snapshot-integrity-audit/tests/tda-quiz-data.test.mjs:92:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [Error],
+    expected: undefined,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+tests/tda-saved-answer.test.mjs
+✔ false remains false, valid statistics and saved explanation are preserved (1.407567ms)
+✔ reject malformed saved answer: string false (0.240371ms)
+✔ reject malformed saved answer: numeric correctness (0.087212ms)
+✔ reject malformed saved answer: foreign correct option (0.072079ms)
+✔ reject malformed saved answer: contradictory correctness (0.144016ms)
+✔ reject malformed saved answer: negative count (0.096255ms)
+✔ reject malformed saved answer: fractional count (0.131287ms)
+✔ reject malformed saved answer: correct count exceeds total (0.905782ms)
+✔ reject malformed saved answer: nonfinite rate (0.203246ms)
+✔ reject malformed saved answer: out of range rate (0.144598ms)
+✔ reject malformed saved answer: array result (0.145178ms)
+✔ selected option must belong to this question (0.163126ms)
+✔ null low-sample rate is retained, malformed optional explanation cannot replace saved result (0.742157ms)
+✔ valid detail references are used without changing authoritative correctness (0.248564ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12.079588
+
+tests/tda-snapshot-integrity.test.mjs
+✔ matching exact bytes and counts retains non-provenance and no-publication contract (3.004358ms)
+✔ mismatched question_sha256 fails before structural interpretation (0.553041ms)
+✔ mismatched answer_key_sha256 fails before structural interpretation (0.389276ms)
+✔ semantically identical reserialization is not the pinned original bytes (0.256185ms)
+✔ mismatched expected_question_count cannot pass (0.588225ms)
+✔ mismatched expected_option_count cannot pass (0.254002ms)
+✔ invalid manifest count 0 fails before reading question source (0.689948ms)
+✔ invalid manifest count -1 fails before reading question source (0.141162ms)
+✔ invalid manifest count 1.5 fails before reading question source (0.476407ms)
+✔ invalid manifest count true fails before reading question source (0.430939ms)
+✔ invalid manifest count "350" fails before reading question source (0.218619ms)
+✔ invalid manifest count 9007199254740992 fails before reading question source (0.214412ms)
+✔ invalid SHA256 ledger field is rejected (0.222695ms)
+✔ invalid SHA256 ledger field is rejected (0.147051ms)
+✔ invalid SHA256 ledger field is rejected (0.157207ms)
+✔ invalid SHA256 ledger field is rejected (0.1194ms)
+✔ missing or unsupported manifest version fails closed (0.29905ms)
+✔ invalid manifest JSON and UTF8 never echo parser fragments (0.642121ms)
+✔ invalid question JSON with a matching hash remains invalid (0.416316ms)
+✔ invalid key UTF8 with a matching hash remains invalid (0.190817ms)
+✔ hash-matched malformed question structure does not pass (0.162925ms)
+✔ hash-matched orphan answer key still requires review (0.414604ms)
+✔ read failure never exposes path or error text (0.2397ms)
+✔ argument count validation occurs before any file read (0.218779ms)
+✔ non-byte reads and oversized inputs fail closed (0.290707ms)
+✔ source bytes remain unchanged by auditing (0.380973ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 20.307498
+
+tests/tda-strict-json-boundary.test.mjs
+✔ strict decoder refuses duplicate prototype (1.433466ms)
+✔ strict decoder refuses duplicate unicode surrogate alias (0.404669ms)
+✔ strict decoder refuses duplicate empty key (0.097777ms)
+✔ strict decoder refuses duplicate backslash alias (0.085199ms)
+✔ depth 127 is accepted (0.909468ms)
+✔ depth 128 is accepted (0.243797ms)
+✔ depth 129 is refused at the boundary (0.341974ms)
+✔ invalid UTF8 c0af is refused (0.122164ms)
+✔ invalid UTF8 eda080 is refused (0.095523ms)
+✔ invalid UTF8 e282 is refused (0.131248ms)
+✔ invalid UTF8 f4908080 is refused (0.163867ms)
+✔ invalid JSON grammar is refused: {"x":NaN} (0.250487ms)
+✔ invalid JSON grammar is refused: {"x":Infinity} (0.095123ms)
+✔ invalid JSON grammar is refused: {"x":1,} (0.146951ms)
+✔ invalid JSON grammar is refused: [0,] (0.093821ms)
+✔ invalid JSON grammar is refused: {"x":"\q"} (0.094432ms)
+✔ invalid JSON grammar is refused: {"x":1} trailing (0.078068ms)
+✔ all JSON finite scalar and escaped string forms retain their values (0.220491ms)
+✔ 10000 fixed-seed valid finite JSON values match JSON.parse without mutation (49.350924ms)
+✔ all malformed manifest classes retain generic reasons and nonpublication gates (1.042518ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 63.548257
+
+tests/worker-acceptance.test.mjs
+✖ latest request wins even when older search resolves last (49.207989ms)
+✖ new input invalidates an old response before debounce expires (10.460322ms)
+✖ clearing search prevents late result resurrection and ends loading (15.130186ms)
+✖ thrown transport ends loading and permits next search recovery (8.979996ms)
+✖ old failed request cannot end newer request loading or show stale error (8.358882ms)
+✖ malformed search non-array payload fails closed and permits retry (10.200902ms)
+✖ malformed search null rule row fails closed and permits retry (14.106416ms)
+✖ malformed search invalid title value fails closed and permits retry (8.583329ms)
+✖ malformed search invalid rule number fails closed and permits retry (8.758082ms)
+✖ malformed displayed rule field summary object fails closed and permits retry (8.937633ms)
+✖ malformed displayed rule field keyword string fails closed and permits retry (10.39875ms)
+✖ malformed displayed rule field example object element fails closed and permits retry (15.553343ms)
+✖ malformed displayed rule field caution null element fails closed and permits retry (10.786162ms)
+✖ malformed displayed rule field related rule string fails closed and permits retry (8.367715ms)
+✖ malformed displayed rule field official body object fails closed and permits retry (16.17056ms)
+✖ well-typed optional text and collections retain normal rendering (8.606314ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 0
+ℹ fail 16
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1217.346781
+
+✖ failing tests:
+
+test at tests/worker-acceptance.test.mjs:36:1
+✖ latest request wins even when older search resolves last (49.207989ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/worker-acceptance.test.mjs:41:1
+✖ new input invalidates an old response before debounce expires (10.460322ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/worker-acceptance.test.mjs:45:1
+✖ clearing search prevents late result resurrection and ends loading (15.130186ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/worker-acceptance.test.mjs:50:1
+✖ thrown transport ends loading and permits next search recovery (8.979996ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/worker-acceptance.test.mjs:57:1
+✖ old failed request cannot end newer request loading or show stale error (8.358882ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/worker-acceptance.test.mjs:70:4
+✖ malformed search non-array payload fails closed and permits retry (10.200902ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/worker-acceptance.test.mjs:70:4
+✖ malformed search null rule row fails closed and permits retry (14.106416ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/worker-acceptance.test.mjs:70:4
+✖ malformed search invalid title value fails closed and permits retry (8.583329ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/worker-acceptance.test.mjs:70:4
+✖ malformed search invalid rule number fails closed and permits retry (8.758082ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/worker-acceptance.test.mjs:88:4
+✖ malformed displayed rule field summary object fails closed and permits retry (8.937633ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/worker-acceptance.test.mjs:88:4
+✖ malformed displayed rule field keyword string fails closed and permits retry (10.39875ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/worker-acceptance.test.mjs:88:4
+✖ malformed displayed rule field example object element fails closed and permits retry (15.553343ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/worker-acceptance.test.mjs:88:4
+✖ malformed displayed rule field caution null element fails closed and permits retry (10.786162ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/worker-acceptance.test.mjs:88:4
+✖ malformed displayed rule field related rule string fails closed and permits retry (8.367715ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/worker-acceptance.test.mjs:88:4
+✖ malformed displayed rule field official body object fails closed and permits retry (16.17056ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/worker-acceptance.test.mjs:102:1
+✖ well-typed optional text and collections retain normal rendering (8.606314ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+

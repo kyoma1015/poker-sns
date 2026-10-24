@@ -1,0 +1,67 @@
+[
+  {
+    "path": "tests/f03-notification.test.mjs",
+    "unchanged": true,
+    "sha256": "87542ccd9acfcf31d6caa11be071401ea75411ca32ecbace6a427c75313b9896"
+  },
+  {
+    "path": "tests/interactive-requests.test.mjs",
+    "unchanged": true,
+    "sha256": "6f80875b0ddc39f5dc94393f38c6fb4a6fa161b3b373172d3ab7adb9ac7cd1dc"
+  },
+  {
+    "path": "tests/player-type.test.mjs",
+    "unchanged": true,
+    "sha256": "b45c46e5a1ffd100440391209d96f23db5e6d06db2ef62063b7864a3ddd7e003"
+  },
+  {
+    "path": "tests/poll-only.test.mjs",
+    "unchanged": true,
+    "sha256": "45cc00bfd30b4d68913088b9d284d589ccab775fa5a42e9569ca7437e8395a83"
+  },
+  {
+    "path": "tests/tda-answer-conflict-audit.test.mjs",
+    "unchanged": true,
+    "sha256": "ad71d4cc2a0ccd170cfa85c25f5ae8e3b7b6e3182e96b3827e20193d045a5264"
+  },
+  {
+    "path": "tests/tda-answer-key-audit.test.mjs",
+    "unchanged": true,
+    "sha256": "e1ae634fb242138321cfd8d6f45f08ff0f1f8e1ee28fc369d2fd5783e6b4b9fb"
+  },
+  {
+    "path": "tests/tda-audit-cli.test.mjs",
+    "unchanged": true,
+    "sha256": "3ef7175260e6cc178cfdab342506b6c28813e2d0795bed5ba30a6a916b9270cd"
+  },
+  {
+    "path": "tests/tda-json-ambiguity.test.mjs",
+    "unchanged": true,
+    "sha256": "f38a29b11715907d3e52e33d6e2ab7596b086a37627853b1bcd95407bf87ff0b"
+  },
+  {
+    "path": "tests/tda-quiz-auth.test.mjs",
+    "unchanged": true,
+    "sha256": "bfcb25a3ec432b2b99f85c9deae5fb68c819d31d1b7dbdd8ba2c1e8af0299696"
+  },
+  {
+    "path": "tests/tda-quiz-data.test.mjs",
+    "unchanged": true,
+    "sha256": "8b2bb1ddaa9be52e343f31fab8a1c5e8087ddca1d33a376a398a2f02e87a779d"
+  },
+  {
+    "path": "tests/tda-saved-answer.test.mjs",
+    "unchanged": true,
+    "sha256": "d167b9f795506bcb56d2bff206575895efc47c5e272d0da7c9ffa30b485df0e1"
+  },
+  {
+    "path": "tests/tda-snapshot-integrity.test.mjs",
+    "unchanged": true,
+    "sha256": "d49c8977ca4e9cb61fd41bfaf59094ef0af483067898234b68275ae9767bc2b1"
+  },
+  {
+    "path": "tests/worker-acceptance.test.mjs",
+    "unchanged": true,
+    "sha256": "1d2f2efb02f69982d023bd7e88e931c53425bc30a72a70d82b459149ead57c93"
+  }
+]

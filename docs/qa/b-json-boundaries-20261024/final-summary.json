@@ -1,0 +1,15 @@
+{
+  "prior_tests": 237,
+  "new_tests": 20,
+  "final_pass": 257,
+  "final_fail": 0,
+  "initial_pass": 240,
+  "initial_fail_environment": 17,
+  "retried_suites": 2,
+  "retry_count": 1,
+  "generated_valid_json_values": 10000,
+  "source_changed": false,
+  "ci_run_id": null,
+  "official_accuracy": "BLOCKED",
+  "new_test_sha256": "245f0c2323281ed542e4bf1027591077b95392701633b681868ff7109ce3ec7a"
+}

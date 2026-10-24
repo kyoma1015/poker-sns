@@ -42,3 +42,6 @@ Preserved test input5ca250f/sourcecf130fd from the interrupted PR119 follow-up; 
 
 ## Strict snapshot JSON —2026-10-24 batch
 Continue saved ec826a8 branch without a new PR. Fixed snapshot ambiguity16tests14FAIL/2PASS→16PASS: duplicate decoded object keys (escaped alias too), nonfinite exponent and overdepth rejected with redacted existing reason codes; normal strings/distinct objects pass. New helper/scripts only, no UI/RPC/grading change. Existing26snapshot acceptance retained. Full local evidence docs/qa/b-json-ambiguity-20261024/. Official350/source/translation/clause-review remainsBLOCKED; concrete receipt contract there. No PR/CI activation or main/production/controller/state changes.
+
+## Strict JSON exact-boundary QA —2026-10-24 continuation
+Continued b00466d after exact GitHub HEAD verification. Added20 permanent tests, including deterministic10000-value valid JSON compatibility, depth127/128/129, malformedUTF8, duplicate decoded aliases, and generic reason/UNVERIFIED/no-publication invariants. All20PASS on existing source: no new source bug invented. Existing13 root testfiles unchanged; local build/lintPASS. Full regression and one environment-only sandbox retry are recorded in docs/qa/b-json-boundaries-20261024/. Official350/source/translation/逐条review remainsBLOCKED; no newPR/manualCI/production/retainedstate/controller operations.
