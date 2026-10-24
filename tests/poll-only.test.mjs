@@ -79,3 +79,10 @@ test('valid vote retains anonymous flag and poll-only RPC arguments', () => {
   assert.deepEqual(pollVoteRequest(poll, 1, Date.parse('2026-10-24T00:00:00Z')),
     { p_post_id: 'poll-1', p_option_index: 1, p_answer: null, p_is_anonymous: true })
 })
+
+test('poll card fails closed when deadline is missing or invalid', () => {
+  const card = readFileSync(new URL('../src/TimelineInteractive.tsx', import.meta.url), 'utf8')
+  assert.match(card, /!Number\.isFinite\(deadline\) \|\| deadline <= Date\.now\(\)/)
+  assert.match(card, /終了または期限を確認できません/)
+  assert.doesNotMatch(card, /new Date\(item\.closes_at!\)/)
+})
