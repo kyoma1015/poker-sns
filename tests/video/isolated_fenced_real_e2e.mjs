@@ -44,7 +44,7 @@ assert.match(first,/^[0-9a-f-]{36}$/)
 const second=await finalizeImmutableCandidate(jwt,path,'real isolated end-to-end',adapters)
 assert.equal(second,first,'repeat finalization must be idempotent')
 await assert.rejects(finalizeImmutableCandidate(jwt,path,'conflicting text',adapters),
-  /commit outcome unknown|conflicting/)
+  /fenced publication rejected/)
 const admin=createClient(url,service,{auth:{persistSession:false,autoRefreshToken:false}})
 const {data:post,error:postError}=await admin.from('posts')
   .select('id,user_id,video_path,video_generation,video_sha256,video_duration_seconds')
