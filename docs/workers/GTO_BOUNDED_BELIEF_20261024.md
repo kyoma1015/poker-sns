@@ -71,3 +71,13 @@ validation; originalG9/G11 ABI/history checkpoint and real-poker convergence.
 Next task: bounded public observation-conditioned support constructor with exact
 mass accounting and explicit hero information-set consistency checks; test it
 against hand-derived river cases before any169EV export.
+
+### Fresh cross-variant canonical comparison
+Three separate native processes ran saved docs/qa/belief-reach-20261024/proof_runner.py
+with each GTO_NATIVE_MODULE_DIR. New two-support river, Bayes/counterfactual reach,
+and immutable learned-row before/after further training are serialized using exact
+Fraction numerators/denominators. All3 canonical SHA256 values match:
+8e2c4b63611aed0b22243ea1a2c976b56b16be7c9be888a928a1cf9342e8939a.
+See g12_*-proof.json and cross-variant.json; this is fresh current-batch comparison,
+not recycled historical comparison. New API's preimplementation import failure is
+an unimplemented-contract baseline, not a claimed preexisting solver defect.
