@@ -20,11 +20,26 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon }
         if (filename.endsWith('/src/supabase.ts')) {
           // Only the session source is injected. The real videoApi.ts
           // loadAuthorizedVideo implementation and PostVideo component run.
-          return `export const supabase = {
-            auth: { getSession: async () => ({
-              data: { session: { access_token: window.__VIDEO_QA_JWT } },
-              error: null,
-            }) },
+          return `import { createClient } from '@supabase/supabase-js'
+          const jwt = window.__VIDEO_QA_JWT
+          const client = createClient('http://127.0.0.1:56321', window.__VIDEO_QA_ANON, {
+            global: { headers: { Authorization: 'Bearer ' + jwt } },
+            auth: { persistSession:false, autoRefreshToken:false },
+          })
+          // Isolated-only stubs for unrelated social tables absent from local QA schema.
+          const empty = { data:[], error:null }
+          const query = new Proxy({}, { get(_target, key) {
+            if (key === 'then') return (resolve, reject) => Promise.resolve(empty).then(resolve, reject)
+            return () => query
+          } })
+          export const supabase = {
+            auth: {
+              getSession: async () => ({ data:{session:{access_token:jwt}}, error:null }),
+              getUser: async () => client.auth.getUser(jwt),
+            },
+            from: table => table === 'posts' ? client.from('posts') : query,
+            rpc: async () => empty,
+            storage: client.storage,
           }`
         }
         if (filename.endsWith('/src/videoApi.ts')) {
@@ -93,6 +108,27 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon }
     await page.waitForFunction(() => document.querySelector('video')?.currentTime>0,
       null,{timeout:15000})
     await page.close()
+    // Mount the ACTUAL Timeline.tsx and read the real local PostgREST posts.
+    // Only unrelated social tables and RPCs are stubbed (no local QA schema).
+    const timelinePage=await browser.newPage()
+    await timelinePage.addInitScript(({jwt,anon}) => {
+      window.__VIDEO_QA_JWT=jwt
+      window.__VIDEO_QA_ANON=anon
+    },{jwt,anon})
+    await timelinePage.goto(origin+'/tests/video/browser-real-timeline.html')
+    await timelinePage.getByRole('button',{name:'おすすめ'}).click({timeout:20000})
+    await timelinePage.getByText('real isolated end-to-end',{exact:true}).waitFor({timeout:20000})
+    const actualVideo=timelinePage.locator('article video').first()
+    await actualVideo.waitFor({timeout:20000})
+    await timelinePage.waitForFunction(() => {
+      const el=document.querySelector('article video')
+      return el && el.readyState>=2 && el.videoWidth>0
+    },null,{timeout:20000})
+    await actualVideo.evaluate(el=>el.play())
+    await timelinePage.waitForFunction(() => document.querySelector('article video')?.currentTime>0,
+      null,{timeout:15000})
+    console.log('PASS: ACTUAL Timeline.tsx renders real RLS PostgREST video and Chromium plays it (social dependencies isolated)')
+    await timelinePage.close()
     const denied = await browser.newPage()
     await denied.addInitScript(({postId,jwt}) => {
       window.__VIDEO_QA_POST_ID=postId
