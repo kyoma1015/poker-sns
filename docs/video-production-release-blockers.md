@@ -29,3 +29,11 @@ Project: poker-id (ephptepeuespnxtzdqby). Existing public.posts columns: id, cre
 ## Evidence rule
 
 Isolated QA success proves the isolated fixture, **not** production readiness. No destructive SQL, production writes, main merge, or production deployment are authorized by this document.
+
+
+## Runtime executable and feature-gate release blockers (2026-10-25)
+
+- `api/video-ffprobe.ts` accepts only an absolute `FFPROBE_BINARY_PATH` when configured; otherwise uses `ffprobe` on PATH. This is **not** evidence that Vercel bundles a working executable. A trusted, version-pinned Linux ffprobe binary must be packaged with the serverless function and executed on a Vercel preview before enabling production.
+- `src/videoApi.ts` now uses the explicit build-time `VITE_VIDEO_SERVER_ENABLED=true` opt-in. It remains disabled when the environment variable is absent. Set it only after backend, storage, JWT/RLS and media QA pass.
+- `VIDEO_PRODUCTION_FENCED_READY=true` is a separate server-only runtime gate. Never set it based only on SQL or isolated CI results.
+- Production rollout is **NO-GO** until the bundled ffprobe executable, serverless invocation, protected Storage API and real JWT access tests pass. A no-op/failed upload must not delete staged objects.
