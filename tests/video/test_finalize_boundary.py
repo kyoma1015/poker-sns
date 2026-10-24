@@ -69,5 +69,19 @@ class BoundaryTests(unittest.TestCase):
                     finalize_authenticated("Bearer verified", self.body, adapters)
                 self.assertEqual(self.calls, [])
 
+
+    @patch("tests.video.finalize_core.verify", return_value={"duration": 2})
+    def test_reconciliation_outage_preserves_video_and_uncertainty(self, verify):
+        from dataclasses import replace
+        def uncertain(*args):
+            raise PostCommitUnknown("DB acknowledgement lost")
+        def reconcile_down(*args):
+            raise TimeoutError("DB reconciliation unavailable")
+        adapters = replace(self.adapters, create_post=uncertain, reconcile_post=reconcile_down)
+        with self.assertRaises(PostCommitUnknown):
+            finalize_authenticated("Bearer verified", self.body, adapters)
+        self.assertNotIn("delete", self.calls)
+        self.assertIn("temp-cleanup", self.calls)
+
 if __name__ == "__main__":
     unittest.main()
