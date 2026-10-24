@@ -50,6 +50,10 @@ function DirectMessageChat() {
   const [isSending, setIsSending] =
     useState(false)
 
+  // React state alone cannot exclude overlapping key/click handlers before
+  // their first await or a subsequent render.
+  const sendingRef = useRef(false)
+
   const bottomRef =
     useRef<HTMLDivElement | null>(null)
 
@@ -324,6 +328,7 @@ function DirectMessageChat() {
   }, [messages.length])
 
   const handleSend = async () => {
+    if (sendingRef.current) return
     const trimmedInput =
       input.trim()
 
@@ -350,47 +355,40 @@ function DirectMessageChat() {
       return
     }
 
-    const { data: currentBlocks, error: blockCheckError } = await supabase.from('user_blocks')
-      .select('blocker_id')
-      .or(`and(blocker_id.eq.${currentUserId},blocked_id.eq.${userId}),and(blocker_id.eq.${userId},blocked_id.eq.${currentUserId})`)
-    if (blockCheckError || (currentBlocks || []).length > 0) {
-      setIsBlocked(true)
-      setStatusMessage('ブロック中のためメッセージを送信できません。')
-      return
-    }
+    sendingRef.current = true
     setIsSending(true)
-
-    const { error } =
-      await supabase
-        .from(
-          'direct_messages'
-        )
-        .insert({
-          sender_id:
-            currentUserId,
-          receiver_id: userId,
-          content:
-            trimmedInput,
-        })
-
-    if (error) {
-      console.error(error)
-
-      setStatusMessage(
-        `DMを送信できませんでした：${error.message}`
-      )
-
+    let sent = false
+    try {
+      const { data: currentBlocks, error: blockCheckError } = await supabase.from('user_blocks')
+        .select('blocker_id')
+        .or(`and(blocker_id.eq.${currentUserId},blocked_id.eq.${userId}),and(blocker_id.eq.${userId},blocked_id.eq.${currentUserId})`)
+      if (blockCheckError || (currentBlocks || []).length > 0) {
+        setIsBlocked(true)
+        setStatusMessage('ブロック中のためメッセージを送信できません。')
+        return
+      }
+      const { error } = await supabase.from('direct_messages').insert({
+        sender_id: currentUserId,
+        receiver_id: userId,
+        content: trimmedInput,
+      })
+      if (error) {
+        setStatusMessage('DMを送信できませんでした。もう一度お試しください。')
+        return
+      }
+      sent = true
+      setInput('')
+      setStatusMessage('')
+      await loadMessages()
+      scrollToBottom()
+    } catch {
+      setStatusMessage(sent
+        ? '送信しましたが、表示の更新に失敗しました。ページを再読み込みしてください。'
+        : 'DMを送信できませんでした。もう一度お試しください。')
+    } finally {
+      sendingRef.current = false
       setIsSending(false)
-      return
     }
-
-    setInput('')
-    setStatusMessage('')
-    setIsSending(false)
-
-    await loadMessages()
-
-    scrollToBottom()
   }
 
   const handleKeyDown = (

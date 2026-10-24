@@ -1,0 +1,44 @@
+[
+  {
+    "file": "tests/direct-message-send.test.mjs",
+    "exit": 0,
+    "tests": 7,
+    "pass": 7,
+    "fail": 0
+  },
+  {
+    "file": "tests/f03-notification.test.mjs",
+    "exit": 0,
+    "tests": 11,
+    "pass": 11,
+    "fail": 0
+  },
+  {
+    "file": "tests/interactive-requests.test.mjs",
+    "exit": 0,
+    "tests": 10,
+    "pass": 10,
+    "fail": 0
+  },
+  {
+    "file": "tests/player-type.test.mjs",
+    "exit": 0,
+    "tests": 40,
+    "pass": 40,
+    "fail": 0
+  },
+  {
+    "file": "tests/poll-only.test.mjs",
+    "exit": 0,
+    "tests": 17,
+    "pass": 17,
+    "fail": 0
+  },
+  {
+    "file": "tests/tda-quiz-auth.test.mjs",
+    "exit": 0,
+    "tests": 11,
+    "pass": 11,
+    "fail": 0
+  }
+]

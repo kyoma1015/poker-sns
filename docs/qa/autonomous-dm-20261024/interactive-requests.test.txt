@@ -1,0 +1,18 @@
+✔ named poll request matches the disclosed named mode (2.750709ms)
+✔ anonymous poll remains anonymous (0.257379ms)
+✔ invalid option null cannot produce a request (0.237659ms)
+✔ invalid option -1 cannot produce a request (1.892101ms)
+✔ invalid option 2 cannot produce a request (0.165981ms)
+✔ invalid option 0.5 cannot produce a request (0.086821ms)
+✔ invalid option NaN cannot produce a request (0.068294ms)
+✔ a previously rendered open card cannot vote at or after the deadline (0.139271ms)
+✔ missing or invalid deadline fails closed (0.298121ms)
+✔ question boxes cannot use the poll write contract (0.375197ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16.949507

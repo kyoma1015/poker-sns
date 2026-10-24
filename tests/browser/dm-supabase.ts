@@ -1,6 +1,7 @@
 // Synthetic transport only. The test browser aborts every non-local request.
 const qa = {
   holdBlocks: false, holdInsert: false, rejectInsert: false,
+  errorInsert: false, blockError: false, rejectReload: false,
   checks: [] as Array<(x: unknown) => void>, inserts: [] as unknown[],
   insertWaiters: [] as Array<(x: unknown) => void>,
   release() { this.holdBlocks = false; this.checks.splice(0).forEach(done => done({ data: [], error: null })) },
@@ -15,20 +16,24 @@ function query(table: string) {
     insert(value: unknown) {
       qa.inserts.push(value)
       if (qa.rejectInsert) { qa.rejectInsert = false; return Promise.reject(new Error('SYNTHETIC_PRIVATE_ERROR')) }
+      if (qa.errorInsert) { qa.errorInsert = false; return Promise.resolve({ error: { message: 'SYNTHETIC_PRIVATE_ERROR' } }) }
       if (qa.holdInsert) return new Promise(done => qa.insertWaiters.push(done))
       return Promise.resolve({ error: null })
     },
     then(resolve: any, reject: any) {
       const result = table === 'user_blocks' && qa.holdBlocks
         ? new Promise(done => qa.checks.push(done))
-        : Promise.resolve({ data: [], error: null })
+        : Promise.resolve({ data: [], error: table === 'user_blocks' && qa.blockError ? { message: 'SYNTHETIC_PRIVATE_ERROR' } : null })
       return result.then(resolve, reject)
     },
   }
   return chain
 }
 export const supabase = {
-  auth: { getUser: async () => ({ data: { user: { id: 'me' } }, error: null }) },
+  auth: { getUser: async () => {
+    if (qa.rejectReload && qa.inserts.length) throw new Error('SYNTHETIC_PRIVATE_ERROR')
+    return { data: { user: { id: 'me' } }, error: null }
+  } },
   from: query,
   channel() { const channel: any = { on() { return channel }, subscribe() { return channel } }; return channel },
   removeChannel() {},
