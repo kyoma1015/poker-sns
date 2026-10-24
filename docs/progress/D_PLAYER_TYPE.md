@@ -10,3 +10,6 @@ PR118 reused. New offline pack traces50questions/222optionIDs and196 varying que
 
 ## Score export own-field contract —2026-10-24
 PR124 branch continues without a newPR. New seven-test input1PASS/6FAIL ->7PASS after audit-only schema guard. All222 score rows must provide own option_id and all32 own finite dimensions with no unknown fields; malformed rows fail with indexed diagnostic and suppress evidence. Existing84 regressions unchanged/PASS; total91. No scoring/question/animal/UI/DB changes. Formal classifier and semantic validity remainBLOCKED. Evidence docs/qa/d-score-schema-20261024/.
+
+## Score container/descriptor fail-closed —2026-10-24
+Existing PR124 continued. Fixed18schema tests reproduce9PASS/9FAIL before and18PASS after rejecting non-array score containers, sparse/inherited array entries, custom row prototypes, hidden/symbol keys and accessor-backed axes. Getter test confirms zero executions; error suppresses distribution and strategy evidence. All84prior regressions preserved, total102PASS. Strict schema addresses ordinary offline JavaScript/JSON inputs, not arbitrary hostile Proxy isolation. No scoring/classifier/UI/DB changes. Authoritative classifier/threshold/tie rules/expert labels remainBLOCKED, referencing prior bounded discovery instead of repeating the same search. Evidence docs/qa/d-score-container-20261024/.

@@ -1,0 +1,26 @@
+✔ historical score schema remains valid and all960 references remain unchanged (30.215182ms)
+✔ inherited score dimension cannot masquerade as an own exported value (6.193994ms)
+✔ inherited option identifier cannot supply a score-row join key (5.206852ms)
+✔ unknown extra score dimension cannot be silently ignored (4.927279ms)
+✔ array decorated as a complete score object is rejected (5.41043ms)
+✔ null score row produces auditFAIL rather than crashing (5.374055ms)
+✔ non-number score payload remains invalid without emitting evidence (6.49517ms)
+✔ invalid null score container fails closed without throwing (1.973584ms)
+✔ invalid object score container fails closed without throwing (1.689544ms)
+✔ invalid string score container fails closed without throwing (1.579197ms)
+✔ invalid number score container fails closed without throwing (1.950799ms)
+✔ invalid boolean score container fails closed without throwing (1.484835ms)
+✔ sparse score array fails closed without emitting evidence (4.571762ms)
+✔ inherited array entry cannot supply an exported score row (4.688057ms)
+✔ polluted score-row prototype cannot hide unreviewed metadata (4.561066ms)
+✔ JSON own __proto__ payload is rejected without global prototype mutation (4.476678ms)
+✔ hidden and symbol score fields cannot escape exact schema validation (9.049602ms)
+✔ score accessor is rejected without executing user code (4.671393ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 117.225761

@@ -59,14 +59,22 @@ export function auditPlayerType(fixture, assets) {
   const scores = new Map()
   const optionIds = new Set(questions.flatMap(question => question.options.map(option => option.id)))
   const scoreKeys = ['option_id', ...Object.keys(traitPositiveMax)]
-  for (const [rowIndex, row] of fixture.scores.entries()) {
+  const scoreRows = Array.isArray(fixture.scores) ? fixture.scores : []
+  if (!Array.isArray(fixture.scores)) errors.push({ code: 'INVALID_SCORE_ROW_SCHEMA', row: null })
+  for (let rowIndex = 0; rowIndex < scoreRows.length; rowIndex++) {
+    const entry = Object.getOwnPropertyDescriptor(scoreRows, String(rowIndex))
+    const row = entry && Object.hasOwn(entry, 'value') ? entry.value : null
     // The checked-in export contract has exactly one own option ID and all32
     // own finite numeric axes. Unknown fields require review, never silent loss.
-    const valid = row !== null && typeof row === 'object' && !Array.isArray(row) &&
-      Object.keys(row).length === scoreKeys.length &&
-      scoreKeys.every(key => Object.hasOwn(row, key)) &&
-      typeof row.option_id === 'string' && row.option_id.trim().length > 0 &&
-      Object.keys(traitPositiveMax).every(key => Number.isFinite(row[key]))
+    const descriptors = row !== null && typeof row === 'object' && !Array.isArray(row)
+      ? Object.getOwnPropertyDescriptors(row) : null
+    const valid = descriptors !== null &&
+      [Object.prototype, null].includes(Object.getPrototypeOf(row)) &&
+      Reflect.ownKeys(row).length === scoreKeys.length &&
+      scoreKeys.every(key => Object.hasOwn(descriptors, key) &&
+        Object.hasOwn(descriptors[key], 'value') && descriptors[key].enumerable) &&
+      typeof descriptors.option_id.value === 'string' && descriptors.option_id.value.trim().length > 0 &&
+      Object.keys(traitPositiveMax).every(key => Number.isFinite(descriptors[key].value))
     if (!valid) {
       errors.push({ code: 'INVALID_SCORE_ROW_SCHEMA', row: rowIndex })
       continue

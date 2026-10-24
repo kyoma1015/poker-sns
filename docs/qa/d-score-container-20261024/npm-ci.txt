@@ -1,0 +1,25 @@
+npm error code EPERM
+npm error syscall connect
+npm error errno EPERM
+npm error FetchError: request to https://registry.npmjs.org/yoga-layout/-/yoga-layout-3.2.1.tgz failed, reason: connect EPERM 172.31.1.61:8080 - Local (undefined:undefined)
+npm error     at ClientRequest.<anonymous> (/opt/codex/runtimes/codex-primary-runtime/dependencies/node/lib/node_modules/npm/node_modules/minipass-fetch/lib/index.js:130:14)
+npm error     at ClientRequest.emit (node:events:509:28)
+npm error     at emitErrorEvent (node:_http_client:112:11)
+npm error     at _destroy (node:_http_client:1144:9)
+npm error     at onSocketNT (node:_http_client:1165:5)
+npm error     at process.processTicksAndRejections (node:internal/process/task_queues:91:21) {
+npm error   code: 'EPERM',
+npm error   errno: 'EPERM',
+npm error   syscall: 'connect',
+npm error   address: '172.31.1.61',
+npm error   port: 8080,
+npm error   type: 'system'
+npm error }
+npm error
+npm error The operation was rejected by your operating system.
+npm error It is likely you do not have the permissions to access this file as the current user
+npm error
+npm error If you believe this might be a permissions issue, please double-check the
+npm error permissions of the file and its containing directories, or try running
+npm error the command again as root/Administrator.
+npm error A complete log of this run can be found in: /tmp/pokerid-d-container-npm-cache/_logs/2026-10-24T14_46_08_888Z-debug-0.log
