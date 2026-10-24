@@ -106,3 +106,11 @@ prior mass, native history/advertised-board equality and queried hero-infoset
 policy consistency. Local310PASS (old271+39),3variant exact canonical output match;
 see GTO_BELIEF_OBSERVATION_20261024.md. Null remains for native169EV and impossible
 observation, no equilibrium or originalG9/G11 claim. No PR/CI/production adoption.
+
+## Common-hero action intervention values — 2026-10-24
+Cycle3 now compares selected legal actions using the same actual native hero
+information key and observed prefix posterior across explicit opponent support.
+Do-action EV excludes target policy probability; actor-excluded counterfactual
+mass remains distinct. Local349PASS (old310+39),3variant exact canonical equality.
+See GTO_INFOSET_ACTION_VALUES_20261024.md. Native169EV remainsnull, fullstrategy
+convergence/G9/G11 still unproved. No PR/manualCI/main or operational adoption.

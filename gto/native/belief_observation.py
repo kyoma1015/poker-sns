@@ -96,3 +96,68 @@ def evaluate_observation(native,game,hero_cards,deals,public_cards,history,polic
             'observation_evidence_mass':mass*result['evidence_mass'],
             'history_validated':True,'policy_consistency':'queried hero infosets only',
             'scope':'conditional explicit support and queried-consistent hero policy; not equilibrium'}
+
+
+def compare_hero_actions(native,game,hero_cards,deals,public_cards,history,actions,policy,*,
+                         max_deals=128,max_nodes=10000,max_actions=64,max_infosets=100000):
+    """Finite common-infoset do-action values under an explicit observed belief.
+
+    The prefix posterior is shared by all interventions, with no target policy
+    probability multiplied into an action value. Hero counterfactual prefix mass
+    is reported separately and is NOT used as a posterior. Values are conditional
+    complete-state continuation-oracle expectations, not solved infoset/169EV.
+    Pure deterministic policy callbacks and sequential use are required.
+    """
+    import math
+    import hashlib
+    from gto.native.poker_oracle import exact_policy_value
+    if (type(max_actions) is not int or not 1<=max_actions<=10000
+            or not isinstance(actions,(list,tuple)) or not 1<=len(actions)<=max_actions
+            or any(type(a) is not int for a in actions) or len(set(actions))!=len(actions)
+            or not isinstance(history,(list,tuple)) or len(history)>1000
+            or any(type(a) is not int for a in history)
+            or type(max_nodes) is not int or not 1<=max_nodes<=1000000):
+        raise ValueError('bounded unique integer actions, history and node budget required')
+    conditioned=condition_public_cards(hero_cards,deals,public_cards,max_deals=max_deals)
+    checked=infoset_consistent_policy(policy,max_infosets=max_infosets)
+    root=native.NativeState(game)
+    if root.audit().get('n')!=2:raise ValueError('heads-up action comparison required')
+    if not conditioned['deals']:
+        return {**conditioned,'posterior':None,'action_values':None,
+                'observation_evidence_mass':Fraction(0),'hero_counterfactual_mass':Fraction(0),
+                'history_validated':False,'native_infoset_ev':None,'hand169_ev':None}
+    targets=[];total=Fraction(0);cf=Fraction(0);common=None
+    for cards,prior in conditioned['deals']:
+        state=root.clone()
+        for c in list(hero_cards)+cards:state.apply_action(c)
+        traced=trace_history(state,history,checked);target=traced['state']
+        if (target.is_terminal() or target.is_chance_node() or target.current_player()!=0
+                or target.audit()['board']!=list(public_cards)):
+            raise ValueError('common observed hero decision required')
+        identity=(target.information_state_string(0),tuple(target.legal_actions()))
+        if common is None:common=identity
+        if identity!=common:raise ValueError('support does not share hero information set/actions')
+        if any(a not in identity[1] for a in actions):raise ValueError('illegal hero intervention')
+        mass=prior*traced['joint_reach'];total+=mass
+        cf+=prior*traced['chance_reach']*math.prod(traced['strategy_reach'][1:])
+        targets.append((target,mass))
+    posterior=[mass/total for _,mass in targets] if total else None
+    values={};used=0;counts={}
+    for action in actions:
+        aggregate=[Fraction(0),Fraction(0)] if total else None;start=used
+        for index,(target,mass) in enumerate(targets):
+            if not mass:continue
+            if used>=max_nodes:raise ValueError('aggregate action EV node budget exceeded')
+            child=target.clone();child.apply_action(action)
+            result=exact_policy_value(child,checked,max_nodes=max_nodes-used)
+            used+=result['nodes']
+            aggregate=[a+posterior[index]*b for a,b in zip(aggregate,result['values'])]
+        values[action]=aggregate;counts[action]=used-start
+    original_mass=conditioned['compatible_prior_mass']
+    return {**conditioned,'posterior':posterior,'action_values':values,'action_nodes':counts,
+            'nodes':used,'observation_evidence_mass':original_mass*total,
+            'hero_counterfactual_mass':original_mass*cf,'history_validated':True,
+            'hero_information_sha256':hashlib.sha256(common[0].encode()).hexdigest(),
+            'legal_actions':list(common[1]),'native_infoset_ev':None,'hand169_ev':None,
+            'scope':'explicit observed belief, common hero decision interventions; not equilibrium',
+            'policy_consistency':'queried hero infosets only','strategy_convergence':'UNKNOWN'}
