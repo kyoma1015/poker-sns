@@ -80,6 +80,22 @@ def main():
         with urlopen(media_request(viewer_token), timeout=10) as response:
             assert response.read() == media
             assert response.headers.get("Cache-Control") == "no-store, private"
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=8) as pool:
+            def fetch_once(_):
+                with urlopen(media_request(viewer_token), timeout=10) as response:
+                    assert response.headers.get("Cache-Control") == "no-store, private"
+                    assert response.headers.get("X-Content-Type-Options") == "nosniff"
+                    return response.read()
+            assert all(result == media for result in pool.map(fetch_once, range(16)))
+        print("PASS: 16 concurrent authorized HTTP media reads with no-store")
+        for headers in ({}, {"Authorization": "Bearer invalid"}):
+            try:
+                urlopen(Request(url, headers=headers), timeout=10)
+            except HTTPError as exc:
+                assert exc.code in (401, 403)
+            else:
+                raise AssertionError("unauthenticated media request accepted")
         set_visibility(False)
         try:
             urlopen(media_request(viewer_token), timeout=10)
