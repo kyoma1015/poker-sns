@@ -1,8 +1,6 @@
-"""Isolated-only immutable Storage RLS test: no owner UPDATE/DELETE.
-
-This fixture is applied only to a fresh local Supabase stack, after removing
-the QA DELETE grant. Never run against production.
-"""
+-- Isolated-only immutable Storage RLS test: no owner UPDATE/DELETE.
+-- Applied only to a fresh local Supabase stack after QA DELETE tests.
+-- Never run against production.
 drop policy if exists "post_videos_delete_own" on storage.objects;
 drop policy if exists "post_videos_update_own" on storage.objects;
 -- QA read and insert policies remain, so uploads/downloads still work.
