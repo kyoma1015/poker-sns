@@ -1,0 +1,274 @@
+{
+  "canonical_sha256": "6aa496d65461fe56d489b7d0205068ae2b56af96f088be2dda5c4bc5911e0ddd",
+  "result": {
+    "conditioned": {
+      "deals": [
+        [
+          [
+            40,
+            45
+          ],
+          {
+            "numerator": 1,
+            "denominator": 1
+          }
+        ]
+      ],
+      "compatible_prior_mass": {
+        "numerator": 3,
+        "denominator": 4
+      },
+      "removed_prior_mass": {
+        "numerator": 1,
+        "denominator": 4
+      },
+      "original_support_size": 2,
+      "support_complete": false
+    },
+    "river": {
+      "support": [
+        {
+          "opponent_cards": [
+            48,
+            49
+          ],
+          "prior": {
+            "numerator": 1,
+            "denominator": 4
+          },
+          "chance_reach": {
+            "numerator": 1,
+            "denominator": 205476480
+          },
+          "strategy_reach": [
+            {
+              "numerator": 1,
+              "denominator": 1
+            },
+            {
+              "numerator": 1,
+              "denominator": 1
+            }
+          ],
+          "mass": {
+            "numerator": 1,
+            "denominator": 821905920
+          },
+          "values": [
+            {
+              "numerator": -2,
+              "denominator": 1
+            },
+            {
+              "numerator": 2,
+              "denominator": 1
+            }
+          ]
+        },
+        {
+          "opponent_cards": [
+            40,
+            45
+          ],
+          "prior": {
+            "numerator": 3,
+            "denominator": 4
+          },
+          "chance_reach": {
+            "numerator": 1,
+            "denominator": 205476480
+          },
+          "strategy_reach": [
+            {
+              "numerator": 1,
+              "denominator": 1
+            },
+            {
+              "numerator": 1,
+              "denominator": 1
+            }
+          ],
+          "mass": {
+            "numerator": 1,
+            "denominator": 273968640
+          },
+          "values": [
+            {
+              "numerator": 2,
+              "denominator": 1
+            },
+            {
+              "numerator": -2,
+              "denominator": 1
+            }
+          ]
+        }
+      ],
+      "evidence_mass": {
+        "numerator": 1,
+        "denominator": 205476480
+      },
+      "posterior": [
+        {
+          "numerator": 1,
+          "denominator": 4
+        },
+        {
+          "numerator": 3,
+          "denominator": 4
+        }
+      ],
+      "conditional_ev": [
+        {
+          "numerator": 1,
+          "denominator": 1
+        },
+        {
+          "numerator": -1,
+          "denominator": 1
+        }
+      ],
+      "counterfactual_mass": null,
+      "nodes": 2,
+      "native_infoset_ev": null,
+      "hand169_ev": null,
+      "scope": "conditional explicit support and queried-consistent hero policy; not equilibrium",
+      "support_complete": false,
+      "strategy_convergence": "UNKNOWN",
+      "deals": [
+        [
+          [
+            48,
+            49
+          ],
+          {
+            "numerator": 1,
+            "denominator": 4
+          }
+        ],
+        [
+          [
+            40,
+            45
+          ],
+          {
+            "numerator": 3,
+            "denominator": 4
+          }
+        ]
+      ],
+      "compatible_prior_mass": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "removed_prior_mass": {
+        "numerator": 0,
+        "denominator": 1
+      },
+      "original_support_size": 2,
+      "observation_evidence_mass": {
+        "numerator": 1,
+        "denominator": 205476480
+      },
+      "history_validated": true,
+      "policy_consistency": "queried hero infosets only"
+    },
+    "filtered": {
+      "support": [
+        {
+          "opponent_cards": [
+            40,
+            45
+          ],
+          "prior": {
+            "numerator": 1,
+            "denominator": 1
+          },
+          "chance_reach": {
+            "numerator": 1,
+            "denominator": 103776
+          },
+          "strategy_reach": [
+            {
+              "numerator": 1,
+              "denominator": 1
+            },
+            {
+              "numerator": 1,
+              "denominator": 1
+            }
+          ],
+          "mass": {
+            "numerator": 1,
+            "denominator": 103776
+          },
+          "values": [
+            {
+              "numerator": -2,
+              "denominator": 1
+            },
+            {
+              "numerator": 2,
+              "denominator": 1
+            }
+          ]
+        }
+      ],
+      "evidence_mass": {
+        "numerator": 1,
+        "denominator": 103776
+      },
+      "posterior": [
+        {
+          "numerator": 1,
+          "denominator": 1
+        }
+      ],
+      "conditional_ev": [
+        {
+          "numerator": -2,
+          "denominator": 1
+        },
+        {
+          "numerator": 2,
+          "denominator": 1
+        }
+      ],
+      "counterfactual_mass": null,
+      "nodes": 1,
+      "native_infoset_ev": null,
+      "hand169_ev": null,
+      "scope": "conditional explicit support and queried-consistent hero policy; not equilibrium",
+      "support_complete": false,
+      "strategy_convergence": "UNKNOWN",
+      "deals": [
+        [
+          [
+            40,
+            45
+          ],
+          {
+            "numerator": 1,
+            "denominator": 1
+          }
+        ]
+      ],
+      "compatible_prior_mass": {
+        "numerator": 3,
+        "denominator": 4
+      },
+      "removed_prior_mass": {
+        "numerator": 1,
+        "denominator": 4
+      },
+      "original_support_size": 2,
+      "observation_evidence_mass": {
+        "numerator": 1,
+        "denominator": 138368
+      },
+      "history_validated": true,
+      "policy_consistency": "queried hero infosets only"
+    },
+    "hidden_card_policy_refused": true
+  }
+}
