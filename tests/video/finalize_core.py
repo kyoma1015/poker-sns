@@ -41,7 +41,7 @@ def finalize_video(
         raise ValueError("invalid object extension")
     UUID(stem)
     # Ownership must be proven before any destructive cleanup.
-    if not verify_owner(user_id, request.object_path):
+    if verify_owner(user_id, request.object_path) is not True:
         raise PermissionError("staged object not owned by authenticated user")
     try:
         verify(request.local_staged_file)
