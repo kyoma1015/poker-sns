@@ -171,6 +171,20 @@ def main():
                     exc.close()
             else:
                 raise AssertionError("another authenticated user finalized owner's video")
+            # A valid JWT from another account must not read the HTTP-first
+            # private video, even though its post ID is known.
+            try:
+                urlopen(Request(
+                    fresh_video_url,
+                    headers={"Authorization": "Bearer " + other_token}), timeout=20)
+            except HTTPError as exc:
+                try:
+                    assert exc.code == 403, exc.code
+                finally:
+                    exc.close()
+            else:
+                raise AssertionError("other account read HTTP-first private video")
+            print("PASS: HTTP-first private video rejects a different valid JWT")
             # The same HTTP listener must serve freshly authorized media after
             # finalization; no redirect or signed Storage URL is returned.
             from urllib.parse import urlencode as encode_video_query
