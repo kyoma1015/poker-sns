@@ -35,7 +35,7 @@ def fetch_visible_video(project_url: str, anon_key: str, service_key: str,
         raise PermissionError("invalid post owner") from None
     if viewer != owner and post.get("is_public") is not True:
         raise PermissionError("private post")
-    path = post.get("video_path")
+    # A valid RLS row must have an explicit boolean visibility state.\n    # Reject malformed metadata even for the owner, not only public viewers.\n    if type(post.get("is_public")) is not bool:\n        raise PermissionError("invalid visibility state")\n    path = post.get("video_path")
     if not isinstance(path, str) or not path.startswith(owner + "/") or path.count("/") != 1:
         raise PermissionError("invalid storage path")
     req = Request(API + "/storage/v1/object/authenticated/post-videos/" +
@@ -59,7 +59,7 @@ def fetch_visible_video(project_url: str, anon_key: str, service_key: str,
         fresh_rows = json.load(response)
     if not isinstance(fresh_rows, list) or len(fresh_rows) != 1 or not isinstance(fresh_rows[0], dict) or fresh_rows[0].get("user_id") != owner or fresh_rows[0].get("video_path") != path:
         raise PermissionError("post changed during media retrieval")
-    if viewer != owner and fresh_rows[0].get("is_public") is not True:
+    if type(fresh_rows[0].get("is_public")) is not bool:\n        raise PermissionError("invalid refreshed visibility state")\n    if viewer != owner and fresh_rows[0].get("is_public") is not True:
         raise PermissionError("post became private during media retrieval")
     return data
 
