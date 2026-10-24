@@ -69,7 +69,7 @@ def main():
         if first != second:
             raise AssertionError("non-idempotent full finalization")
         # Exercise the actual isolated POST endpoint, not only its Python function.
-        from tests.video.isolated_finalize_http import make_local_server as make_finalize_server
+        from tests.video.isolated_video_http import make_local_server as make_finalize_server
         from threading import Thread as FinalizeThread
         from urllib.error import HTTPError
         finalize_server = make_finalize_server(key, service)
@@ -126,6 +126,28 @@ def main():
                     exc.close()
             else:
                 raise AssertionError("another authenticated user finalized owner's video")
+            # The same HTTP listener must serve freshly authorized media after
+            # finalization; no redirect or signed Storage URL is returned.
+            from urllib.parse import urlencode as encode_video_query
+            same_origin_video = (
+                "http://127.0.0.1:" + str(finalize_server.server_port)
+                + "/video?" + encode_video_query({"post_id": first["post_id"]}))
+            with urlopen(Request(
+                same_origin_video,
+                headers={"Authorization": "Bearer " + session}), timeout=20) as response:
+                assert response.read() == media.read_bytes()
+                assert response.headers.get("Cache-Control") == "no-store, private"
+                assert response.headers.get("Vary") == "Authorization"
+            try:
+                urlopen(Request(same_origin_video), timeout=10)
+            except HTTPError as exc:
+                try:
+                    assert exc.code in (401, 403)
+                finally:
+                    exc.close()
+            else:
+                raise AssertionError("combined HTTP server exposed video without JWT")
+            print("PASS: same isolated HTTP origin finalizes and serves freshly JWT-authorized video")
             print("PASS: isolated HTTP POST denies cross-account staged object finalization")
             print("PASS: isolated HTTP POST finalization is idempotent and rejects unauthorized requests")
         finally:
