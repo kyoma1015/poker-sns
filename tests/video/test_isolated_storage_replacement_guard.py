@@ -20,13 +20,22 @@ class ObjectReplacementSafety(unittest.TestCase):
         plan = plan_orphan_recovery(
             post_exists=False, pinned_version="etag-a",
             storage_atomic_cas=False, global_write_fence=True)
-        self.assertEqual(plan["decision"], "quarantine_no_atomic_delete")
+        self.assertEqual(plan["decision"], "quarantine_key_reuse_possible")
+        self.assertFalse(plan["delete_permitted"])
+
+    def test_fenced_writer_without_permanent_reservation_is_not_enough(self):
+        plan = plan_orphan_recovery(
+            post_exists=False, pinned_version="etag-a",
+            storage_atomic_cas=True, global_write_fence=True,
+            all_storage_writers_fenced=True)
+        self.assertEqual(plan["decision"], "quarantine_key_reuse_possible")
         self.assertFalse(plan["delete_permitted"])
 
     def test_even_candidate_requires_review(self):
         plan = plan_orphan_recovery(
             post_exists=False, pinned_version="etag-a",
-            storage_atomic_cas=True, global_write_fence=True)
+            storage_atomic_cas=True, global_write_fence=True,
+            permanent_key_reservation=True, all_storage_writers_fenced=True)
         self.assertEqual(plan["decision"], "eligible_for_review_only")
         self.assertFalse(plan["delete_permitted"])
 
