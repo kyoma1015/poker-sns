@@ -28,6 +28,9 @@ VIDEO_QA_ENV="$qa/local.env" python3 -m tests.video.isolated_viewer_signing_e2e
 psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/isolated_immutable_storage_guard.sql
 # Compose the production-oriented immutable policy with existing isolated QA
 # INSERT/SELECT policies; no client UPDATE or DELETE should become possible.
+# Apply the reservation ledger before the reservation-fenced INSERT policy.
+psql "$dburl" -v ON_ERROR_STOP=1 -f sql/video_permanent_key_reservation_review_only.sql
+psql "$dburl" -v ON_ERROR_STOP=1 -c "grant execute on function public.video_reserve_object_key(uuid,text) to service_role;"
 psql "$dburl" -v ON_ERROR_STOP=1 -f sql/post_short_videos_immutable_review_only.sql
 VIDEO_QA_ENV="$qa/local.env" node tests/video/isolated_immutable_storage_http_e2e.mjs
 
@@ -36,8 +39,6 @@ VIDEO_QA_ENV="$qa/local.env" node tests/video/isolated_immutable_storage_http_e2
 psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/isolated_fenced_publish.sql
 # The actual Chromium uploader now reserves each key through the trusted RPC.
 # Apply the append-only ledger only to this disposable local stack.
-psql "$dburl" -v ON_ERROR_STOP=1 -f sql/video_permanent_key_reservation_review_only.sql
-psql "$dburl" -v ON_ERROR_STOP=1 -c "grant execute on function public.video_reserve_object_key(uuid,text) to service_role;"
 psql "$dburl" -v ON_ERROR_STOP=1 -c "notify pgrst, 'reload schema';"
 # Node 24 strips TS but does not resolve runtime .js specifiers to source .ts.
 # Use ephemeral aliases only in isolated QA; never commit generated .js files.
