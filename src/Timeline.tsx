@@ -169,6 +169,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const [videoFile, setVideoFile] = useState<File | null>(null)
   // Retain the exact immutable object path after an uncertain finalize result.
   const [pendingVideo, setPendingVideo] = useState<{ path: string; owner: string; content: string } | null>(null)
+  const pendingVideoRef = useRef<{ path: string; owner: string; content: string } | null>(null)
   const [videoPreview, setVideoPreview] = useState<string | null>(null)
   useEffect(() => { if (!videoFile) { setVideoPreview(null); return }; const url = URL.createObjectURL(videoFile); setVideoPreview(url); return () => URL.revokeObjectURL(url) }, [videoFile])
   const [imageFiles, setImageFiles] = useState<File[]>([])
@@ -892,12 +893,17 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         if (videoError) throw new Error(videoError)
         // Never upload a second object after an ambiguous server outcome.
         // Retrying must use the same path and original content fingerprint.
-        if (pendingVideo && (pendingVideo.owner !== user.id || pendingVideo.content !== content.trim())) {
+        if (pendingVideoRef.current && (pendingVideoRef.current.owner !== user.id || pendingVideoRef.current.content !== content.trim())) {
           throw new Error('前回の投稿内容またはアカウントが異なります。元の内容で再試行してください。')
         }
-        const path = pendingVideo?.path ?? await uploadPostVideo(user.id, videoFile)
-        if (!pendingVideo) setPendingVideo({ path, owner: user.id, content: content.trim() })
+        const path = pendingVideoRef.current?.path ?? await uploadPostVideo(user.id, videoFile)
+        if (!pendingVideoRef.current) {
+          const staged = { path, owner: user.id, content: content.trim() }
+          pendingVideoRef.current = staged
+          setPendingVideo(staged)
+        }
         await finalizeUploadedVideo(path, content.trim())
+        pendingVideoRef.current = null
         setPendingVideo(null)
         setVideoFile(null)
         setContent('')
