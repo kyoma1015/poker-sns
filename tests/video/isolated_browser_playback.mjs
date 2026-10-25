@@ -29,7 +29,10 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
             global: { headers: { Authorization: 'Bearer ' + jwt } },
             auth: { persistSession:false, autoRefreshToken:false },
           })
-          window.__VIDEO_QA_TRIGGER_SIGN_OUT = () => client.auth.signOut({ scope: 'local' })
+          const authListeners = new Set()
+          window.__VIDEO_QA_TRIGGER_SIGN_OUT = () => {
+            for (const callback of authListeners) callback('SIGNED_OUT', null)
+          }
           // Isolated-only stubs for unrelated social tables absent from local QA schema.
           const empty = { data:[], error:null }
           const query = new Proxy({}, { get(_target, key) {
@@ -41,8 +44,8 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
               getSession: async () => ({ data:{session:{access_token:jwt}}, error:null }),
               getUser: async () => client.auth.getUser(jwt),
               onAuthStateChange: callback => {
-                const { data } = client.auth.onAuthStateChange(callback)
-                return { data: { subscription: data.subscription } }
+                authListeners.add(callback)
+                return { data: { subscription: { unsubscribe: () => authListeners.delete(callback) } } }
               },
             },
             from: table => table === 'posts' ? client.from('posts') : query,
@@ -243,7 +246,8 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
       return article?.querySelector('video')?.currentTime>0
     },uploadText,{timeout:15000})
     // Verify the production component drops its in-memory Blob URL on sign-out.
-    // The test-only Supabase bridge forwards the real GoTrue auth event.
+    // The test-only bridge dispatches SIGNED_OUT to the actual React component.
+    // This proves client-side URL cleanup, not real GoTrue token revocation.
     await timelinePage.evaluate(() => window.__VIDEO_QA_TRIGGER_SIGN_OUT?.())
     await timelinePage.waitForFunction(text => {
       const article=[...document.querySelectorAll('article')].find(a=>a.textContent?.includes(text))
@@ -251,7 +255,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     },uploadText,{timeout:20000})
     assert.equal(await uploadedArticle.locator('video').count(),0,
       'authenticated video element must disappear after sign-out')
-    console.log('PASS: real Chromium authenticated video Blob URL discarded on sign-out')
+    console.log('PASS: Chromium React video Blob URL discarded on synthetic SIGNED_OUT event')
     console.log('PASS: FULL ACTUAL Timeline.tsx UI video file selection -> real isolated Storage HTTP upload -> real finalize HTTP -> RLS PostgREST feed -> Chromium playback')
     console.log('PASS: ACTUAL Timeline.tsx renders real RLS PostgREST video and Chromium plays it (social dependencies isolated)')
     await timelinePage.close()
