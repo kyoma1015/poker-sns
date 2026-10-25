@@ -10,6 +10,8 @@
 -- Assumes bucket post-videos already exists and is private. No client
 -- UPDATE or DELETE policies are created. Existing permissive policies
 -- must be audited and revoked before this can be considered safe.
+-- The append-only ledger and owner predicate must be installed first.
+-- Replace the old unrestricted candidate INSERT policy; never retain both.
 create policy "post_videos_immutable_insert_own" on storage.objects
   for insert to authenticated
   with check (
@@ -17,6 +19,7 @@ create policy "post_videos_immutable_insert_own" on storage.objects
     and (storage.foldername(name))[1] = (select auth.uid())::text
     and name ~ ('^' || (select auth.uid())::text ||
                 '/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}[.](mp4|webm)$')
+    and public.video_reserved_key_is_owned(name, (select auth.uid()))
   );
 create policy "post_videos_immutable_read_own" on storage.objects
   for select to authenticated
@@ -49,10 +52,8 @@ create policy "post_videos_immutable_read_own" on storage.objects
 --   AND (storage.foldername(name))[1] = auth.uid()::text
 --   AND public.video_reserved_key_is_owned(name, auth.uid())
 -- The helper must be security-definer, read-only and strictly owner-scoped.
--- IMPORTANT: authenticated has no SELECT privilege on the private ledger.
--- Therefore this illustrative policy is NOT deployable as written: the
--- existence check needs a security-definer boolean helper with an explicit
--- authenticated EXECUTE grant, plus a fully audited Storage policy replacement.
+-- The helper is defined in video_permanent_key_reservation_review_only.sql.
+-- This policy is NOT deployable until all permissive writers are audited.
 -- Keep release gate OFF until that helper and writer inventory are complete.
 
 -- ABA replacement remains a release blocker until every policy and privileged
