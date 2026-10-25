@@ -8,7 +8,38 @@ from pathlib import Path
 from datetime import datetime, timezone
 from tests.video.isolated_cleanup_worker import run_one
 
+def test_quarantine_contract():
+    from tests.video.isolated_cleanup_worker import quarantine_orphan
+    owner = "10000000-0000-0000-0000-000000000001"
+    path = owner + "/30000000-0000-0000-0000-000000000001.mp4"
+    cases = (
+        (False, None, None, "missing_pinned_version", "quarantine"),
+        (False, "v1", "v2", "version_changed", "quarantine"),
+        (False, "v1", "v1", "atomic_delete_unproven", "quarantine"),
+        (True, "v1", "v1", "referenced_by_post", "retain"),
+    )
+    for posted, expected, observed, reason, status in cases:
+        record = quarantine_orphan(
+            owner=owner, path=path, expected_version=expected,
+            observed_version=observed, referenced_by_post=posted)
+        assert record["reason"] == reason, record
+        assert record["status"] == status, record
+        assert record["delete_permitted"] is False, record
+        assert record["object_path"] == path and record["owner_id"] == owner
+    for invalid in ("../escape.mp4", owner + "/nested/30000000-0000-0000-0000-000000000001.mp4",
+                    owner + "/30000000-0000-0000-0000-000000000001.exe"):
+        try:
+            quarantine_orphan(owner=owner, path=invalid, expected_version="v1",
+                              observed_version="v1", referenced_by_post=False)
+        except (ValueError, TypeError):
+            pass
+        else:
+            raise AssertionError("invalid quarantine path accepted: " + invalid)
+    print("PASS: non-destructive orphan quarantine contract and path validation")
+
+
 def main():
+    test_quarantine_contract()
     env = {}
     for line in Path(os.environ["VIDEO_QA_ENV"]).read_text().splitlines():
         if "=" in line:
