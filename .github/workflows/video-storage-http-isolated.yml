@@ -40,7 +40,16 @@ jobs:
         if: steps.image-cache.outputs.cache-hit == 'true'
         run: docker load -i /tmp/pokerid-supabase-images.tar
       - name: Install ffmpeg for real media probe
-        run: sudo apt-get install -y -qq ffmpeg
+        timeout-minutes: 4
+        run: |
+          set -euo pipefail
+          if command -v ffprobe >/dev/null 2>&1 && command -v ffmpeg >/dev/null 2>&1; then
+            ffprobe -version | head -n 1
+            exit 0
+          fi
+          sudo env DEBIAN_FRONTEND=noninteractive timeout --signal=TERM --kill-after=15s 180s apt-get install -y -qq -o DPkg::Lock::Timeout=30 ffmpeg
+          command -v ffprobe
+          ffprobe -version | head -n 1
       - name: Enforce real ffprobe runtime tests without skip
         env:
           REQUIRE_FFPROBE_RUNTIME: 'true'
