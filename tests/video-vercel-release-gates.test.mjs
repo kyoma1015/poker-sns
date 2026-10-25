@@ -8,7 +8,7 @@ const bundler = readFileSync(new URL('../scripts/bundle-ffprobe.mjs', import.met
 const packageJson = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'))
 
 test('Hobby serverless function budget cannot regress', () => {
-  const entries = readdirSync(new URL('../api/', import.meta.url)).filter(name => /\\.(ts|js)$/.test(name))
+  const entries = readdirSync(new URL('../api/', import.meta.url)).filter(name => name.endsWith('.ts') || name.endsWith('.js'))
   assert.ok(entries.length <= 12, `Hobby supports at most 12 API functions, found ${entries.length}`)
   assert.ok(!entries.includes('video-runtime-attestation.ts'))
   assert.ok(!Object.keys(config.functions || {}).some(path => path.includes('runtime-attestation')))
@@ -16,16 +16,16 @@ test('Hobby serverless function budget cannot regress', () => {
 
 test('ffprobe runtime attestation shares finalize function and stays preview-only', () => {
   assert.ok(config.rewrites.some(rule => rule.source === '/internal/video/runtime-attestation' && rule.destination.includes('/api/video-finalize?runtime_attestation=ffprobe')))
-  assert.match(finalize, /process\\.env\\.VERCEL_ENV !== 'preview'/)
-  assert.match(finalize, /spawn\\(executable, \\['-version'\\]/)
-  assert.match(finalize, /return res\\.status\\(404\\)\\.end\\(\\)/)
+  assert.ok(finalize.includes("process.env.VERCEL_ENV !== 'preview'"))
+  assert.ok(finalize.includes("spawn(executable, ['-version']"))
+  assert.ok(finalize.includes('return res.status(404).end()'))
 })
 
 test('build requires SHA256-pinned executable and Vercel function inclusion', () => {
   assert.equal(packageJson.scripts.prebuild, 'node scripts/bundle-ffprobe.mjs')
   assert.match(bundler, /const sha256 = '[a-f0-9]{64}'/)
   assert.match(bundler, /digest !== sha256/)
-  assert.match(bundler, /chmodSync\\(target, 0o755\\)/)
-  assert.match(bundler, /spawnSync\\(target, \\['-version'\\]/)
+  assert.ok(bundler.includes('chmodSync(target, 0o755)'))
+  assert.ok(bundler.includes("spawnSync(target, ['-version']"))
   assert.equal(config.functions['api/video-finalize.ts'].includeFiles, 'api/bin/ffprobe')
 })
