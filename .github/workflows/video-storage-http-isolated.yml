@@ -11,6 +11,8 @@ on:
       - 'src/videoApi.ts'
       - 'sql/post_short_videos_candidate.sql'
       - 'sql/post_short_videos_immutable_review_only.sql'
+      - 'sql/video_permanent_key_reservation_review_only.sql'
+      - 'scripts/bundle-ffprobe.mjs'
       - '.github/workflows/video-storage-http-isolated.yml'
   workflow_dispatch:
 permissions:
@@ -43,6 +45,12 @@ jobs:
         env:
           REQUIRE_FFPROBE_RUNTIME: 'true'
         run: node --test tests/video-ffprobe-runtime.test.mjs
+      - name: Verify pinned ffprobe build bundle without deploying
+        run: |
+          node scripts/bundle-ffprobe.mjs
+          test -x api/bin/ffprobe
+          api/bin/ffprobe -version
+          file api/bin/ffprobe
       - name: Install Chromium for actual React playback QA
         run: npx playwright-core install --with-deps chromium
       - name: Isolated Supabase Storage HTTP E2E
