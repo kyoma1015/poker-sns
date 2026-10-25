@@ -65,6 +65,7 @@ insert into public.posts(id,user_id,content) values
  ('11111111-1111-1111-1111-111111111111',
   '10000000-0000-0000-0000-000000000001','preserved existing post');
 SQL
+docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 -c 'create role authenticated nologin'
 docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 < tests/video/production_additive_candidate.sql
 docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 < tests/video/production_candidate_isolated_assertions.sql
 echo 'PASS: isolated production-schema-compatible additive migration and fenced RPC assertions'
@@ -77,7 +78,7 @@ do $$ begin
   end if;
 end $$;
 SQL
-docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 < sql/video_permanent_key_reservation_review_only.sql
+# Ledger is already installed by production_additive_candidate.sql; do not reapply it.
 docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 <<'SQL'
 do $$
 declare
