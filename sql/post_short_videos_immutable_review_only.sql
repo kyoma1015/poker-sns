@@ -37,5 +37,30 @@ create policy "post_videos_immutable_read_own" on storage.objects
 -- alone is not an immutability proof until those invariants are demonstrated.
 -- Audit query: sql/video_storage_policy_audit_read_only.sql
 
+-- Future release: require a durable reservation before ANY new Storage INSERT.
+-- The ledger is append-only and the RPC is service_role-only. This SQL is
+-- review-only; isolated tests apply the ledger separately before uploads.
+-- A permissive INSERT policy can bypass this predicate, so the full writer
+-- inventory and policy audit remain mandatory release blockers.
+-- The isolated QA INSERT policy must be replaced with this fenced policy
+-- during a production migration; never OR-combine both.
+create policy "post_videos_reserved_insert_own" on storage.objects
+  for insert to authenticated
+  with check (
+    bucket_id = 'post-videos'
+    and (storage.foldername(name))[1] = (select auth.uid())::text
+    and exists (
+      select 1 from public.video_reserved_object_keys reserved
+      where reserved.bucket_id = 'post-videos'
+        and reserved.object_path = storage.objects.name
+        and reserved.owner_id = (select auth.uid())
+    )
+  );
+-- IMPORTANT: authenticated has no SELECT privilege on the private ledger.
+-- Therefore this illustrative policy is NOT deployable as written: the
+-- existence check needs a security-definer boolean helper with an explicit
+-- authenticated EXECUTE grant, plus a fully audited Storage policy replacement.
+-- Keep release gate OFF until that helper and writer inventory are complete.
+
 -- ABA replacement remains a release blocker until every policy and privileged
 -- path is proven unable to replace an existing object generation.
