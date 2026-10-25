@@ -14,15 +14,15 @@ class PrivilegedVideoApiBoundary(unittest.TestCase):
     def test_no_privileged_storage_mutations(self):
         for path in SOURCES:
             text = path.read_text()
-            self.assertNotRegex(text, r'(?s)admin\\.storage\\.from\\([^)]*\\)\\s*\\.\\s*(?:upload|update|remove|move|copy|createSignedUploadUrl)\\s*\\(', str(path))
-            self.assertNotRegex(text, r'(?s)admin\\.storage\\.\\w+\\s*\\(', str(path))
+            self.assertNotRegex(text, r'(?s)admin\.storage\.from\([^)]*\)\s*\.\s*(?:upload|update|remove|move|copy|createSignedUploadUrl)\s*\(', str(path))
+            self.assertNotRegex(text, r'(?s)admin\.storage\.\w+\s*\(', str(path))
             self.assertNotRegex(text, r'/storage/v1/(?:object|bucket)/(?:upload|move|copy|remove|delete)', str(path))
     def test_privileged_rpc_allowlist(self):
         allowed = {'video_reserve_object_key', 'video_production_storage_generation',
                    'video_production_publish_fenced', 'video_production_reconcile_fenced'}
         for path in SOURCES:
             text = path.read_text()
-            used = set(re.findall(r'admin\\.rpc\\(\\s*[\\x27\\x22]([^\\x27\\x22]+)', text))
+            used = set(re.findall(r'admin\.rpc\(\s*[\x27\x22]([^\x27\x22]+)', text))
             self.assertLessEqual(used, allowed, f'{path}: privileged RPC outside allowlist: {used-allowed}')
 
 if __name__ == '__main__':
