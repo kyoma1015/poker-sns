@@ -65,9 +65,11 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
     const anon = process.env.VITE_SUPABASE_ANON_KEY
     const service = process.env.SUPABASE_SERVICE_ROLE_KEY
     // Production release requires a separately audited Storage writer fence.
+    // Isolated local QA may reserve against its disposable ledger only.
+    const isolatedReservation = options.isolatedLocalOnly === true && url === 'http://127.0.0.1:56321'
     const host = url?.startsWith('https://') ? url.slice(8).split('/')[0] : ''
-    if (process.env.VIDEO_PRODUCTION_FENCED_READY !== 'true' ||
-        !/^[a-z0-9-]+[.]supabase[.]co$/.test(host) ||
+    if ((!isolatedReservation && (process.env.VIDEO_PRODUCTION_FENCED_READY !== 'true' ||
+        !/^[a-z0-9-]+[.]supabase[.]co$/.test(host))) ||
         !anon || !service) return res.status(503).json({ error: 'video_reservation_not_enabled' })
     try {
       const viewer = createClient(url, anon, {
