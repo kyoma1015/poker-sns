@@ -45,3 +45,15 @@ test('direct signed Storage playback URLs are blocked', () => {
   assert.doesNotMatch(source, /\.createSignedUrl\(/)
   assert.match(source, /createPostVideoPlaybackUrl\(_path: string\): Promise<string>[\s\S]*?throw new Error/)
 })
+
+test('pending draft restore verifies current authenticated account before showing content', () => {
+  const restoreStart = timeline.indexOf("sessionStorage.getItem('poker-id-pending-video-v1')")
+  const authStart = timeline.lastIndexOf('await supabase.auth.getUser()', restoreStart)
+  const ownerCheck = timeline.indexOf('record.owner !== user.id', restoreStart)
+  const renderDraft = timeline.indexOf('setContent(staged.content)', restoreStart)
+  assert.ok(authStart >= 0 && authStart < restoreStart, 'authenticate before reading cached draft')
+  assert.ok(ownerCheck > restoreStart && ownerCheck < renderDraft,
+    'reject foreign owner before rendering private draft content')
+  assert.match(timeline.slice(authStart, renderDraft), /cancelled \|\| error \|\| !user/)
+  assert.match(timeline.slice(authStart, renderDraft), /cancelled \|\| record\.owner !== user\.id/)
+})
