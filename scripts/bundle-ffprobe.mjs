@@ -1,7 +1,7 @@
 // Pinned upstream release archive; no npm dependency or lockfile change required.
 // Fail closed if the upstream asset changes or download/extraction fails.
 import { createHash } from 'node:crypto'
-import { createWriteStream, mkdirSync, mkdtempSync, readdirSync, copyFileSync, chmodSync, rmSync, statSync } from 'node:fs'
+import { createWriteStream, mkdirSync, mkdtempSync, readdirSync, copyFileSync, chmodSync, rmSync, statSync, renameSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { spawnSync } from 'node:child_process'
@@ -41,10 +41,19 @@ try {
   const dest = join(process.cwd(), 'api', 'bin')
   mkdirSync(dest, { recursive: true })
   const target = join(dest, 'ffprobe')
-  copyFileSync(join(work, probes[0]), target)
-  chmodSync(target, 0o755)
-  const verify = spawnSync(target, ['-version'], { timeout: 10000, stdio: 'ignore' })
-  if (verify.status !== 0) throw new Error('bundled ffprobe execution failed')
+  // Verify a temporary executable before atomically replacing the build
+  // artifact. A failed download, extraction or exec must never leave a
+  // partially copied ffprobe at the path included by Vercel.
+  const staged = join(dest, '.ffprobe-' + process.pid + '.tmp')
+  try {
+    copyFileSync(join(work, probes[0]), staged)
+    chmodSync(staged, 0o755)
+    const verify = spawnSync(staged, ['-version'], { timeout: 10000, stdio: 'ignore' })
+    if (verify.status !== 0) throw new Error('bundled ffprobe execution failed')
+    renameSync(staged, target)
+  } finally {
+    rmSync(staged, { force: true })
+  }
   console.log('Pinned ffprobe executable verified')
 } finally {
   rmSync(work, { recursive: true, force: true })
