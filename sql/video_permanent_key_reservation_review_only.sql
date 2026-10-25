@@ -54,7 +54,7 @@ revoke all on function public.video_reserve_object_key(uuid,text)
 create or replace function public.video_reserved_key_is_owned(
   p_path text, p_owner uuid
 ) returns boolean language sql stable security definer
-set search_path = '' as $
+set search_path = '' as $reserved_owner$
   select p_owner is not null
     and p_owner = (select auth.uid())
     and exists (
@@ -63,7 +63,7 @@ set search_path = '' as $
         and r.object_path = p_path
         and r.owner_id = p_owner
     );
-$;
+$reserved_owner$;
 revoke all on function public.video_reserved_key_is_owned(text,uuid)
   from public, anon;
 grant execute on function public.video_reserved_key_is_owned(text,uuid)
