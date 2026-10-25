@@ -56,4 +56,12 @@ assert.ok(remove.error||!remove.data?.length,'DELETE must not remove object')
 const download=await owner.storage.from('post-videos').download(path)
 assert.ifError(download.error)
 assert.equal(Buffer.compare(Buffer.from(await download.data.arrayBuffer()),bytes),0)
+// A leaked global service_role key can still bypass authenticated RLS through
+// the Storage management API. Record the observed capability without writing
+// or deleting a production object. This is an explicit release blocker, not
+// an assertion that application-level fetch guards revoke that key's power.
+const adminStorageRead=await admin.storage.from('post-videos').download(path)
+assert.ifError(adminStorageRead.error)
+assert.equal(Buffer.compare(Buffer.from(await adminStorageRead.data.arrayBuffer()),bytes),0)
+console.log('NO-GO CAPABILITY: global service_role can access video Storage outside application RPC fetch guards')
 console.log('PASS: real isolated HTTP unreserved/foreign rejected, reserved owner allowed, overwrite/delete denied')
