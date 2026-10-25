@@ -6,21 +6,22 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { probeVideoBytes, MAX_VIDEO_BYTES } from '../api/video-ffprobe.ts'
 
+const ffmpegBinary = process.env.FFMPEG_BINARY_PATH || 'ffmpeg'
 const hasBinary = name => spawnSync(name, ['-version'], { stdio: 'ignore' }).status === 0
 const requireRuntimeProbe = process.env.REQUIRE_FFPROBE_RUNTIME === 'true'
 
 test('release ffprobe runtime cannot silently skip validation', { skip: !requireRuntimeProbe }, () => {
-  assert.ok(hasBinary('ffmpeg'), 'ffmpeg fixture generator unavailable')
+  assert.ok(hasBinary(ffmpegBinary), 'ffmpeg fixture generator unavailable')
   const executable = process.env.FFPROBE_BINARY_PATH || 'ffprobe'
   assert.ok(hasBinary(executable), 'ffprobe executable unavailable')
 })
 
-test('real server ffprobe accepts H264 and rejects invalid video', { skip: !requireRuntimeProbe && (!hasBinary('ffmpeg') || !hasBinary(process.env.FFPROBE_BINARY_PATH || 'ffprobe')) }, async () => {
+test('real server ffprobe accepts H264 and rejects invalid video', { skip: !requireRuntimeProbe && (!hasBinary(ffmpegBinary) || !hasBinary(process.env.FFPROBE_BINARY_PATH || 'ffprobe')) }, async () => {
   const dir = mkdtempSync(join(tmpdir(), 'poker-probe-test-'))
   try {
     const valid = join(dir, 'valid.mp4')
     const long = join(dir, 'long.mp4')
-    const generate = (target, seconds) => spawnSync('ffmpeg', [
+    const generate = (target, seconds) => spawnSync(ffmpegBinary, [
       '-hide_banner', '-loglevel', 'error', '-f', 'lavfi',
       '-i', 'color=c=black:s=32x32:r=5', '-t', String(seconds),
       '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-y', target,
