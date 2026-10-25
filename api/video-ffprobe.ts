@@ -39,7 +39,7 @@ export async function probeVideoBytes(bytes: Buffer, extension: VideoExtension):
     // Never accept a relative path or a shell command. Missing binaries fail closed.
     const configured = process.env.FFPROBE_BINARY_PATH
     if (configured && !isAbsolute(configured)) throw new Error('ffprobe binary path must be absolute')
-    const executable = configured || 'ffprobe'
+    const executable = configured || (process.env.VERCEL ? join(process.cwd(), 'api', 'bin', 'ffprobe') : 'ffprobe')
     metadata = await new Promise<ProbeResult>((resolve, reject) => {
     const child = spawn(executable, [
       '-v', 'error', '-show_format', '-show_streams', '-of', 'json', '-i', filename,
