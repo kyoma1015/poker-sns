@@ -190,7 +190,12 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           !/^[0-9a-f-]{36}\.(mp4|webm)$/.test(record.path.slice(record.owner.length + 1)) ||
           typeof record.content !== 'string' || record.content.length > 10000) return
       // A different signed-in account must never see a previous owner's draft.
-      if (cancelled || record.owner !== user.id) return
+      // Drop only the stale local pointer; never delete its Storage object.
+      if (cancelled) return
+      if (record.owner !== user.id) {
+        sessionStorage.removeItem('poker-id-pending-video-v1')
+        return
+      }
       const staged = { owner: record.owner, path: record.path, content: record.content }
       // The restored path is untrusted client state; server JWT, owner and generation checks remain authoritative.
       pendingVideoRef.current = staged
