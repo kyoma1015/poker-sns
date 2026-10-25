@@ -101,9 +101,9 @@ begin
   if (select count(*) from public.video_reserved_object_keys) <> 1 then
     raise exception 'reservation ledger mutated';
   end if;
-end $;
+end $$;
 -- Verify that app roles cannot mutate the ledger or invoke privileged RPC.
-do $
+do $$
 begin
   if has_function_privilege('authenticated',
        'public.video_reserve_object_key(uuid,text)', 'EXECUTE') then
@@ -121,6 +121,6 @@ begin
           where oid='public.video_reserved_object_keys'::regclass) then
     raise exception 'reservation ledger RLS disabled';
   end if;
-end $;
+end $$;
 SQL
 echo 'PASS: disposable PostgreSQL reservation rejects duplicates and denies client mutation'
