@@ -80,17 +80,16 @@ class CleanupWorkerTests(unittest.TestCase):
                          "worker operation failed; retry")
 
     @patch("tests.video.isolated_cleanup_worker._rpc")
-    def test_pinned_already_absent_object_acknowledged_without_delete(self, rpc):
+    def test_pinned_absent_object_retries_without_tombstone(self, rpc):
         rpc.side_effect = [[{"id": 4, "owner_id": OWNER, "object_path": PATH,
                              "expected_object_version": "v1"}], None, True]
         deleted = []
         outcome = run_one(URL, "isolated", lambda *_: None,
                           lambda *args: deleted.append(args))
-        self.assertEqual(outcome, "complete")
+        self.assertEqual(outcome, "retry")
         self.assertEqual(deleted, [])
-        self.assertTrue(rpc.call_args.args[3]["p_success"])
-        self.assertEqual(rpc.call_args.args[3]["p_reason"],
-                         "object already absent")
+        self.assertFalse(rpc.call_args.args[3]["p_success"])
+        self.assertIn("tombstone", rpc.call_args.args[3]["p_reason"])
 
     @patch("tests.video.isolated_cleanup_worker._rpc")
     def test_invalid_queued_path_never_reaches_storage(self, rpc):
