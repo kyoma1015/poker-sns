@@ -33,7 +33,7 @@ try {
   if (digest !== sha256) throw new Error('ffprobe archive SHA256 mismatch')
   const listing = spawnSync('tar', ['-tJf', archive], { encoding: 'utf8', maxBuffer: 1024 * 1024 })
   if (listing.status !== 0) throw new Error('ffprobe archive listing failed')
-  const entries = listing.stdout.trim().split('\\n')
+  const entries = listing.stdout.trim().split(String.fromCharCode(10))
   const probes = entries.filter(p => /^(?:\\.\\/)?[^/]+\\/bin\\/ffprobe$/.test(p))
   if (probes.length !== 1) throw new Error('ffprobe archive layout changed')
   const extracted = spawnSync('tar', ['-xJf', archive, '-C', work, probes[0]], { timeout: 120000 })
