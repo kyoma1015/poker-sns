@@ -55,5 +55,5 @@ test('pending draft restore verifies current authenticated account before showin
   assert.ok(ownerCheck > restoreStart && ownerCheck < renderDraft,
     'reject foreign owner before rendering private draft content')
   assert.match(timeline.slice(authStart, renderDraft), /cancelled \|\| error \|\| !user/)
-  assert.match(timeline.slice(authStart, renderDraft), /cancelled \|\| record\.owner !== user\.id/)
+  assert.match(timeline.slice(authStart, renderDraft), /if \(cancelled\) return[\s\S]*?if \(record\.owner !== user\.id\) \{[\s\S]*?sessionStorage\.removeItem\('poker-id-pending-video-v1'\)/)
 })
