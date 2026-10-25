@@ -172,5 +172,32 @@ class CleanupWorkerTests(unittest.TestCase):
                          lambda *args: deleted.append(args)), "retry")
         self.assertFalse(deleted)
 
+    @patch("tests.video.isolated_cleanup_worker._rpc")
+    def test_conditional_delete_success_only_for_exact_pinned_version(self, rpc):
+        rpc.side_effect = [[{"id": 10, "owner_id": OWNER, "object_path": PATH,
+                             "expected_object_version": "generation-10"}], None, True]
+        calls = []
+        def fenced_delete(owner, path, generation):
+            calls.append((owner, path, generation))
+            return generation == "generation-10"
+        outcome = run_one(URL, "isolated",
+                          lambda *_: "generation-10", fenced_delete)
+        self.assertEqual(outcome, "complete")
+        self.assertEqual(calls, [(OWNER, PATH, "generation-10")])
+        self.assertTrue(rpc.call_args.args[3]["p_success"])
+        self.assertEqual(rpc.call_args.args[3]["p_reason"], "conditional deletion succeeded")
+
+    @patch("tests.video.isolated_cleanup_worker._rpc")
+    def test_aba_replacement_blocks_conditional_delete(self, rpc):
+        rpc.side_effect = [[{"id": 11, "owner_id": OWNER, "object_path": PATH,
+                             "expected_object_version": "generation-old"}], None, True]
+        deletes = []
+        outcome = run_one(URL, "isolated", lambda *_: "generation-new",
+                          lambda *args: deletes.append(args) or True)
+        self.assertEqual(outcome, "retry")
+        self.assertEqual(deletes, [])
+        self.assertFalse(rpc.call_args.args[3]["p_success"])
+        self.assertIn("version changed", rpc.call_args.args[3]["p_reason"])
+
 if __name__ == "__main__":
     unittest.main()
