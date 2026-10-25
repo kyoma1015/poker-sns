@@ -22,6 +22,11 @@ jobs:
       - run: npm audit --omit=dev --audit-level=high
       - name: Client regression
         run: |
+          # Node 24 strips TypeScript syntax but does not map compiled .js specifiers
+          # to .ts sources. CI-only symlinks preserve the production ESM contract.
+          for source in api/video-*.ts; do
+            ln -s "$(basename "$source")" "${source%.ts}.js"
+          done
           for test_file in tests/*.test.mjs; do node "$test_file"; done
       - run: npm run build
       - run: npm run lint
