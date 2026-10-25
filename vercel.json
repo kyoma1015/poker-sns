@@ -32,5 +32,13 @@
       "source": "/(.*)",
       "destination": "/index.html"
     }
-  ]
+  ],
+  "functions": {
+    "api/video-finalize.ts": {
+      "includeFiles": "api/bin/ffprobe"
+    },
+    "api/video-runtime-attestation.ts": {
+      "includeFiles": "api/bin/ffprobe"
+    }
+  }
 }
