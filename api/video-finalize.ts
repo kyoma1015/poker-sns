@@ -67,6 +67,10 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
     // Production release requires a separately audited Storage writer fence.
     // Isolated local QA may reserve against its disposable ledger only.
     const isolatedReservation = options.isolatedLocalOnly === true && url === 'http://127.0.0.1:56321'
+    // Fail closed: a service_role fetch allowlist is not least privilege.
+    if (!isolatedReservation && process.env.VIDEO_PRIVILEGED_WRITER_ATTESTED !== 'true') {
+      return res.status(503).json({ error: 'video_privileged_writer_not_attested' })
+    }
     const host = url?.startsWith('https://') ? url.slice(8).split('/')[0] : ''
     if ((!isolatedReservation && (process.env.VIDEO_PRODUCTION_FENCED_READY !== 'true' ||
         !/^[a-z0-9-]+[.]supabase[.]co$/.test(host))) ||
