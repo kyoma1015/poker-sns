@@ -271,7 +271,7 @@ assert.ok(!otherFeed.some(row=>row.id===first),'RLS must exclude video from othe
 await verifyRealBrowserPlayback({postId:feedPost.id,jwt,deniedJwt:otherJwt,anon,service,bytes})
 // Verify that the browser's real reservation RPC created a permanent ledger
 // record; the service role may read it but browser clients cannot mutate it.
-const admin=createClient(url,service,{auth:{persistSession:false,autoRefreshToken:false}})
+
 const {data:reservedKeys,error:reservedKeysError}=await admin
   .from('video_reserved_object_keys')
   .select('object_path,owner_id')
