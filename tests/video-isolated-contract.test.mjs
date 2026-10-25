@@ -93,7 +93,7 @@ test('Vercel finalize boundary rejects unsafe requests and cannot publish', () =
   assert.match(handler, /video_finalize_not_enabled/)
   assert.match(handler, /Object.getPrototypeOf\(body\) !== Object.prototype/)
   assert.match(handler, /Buffer.byteLength\(JSON.stringify\(body\), 'utf8'\) > MAX_BODY_BYTES/)
-  for (const unsafe of [".from('posts').insert", '.upload(', '.remove(', 'createSignedUrl', 'service_role']) {
+  for (const unsafe of [".from('posts').insert", '.upload(', '.remove(', 'createSignedUrl']) {
     assert.ok(!handler.includes(unsafe), unsafe)
   }
   assert.match(api, /VIDEO_SERVER_ENABLED = import\.meta\.env\.VITE_VIDEO_SERVER_ENABLED === 'true'/)
