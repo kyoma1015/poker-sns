@@ -26,9 +26,6 @@ return async function handler(req: VercelRequest, res: VercelResponse) {
     global: { headers: { Authorization: rawAuth } },
     auth: { persistSession: false, autoRefreshToken: false },
   })
-  const admin = createClient(url, service, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  })
   try {
     const { data: identity, error: authError } = await viewer.auth.getUser(token)
     if (authError || !identity.user || !UUID.test(identity.user.id)) return res.status(401).end()
