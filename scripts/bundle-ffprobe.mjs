@@ -17,11 +17,24 @@ if (process.platform !== 'linux' || process.arch !== 'x64') {
   process.exit(0)
 }
 const work = mkdtempSync(join(tmpdir(), 'poker-ffprobe-build-'))
+const MAX_ARCHIVE_BYTES = expectedBytes
 try {
   const archive = join(work, 'ffmpeg.tar.xz')
   const response = await fetch(url, { redirect: 'follow', signal: AbortSignal.timeout(180000) })
   if (!response.ok || !response.body) throw new Error('pinned ffprobe archive download failed')
-  await pipeline(Readable.fromWeb(response.body), createWriteStream(archive))
+  const declaredLength = response.headers.get('content-length')
+  if (declaredLength !== null && (!/^\\d+$/.test(declaredLength) || Number(declaredLength) !== expectedBytes)) {
+    await response.body.cancel()
+    throw new Error('ffprobe archive Content-Length mismatch')
+  }
+  let downloaded = 0
+  const bounded = Readable.fromWeb(response.body).map(chunk => {
+    downloaded += chunk.byteLength
+    if (downloaded > MAX_ARCHIVE_BYTES) throw new Error('ffprobe archive exceeds pinned byte limit')
+    return chunk
+  })
+  await pipeline(bounded, createWriteStream(archive))
+  if (downloaded !== expectedBytes) throw new Error('ffprobe archive truncated')
   if (statSync(archive).size !== expectedBytes) throw new Error('ffprobe archive length mismatch')
   const digest = await new Promise((resolve, reject) => {
     const hash = createHash('sha256')
