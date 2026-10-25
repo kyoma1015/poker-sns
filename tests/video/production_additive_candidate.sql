@@ -104,7 +104,8 @@ end $video_policy_guard$;
 create policy poker_post_videos_insert_once on storage.objects for insert to authenticated
 with check(bucket_id='post-videos' and
  split_part(name,'/',1)=(select auth.uid())::text and
- name ~ '^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}[.](mp4|webm) and public.video_reserved_key_is_owned(name,(select auth.uid())));
+ name ~ '^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}[.](mp4|webm)$' and
+ public.video_reserved_key_is_owned(name,(select auth.uid())));
 create policy poker_post_videos_read_own on storage.objects for select to authenticated
 using(bucket_id='post-videos' and split_part(name,'/',1)=(select auth.uid())::text);
 -- A permissive policy for ALL or UPDATE/DELETE can override bucket-specific
