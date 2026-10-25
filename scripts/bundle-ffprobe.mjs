@@ -22,11 +22,9 @@ try {
   const archive = join(work, 'ffmpeg.tar.xz')
   const response = await fetch(url, { redirect: 'follow', signal: AbortSignal.timeout(180000) })
   if (!response.ok || !response.body) throw new Error('pinned ffprobe archive download failed')
-  const declaredLength = response.headers.get('content-length')
-  if (declaredLength !== null && (!/^\\d+$/.test(declaredLength) || Number(declaredLength) !== expectedBytes)) {
-    await response.body.cancel()
-    throw new Error('ffprobe archive declared length exceeds pinned limit')
-  }
+  // Redirects and intermediary compression can report a different HTTP
+  // Content-Length than the decoded stream. Never trust that header for
+  // integrity or safety; enforce the pinned limit on actual received bytes.
   let downloaded = 0
   const bounded = Readable.fromWeb(response.body).map(chunk => {
     downloaded += chunk.byteLength
