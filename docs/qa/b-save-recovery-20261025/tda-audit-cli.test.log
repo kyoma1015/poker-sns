@@ -1,0 +1,26 @@
+✔ malformed JSON never echoes payload fragments or parser details (2.067425ms)
+✔ malformed JSON never echoes payload fragments or parser details (0.250208ms)
+✔ malformed JSON never echoes payload fragments or parser details (0.120011ms)
+✔ read failures do not reveal paths or untrusted error text (0.938088ms)
+✔ invalid question shape has a stable failure code without raw data (0.489901ms)
+✔ invalid arguments fail before reading ([]) (0.240163ms)
+✔ invalid arguments fail before reading ([""]) (0.134343ms)
+✔ invalid arguments fail before reading (["export.json","1","ignored-before"]) (0.138039ms)
+✔ invalid arguments fail before reading (["export.json","0"]) (0.222696ms)
+✔ invalid arguments fail before reading (["export.json","-1"]) (0.293304ms)
+✔ invalid arguments fail before reading (["export.json","1.5"]) (0.123417ms)
+✔ invalid arguments fail before reading (["export.json","1e3"]) (0.088464ms)
+✔ invalid arguments fail before reading (["export.json","01"]) (0.056836ms)
+✔ invalid arguments fail before reading (["export.json","NaN"]) (0.087352ms)
+✔ invalid arguments fail before reading (["export.json","9007199254740992"]) (0.111178ms)
+✔ invalid arguments fail before reading (["export.json","999999999999999999999999999999999999999999999999999999999999999999999999999999999999) (0.136867ms)
+✔ valid report and count mismatch preserve the non-publication contract (0.742002ms)
+✔ safe integer upper boundary is accepted as a count, without rounding (0.231079ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13.31648

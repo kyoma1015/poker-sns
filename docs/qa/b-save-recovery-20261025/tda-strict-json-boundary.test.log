@@ -1,0 +1,28 @@
+✔ strict decoder refuses duplicate prototype (1.362349ms)
+✔ strict decoder refuses duplicate unicode surrogate alias (0.159731ms)
+✔ strict decoder refuses duplicate empty key (0.093061ms)
+✔ strict decoder refuses duplicate backslash alias (0.085709ms)
+✔ depth 127 is accepted (0.823775ms)
+✔ depth 128 is accepted (0.248766ms)
+✔ depth 129 is refused at the boundary (0.263449ms)
+✔ invalid UTF8 c0af is refused (0.121623ms)
+✔ invalid UTF8 eda080 is refused (0.346384ms)
+✔ invalid UTF8 e282 is refused (0.155215ms)
+✔ invalid UTF8 f4908080 is refused (0.130016ms)
+✔ invalid JSON grammar is refused: {"x":NaN} (0.219462ms)
+✔ invalid JSON grammar is refused: {"x":Infinity} (0.07294ms)
+✔ invalid JSON grammar is refused: {"x":1,} (0.096546ms)
+✔ invalid JSON grammar is refused: [0,] (0.082574ms)
+✔ invalid JSON grammar is refused: {"x":"\q"} (0.09274ms)
+✔ invalid JSON grammar is refused: {"x":1} trailing (0.078679ms)
+✔ all JSON finite scalar and escaped string forms retain their values (0.189616ms)
+✔ 10000 fixed-seed valid finite JSON values match JSON.parse without mutation (43.554681ms)
+✔ all malformed manifest classes retain generic reasons and nonpublication gates (1.011359ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 55.879051
