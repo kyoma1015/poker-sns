@@ -220,6 +220,16 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     await timeoutPage.goto(origin+'/tests/video/browser-real-timeline.html')
     await timeoutPage.evaluate(async () => {
       const module=await import('/src/videoUpload.ts')
+      // A deliberately non-signalling element proves the timer, not the
+      // browser's normal immediate corrupt-file error path.
+      const originalCreate=document.createElement.bind(document)
+      const originalUrl=URL.createObjectURL
+      const originalRevoke=URL.revokeObjectURL
+      document.createElement=(tag,...args)=>tag==='video'
+        ? {preload:'',onloadedmetadata:null,onerror:null,src:'',removeAttribute(){},load(){}}
+        : originalCreate(tag,...args)
+      URL.createObjectURL=()=> 'blob:isolated-timeout'
+      URL.revokeObjectURL=()=> { window.__VIDEO_TIMEOUT_REVOKED=true }
       const corrupt=new File([new Uint8Array([0,1,2,3])],'corrupt.webm',{type:'video/webm'})
       window.__VIDEO_TIMEOUT_RESULT='pending'
       void module.readVideoDuration(corrupt).then(
