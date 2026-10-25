@@ -26,6 +26,12 @@ class PrivilegedVideoApiBoundary(unittest.TestCase):
         self.assertNotIn("admin.from('posts')", text)
         self.assertIn("viewer.from('posts')", text)
 
+    def test_media_transport_never_uses_service_role(self):
+        text = (ROOT / 'api/video-media.ts').read_text()
+        self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY', text)
+        self.assertNotIn("apikey: service", text)
+        self.assertIn("apikey: anon, Authorization: rawAuth", text)
+
     def test_privileged_rpc_allowlist(self):
         allowed = {'video_reserve_object_key', 'video_production_storage_generation',
                    'video_production_publish_fenced', 'video_production_reconcile_fenced'}
