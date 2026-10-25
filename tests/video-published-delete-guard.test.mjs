@@ -27,7 +27,7 @@ test('authorized media uses server JWT and RLS, never redirects to signed URLs',
   assert.match(media,/viewer\.auth\.getUser\(token\)/)
   assert.match(media,/viewer\.from\('posts'\)/)
   assert.match(media,/VIDEO_PRODUCTION_FENCED_READY !== 'true'/)
-  assert.match(media,/Cache-Control', 'no-store, private'/)
+  assert.match(media,/Cache-Control', 'private, no-store, no-cache, max-age=0, must-revalidate'/)
   assert.doesNotMatch(media,/\.createSignedUrl\(/)
   assert.doesNotMatch(media,/res\.redirect\(/)
 })
