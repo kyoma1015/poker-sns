@@ -1,5 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { createClient } from '@supabase/supabase-js'
+import { spawn } from 'node:child_process'
+import { isAbsolute, join } from 'node:path'
 import { finalizeImmutableCandidate, type FinalizeCandidateAdapters } from './video-finalize-core.ts'
 import { createProductionSupabaseVideoAdapters } from './video-production-supabase-adapters.ts'
 
@@ -17,6 +19,27 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
   res.setHeader('Cache-Control', 'no-store, private')
   res.setHeader('Vary', 'Authorization')
   res.setHeader('X-Content-Type-Options', 'nosniff')
+  // Preview-only runtime attestation, sharing this existing serverless function.
+  // No new Vercel function or production endpoint is required.
+  if (req.method === 'GET' && req.query?.runtime_attestation === 'ffprobe') {
+    if (process.env.VERCEL_ENV !== 'preview') return res.status(404).end()
+    const executable = process.env.FFPROBE_BINARY_PATH || join(process.cwd(), 'api', 'bin', 'ffprobe')
+    if (!isAbsolute(executable)) return res.status(503).json({ ffprobe: 'unconfigured' })
+    const ok = await new Promise<boolean>(resolve => {
+      const child = spawn(executable, ['-version'], { stdio: 'ignore', shell: false })
+      let settled = false
+      const done = (value: boolean) => {
+        if (settled) return
+        settled = true
+        clearTimeout(timeout)
+        resolve(value)
+      }
+      const timeout = setTimeout(() => { child.kill(); done(false) }, 5000)
+      child.on('error', () => done(false))
+      child.on('close', code => done(code === 0))
+    })
+    return res.status(ok ? 200 : 503).json({ ffprobe: ok ? 'executable' : 'unavailable' })
+  }
   if (req.method !== 'POST') return res.status(405).end()
   const authorization = req.headers.authorization
   if (typeof authorization !== 'string' || !/^Bearer [A-Za-z0-9_.-]+$/.test(authorization)) return res.status(401).end()
