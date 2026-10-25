@@ -220,6 +220,18 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     const composer=timelinePage.getByRole('dialog',{name:'新しい投稿'})
     await composer.waitFor({timeout:15000})
     await composer.getByPlaceholder('ポーカーについて何を投稿する？').fill(uploadText)
+    // Reservation RPC must exist in the disposable HTTP stack before the
+    // real client can upload. Never mock a successful reservation response.
+    const reservationPreflight = await timelinePage.evaluate(async () => {
+      const response = await fetch('/internal/video/finalize', {
+        method:'POST',
+        headers:{'Content-Type':'application/json',Authorization:'Bearer '+window.__VIDEO_QA_JWT},
+        body:JSON.stringify({action:'reserve',object_path:'00000000-0000-0000-0000-000000000000/00000000-0000-0000-0000-000000000000.webm'}),
+      })
+      return response.status
+    })
+    assert.ok([401,403,503].includes(reservationPreflight),
+      'foreign owner reservation must never be accepted')
     await timelinePage.locator('input[accept="video/mp4,video/webm"]').setInputFiles({
       name:'timeline-e2e.webm',mimeType:'video/webm',buffer:bytes,
     })
