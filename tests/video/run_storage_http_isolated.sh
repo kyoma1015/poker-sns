@@ -34,6 +34,10 @@ VIDEO_QA_ENV="$qa/local.env" node tests/video/isolated_immutable_storage_http_e2
 # Real isolated Auth + Storage HTTP + PostgREST RPC + ffprobe composition.
 # The immutable Storage guard is active before the generation-fenced RPC runs.
 psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/isolated_fenced_publish.sql
+# The actual Chromium uploader now reserves each key through the trusted RPC.
+# Apply the append-only ledger only to this disposable local stack.
+psql "$dburl" -v ON_ERROR_STOP=1 -f sql/video_permanent_key_reservation_review_only.sql
+psql "$dburl" -v ON_ERROR_STOP=1 -c "grant execute on function public.video_reserve_object_key(uuid,text) to service_role;"
 psql "$dburl" -v ON_ERROR_STOP=1 -c "notify pgrst, 'reload schema';"
 # Node 24 strips TS but does not resolve runtime .js specifiers to source .ts.
 # Use ephemeral aliases only in isolated QA; never commit generated .js files.
