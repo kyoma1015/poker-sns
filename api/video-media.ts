@@ -8,9 +8,13 @@ const MAX_BYTES = 20 * 1024 * 1024
 /** Candidate Vercel route: no public URLs, no redirect, and no Storage mutation. */
 export function createVideoMediaHandler(options: { isolatedLocalOnly?: boolean } = {}) {
 return async function handler(req: VercelRequest, res: VercelResponse) {
-  res.setHeader('Cache-Control', 'no-store, private')
+  res.setHeader('Cache-Control', 'private, no-store, no-cache, max-age=0, must-revalidate')
+  res.setHeader('Pragma', 'no-cache')
+  res.setHeader('Expires', '0')
   res.setHeader('Vary', 'Authorization')
   res.setHeader('X-Content-Type-Options', 'nosniff')
+  res.setHeader('Content-Security-Policy', "default-src 'none'; sandbox")
+  res.setHeader('Cross-Origin-Resource-Policy', 'same-origin')
   if (req.method !== 'GET') return res.status(405).end()
   const rawAuth = req.headers.authorization
   if (!rawAuth || !/^Bearer [A-Za-z0-9_.-]+$/.test(rawAuth)) return res.status(401).end()
