@@ -185,7 +185,9 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
       'foreign account session draft must not render in actual Timeline')
     assert.equal(await timelinePage.getByRole('dialog',{name:'新しい投稿'}).count(),0,
       'foreign account session draft must not open composer')
-    console.log('PASS: REAL Chromium account switch rejects foreign pending video draft')
+    assert.equal(await timelinePage.evaluate(() => sessionStorage.getItem('poker-id-pending-video-v1')),null,
+      'foreign pending draft pointer must be removed without deleting the Storage object')
+    console.log('PASS: REAL Chromium account switch rejects foreign pending video draft and clears local pointer')
     // Same-owner recovery must preserve the draft and open the composer.
     const ownedDraft='OWN-ACCOUNT-PENDING-VIDEO-'+Date.now()
     await timelinePage.evaluate(({owner,ownedDraft}) => {
