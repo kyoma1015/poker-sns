@@ -80,7 +80,20 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
       const { data, error } = await viewer.auth.getUser(token)
       if (error || !data.user || !UUID.test(data.user.id)) return res.status(401).end()
       if (data.user.id !== match[1]) return res.status(403).end()
+      // Restrict this privileged client to the reservation RPC. Even if
+      // future code accidentally calls Storage, the request is denied here.
+      // This does not revoke external service_role Storage permissions.
+      const reserveOnlyFetch: typeof fetch = (input, init) => {
+        const target = new URL(typeof input === 'string' ? input : input instanceof URL ? input.href : input.url)
+        if (target.origin !== new URL(url).origin ||
+            target.pathname !== '/rest/v1/rpc/video_reserve_object_key' ||
+            target.search || (init?.method ?? 'GET').toUpperCase() !== 'POST') {
+          throw new Error('privileged reservation request denied')
+        }
+        return fetch(input, init)
+      }
       const admin = createClient(url, service, {
+        global: { fetch: reserveOnlyFetch },
         auth: { persistSession: false, autoRefreshToken: false },
       })
       // Reauthenticate immediately before committing a permanent reservation.
