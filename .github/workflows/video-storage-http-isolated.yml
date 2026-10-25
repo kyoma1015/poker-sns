@@ -55,6 +55,7 @@ jobs:
         env:
           REQUIRE_FFPROBE_RUNTIME: 'true'
           FFPROBE_BINARY_PATH: './api/bin/ffprobe'
+          FFMPEG_BINARY_PATH: './api/bin/ffmpeg'
         run: node --test tests/video-ffprobe-runtime.test.mjs
       - name: Verify pinned ffprobe build bundle without deploying
         run: test -x api/bin/ffprobe
