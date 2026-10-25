@@ -147,7 +147,7 @@ def main():
                           posted_owner, posted_path) == published_id
     print("PASS: real isolated committed post retained; queue acknowledged; zero Storage access")
 
-    # A pinned but already-absent object can be acknowledged without delete.
+    # A pinned but already-absent object must retry until a durable tombstone exists.
     # This exercises the real claim/reconcile/finish RPC chain and lease release.
     absent_path = owner + "/" + str(uuid4()) + ".mp4"
     absent_payload = {"owner_id": owner, "object_path": absent_path,
@@ -168,7 +168,7 @@ def main():
         raise AssertionError("absent object must never be deleted")
     absent_result = run_one("http://127.0.0.1:56321", service,
                             absent_inspection, deny_delete)
-    assert absent_result == "complete", absent_result
+    assert absent_result == "retry", absent_result
     assert inspected == [(owner, absent_path)], inspected
     absent_status = Request(
         "http://127.0.0.1:56321/rest/v1/video_cleanup_queue?id=eq."
@@ -177,10 +177,10 @@ def main():
         headers={"apikey": service, "Authorization": "Bearer " + service})
     with urlopen(absent_status, timeout=10) as response:
         saved_absent = json.load(response)[0]
-    assert saved_absent["completed_at"] is not None, saved_absent
+    assert saved_absent["completed_at"] is None, saved_absent
     assert saved_absent["lease_owner"] is None and saved_absent["lease_until"] is None, saved_absent
-    assert saved_absent["attempts"] == 1, saved_absent
-    print("PASS: real isolated cleanup queue acknowledges pinned absent object without deletion")
+    assert saved_absent["attempts"] == 1 and "tombstone" in saved_absent["last_error"], saved_absent
+    print("PASS: real isolated cleanup queue retries pinned absent object without durable tombstone")
 
     for name, path, version in cases:
         payload = {"owner_id": owner, "object_path": owner + "/" + str(uuid4()) + ".mp4" if name == "unpinned_version" else path,
