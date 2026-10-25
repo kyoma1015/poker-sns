@@ -91,10 +91,12 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
       return res.status(503).json({ error: 'video_finalize_not_enabled' })
     }
     try {
-      const postId = await finalizeImmutableCandidate(authorization.slice(7), object_path, content, {
-        ...activeAdapters,
-        authenticate: async () => data.user!.id,
-      })
+      // Preserve the adapter's live authentication callback. Replacing it with
+      // the identity captured above would let a revoked token pass the core's
+      // post-ffprobe authorization recheck.
+      const postId = await finalizeImmutableCandidate(
+        authorization.slice(7), object_path, content, activeAdapters,
+      )
       return res.status(201).json({ post_id: postId })
     } catch {
       return res.status(503).json({ error: 'video_finalize_unavailable' })
