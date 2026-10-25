@@ -48,6 +48,29 @@ end;
 $$;
 revoke all on function public.video_reserve_object_key(uuid,text)
   from public, anon, authenticated;
+-- Read-only owner predicate for a future Storage INSERT policy.
+-- SECURITY DEFINER bypasses ledger RLS without exposing the ledger itself.
+-- Only the exact authenticated owner and reserved path may match.
+create or replace function public.video_reserved_key_is_owned(
+  p_path text, p_owner uuid
+) returns boolean language sql stable security definer
+set search_path = '' as $
+  select p_owner is not null
+    and p_owner = (select auth.uid())
+    and exists (
+      select 1 from public.video_reserved_object_keys r
+      where r.bucket_id = 'post-videos'
+        and r.object_path = p_path
+        and r.owner_id = p_owner
+    );
+$;
+revoke all on function public.video_reserved_key_is_owned(text,uuid)
+  from public, anon;
+grant execute on function public.video_reserved_key_is_owned(text,uuid)
+  to authenticated;
+-- This helper is a prerequisite only; it does not fence permissive INSERT
+-- policies, privileged service_role Storage writes, or upserts.
+
 -- Trusted service-role EXECUTE grant is a separate audited release step.
 -- SECURITY BLOCKER: reservation must be transactionally bound to all upload
 -- paths, including retries; Storage is a separate service so DB uniqueness
