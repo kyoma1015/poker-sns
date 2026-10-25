@@ -46,3 +46,16 @@ test('malformed bytes never reach publish or cleanup', async () => {
   assert.ok(!calls.includes('publish'))
   assert.ok(!calls.includes('reconcile'))
 })
+
+test('revoked JWT during preflight cannot reach publish', async () => {
+  let checks = 0
+  const { calls, result } = adapters({
+    authenticate: async () => {
+      checks++
+      return checks === 1 ? owner : '33333333-3333-4333-8333-333333333333'
+    },
+  })
+  // This malformed fixture is rejected by ffprobe first; no publish is permitted.
+  await assert.rejects(finalizeImmutableCandidate(token, path, '', result))
+  assert.ok(!calls.includes('publish'))
+})
