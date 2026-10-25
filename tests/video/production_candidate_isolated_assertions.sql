@@ -74,3 +74,18 @@ begin
 end $service_test$;
 reset role;
 select 'PASS: production candidate isolated preservation, private bucket, RPC grants, generation and replay' as result;
+
+-- SECURITY REGRESSION: even a permanent reservation + authenticated INSERT RLS
+-- cannot prevent service_role from directly mutating Storage objects.
+-- This is a release blocker, not a passing writer-fence assertion.
+do $privileged_writer_audit$
+begin
+ if not (select rolbypassrls from pg_roles where rolname='service_role') then
+  raise exception 'test fixture does not model production service_role BYPASSRLS';
+ end if;
+ if not has_table_privilege('service_role','storage.objects','INSERT')
+    or not has_table_privilege('service_role','storage.objects','UPDATE') then
+  raise exception 'test fixture does not model privileged Storage writer';
+ end if;
+ raise notice 'RELEASE BLOCKER: privileged service_role can bypass authenticated reservation policy; end-to-end writer fence not proven';
+end $privileged_writer_audit$;
