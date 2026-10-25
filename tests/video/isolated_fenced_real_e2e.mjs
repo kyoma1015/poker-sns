@@ -255,6 +255,17 @@ assert.equal(ownerPlayback.headers['content-security-policy'],"default-src 'none
 const otherJwt=(await other.auth.getSession()).data.session.access_token
 const deniedPlayback=await invokeMedia(otherJwt)
 assert.equal(deniedPlayback.status,404,'unauthorized server media handler')
+// Revoke the owner's session in real local GoTrue, then prove that the
+// previously issued access token is denied by the actual media handler.
+// This is separate from JWT expiry and from the synthetic adapter revocation.
+const {error:signOutError}=await client.auth.signOut({scope:'global'})
+assert.ifError(signOutError)
+const revokedSessionPlayback=await invokeMedia(jwt)
+assert.notEqual(revokedSessionPlayback.status,200,
+  'revoked real Auth session must not receive video bytes with its old JWT')
+assert.equal(revokedSessionPlayback.body,null,
+  'revoked real Auth session must not receive media payload')
+console.log('PASS: real GoTrue session sign-out denies old JWT at authenticated media HTTP boundary')
 // Query the same real PostgREST posts feed used by Timeline.loadPosts.
 // This is an actual RLS-protected feed read, not a mocked timeline query.
 const {data:feed,error:feedError}=await client.from('posts').select('*')
