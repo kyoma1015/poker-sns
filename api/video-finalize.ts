@@ -66,7 +66,7 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
     const service = process.env.SUPABASE_SERVICE_ROLE_KEY
     // Production release requires a separately audited Storage writer fence.
     if (process.env.VIDEO_PRODUCTION_FENCED_READY !== 'true' ||
-        !url || !/^https:\\/\\/[a-z0-9-]+\\.supabase\\.co\\/?$/.test(url) ||
+        !url || !url.startsWith('https://') || !/^[a-z0-9-]+\.supabase\.co\/?$/.test(url.slice(8)) ||
         !anon || !service) return res.status(503).json({ error: 'video_reservation_not_enabled' })
     try {
       const viewer = createClient(url, anon, {
