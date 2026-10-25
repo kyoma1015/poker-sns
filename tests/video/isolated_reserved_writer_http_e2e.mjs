@@ -29,6 +29,11 @@ const duplicate=await admin.rpc('video_reserve_object_key',{p_owner:ownerId,p_pa
 assert.ok(duplicate.error,'permanent key must never be reserved twice')
 const unauthorized=await owner.rpc('video_reserve_object_key',{p_owner:ownerId,p_path:`${ownerId}/${randomUUID()}.webm`})
 assert.ok(unauthorized.error,'authenticated client must not invoke privileged reservation RPC')
+const {data:foreignReservation,error:foreignReservationError}=await admin.rpc('video_reserve_object_key',{
+  p_owner:ownerId,p_path:`${(await other.auth.getUser()).data.user.id}/${randomUUID()}.webm`,
+})
+assert.ok(foreignReservationError,'privileged RPC must reject mismatched owner and path')
+assert.equal(foreignReservation,null)
 const {data:ledger,error:ledgerError}=await admin.from('video_reserved_object_keys')
   .select('reservation_id,owner_id,object_path').eq('object_path',path)
 assert.ifError(ledgerError)
