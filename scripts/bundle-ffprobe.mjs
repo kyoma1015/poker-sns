@@ -9,7 +9,8 @@ import { Readable } from 'node:stream'
 import { pipeline } from 'node:stream/promises'
 import { createReadStream } from 'node:fs'
 
-const url = 'https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz'
+// Immutable GitHub release asset ID; the mutable /latest URL is never used.
+const url = 'https://api.github.com/repos/yt-dlp/FFmpeg-Builds/releases/assets/675690310'
 const sha256 = 'f9c52a05bb4e51b44c7e7b52937b38d1fe28bfaa319bb291e6020a5cd9574f17'
 const expectedBytes = 156579068
 if (process.platform !== 'linux' || process.arch !== 'x64') {
@@ -20,7 +21,7 @@ const work = mkdtempSync(join(tmpdir(), 'poker-ffprobe-build-'))
 const MAX_ARCHIVE_BYTES = expectedBytes
 try {
   const archive = join(work, 'ffmpeg.tar.xz')
-  const response = await fetch(url, { redirect: 'follow', signal: AbortSignal.timeout(180000) })
+  const response = await fetch(url, { redirect: 'follow', headers: { Accept: 'application/octet-stream', 'User-Agent': 'poker-id-ffprobe-build' }, signal: AbortSignal.timeout(180000) })
   if (!response.ok || !response.body) throw new Error('pinned ffprobe archive download failed')
   // Redirects and intermediary compression can report a different HTTP
   // Content-Length than the decoded stream. Never trust that header for
