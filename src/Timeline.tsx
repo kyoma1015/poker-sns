@@ -826,7 +826,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     if (imageFiles.length || selectedResult || selectedDiagnosis || styleSnapshot || interactiveMode !== 'normal') { setMessage('動画は画像・戦績・診断・アンケートと同時に添付できません。'); return }
     const error = await validateVideo(file)
     if (error) { setMessage(error); return }
-    if (pendingVideoRef.current) { setMessage('前回の動画投稿の確定結果が不明です。投稿ボタンから同じStorageファイルを再試行してください。'); return }
+    // Re-check after async metadata validation: finalize may have started meanwhile.
+    if (pendingVideoRef.current || videoSubmitInFlightRef.current) { setMessage('保留中の動画を先に再試行してください。'); return }
     setVideoFile(file)
     setMessage(VIDEO_SERVER_ENABLED ? '' : '動画のプレビューを確認できます。サーバーAPIの安全確認が終わるまで投稿は無効です。')
   }
