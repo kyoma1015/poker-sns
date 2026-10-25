@@ -81,6 +81,9 @@ export function createProductionSupabaseVideoAdapters(
         throw new Error('incomplete Storage object')
       }
       const bytes = Buffer.concat(chunks, received)
+      // Authorization may expire or be revoked during the bounded Storage read.
+      // Revalidate the request-scoped JWT before exposing bytes to the publish core.
+      if (await authenticate(accessToken) !== ownerId) throw new Error('authorization changed during read')
       if (generation !== await metadata(ownerId, path)) throw new Error('Storage generation changed during read')
       return { ownerId, objectPath: path, generation, size: bytes.length, bytes }
     },
