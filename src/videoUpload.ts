@@ -31,8 +31,7 @@ export function readVideoDuration(file: File): Promise<number> {
       video.onloadedmetadata = null
       video.onerror = null
       video.removeAttribute('src')
-      video.load()
-      URL.revokeObjectURL(url)
+      try { video.load() } finally { URL.revokeObjectURL(url) }
       if (value === undefined) reject(new Error('動画の長さを確認できませんでした。'))
       else resolve(value)
     }
