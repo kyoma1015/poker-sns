@@ -176,6 +176,43 @@ async function invokeFinalize(token, body) {
      'content-type':'application/json'},body},res)
  return {status:res.statusCode,body:res.body,headers}
 }
+// Exercise the actual HTTP finalize handler with a real ffprobe preflight.
+// The adapter revokes authorization on the second authentication check,
+// after the handler's initial JWT validation. No publish may occur.
+let boundaryAuthChecks=0
+let boundaryPublishCalls=0
+const revokedBoundaryAdapters={
+  ...adapters,
+  authenticate: async token => {
+    boundaryAuthChecks++
+    if (boundaryAuthChecks > 1) throw new Error('JWT revoked during HTTP finalize')
+    return adapters.authenticate(token)
+  },
+  publish: async (...args) => {
+    boundaryPublishCalls++
+    return adapters.publish(...args)
+  },
+}
+const revokedBoundaryHandler=createVideoFinalizeHandler(revokedBoundaryAdapters,{isolatedLocalOnly:true})
+const revokedBoundaryResponse={
+  statusCode:200,body:null,
+  setHeader(){return this},
+  status(code){this.statusCode=code;return this},
+  json(data){this.body=data;return this},
+  end(){return this},
+}
+const revokedBody={object_path:path,content:'revoked HTTP finalize must not publish'}
+const revokedEncoded=JSON.stringify(revokedBody)
+await revokedBoundaryHandler({
+  method:'POST',
+  headers:{authorization:'Bearer '+jwt,'content-length':String(Buffer.byteLength(revokedEncoded)),
+    'content-type':'application/json'},
+  body:revokedBody,
+},revokedBoundaryResponse)
+assert.equal(revokedBoundaryResponse.statusCode,503,'revoked JWT must reject actual HTTP finalize')
+assert.ok(boundaryAuthChecks>=2,'actual HTTP finalize must preserve live post-ffprobe authentication')
+assert.equal(boundaryPublishCalls,0,'revoked JWT must never reach publish from HTTP handler')
+console.log('PASS: actual HTTP finalize handler rechecks JWT after real ffprobe and rejects revocation')
 const viaHttp=await invokeFinalize(jwt,{object_path:path,content:'real isolated end-to-end'})
 assert.equal(viaHttp.status,201,'actual finalize API boundary must succeed')
 assert.equal(viaHttp.body.post_id,first)
