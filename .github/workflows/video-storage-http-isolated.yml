@@ -43,23 +43,18 @@ jobs:
         timeout-minutes: 4
         run: |
           set -euo pipefail
-          if command -v ffprobe >/dev/null 2>&1 && command -v ffmpeg >/dev/null 2>&1; then
-            ffprobe -version | head -n 1
-            exit 0
-          fi
-          sudo env DEBIAN_FRONTEND=noninteractive timeout --signal=TERM --kill-after=15s 180s apt-get install -y -qq -o DPkg::Lock::Timeout=30 ffmpeg
-          command -v ffprobe
-          ffprobe -version | head -n 1
+          # Avoid apt: the runner's package manager can hang without output.
+          # Use the same pinned, SHA256-verified executable as the Vercel build.
+          node scripts/bundle-ffprobe.mjs
+          test -x api/bin/ffprobe
+          api/bin/ffprobe -version
+          file api/bin/ffprobe
       - name: Enforce real ffprobe runtime tests without skip
         env:
           REQUIRE_FFPROBE_RUNTIME: 'true'
         run: node --test tests/video-ffprobe-runtime.test.mjs
       - name: Verify pinned ffprobe build bundle without deploying
-        run: |
-          node scripts/bundle-ffprobe.mjs
-          test -x api/bin/ffprobe
-          api/bin/ffprobe -version
-          file api/bin/ffprobe
+        run: test -x api/bin/ffprobe
       - name: Install Chromium for actual React playback QA
         run: npx playwright-core install --with-deps chromium
       - name: Isolated Supabase Storage HTTP E2E
