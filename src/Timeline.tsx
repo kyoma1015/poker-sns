@@ -189,6 +189,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       pendingVideoRef.current = staged
       setPendingVideo(staged)
       setContent(staged.content)
+      setComposeOpen(true)
     } catch { /* Untrusted or unavailable session storage: stay fail-closed. */ }
   }, [])
   const videoSubmitInFlightRef = useRef(false)
@@ -821,6 +822,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
   const chooseVideo = async (file: File | undefined) => {
     if (!file) return
+    if (pendingVideoRef.current || videoSubmitInFlightRef.current) { setMessage('保留中の動画を先に再試行してください。'); return }
     if (imageFiles.length || selectedResult || selectedDiagnosis || styleSnapshot || interactiveMode !== 'normal') { setMessage('動画は画像・戦績・診断・アンケートと同時に添付できません。'); return }
     const error = await validateVideo(file)
     if (error) { setMessage(error); return }
