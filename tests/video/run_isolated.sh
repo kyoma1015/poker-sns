@@ -101,6 +101,26 @@ begin
   if (select count(*) from public.video_reserved_object_keys) <> 1 then
     raise exception 'reservation ledger mutated';
   end if;
-end $$;
+end $;
+-- Verify that app roles cannot mutate the ledger or invoke privileged RPC.
+do $
+begin
+  if has_function_privilege('authenticated',
+       'public.video_reserve_object_key(uuid,text)', 'EXECUTE') then
+    raise exception 'authenticated can invoke trusted reservation RPC';
+  end if;
+  if has_table_privilege('authenticated',
+       'public.video_reserved_object_keys', 'DELETE') then
+    raise exception 'authenticated can erase key reservations';
+  end if;
+  if has_table_privilege('anon',
+       'public.video_reserved_object_keys', 'INSERT') then
+    raise exception 'anon can forge reservations';
+  end if;
+  if not (select relrowsecurity from pg_class
+          where oid='public.video_reserved_object_keys'::regclass) then
+    raise exception 'reservation ledger RLS disabled';
+  end if;
+end $;
 SQL
-echo 'PASS: disposable PostgreSQL permanent key reservation rejects duplicate and foreign-owner path'
+echo 'PASS: disposable PostgreSQL reservation rejects duplicates and denies client mutation'
