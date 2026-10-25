@@ -22,7 +22,22 @@ export function createProductionSupabaseVideoAdapters(
     global: { headers: { Authorization: 'Bearer ' + accessToken } },
     auth: { persistSession: false, autoRefreshToken: false },
   })
+  // Limit this privileged HTTP client to the three reviewed RPC endpoints.
+  // This does not revoke external service_role Storage administrator powers.
+  const allowedRpc = new Set(['video_production_storage_generation',
+    'video_production_publish_fenced', 'video_production_reconcile_fenced'])
+  const rpcOnlyFetch: typeof fetch = (input, init) => {
+    const target = new URL(typeof input === 'string' ? input : input instanceof URL ? input.href : input.url)
+    if (target.origin !== new URL(url).origin) throw new Error('privileged origin denied')
+    const prefix = '/rest/v1/rpc/'
+    const rpc = target.pathname.startsWith(prefix) ? target.pathname.slice(prefix.length) : ''
+    if (!allowedRpc.has(rpc) || target.search || (init?.method ?? 'GET').toUpperCase() !== 'POST') {
+      throw new Error('privileged request outside RPC allowlist')
+    }
+    return fetch(input, init)
+  }
   const admin = createClient(url, serviceRoleKey, {
+    global: { fetch: rpcOnlyFetch },
     auth: { persistSession: false, autoRefreshToken: false },
   })
   const authenticate = async (token: string) => {
@@ -113,7 +128,7 @@ export function createProductionSupabaseVideoAdapters(
       if (error || (data !== null && typeof data !== 'string')) throw new Error('reconciliation unavailable')
       if (!data) return null
       if (!sha256 || duration === undefined || content === undefined) return null
-      const { data: post, error: readError } = await admin.from('posts')
+      const { data: post, error: readError } = await viewer.from('posts')
         .select('id,user_id,video_path,video_generation,video_sha256,video_duration_seconds,content')
         .eq('id', data).maybeSingle()
       if (readError || !post) throw new Error('reconciliation fingerprint unavailable')
