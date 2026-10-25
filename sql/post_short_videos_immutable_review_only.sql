@@ -44,18 +44,11 @@ create policy "post_videos_immutable_read_own" on storage.objects
 -- inventory and policy audit remain mandatory release blockers.
 -- The isolated QA INSERT policy must be replaced with this fenced policy
 -- during a production migration; never OR-combine both.
-create policy "post_videos_reserved_insert_own" on storage.objects
-  for insert to authenticated
-  with check (
-    bucket_id = 'post-videos'
-    and (storage.foldername(name))[1] = (select auth.uid())::text
-    and exists (
-      select 1 from public.video_reserved_object_keys reserved
-      where reserved.bucket_id = 'post-videos'
-        and reserved.object_path = storage.objects.name
-        and reserved.owner_id = (select auth.uid())
-    )
-  );
+-- Intended predicate (NOT executable until helper and grants are audited):
+--   bucket_id = 'post-videos'
+--   AND (storage.foldername(name))[1] = auth.uid()::text
+--   AND public.video_reserved_key_is_owned(name, auth.uid())
+-- The helper must be security-definer, read-only and strictly owner-scoped.
 -- IMPORTANT: authenticated has no SELECT privilege on the private ledger.
 -- Therefore this illustrative policy is NOT deployable as written: the
 -- existence check needs a security-definer boolean helper with an explicit
