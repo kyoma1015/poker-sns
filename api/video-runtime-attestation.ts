@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { spawn } from 'node:child_process'
-import { isAbsolute } from 'node:path'
+import { isAbsolute, join } from 'node:path'
 
 /**
  * Read-only runtime attestation for preview deployments only.
@@ -11,7 +11,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('X-Content-Type-Options', 'nosniff')
   if (process.env.VERCEL_ENV !== 'preview') return res.status(404).end()
   if (req.method !== 'GET') return res.status(405).end()
-  const path = process.env.FFPROBE_BINARY_PATH
+  const path = process.env.FFPROBE_BINARY_PATH || join(process.cwd(), 'api', 'bin', 'ffprobe')
   if (!path || !isAbsolute(path)) return res.status(503).json({ ffprobe: 'unconfigured' })
   const result = await new Promise<boolean>(resolve => {
     let settled = false
