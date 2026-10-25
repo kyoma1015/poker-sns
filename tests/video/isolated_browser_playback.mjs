@@ -232,6 +232,14 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     })
     assert.ok([401,403,503].includes(reservationPreflight),
       'foreign owner reservation must never be accepted')
+    // Assert the actual browser upload must reserve a permanent key first.
+    // Observe real HTTP responses, not a mocked success.
+    const videoReservationResponses=[]
+    timelinePage.on('response', response => {
+      if (response.url().includes('/internal/video/finalize')) {
+        videoReservationResponses.push({status:response.status(),method:response.request().method()})
+      }
+    })
     await timelinePage.locator('input[accept="video/mp4,video/webm"]').setInputFiles({
       name:'timeline-e2e.webm',mimeType:'video/webm',buffer:bytes,
     })
@@ -244,6 +252,8 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
         errors:timelineErrors
       }),{cause:error})
     }
+    assert.ok(videoReservationResponses.some(x=>x.status===201&&x.method==='POST'),
+      'real browser must receive trusted HTTP reservation/finalize success')
     const uploadedArticle=timelinePage.locator('article').filter({hasText:uploadText})
     const uploadedVideo=uploadedArticle.locator('video')
     await uploadedVideo.waitFor({timeout:20000})
