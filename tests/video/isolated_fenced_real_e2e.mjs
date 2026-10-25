@@ -76,6 +76,32 @@ const {data:revokedRows,error:revokedRowsError}=await client.from('posts')
 assert.ifError(revokedRowsError)
 assert.equal(revokedRows.length,0,'revoked preflight must not create a post')
 console.log('PASS: real immutable Storage + ffprobe -> JWT revoked before publish -> no DB post')
+// A replacement generation observed after real ffprobe must block publication.
+let generationChecks=0
+let changedPublishCalls=0
+const changedGenerationAdapters={
+  ...adapters,
+  currentGeneration: async (...args) => {
+    generationChecks++
+    const current=await adapters.currentGeneration(...args)
+    return generationChecks >= 2 ? '00000000-0000-4000-8000-000000000000' : current
+  },
+  publish: async (...args) => {
+    changedPublishCalls++
+    return adapters.publish(...args)
+  },
+}
+await assert.rejects(
+  finalizeImmutableCandidate(jwt,path,'must never publish changed generation',changedGenerationAdapters),
+  /not proven/,
+)
+assert.ok(generationChecks>=2,'must detect changed generation after real ffprobe')
+assert.equal(changedPublishCalls,0,'changed Storage generation must not publish')
+const {data:changedRows,error:changedRowsError}=await client.from('posts')
+  .select('id').eq('video_path',path)
+assert.ifError(changedRowsError)
+assert.equal(changedRows.length,0,'changed generation must not create a post')
+console.log('PASS: real ffprobe + changed immutable Storage generation -> no publish')
 const first=await finalizeImmutableCandidate(jwt,path,'real isolated end-to-end',adapters)
 assert.match(first,/^[0-9a-f-]{36}$/)
 const second=await finalizeImmutableCandidate(jwt,path,'real isolated end-to-end',adapters)
