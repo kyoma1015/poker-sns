@@ -66,6 +66,29 @@ assert.ok((await owner.storage.from(bucket).download(orphan)).error)
 const serviceKey=env.SERVICE_ROLE_KEY
 assert.ok(serviceKey,'missing isolated service role key')
 const server=createClient(url,serviceKey,{auth:{persistSession:false,autoRefreshToken:false}})
+// Reproduce an actual ABA path reuse on disposable LOCAL Storage only.
+// The same key can name different bytes after an authorized deletion.
+// This demonstrates why inspection followed by remove(path) is unsafe.
+const abaPath=`${ownerId}/${randomUUID()}.webm`
+const abaA=Buffer.from('isolated-generation-A')
+const abaB=Buffer.from('isolated-generation-B')
+assert.ifError((await owner.storage.from(bucket).upload(abaPath,abaA,
+  {contentType:'video/webm',upsert:false})).error)
+const abaInitial=await owner.storage.from(bucket).download(abaPath)
+assert.ifError(abaInitial.error)
+assert.deepEqual(Buffer.from(await abaInitial.data.arrayBuffer()),abaA)
+const abaRemoved=await server.storage.from(bucket).remove([abaPath])
+assert.ifError(abaRemoved.error)
+const abaRecreated=await owner.storage.from(bucket).upload(abaPath,abaB,
+  {contentType:'video/webm',upsert:false})
+assert.ifError(abaRecreated.error)
+const abaAfter=await owner.storage.from(bucket).download(abaPath)
+assert.ifError(abaAfter.error)
+assert.deepEqual(Buffer.from(await abaAfter.data.arrayBuffer()),abaB,
+  'new generation at same Storage path must survive stale inspection')
+const abaViewer=await viewer.storage.from(bucket).download(abaPath)
+assert.ok(abaViewer.error,'ABA replacement must remain private')
+console.log('PASS: real isolated Storage ABA delete-and-recreate changes bytes at identical path; unsafe path-only cleanup prohibited')
 const publishPath=`${ownerId}/${randomUUID()}.mp4`
 const videoBytes=Buffer.from('isolated-publish-object')
 assert.ifError((await owner.storage.from(bucket).upload(publishPath,videoBytes,{contentType:'video/mp4'})).error)
