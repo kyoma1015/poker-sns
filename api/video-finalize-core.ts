@@ -1,5 +1,5 @@
-import { inspectStagedVideo, requireImmutableGeneration } from './video-preflight.ts'
-import type { VideoExtension } from './video-ffprobe.ts'
+import { inspectStagedVideo, requireImmutableGeneration } from './video-preflight.js'
+import type { VideoExtension } from './video-ffprobe.js'
 
 /** A confirmed RPC rejection is not an ambiguous commit and must never reconcile to an older post. */
 export class DefinitivePublishRejection extends Error {}
