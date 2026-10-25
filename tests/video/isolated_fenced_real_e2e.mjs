@@ -201,6 +201,9 @@ const revokedBoundaryResponse={
   json(data){this.body=data;return this},
   end(){return this},
 }
+const {data:boundaryRowsBefore,error:boundaryRowsBeforeError}=await client.from('posts')
+  .select('id,content').eq('video_path',path)
+assert.ifError(boundaryRowsBeforeError)
 const revokedBody={object_path:path,content:'revoked HTTP finalize must not publish'}
 const revokedEncoded=JSON.stringify(revokedBody)
 await revokedBoundaryHandler({
@@ -213,9 +216,12 @@ assert.equal(revokedBoundaryResponse.statusCode,503,'revoked JWT must reject act
 assert.ok(boundaryAuthChecks>=2,'actual HTTP finalize must preserve live post-ffprobe authentication')
 assert.equal(boundaryPublishCalls,0,'revoked JWT must never reach publish from HTTP handler')
 const {data:boundaryRevokedRows,error:boundaryRevokedRowsError}=await client.from('posts')
-  .select('id').eq('video_path',path)
+  .select('id,content').eq('video_path',path)
 assert.ifError(boundaryRevokedRowsError)
-assert.equal(boundaryRevokedRows.length,0,'revoked HTTP finalize must leave zero published rows')
+assert.equal(boundaryRevokedRows.length,boundaryRowsBefore.length,
+  'revoked HTTP finalize must not create any additional published rows')
+assert.ok(!boundaryRevokedRows.some(row=>row.content==='revoked HTTP finalize must not publish'),
+  'revoked HTTP finalize content must never be published')
 console.log('PASS: actual HTTP finalize handler rechecks JWT after real ffprobe and rejects revocation')
 const viaHttp=await invokeFinalize(jwt,{object_path:path,content:'real isolated end-to-end'})
 assert.equal(viaHttp.status,201,'actual finalize API boundary must succeed')
