@@ -28,6 +28,23 @@ export async function finalizeUploadedVideo(objectPath: string, content: string)
   return payload.post_id
 }
 
+/** Reserve an object path before ANY Storage write. The server is the sole
+ * trusted caller of the permanent-key ledger. Never retry a rejected key. */
+export async function reserveVideoObjectPath(objectPath: string): Promise<void> {
+  if (!VIDEO_SERVER_ENABLED) throw new Error('動画投稿はサーバーAPIの安全確認待ちです。')
+  const response = await fetch(VIDEO_FINALIZE_ROUTE, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: await authHeader() },
+    cache: 'no-store',
+    body: JSON.stringify({ action: 'reserve', object_path: objectPath }),
+  })
+  if (!response.ok) throw new Error('動画の保存先を安全に確保できませんでした。')
+  const payload: unknown = await response.json()
+  if (!payload || typeof payload !== 'object' || !('reserved' in payload) || payload.reserved !== true) {
+    throw new Error('動画保存先の予約応答が不正です。')
+  }
+}
+
 /** Requires server-side JWT/RLS check per request; never uses a signed URL. */
 export async function loadAuthorizedVideo(postId: string): Promise<string> {
   if (!VIDEO_SERVER_ENABLED) throw new Error('動画再生APIは安全確認待ちです。')
