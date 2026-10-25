@@ -29,6 +29,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
             global: { headers: { Authorization: 'Bearer ' + jwt } },
             auth: { persistSession:false, autoRefreshToken:false },
           })
+          window.__VIDEO_QA_TRIGGER_SIGN_OUT = () => client.auth.signOut({ scope: 'local' })
           // Isolated-only stubs for unrelated social tables absent from local QA schema.
           const empty = { data:[], error:null }
           const query = new Proxy({}, { get(_target, key) {
@@ -241,6 +242,16 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
       const article=[...document.querySelectorAll('article')].find(a=>a.textContent?.includes(text))
       return article?.querySelector('video')?.currentTime>0
     },uploadText,{timeout:15000})
+    // Verify the production component drops its in-memory Blob URL on sign-out.
+    // The test-only Supabase bridge forwards the real GoTrue auth event.
+    await timelinePage.evaluate(() => window.__VIDEO_QA_TRIGGER_SIGN_OUT?.())
+    await timelinePage.waitForFunction(text => {
+      const article=[...document.querySelectorAll('article')].find(a=>a.textContent?.includes(text))
+      return article && !article.querySelector('video')
+    },uploadText,{timeout:20000})
+    assert.equal(await uploadedArticle.locator('video').count(),0,
+      'authenticated video element must disappear after sign-out')
+    console.log('PASS: real Chromium authenticated video Blob URL discarded on sign-out')
     console.log('PASS: FULL ACTUAL Timeline.tsx UI video file selection -> real isolated Storage HTTP upload -> real finalize HTTP -> RLS PostgREST feed -> Chromium playback')
     console.log('PASS: ACTUAL Timeline.tsx renders real RLS PostgREST video and Chromium plays it (social dependencies isolated)')
     await timelinePage.close()
