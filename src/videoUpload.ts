@@ -70,9 +70,7 @@ export async function removePostVideo(userId: string, path: string): Promise<voi
   throw new Error('動画ファイルの削除は安全な条件付き削除が実装されるまで停止しています。')
 }
 
-export async function createPostVideoPlaybackUrl(path: string): Promise<string> {
-  if (!/^[0-9a-f-]{36}\/[0-9a-f-]{36}\.(mp4|webm)$/i.test(path)) throw new Error('動画パスが不正です。')
-  const { data, error } = await supabase.storage.from(VIDEO_BUCKET).createSignedUrl(path, 300)
-  if (error || !data?.signedUrl) throw error || new Error('動画を再生できません。')
-  return data.signedUrl
+/** Direct Storage signed URLs bypass per-view JWT/RLS checks. Never issue them. */
+export async function createPostVideoPlaybackUrl(_path: string): Promise<string> {
+  throw new Error('動画再生には認証済みの投稿IDと専用media APIを使用してください。')
 }
