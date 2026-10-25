@@ -65,8 +65,9 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
     const anon = process.env.VITE_SUPABASE_ANON_KEY
     const service = process.env.SUPABASE_SERVICE_ROLE_KEY
     // Production release requires a separately audited Storage writer fence.
+    const host = url?.startsWith('https://') ? url.slice(8).replace(/\\/$/, '') : ''
     if (process.env.VIDEO_PRODUCTION_FENCED_READY !== 'true' ||
-        !url || !url.startsWith('https://') || !/^[a-z0-9-]+\.supabase\.co\/?$/.test(url.slice(8)) ||
+        !/^[a-z0-9-]+[.]supabase[.]co$/.test(host) ||
         !anon || !service) return res.status(503).json({ error: 'video_reservation_not_enabled' })
     try {
       const viewer = createClient(url, anon, {
