@@ -83,6 +83,11 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
       const admin = createClient(url, service, {
         auth: { persistSession: false, autoRefreshToken: false },
       })
+      // Reauthenticate immediately before committing a permanent reservation.
+      // A token revoked while the trusted RPC client was being constructed
+      // must not reserve a key for an invalid session.
+      const { data: fresh, error: freshError } = await viewer.auth.getUser(token)
+      if (freshError || fresh.user?.id !== data.user.id) return res.status(401).end()
       const { data: reservation, error: reservationError } = await admin.rpc('video_reserve_object_key', {
         p_owner: data.user.id, p_path: path,
       })
