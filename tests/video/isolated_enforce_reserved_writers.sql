@@ -16,6 +16,14 @@ begin
       raise exception 'unreviewed permissive Storage writer policy: %', p.policyname;
     end if;
   end loop;
+  for p in select * from pg_policies
+    where schemaname='storage' and tablename='objects'
+      and cmd in ('UPDATE','DELETE','ALL') and permissive='PERMISSIVE'
+      and (roles @> array['authenticated']::name[]
+        or roles @> array['public']::name[])
+  loop
+    raise exception 'unreviewed mutating Storage writer policy: %', p.policyname;
+  end loop;
   if not exists (
     select 1 from pg_policies
     where schemaname='storage' and tablename='objects'
