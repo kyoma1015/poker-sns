@@ -25,6 +25,9 @@ def delete_if_exact_version(owner: str, path: str, expected_version: str) -> boo
             raise ValueError("missing version")
     except (ValueError, TypeError, AttributeError):
         raise PermissionError("invalid object identity or version") from None
+    # Deliberately never issue Storage REST DELETE, including after a
+    # successful generation inspection: the current StorageFileApi.remove
+    # sends only {prefixes: paths}, so an ABA replacement would be removed.
     raise ConditionalDeleteUnavailable(
         "Storage REST remove has no verified atomic If-Match/version precondition"
     )
