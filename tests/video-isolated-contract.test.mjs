@@ -65,7 +65,9 @@ test('Vercel media route enforces JWT, post RLS and private byte delivery', () =
   assert.ok(handler.includes(".select('user_id,video_path')"))
   assert.ok(!handler.includes("video_path,is_public"), "production posts has no is_public column")
   assert.ok(handler.includes('await visible() !== path'))
-  assert.ok(handler.includes("'no-store, private'"))
+  assert.match(handler, /Cache-Control', 'private, no-store, no-cache, max-age=0, must-revalidate'/)
+  assert.match(handler, /Vary', 'Authorization'/)
+  assert.match(handler, /Cross-Origin-Resource-Policy', 'same-origin'/)
   for (const unsafe of ['createSignedUrl', 'getPublicUrl', '.remove(']) {
     assert.ok(!handler.includes(unsafe), unsafe)
   }
