@@ -7,4 +7,4 @@ function ChatRoute() {
   useEffect(() => { (window as any).dmQA.navigate = navigate }, [navigate])
   return <DirectMessageChat />
 }
-createRoot(document.getElementById('root')!).render(<MemoryRouter initialEntries={['/dm/other']}><Routes><Route path="/dm/:userId" element={<ChatRoute />} /></Routes></MemoryRouter>)
+createRoot(document.getElementById('root')!).render(<MemoryRouter initialEntries={['/dm/other']}><Routes><Route path="/dm/:userId" element={<ChatRoute />} /><Route path="/login" element={<p>Synthetic login</p>} /></Routes></MemoryRouter>)

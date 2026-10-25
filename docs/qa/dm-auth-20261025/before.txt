@@ -1,0 +1,96 @@
+✔ DM repeated Enter during block verification sends exactly once (1751.692238ms)
+✔ DM repeated Enter while insert is pending cannot create another message (1099.373539ms)
+✔ DM rejected transport unlocks retry and does not display backend details (1107.60553ms)
+✔ DM returned insert error preserves draft, redacts details and permits explicit retry (1074.346095ms)
+✔ DM block verification error fails closed without writing (1027.258329ms)
+✔ DM accepted write followed by reload failure is reported as sent without restoring draft (1047.835306ms)
+✔ DM whitespace and IME composition never write a message (1052.825988ms)
+✔ DM a late response from the previous conversation cannot replace the current messages (1143.860545ms)
+✔ DM leaving and returning to the same peer cannot let an old send clear a new draft (1124.979705ms)
+✖ DM sign out clears private messages and draft without waiting for another request (1100.131302ms)
+✖ DM switching account remounts the conversation without retaining old private data (1099.531149ms)
+✖ DM pending authorization check cannot write after sign out (1123.434642ms)
+✖ DM revalidates authenticated identity before a write if its auth event was missed (1185.597667ms)
+✔ DM same-account token refresh preserves the unsent draft (1080.490517ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 10
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16026.255652
+
+✖ failing tests:
+
+test at tests/direct-message-send.test.mjs:109:1
+✖ DM sign out clears private messages and draft without waiting for another request (1100.131302ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /THIRD_SYNTHETIC|Private old draft/. Input:
+  
+  '‹\n♠\nAnother synthetic player\n@synthetic\n昨日\nTHIRD_SYNTHETIC\n00:00\n↑'
+  
+      at file:///workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:116:10
+      at async withChat (file:///workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:25:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '‹\n♠\nAnother synthetic player\n@synthetic\n昨日\nTHIRD_SYNTHETIC\n00:00\n↑',
+    expected: /THIRD_SYNTHETIC|Private old draft/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }
+
+test at tests/direct-message-send.test.mjs:119:1
+✖ DM switching account remounts the conversation without retaining old private data (1099.531149ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /NEW_ACCOUNT_SYNTHETIC/. Input:
+  
+  '‹\n♠\nAnother synthetic player\n@synthetic\n昨日\nTHIRD_SYNTHETIC\n00:00\n↑'
+  
+      at file:///workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:125:10
+      at async withChat (file:///workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:25:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '‹\n♠\nAnother synthetic player\n@synthetic\n昨日\nTHIRD_SYNTHETIC\n00:00\n↑',
+    expected: /NEW_ACCOUNT_SYNTHETIC/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/direct-message-send.test.mjs:129:1
+✖ DM pending authorization check cannot write after sign out (1123.434642ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at file:///workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:134:10
+      at async withChat (file:///workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:25:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/direct-message-send.test.mjs:136:1
+✖ DM revalidates authenticated identity before a write if its auth event was missed (1185.597667ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at file:///workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:139:10
+      at async withChat (file:///workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:25:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

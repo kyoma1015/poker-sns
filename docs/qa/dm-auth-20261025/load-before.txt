@@ -1,0 +1,77 @@
+✔ DM repeated Enter during block verification sends exactly once (1320.161909ms)
+✔ DM repeated Enter while insert is pending cannot create another message (1153.380853ms)
+✔ DM rejected transport unlocks retry and does not display backend details (989.886614ms)
+✔ DM returned insert error preserves draft, redacts details and permits explicit retry (1040.722287ms)
+✔ DM block verification error fails closed without writing (991.613341ms)
+✔ DM accepted write followed by reload failure is reported as sent without restoring draft (929.680902ms)
+✔ DM whitespace and IME composition never write a message (933.63142ms)
+✔ DM a late response from the previous conversation cannot replace the current messages (1137.042404ms)
+✔ DM leaving and returning to the same peer cannot let an old send clear a new draft (1144.427897ms)
+✔ DM sign out clears private messages and draft without waiting for another request (1086.49677ms)
+✔ DM switching account remounts the conversation without retaining old private data (1081.364549ms)
+✔ DM pending authorization check cannot write after sign out (1042.395752ms)
+✔ DM revalidates authenticated identity before a write if its auth event was missed (1042.738332ms)
+✔ DM same-account token refresh preserves the unsent draft (991.825625ms)
+✔ DM auth callbacks do not call Supabase reentrantly and unsubscribe on exit (996.185423ms)
+✔ DM queued Realtime delivery cannot mark old messages read after synchronous signout (970.156903ms)
+✔ DM duplicate current-conversation INSERT events reload one saved row without duplicating it (954.156763ms)
+2:23:32 AM [vite] (client) [Unhandled rejection] Error: SYNTHETIC_PRIVATE_AUTH
+ > Object.getUser tests/browser/dm-supabase.ts:54:62
+    52 |    auth: { getUser: async () => {
+    53 |      if (qa.insideAuthCallback) qa.authCallsInsideCallback++
+    54 |      if (qa.rejectUserOnce) { qa.rejectUserOnce = false; throw new Error('SYNTHETIC_PRIVATE_AUTH') }
+       |                                                                ^
+    55 |      if (qa.errorUserOnce) { qa.errorUserOnce = false; return { data: { user: { id: qa.userId } }, error: { message: '...
+    56 |      if (qa.rejectReload && qa.inserts.length) throw new Error('SYNTHETIC_PRIVATE_ERROR')
+ > loadMessages src/DirectMessageChat.tsx:148:28
+ > src/DirectMessageChat.tsx:255:4
+ > Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:28656:19
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:1045:29
+ > commitHookEffectListMount node_modules/react-dom/cjs/react-dom-client.development.js:13748:28
+ > commitHookPassiveMountEffects node_modules/react-dom/cjs/react-dom-client.development.js:13835:10
+ > commitPassiveMountOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:16906:12
+ > recursivelyTraversePassiveMountEffects node_modules/react-dom/cjs/react-dom-client.development.js:16851:12
+ > commitPassiveMountOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:16898:10
+
+✖ DM initial authentication rejection shows redacted recoverable read guidance (2193.658809ms)
+✖ DM returned auth error never trusts accompanying user data or marks messages read (1139.283425ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 17
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 21145.653716
+
+✖ failing tests:
+
+test at tests/direct-message-send.test.mjs:179:1
+✖ DM initial authentication rejection shows redacted recoverable read guidance (2193.658809ms)
+  locator.waitFor: Timeout 1200ms exceeded.
+  Call log:
+  [2m  - waiting for getByRole('button', { name: 'DMを再読み込み', exact: true }) to be visible[22m
+  
+      at /workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:182:15
+      at async withChat (/workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:25:5) {
+    log: [ "  - waiting for getByRole('button', { name: 'DMを再読み込み', exact: true }) to be visible" ],
+    name: 'TimeoutError'
+  }
+
+test at tests/direct-message-send.test.mjs:186:1
+✖ DM returned auth error never trusts accompanying user data or marks messages read (1139.283425ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 1
+  
+      at file:///workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:189:10
+      at async withChat (file:///workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:25:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

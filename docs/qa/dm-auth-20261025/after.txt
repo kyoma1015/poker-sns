@@ -1,0 +1,22 @@
+✔ DM repeated Enter during block verification sends exactly once (1242.444945ms)
+✔ DM repeated Enter while insert is pending cannot create another message (1054.804761ms)
+✔ DM rejected transport unlocks retry and does not display backend details (1021.252029ms)
+✔ DM returned insert error preserves draft, redacts details and permits explicit retry (995.566173ms)
+✔ DM block verification error fails closed without writing (952.554873ms)
+✔ DM accepted write followed by reload failure is reported as sent without restoring draft (953.67376ms)
+✔ DM whitespace and IME composition never write a message (993.138262ms)
+✔ DM a late response from the previous conversation cannot replace the current messages (1094.021147ms)
+✔ DM leaving and returning to the same peer cannot let an old send clear a new draft (1101.328339ms)
+✔ DM sign out clears private messages and draft without waiting for another request (1112.34933ms)
+✔ DM switching account remounts the conversation without retaining old private data (1085.965926ms)
+✔ DM pending authorization check cannot write after sign out (1039.514111ms)
+✔ DM revalidates authenticated identity before a write if its auth event was missed (1065.846835ms)
+✔ DM same-account token refresh preserves the unsent draft (1077.235763ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14796.144118

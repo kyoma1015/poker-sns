@@ -1,0 +1,101 @@
+EEEEEEEEEEEE
+======================================================================
+ERROR: test_actual_cli_sanitized_success_and_failure (__main__.RetainedInspection.test_actual_cli_sanitized_success_and_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_retained_state_inspection.py", line 19, in setUp
+    import inspect_retained_state as module
+ModuleNotFoundError: No module named 'inspect_retained_state'
+
+======================================================================
+ERROR: test_corrupt_database_refuses_without_repair (__main__.RetainedInspection.test_corrupt_database_refuses_without_repair)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_retained_state_inspection.py", line 19, in setUp
+    import inspect_retained_state as module
+ModuleNotFoundError: No module named 'inspect_retained_state'
+
+======================================================================
+ERROR: test_count_and_finite_run_budget_mismatch_refuse (__main__.RetainedInspection.test_count_and_finite_run_budget_mismatch_refuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_retained_state_inspection.py", line 19, in setUp
+    import inspect_retained_state as module
+ModuleNotFoundError: No module named 'inspect_retained_state'
+
+======================================================================
+ERROR: test_exact_manual_digest_and_no_database_content_change (__main__.RetainedInspection.test_exact_manual_digest_and_no_database_content_change)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_retained_state_inspection.py", line 19, in setUp
+    import inspect_retained_state as module
+ModuleNotFoundError: No module named 'inspect_retained_state'
+
+======================================================================
+ERROR: test_expected_duplicate_keys_nonfinite_and_wrong_shape_refuse (__main__.RetainedInspection.test_expected_duplicate_keys_nonfinite_and_wrong_shape_refuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_retained_state_inspection.py", line 19, in setUp
+    import inspect_retained_state as module
+ModuleNotFoundError: No module named 'inspect_retained_state'
+
+======================================================================
+ERROR: test_full_row_digest_detects_private_field_change (__main__.RetainedInspection.test_full_row_digest_detects_private_field_change)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_retained_state_inspection.py", line 19, in setUp
+    import inspect_retained_state as module
+ModuleNotFoundError: No module named 'inspect_retained_state'
+
+======================================================================
+ERROR: test_manifest_duplicate_keys_nonfinite_and_duplicate_ids_refuse (__main__.RetainedInspection.test_manifest_duplicate_keys_nonfinite_and_duplicate_ids_refuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_retained_state_inspection.py", line 19, in setUp
+    import inspect_retained_state as module
+ModuleNotFoundError: No module named 'inspect_retained_state'
+
+======================================================================
+ERROR: test_missing_database_is_not_created (__main__.RetainedInspection.test_missing_database_is_not_created)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_retained_state_inspection.py", line 19, in setUp
+    import inspect_retained_state as module
+ModuleNotFoundError: No module named 'inspect_retained_state'
+
+======================================================================
+ERROR: test_missing_schema_refuses_without_creating_tables (__main__.RetainedInspection.test_missing_schema_refuses_without_creating_tables)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_retained_state_inspection.py", line 19, in setUp
+    import inspect_retained_state as module
+ModuleNotFoundError: No module named 'inspect_retained_state'
+
+======================================================================
+ERROR: test_mode_ro_and_query_only_are_used (__main__.RetainedInspection.test_mode_ro_and_query_only_are_used)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_retained_state_inspection.py", line 19, in setUp
+    import inspect_retained_state as module
+ModuleNotFoundError: No module named 'inspect_retained_state'
+
+======================================================================
+ERROR: test_original_task_hash_and_checkpoint_mismatch_refuse (__main__.RetainedInspection.test_original_task_hash_and_checkpoint_mismatch_refuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_retained_state_inspection.py", line 19, in setUp
+    import inspect_retained_state as module
+ModuleNotFoundError: No module named 'inspect_retained_state'
+
+======================================================================
+ERROR: test_reads_committed_wal_and_rejects_database_symlink (__main__.RetainedInspection.test_reads_committed_wal_and_rejects_database_symlink)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_retained_state_inspection.py", line 19, in setUp
+    import inspect_retained_state as module
+ModuleNotFoundError: No module named 'inspect_retained_state'
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.001s
+
+FAILED (errors=12)

@@ -1,0 +1,17 @@
+{
+  "kind": "new read-only API contract, not production defect",
+  "baseline": {
+    "tests": 12,
+    "errors": 12,
+    "reason": "ModuleNotFoundError before implementation"
+  },
+  "final": {
+    "tests": 12,
+    "pass": 12,
+    "fail": 0
+  },
+  "test_command": "python -B tests/automation/test_retained_state_inspection.py",
+  "scope": "temporary SQLite/real local CLI subprocess only; retained state never opened by this test/agent",
+  "new_runtime_permissions": false,
+  "execution_allowed": false
+}

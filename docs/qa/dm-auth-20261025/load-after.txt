@@ -1,0 +1,27 @@
+✔ DM repeated Enter during block verification sends exactly once (1211.580446ms)
+✔ DM repeated Enter while insert is pending cannot create another message (1186.889694ms)
+✔ DM rejected transport unlocks retry and does not display backend details (1001.092824ms)
+✔ DM returned insert error preserves draft, redacts details and permits explicit retry (988.547244ms)
+✔ DM block verification error fails closed without writing (946.919537ms)
+✔ DM accepted write followed by reload failure is reported as sent without restoring draft (924.228782ms)
+✔ DM whitespace and IME composition never write a message (993.480674ms)
+✔ DM a late response from the previous conversation cannot replace the current messages (1090.268716ms)
+✔ DM leaving and returning to the same peer cannot let an old send clear a new draft (1131.679149ms)
+✔ DM sign out clears private messages and draft without waiting for another request (1128.228694ms)
+✔ DM switching account remounts the conversation without retaining old private data (1053.813383ms)
+✔ DM pending authorization check cannot write after sign out (1089.183323ms)
+✔ DM revalidates authenticated identity before a write if its auth event was missed (986.873307ms)
+✔ DM same-account token refresh preserves the unsent draft (1013.896569ms)
+✔ DM auth callbacks do not call Supabase reentrantly and unsubscribe on exit (1083.302221ms)
+✔ DM queued Realtime delivery cannot mark old messages read after synchronous signout (1014.490442ms)
+✔ DM duplicate current-conversation INSERT events reload one saved row without duplicating it (972.683338ms)
+✔ DM initial authentication rejection shows redacted recoverable read guidance (1056.127676ms)
+✔ DM returned auth error never trusts accompanying user data or marks messages read (1043.894259ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19924.745999

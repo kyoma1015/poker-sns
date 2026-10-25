@@ -5,6 +5,13 @@ on:
     paths:
       - 'scripts/code_worker.py'
       - 'scripts/continuation_recovery.py'
+      - 'scripts/private_journal.py'
+      - 'scripts/journal_checkpoint.py'
+      - 'src/DirectMessageChat.tsx'
+      - 'tests/browser/dm-*.tsx'
+      - 'tests/browser/dm-*.ts'
+      - 'tests/direct-message-send.test.mjs'
+      - 'tests/automation/**'
       - 'tests/automation/test_corrupt_evidence.py'
       - 'tests/automation/test_evidence_activation.py'
       - 'tests/automation/test_activation_cas.py'
@@ -22,9 +29,15 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Complete isolated automation regressions
+        run: python -B -m unittest discover -s tests/automation -v
       - name: Existing protected worker queue WAL CAS recovery and host boundaries
         run: |
           python -B -m unittest discover -s tests/worker_acceptance -v
@@ -42,3 +55,13 @@ jobs:
             python -B tests/automation/test_evidence_activation.py -v || exit 1
             python -B tests/automation/test_activation_cas.py -v || exit 1
           done
+      - name: Locked frontend dependencies
+        run: npm ci --cache "$RUNNER_TEMP/pokerid-npm-cache"
+      - name: Synthetic React and existing frontend regressions
+        env:
+          CHROMIUM_PATH: /usr/bin/google-chrome
+        run: |
+          set -eu
+          for suite in tests/*.test.mjs; do node "$suite"; done
+      - run: npm run build
+      - run: npm run lint

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-24T15:54:32.007335+00:00",
+  "updated_at": "2026-10-25T02:30:15.915790+00:00",
   "repository": "kyoma1015/poker-sns",
   "issue": 22,
   "record_kind": "non-executable development continuation index, not controller jobs",
@@ -15,71 +15,93 @@
     {
       "lane": "A",
       "branch": "codex/a-lease-integration-20261023",
-      "source_sha": "d2332d380e320e7ab84360e4f59a1a536b5356d3",
       "controller_source_sha": "df0e31150ae9f1b68c337eecad9b7bfb36dc3a3f",
       "tests": {
-        "controller": 225,
-        "javascript": 98,
-        "browser_dm": 9
+        "controller_and_readonly": 239,
+        "javascript": 108,
+        "browser_dm": 19
       },
-      "ci": "NOT RUN",
+      "ci": {
+        "status": "awaiting automatic publication run; query current PR121 head, never infer from local PASS"
+      },
       "evidence": [
-        "docs/qa/journal-checkpoint-20261024/",
-        "docs/qa/autonomous-dm-20261024/"
+        "docs/qa/tree-readiness-20261024/",
+        "docs/qa/retained-inspection-20261025/",
+        "docs/qa/dm-auth-20261025/"
       ],
-      "next": "isolated account/realtime generation and server-uncertainty fixtures; external-pin caller guarantees; no runtime adoption"
+      "next": "Authentic isolated DM policy/idempotency QA needs reviewed schema; preserve19 account/realtime/read retry cases; source publication commit metadata may differ but source blobs must match",
+      "source_origin_local_sha": "fce53e0a1d0ac1309e6af976b9c4e19d4c9889d7",
+      "publication_ref": "refs/heads/codex/a-lease-integration-20261023",
+      "resolve_published_head_on_resume": true,
+      "source_git_blobs": {
+        "src/DirectMessageChat.tsx": "11e21c0735402f1dc6d4a020ea1c312040edfc5f",
+        "scripts/code_worker.py": "f0e9f8f60f550d783f99faedaac1be660478940c",
+        "scripts/inspect_retained_state.py": "ceff80506ce5d255aca35cbe23914fd5c9339020",
+        "tests/direct-message-send.test.mjs": "07be5f7eb286a95b37b2988b39285c097d258d51"
+      },
+      "pr": 121
     },
     {
       "lane": "B",
       "branch": "codex/b-snapshot-integrity-audit-20261023",
-      "published_sha": "438ece5c78d171b3b07a408ce9c688acbe6d3acc",
+      "published_sha": "245d55bae1f03073dc519e5c307bc1fc4b96138b",
       "tests": {
-        "local": 265
+        "local_and_CI": 273
       },
-      "ci": "NOT RUN",
+      "ci": {
+        "id": 40153776950,
+        "job": 121050617998,
+        "result": "SUCCESS",
+        "head": "245d55bae1f03073dc519e5c307bc1fc4b96138b"
+      },
       "evidence": [
-        "docs/qa/b-legacy-strict-json-20261024/"
+        "docs/qa/b-real-offline-entrypoints-20261024/"
       ],
-      "next": "authoritative350 snapshot/key/source/translation/review receipt; unknown schema uniqueness must not be invented"
+      "next": "authoritative350 snapshot/key/source/translation/review receipt; unknown schema uniqueness must not be invented",
+      "pr": 119
     },
     {
       "lane": "C",
       "branch": "codex/c-initial-chance-reach-20261023",
-      "published_sha": "4fd276bb4ed23f1d4ea02ba1b81855ffcf87f932",
-      "retained_local_sha": "ec6de1321e901a46f1876c7d0992c3b2f9c5566e",
-      "verified_tree": "f9d5b99eace9eda577bb9623f0990825c801f77a",
+      "published_sha": "a9e62b37d65d6f8e9883bdf74709fa5167172b1b",
       "publication_note": "One child git push auth failure was not repeated. Official GitHub tools saved the identical tested tree as8be36e0. After the root publisher independently succeeded on A, it fetched that public commit, verified identical trees and merged the two C histories without source changes, then normally pushed the resulting fast-forward. Original local commits and API publication are both ancestors; no force/reset/rebase.",
       "tests": {
-        "local_three_variants": 310
+        "local_and_CI": 349
       },
-      "ci": "NOT RUN",
+      "ci": {
+        "id": 40153781154,
+        "job": 121050631925,
+        "result": "SUCCESS",
+        "head": "a9e62b37d65d6f8e9883bdf74709fa5167172b1b"
+      },
       "evidence": [
-        "docs/qa/belief-observation-20261024/"
+        "docs/qa/infoset-actions-20261024/"
       ],
-      "next": "Recheck published head and tested tree, then bounded common-infoset action comparison before169EV; complete support and equilibrium remain unproved"
+      "next": "Provenance-carrying action values per hero combo with strict observation/config/policy identity; coverage-aware169 aggregation must retain unknown EV null",
+      "pr": 120
     },
     {
       "lane": "D",
       "branch": "codex/d-strategy-evidence-20261023",
-      "published_sha": "df91a23ccca19a2047aed50ec22808dc5613f678",
+      "published_sha": "22ac8ce8eb858bca8d96aef636dd26e8a8fb7e5c",
       "pr": 124,
       "tests": {
-        "local_and_CI": 110
+        "local_and_CI": 115
       },
       "ci": {
-        "id": 40107356291,
-        "job": 120911697851,
+        "id": 40110799631,
+        "job": 120921914667,
         "result": "SUCCESS",
-        "head": "df91a23ccca19a2047aed50ec22808dc5613f678"
+        "head": "22ac8ce8eb858bca8d96aef636dd26e8a8fb7e5c"
       },
       "evidence": [
-        "docs/qa/d-presentation-values-20261024/"
+        "docs/qa/d-png-cleanup-20261024/"
       ],
-      "next": "isolated save/share/PNG lifecycle fixtures without score/classifier/v2 DB changes; semantics blocked pending authoritative labels"
+      "next": "Browser PNG and existing redaction patch inheritance review; authoritative classifier/labels remain missing"
     }
   ],
   "retained_state_readonly": {
-    "at": "2026-10-24T15:29:26.458446+00:00",
+    "at": "2026-10-25T02:16:37.231457+00:00",
     "total": 45,
     "counts": {
       "blocked": 2,
@@ -115,7 +137,10 @@
   "runtime": {
     "independent_startup": "UNKNOWN",
     "unattended_enabled": false,
-    "current_trigger": "explicit user conversation; not scheduler evidence"
+    "current_trigger": "explicit user conversation; not scheduler evidence",
+    "auto_resume": "OFF",
+    "provider_observation": "Both old finite reservations disabled, no provider run/result IDs; no schedule changes",
+    "review": "docs/workers/AUTO_RESUME_CAPABILITY_REVIEW_20261025.md"
   },
   "gates": {
     "new_pr": false,
@@ -125,7 +150,8 @@
     "paid_services": false,
     "host_controller_connection": false,
     "schedule_changes": false,
-    "poll_publication": "NO-GO"
+    "poll_publication": "NO-GO",
+    "existing_draft_fast_forward_updates": true
   },
   "resume": [
     "Read docs/progress/DEVELOPMENT_MASTER_20261024.md and relevant lane evidence",
@@ -141,6 +167,6 @@
     "G9/G11 original ABI/historicalcheckpoint and real-poker convergence unproved",
     "Formal external journal-store auth/durability/deadlines and host adoption unproved"
   ],
-  "last_successful_step": "All four implementations preserved; C publication histories reconciled on identical tested tree; next remote and retained-state final checks",
-  "last_C_publish_issue": "Recovered through existing authorized publishers; no credential copying, connection or permission changes"
+  "last_successful_step": "B/C existing Draft heads fast-forwarded under existing update permission; automatic exact-head CI succeeded; A final source and read-only probe verified locally, publication CI pending",
+  "last_C_publish_issue": "Prior publication histories retained; current C normal remote/local HEAD matched at start"
 }

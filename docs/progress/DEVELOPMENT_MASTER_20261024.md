@@ -34,3 +34,9 @@ The machine-readable sibling is `../workers/DEVELOPMENT_RESUME_INDEX_20261024.js
 6. If a task needs missing evidence/approval, retain BLOCKED and select a separate safe task. Never manufacture TDA answers, animal meanings, GTO convergence or full feature completion.
 
 No scheduler activation is approved. Existing GitHub validation workflows cannot be treated as a Codex launcher. Independent automatic startup remains UNKNOWN; unattended operation remains OFF. Completion of this index is not completion of autonomous operation or the product.
+
+## 2026-10-25 continuation
+
+DM account/signout/queued realtime guards and recoverable failed reads now have19 actual React synthetic-transport cases. The read-only continuity CLI packages the former manual probe without authorizing work. Two process-fixture timing races were fixed by readiness/atomic publication without weakening assertions. B real CLI boundaries273, C common-infoset finite action values349 and D PNG cleanup115 have exact-head automatic CI evidence in the sibling index. PR119/120 are now connected to their reviewed descendant heads by non-force updates; Draft/base/main remain unchanged. PR121 publication similarly uses its existing CI, not a new PR or manual dispatch. The pinned source HEAD and CI must be re-read at resume.
+
+AUTO-RESUME remains OFF. Both old reservations are disabled with missing provider run IDs/results; see AUTO_RESUME_CAPABILITY_REVIEW_20261025.md. No new reservation, paid identity, runtime adoption or held-state write was authorized. Finite CI is not an autonomous model worker. Authentic DM RLS/idempotency, official TDA350 evidence, expert classifier labels and full GTO convergence remain separate unfinished gates.
