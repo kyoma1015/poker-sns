@@ -17,6 +17,15 @@ class PrivilegedVideoApiBoundary(unittest.TestCase):
             self.assertNotRegex(text, r'(?s)admin\.storage\.from\([^)]*\)\s*\.\s*(?:upload|update|remove|move|copy|createSignedUploadUrl)\s*\(', str(path))
             self.assertNotRegex(text, r'(?s)admin\.storage\.\w+\s*\(', str(path))
             self.assertNotRegex(text, r'/storage/v1/(?:object|bucket)/(?:upload|move|copy|remove|delete)', str(path))
+    def test_privileged_client_has_runtime_rpc_only_fetch(self):
+        text = (ROOT / 'api/video-production-supabase-adapters.ts').read_text()
+        self.assertIn('global: { fetch: rpcOnlyFetch }', text)
+        self.assertIn("target.origin !== new URL(url).origin", text)
+        self.assertIn("'/rest/v1/rpc/'", text)
+        self.assertIn('allowedRpc.has(rpc)', text)
+        self.assertNotIn("admin.from('posts')", text)
+        self.assertIn("viewer.from('posts')", text)
+
     def test_privileged_rpc_allowlist(self):
         allowed = {'video_reserve_object_key', 'video_production_storage_generation',
                    'video_production_publish_fenced', 'video_production_reconcile_fenced'}
