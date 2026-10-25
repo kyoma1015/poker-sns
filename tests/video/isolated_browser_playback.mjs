@@ -46,9 +46,9 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
           }`
         }
         if (filename.endsWith('/src/videoApi.ts')) {
-          assert.ok(source.includes('VIDEO_SERVER_ENABLED = false as boolean'),
+          assert.ok(source.includes("VIDEO_SERVER_ENABLED = import.meta.env.VITE_VIDEO_SERVER_ENABLED === 'true'"),
             'production video feature gate unexpectedly changed')
-          return source.replace('VIDEO_SERVER_ENABLED = false as boolean',
+          return source.replace("VIDEO_SERVER_ENABLED = import.meta.env.VITE_VIDEO_SERVER_ENABLED === 'true'",
             'VIDEO_SERVER_ENABLED = true as boolean')
         }
         return null
