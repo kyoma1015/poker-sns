@@ -47,8 +47,9 @@ try {
   if (listing.status !== 0) throw new Error('ffprobe archive listing failed')
   const entries = listing.stdout.trim().split(String.fromCharCode(10))
   const probes = entries.filter(p => p.endsWith('/bin/ffprobe') && !p.includes('..') && p.split('/').length <= 5)
-  if (probes.length !== 1) throw new Error('ffprobe archive layout changed')
-  const extracted = spawnSync('tar', ['-xJf', archive, '-C', work, probes[0]], { timeout: 120000 })
+  const encoders = entries.filter(p => p.endsWith('/bin/ffmpeg') && !p.includes('..') && p.split('/').length <= 5)
+  if (probes.length !== 1 || encoders.length !== 1) throw new Error('ffmpeg archive layout changed')
+  const extracted = spawnSync('tar', ['-xJf', archive, '-C', work, probes[0], encoders[0]], { timeout: 120000 })
   if (extracted.status !== 0) throw new Error('ffprobe extraction failed')
   const dest = join(process.cwd(), 'api', 'bin')
   mkdirSync(dest, { recursive: true })
@@ -65,6 +66,15 @@ try {
     renameSync(staged, target)
   } finally {
     rmSync(staged, { force: true })
+  }
+  // CI needs the matching ffmpeg encoder for real fixture generation.
+  // Do not include it in Vercel's function bundle unless explicitly required.
+  if (process.env.VIDEO_CI_FFMPEG_FIXTURES === 'true') {
+    const ffmpeg = join(dest, 'ffmpeg')
+    copyFileSync(join(work, encoders[0]), ffmpeg)
+    chmodSync(ffmpeg, 0o755)
+    const check = spawnSync(ffmpeg, ['-version'], { timeout: 10000, stdio: 'ignore' })
+    if (check.status !== 0) throw new Error('pinned ffmpeg fixture generator unavailable')
   }
   console.log('Pinned ffprobe executable verified')
 } finally {
