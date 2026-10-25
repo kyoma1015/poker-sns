@@ -33,6 +33,9 @@ psql "$dburl" -v ON_ERROR_STOP=1 -f sql/video_permanent_key_reservation_review_o
 psql "$dburl" -v ON_ERROR_STOP=1 -c "grant execute on function public.video_reserve_object_key(uuid,text) to service_role;"
 psql "$dburl" -v ON_ERROR_STOP=1 -f sql/post_short_videos_immutable_review_only.sql
 VIDEO_QA_ENV="$qa/local.env" node tests/video/isolated_immutable_storage_http_e2e.mjs
+# Enforce the single reserved-key writer only after legacy mutation tests.
+psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/isolated_enforce_reserved_writers.sql
+VIDEO_QA_ENV="$qa/local.env" node tests/video/isolated_reserved_writer_http_e2e.mjs
 
 # Real isolated Auth + Storage HTTP + PostgREST RPC + ffprobe composition.
 # The immutable Storage guard is active before the generation-fenced RPC runs.
