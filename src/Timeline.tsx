@@ -170,6 +170,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   // Retain the exact immutable object path after an uncertain finalize result.
   const [pendingVideo, setPendingVideo] = useState<{ path: string; owner: string; content: string } | null>(null)
   const pendingVideoRef = useRef<{ path: string; owner: string; content: string } | null>(null)
+  const videoSubmitInFlightRef = useRef(false)
   const [videoPreview, setVideoPreview] = useState<string | null>(null)
   useEffect(() => { if (!videoFile) { setVideoPreview(null); return }; const url = URL.createObjectURL(videoFile); setVideoPreview(url); return () => URL.revokeObjectURL(url) }, [videoFile])
   const [imageFiles, setImageFiles] = useState<File[]>([])
@@ -875,7 +876,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
 
     if (videoFile) {
-      if (isPosting) return
+      if (isPosting || videoSubmitInFlightRef.current) return
       if (!VIDEO_SERVER_ENABLED) {
         setMessage('動画投稿はサーバーAPIの安全確認待ちです。')
         return
@@ -884,6 +885,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         setMessage('動画は他の添付と同時に投稿できません。')
         return
       }
+      videoSubmitInFlightRef.current = true
       setIsPosting(true)
       setMessage('動画を検証・投稿中...')
       try {
@@ -914,6 +916,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       } catch (error) {
         setMessage(`動画を投稿できませんでした：${error instanceof Error ? error.message : '不明なエラー'}。アップロード済みファイルは安全な回収対象として保持されます。`)
       } finally {
+        videoSubmitInFlightRef.current = false
         setIsPosting(false)
       }
       return
