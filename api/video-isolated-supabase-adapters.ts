@@ -86,6 +86,9 @@ export function createIsolatedSupabaseVideoAdapters(
         throw new Error('incomplete Storage object')
       }
       const bytes = Buffer.concat(chunks, received)
+      // A JWT can be revoked while Storage streams bytes. Match the production
+      // adapter: reauthenticate before returning bytes to the publish core.
+      if (await authenticate(accessToken) !== ownerId) throw new Error('authorization changed during read')
       if (generation !== await metadata(ownerId, path)) throw new Error('Storage generation changed during read')
       return { ownerId, objectPath: path, generation, size: bytes.length, bytes }
     },
