@@ -52,6 +52,9 @@ export async function finalizeImmutableCandidate(
   const inspected = await inspectStagedVideo(snapshot.bytes, match[3] as VideoExtension, snapshot.size)
   requireImmutableGeneration(generation, await adapters.currentGeneration(owner, path))
   if (!generation) throw new Error('missing immutable generation')
+  // A revoked or switched JWT must not publish after asynchronous probing.
+  // This check is independent of Storage generation and the DB's atomic fence.
+  if (await adapters.authenticate(token) !== owner) throw new Error('authorization changed before publish')
   // A second pre-publish check is only a detection mechanism. The adapter's
   // publish operation MUST enforce the generation inside the DB transaction.
   requireImmutableGeneration(generation, await adapters.currentGeneration(owner, path))
