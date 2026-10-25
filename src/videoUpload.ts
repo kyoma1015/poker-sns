@@ -1,5 +1,5 @@
 import { supabase } from './supabase'
-import { VIDEO_SERVER_ENABLED } from './videoApi'
+import { VIDEO_SERVER_ENABLED, reserveVideoObjectPath } from './videoApi'
 
 export const MAX_VIDEO_BYTES = 20 * 1024 * 1024
 export const MAX_VIDEO_SECONDS = 30
@@ -60,6 +60,9 @@ export async function uploadPostVideo(userId: string, file: File): Promise<strin
   if (validationError) throw new Error(validationError)
   const ext = file.type === 'video/mp4' ? 'mp4' : 'webm'
   const path = `${user.id}/${crypto.randomUUID()}.${ext}`
+  // The permanent reservation must commit before Storage can receive bytes.
+  // A failed/ambiguous reservation never falls back to a direct upload.
+  await reserveVideoObjectPath(path)
   const { error } = await supabase.storage.from(VIDEO_BUCKET).upload(path, file, { contentType: file.type, upsert: false })
   if (error) throw error
   return path
