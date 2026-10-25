@@ -25,7 +25,7 @@ try {
   const declaredLength = response.headers.get('content-length')
   if (declaredLength !== null && (!/^\\d+$/.test(declaredLength) || Number(declaredLength) !== expectedBytes)) {
     await response.body.cancel()
-    throw new Error('ffprobe archive Content-Length mismatch')
+    throw new Error('ffprobe archive declared length exceeds pinned limit')
   }
   let downloaded = 0
   const bounded = Readable.fromWeb(response.body).map(chunk => {
