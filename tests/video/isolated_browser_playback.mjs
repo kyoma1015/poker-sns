@@ -245,6 +245,17 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
       const article=[...document.querySelectorAll('article')].find(a=>a.textContent?.includes(text))
       return article?.querySelector('video')?.currentTime>0
     },uploadText,{timeout:15000})
+    // Verify that the actual Blob URL is revoked, not merely detached from DOM.
+    const previousBlobUrl = await uploadedVideo.getAttribute('src')
+    assert.ok(previousBlobUrl?.startsWith('blob:'), 'playback must use a Blob URL')
+    await timelinePage.evaluate(() => {
+      window.__VIDEO_QA_REVOKED_URLS = []
+      const revoke = URL.revokeObjectURL.bind(URL)
+      URL.revokeObjectURL = value => {
+        window.__VIDEO_QA_REVOKED_URLS.push(value)
+        return revoke(value)
+      }
+    })
     // Verify the production component drops its in-memory Blob URL on sign-out.
     // The test-only bridge dispatches SIGNED_OUT to the actual React component.
     // This proves client-side URL cleanup, not real GoTrue token revocation.
@@ -255,7 +266,9 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     },uploadText,{timeout:20000})
     assert.equal(await uploadedArticle.locator('video').count(),0,
       'authenticated video element must disappear after sign-out')
-    console.log('PASS: Chromium React video Blob URL discarded on synthetic SIGNED_OUT event')
+    const revokedUrls = await timelinePage.evaluate(() => window.__VIDEO_QA_REVOKED_URLS)
+    assert.ok(revokedUrls.includes(previousBlobUrl), 'SIGNED_OUT must revoke the exact playback Blob URL')
+    console.log('PASS: Chromium React playback Blob URL explicitly revoked on synthetic SIGNED_OUT event')
     console.log('PASS: FULL ACTUAL Timeline.tsx UI video file selection -> real isolated Storage HTTP upload -> real finalize HTTP -> RLS PostgREST feed -> Chromium playback')
     console.log('PASS: ACTUAL Timeline.tsx renders real RLS PostgREST video and Chromium plays it (social dependencies isolated)')
     await timelinePage.close()
