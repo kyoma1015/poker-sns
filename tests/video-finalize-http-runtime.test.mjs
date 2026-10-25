@@ -64,3 +64,35 @@ test('injected finalize adapter cannot enable publishing against a production or
     else process.env.VITE_SUPABASE_ANON_KEY = previousAnon
   }
 })
+
+test('runtime attestation never exposes a production GET endpoint', async () => {
+  const previous = process.env.VERCEL_ENV
+  process.env.VERCEL_ENV = 'production'
+  try {
+    const res = response()
+    await handler(request({ method: 'GET', query: { runtime_attestation: 'ffprobe' } }), res)
+    assert.equal(res.statusCode, 404)
+    assert.equal(res.headers['Cache-Control'], 'no-store, private')
+  } finally {
+    if (previous === undefined) delete process.env.VERCEL_ENV
+    else process.env.VERCEL_ENV = previous
+  }
+})
+
+test('preview runtime attestation fails closed for missing absolute ffprobe binary', async () => {
+  const previousEnv = process.env.VERCEL_ENV
+  const previousBinary = process.env.FFPROBE_BINARY_PATH
+  process.env.VERCEL_ENV = 'preview'
+  process.env.FFPROBE_BINARY_PATH = '/nonexistent-poker-id-ffprobe/ffprobe'
+  try {
+    const res = response()
+    await handler(request({ method: 'GET', query: { runtime_attestation: 'ffprobe' } }), res)
+    assert.equal(res.statusCode, 503)
+    assert.deepEqual(res.body, { ffprobe: 'unavailable' })
+  } finally {
+    if (previousEnv === undefined) delete process.env.VERCEL_ENV
+    else process.env.VERCEL_ENV = previousEnv
+    if (previousBinary === undefined) delete process.env.FFPROBE_BINARY_PATH
+    else process.env.FFPROBE_BINARY_PATH = previousBinary
+  }
+})
