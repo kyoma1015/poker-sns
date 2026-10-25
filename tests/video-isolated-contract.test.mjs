@@ -73,6 +73,12 @@ test('Vercel media route enforces JWT, post RLS and private byte delivery', () =
   }
 })
 
+test('finalize preserves live adapter authentication for post-ffprobe JWT revocation', () => {
+  const handler = read('../api/video-finalize.ts')
+  assert.match(handler, /finalizeImmutableCandidate\(\s*authorization\.slice\(7\), object_path, content, activeAdapters/)
+  assert.doesNotMatch(handler, /authenticate:\s*async\s*\(\)\s*=>\s*data\.user/)
+})
+
 test('Vercel finalize boundary rejects unsafe requests and cannot publish', () => {
   const handler = read('../api/video-finalize.ts')
   const routing = read('../vercel.json')
