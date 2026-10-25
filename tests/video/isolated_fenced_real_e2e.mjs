@@ -49,6 +49,33 @@ assert.ok(bytes.length>0&&bytes.length<20*1024*1024)
 const storage=client.storage.from('post-videos')
 assert.ifError((await storage.upload(path,bytes,{contentType:'video/webm',upsert:false})).error)
 const adapters=createIsolatedSupabaseVideoAdapters(url,anon,service,jwt)
+// Revoke authorization during a real, valid video preflight (after immutable
+// Storage snapshot and ffprobe). The production core must stop before publish.
+let authChecks=0
+let revokedPublishCalls=0
+const revokedAdapters={
+  ...adapters,
+  authenticate: async token => {
+    authChecks++
+    if (authChecks > 1) throw new Error('JWT revoked during video preflight')
+    return adapters.authenticate(token)
+  },
+  publish: async (...args) => {
+    revokedPublishCalls++
+    return adapters.publish(...args)
+  },
+}
+await assert.rejects(
+  finalizeImmutableCandidate(jwt,path,'must never publish after revoked JWT',revokedAdapters),
+  /JWT revoked during video preflight/,
+)
+assert.ok(authChecks >= 2,'core must reauthenticate after real ffprobe')
+assert.equal(revokedPublishCalls,0,'revoked token must not reach publish')
+const {data:revokedRows,error:revokedRowsError}=await client.from('posts')
+  .select('id').eq('video_path',path)
+assert.ifError(revokedRowsError)
+assert.equal(revokedRows.length,0,'revoked preflight must not create a post')
+console.log('PASS: real immutable Storage + ffprobe -> JWT revoked before publish -> no DB post')
 const first=await finalizeImmutableCandidate(jwt,path,'real isolated end-to-end',adapters)
 assert.match(first,/^[0-9a-f-]{36}$/)
 const second=await finalizeImmutableCandidate(jwt,path,'real isolated end-to-end',adapters)
