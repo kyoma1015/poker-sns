@@ -176,12 +176,15 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     await timelinePage.reload()
     await timelinePage.getByRole('button',{name:'おすすめ'}).click({timeout:20000})
     await timelinePage.getByText('real isolated end-to-end',{exact:true}).waitFor({timeout:20000})
-    await timelinePage.waitForTimeout(500)
+    // Wait for the asynchronous authenticated restore to finish rather than
+    // using a fixed delay that can pass before getUser resolves on slow CI.
+    await timelinePage.waitForFunction(() =>
+      sessionStorage.getItem('poker-id-pending-video-v1') === null,
+      null,{timeout:20000})
     assert.equal(await timelinePage.getByText(foreignDraft,{exact:true}).count(),0,
       'foreign account session draft must not render in actual Timeline')
     assert.equal(await timelinePage.getByRole('dialog',{name:'新しい投稿'}).count(),0,
       'foreign account session draft must not open composer')
-    await timelinePage.evaluate(() => sessionStorage.removeItem('poker-id-pending-video-v1'))
     console.log('PASS: REAL Chromium account switch rejects foreign pending video draft')
     // Same-owner recovery must preserve the draft and open the composer.
     const ownedDraft='OWN-ACCOUNT-PENDING-VIDEO-'+Date.now()
