@@ -39,6 +39,10 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
             auth: {
               getSession: async () => ({ data:{session:{access_token:jwt}}, error:null }),
               getUser: async () => client.auth.getUser(jwt),
+              onAuthStateChange: callback => {
+                const { data } = client.auth.onAuthStateChange(callback)
+                return { data: { subscription: data.subscription } }
+              },
             },
             from: table => table === 'posts' ? client.from('posts') : query,
             rpc: async () => empty,
