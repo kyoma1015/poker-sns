@@ -218,15 +218,17 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     const timeoutPage=await browser.newPage()
     await timeoutPage.clock.install()
     await timeoutPage.goto(origin+'/tests/video/browser-real-timeline.html')
-    const timeoutResult=await timeoutPage.evaluate(async () => {
+    await timeoutPage.evaluate(async () => {
       const module=await import('/src/videoUpload.ts')
       const corrupt=new File([new Uint8Array([0,1,2,3])],'corrupt.webm',{type:'video/webm'})
-      const started=module.readVideoDuration(corrupt).then(
-        ()=> 'unexpected_success', ()=> 'rejected')
-      return {started}
+      window.__VIDEO_TIMEOUT_RESULT='pending'
+      void module.readVideoDuration(corrupt).then(
+        ()=> { window.__VIDEO_TIMEOUT_RESULT='unexpected_success' },
+        ()=> { window.__VIDEO_TIMEOUT_RESULT='rejected' })
     })
     await timeoutPage.clock.fastForward(15000)
-    assert.equal(await timeoutResult.started,'rejected',
+    await timeoutPage.waitForFunction(() => window.__VIDEO_TIMEOUT_RESULT !== 'pending',{timeout:1000})
+    assert.equal(await timeoutPage.evaluate(() => window.__VIDEO_TIMEOUT_RESULT),'rejected',
       'corrupt Chromium metadata must reject by 15-second deadline')
     await timeoutPage.close()
     console.log('PASS: Chromium video metadata rejects within virtual 15-second timeout')
