@@ -213,6 +213,23 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     await timelinePage.evaluate(() => sessionStorage.removeItem('poker-id-pending-video-v1'))
     await timelinePage.reload()
     console.log('PASS: REAL Chromium restores same-owner pending draft after reload')
+    // Verify the real browser duration reader cannot hang on a corrupt video.
+    // Advance Chromium's virtual clock by 15 seconds without a real 15s delay.
+    const timeoutPage=await browser.newPage()
+    await timeoutPage.clock.install()
+    await timeoutPage.goto(origin+'/tests/video/browser-real-timeline.html')
+    const timeoutResult=await timeoutPage.evaluate(async () => {
+      const module=await import('/src/videoUpload.ts')
+      const corrupt=new File([new Uint8Array([0,1,2,3])],'corrupt.webm',{type:'video/webm'})
+      const started=module.readVideoDuration(corrupt).then(
+        ()=> 'unexpected_success', ()=> 'rejected')
+      return {started}
+    })
+    await timeoutPage.clock.fastForward(15000)
+    assert.equal(await timeoutResult.started,'rejected',
+      'corrupt Chromium metadata must reject by 15-second deadline')
+    await timeoutPage.close()
+    console.log('PASS: Chromium video metadata rejects within virtual 15-second timeout')
     // Full real Timeline UI flow: file picker -> local Storage -> HTTP finalize
     // -> RLS PostgREST feed refresh -> real PostVideo Chromium playback.
     const uploadText='isolated timeline browser upload '+Date.now()
