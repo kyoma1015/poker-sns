@@ -52,6 +52,7 @@ def run_one(base_url: str, service_key: str, inspect_object, delete_if_version):
     job_id, owner, path = job["id"], job["owner_id"], job["object_path"]
     success = False
     reason = "unverified"
+    quarantine_record = None
     try:
         if str(UUID(owner)) != owner:
             raise ValueError("noncanonical owner")
@@ -86,8 +87,14 @@ def run_one(base_url: str, service_key: str, inspect_object, delete_if_version):
                     # perform an unsafe check-then-remove(path) operation.
                     # Quarantine rather than invoking any deletion callback.
                     reason = "atomic Storage deletion not proven: quarantined"
+                    quarantine_record = quarantine_orphan(
+                        owner=owner, path=path, expected_version=expected,
+                        observed_version=current, referenced_by_post=False)
     except Exception:
         reason = "worker operation failed; retry"
+    if quarantine_record is not None:
+        # The queue remains retryable; no Storage mutation or false success.
+        assert quarantine_record["delete_permitted"] is False
     finished = _rpc(base_url, service_key, "video_qa_finish_cleanup",
                     {"p_id": job_id, "p_worker": worker,
                      "p_success": success, "p_reason": reason})
