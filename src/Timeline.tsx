@@ -186,6 +186,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           !/^[0-9a-f-]{36}\.(mp4|webm)$/.test(record.path.slice(record.owner.length + 1)) ||
           typeof record.content !== 'string' || record.content.length > 10000) return
       const staged = { owner: record.owner, path: record.path, content: record.content }
+      // The restored path is untrusted client state; server JWT, owner and generation checks remain authoritative.
       pendingVideoRef.current = staged
       setPendingVideo(staged)
       setContent(staged.content)
