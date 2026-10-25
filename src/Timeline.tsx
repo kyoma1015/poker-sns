@@ -173,7 +173,11 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const pendingVideoRef = useRef<PendingVideo | null>(null)
   // Session-scoped recovery; never persist credentials or delete by path.
   useEffect(() => {
+    let cancelled = false
+    const restore = async () => {
     try {
+      const { data: { user }, error } = await supabase.auth.getUser()
+      if (cancelled || error || !user) return
       const raw = sessionStorage.getItem('poker-id-pending-video-v1')
       if (!raw) return
       const value: unknown = JSON.parse(raw)
@@ -185,6 +189,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           !record.path.startsWith(record.owner + '/') ||
           !/^[0-9a-f-]{36}\.(mp4|webm)$/.test(record.path.slice(record.owner.length + 1)) ||
           typeof record.content !== 'string' || record.content.length > 10000) return
+      // A different signed-in account must never see a previous owner's draft.
+      if (cancelled || record.owner !== user.id) return
       const staged = { owner: record.owner, path: record.path, content: record.content }
       // The restored path is untrusted client state; server JWT, owner and generation checks remain authoritative.
       pendingVideoRef.current = staged
@@ -192,6 +198,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       setContent(staged.content)
       setComposeOpen(true)
     } catch { /* Untrusted or unavailable session storage: stay fail-closed. */ }
+    }
+    void restore()
+    return () => { cancelled = true }
   }, [])
   const videoSubmitInFlightRef = useRef(false)
   const [videoPreview, setVideoPreview] = useState<string | null>(null)
