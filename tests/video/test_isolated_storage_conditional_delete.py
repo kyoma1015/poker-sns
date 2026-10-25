@@ -8,6 +8,28 @@ class AtomicDeletionTests(unittest.TestCase):
         with self.assertRaises(ConditionalDeleteUnavailable):
             delete_if_exact_version(owner, owner + "/40000000-0000-0000-0000-000000000004.mp4", "v1")
 
+    def test_aba_replacement_between_inspection_and_delete_cannot_be_removed(self):
+        # Simulate Storage version A being observed, then a replacement B
+        # appearing at the same path before a path-only delete is attempted.
+        # The production adapter must never invoke an unversioned remover.
+        owner = "10000000-0000-0000-0000-000000000001"
+        path = owner + "/40000000-0000-0000-0000-000000000004.webm"
+        current = {"version": "generation-A", "bytes": b"original"}
+        observed = current["version"]
+        current.update(version="generation-B", bytes=b"replacement")
+        attempted_unversioned_removals = []
+
+        def unsafe_remove_by_path(key):
+            attempted_unversioned_removals.append(key)
+            current.clear()
+
+        with self.assertRaises(ConditionalDeleteUnavailable):
+            delete_if_exact_version(owner, path, observed)
+        self.assertEqual(current["version"], "generation-B")
+        self.assertEqual(current["bytes"], b"replacement")
+        self.assertEqual(attempted_unversioned_removals, [],
+                         "fail-closed adapter must not call path-only removal")
+
     def test_missing_version_rejected(self):
         owner = "10000000-0000-0000-0000-000000000001"
         with self.assertRaises(PermissionError):
