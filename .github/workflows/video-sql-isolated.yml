@@ -3,6 +3,8 @@ on:
   pull_request:
     paths:
       - 'sql/post_short_videos_candidate.sql'
+      - 'sql/video_permanent_key_reservation_review_only.sql'
+      - 'tests/video/run_isolated.sh'
       - 'tests/video/**'
       - '.github/workflows/video-sql-isolated.yml'
   workflow_dispatch:
