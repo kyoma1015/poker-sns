@@ -62,10 +62,10 @@ class CleanupWorkerTests(unittest.TestCase):
             lambda *args: deletion_attempts.append(args) or False)
         self.assertEqual(outcome, "retry")
         self.assertEqual(inspected, [(OWNER, PATH)])
-        self.assertEqual(deletion_attempts, [(OWNER, PATH, "v1")])
+        self.assertEqual(deletion_attempts, [])
         self.assertEqual(rpc.call_args.args[2], "video_qa_finish_cleanup")
         self.assertFalse(rpc.call_args.args[3]["p_success"])
-        self.assertIn("unsupported", rpc.call_args.args[3]["p_reason"])
+        self.assertIn("quarantined", rpc.call_args.args[3]["p_reason"])
 
     @patch("tests.video.isolated_cleanup_worker._rpc")
     def test_atomic_delete_exception_keeps_job_for_retry(self, rpc):
@@ -76,8 +76,7 @@ class CleanupWorkerTests(unittest.TestCase):
         self.assertEqual(run_one(URL, "isolated", lambda *_: "v1", unavailable),
                          "retry")
         self.assertFalse(rpc.call_args.args[3]["p_success"])
-        self.assertEqual(rpc.call_args.args[3]["p_reason"],
-                         "worker operation failed; retry")
+        self.assertIn("quarantined", rpc.call_args.args[3]["p_reason"])
 
     @patch("tests.video.isolated_cleanup_worker._rpc")
     def test_pinned_absent_object_retries_without_tombstone(self, rpc):
@@ -172,7 +171,7 @@ class CleanupWorkerTests(unittest.TestCase):
         self.assertFalse(deleted)
 
     @patch("tests.video.isolated_cleanup_worker._rpc")
-    def test_conditional_delete_success_only_for_exact_pinned_version(self, rpc):
+    def test_unverified_conditional_delete_callback_never_invoked(self, rpc):
         rpc.side_effect = [[{"id": 10, "owner_id": OWNER, "object_path": PATH,
                              "expected_object_version": "generation-10"}], None, True]
         calls = []
@@ -181,10 +180,10 @@ class CleanupWorkerTests(unittest.TestCase):
             return generation == "generation-10"
         outcome = run_one(URL, "isolated",
                           lambda *_: "generation-10", fenced_delete)
-        self.assertEqual(outcome, "complete")
-        self.assertEqual(calls, [(OWNER, PATH, "generation-10")])
-        self.assertTrue(rpc.call_args.args[3]["p_success"])
-        self.assertEqual(rpc.call_args.args[3]["p_reason"], "conditional deletion succeeded")
+        self.assertEqual(outcome, "retry")
+        self.assertEqual(calls, [])
+        self.assertFalse(rpc.call_args.args[3]["p_success"])
+        self.assertIn("quarantined", rpc.call_args.args[3]["p_reason"])
 
     @patch("tests.video.isolated_cleanup_worker._rpc")
     def test_aba_replacement_blocks_conditional_delete(self, rpc):
