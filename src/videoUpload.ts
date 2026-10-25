@@ -1,4 +1,5 @@
 import { supabase } from './supabase'
+import { VIDEO_SERVER_ENABLED } from './videoApi'
 
 export const MAX_VIDEO_BYTES = 20 * 1024 * 1024
 export const MAX_VIDEO_SECONDS = 30
@@ -52,6 +53,7 @@ export async function validateVideo(file: File): Promise<string | null> {
 
 /** Staged only: caller must enforce server-side duration and reviewed RLS before enabling. */
 export async function uploadPostVideo(userId: string, file: File): Promise<string> {
+  if (!VIDEO_SERVER_ENABLED) throw new Error('動画投稿は安全確認待ちです。')
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   if (authError || !user || user.id !== userId) throw new Error('ログイン情報を確認してください。')
   const validationError = await validateVideo(file)
