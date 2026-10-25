@@ -171,7 +171,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   type PendingVideo = { path: string; owner: string; content: string }
   const [pendingVideo, setPendingVideo] = useState<PendingVideo | null>(null)
   const pendingVideoRef = useRef<PendingVideo | null>(null)
-  // Session-scoped recovery: never persist a bearer token or perform path-only deletion.
+  // Session-scoped recovery; never persist credentials or delete by path.
   useEffect(() => {
     try {
       const raw = sessionStorage.getItem('poker-id-pending-video-v1')
@@ -179,10 +179,18 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       const value: unknown = JSON.parse(raw)
       if (!value || typeof value !== 'object') return
       const record = value as Record<string, unknown>
-      if (typeof record.owner !== 'string' || typeof record.path !== 'string' ||
-          typeof record.content !== 'string' || record.content.length > 10000 ||
-          !new RegExp('^' + record.owner.replace(/[.*+?^${}()|[\]\\]/g, '\\  const [pendingVideo, setPendingVideo] = useState<{ path: string; owner: string; content: string } | null>(null)
-  const pendingVideoRef = useRef<{ path: string; owner: string; content: string } | null>(null)') + '/[0-9a-f-]{36}\\.(mp4|webm)
+      const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
+      if (typeof record.owner !== 'string' || !uuid.test(record.owner) ||
+          typeof record.path !== 'string' ||
+          !record.path.startsWith(record.owner + '/') ||
+          !/^[0-9a-f-]{36}\.(mp4|webm)$/.test(record.path.slice(record.owner.length + 1)) ||
+          typeof record.content !== 'string' || record.content.length > 10000) return
+      const staged = { owner: record.owner, path: record.path, content: record.content }
+      pendingVideoRef.current = staged
+      setPendingVideo(staged)
+      setContent(staged.content)
+    } catch { /* Untrusted or unavailable session storage: stay fail-closed. */ }
+  }, [])
   const videoSubmitInFlightRef = useRef(false)
   const [videoPreview, setVideoPreview] = useState<string | null>(null)
   useEffect(() => { if (!videoFile) { setVideoPreview(null); return }; const url = URL.createObjectURL(videoFile); setVideoPreview(url); return () => URL.revokeObjectURL(url) }, [videoFile])
