@@ -47,10 +47,13 @@ def run_one(base_url: str, service_key: str, inspect_object, delete_if_version):
                     reason = "object absent but immutable tombstone unproven: retry"
                 elif current != expected:
                     reason = "object version changed: retain"
-                elif delete_if_version(owner, path, expected):
-                    success, reason = True, "conditional deletion succeeded"
                 else:
-                    reason = "conditional delete unsupported or rejected"
+                    # The public Storage API has no verified compare-and-delete
+                    # primitive. Merely injecting a callable named
+                    # delete_if_version does not prove atomicity; it could
+                    # perform an unsafe check-then-remove(path) operation.
+                    # Quarantine rather than invoking any deletion callback.
+                    reason = "atomic Storage deletion not proven: quarantined"
     except Exception:
         reason = "worker operation failed; retry"
     finished = _rpc(base_url, service_key, "video_qa_finish_cleanup",
