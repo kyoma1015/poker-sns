@@ -2,8 +2,8 @@ import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { createClient } from '@supabase/supabase-js'
 import { spawn } from 'node:child_process'
 import { isAbsolute, join } from 'node:path'
-import { finalizeImmutableCandidate, type FinalizeCandidateAdapters } from './video-finalize-core.ts'
-import { createProductionSupabaseVideoAdapters } from './video-production-supabase-adapters.ts'
+import { finalizeImmutableCandidate, type FinalizeCandidateAdapters } from './video-finalize-core.js'
+import { createProductionSupabaseVideoAdapters } from './video-production-supabase-adapters.js'
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
 const VIDEO_PATH = /^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\.(mp4|webm)$/
