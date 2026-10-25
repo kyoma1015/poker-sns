@@ -1,0 +1,18 @@
+test_all_blocked_is_unknown_not_uniform (__main__.Observation.test_all_blocked_is_unknown_not_uniform) ... ok
+test_cap_checked_before_expansion (__main__.Observation.test_cap_checked_before_expansion) ... ok
+test_consistent_hero_policy_and_copied_results (__main__.Observation.test_consistent_hero_policy_and_copied_results) ... ok
+test_empty_observation_and_zero_prior_support (__main__.Observation.test_empty_observation_and_zero_prior_support) ... ok
+test_hero_infoset_hidden_card_policy_leak_refuses (__main__.Observation.test_hero_infoset_hidden_card_policy_leak_refuses) ... ok
+test_history_board_mismatch_refuses (__main__.Observation.test_history_board_mismatch_refuses) ... ok
+test_infoset_limit_and_invalid_parameters (__main__.Observation.test_infoset_limit_and_invalid_parameters) ... ok
+test_invalid_board_and_private_support (__main__.Observation.test_invalid_board_and_private_support) ... ok
+test_observation_filtered_mass_not_double_counted (__main__.Observation.test_observation_filtered_mass_not_double_counted) ... ok
+test_observation_river_exact_ev_and_mass (__main__.Observation.test_observation_river_exact_ev_and_mass) ... ok
+test_support_mass_conservation_and_exact_conditioning (__main__.Observation.test_support_mass_conservation_and_exact_conditioning) ... ok
+test_zero_support_value_null (__main__.Observation.test_zero_support_value_null) ... ok
+test_zero_weight_representation_is_same_hero_policy (__main__.Observation.test_zero_weight_representation_is_same_hero_policy) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.008s
+
+OK

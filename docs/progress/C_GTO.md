@@ -114,3 +114,13 @@ Do-action EV excludes target policy probability; actor-excluded counterfactual
 mass remains distinct. Local349PASS (old310+39),3variant exact canonical equality.
 See GTO_INFOSET_ACTION_VALUES_20261024.md. Native169EV remainsnull, fullstrategy
 convergence/G9/G11 still unproved. No PR/manualCI/main or operational adoption.
+
+## Native combo action export — 2026-10-25
+New immutable explicit/native-average PolicySnapshot and actual native combo action
+records connect the existing action oracle to coverage-aware169 conditional action
+reports and exact-rational JSON transport. Missing generic native/169EV staysnull;
+no fullstrategy proof. Local400PASS includes6 repeated stub executions; comparable
+existing CI suite394=old349+45new. Three serialized reports exactly match SHA
+418f0a4bdca743b6d4e44fad0440654e01270e89aeb543b2a50e65d41d48d036.
+See GTO_COMBO_ACTION_EXPORT_20261025.md. No production/main/checkpoint/controller
+adoption, no originalG9/G11 or convergence claim. CI is pending parent publication.

@@ -1,0 +1,447 @@
+[
+  {
+    "variant": "g12_next",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_belief_observation.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 13
+  },
+  {
+    "variant": "g12_next",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_belief_reach.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 13
+  },
+  {
+    "variant": "g12_next",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_hand169_bridge.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 9
+  },
+  {
+    "variant": "g12_next",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_hand169_bridge_boundaries.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "variant": "g12_next",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_history_ev_integration.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "variant": "g12_next",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_history_reach.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 12
+  },
+  {
+    "variant": "g12_next",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_infoset_action_values.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 13
+  },
+  {
+    "variant": "g12_next",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_infoset_export.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 15
+  },
+  {
+    "variant": "g12_next",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_initial_chance_reach.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 10
+  },
+  {
+    "variant": "g12_next",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_poker_oracle_probability_guard.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "variant": "g12_next",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_poker_oracle_profiles.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "variant": "g12_next",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_training_batch.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 8
+  },
+  {
+    "variant": "g12_p1_cache",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_belief_observation.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 13
+  },
+  {
+    "variant": "g12_p1_cache",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_belief_reach.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 13
+  },
+  {
+    "variant": "g12_p1_cache",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_hand169_bridge.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 9
+  },
+  {
+    "variant": "g12_p1_cache",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_hand169_bridge_boundaries.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "variant": "g12_p1_cache",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_history_ev_integration.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "variant": "g12_p1_cache",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_history_reach.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 12
+  },
+  {
+    "variant": "g12_p1_cache",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_infoset_action_values.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 13
+  },
+  {
+    "variant": "g12_p1_cache",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_infoset_export.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 15
+  },
+  {
+    "variant": "g12_p1_cache",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_initial_chance_reach.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 10
+  },
+  {
+    "variant": "g12_p1_cache",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_poker_oracle_probability_guard.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "variant": "g12_p1_cache",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_poker_oracle_profiles.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "variant": "g12_p1_cache",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_training_batch.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 8
+  },
+  {
+    "variant": "g12_p1_packed",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_belief_observation.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 13
+  },
+  {
+    "variant": "g12_p1_packed",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_belief_reach.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 13
+  },
+  {
+    "variant": "g12_p1_packed",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_hand169_bridge.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 9
+  },
+  {
+    "variant": "g12_p1_packed",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_hand169_bridge_boundaries.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "variant": "g12_p1_packed",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_history_ev_integration.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "variant": "g12_p1_packed",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_history_reach.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 12
+  },
+  {
+    "variant": "g12_p1_packed",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_infoset_action_values.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 13
+  },
+  {
+    "variant": "g12_p1_packed",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_infoset_export.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 15
+  },
+  {
+    "variant": "g12_p1_packed",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_initial_chance_reach.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 10
+  },
+  {
+    "variant": "g12_p1_packed",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_poker_oracle_probability_guard.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "variant": "g12_p1_packed",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_poker_oracle_profiles.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "variant": "g12_p1_packed",
+    "command": [
+      "python",
+      "-B",
+      "gto/native/test_training_batch.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 8
+  },
+  {
+    "label": "pure",
+    "command": [
+      "python",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "gto/tests",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 18
+  },
+  {
+    "label": "acceptance",
+    "command": [
+      "python",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests/worker_acceptance",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 33
+  },
+  {
+    "label": "packed",
+    "command": [
+      "python",
+      "handoff/gto/tests/run_backend_tests.py"
+    ],
+    "exit": 0,
+    "tests": null
+  },
+  {
+    "label": "next",
+    "command": [
+      "python",
+      "-B",
+      "handoff/gto/g12_next/g12_p1_live_backend_tests.py"
+    ],
+    "exit": 0,
+    "tests": 9
+  }
+]
