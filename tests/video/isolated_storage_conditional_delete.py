@@ -1,8 +1,6 @@
 """Fail-closed isolated Storage deletion capability.
 
-Supabase Storage remove(path) is not a compare-and-delete operation: a HEAD
-or metadata version check followed by remove is subject to a replacement
-race (ABA). No unversioned delete is permitted here.
+Supabase storage-js StorageFileApi.remove(paths) sends only {prefixes: paths}\nto /object/{bucket}; there is no expected generation in the request. A HEAD\nor metadata version check followed by remove is subject to a replacement\nrace (ABA). No unversioned delete is permitted here.\nSource: https://github.com/supabase/storage-js/blob/main/src/packages/StorageFileApi.ts
 """
 
 class ConditionalDeleteUnavailable(RuntimeError):
