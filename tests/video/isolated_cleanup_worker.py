@@ -6,6 +6,38 @@ Never deletes a posted video or an unpinned object. No production use.
 from uuid import UUID, uuid4
 from .isolated_db_adapter import _rpc
 
+def quarantine_orphan(*, owner: str, path: str, expected_version: str | None,
+                      observed_version: str | None, referenced_by_post: bool) -> dict:
+    """Produce an immutable, non-destructive review record; never a delete command.
+
+    The record deliberately contains no bearer tokens, URLs, or service credentials.
+    Quarantine means hold for manual review, not moving or deleting Storage bytes.
+    """
+    from datetime import datetime, timezone
+    if str(UUID(owner)) != owner:
+        raise ValueError("invalid owner")
+    folder, separator, filename = path.partition("/")
+    if not separator or folder != owner or "/" in filename:
+        raise ValueError("invalid Storage path")
+    stem, dot, extension = filename.rpartition(".")
+    if not dot or extension not in ("mp4", "webm") or str(UUID(stem)) != stem:
+        raise ValueError("invalid Storage object identifier")
+    reason = ("referenced_by_post" if referenced_by_post else
+              "missing_pinned_version" if not expected_version else
+              "version_changed" if observed_version != expected_version else
+              "atomic_delete_unproven")
+    return {
+        "owner_id": owner,
+        "object_path": path,
+        "expected_object_version": expected_version,
+        "observed_object_version": observed_version,
+        "reason": reason,
+        "status": "retain" if referenced_by_post else "quarantine",
+        "delete_permitted": False,
+        "recorded_at": datetime.now(timezone.utc).isoformat(),
+    }
+
+
 def run_one(base_url: str, service_key: str, inspect_object, delete_if_version):
     worker = str(uuid4())
     if base_url != "http://127.0.0.1:56321" or not service_key:
