@@ -52,6 +52,45 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
   if (!body || typeof body !== 'object' || Array.isArray(body)) return res.status(400).end()
   // Reject inherited fields and exotic prototypes at the HTTP trust boundary.
   if (Object.getPrototypeOf(body) !== Object.prototype && Object.getPrototypeOf(body) !== null) return res.status(400).end()
+  // Reservation shares the existing serverless function (Hobby function cap).
+  // Only trusted service_role can invoke the append-only permanent ledger.
+  // A failed or ambiguous reservation is never treated as success.
+  if (Object.keys(body).length === 2 &&
+      (body as Record<string, unknown>).action === 'reserve' &&
+      typeof (body as Record<string, unknown>).object_path === 'string') {
+    const path = (body as Record<string, unknown>).object_path as string
+    const match = VIDEO_PATH.exec(path)
+    if (!match) return res.status(400).end()
+    const url = process.env.VITE_SUPABASE_URL
+    const anon = process.env.VITE_SUPABASE_ANON_KEY
+    const service = process.env.SUPABASE_SERVICE_ROLE_KEY
+    // Production release requires a separately audited Storage writer fence.
+    if (process.env.VIDEO_PRODUCTION_FENCED_READY !== 'true' ||
+        !url || !/^https:\\/\\/[a-z0-9-]+\\.supabase\\.co\\/?$/.test(url) ||
+        !anon || !service) return res.status(503).json({ error: 'video_reservation_not_enabled' })
+    try {
+      const viewer = createClient(url, anon, {
+        global: { headers: { Authorization: authorization } },
+        auth: { persistSession: false, autoRefreshToken: false },
+      })
+      const token = authorization.slice(7)
+      const { data, error } = await viewer.auth.getUser(token)
+      if (error || !data.user || !UUID.test(data.user.id)) return res.status(401).end()
+      if (data.user.id !== match[1]) return res.status(403).end()
+      const admin = createClient(url, service, {
+        auth: { persistSession: false, autoRefreshToken: false },
+      })
+      const { data: reservation, error: reservationError } = await admin.rpc('video_reserve_object_key', {
+        p_owner: data.user.id, p_path: path,
+      })
+      if (reservationError || typeof reservation !== 'string' || !UUID.test(reservation)) {
+        return res.status(503).json({ error: 'video_reservation_unavailable' })
+      }
+      return res.status(201).json({ reserved: true })
+    } catch {
+      return res.status(503).json({ error: 'video_reservation_unavailable' })
+    }
+  }
   const fields = Object.keys(body)
   if (fields.length !== 2 || !fields.includes('object_path') || !fields.includes('content')) return res.status(400).end()
   const { object_path, content } = body as { object_path: unknown; content: unknown }
