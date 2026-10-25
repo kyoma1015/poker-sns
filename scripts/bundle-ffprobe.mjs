@@ -34,7 +34,7 @@ try {
   const listing = spawnSync('tar', ['-tJf', archive], { encoding: 'utf8', maxBuffer: 1024 * 1024 })
   if (listing.status !== 0) throw new Error('ffprobe archive listing failed')
   const entries = listing.stdout.trim().split('\\n')
-  const probes = entries.filter(p => /^ffmpeg-master-latest-linux64-gpl\\/bin\\/ffprobe$/.test(p))
+  const probes = entries.filter(p => p === 'ffmpeg-master-latest-linux64-gpl/bin/ffprobe')
   if (probes.length !== 1) throw new Error('ffprobe archive layout changed')
   const extracted = spawnSync('tar', ['-xJf', archive, '-C', work, probes[0]], { timeout: 120000 })
   if (extracted.status !== 0) throw new Error('ffprobe extraction failed')
