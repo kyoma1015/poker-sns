@@ -45,13 +45,16 @@ jobs:
           set -euo pipefail
           # Avoid apt: the runner's package manager can hang without output.
           # Use the same pinned, SHA256-verified executable as the Vercel build.
-          node scripts/bundle-ffprobe.mjs
+          VIDEO_CI_FFMPEG_FIXTURES=true node scripts/bundle-ffprobe.mjs
+          test -x api/bin/ffmpeg
           test -x api/bin/ffprobe
           api/bin/ffprobe -version
           file api/bin/ffprobe
       - name: Enforce real ffprobe runtime tests without skip
         env:
           REQUIRE_FFPROBE_RUNTIME: 'true'
+          FFPROBE_BINARY_PATH: './api/bin/ffprobe'
+          PATH: '/home/runner/work/poker-sns/poker-sns/api/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
         run: node --test tests/video-ffprobe-runtime.test.mjs
       - name: Verify pinned ffprobe build bundle without deploying
         run: test -x api/bin/ffprobe
