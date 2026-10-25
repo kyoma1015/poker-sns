@@ -10,7 +10,7 @@ test('quiz save uncertainty cannot duplicate writes or fabricate a score and rem
   assert.equal(result.status, 0, result.stdout + result.stderr)
   const reports = result.stdout.split('\n').filter(line => line.startsWith('{')).map(line => JSON.parse(line))
   assert.equal(reports.at(-1)?.verdict, 'PASS')
-  assert.equal(reports.at(-1)?.tests, 7)
+  assert.equal(reports.at(-1)?.tests, 8)
 })
 
 // Use the locked production SDK with an injected fetch, never a real endpoint.

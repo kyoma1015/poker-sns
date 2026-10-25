@@ -92,6 +92,18 @@ try {
     assert.equal(await page.evaluate(() => window.tdaQaCalls.filter(name => name === 'submit_tda_quiz_answer').length), 2)
     await page.getByText('全問正解です。', { exact: true }).waitFor()
   })
+  await check('same-tick double option activation writes one answer and scores once', async () => {
+    await open('double-activate')
+    await page.getByRole('button', { name: 'クイズを始める', exact: true }).click()
+    await page.getByRole('heading', { name: 'QA用の合成問題', exact: true }).waitFor()
+    await page.evaluate(() => {
+      const option = [...document.querySelectorAll('button')].find(button => button.textContent.includes('合成選択肢B'))
+      option.click(); option.click()
+    })
+    await page.getByText('保存済みの合成解説', { exact: true }).waitFor()
+    assert.equal(await page.evaluate(() => window.tdaQaCalls.filter(name => name === 'submit_tda_quiz_answer').length), 1)
+    assert.equal(await page.getByText('SCORE 1', { exact: true }).count(), 1)
+  })
   assert.deepEqual(errors, [])
   if (failures.length) { console.log(JSON.stringify({verdict:'FAIL',pass:results.length,fail:failures.length,failures})); process.exitCode=1 }
   console.log(JSON.stringify({ verdict: failures.length ? 'FAIL' : 'PASS', tests: results.length, results, browser: await browser.version(), transport: 'in-memory mock; all questions synthetic; external requests blocked; no DB' }))

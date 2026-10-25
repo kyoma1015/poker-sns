@@ -372,6 +372,7 @@ function TDA() {
   const [quizMode, setQuizMode] = useState<'normal' | 'hard' | 'wrong'>('normal')
   const [quizReview, setQuizReview] = useState<TdaQuizReviewItem[]>([])
   const quizVersion = useRef(0)
+  const quizAnswerClaim = useRef<number | null>(null)
   useEffect(() => () => { quizVersion.current += 1 }, [])
 
 
@@ -630,6 +631,10 @@ function TDA() {
     if (!question) return
 
     const version = quizVersion.current
+    // State updates render later; two option events can share the same closure.
+    // Claim synchronously and retain the claim for confirmed/uncertain writes.
+    if (quizAnswerClaim.current === version) return
+    quizAnswerClaim.current = version
     setQuizSelectedOption(optionId)
     setQuizAnswerLoading(true)
     setQuizError('')
@@ -637,6 +642,7 @@ function TDA() {
     const authenticated = await ensureQuizAuthenticated(version)
     if (version !== quizVersion.current) return
     if (!authenticated) {
+      quizAnswerClaim.current = null
       setQuizSelectedOption(null)
       setQuizAnswerLoading(false)
       return
@@ -659,7 +665,10 @@ function TDA() {
       // A lost/failed response does not prove that the server rolled back.
       // Never invite another write for an answer whose outcome is unknown.
       setQuizAnswerUnverified(!needsLogin)
-      if (needsLogin) setQuizSelectedOption(null)
+      if (needsLogin) {
+        quizAnswerClaim.current = null
+        setQuizSelectedOption(null)
+      }
       setQuizError(needsLogin
         ? '回答を記録するにはログインしてください。'
         : '回答の保存・判定を確認できませんでした。保存済みの可能性があるため、再回答せず次へ進んでください。')
