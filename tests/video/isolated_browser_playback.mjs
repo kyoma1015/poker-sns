@@ -163,6 +163,26 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     await actualVideo.evaluate(el=>el.play())
     await timelinePage.waitForFunction(() => document.querySelector('article video')?.currentTime>0,
       null,{timeout:15000})
+    // Real Chromium account-switch regression: an untrusted session draft
+    // owned by another user must not be displayed in the composer.
+    const foreignDraft='FOREIGN-ACCOUNT-PRIVATE-DRAFT-'+Date.now()
+    await timelinePage.evaluate(({foreignOwner,foreignDraft}) => {
+      sessionStorage.setItem('poker-id-pending-video-v1',JSON.stringify({
+        owner:foreignOwner,
+        path:foreignOwner+'/22222222-2222-4222-8222-222222222222.webm',
+        content:foreignDraft,
+      }))
+    },{foreignOwner:'33333333-3333-4333-8333-333333333333',foreignDraft})
+    await timelinePage.reload()
+    await timelinePage.getByRole('button',{name:'おすすめ'}).click({timeout:20000})
+    await timelinePage.getByText('real isolated end-to-end',{exact:true}).waitFor({timeout:20000})
+    await timelinePage.waitForTimeout(500)
+    assert.equal(await timelinePage.getByText(foreignDraft,{exact:true}).count(),0,
+      'foreign account session draft must not render in actual Timeline')
+    assert.equal(await timelinePage.getByRole('dialog',{name:'新しい投稿'}).count(),0,
+      'foreign account session draft must not open composer')
+    await timelinePage.evaluate(() => sessionStorage.removeItem('poker-id-pending-video-v1'))
+    console.log('PASS: REAL Chromium account switch rejects foreign pending video draft')
     // Full real Timeline UI flow: file picker -> local Storage -> HTTP finalize
     // -> RLS PostgREST feed refresh -> real PostVideo Chromium playback.
     const uploadText='isolated timeline browser upload '+Date.now()
