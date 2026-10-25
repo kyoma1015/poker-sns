@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/internal/video/runtime-attestation",
+      "destination": "/api/video-finalize?runtime_attestation=ffprobe"
+    },
+    {
       "source": "/internal/video/finalize",
       "destination": "/api/video-finalize"
     },
@@ -35,9 +39,6 @@
   ],
   "functions": {
     "api/video-finalize.ts": {
-      "includeFiles": "api/bin/ffprobe"
-    },
-    "api/video-runtime-attestation.ts": {
       "includeFiles": "api/bin/ffprobe"
     }
   }
