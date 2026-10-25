@@ -14,7 +14,7 @@ export default function PostVideo({ postId }: { postId: string }) {
       // A Blob URL bypasses the server after the initial authorized fetch.
       // Discard the locally cached media as soon as the session ends or
       // changes, so an old authenticated video cannot keep playing.
-      if (event === 'SIGNED_OUT' || event === 'USER_UPDATED' || event === 'SIGNED_IN') {
+      if (event === 'SIGNED_OUT' || event === 'USER_UPDATED') {
         active = false
         if (objectUrl) URL.revokeObjectURL(objectUrl)
         objectUrl = ''
