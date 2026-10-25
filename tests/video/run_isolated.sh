@@ -66,11 +66,11 @@ insert into public.posts(id,user_id,content) values
   '10000000-0000-0000-0000-000000000001','preserved existing post');
 SQL
 docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 <<'SQL'
-do $ begin
+do $role_setup$ begin
  if not exists (select 1 from pg_roles where rolname='authenticated') then
   create role authenticated nologin;
  end if;
-end $;
+end $role_setup$;
 SQL
 docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 < tests/video/production_additive_candidate.sql
 docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 < tests/video/production_candidate_isolated_assertions.sql
