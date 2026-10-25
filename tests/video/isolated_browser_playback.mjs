@@ -237,7 +237,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
         ()=> { window.__VIDEO_TIMEOUT_RESULT='rejected' })
     })
     await timeoutPage.clock.fastForward(15000)
-    await timeoutPage.waitForFunction(() => window.__VIDEO_TIMEOUT_RESULT !== 'pending',{timeout:1000})
+    await timeoutPage.waitForFunction(() => window.__VIDEO_TIMEOUT_RESULT !== 'pending',null,{timeout:1000})
     assert.equal(await timeoutPage.evaluate(() => window.__VIDEO_TIMEOUT_RESULT),'rejected',
       'corrupt Chromium metadata must reject by 15-second deadline')
     await timeoutPage.close()
