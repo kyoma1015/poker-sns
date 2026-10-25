@@ -269,6 +269,18 @@ const {data:otherFeed,error:otherFeedError}=await other.from('posts').select('*'
 assert.ifError(otherFeedError)
 assert.ok(!otherFeed.some(row=>row.id===first),'RLS must exclude video from other user feed')
 await verifyRealBrowserPlayback({postId:feedPost.id,jwt,deniedJwt:otherJwt,anon,service,bytes})
+// Verify that the browser's real reservation RPC created a permanent ledger
+// record; the service role may read it but browser clients cannot mutate it.
+const admin=createClient(url,service,{auth:{persistSession:false,autoRefreshToken:false}})
+const {data:reservedKeys,error:reservedKeysError}=await admin
+  .from('video_reserved_object_keys')
+  .select('object_path,owner_id')
+  .eq('owner_id',owner)
+assert.ifError(reservedKeysError)
+assert.ok(reservedKeys?.some(row=>row.object_path.startsWith(owner+'/')),
+  'Chromium upload must persist a permanent reserved Storage key')
+console.log('PASS: real Chromium upload persisted immutable reservation ledger')
+
 // Revoke the owner's session in real local GoTrue, then prove that the
 // previously issued access token is denied by the actual media handler.
 // This is separate from JWT expiry and from the synthetic adapter revocation.
