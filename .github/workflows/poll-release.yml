@@ -28,6 +28,10 @@ jobs:
             ln -s "$(basename "$source")" "${source%.ts}.js"
           done
           for test_file in tests/*.test.mjs; do node "$test_file"; done
+          # Remove test-only .js aliases before oxlint parses them as JavaScript.
+          for source in api/video-*.ts; do
+            rm -- "${source%.ts}.js"
+          done
       - run: npm run build
       - run: npm run lint
       - name: Mobile browser QA (mock transport)
