@@ -216,6 +216,10 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     // Verify the real browser duration reader cannot hang on a corrupt video.
     // Advance Chromium's virtual clock by 15 seconds without a real 15s delay.
     const timeoutPage=await browser.newPage()
+    await timeoutPage.addInitScript(({jwt,anon}) => {
+      window.__VIDEO_QA_JWT=jwt
+      window.__VIDEO_QA_ANON=anon
+    },{jwt,anon})
     await timeoutPage.clock.install()
     await timeoutPage.goto(origin+'/tests/video/browser-real-timeline.html')
     await timeoutPage.evaluate(async () => {
