@@ -869,7 +869,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     </div>
   ) : null
 
-  const canSubmitPost = Boolean(content.trim() || (interactiveMode==='normal' && (selectedResult || selectedDiagnosis || styleSnapshot || imageFiles.length || videoFile)))
+  const canSubmitPost = Boolean(content.trim() || (interactiveMode==='normal' && (selectedResult || selectedDiagnosis || styleSnapshot || imageFiles.length || videoFile || pendingVideo)))
     && (interactiveMode!=='poll'||(pollOptions.every(o=>o.trim()) && new Set(pollOptions.map(o=>o.trim().toLowerCase())).size===pollOptions.length))
 
   const handlePost = async () => {
@@ -896,7 +896,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     }
 
 
-    if (videoFile) {
+    if (videoFile || pendingVideoRef.current) {
       if (isPosting || videoSubmitInFlightRef.current) return
       if (!VIDEO_SERVER_ENABLED) {
         setMessage('動画投稿はサーバーAPIの安全確認待ちです。')
@@ -912,14 +912,17 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       try {
         const { data: { user }, error: authError } = await supabase.auth.getUser()
         if (authError || !user) throw new Error('ログイン情報を確認してください。')
-        const videoError = await validateVideo(videoFile)
-        if (videoError) throw new Error(videoError)
+        if (videoFile && !pendingVideoRef.current) {
+          const videoError = await validateVideo(videoFile)
+          if (videoError) throw new Error(videoError)
+        }
         // Never upload a second object after an ambiguous server outcome.
         // Retrying must use the same path and original content fingerprint.
         if (pendingVideoRef.current && (pendingVideoRef.current.owner !== user.id || pendingVideoRef.current.content !== content.trim())) {
           throw new Error('前回の投稿内容またはアカウントが異なります。元の内容で再試行してください。')
         }
-        const path = pendingVideoRef.current?.path ?? await uploadPostVideo(user.id, videoFile)
+        const path = pendingVideoRef.current?.path ?? (videoFile ? await uploadPostVideo(user.id, videoFile) : '')
+        if (!path) throw new Error('動画を再選択してください。')
         if (!pendingVideoRef.current) {
           const staged = { path, owner: user.id, content: content.trim() }
           pendingVideoRef.current = staged
