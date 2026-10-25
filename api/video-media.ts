@@ -22,8 +22,7 @@ return async function handler(req: VercelRequest, res: VercelResponse) {
   if (typeof rawId !== 'string' || !UUID.test(rawId)) return res.status(400).end()
   const url = process.env.VITE_SUPABASE_URL
   const anon = process.env.VITE_SUPABASE_ANON_KEY
-  const service = process.env.SUPABASE_SERVICE_ROLE_KEY
-  if (!url || !anon || !service || !(/^https:\/\/[^/]+\/?$/.test(url) ||
+  if (!url || !anon || !(/^https:\/\/[^/]+\/?$/.test(url) ||
     (options.isolatedLocalOnly === true && url === 'http://127.0.0.1:56321'))) return res.status(503).end()
   // Keep media disabled until the same audited production fence as finalize.
   // Isolated tests may opt into their explicit local-only transport.
@@ -58,7 +57,7 @@ return async function handler(req: VercelRequest, res: VercelResponse) {
     // The Storage SDK's download() would buffer an unbounded Blob first.
     const media = await fetch((url.endsWith('/') ? url.slice(0, -1) : url) +
       '/storage/v1/object/authenticated/post-videos/' + path, {
-      headers: { apikey: service, Authorization: 'Bearer ' + service },
+      headers: { apikey: anon, Authorization: rawAuth },
       signal: AbortSignal.timeout(30000),
     })
     if (!media.ok || !media.body) return res.status(503).end()
