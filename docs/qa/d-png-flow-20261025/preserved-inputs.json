@@ -1,0 +1,47 @@
+[
+  {
+    "file": "tests/player-type.test.mjs",
+    "sha256": "03d5bff766b176a45bf0897ffdc5107fa2da057ee36633ed724bc2f07d14777e",
+    "unchanged": true
+  },
+  {
+    "file": "tests/player-type-audit.test.mjs",
+    "sha256": "4ce555bb1a92bf356ff796a786f651a32c464292eacca4b3b1daa29282911c42",
+    "unchanged": true
+  },
+  {
+    "file": "tests/player-type-distribution.test.mjs",
+    "sha256": "957afcab50957ce04f0802bef6fbe2dcaf20577c2062672d6745ce2555ec1b0a",
+    "unchanged": true
+  },
+  {
+    "file": "tests/player-type-reference.test.mjs",
+    "sha256": "ae521ed54500adff46c22cd30f27a83d5a80c3585e8523210f500c8eb522609a",
+    "unchanged": true
+  },
+  {
+    "file": "tests/player-type-strategy-evidence.test.mjs",
+    "sha256": "45a98b39f5c49c7fe2ec142ab71e654e56e3d654ecd770eba293672947dd57b5",
+    "unchanged": true
+  },
+  {
+    "file": "tests/player-type-score-schema.test.mjs",
+    "sha256": "0a097ed167b8191b16ee7ea0318e9c16f11c7ef6844cb73eded4900c489905c7",
+    "unchanged": true
+  },
+  {
+    "file": "tests/player-type-presentation-values.test.mjs",
+    "sha256": "168e4da584edf8db79627ac621c84a9908edfcbc2f8aa4167b6079d9ecbeec2b",
+    "unchanged": true
+  },
+  {
+    "file": "tests/player-type-png-cleanup.test.mjs",
+    "sha256": "b5fc9df1cf830727d1607ebde7da2f1d0dfdb2b083373b3d5e1ffb3442092c63",
+    "unchanged": true
+  },
+  {
+    "file": "tests/fixtures/player-type-v2.json",
+    "sha256": "ef15e04c485f090f72707656a9127c54a855c98e2453771ad86c68068cfe4d2c",
+    "unchanged": true
+  }
+]

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { supabase } from './supabase'
 import './PlayerTypeDiagnosis.css'
+import { loadShareImage, encodeSharePng } from './playerTypeShareImage'
 
 type QuestionRow = {
   question_id: string
@@ -165,7 +166,9 @@ function personalAdvice(detail: ResultDetail) {
 function PlayerTypeDiagnosis() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
+  const imageResultId = searchParams.get('result')
   const clickLock = useRef(false)
+  const imageOperation = useRef({ generation: 0, pending: false })
 
   const [screen, setScreen] = useState<'intro' | 'quiz' | 'result'>('intro')
   const [questions, setQuestions] = useState<Question[]>([])
@@ -184,6 +187,18 @@ function PlayerTypeDiagnosis() {
   const [shareText, setShareText] = useState('')
   const [externalShareError, setExternalShareError] = useState('')
   const [imageSaving, setImageSaving] = useState(false)
+
+  useEffect(() => {
+    const operation = imageOperation.current
+    operation.generation++
+    operation.pending = false
+    setImageSaving(false)
+    setExternalShareError('')
+    return () => {
+      operation.generation++
+      operation.pending = false
+    }
+  }, [result?.result_id, imageResultId])
 
   useEffect(() => {
     void loadQuestions()
@@ -260,6 +275,10 @@ function PlayerTypeDiagnosis() {
   const progress = Math.min(100, (visibleNumber / QUESTION_COUNT) * 100)
 
   function startDiagnosis() {
+    imageOperation.current.generation++
+    imageOperation.current.pending = false
+    setImageSaving(false)
+    setExternalShareError('')
     if (questions.length !== QUESTION_COUNT) return
 
     setScreen('quiz')
@@ -562,12 +581,7 @@ function PlayerTypeDiagnosis() {
     ctx.font = '24px sans-serif'
     ctx.fillText('PLAYER TYPE DIAGNOSIS', 540, 169)
 
-    const animal = new Image()
-    animal.src = `/animals/${result.result_type_key}.png`
-    await new Promise<void>((resolve, reject) => {
-      animal.onload = () => resolve()
-      animal.onerror = () => reject(new Error('動物画像を読み込めませんでした'))
-    })
+    const animal = await loadShareImage(`/animals/${result.result_type_key}.png`)
     // Keep the original animal artwork, without cropping or stretching.
     ctx.drawImage(animal, 260, 196, 560, 560)
 
@@ -648,11 +662,7 @@ function PlayerTypeDiagnosis() {
     ctx.fillStyle = '#d8c8a4'
     ctx.fillText('※強さや技術の優劣ではなく、プレイスタイルの傾向を表します。', 540, 1440, 890)
 
-    return await new Promise<Blob>((resolve, reject) => {
-      canvas.toBlob((value) => value
-        ? resolve(value)
-        : reject(new Error('画像データを作成できませんでした')), 'image/png')
-    })
+    return await encodeSharePng(canvas)
   }
 
   function downloadShareImage(blob: Blob) {
@@ -682,15 +692,25 @@ function PlayerTypeDiagnosis() {
   }
 
   async function saveShareImage() {
-    if (!result || imageSaving) return
+    const operation = imageOperation.current
+    if (!result || !detail || operation.pending) return
+    const generation = operation.generation
+    operation.pending = true
     setImageSaving(true)
     setExternalShareError('')
     try {
-      downloadShareImage(await createShareImage())
-    } catch (e) {
-      setExternalShareError(`画像の保存に失敗しました：${e instanceof Error ? e.message : String(e)}`)
+      const image = await createShareImage()
+      if (operation.generation !== generation) return
+      downloadShareImage(image)
+    } catch {
+      // Selectively inherit PR60's public generic message, never raw exceptions.
+      if (operation.generation !== generation) return
+      setExternalShareError('画像の保存に失敗しました。もう一度お試しください。')
     } finally {
-      setImageSaving(false)
+      if (operation.generation === generation) {
+        operation.pending = false
+        setImageSaving(false)
+      }
     }
   }
 

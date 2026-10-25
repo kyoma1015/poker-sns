@@ -1,0 +1,109 @@
+✔ mobile real canvas exports a nonempty PNG with the existing filename (2645.625064ms)
+✖ image failures redact details and allow the same result to retry successfully (3724.319641ms)
+✖ hang reaches a finite deadline and enables retry (3609.528105ms)
+✖ encode-hang reaches a finite deadline and enables retry (3695.554528ms)
+✖ an old pending image cannot download after restarting diagnosis (3916.084563ms)
+✖ two synchronous save activations start only one image operation (2847.005885ms)
+✖ changing to another saved result invalidates a pending PNG operation (2847.346146ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 1
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23588.302608
+
+✖ failing tests:
+
+test at tests/player-type-share-browser.test.mjs:38:1
+✖ image failures redact details and allow the same result to retry successfully (3724.319641ms)
+  locator.waitFor: Timeout 2000ms exceeded.
+  Call log:
+  [2m  - waiting for getByRole('alert').getByText('画像の保存に失敗しました。もう一度お試しください。', { exact: true }) to be visible[22m
+  
+      at TestContext.<anonymous> (/workspace/work/issue22-d-strategy-evidence/tests/player-type-share-browser.test.mjs:39:145) {
+    log: [ "  - waiting for getByRole('alert').getByText('画像の保存に失敗しました。もう一度お試しください。', { exact: true }) to be visible" ],
+    name: 'TimeoutError'
+  }
+
+test at tests/player-type-share-browser.test.mjs:41:42
+✖ hang reaches a finite deadline and enables retry (3609.528105ms)
+  locator.waitFor: Timeout 2000ms exceeded.
+  Call log:
+  [2m  - waiting for getByRole('alert') to be visible[22m
+  
+      at TestContext.<anonymous> (/workspace/work/issue22-d-strategy-evidence/tests/player-type-share-browser.test.mjs:42:219) {
+    log: [ "  - waiting for getByRole('alert') to be visible" ],
+    name: 'TimeoutError'
+  }
+
+test at tests/player-type-share-browser.test.mjs:41:42
+✖ encode-hang reaches a finite deadline and enables retry (3695.554528ms)
+  locator.waitFor: Timeout 2000ms exceeded.
+  Call log:
+  [2m  - waiting for getByRole('alert') to be visible[22m
+  
+      at TestContext.<anonymous> (/workspace/work/issue22-d-strategy-evidence/tests/player-type-share-browser.test.mjs:42:219) {
+    log: [ "  - waiting for getByRole('alert') to be visible" ],
+    name: 'TimeoutError'
+  }
+
+test at tests/player-type-share-browser.test.mjs:44:1
+✖ an old pending image cannot download after restarting diagnosis (3916.084563ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   'PokerID_lion_qa-resul.png'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-share-browser.test.mjs:45:377)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type-share-browser.test.mjs:47:1
+✖ two synchronous save activations start only one image operation (2847.005885ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-share-browser.test.mjs:48:107)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type-share-browser.test.mjs:51:1
+✖ changing to another saved result invalidates a pending PNG operation (2847.346146ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   'PokerID_lion_qa-resul.png'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-share-browser.test.mjs:52:387)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

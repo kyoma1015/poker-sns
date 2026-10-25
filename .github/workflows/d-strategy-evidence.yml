@@ -4,6 +4,11 @@ on:
     branches: [codex/d-persona-reference-20261023]
     paths:
       - 'src/PlayerTypeDiagnosis.tsx'
+      - 'src/playerTypeShareImage.ts'
+      - 'tests/player-type-share-image.test.mjs'
+      - 'tests/player-type-share-browser.test.mjs'
+      - 'tests/browser/player-type-share-entry.tsx'
+      - 'tests/browser/player-type-share-supabase.ts'
       - 'tests/player-type-png-cleanup.test.mjs'
       - 'src/playerTypePresentation.ts'
       - 'tests/player-type-presentation-values.test.mjs'
@@ -36,8 +41,12 @@ jobs:
       - run: node tests/player-type-score-schema.test.mjs
       - run: node tests/player-type-presentation-values.test.mjs
       - run: node tests/player-type-png-cleanup.test.mjs
+      - run: node tests/player-type-share-image.test.mjs
       - run: node scripts/audit-player-type.mjs > "$RUNNER_TEMP/d-strategy-report.json"
       - run: npm ci --cache "$RUNNER_TEMP/npm-cache"
+      - run: node tests/player-type-share-browser.test.mjs
+        env:
+          CHROMIUM_PATH: /usr/bin/google-chrome
       - run: npm run build
       - run: npm run lint
       - uses: actions/upload-artifact@v4
