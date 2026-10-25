@@ -167,6 +167,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const imageInputRef = useRef<HTMLInputElement>(null)
   const videoInputRef = useRef<HTMLInputElement>(null)
   const [videoFile, setVideoFile] = useState<File | null>(null)
+  // Retain the exact immutable object path after an uncertain finalize result.
+  const [pendingVideo, setPendingVideo] = useState<{ path: string; owner: string; content: string } | null>(null)
   const [videoPreview, setVideoPreview] = useState<string | null>(null)
   useEffect(() => { if (!videoFile) { setVideoPreview(null); return }; const url = URL.createObjectURL(videoFile); setVideoPreview(url); return () => URL.revokeObjectURL(url) }, [videoFile])
   const [imageFiles, setImageFiles] = useState<File[]>([])
@@ -799,6 +801,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     if (imageFiles.length || selectedResult || selectedDiagnosis || styleSnapshot || interactiveMode !== 'normal') { setMessage('動画は画像・戦績・診断・アンケートと同時に添付できません。'); return }
     const error = await validateVideo(file)
     if (error) { setMessage(error); return }
+    if (pendingVideo) { setMessage('前回の動画投稿の確定結果が不明です。同じファイルで再試行してください。'); return }
     setVideoFile(file)
     setMessage(VIDEO_SERVER_ENABLED ? '' : '動画のプレビューを確認できます。サーバーAPIの安全確認が終わるまで投稿は無効です。')
   }
@@ -887,10 +890,15 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         if (authError || !user) throw new Error('ログイン情報を確認してください。')
         const videoError = await validateVideo(videoFile)
         if (videoError) throw new Error(videoError)
-        const path = await uploadPostVideo(user.id, videoFile)
-        // Unknown server outcome must remain recoverable; never issue an
-        // unversioned Storage remove after upload or finalization failure.
+        // Never upload a second object after an ambiguous server outcome.
+        // Retrying must use the same path and original content fingerprint.
+        if (pendingVideo && (pendingVideo.owner !== user.id || pendingVideo.content !== content.trim())) {
+          throw new Error('前回の投稿内容またはアカウントが異なります。元の内容で再試行してください。')
+        }
+        const path = pendingVideo?.path ?? await uploadPostVideo(user.id, videoFile)
+        if (!pendingVideo) setPendingVideo({ path, owner: user.id, content: content.trim() })
         await finalizeUploadedVideo(path, content.trim())
+        setPendingVideo(null)
         setVideoFile(null)
         setContent('')
         setComposeOpen(false)
@@ -2236,6 +2244,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       {selectedDiagnosis && <div style={{ border: '1px solid #92733a', borderRadius: 12, padding: 16, color: '#f6e5bf' }}>♧ 自己診断：{playerTypeEmoji[selectedDiagnosis.result_type_key]} {selectedDiagnosis.animal_name_ja}<div style={{ fontSize: 12 }}>{selectedDiagnosis.catchphrase}</div></div>}
       {styleSnapshot && renderStyleSnapshot(styleSnapshot)}
       {videoPreview && <video controls preload="metadata" src={videoPreview} style={{ width: '100%', maxHeight: 360, borderRadius: 10 }} />}
+      {pendingVideo && <p role="status" style={{ fontSize: 12, color: '#e6c27a' }}>動画はアップロード済みです。投稿確定に失敗した場合は、内容を変更せず「投稿」から同じファイルを再試行してください。新規アップロードや無条件削除は行いません。</p>}
       {imagePreviews.length > 0 && <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,minmax(0,1fr))', gap: 8, marginTop: 8 }}>{imagePreviews.map((url, i) => <div key={url} style={{ position: 'relative' }}><img src={url} alt={`添付画像${i+1}`} style={{ width: '100%', maxHeight: 220, objectFit: 'cover', borderRadius: 8 }}/><button type="button" onClick={() => setImageFiles(files => files.filter((_, index) => index !== i))} style={{ position: 'absolute', right: 4, top: 4, width: 'auto', background: '#222', color: '#fff' }}>×</button></div>)}</div>}
     </div>
   }
