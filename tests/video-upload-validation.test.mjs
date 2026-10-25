@@ -13,7 +13,7 @@ test('video candidate declares required limits and MIME types', () => {
 })
 test('posting is gated by explicit default-off production readiness', () => {
   assert.match(timeline, /if \(!VIDEO_SERVER_ENABLED\)/)
-  assert.match(timeline, /await uploadPostVideo\(user\.id, videoFile\)/)
+  assert.match(timeline, /videoFile \? await uploadPostVideo\(user\.id, videoFile\) : ''/)
   const api = readFileSync(new URL('../src/videoApi.ts', import.meta.url), 'utf8')
   assert.match(api, /VIDEO_SERVER_ENABLED = import\.meta\.env\.VITE_VIDEO_SERVER_ENABLED === 'true'/)
   assert.match(api, /if \(!VIDEO_SERVER_ENABLED\) throw new Error/)
@@ -27,4 +27,21 @@ test('staged storage is private, limited, and not readable by every authenticate
 test('path validation is strict before deleting storage objects', () => {
   assert.match(source, /isOwnedVideoPath\(path, user\.id\)/)
   assert.match(source, /path\.split\('\/'\)\[0\] === userId/)
+})
+
+test('reload recovery retains immutable owner/path/content and reopens composer', () => {
+  assert.match(timeline, /sessionStorage\.getItem\('poker-id-pending-video-v1'\)/)
+  assert.match(timeline, /pendingVideoRef\.current = staged[\s\S]*?setPendingVideo\(staged\)[\s\S]*?setContent\(staged\.content\)[\s\S]*?setComposeOpen\(true\)/)
+  assert.match(timeline, /pendingVideoRef\.current\?\.path \?\? \(videoFile \? await uploadPostVideo/)
+  assert.match(timeline, /sessionStorage\.removeItem\('poker-id-pending-video-v1'\)/)
+})
+test('pending finalize rejects owner/content changes and async video selection races', () => {
+  assert.match(timeline, /pendingVideoRef\.current\.owner !== user\.id \|\| pendingVideoRef\.current\.content !== content\.trim\(\)/)
+  assert.match(timeline, /videoSubmitInFlightRef\.current = true/)
+  assert.match(timeline, /if \(pendingVideoRef\.current \|\| videoSubmitInFlightRef\.current\)/)
+  assert.match(timeline, /if \(videoFile \|\| pendingVideoRef\.current\)/)
+})
+test('direct signed Storage playback URLs are blocked', () => {
+  assert.doesNotMatch(source, /\.createSignedUrl\(/)
+  assert.match(source, /createPostVideoPlaybackUrl\(_path: string\): Promise<string>[\s\S]*?throw new Error/)
 })
