@@ -34,7 +34,7 @@ try {
   const listing = spawnSync('tar', ['-tJf', archive], { encoding: 'utf8', maxBuffer: 1024 * 1024 })
   if (listing.status !== 0) throw new Error('ffprobe archive listing failed')
   const entries = listing.stdout.trim().split(String.fromCharCode(10))
-  const probes = entries.filter(p => /^(?:\\.\\/)?[^/]+\\/bin\\/ffprobe$/.test(p))
+  const probes = entries.filter(p => p.endsWith('/bin/ffprobe') && !p.includes('..') && p.split('/').length <= 5)
   if (probes.length !== 1) throw new Error('ffprobe archive layout changed')
   const extracted = spawnSync('tar', ['-xJf', archive, '-C', work, probes[0]], { timeout: 120000 })
   if (extracted.status !== 0) throw new Error('ffprobe extraction failed')
