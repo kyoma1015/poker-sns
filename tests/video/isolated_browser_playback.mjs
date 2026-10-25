@@ -252,8 +252,11 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
         errors:timelineErrors
       }),{cause:error})
     }
-    assert.ok(videoReservationResponses.some(x=>x.status===201&&x.method==='POST'),
-      'real browser must receive trusted HTTP reservation/finalize success')
+    assert.ok(videoReservationResponses.filter(x=>x.status===201&&x.method==='POST').length >= 2,
+      'real browser must receive distinct trusted reservation AND finalize successes')
+    // Reservation ledger is the durable authority, not the HTTP success alone.
+    // The key is verified through the local service-role RPC-backed database.
+
     const uploadedArticle=timelinePage.locator('article').filter({hasText:uploadText})
     const uploadedVideo=uploadedArticle.locator('video')
     await uploadedVideo.waitFor({timeout:20000})
