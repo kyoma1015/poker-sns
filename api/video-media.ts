@@ -21,6 +21,13 @@ return async function handler(req: VercelRequest, res: VercelResponse) {
   const service = process.env.SUPABASE_SERVICE_ROLE_KEY
   if (!url || !anon || !service || !(/^https:\/\/[^/]+\/?$/.test(url) ||
     (options.isolatedLocalOnly === true && url === 'http://127.0.0.1:56321'))) return res.status(503).end()
+  // Keep media disabled until the same audited production fence as finalize.
+  // Isolated tests may opt into their explicit local-only transport.
+  if (options.isolatedLocalOnly !== true &&
+      (!/^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/.test(url) ||
+       process.env.VIDEO_PRODUCTION_FENCED_READY !== 'true')) {
+    return res.status(503).end()
+  }
   const token = rawAuth.slice(7)
   const viewer = createClient(url, anon, {
     global: { headers: { Authorization: rawAuth } },
