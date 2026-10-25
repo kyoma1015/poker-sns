@@ -21,9 +21,15 @@ export function readVideoDuration(file: File): Promise<number> {
     const video = document.createElement('video')
     const url = URL.createObjectURL(file)
     let finished = false
+    // A corrupt container can neither emit loadedmetadata nor error.
+    // Bound the pending Promise and release the object URL on timeout.
+    const timeout = window.setTimeout(() => finish(), 15000)
     const finish = (value?: number) => {
       if (finished) return
       finished = true
+      window.clearTimeout(timeout)
+      video.onloadedmetadata = null
+      video.onerror = null
       video.removeAttribute('src')
       video.load()
       URL.revokeObjectURL(url)
