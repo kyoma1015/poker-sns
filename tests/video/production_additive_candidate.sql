@@ -194,7 +194,7 @@ commit;
  insert into public.video_reserved_object_keys(bucket_id,object_path,owner_id)
  values ('post-videos',p_path,p_owner) returning reservation_id into v_id;
  return v_id;
-end $reserve$;
+end; $reserve$;
 revoke all on function public.video_reserve_object_key(uuid,text) from public,anon,authenticated;
 grant execute on function public.video_reserve_object_key(uuid,text) to service_role;
 create or replace function public.video_reserved_key_is_owned(p_path text,p_owner uuid)
@@ -216,7 +216,7 @@ begin
    and (coalesce(qual,'') ilike '%post-videos%' or
         coalesce(with_check,'') ilike '%post-videos%')
  ) then raise exception 'existing video Storage policy requires explicit audit'; end if;
-end $writer_guard$;
+end; $writer_guard$;
 create policy poker_post_videos_insert_once on storage.objects for insert to authenticated
 with check(bucket_id='post-videos' and
  split_part(name,'/',1)=(select auth.uid())::text and
