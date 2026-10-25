@@ -191,10 +191,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
         path:owner+'/22222222-2222-4222-8222-222222222222.webm',
         content:ownedDraft,
       }))
-    },{owner:(await (async () => {
-      const payload=JSON.parse(Buffer.from(jwt.split('.')[1],'base64url').toString('utf8'))
-      return payload.sub
-    })()),ownedDraft})
+    },{owner:JSON.parse(Buffer.from(jwt.split('.')[1],'base64url').toString('utf8')).sub,ownedDraft})
     await timelinePage.reload()
     const restoredComposer=timelinePage.getByRole('dialog',{name:'新しい投稿'})
     await restoredComposer.waitFor({timeout:20000})
