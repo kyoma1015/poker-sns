@@ -68,3 +68,39 @@ SQL
 docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 < tests/video/production_additive_candidate.sql
 docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 < tests/video/production_candidate_isolated_assertions.sql
 echo 'PASS: isolated production-schema-compatible additive migration and fenced RPC assertions'
+
+# Permanent-key ledger candidate is exercised ONLY in disposable PostgreSQL.
+docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 <<'SQL'
+do $$ begin
+  if not exists (select 1 from pg_roles where rolname = 'authenticated') then
+    create role authenticated nologin;
+  end if;
+end $$;
+SQL
+docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 < sql/video_permanent_key_reservation_review_only.sql
+docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 <<'SQL'
+do $$
+declare
+  owner uuid := '10000000-0000-0000-0000-000000000001';
+  path text := '10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.mp4';
+  reservation uuid;
+begin
+  reservation := public.video_reserve_object_key(owner,path);
+  if reservation is null then raise exception 'reservation missing'; end if;
+  begin
+    perform public.video_reserve_object_key(owner,path);
+    raise exception 'duplicate reservation accepted';
+  exception when unique_violation then null;
+  end;
+  begin
+    perform public.video_reserve_object_key(owner,'10000000-0000-0000-0000-000000000002/30000000-0000-0000-0000-000000000001.mp4');
+    raise exception 'foreign owner path accepted';
+  exception when raise_exception then
+    if SQLERRM <> 'invalid video reservation' then raise; end if;
+  end;
+  if (select count(*) from public.video_reserved_object_keys) <> 1 then
+    raise exception 'reservation ledger mutated';
+  end if;
+end $$;
+SQL
+echo 'PASS: disposable PostgreSQL permanent key reservation rejects duplicate and foreign-owner path'
