@@ -924,6 +924,10 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         if (pendingVideoRef.current && (pendingVideoRef.current.owner !== user.id || pendingVideoRef.current.content !== content.trim())) {
           throw new Error('前回の投稿内容またはアカウントが異なります。元の内容で再試行してください。')
         }
+        // Re-check after asynchronous auth/metadata; a prior upload must never be overwritten.
+        if (pendingVideoRef.current && (pendingVideoRef.current.owner !== user.id || pendingVideoRef.current.content !== content.trim())) {
+          throw new Error('保留中の動画とログインアカウントまたは投稿内容が一致しません。')
+        }
         const path = pendingVideoRef.current?.path ?? (videoFile ? await uploadPostVideo(user.id, videoFile) : '')
         if (!path) throw new Error('動画を再選択してください。')
         if (!pendingVideoRef.current) {
