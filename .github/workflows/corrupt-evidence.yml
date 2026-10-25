@@ -8,6 +8,8 @@ on:
       - 'scripts/private_journal.py'
       - 'scripts/journal_checkpoint.py'
       - 'src/DirectMessageChat.tsx'
+      - 'src/DirectMessages.tsx'
+      - 'tests/direct-message-inbox.test.mjs'
       - 'tests/browser/dm-*.tsx'
       - 'tests/browser/dm-*.ts'
       - 'tests/direct-message-send.test.mjs'

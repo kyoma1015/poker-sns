@@ -1,0 +1,146 @@
+✖ inbox immediately removes private previews on signout and unsubscribes (3007.8058ms)
+✖ inbox account switch loads only the new identity and cleans old realtime (2986.974146ms)
+3:04:24 PM [vite] (client) [Unhandled rejection] Error: SYNTHETIC_PRIVATE_BACKEND
+ > Object.order tests/browser/dm-inbox-supabase.ts:19:198
+    17 |    select() { return chain }, or(filter: string) { if (table === 'direct_messages') qa.filters.push(filter); return ch...
+    18 |    in() { return chain },
+    19 |  ...essages) { qa.rejectMessages = false; return Promise.reject(new Error('SYNTHETIC_PRIVATE_BACKEND')) } if (qa.holdM...
+       |                                                                 ^
+    20 |    then(resolve: any, reject: any) { if (table === 'profiles' && qa.rejectProfiles) { qa.rejectProfiles = false; retur...
+    21 |   }; return chain
+ > loadConversations src/DirectMessages.tsx:63:11
+ > Object.handler src/DirectMessages.tsx:223:12
+ > tests/browser/dm-inbox-supabase.ts:12:66
+ > Object.realtime tests/browser/dm-inbox-supabase.ts:12:51
+
+✖ inbox transport failure offers explicit redacted recovery (3022.2459ms)
+3:04:27 PM [vite] (client) [Unhandled rejection] Error: SYNTHETIC_PRIVATE_PROFILE
+ > Object.then tests/browser/dm-inbox-supabase.ts:20:134
+    18 |    in() { return chain },
+    19 |    order() { qa.messageReads++; const data = qa.rows(qa.userId, qa.userId === 'newme' ? 'PRIVATE_NEW_MESSAGE' : qa.con...
+    20 |  ...rofiles) { qa.rejectProfiles = false; return Promise.reject(new Error('SYNTHETIC_PRIVATE_PROFILE')).then(resolve, ...
+       |                                                                 ^
+    21 |   }; return chain
+    22 |  }
+ > loadConversations src/DirectMessages.tsx:118:12
+
+✖ inbox profile transport failure can recover without private backend text (2968.881637ms)
+✖ inbox older reload cannot replace the latest realtime snapshot (2945.776102ms)
+✖ inbox pending old account result never appears after switch (5891.172861ms)
+✖ inbox excludes unrelated returned rows and sends an ownership filter (2749.913695ms)
+✖ inbox auth failure with user data fails closed and permits recovery (4277.807243ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 0
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27856.911455
+
+✖ failing tests:
+
+test at tests/direct-message-inbox.test.mjs:29:1
+✖ inbox immediately removes private previews on signout and unsubscribes (3007.8058ms)
+  locator.waitFor: Timeout 1800ms exceeded.
+  Call log:
+  [2m  - waiting for getByText('Synthetic login') to be visible[22m
+  
+      at /workspace/work/issue22-a-published-20261025-fd818ff/tests/direct-message-inbox.test.mjs:30:115
+      at async withInbox (/workspace/work/issue22-a-published-20261025-fd818ff/tests/direct-message-inbox.test.mjs:24:5) {
+    log: [ "  - waiting for getByText('Synthetic login') to be visible" ],
+    name: 'TimeoutError'
+  }
+
+test at tests/direct-message-inbox.test.mjs:34:1
+✖ inbox account switch loads only the new identity and cleans old realtime (2986.974146ms)
+  locator.waitFor: Timeout 1800ms exceeded.
+  Call log:
+  [2m  - waiting for getByText('PRIVATE_NEW_MESSAGE', { exact: true }) to be visible[22m
+  
+      at /workspace/work/issue22-a-published-20261025-fd818ff/tests/direct-message-inbox.test.mjs:35:139
+      at async withInbox (/workspace/work/issue22-a-published-20261025-fd818ff/tests/direct-message-inbox.test.mjs:24:5) {
+    log: [ "  - waiting for getByText('PRIVATE_NEW_MESSAGE', { exact: true }) to be visible" ],
+    name: 'TimeoutError'
+  }
+
+test at tests/direct-message-inbox.test.mjs:40:1
+✖ inbox transport failure offers explicit redacted recovery (3022.2459ms)
+  locator.waitFor: Timeout 1800ms exceeded.
+  Call log:
+  [2m  - waiting for getByRole('button', { name: 'DM一覧を再読み込み', exact: true }) to be visible[22m
+  
+      at /workspace/work/issue22-a-published-20261025-fd818ff/tests/direct-message-inbox.test.mjs:42:70
+      at async withInbox (/workspace/work/issue22-a-published-20261025-fd818ff/tests/direct-message-inbox.test.mjs:24:5) {
+    log: [ "  - waiting for getByRole('button', { name: 'DM一覧を再読み込み', exact: true }) to be visible" ],
+    name: 'TimeoutError'
+  }
+
+test at tests/direct-message-inbox.test.mjs:46:1
+✖ inbox profile transport failure can recover without private backend text (2968.881637ms)
+  locator.waitFor: Timeout 1800ms exceeded.
+  Call log:
+  [2m  - waiting for getByRole('button', { name: 'DM一覧を再読み込み', exact: true }) to be visible[22m
+  
+      at /workspace/work/issue22-a-published-20261025-fd818ff/tests/direct-message-inbox.test.mjs:48:70
+      at async withInbox (/workspace/work/issue22-a-published-20261025-fd818ff/tests/direct-message-inbox.test.mjs:24:5) {
+    log: [ "  - waiting for getByRole('button', { name: 'DM一覧を再読み込み', exact: true }) to be visible" ],
+    name: 'TimeoutError'
+  }
+
+test at tests/direct-message-inbox.test.mjs:51:1
+✖ inbox older reload cannot replace the latest realtime snapshot (2945.776102ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /LATEST_MESSAGE/. Input:
+  
+  '‹\nメッセージ\n♠\nSynthetic peer\n@synthetic\nLATE_OLD_MESSAGE\n·\n15時間\n1\n›'
+  
+      at file:///workspace/work/issue22-a-published-20261025-fd818ff/tests/direct-message-inbox.test.mjs:56:9
+      at async withInbox (file:///workspace/work/issue22-a-published-20261025-fd818ff/tests/direct-message-inbox.test.mjs:24:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '‹\nメッセージ\n♠\nSynthetic peer\n@synthetic\nLATE_OLD_MESSAGE\n·\n15時間\n1\n›',
+    expected: /LATEST_MESSAGE/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/direct-message-inbox.test.mjs:58:1
+✖ inbox pending old account result never appears after switch (5891.172861ms)
+  locator.waitFor: Timeout 1800ms exceeded.
+  Call log:
+  [2m  - waiting for getByText('PRIVATE_NEW_MESSAGE', { exact: true }) to be visible[22m
+  
+      at /workspace/work/issue22-a-published-20261025-fd818ff/tests/direct-message-inbox.test.mjs:60:161
+      at async withInbox (/workspace/work/issue22-a-published-20261025-fd818ff/tests/direct-message-inbox.test.mjs:24:5) {
+    log: [ "  - waiting for getByText('PRIVATE_NEW_MESSAGE', { exact: true }) to be visible" ],
+    name: 'TimeoutError'
+  }
+
+test at tests/direct-message-inbox.test.mjs:63:1
+✖ inbox excludes unrelated returned rows and sends an ownership filter (2749.913695ms)
+  AssertionError [ERR_ASSERTION]: The "string" argument must be of type string. Received type undefined (undefined)
+      at file:///workspace/work/issue22-a-published-20261025-fd818ff/tests/direct-message-inbox.test.mjs:66:9
+      at async withInbox (file:///workspace/work/issue22-a-published-20261025-fd818ff/tests/direct-message-inbox.test.mjs:24:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /sender_id.eq.me,receiver_id.eq.me/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/direct-message-inbox.test.mjs:68:1
+✖ inbox auth failure with user data fails closed and permits recovery (4277.807243ms)
+  locator.waitFor: Timeout 1800ms exceeded.
+  Call log:
+  [2m  - waiting for getByRole('button', { name: 'DM一覧を再読み込み', exact: true }) to be visible[22m
+  
+      at /workspace/work/issue22-a-published-20261025-fd818ff/tests/direct-message-inbox.test.mjs:70:161
+      at async withInbox (/workspace/work/issue22-a-published-20261025-fd818ff/tests/direct-message-inbox.test.mjs:24:5) {
+    log: [ "  - waiting for getByRole('button', { name: 'DM一覧を再読み込み', exact: true }) to be visible" ],
+    name: 'TimeoutError'
+  }

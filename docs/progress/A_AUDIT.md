@@ -51,3 +51,7 @@ See `docs/workers/PRIVATE_JOURNAL_20261024.md`: private append-only hash-chain p
 ## 2026-10-24 process-fixture timing root causes
 
 Two fixed fixture failures now pass after bounded topology readiness and atomic generated-source publication. See `TREE_FIXTURE_READINESS_20261024.md`; automation142 + worker85 =227PASS. Assertions/timeouts retained; two existing fixture files intentionally changed and original SHA references retained. Runtime adoption and independent startup remain unproved.
+
+## 2026-10-25 DM inbox functional continuation
+
+The individual chat guards are now extended to the inbox: synchronous auth invalidation, keyed account identity, latest-generation reads, scoped query/client filtering, cleanup and explicit redacted reload. Fixed original8FAIL→8PASS in actual React/mobile Chromium with synthetic transport; full commands and results in docs/qa/dm-inbox-20261025/. Authentic isolated RLS/idempotency remain separate BLOCKED gates; no DB/schema/runtime adoption. Product-level acceptance ledger: docs/workers/FEATURE_COMPLETION_20261025.md.

@@ -1,0 +1,16 @@
+✔ inbox immediately removes private previews on signout and unsubscribes (2870.987687ms)
+✔ inbox account switch loads only the new identity and cleans old realtime (2050.353417ms)
+✔ inbox transport failure offers explicit redacted recovery (1772.794145ms)
+✔ inbox profile transport failure can recover without private backend text (3385.975546ms)
+✔ inbox older reload cannot replace the latest realtime snapshot (3818.5296ms)
+✔ inbox pending old account result never appears after switch (3631.681925ms)
+✔ inbox excludes unrelated returned rows and sends an ownership filter (3342.913694ms)
+✔ inbox auth failure with user data fails closed and permits recovery (2335.759646ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23229.284058

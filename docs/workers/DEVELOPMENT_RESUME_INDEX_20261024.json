@@ -168,5 +168,31 @@
     "Formal external journal-store auth/durability/deadlines and host adoption unproved"
   ],
   "last_successful_step": "B/C existing Draft heads fast-forwarded under existing update permission; automatic exact-head CI succeeded; A final source and read-only probe verified locally, publication CI pending",
-  "last_C_publish_issue": "Prior publication histories retained; current C normal remote/local HEAD matched at start"
+  "last_C_publish_issue": "Prior publication histories retained; current C normal remote/local HEAD matched at start",
+  "current_feature_batch": {
+    "updated_at": "2026-10-25T15:10:51.336716+00:00",
+    "ledger": "docs/workers/FEATURE_COMPLETION_20261025.md",
+    "A": {
+      "local_tests": {
+        "frontend": 116,
+        "automation": 154,
+        "worker": 85
+      },
+      "publication": "resolve latest PR121 and exact-head CI"
+    },
+    "B": {
+      "publication": "resolve latest PR119 and exact-head CI",
+      "scope": "quiz save and result continuation"
+    },
+    "C": {
+      "local_source": "04b5b808b58e313c6f0d63c8ddab5681e6618e1a",
+      "comparable_ci_target": 394,
+      "publication": "resolve latest PR120 and exact-head CI"
+    },
+    "D": {
+      "local_source": "8df9384c505ca811033d1d87e2ff02e2a17fdeaa",
+      "local_tests": 128,
+      "publication": "resolve latest PR124 and exact-head CI"
+    }
+  }
 }
