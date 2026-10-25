@@ -183,6 +183,26 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
       'foreign account session draft must not open composer')
     await timelinePage.evaluate(() => sessionStorage.removeItem('poker-id-pending-video-v1'))
     console.log('PASS: REAL Chromium account switch rejects foreign pending video draft')
+    // Same-owner recovery must preserve the draft and open the composer.
+    const ownedDraft='OWN-ACCOUNT-PENDING-VIDEO-'+Date.now()
+    await timelinePage.evaluate(({owner,ownedDraft}) => {
+      sessionStorage.setItem('poker-id-pending-video-v1',JSON.stringify({
+        owner,
+        path:owner+'/22222222-2222-4222-8222-222222222222.webm',
+        content:ownedDraft,
+      }))
+    },{owner:(await (async () => {
+      const payload=JSON.parse(Buffer.from(jwt.split('.')[1],'base64url').toString('utf8'))
+      return payload.sub
+    })()),ownedDraft})
+    await timelinePage.reload()
+    const restoredComposer=timelinePage.getByRole('dialog',{name:'新しい投稿'})
+    await restoredComposer.waitFor({timeout:20000})
+    assert.equal(await restoredComposer.getByPlaceholder('ポーカーについて何を投稿する？').inputValue(),ownedDraft,
+      'same-owner pending draft must be restored after reload')
+    await timelinePage.evaluate(() => sessionStorage.removeItem('poker-id-pending-video-v1'))
+    await timelinePage.reload()
+    console.log('PASS: REAL Chromium restores same-owner pending draft after reload')
     // Full real Timeline UI flow: file picker -> local Storage -> HTTP finalize
     // -> RLS PostgREST feed refresh -> real PostVideo Chromium playback.
     const uploadText='isolated timeline browser upload '+Date.now()
