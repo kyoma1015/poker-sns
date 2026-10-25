@@ -40,7 +40,11 @@ def run_one(base_url: str, service_key: str, inspect_object, delete_if_version):
             else:
                 current = inspect_object(owner, path)
                 if current is None:
-                    success, reason = True, "object already absent"
+                    # A missing object is not durable proof of cleanup:
+                    # a stale job can race with a re-upload at the same path.
+                    # Retain the retryable job unless a tombstone/fence
+                    # proves the key can never be reused.
+                    reason = "object absent but immutable tombstone unproven: retry"
                 elif current != expected:
                     reason = "object version changed: retain"
                 elif delete_if_version(owner, path, expected):
