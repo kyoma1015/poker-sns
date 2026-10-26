@@ -1,0 +1,34 @@
+✔ matching exact bytes and counts retains non-provenance and no-publication contract (6.133881ms)
+✔ mismatched question_sha256 fails before structural interpretation (1.395338ms)
+✔ mismatched answer_key_sha256 fails before structural interpretation (0.802232ms)
+✔ semantically identical reserialization is not the pinned original bytes (0.310088ms)
+✔ mismatched expected_question_count cannot pass (0.779398ms)
+✔ mismatched expected_option_count cannot pass (0.29761ms)
+✔ invalid manifest count 0 fails before reading question source (0.843595ms)
+✔ invalid manifest count -1 fails before reading question source (0.256377ms)
+✔ invalid manifest count 1.5 fails before reading question source (0.851066ms)
+✔ invalid manifest count true fails before reading question source (0.369979ms)
+✔ invalid manifest count "350" fails before reading question source (0.197639ms)
+✔ invalid manifest count 9007199254740992 fails before reading question source (0.154734ms)
+✔ invalid SHA256 ledger field is rejected (0.188865ms)
+✔ invalid SHA256 ledger field is rejected (0.148915ms)
+✔ invalid SHA256 ledger field is rejected (0.114172ms)
+✔ invalid SHA256 ledger field is rejected (0.167463ms)
+✔ missing or unsupported manifest version fails closed (0.269928ms)
+✔ invalid manifest JSON and UTF8 never echo parser fragments (0.589201ms)
+✔ invalid question JSON with a matching hash remains invalid (0.168855ms)
+✔ invalid key UTF8 with a matching hash remains invalid (0.282166ms)
+✔ hash-matched malformed question structure does not pass (0.176296ms)
+✔ hash-matched orphan answer key still requires review (0.30447ms)
+✔ read failure never exposes path or error text (0.230689ms)
+✔ argument count validation occurs before any file read (0.222677ms)
+✔ non-byte reads and oversized inputs fail closed (0.188285ms)
+✔ source bytes remain unchanged by auditing (0.327706ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25.899543

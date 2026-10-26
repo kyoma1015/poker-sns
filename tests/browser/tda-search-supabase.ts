@@ -9,7 +9,7 @@ Object.assign(window, { tdaSearchQA: {
   reject: (index: number) => pending[index].reject(new Error('synthetic disconnected search')),
 } })
 export const supabase = {
-  auth: { getUser: async () => ({ data: { user: null }, error: null }) },
+  auth: { onAuthStateChange: (callback: (event: string, session: unknown) => void) => { let active = true; queueMicrotask(() => { if (active) callback('INITIAL_SESSION', null) }); return {data:{subscription:{unsubscribe:()=>{active=false}}}} }, getUser: async () => ({ data: { user: null }, error: null }) },
   rpc: (name: string, args: { search_text?: string }) => {
     if (name !== 'search_tda_rules') return Promise.resolve({ data: [], error: null })
     calls.push(args.search_text || '')

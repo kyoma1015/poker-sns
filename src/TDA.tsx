@@ -1,6 +1,6 @@
 import { normalizeQuizFilters, parseQuizAnswer, parseQuizQuestions, safeQuizRpc, type TdaQuizQuestion } from './tdaQuizData'
 import { checkQuizAuthentication } from './tdaQuizAuth'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -256,8 +256,45 @@ const quickSearches = [
 
 
 
+type QuizAuthScope = { identity: string | null | undefined; epoch: number; alive: boolean }
+
 function TDA() {
+  const scope = useRef<QuizAuthScope>({ identity: undefined, epoch: 0, alive: false })
+  const [snapshot, setSnapshot] = useState<QuizAuthScope>({ identity: undefined, epoch: 0, alive: false })
+  const syncIdentity = useCallback((identity: string | null | undefined) => {
+    if (scope.current.alive && identity === scope.current.identity) return
+    const next = { identity, epoch: scope.current.epoch + 1, alive: true }
+    // Invalidate old handlers synchronously, before React can render the new key.
+    scope.current = next
+    setSnapshot(next)
+  }, [])
+  useEffect(() => {
+    let subscribed = true
+    scope.current = { ...scope.current, alive: true }
+    setSnapshot(scope.current)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (!subscribed) return
+      // Keep this callback synchronous and free of SDK calls (auth-lock safety).
+      const id = session?.user?.id
+      syncIdentity(event !== 'SIGNED_OUT' && typeof id === 'string' && id.length > 0 ? id : null)
+    })
+    return () => {
+      subscribed = false
+      scope.current = { identity: undefined, epoch: scope.current.epoch + 1, alive: false }
+      subscription.unsubscribe()
+    }
+  }, [syncIdentity])
+  return <TDAContent key={snapshot.epoch} scope={scope} snapshot={snapshot} syncIdentity={syncIdentity} />
+}
+
+function TDAContent({ scope, snapshot, syncIdentity }: {
+  scope: { current: QuizAuthScope }
+  snapshot: QuizAuthScope
+  syncIdentity: (identity: string | null | undefined) => void
+}) {
   const navigate = useNavigate()
+  const isAccountCurrent = () => scope.current.alive && scope.current.epoch === snapshot.epoch &&
+    scope.current.identity === snapshot.identity
 
 
 
@@ -410,8 +447,31 @@ function TDA() {
   // 問題の閲覧は公開されているが、回答の保存にはログインが必要。
   // RPCの権限は変更せず、回答できない状態を開始前に案内する。
   const ensureQuizAuthenticated = async (version: number): Promise<boolean> => {
-    const result = await checkQuizAuthentication(supabase.auth)
-    if (version !== quizVersion.current) return false
+    if (!isAccountCurrent()) return false
+    if (!snapshot.identity) {
+      setQuizAuthRequired(snapshot.identity === null)
+      setQuizError(snapshot.identity === null
+        ? '回答を記録するにはログインしてください。'
+        : 'ログイン状態を確認しています。少し待って再度お試しください。')
+      return false
+    }
+    let verifiedIdentity: string | null | undefined
+    const result = await checkQuizAuthentication({
+      getSession: async () => isAccountCurrent()
+        ? supabase.auth.getSession() : { data: { session: null }, error: null },
+      getUser: async () => {
+        if (!isAccountCurrent()) return { data: { user: null }, error: null }
+        const lookup = await supabase.auth.getUser()
+        if (!lookup.error) verifiedIdentity = lookup.data.user?.id ?? null
+        return lookup
+      },
+    })
+    if (version !== quizVersion.current || !isAccountCurrent()) return false
+    // Also fail closed when the SDK missed/delayed an account-change event.
+    if ((result.ok && verifiedIdentity !== snapshot.identity) || (!result.ok && result.requiresLogin)) {
+      syncIdentity(result.ok ? verifiedIdentity : null)
+      return false
+    }
     setQuizAuthRequired(!result.ok && result.requiresLogin)
     if (!result.ok) setQuizError(result.message)
     return result.ok
@@ -419,7 +479,7 @@ function TDA() {
 
   const startQuiz = async () => {
 
-    if (quizLoading) return
+    if (quizLoading || !isAccountCurrent()) return
     const version = ++quizVersion.current
 
 
@@ -429,7 +489,7 @@ function TDA() {
     setQuizError('')
     setQuizAuthRequired(false)
     const authenticated = await ensureQuizAuthenticated(version)
-    if (version !== quizVersion.current) return
+    if (version !== quizVersion.current || !isAccountCurrent()) return
     if (!authenticated) {
       setQuizLoading(false)
       return
@@ -468,7 +528,7 @@ function TDA() {
 
 
 
-    if (version !== quizVersion.current) return
+    if (version !== quizVersion.current || !isAccountCurrent()) return
     if (error) {
 
       console.error(error)
@@ -514,14 +574,14 @@ function TDA() {
 
 
   const startHardQuiz = async () => {
-    if (quizLoading) return
+    if (quizLoading || !isAccountCurrent()) return
     const version = ++quizVersion.current
 
     setQuizLoading(true)
     setQuizError('')
     setQuizAuthRequired(false)
     const authenticated = await ensureQuizAuthenticated(version)
-    if (version !== quizVersion.current) return
+    if (version !== quizVersion.current || !isAccountCurrent()) return
     if (!authenticated) {
       setQuizLoading(false)
       return
@@ -540,7 +600,7 @@ function TDA() {
       p_limit: 10,
     }))
 
-    if (version !== quizVersion.current) return
+    if (version !== quizVersion.current || !isAccountCurrent()) return
     if (error) {
       console.error(error)
       setQuizError('みんなが間違えた問題の取得に失敗しました。')
@@ -569,14 +629,14 @@ function TDA() {
 
 
   const startWrongQuiz = async () => {
-    if (quizLoading) return
+    if (quizLoading || !isAccountCurrent()) return
     const version = ++quizVersion.current
 
     setQuizLoading(true)
     setQuizError('')
     setQuizAuthRequired(false)
     const authenticated = await ensureQuizAuthenticated(version)
-    if (version !== quizVersion.current) return
+    if (version !== quizVersion.current || !isAccountCurrent()) return
     if (!authenticated) {
       setQuizLoading(false)
       return
@@ -595,7 +655,7 @@ function TDA() {
       p_limit: 10,
     }))
 
-    if (version !== quizVersion.current) return
+    if (version !== quizVersion.current || !isAccountCurrent()) return
     if (error) {
       console.error(error)
       setQuizError('間違えた問題の取得に失敗しました。')
@@ -625,7 +685,7 @@ function TDA() {
 
 
   const answerQuiz = async (optionId: string) => {
-    if (quizAnswer || quizAnswerLoading || quizAnswerUnverified) return
+    if (quizAnswer || quizAnswerLoading || quizAnswerUnverified || !isAccountCurrent()) return
 
     const question = quizQuestions[quizIndex]
     if (!question) return
@@ -640,7 +700,7 @@ function TDA() {
     setQuizError('')
     setQuizAuthRequired(false)
     const authenticated = await ensureQuizAuthenticated(version)
-    if (version !== quizVersion.current) return
+    if (version !== quizVersion.current || !isAccountCurrent()) return
     if (!authenticated) {
       quizAnswerClaim.current = null
       setQuizSelectedOption(null)
@@ -656,7 +716,7 @@ function TDA() {
       },
     ))
 
-    if (version !== quizVersion.current) return
+    if (version !== quizVersion.current || !isAccountCurrent()) return
     if (submitError) {
       console.error(submitError)
       const needsLogin = submitError.code === '42501' ||
@@ -718,7 +778,7 @@ function TDA() {
       'check_tda_quiz_answer',
       { p_question_id: question.question_id, p_option_id: optionId },
     ))
-    if (version !== quizVersion.current || detailError) return
+    if (version !== quizVersion.current || !isAccountCurrent() || detailError) return
     const detailRow = Array.isArray(detailData) ? detailData[0] : detailData
     let enriched: TdaQuizAnswer
     try { enriched = parseQuizAnswer(question, optionId, submitRow, detailRow) }

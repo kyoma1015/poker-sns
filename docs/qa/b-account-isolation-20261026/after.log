@@ -1,0 +1,10 @@
+PASS account change clears completed answer and history
+PASS delayed private wrong-question response is discarded after account change
+PASS account change during answer auth refuses write after stale verified user
+PASS already-dispatched save cannot populate the new account
+PASS late optional details cannot restore signed-out private results
+PASS same-account token refresh preserves pending quiz and score
+PASS synchronous signout then old option activation cannot dispatch
+PASS fresh verified account mismatch without event refuses write and clears old quiz
+PASS auth callbacks are synchronous without SDK reentrancy and unsubscribe on unmount
+{"verdict":"PASS","tests":9,"results":["account change clears completed answer and history","delayed private wrong-question response is discarded after account change","account change during answer auth refuses write after stale verified user","already-dispatched save cannot populate the new account","late optional details cannot restore signed-out private results","same-account token refresh preserves pending quiz and score","synchronous signout then old option activation cannot dispatch","fresh verified account mismatch without event refuses write and clears old quiz","auth callbacks are synchronous without SDK reentrancy and unsubscribe on unmount"],"browser":"154.0.8037.57","transport":"synthetic in-memory only; external blocked; no DB"}

@@ -1,0 +1,19 @@
+✔ same prompt and option text set with different correct meanings yields a conflict candidate (2.118151ms)
+✔ option ID differences alone are not a conflicting answer (0.285472ms)
+✔ different display order does not change an answer meaning (0.255215ms)
+✔ different option text set is not falsely matched (0.20566ms)
+✔ different prompt is not falsely matched (31.70316ms)
+✔ existing NFKC whitespace case normalization only produces review candidates (0.395848ms)
+✔ duplicate option meanings are not used to invent a definite cross-question conflict (0.239852ms)
+✔ invalid or ambiguous answer keys do not produce conflict candidates (0.958709ms)
+✔ one three-question conflict group preserves all candidate IDs deterministically (0.313564ms)
+✔ orphan duplicate answer rows retain both independent referential issues (0.49637ms)
+✔ candidate report does not echo full private prompt or explanation text (0.255396ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 45.525498
