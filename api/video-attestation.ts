@@ -1,4 +1,4 @@
-import { createHmac, randomBytes, timingSafeEqual } from 'node:crypto'
+import { createHash, createHmac, randomBytes, timingSafeEqual } from 'node:crypto'
 
 /** Versioned, length-delimited server evidence. Never call with browser-supplied metadata. */
 export type VideoAttestationClaims = {
@@ -40,4 +40,33 @@ export function verifyVideoAttestation(key: Buffer, claims: VideoAttestationClai
 }
 export function createVideoAttestationNonce(): string {
   return randomBytes(16).toString('hex')
+}
+
+/** Fixed-width byte encoding shared with pgcrypto decode(...,'hex') on the DB side. */
+export function videoAttestationDigest(content: string): string {
+  return createHash('sha256').update(content,'utf8').digest('hex')
+}
+
+/** PostgreSQL can verify this exact binary payload using decode and pgcrypto.hmac.
+ * This avoids JS/Postgres float serialization or ambiguous field boundaries. */
+export function binaryVideoAttestation(c: VideoAttestationClaims): Buffer {
+  canonicalVideoAttestation(c)
+  const path=Buffer.from(c.path,'utf8')
+  if (path.length>255) throw new Error('attestation path too long')
+  const result=Buffer.alloc(1+16+1+path.length+16+32+4+32+8+16)
+  let offset=0
+  result.writeUInt8(1,offset++)
+  for(const id of [c.owner]) { Buffer.from(id.replaceAll('-',''),'hex').copy(result,offset); offset+=16 }
+  result.writeUInt8(path.length,offset++);path.copy(result,offset);offset+=path.length
+  Buffer.from(c.generation.replaceAll('-',''),'hex').copy(result,offset);offset+=16
+  Buffer.from(c.sha256,'hex').copy(result,offset);offset+=32
+  result.writeUInt32BE(c.durationMs,offset);offset+=4
+  Buffer.from(c.contentSha256,'hex').copy(result,offset);offset+=32
+  result.writeBigUInt64BE(BigInt(c.expiresAt),offset);offset+=8
+  Buffer.from(c.nonce,'hex').copy(result,offset)
+  return result
+}
+export function signBinaryVideoAttestation(key: Buffer,c:VideoAttestationClaims):string {
+  if(key.length!==32) throw new Error('invalid attestation signing key')
+  return createHmac('sha256',key).update(binaryVideoAttestation(c)).digest('hex')
 }
