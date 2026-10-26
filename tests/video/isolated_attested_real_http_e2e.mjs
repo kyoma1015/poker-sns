@@ -69,6 +69,10 @@ try {
  })
  const foreignSession=(await attacker.auth.getSession()).data.session
  assert.ok(foreignSession?.access_token)
+ // A valid owner JWT cannot reserve an object under another account's path.
+ const foreignOwner=(await attacker.auth.getUser()).data.user.id
+ assert.equal((await reserve(session.access_token,`${foreignOwner}/${randomUUID()}.webm`)).status,403,
+  'owner JWT must not reserve another account Storage path')
  assert.equal((await reserve(foreignSession.access_token,path)).status,403,
   'foreign JWT must not reserve owner Storage key')
  assert.equal((await reserve('invalid.jwt.token',path)).status,401,
