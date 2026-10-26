@@ -828,5 +828,22 @@
       "reason": "fixed prospective next-navigation regression; baseline runtime result pending"
     }
   ],
-  "overrides": []
+  "overrides": [
+    {
+      "path": "src/TDA.tsx",
+      "sha": "52bfe53fb6af741acced6553a29d912e6c8139d1",
+      "origin_blob": "2d3da347fd3f2f09e63a30e34f8fd84c114898c2",
+      "reason": "exact answered-question and generation consumption on next",
+      "before_ci": 40352121918,
+      "before_result": {
+        "pass": 1,
+        "fail": 2,
+        "tests": 3
+      },
+      "fixed_input_paths": [
+        "tests/browser/tda-next-navigation.mjs",
+        "tests/tda-next-navigation.test.mjs"
+      ]
+    }
+  ]
 }

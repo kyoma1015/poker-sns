@@ -409,7 +409,7 @@ function TDAContent({ scope, snapshot, syncIdentity }: {
   const [quizMode, setQuizMode] = useState<'normal' | 'hard' | 'wrong'>('normal')
   const [quizReview, setQuizReview] = useState<TdaQuizReviewItem[]>([])
   const quizVersion = useRef(0)
-  const quizAnswerClaim = useRef<number | null>(null)
+  const quizAnswerClaim = useRef<{ version: number; question: TdaQuizQuestion } | null>(null)
   useEffect(() => () => { quizVersion.current += 1 }, [])
 
 
@@ -693,8 +693,8 @@ function TDAContent({ scope, snapshot, syncIdentity }: {
     const version = quizVersion.current
     // State updates render later; two option events can share the same closure.
     // Claim synchronously and retain the claim for confirmed/uncertain writes.
-    if (quizAnswerClaim.current === version) return
-    quizAnswerClaim.current = version
+    if (quizAnswerClaim.current?.version === version) return
+    quizAnswerClaim.current = { version, question }
     setQuizSelectedOption(optionId)
     setQuizAnswerLoading(true)
     setQuizError('')
@@ -792,7 +792,10 @@ function TDAContent({ scope, snapshot, syncIdentity }: {
   const nextQuizQuestion = () => {
 
     if (!quizAnswer && !quizAnswerUnverified) return
-    if (quizAnswerLoading) return
+    if (quizAnswerLoading || !isAccountCurrent()) return
+    const claim = quizAnswerClaim.current
+    if (!claim || claim.version !== quizVersion.current || claim.question !== quizQuestions[quizIndex]) return
+    // Consume this exact answered question synchronously before React renders.
     quizVersion.current += 1
 
     if (quizIndex >= quizQuestions.length - 1) {
