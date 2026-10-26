@@ -17,6 +17,13 @@ if (process.platform !== 'linux' || process.arch !== 'x64') {
   console.log('ffprobe bundle: skipped non-Linux-x64 build')
   process.exit(0)
 }
+// CI runs that only need the frontend build can opt out of fetching the
+// 156 MB server-only ffprobe archive. Production builds still fail closed.
+if (process.env.VIDEO_SKIP_FFPROBE_BUNDLE === '1') {
+  if (process.env.VERCEL || process.env.VERCEL_ENV) throw new Error('cannot skip ffprobe on Vercel')
+  console.log('ffprobe bundle: skipped for isolated frontend-only QA')
+  process.exit(0)
+}
 const work = mkdtempSync(join(tmpdir(), 'poker-ffprobe-build-'))
 const MAX_ARCHIVE_BYTES = expectedBytes
 try {
