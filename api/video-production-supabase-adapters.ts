@@ -2,7 +2,7 @@ import { DefinitivePublishRejection } from './video-finalize-core.js'
 import { createClient } from '@supabase/supabase-js'
 import type { FinalizeCandidateAdapters, ImmutableStagedSnapshot } from './video-finalize-core.js'
 import { MAX_VIDEO_BYTES } from './video-ffprobe.js'
-import { createVideoAttestationNonce, signBinaryVideoAttestation, videoAttestationDigest } from '../server/video-attestation.ts'
+import { createVideoAttestationNonce, signBinaryVideoAttestation, videoAttestationDigest } from '../server/video-attestation.js'
 
 const UUID = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
 const PATH = new RegExp('^(' + UUID + ')/(' + UUID + ')\\.(mp4|webm)$')
