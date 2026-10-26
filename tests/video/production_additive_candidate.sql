@@ -54,6 +54,10 @@ set search_path = '' as $$
 declare
   v_id uuid;
 begin
+  -- Caller identity is the sole reservation authority; do not trust p_owner.
+  if (select auth.uid()) is distinct from p_owner then
+    raise exception 'reservation owner mismatch';
+  end if;
   if p_owner is null or p_path is null
      or p_path !~ ('^' || p_owner::text ||
        '/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}[.](mp4|webm)$')
@@ -69,7 +73,8 @@ begin
 end;
 $$;
 revoke all on function public.video_reserve_object_key(uuid,text)
-  from public, anon, authenticated;
+  from public, anon;
+grant execute on function public.video_reserve_object_key(uuid,text) to authenticated;
 -- Read-only owner predicate for a future Storage INSERT policy.
 -- SECURITY DEFINER bypasses ledger RLS without exposing the ledger itself.
 -- Only the exact authenticated owner and reserved path may match.
@@ -94,7 +99,7 @@ grant execute on function public.video_reserved_key_is_owned(text,uuid)
 -- policies, privileged service_role Storage writes, or upserts.
 
 
-grant execute on function public.video_reserve_object_key(uuid,text) to service_role;
+-- Only the authenticated owner can reserve. No service_role grant.
 -- Refuse pre-existing video writer policies instead of silently OR-combining them.
 do $video_policy_guard$ begin
  if exists(select 1 from pg_policies where schemaname='storage' and tablename='objects'
