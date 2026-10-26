@@ -38,21 +38,21 @@ begin
  -- Test-only key is supplied as a literal in the disposable fixture.
  signature:=encode(extensions.hmac(payload,decode(repeat('41',32),'hex'),'sha256'),'hex');
  begin
-  perform public.video_publish_attested_v1(o,p,g,h,2000,content,expires,n,repeat('0',64),1);
+  perform public.video_publish_attested_v1(o,p,g,h,2000,content,expires,n,repeat('0',64),1::smallint);
   raise exception 'forged signature accepted';
  exception when raise_exception then
   if SQLERRM='forged signature accepted' then raise; end if;
  end;
  begin
-  perform public.video_publish_attested_v1(o,p,g,h,2000,'tampered',expires,n,signature,1);
+  perform public.video_publish_attested_v1(o,p,g,h,2000,'tampered',expires,n,signature,1::smallint);
   raise exception 'tampered content accepted';
  exception when raise_exception then
   if SQLERRM='tampered content accepted' then raise; end if;
  end;
- result:=public.video_publish_attested_v1(o,p,g,h,2000,content,expires,n,signature,1);
+ result:=public.video_publish_attested_v1(o,p,g,h,2000,content,expires,n,signature,1::smallint);
  if result is null then raise exception 'valid attestation rejected'; end if;
  begin
-  perform public.video_publish_attested_v1(o,p,g,h,2000,content,expires,n,signature,1);
+  perform public.video_publish_attested_v1(o,p,g,h,2000,content,expires,n,signature,1::smallint);
   raise exception 'replayed nonce accepted';
  exception when unique_violation then null;
  end;
