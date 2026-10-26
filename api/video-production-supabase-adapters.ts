@@ -132,6 +132,13 @@ export function createProductionSupabaseVideoAdapters(
       } finally {
         signingKey.fill(0)
       }
+      // Revalidate the owner and immutable object generation immediately before
+      // sending the attested publication RPC. The signing operation and network
+      // scheduling may outlive the session or the staged Storage generation.
+      if (await authenticate(accessToken) !== ownerId) throw new Error('authorization changed before publication')
+      if (await metadata(ownerId, path) !== generation) {
+        throw new DefinitivePublishRejection('Storage generation changed before publication')
+      }
       const { data, error } = await viewer.rpc('video_publish_attested_v1', {
         p_owner: ownerId, p_path: path, p_generation: generation,
         p_sha256: sha256, p_duration_ms: durationMs, p_content: content,
