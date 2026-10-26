@@ -9,9 +9,9 @@ const PRODUCTION_URL = /^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/
 
 /** Production candidate: disabled until the audited production migration and runtime preflight pass. No Storage deletion. */
 export function createProductionSupabaseVideoAdapters(
-  url: string, anonKey: string, serviceRoleKey: string, accessToken: string,
+  url: string, anonKey: string, accessToken: string,
 ): FinalizeCandidateAdapters {
-  if (!PRODUCTION_URL.test(url) || !anonKey || !serviceRoleKey || !accessToken || process.env.VIDEO_PRODUCTION_FENCED_READY !== 'true') {
+  if (!PRODUCTION_URL.test(url) || !anonKey || !accessToken || process.env.VIDEO_PRODUCTION_FENCED_READY !== 'true') {
     throw new Error('production video fenced release gate disabled')
   }
   const ownerPath = (owner: string, path: string) => {
@@ -22,32 +22,9 @@ export function createProductionSupabaseVideoAdapters(
     global: { headers: { Authorization: 'Bearer ' + accessToken } },
     auth: { persistSession: false, autoRefreshToken: false },
   })
-  // Limit this privileged HTTP client to the three reviewed RPC endpoints.
-  // This does not revoke external service_role Storage administrator powers.
-  const allowedRpc = new Set(['video_production_storage_generation',
-    'video_production_publish_fenced', 'video_production_reconcile_fenced'])
-  const rpcOnlyFetch: typeof fetch = (input, init) => {
-    const target = new URL(typeof input === 'string' ? input : input instanceof URL ? input.href : input.url)
-    if (target.origin !== new URL(url).origin) throw new Error('privileged origin denied')
-    const prefix = '/rest/v1/rpc/'
-    const rpc = target.pathname.startsWith(prefix) ? target.pathname.slice(prefix.length) : ''
-    if (!allowedRpc.has(rpc) || target.search || (init?.method ?? 'GET').toUpperCase() !== 'POST') {
-      throw new Error('privileged request outside RPC allowlist')
-    }
-    return fetch(input, init)
-  }
-  // A request-path allowlist is not a privilege boundary for a service_role
-  // credential. Until a genuinely restricted credential and audited RPC grants
-  // are provisioned, reject production publication even when a feature flag
-  // is accidentally enabled. Isolated adapters do not use this path.
-  // No environment flag can convert a service_role credential into a
-  // least-privilege writer. Reject this production path unconditionally
-  // until it is replaced with a separately scoped credential and audited RPCs.
-  if (serviceRoleKey) throw new Error('service_role production video writer forbidden')
-  const admin = createClient(url, serviceRoleKey, {
-    global: { fetch: rpcOnlyFetch },
-    auth: { persistSession: false, autoRefreshToken: false },
-  })
+  // All RPCs run with the request-scoped user JWT, never a privileged key.
+  // The SQL candidate must independently enforce auth.uid(), owner/path,
+  // immutable generation and exact replay before this path may be enabled.
   const authenticate = async (token: string) => {
     if (token !== accessToken) throw new Error('JWT differs from request-scoped token')
     const { data, error } = await viewer.auth.getUser(token)
@@ -59,7 +36,7 @@ export function createProductionSupabaseVideoAdapters(
     ownerPath(owner, path)
     // storage schema is not exposed through PostgREST by default. Use a
     // narrowly scoped trusted RPC, not an unrestricted storage schema grant.
-    const { data, error } = await admin.rpc('video_production_storage_generation', {
+    const { data, error } = await viewer.rpc('video_production_storage_generation', {
       p_owner: owner, p_path: path,
     })
     if (error || typeof data !== 'string' || data.length !== 36) {
@@ -117,7 +94,7 @@ export function createProductionSupabaseVideoAdapters(
     async publish(ownerId, path, generation, sha256, duration, content) {
       if (await authenticate(accessToken) !== ownerId) throw new Error('unauthorized owner')
       ownerPath(ownerId, path)
-      const { data, error } = await admin.rpc('video_production_publish_fenced', {
+      const { data, error } = await viewer.rpc('video_production_publish_fenced', {
         p_owner: ownerId, p_path: path, p_generation: generation,
         p_sha256: sha256, p_duration: duration, p_content: content,
       })
@@ -130,7 +107,7 @@ export function createProductionSupabaseVideoAdapters(
     async reconcile(ownerId, path, generation, sha256, duration, content) {
       if (await authenticate(accessToken) !== ownerId) throw new Error('unauthorized owner')
       ownerPath(ownerId, path)
-      const { data, error } = await admin.rpc('video_production_reconcile_fenced', {
+      const { data, error } = await viewer.rpc('video_production_reconcile_fenced', {
         p_owner: ownerId, p_path: path, p_generation: generation,
       })
       if (error || (data !== null && typeof data !== 'string')) throw new Error('reconciliation unavailable')
