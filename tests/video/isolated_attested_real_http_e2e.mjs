@@ -114,8 +114,12 @@ assert.ok((await attacker.storage.from('post-videos').download(orphanPath)).erro
 assert.ok((await ownerClient.storage.from('post-videos').upload(orphanPath,bytes,{
  contentType:'video/webm',upsert:true})).error,
  'recovery must not permit orphan overwrite')
-assert.ok((await ownerClient.storage.from('post-videos').remove([orphanPath])).error,
- 'recovery must not permit unsafe client-side delete')
+// Supabase Storage DELETE can return HTTP success with an empty deleted-row
+// list when RLS matches no rows. Do not equate an absent error with deletion.
+const {data:deleteResult,error:deleteError}=await ownerClient.storage
+ .from('post-videos').remove([orphanPath])
+assert.ok(deleteError || (Array.isArray(deleteResult) && deleteResult.length===0),
+ 'unsafe client-side delete must not remove any object')
 const {data:recoveredBytes,error:recoveredError}=await ownerClient.storage
  .from('post-videos').download(orphanPath)
 assert.ifError(recoveredError)
