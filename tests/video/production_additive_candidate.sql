@@ -6,10 +6,8 @@ alter table public.posts add column if not exists video_generation uuid;
 alter table public.posts add column if not exists video_sha256 text;
 alter table public.posts add column if not exists video_duration_seconds double precision;
 create unique index if not exists poker_posts_video_path_unique on public.posts(video_path) where video_path is not null;
--- The live posts table does not currently grant service_role SELECT/INSERT.
--- Required by SECURITY INVOKER fenced RPCs; do not grant UPDATE/DELETE.
-grant usage on schema public to service_role;
-grant select,insert on public.posts to service_role;
+-- Do not grant broad posts privileges to service_role for video publication.
+-- Privileged mutations are not an acceptable authorization boundary.
 insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types)
 values ('post-videos','post-videos',false,20971520,array['video/mp4','video/webm']::text[])
 on conflict (id) do nothing;
@@ -127,23 +125,23 @@ begin
 end $guard$;
 -- No authenticated UPDATE/DELETE policy for post-videos. No public read policy.
 create or replace function public.video_production_storage_generation(p_owner uuid,p_path text)
-returns uuid language plpgsql security invoker set search_path='' as $$
+returns uuid language plpgsql security definer set search_path='' as $$
 declare v uuid;
 begin
- if current_user not in ('postgres','service_role') or
+ if (select auth.uid()) is distinct from p_owner or
     split_part(p_path,'/',1)<>p_owner::text then raise exception 'trusted owner required'; end if;
  select id into v from storage.objects where bucket_id='post-videos' and name=p_path
    and owner_id=p_owner::text;
  return v;
 end $$;
-revoke all on function public.video_production_storage_generation(uuid,text) from public,anon,authenticated;
-grant execute on function public.video_production_storage_generation(uuid,text) to service_role;
+revoke all on function public.video_production_storage_generation(uuid,text) from public,anon,service_role;
+grant execute on function public.video_production_storage_generation(uuid,text) to authenticated;
 create or replace function public.video_production_publish_fenced(
  p_owner uuid,p_path text,p_generation uuid,p_sha256 text,p_duration double precision,p_content text)
-returns uuid language plpgsql security invoker set search_path='' as $$
+returns uuid language plpgsql security definer set search_path='' as $$
 declare v uuid;
 begin
- if current_user not in ('postgres','service_role') then raise exception 'trusted role required'; end if;
+ if (select auth.uid()) is distinct from p_owner then raise exception 'video owner mismatch'; end if;
  if p_path !~ '^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}[.](mp4|webm)$'
  or split_part(p_path,'/',1)<>p_owner::text or p_sha256 !~ '^[0-9a-f]{64}$'
  or p_duration<=0 or p_duration>30 or p_duration='NaN'::float8
@@ -163,17 +161,17 @@ begin
  if v is null then raise exception 'conflicting prior video publication'; end if;
  return v;
 end $$;
-revoke all on function public.video_production_publish_fenced(uuid,text,uuid,text,double precision,text) from public,anon,authenticated;
-grant execute on function public.video_production_publish_fenced(uuid,text,uuid,text,double precision,text) to service_role;
+revoke all on function public.video_production_publish_fenced(uuid,text,uuid,text,double precision,text) from public,anon,service_role;
+grant execute on function public.video_production_publish_fenced(uuid,text,uuid,text,double precision,text) to authenticated;
 create or replace function public.video_production_reconcile_fenced(p_owner uuid,p_path text,p_generation uuid)
-returns uuid language plpgsql security invoker set search_path='' as $$
+returns uuid language plpgsql security definer set search_path='' as $$
 declare v uuid;
 begin
- if current_user not in ('postgres','service_role') then raise exception 'trusted role required'; end if;
+ if (select auth.uid()) is distinct from p_owner then raise exception 'video owner mismatch'; end if;
  select id into v from public.posts where user_id=p_owner and video_path=p_path
  and video_generation=p_generation;
  return v;
 end $$;
-revoke all on function public.video_production_reconcile_fenced(uuid,text,uuid) from public,anon,authenticated;
-grant execute on function public.video_production_reconcile_fenced(uuid,text,uuid) to service_role;
+revoke all on function public.video_production_reconcile_fenced(uuid,text,uuid) from public,anon,service_role;
+grant execute on function public.video_production_reconcile_fenced(uuid,text,uuid) to authenticated;
 commit;
