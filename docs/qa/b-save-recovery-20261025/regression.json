@@ -1,0 +1,127 @@
+{
+  "source_sha256": "1542319a758c05f40e376418bfce2fb132a9c7145b8ae94fbf9dbaae2d7734f3",
+  "files": [
+    {
+      "file": "tests/f03-notification.test.mjs",
+      "exit": 0,
+      "tests": 11,
+      "pass": 11,
+      "fail": 0
+    },
+    {
+      "file": "tests/interactive-requests.test.mjs",
+      "exit": 0,
+      "tests": 10,
+      "pass": 10,
+      "fail": 0
+    },
+    {
+      "file": "tests/player-type.test.mjs",
+      "exit": 0,
+      "tests": 40,
+      "pass": 40,
+      "fail": 0
+    },
+    {
+      "file": "tests/poll-only.test.mjs",
+      "exit": 0,
+      "tests": 17,
+      "pass": 17,
+      "fail": 0
+    },
+    {
+      "file": "tests/tda-answer-conflict-audit.test.mjs",
+      "exit": 0,
+      "tests": 11,
+      "pass": 11,
+      "fail": 0
+    },
+    {
+      "file": "tests/tda-answer-key-audit.test.mjs",
+      "exit": 0,
+      "tests": 19,
+      "pass": 19,
+      "fail": 0
+    },
+    {
+      "file": "tests/tda-audit-cli.test.mjs",
+      "exit": 0,
+      "tests": 18,
+      "pass": 18,
+      "fail": 0
+    },
+    {
+      "file": "tests/tda-json-ambiguity.test.mjs",
+      "exit": 0,
+      "tests": 16,
+      "pass": 16,
+      "fail": 0
+    },
+    {
+      "file": "tests/tda-legacy-strict-json.test.mjs",
+      "exit": 0,
+      "tests": 8,
+      "pass": 8,
+      "fail": 0
+    },
+    {
+      "file": "tests/tda-offline-entrypoints.test.mjs",
+      "exit": 0,
+      "tests": 8,
+      "pass": 8,
+      "fail": 0
+    },
+    {
+      "file": "tests/tda-quiz-auth.test.mjs",
+      "exit": 0,
+      "tests": 11,
+      "pass": 11,
+      "fail": 0
+    },
+    {
+      "file": "tests/tda-quiz-data.test.mjs",
+      "exit": 0,
+      "tests": 28,
+      "pass": 28,
+      "fail": 0
+    },
+    {
+      "file": "tests/tda-save-recovery.test.mjs",
+      "exit": 0,
+      "tests": 4,
+      "pass": 4,
+      "fail": 0
+    },
+    {
+      "file": "tests/tda-saved-answer.test.mjs",
+      "exit": 0,
+      "tests": 14,
+      "pass": 14,
+      "fail": 0
+    },
+    {
+      "file": "tests/tda-snapshot-integrity.test.mjs",
+      "exit": 0,
+      "tests": 26,
+      "pass": 26,
+      "fail": 0
+    },
+    {
+      "file": "tests/tda-strict-json-boundary.test.mjs",
+      "exit": 0,
+      "tests": 20,
+      "pass": 20,
+      "fail": 0
+    },
+    {
+      "file": "tests/worker-acceptance.test.mjs",
+      "exit": 0,
+      "tests": 16,
+      "pass": 16,
+      "fail": 0
+    }
+  ],
+  "tests": 277,
+  "pass": 277,
+  "fail": 0
+}

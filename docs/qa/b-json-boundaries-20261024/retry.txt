@@ -1,0 +1,62 @@
+tests/tda-quiz-data.test.mjs
+✔ question validation sorts a copy without changing option identity or original input (1.958083ms)
+✔ malformed null fails closed (1.04453ms)
+✔ malformed object fails closed (0.130987ms)
+✔ malformed no options fails closed (0.108323ms)
+✔ malformed one option fails closed (0.098518ms)
+✔ malformed empty text fails closed (0.104597ms)
+✔ malformed missing metadata fails closed (0.082264ms)
+✔ malformed duplicate question ID fails closed (0.088493ms)
+✔ malformed duplicate option ID fails closed (0.117196ms)
+✔ malformed duplicate option order fails closed (0.140591ms)
+✔ malformed fractional order fails closed (0.151598ms)
+✔ malformed empty option text fails closed (0.091958ms)
+✔ malformed negative order fails closed (0.065298ms)
+✔ rejected and synchronous transport failures become recoverable errors without retries (0.387833ms)
+✔ successful save data and RPC permission errors are preserved without reinterpretation (0.14691ms)
+✔ offline audit flags normalized question and option duplicate candidates only (0.553803ms)
+✔ audit report flags missing expected count and never claims publication approval (0.326491ms)
+✔ sparse quiz input rejects empty sparse question bank (0.071798ms)
+✔ sparse quiz input rejects question followed by missing row (0.051607ms)
+✔ sparse quiz input rejects entirely missing options (0.042083ms)
+✔ sparse quiz input rejects one present option (0.034742ms)
+✔ frozen dense valid input and empty bank remain valid (0.10594ms)
+✔ reviewed PR28 empty-audit guard remains present (0.096004ms)
+✔ optional filters default invalid rows and fields to empty lists (0.165359ms)
+✔ optional filters exclude nonstring items and preserve valid sibling fields (0.101733ms)
+✔ optional filters preserve string values order and copy frozen arrays (0.116795ms)
+✔ optional filters densify sparse lists without inventing choices (0.087261ms)
+✔ optional filters render and preserve quiz requests in four mocked mobile scenarios (4967.717224ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4981.600318
+tests/worker-acceptance.test.mjs
+✔ latest request wins even when older search resolves last (2571.672108ms)
+✔ new input invalidates an old response before debounce expires (2300.58493ms)
+✔ clearing search prevents late result resurrection and ends loading (2249.628925ms)
+✔ thrown transport ends loading and permits next search recovery (2467.281956ms)
+✔ old failed request cannot end newer request loading or show stale error (2109.635122ms)
+✔ malformed search non-array payload fails closed and permits retry (1910.295208ms)
+✔ malformed search null rule row fails closed and permits retry (1942.68949ms)
+✔ malformed search invalid title value fails closed and permits retry (1923.268996ms)
+✔ malformed search invalid rule number fails closed and permits retry (1999.903152ms)
+✔ malformed displayed rule field summary object fails closed and permits retry (1950.396672ms)
+✔ malformed displayed rule field keyword string fails closed and permits retry (1930.365988ms)
+✔ malformed displayed rule field example object element fails closed and permits retry (1916.551927ms)
+✔ malformed displayed rule field caution null element fails closed and permits retry (1866.099375ms)
+✔ malformed displayed rule field related rule string fails closed and permits retry (1861.788886ms)
+✔ malformed displayed rule field official body object fails closed and permits retry (1981.736495ms)
+✔ well-typed optional text and collections retain normal rendering (1434.469507ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 32425.328848

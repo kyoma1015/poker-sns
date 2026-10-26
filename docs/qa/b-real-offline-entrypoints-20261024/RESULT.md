@@ -1,0 +1,11 @@
+# B real offline entrypoint QA —2026-10-24 UTC
+
+Start438ece5c78d171b3b07a408ce9c688acbe6d3acc matched GitHub existing branch codex/b-snapshot-integrity-audit-20261023. Existing PR119 lineage and strict helper/legacy inheritance repair preserved. No new defect reproduced, so no source modification made.
+
+Added8 actual-process tests, not readFile mocks: both scripts/audit-tda-questions.mjs and scripts/tda-snapshot-audit.mjs run in bounded child processes with freshly created temporary local files. Normal bytes, duplicate member, invalidUTF8 inside a JSON string and empty file tested at both entrypoints. Snapshot bad bytes carry the correct exact-byte hash, proving hash pass does not bypass strict decode. Tests assert exitstatus, signal, expected stdout/stderr channel, generic reason code, no private fragment/path leakage, UNVERIFIED and publicationfalse. Each test deletes only its own temporary directory. Timeout10s per subprocess; no network or DB used by tested CLIs.
+
+Acceptance8PASS on current source. This is execution-boundary coverage of existing source behavior, not a new bugfix or official corpus verification. Previously265 tests retained unchanged. Commands: node tests/tda-offline-entrypoints.test.mjs; direct node execution of every tests/*.test.mjs with CHROMIUM_PATH=/usr/bin/chromium; npm run build; npm run lint; git diff --check. Logs alongside this report. Local Chromium regression uses mocked transport; no production authentication.
+
+Official immutable350 questions, keys, authoritative original edition, translation and reviewer clause evidence remain absent from this lane's received materials. Official correctnessBLOCKED. Receipt requirements remain ../b-json-ambiguity-20261024/SOURCE_RECEIPT_REQUIREMENTS.md. Do not add global optionID uniqueness without authoritative schema. No newPR/manualCI/main/production/controller/heldSQLite/job/lease/reservation/billing operations. Resume in the same branch; source repair requires a proven fixedFAIL, not invented specifications.
+
+Final measured result16suites273PASS/0FAIL (265inherited+8new), build/lint exit0, inherited lint/chunk warnings retained. No retry. All15 inherited root testfiles unchanged, SHA256s in protected.json. Final acceptance log includes the explicit temporary-path leakage check added during review.

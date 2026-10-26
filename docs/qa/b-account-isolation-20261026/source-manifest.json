@@ -1,0 +1,23 @@
+{
+  "base_sha": "5416f6c283bf723d551b069fca9a6215b80b562c",
+  "files": {
+    "src/TDA.tsx": "2d6cd439d48a18c00e59a9604dc4ee0b6ec3b963813c1683f905cee78b56218d",
+    "tests/browser/tda-account-entry.tsx": "3a5ba8e93b591441497e59bb22072b05411ecb2005bd7518a7257cfe6c867ee7",
+    "tests/browser/tda-account-isolation.mjs": "2ee0f7e55d91179b621a6977a963cead8fbfc50c2a40a26c44d0de56a3e92e5f",
+    "tests/browser/tda-account-supabase.ts": "edb64b512addb385ee98ac478b1a86e2805d822d6d97c00e864dd423e24d5ad2",
+    "tests/tda-account-isolation.test.mjs": "841cedb1e3ef413b3a2412e26c396792dd2fcdf7cfdba9dd570f2ebd67df00e3",
+    "tests/browser/tda-supabase.ts": "d5e0c0333dba3eec5e6ba89f6186fbbd1b08015d48cbd93ca2079260eb39f0de",
+    "tests/browser/tda-filters-supabase.ts": "e6d1690139ea6133d00b9f30668db05bf5129f1879204e8caab9f2ad71055be0",
+    "tests/browser/tda-search-supabase.ts": "c35b8bdf9331a49a81b0b33ba51a09dd98aff99978786548d0843597cc2cda1d"
+  },
+  "browser_before": {
+    "pass": 1,
+    "fail": 8
+  },
+  "browser_after": {
+    "pass": 9,
+    "fail": 0
+  },
+  "official350": "BLOCKED",
+  "production_modified": false
+}

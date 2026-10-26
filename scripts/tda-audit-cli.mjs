@@ -1,8 +1,9 @@
 import { readFileSync } from 'node:fs'
 import { quizAuditReport } from '../src/tdaQuizData.ts'
+import { parseUnambiguousJSON } from './strict-json.mjs'
 
 const defaultIo = {
-  readFile: file => readFileSync(file, 'utf8'),
+  readFile: file => readFileSync(file),
   stdout: line => console.log(line),
   stderr: line => console.error(line),
 }
@@ -27,7 +28,7 @@ export function runQuizAuditCli(args, io = defaultIo) {
   try { raw = io.readFile(file) }
   catch { return fail('INPUT_READ_FAILED') }
   let value
-  try { value = JSON.parse(raw) }
+  try { value = parseUnambiguousJSON(typeof raw === 'string' ? Buffer.from(raw, 'utf8') : raw) }
   catch { return fail('INVALID_JSON') }
   let report
   try { report = quizAuditReport(value, count) }

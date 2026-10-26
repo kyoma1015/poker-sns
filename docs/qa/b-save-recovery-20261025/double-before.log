@@ -1,0 +1,13 @@
+3:15:13 PM [vite] (client) [console.error] { message: "通信状況を確認して再度お試しください。" }
+PASS save-throws preserves uncertain answer and permits unscored completion
+PASS save-empty preserves uncertain answer and permits unscored completion
+PASS malformed-answer preserves uncertain answer and permits unscored completion
+3:15:14 PM [vite] (client) [console.error] { message: "通信状況を確認して再度お試しください。" }
+PASS uncertain first answer never corrupts next verified answer or review numbering
+3:15:15 PM [vite] (client) [console.error] { code: "42501", message: "permission denied for function" }
+PASS explicit permission rejection retains login guidance and permits later verified answer
+PASS saved answer remains usable while optional detail never returns
+PASS late optional details cannot replace the next question answer
+FAIL same-tick double option activation writes one answer and scores once Expected values to be strictly equal:
+{"verdict":"FAIL","pass":7,"fail":1,"failures":[{"name":"same-tick double option activation writes one answer and scores once","message":"Expected values to be strictly equal:\n\n2 !== 1\n"}]}
+{"verdict":"FAIL","tests":7,"results":["save-throws preserves uncertain answer and permits unscored completion","save-empty preserves uncertain answer and permits unscored completion","malformed-answer preserves uncertain answer and permits unscored completion","uncertain first answer never corrupts next verified answer or review numbering","explicit permission rejection retains login guidance and permits later verified answer","saved answer remains usable while optional detail never returns","late optional details cannot replace the next question answer"],"browser":"154.0.8037.57","transport":"in-memory mock; all questions synthetic; external requests blocked; no DB"}

@@ -1,0 +1,27 @@
+✔ valid offline export reports counts and 1-based displayed answer position without mutating input (2.290933ms)
+✔ missing answer row remains review required (0.243879ms)
+✔ duplicate answer rows do not select one answer silently (0.240484ms)
+✔ orphan answer row is identified (0.953061ms)
+✔ answer outside question options is rejected (0.36381ms)
+✔ missing or invalid explanation () needs review (0.308507ms)
+✔ missing or invalid explanation (null) needs review (0.251851ms)
+✔ missing or invalid explanation (42) needs review (0.124027ms)
+✔ invalid rule references [] need review (0.219071ms)
+✔ invalid rule references [0] need review (0.330489ms)
+✔ invalid rule references [true] need review (0.212411ms)
+✔ invalid rule references [1.5] need review (0.135475ms)
+✔ invalid rule references [1,1] need review (0.095354ms)
+✔ invalid rule references null need review (0.073862ms)
+✔ non-four-choice question is reported rather than counted as 1400 (0.249487ms)
+✔ empty corpus never passes (0.089876ms)
+✔ malformed and sparse key rows fail closed without echoing payload (0.529791ms)
+✔ malformed and sparse questions retain established parser rejection (0.119631ms)
+✔ balanced synthetic answers expose all four positions without a quality approval (0.195035ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14.235969

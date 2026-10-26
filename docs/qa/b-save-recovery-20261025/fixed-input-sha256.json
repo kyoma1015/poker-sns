@@ -1,0 +1,5 @@
+{
+  "tests/browser/tda-save-recovery.mjs": "9deade9d0e81a6a6008d75cd3d7122ea19b040231a3e9655e5186996a17bc77a",
+  "tests/browser/tda-supabase.ts": "e77e58b27c0fd28298617b62355de3932d90b0fb6279bbb3af7c3f01be805e60",
+  "tests/tda-save-recovery.test.mjs": "b5902a912c48d55d3de3245df4f5bf6d806695b2e562b149ae41d39baf894c4a"
+}

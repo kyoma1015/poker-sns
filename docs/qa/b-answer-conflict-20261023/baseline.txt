@@ -1,0 +1,268 @@
+✖ same prompt and option text set with different correct meanings yields a conflict candidate (2.655047ms)
+✖ option ID differences alone are not a conflicting answer (0.401267ms)
+✖ different display order does not change an answer meaning (0.346855ms)
+✖ different option text set is not falsely matched (0.265041ms)
+✖ different prompt is not falsely matched (1.027304ms)
+✖ existing NFKC whitespace case normalization only produces review candidates (0.268526ms)
+✖ duplicate option meanings are not used to invent a definite cross-question conflict (0.279924ms)
+✖ invalid or ambiguous answer keys do not produce conflict candidates (0.379094ms)
+✖ one three-question conflict group preserves all candidate IDs deterministically (0.454788ms)
+✖ orphan duplicate answer rows retain both independent referential issues (3.868292ms)
+✖ candidate report does not echo full private prompt or explanation text (0.286143ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 0
+ℹ fail 11
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16.542025
+
+✖ failing tests:
+
+test at tests/tda-answer-conflict-audit.test.mjs:7:1
+✖ same prompt and option text set with different correct meanings yields a conflict candidate (2.655047ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - [
+  -   {
+  -     correct_option_ids: [
+  -       'q1-A',
+  -       'q2-B'
+  -     ],
+  -     question_ids: [
+  -       'q1',
+  -       'q2'
+  -     ]
+  -   }
+  - ]
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-conflict-audit/tests/tda-answer-conflict-audit.test.mjs:7:176)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-conflict-audit.test.mjs:8:1
+✖ option ID differences alone are not a conflicting answer (0.401267ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  
+  undefined !== []
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-conflict-audit/tests/tda-answer-conflict-audit.test.mjs:8:77)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-conflict-audit.test.mjs:9:1
+✖ different display order does not change an answer meaning (0.346855ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  
+  undefined !== []
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-conflict-audit/tests/tda-answer-conflict-audit.test.mjs:9:174)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-conflict-audit.test.mjs:10:1
+✖ different option text set is not falsely matched (0.265041ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  
+  undefined !== []
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-conflict-audit/tests/tda-answer-conflict-audit.test.mjs:10:128)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-conflict-audit.test.mjs:11:1
+✖ different prompt is not falsely matched (1.027304ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  
+  undefined !== []
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-conflict-audit/tests/tda-answer-conflict-audit.test.mjs:11:60)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-conflict-audit.test.mjs:12:1
+✖ existing NFKC whitespace case normalization only produces review candidates (0.268526ms)
+  TypeError: Cannot read properties of undefined (reading 'length')
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-conflict-audit/tests/tda-answer-conflict-audit.test.mjs:12:221)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/tda-answer-conflict-audit.test.mjs:13:1
+✖ duplicate option meanings are not used to invent a definite cross-question conflict (0.279924ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  
+  undefined !== []
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-conflict-audit/tests/tda-answer-conflict-audit.test.mjs:13:211)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-conflict-audit.test.mjs:14:1
+✖ invalid or ambiguous answer keys do not produce conflict candidates (0.379094ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  
+  undefined !== []
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-conflict-audit/tests/tda-answer-conflict-audit.test.mjs:14:198)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-conflict-audit.test.mjs:15:1
+✖ one three-question conflict group preserves all candidate IDs deterministically (0.454788ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - [
+  -   {
+  -     correct_option_ids: [
+  -       'q1-A',
+  -       'q2-A',
+  -       'q3-C'
+  -     ],
+  -     question_ids: [
+  -       'q1',
+  -       'q2',
+  -       'q3'
+  -     ]
+  -   }
+  - ]
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-conflict-audit/tests/tda-answer-conflict-audit.test.mjs:15:221)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-conflict-audit.test.mjs:16:1
+✖ orphan duplicate answer rows retain both independent referential issues (3.868292ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(r.issues.some(x=>x.code==='DUPLICATE_ANSWER_KEY'&&x.question_id==='orphan'))
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-conflict-audit/tests/tda-answer-conflict-audit.test.mjs:16:250)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/tda-answer-conflict-audit.test.mjs:17:1
+✖ candidate report does not echo full private prompt or explanation text (0.286143ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  undefined !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-b-answer-conflict-audit/tests/tda-answer-conflict-audit.test.mjs:17:304)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

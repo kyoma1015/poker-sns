@@ -1,0 +1,10 @@
+{
+  "base": "ec826a8b0746fa4344274961af1fac2db7716b8c",
+  "inherited_test_count": 22,
+  "changed_inherited_tests": [],
+  "fixed_test_sha256": "f38a29b11715907d3e52e33d6e2ab7596b086a37627853b1bcd95407bf87ff0b",
+  "fixed_test_unchanged": true,
+  "official_original_received": false,
+  "new_pr_created": false,
+  "ci_started": false
+}

@@ -1,0 +1,12 @@
+✔ quiz save uncertainty cannot duplicate writes or fabricate a score and remains navigable (6817.489269ms)
+✔ installed SDK answer POST is sent once on service-unavailable (113.27648ms)
+✔ installed SDK answer POST is sent once on network-rejection (1.551775ms)
+✔ installed SDK answer POST is sent once on permission-rejection (2.176359ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6940.808934

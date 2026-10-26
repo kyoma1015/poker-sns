@@ -1,0 +1,24 @@
+✔ manifest duplicate version is ambiguous even when last value is valid (1.982446ms)
+✔ manifest duplicate question hash is ambiguous even when last value is valid (0.347325ms)
+✔ manifest duplicate expected count is ambiguous even when last value is valid (0.246022ms)
+✔ manifest duplicate escaped alias is ambiguous even when last value is valid (1.934724ms)
+✔ hash-matched source duplicate question text is rejected (2.017229ms)
+✔ hash-matched source duplicate question id is rejected (0.239182ms)
+✔ hash-matched source duplicate nested option id is rejected (0.422167ms)
+✔ hash-matched source duplicate correct answer is rejected (0.288256ms)
+✔ hash-matched source duplicate explanation is rejected (0.292792ms)
+✔ hash-matched source duplicate references is rejected (0.554417ms)
+✔ nonfinite exponent 1e999 in manifest is rejected (0.25775ms)
+✔ nonfinite exponent -1e999 in manifest is rejected (0.105991ms)
+✔ nonfinite exponent in hash-matched source is rejected (0.188175ms)
+✔ depth outside the explicit bounded JSON contract is rejected (0.239261ms)
+✔ same member names in distinct nested objects are valid (1.663264ms)
+✔ escaped quotes braces and numeric-looking strings remain ordinary text (0.772477ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35.809707

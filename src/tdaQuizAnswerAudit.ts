@@ -21,17 +21,36 @@ export function auditQuizAnswerKey(questionExport: unknown, answerKeyExport: unk
   const issues: AuditIssue[] = []
   const ids = new Set(questions.map(question => question.question_id))
   const answer_position_counts: Record<string, number> = {}
-  for (const id of keys.keys()) if (!ids.has(id)) issues.push({code:'ORPHAN_ANSWER_KEY',question_id:id})
+  const duplicateAnswerConflictCandidates: { question_ids: string[]; correct_option_ids: string[] }[] = []
+  const normalized = (text: string) => text.normalize('NFKC').replace(/\s+/gu, '').toLocaleLowerCase('en-US')
+  const answerGroups = new Map<string, { question_id: string; correct_option_id: string; meaning: string }[]>()
+  // Referential problems are independent: duplicate orphan rows must retain both
+  // findings, rather than disappearing from duplicate diagnostics entirely.
+  for (const [id, rows] of keys) {
+    if (!ids.has(id)) issues.push({code:'ORPHAN_ANSWER_KEY',question_id:id})
+    if (rows.length > 1) issues.push({code:'DUPLICATE_ANSWER_KEY',question_id:id})
+  }
   for (const question of questions) {
     const id = question.question_id
     if (question.options.length !== 4) issues.push({code:'OPTION_COUNT_NOT_FOUR',question_id:id})
     const rows = keys.get(id) ?? []
     if (!rows.length) { issues.push({code:'MISSING_ANSWER_KEY',question_id:id}); continue }
-    if (rows.length !== 1) { issues.push({code:'DUPLICATE_ANSWER_KEY',question_id:id}); continue }
+    if (rows.length !== 1) continue
     const key = rows[0]
     const index = question.options.findIndex(option => option.id === key.correct_option_id)
     if (index < 0) issues.push({code:'INVALID_CORRECT_OPTION',question_id:id})
-    else { const position = String(index + 1); answer_position_counts[position] = (answer_position_counts[position] ?? 0) + 1 }
+    else {
+      const position = String(index + 1)
+      answer_position_counts[position] = (answer_position_counts[position] ?? 0) + 1
+      const optionMeanings = question.options.map(option => normalized(option.option_text))
+      // Same prompt and same option meanings is only a review candidate, not
+      // official semantic equivalence. Ignore ambiguous duplicate option texts.
+      if (new Set(optionMeanings).size === optionMeanings.length) {
+        const signature = JSON.stringify([normalized(question.question_text), [...optionMeanings].sort()])
+        const answer = { question_id:id, correct_option_id:question.options[index].id, meaning:optionMeanings[index] }
+        answerGroups.set(signature, [...(answerGroups.get(signature) ?? []), answer])
+      }
+    }
     if (!nonempty(key.explanation)) issues.push({code:'INVALID_EXPLANATION',question_id:id})
     const refs = key.rule_numbers
     if (!Array.isArray(refs) || !refs.length || Array.from(refs).some(ref =>
@@ -39,10 +58,15 @@ export function auditQuizAnswerKey(questionExport: unknown, answerKeyExport: unk
       issues.push({code:'INVALID_RULE_REFERENCES',question_id:id})
     }
   }
+  for (const group of answerGroups.values()) if (new Set(group.map(answer => answer.meaning)).size > 1) {
+    // Only IDs leave this audit: do not copy private source text into reports.
+    duplicateAnswerConflictCandidates.push({question_ids:group.map(answer => answer.question_id),
+      correct_option_ids:group.map(answer => answer.correct_option_id)})
+  }
   if (!questions.length) issues.push({code:'EMPTY_CORPUS'})
   const hasDuplicates = duplicates.duplicateQuestionCandidates.length > 0 || duplicates.duplicateOptionCandidates.length > 0
   return { ...duplicates, option_count: questions.reduce((total, question) => total + question.options.length, 0),
-    answer_key_count: answerKeyExport.length, answer_position_counts, issues,
-    verdict: !issues.length && !hasDuplicates ? 'STRUCTURE_PASS' as const : 'REVIEW_REQUIRED' as const,
+    answer_key_count: answerKeyExport.length, answer_position_counts, issues, duplicateAnswerConflictCandidates,
+    verdict: !issues.length && !hasDuplicates && !duplicateAnswerConflictCandidates.length ? 'STRUCTURE_PASS' as const : 'REVIEW_REQUIRED' as const,
     official_rule_accuracy: 'UNVERIFIED' as const, publication_approved: false as const }
 }

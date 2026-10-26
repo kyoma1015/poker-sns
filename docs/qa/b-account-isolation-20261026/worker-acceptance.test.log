@@ -1,0 +1,24 @@
+✔ latest request wins even when older search resolves last (2184.086004ms)
+✔ new input invalidates an old response before debounce expires (1609.006302ms)
+✔ clearing search prevents late result resurrection and ends loading (1890.478357ms)
+✔ thrown transport ends loading and permits next search recovery (1980.680965ms)
+✔ old failed request cannot end newer request loading or show stale error (2006.011339ms)
+✔ malformed search non-array payload fails closed and permits retry (1964.421818ms)
+✔ malformed search null rule row fails closed and permits retry (1978.662489ms)
+✔ malformed search invalid title value fails closed and permits retry (1975.507916ms)
+✔ malformed search invalid rule number fails closed and permits retry (1898.839968ms)
+✔ malformed displayed rule field summary object fails closed and permits retry (1995.812912ms)
+✔ malformed displayed rule field keyword string fails closed and permits retry (1909.114572ms)
+✔ malformed displayed rule field example object element fails closed and permits retry (1981.919235ms)
+✔ malformed displayed rule field caution null element fails closed and permits retry (1941.343662ms)
+✔ malformed displayed rule field related rule string fails closed and permits retry (1914.221673ms)
+✔ malformed displayed rule field official body object fails closed and permits retry (1905.774244ms)
+✔ well-typed optional text and collections retain normal rendering (1615.977494ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30760.045312

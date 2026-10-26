@@ -1,0 +1,16 @@
+✔ real legacy entrypoint normal bytes (147.651232ms)
+✔ real legacy entrypoint duplicate member (257.211941ms)
+✔ real legacy entrypoint invalid UTF8 inside JSON string (150.781545ms)
+✔ real legacy entrypoint empty file (190.646803ms)
+✔ real snapshot entrypoint normal bytes (205.579355ms)
+✔ real snapshot entrypoint duplicate member (146.979499ms)
+✔ real snapshot entrypoint invalid UTF8 inside JSON string (96.098067ms)
+✔ real snapshot entrypoint empty file (71.103707ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1273.173886

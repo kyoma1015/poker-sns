@@ -1,6 +1,6 @@
 import { normalizeQuizFilters, parseQuizAnswer, parseQuizQuestions, safeQuizRpc, type TdaQuizQuestion } from './tdaQuizData'
 import { checkQuizAuthentication } from './tdaQuizAuth'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -162,6 +162,7 @@ type TdaQuizFilters = {
 type TdaQuizReviewItem = {
   question: TdaQuizQuestion
   selected_option_id: string
+  question_number: number
   answer: TdaQuizAnswer
 }
 
@@ -255,8 +256,45 @@ const quickSearches = [
 
 
 
+type QuizAuthScope = { identity: string | null | undefined; epoch: number; alive: boolean }
+
 function TDA() {
+  const scope = useRef<QuizAuthScope>({ identity: undefined, epoch: 0, alive: false })
+  const [snapshot, setSnapshot] = useState<QuizAuthScope>({ identity: undefined, epoch: 0, alive: false })
+  const syncIdentity = useCallback((identity: string | null | undefined) => {
+    if (scope.current.alive && identity === scope.current.identity) return
+    const next = { identity, epoch: scope.current.epoch + 1, alive: true }
+    // Invalidate old handlers synchronously, before React can render the new key.
+    scope.current = next
+    setSnapshot(next)
+  }, [])
+  useEffect(() => {
+    let subscribed = true
+    scope.current = { ...scope.current, alive: true }
+    setSnapshot(scope.current)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (!subscribed) return
+      // Keep this callback synchronous and free of SDK calls (auth-lock safety).
+      const id = session?.user?.id
+      syncIdentity(event !== 'SIGNED_OUT' && typeof id === 'string' && id.length > 0 ? id : null)
+    })
+    return () => {
+      subscribed = false
+      scope.current = { identity: undefined, epoch: scope.current.epoch + 1, alive: false }
+      subscription.unsubscribe()
+    }
+  }, [syncIdentity])
+  return <TDAContent key={snapshot.epoch} scope={scope} snapshot={snapshot} syncIdentity={syncIdentity} />
+}
+
+function TDAContent({ scope, snapshot, syncIdentity }: {
+  scope: { current: QuizAuthScope }
+  snapshot: QuizAuthScope
+  syncIdentity: (identity: string | null | undefined) => void
+}) {
   const navigate = useNavigate()
+  const isAccountCurrent = () => scope.current.alive && scope.current.epoch === snapshot.epoch &&
+    scope.current.identity === snapshot.identity
 
 
 
@@ -370,6 +408,9 @@ function TDA() {
   const [quizFinished, setQuizFinished] = useState(false)
   const [quizMode, setQuizMode] = useState<'normal' | 'hard' | 'wrong'>('normal')
   const [quizReview, setQuizReview] = useState<TdaQuizReviewItem[]>([])
+  const quizVersion = useRef(0)
+  const quizAnswerClaim = useRef<number | null>(null)
+  useEffect(() => () => { quizVersion.current += 1 }, [])
 
 
 
@@ -405,8 +446,32 @@ function TDA() {
 
   // 問題の閲覧は公開されているが、回答の保存にはログインが必要。
   // RPCの権限は変更せず、回答できない状態を開始前に案内する。
-  const ensureQuizAuthenticated = async (): Promise<boolean> => {
-    const result = await checkQuizAuthentication(supabase.auth)
+  const ensureQuizAuthenticated = async (version: number): Promise<boolean> => {
+    if (!isAccountCurrent()) return false
+    if (!snapshot.identity) {
+      setQuizAuthRequired(snapshot.identity === null)
+      setQuizError(snapshot.identity === null
+        ? '回答を記録するにはログインしてください。'
+        : 'ログイン状態を確認しています。少し待って再度お試しください。')
+      return false
+    }
+    let verifiedIdentity: string | null | undefined
+    const result = await checkQuizAuthentication({
+      getSession: async () => isAccountCurrent()
+        ? supabase.auth.getSession() : { data: { session: null }, error: null },
+      getUser: async () => {
+        if (!isAccountCurrent()) return { data: { user: null }, error: null }
+        const lookup = await supabase.auth.getUser()
+        if (!lookup.error) verifiedIdentity = lookup.data.user?.id ?? null
+        return lookup
+      },
+    })
+    if (version !== quizVersion.current || !isAccountCurrent()) return false
+    // Also fail closed when the SDK missed/delayed an account-change event.
+    if ((result.ok && verifiedIdentity !== snapshot.identity) || (!result.ok && result.requiresLogin)) {
+      syncIdentity(result.ok ? verifiedIdentity : null)
+      return false
+    }
     setQuizAuthRequired(!result.ok && result.requiresLogin)
     if (!result.ok) setQuizError(result.message)
     return result.ok
@@ -414,7 +479,8 @@ function TDA() {
 
   const startQuiz = async () => {
 
-    if (quizLoading) return
+    if (quizLoading || !isAccountCurrent()) return
+    const version = ++quizVersion.current
 
 
 
@@ -422,7 +488,9 @@ function TDA() {
 
     setQuizError('')
     setQuizAuthRequired(false)
-    if (!(await ensureQuizAuthenticated())) {
+    const authenticated = await ensureQuizAuthenticated(version)
+    if (version !== quizVersion.current || !isAccountCurrent()) return
+    if (!authenticated) {
       setQuizLoading(false)
       return
     }
@@ -460,6 +528,7 @@ function TDA() {
 
 
 
+    if (version !== quizVersion.current || !isAccountCurrent()) return
     if (error) {
 
       console.error(error)
@@ -505,12 +574,15 @@ function TDA() {
 
 
   const startHardQuiz = async () => {
-    if (quizLoading) return
+    if (quizLoading || !isAccountCurrent()) return
+    const version = ++quizVersion.current
 
     setQuizLoading(true)
     setQuizError('')
     setQuizAuthRequired(false)
-    if (!(await ensureQuizAuthenticated())) {
+    const authenticated = await ensureQuizAuthenticated(version)
+    if (version !== quizVersion.current || !isAccountCurrent()) return
+    if (!authenticated) {
       setQuizLoading(false)
       return
     }
@@ -528,6 +600,7 @@ function TDA() {
       p_limit: 10,
     }))
 
+    if (version !== quizVersion.current || !isAccountCurrent()) return
     if (error) {
       console.error(error)
       setQuizError('みんなが間違えた問題の取得に失敗しました。')
@@ -556,12 +629,15 @@ function TDA() {
 
 
   const startWrongQuiz = async () => {
-    if (quizLoading) return
+    if (quizLoading || !isAccountCurrent()) return
+    const version = ++quizVersion.current
 
     setQuizLoading(true)
     setQuizError('')
     setQuizAuthRequired(false)
-    if (!(await ensureQuizAuthenticated())) {
+    const authenticated = await ensureQuizAuthenticated(version)
+    if (version !== quizVersion.current || !isAccountCurrent()) return
+    if (!authenticated) {
       setQuizLoading(false)
       return
     }
@@ -579,6 +655,7 @@ function TDA() {
       p_limit: 10,
     }))
 
+    if (version !== quizVersion.current || !isAccountCurrent()) return
     if (error) {
       console.error(error)
       setQuizError('間違えた問題の取得に失敗しました。')
@@ -608,16 +685,24 @@ function TDA() {
 
 
   const answerQuiz = async (optionId: string) => {
-    if (quizAnswer || quizAnswerLoading || quizAnswerUnverified) return
+    if (quizAnswer || quizAnswerLoading || quizAnswerUnverified || !isAccountCurrent()) return
 
     const question = quizQuestions[quizIndex]
     if (!question) return
 
+    const version = quizVersion.current
+    // State updates render later; two option events can share the same closure.
+    // Claim synchronously and retain the claim for confirmed/uncertain writes.
+    if (quizAnswerClaim.current === version) return
+    quizAnswerClaim.current = version
     setQuizSelectedOption(optionId)
     setQuizAnswerLoading(true)
     setQuizError('')
     setQuizAuthRequired(false)
-    if (!(await ensureQuizAuthenticated())) {
+    const authenticated = await ensureQuizAuthenticated(version)
+    if (version !== quizVersion.current || !isAccountCurrent()) return
+    if (!authenticated) {
+      quizAnswerClaim.current = null
       setQuizSelectedOption(null)
       setQuizAnswerLoading(false)
       return
@@ -631,15 +716,22 @@ function TDA() {
       },
     ))
 
+    if (version !== quizVersion.current || !isAccountCurrent()) return
     if (submitError) {
       console.error(submitError)
-      setQuizSelectedOption(null)
       const needsLogin = submitError.code === '42501' ||
         /authentication required|permission denied for function/i.test(submitError.message)
       setQuizAuthRequired(needsLogin)
+      // A lost/failed response does not prove that the server rolled back.
+      // Never invite another write for an answer whose outcome is unknown.
+      setQuizAnswerUnverified(!needsLogin)
+      if (needsLogin) {
+        quizAnswerClaim.current = null
+        setQuizSelectedOption(null)
+      }
       setQuizError(needsLogin
         ? '回答を記録するにはログインしてください。'
-        : '回答の保存・判定に失敗しました。')
+        : '回答の保存・判定を確認できませんでした。保存済みの可能性があるため、再回答せず次へ進んでください。')
       setQuizAnswerLoading(false)
       return
     }
@@ -653,22 +745,9 @@ function TDA() {
       return
     }
 
-    // 既存RPCから根拠Ruleを取得。正誤判定は保存RPCの結果を採用。
-    const { data: detailData, error: detailError } = await safeQuizRpc(() => supabase.rpc(
-      'check_tda_quiz_answer',
-      {
-        p_question_id: question.question_id,
-        p_option_id: optionId,
-      },
-    ))
-
-    if (detailError) {
-      console.error(detailError)
-    }
-
-    const detailRow = Array.isArray(detailData) ? detailData[0] : detailData
+    // Validate and display the authoritative save before optional enrichment.
     let answerResult: TdaQuizAnswer
-    try { answerResult = parseQuizAnswer(question, optionId, submitRow, detailRow) }
+    try { answerResult = parseQuizAnswer(question, optionId, submitRow) }
     catch {
       setQuizAnswerUnverified(true)
       setQuizError('回答結果を確認できませんでした。保存済みの可能性があるため、この問題には再回答しないでください。')
@@ -682,6 +761,7 @@ function TDA() {
       {
         question,
         selected_option_id: optionId,
+        question_number: quizIndex + 1,
         answer: answerResult,
       },
     ])
@@ -691,10 +771,29 @@ function TDA() {
     }
 
     setQuizAnswerLoading(false)
+
+    // Explanation/refs are read-only enrichment, not a prerequisite for using a
+    // confirmed answer. Late details must never overwrite a later question/run.
+    const { data: detailData, error: detailError } = await safeQuizRpc(() => supabase.rpc(
+      'check_tda_quiz_answer',
+      { p_question_id: question.question_id, p_option_id: optionId },
+    ))
+    if (version !== quizVersion.current || !isAccountCurrent() || detailError) return
+    const detailRow = Array.isArray(detailData) ? detailData[0] : detailData
+    let enriched: TdaQuizAnswer
+    try { enriched = parseQuizAnswer(question, optionId, submitRow, detailRow) }
+    catch { return } // Optional malformed data cannot discard a confirmed save.
+    setQuizAnswer(enriched)
+    setQuizReview(items => items.map(item => item.question.question_id === question.question_id
+      ? { ...item, answer: enriched } : item))
   }
 
 
   const nextQuizQuestion = () => {
+
+    if (!quizAnswer && !quizAnswerUnverified) return
+    if (quizAnswerLoading) return
+    quizVersion.current += 1
 
     if (quizIndex >= quizQuestions.length - 1) {
 
@@ -720,6 +819,7 @@ function TDA() {
 
 
   const resetQuiz = () => {
+    quizVersion.current += 1
 
     setQuizStarted(false)
 
@@ -3507,7 +3607,7 @@ function TDA() {
 
 
 
-                {quizAnswer && (
+                {(quizAnswer || quizAnswerUnverified) && (
 
                   <button
 
@@ -3519,11 +3619,11 @@ function TDA() {
 
                   >
 
-                    {quizIndex >= quizQuestions.length - 1
-
-                      ? '結果を見る'
-
-                      : '次の問題へ'}
+                    {quizAnswerUnverified
+                      ? (quizIndex >= quizQuestions.length - 1
+                        ? '未確認の回答を採点せず結果を見る'
+                        : 'この回答を採点せず次の問題へ')
+                      : (quizIndex >= quizQuestions.length - 1 ? '結果を見る' : '次の問題へ')}
 
                   </button>
 
@@ -3540,10 +3640,18 @@ function TDA() {
                 <div className="tda-quiz-finished-icon">✓</div>
                 <div className="tda-quiz-finished-label">RESULT</div>
                 <h3>
-                  {quizScore} / {quizQuestions.length}
+                  {quizReview.length === 0 ? '採点できる回答がありません' : `${quizScore} / ${quizReview.length}`}
                 </h3>
+                {quizReview.length < quizQuestions.length && (
+                  <>
+                    <p>確認できた回答 {quizReview.length}問 / 出題 {quizQuestions.length}問</p>
+                    <p>保存・判定を確認できなかった回答：{quizQuestions.length - quizReview.length}問。正解・不正解には含めていません。</p>
+                  </>
+                )}
                 <p>
-                  {quizScore === quizQuestions.length
+                  {quizReview.length < quizQuestions.length
+                    ? '確認できた回答のみの結果です。未確認の回答は採点していません。'
+                    : quizScore === quizQuestions.length
                     ? '全問正解です。'
                     : quizScore >= Math.ceil(quizQuestions.length * 0.8)
                       ? 'かなり理解できています。'
@@ -3569,7 +3677,7 @@ function TDA() {
                           className="tda-quiz-review-item"
                         >
                           <div className="tda-quiz-review-head">
-                            <span>Q{index + 1}</span>
+                            <span>Q{item.question_number}</span>
                             <strong className={item.answer.is_correct ? 'correct' : 'wrong'}>
                               {item.answer.is_correct ? '✓ 正解' : '✕ 不正解'}
                             </strong>

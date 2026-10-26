@@ -1,0 +1,25 @@
+✔ stale or forged question mode is rejected before RPC (1.396078ms)
+✔ stale or forged normal mode is rejected before RPC (0.107182ms)
+✔ stale or forged  mode is rejected before RPC (0.07271ms)
+✔ stale or forged QUESTION mode is rejected before RPC (0.067021ms)
+✔ 2 poll choices and privacy mode produce poll-only contract (0.737454ms)
+✔ 3 poll choices and privacy mode produce poll-only contract (0.098539ms)
+✔ 4 poll choices and privacy mode produce poll-only contract (0.36391ms)
+✔ invalid poll parameters [["A"],24] fail closed (0.206963ms)
+✔ invalid poll parameters [["A","B","C","D","E"],24] fail closed (0.202926ms)
+✔ invalid poll parameters [["A"," a "],24] fail closed (1.37042ms)
+✔ invalid poll parameters [["","B"],24] fail closed (0.17929ms)
+✔ invalid poll parameters [["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx","B"],24] fail closed (0.738556ms)
+✔ invalid poll parameters [["A","B"],0] fail closed (0.069395ms)
+✔ invalid poll parameters [["A","B"],null] fail closed (0.044607ms)
+✔ empty and overlong content fail closed (0.134854ms)
+✔ anonymous presentation drops identities even in unexpected server payload without mutating it (0.361626ms)
+✔ both composers use guarded creation; public card cannot mount historical question thread (1.775582ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15.748797

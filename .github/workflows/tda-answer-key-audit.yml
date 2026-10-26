@@ -1,10 +1,15 @@
 name: Offline TDA answer-key audit
 on:
   pull_request:
-    branches: [codex/b-filter-values-fix-20261022]
+    branches: [codex/b-filter-values-fix-20261022, codex/b-answer-key-audit-20261023, codex/b-answer-conflict-audit-20261023]
     paths:
       - src/tdaQuizAnswerAudit.ts
       - tests/tda-answer-key-audit.test.mjs
+      - tests/tda-answer-conflict-audit.test.mjs
+      - scripts/tda-snapshot-audit.mjs
+      - scripts/strict-json.mjs
+      - tests/tda-json-ambiguity.test.mjs
+      - tests/tda-snapshot-integrity.test.mjs
       - .github/workflows/tda-answer-key-audit.yml
 permissions:
   contents: read

@@ -1,0 +1,36 @@
+✔ question validation sorts a copy without changing option identity or original input (1.86598ms)
+✔ malformed null fails closed (0.313564ms)
+✔ malformed object fails closed (0.116856ms)
+✔ malformed no options fails closed (0.180542ms)
+✔ malformed one option fails closed (0.129837ms)
+✔ malformed empty text fails closed (0.075975ms)
+✔ malformed missing metadata fails closed (0.084177ms)
+✔ malformed duplicate question ID fails closed (0.084728ms)
+✔ malformed duplicate option ID fails closed (0.108534ms)
+✔ malformed duplicate option order fails closed (3.851802ms)
+✔ malformed fractional order fails closed (0.118739ms)
+✔ malformed empty option text fails closed (0.120122ms)
+✔ malformed negative order fails closed (0.05301ms)
+✔ rejected and synchronous transport failures become recoverable errors without retries (0.388427ms)
+✔ successful save data and RPC permission errors are preserved without reinterpretation (0.124928ms)
+✔ offline audit flags normalized question and option duplicate candidates only (0.706467ms)
+✔ audit report flags missing expected count and never claims publication approval (0.256167ms)
+✔ sparse quiz input rejects empty sparse question bank (0.073231ms)
+✔ sparse quiz input rejects question followed by missing row (0.050536ms)
+✔ sparse quiz input rejects entirely missing options (0.038288ms)
+✔ sparse quiz input rejects one present option (0.111378ms)
+✔ frozen dense valid input and empty bank remain valid (0.251931ms)
+✔ reviewed PR28 empty-audit guard remains present (0.154974ms)
+✔ optional filters default invalid rows and fields to empty lists (0.411111ms)
+✔ optional filters exclude nonstring items and preserve valid sibling fields (0.159531ms)
+✔ optional filters preserve string values order and copy frozen arrays (0.126261ms)
+✔ optional filters densify sparse lists without inventing choices (0.087452ms)
+✔ optional filters render and preserve quiz requests in four mocked mobile scenarios (4053.198202ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4072.707207

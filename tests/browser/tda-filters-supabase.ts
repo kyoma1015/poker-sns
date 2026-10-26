@@ -6,6 +6,11 @@ const question = { question_id: 'synthetic-filter-q1', question_text: 'QA用の�
   options: [{ id: 'a', option_order: 0, option_text: '合成選択肢A' }, { id: 'b', option_order: 1, option_text: '合成選択肢B' }] }
 export const supabase = {
   auth: {
+    onAuthStateChange: (callback: (event: string, session: unknown) => void) => {
+      let active = true
+      queueMicrotask(() => { if (active) callback('INITIAL_SESSION', {user:{id:'qa-only'}}) })
+      return {data:{subscription:{unsubscribe:()=>{ active = false }}}}
+    },
     getUser: async () => ({ data: { user: { id: 'qa-only' } }, error: null }),
     getSession: async () => ({ data: { session: {} }, error: null }),
   },

@@ -1,0 +1,11 @@
+FAIL account change clears completed answer and history Expected values to be strictly equal:
+FAIL delayed private wrong-question response is discarded after account change Expected values to be strictly equal:
+FAIL account change during answer auth refuses write after stale verified user Expected values to be strictly equal:
+FAIL already-dispatched save cannot populate the new account Expected values to be strictly equal:
+FAIL late optional details cannot restore signed-out private results Expected values to be strictly equal:
+PASS same-account token refresh preserves pending quiz and score
+FAIL synchronous signout then old option activation cannot dispatch Expected values to be strictly equal:
+FAIL fresh verified account mismatch without event refuses write and clears old quiz Expected values to be strictly equal:
+FAIL auth callbacks are synchronous without SDK reentrancy and unsubscribe on unmount The expression evaluated to a falsy value:
+{"verdict":"FAIL","pass":1,"fail":8,"failures":[{"name":"account change clears completed answer and history","message":"Expected values to be strictly equal:\n\n1 !== 0\n"},{"name":"delayed private wrong-question response is discarded after account change","message":"Expected values to be strictly equal:\n\n1 !== 0\n"},{"name":"account change during answer auth refuses write after stale verified user","message":"Expected values to be strictly equal:\n\n1 !== 0\n"},{"name":"already-dispatched save cannot populate the new account","message":"Expected values to be strictly equal:\n\n1 !== 0\n"},{"name":"late optional details cannot restore signed-out private results","message":"Expected values to be strictly equal:\n\n1 !== 0\n"},{"name":"synchronous signout then old option activation cannot dispatch","message":"Expected values to be strictly equal:\n\n1 !== 0\n"},{"name":"fresh verified account mismatch without event refuses write and clears old quiz","message":"Expected values to be strictly equal:\n\n1 !== 0\n"},{"name":"auth callbacks are synchronous without SDK reentrancy and unsubscribe on unmount","message":"The expression evaluated to a falsy value:\n\n  assert.ok(stats.unsubscribed>0)\n"}]}
+{"verdict":"FAIL","tests":1,"results":["same-account token refresh preserves pending quiz and score"],"browser":"154.0.8037.57","transport":"synthetic in-memory only; external blocked; no DB"}

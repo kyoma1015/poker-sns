@@ -1,0 +1,15 @@
+{
+  "observed_at_utc": "2026-10-23T00:35:00Z",
+  "mode": "read_only_github_recursive_tree",
+  "trees": [
+    {"ref":"main","sha":"781f038415503ece850c25a26e72ef67dee9c8a1","truncated":false,"candidate_paths":["api/tda-ai.ts","src/TDA.tsx","sql/poll_only/block_legacy_question_inserts_candidate.sql","tests/poll-legacy-question-guard.test.mjs"]},
+    {"ref":"chore/codex-handoff-artifacts-20261020","sha":"ae22acd1ba5d167f1d7111069966dda672260129","truncated":false,"candidate_paths":["api/tda-ai.ts","docs/progress/B_TDA.md","src/TDA.tsx"]}
+  ],
+  "candidate_path_pattern": "tda|quiz|question|350|rules.*pdf",
+  "complete_published350_export": "NOT_FOUND_IN_INSPECTED_PATHS",
+  "official_rule_text_bundle": "NOT_FOUND_IN_INSPECTED_PATHS",
+  "global_absence_proved": false,
+  "production_database_connected": false,
+  "official_review_status": "BLOCKED: immutable export, official version/hash and per-question review evidence required",
+  "synthetic_fixtures_are_originals": false
+}

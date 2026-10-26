@@ -1,0 +1,287 @@
+(node:121629) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ notification entry points use verified events and the saved comment ID (3.185339ms)
+✔ successful verified event returns null once (3.927692ms)
+✔ authorization/validation 401/unauthorized is never retried (0.866861ms)
+✔ authorization/validation 403/denied is never retried (0.657114ms)
+✔ authorization/validation 400/22023 is never retried (1.412126ms)
+✔ authorization/validation 200/42501 is never retried (0.93892ms)
+✔ HTTP 429 retries with the same event and recovers (1.125934ms)
+✔ HTTP 500 retries with the same event and recovers (0.917488ms)
+✔ HTTP 503 retries with the same event and recovers (1.501552ms)
+✔ network failure is retried at most three times (1.51329ms)
+✔ transport ignoring abort still finishes and aborts each of three attempts (5.251324ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 72.870419
+✔ named poll request matches the disclosed named mode (1.637137ms)
+✔ anonymous poll remains anonymous (0.251761ms)
+✔ invalid option null cannot produce a request (0.235957ms)
+✔ invalid option -1 cannot produce a request (0.102986ms)
+✔ invalid option 2 cannot produce a request (0.082305ms)
+✔ invalid option 0.5 cannot produce a request (0.070307ms)
+✔ invalid option NaN cannot produce a request (0.064568ms)
+✔ a previously rendered open card cannot vote at or after the deadline (0.129236ms)
+✔ missing or invalid deadline fails closed (0.197288ms)
+✔ question boxes cannot use the poll write contract (0.228345ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12.098613
+✔ all 32 positive ceilings equal the sum of per-question attainable maxima (3.472403ms)
+✔ negative, zero, unknown and nonfinite values do not become top tendencies (0.72715ms)
+✔ normalization compares proportions rather than raw totals (0.275757ms)
+✔ one incidental selective-burst point must not assert attacking ability (0.413686ms)
+✔ noticing danger must not imply that a calling station folds (0.416961ms)
+✔ attack wording needs both initiative and sustained attack at the threshold (0.169756ms)
+✔ fixed persona replay (not live): 超弱気な初心者 (19.96854ms)
+✔ fixed persona replay (not live): 超タイトな初心者 (2.059726ms)
+✔ fixed persona replay (not live): タイト・パッシブ (0.960302ms)
+✔ fixed persona replay (not live): タイト・アグレッシブ (1.321049ms)
+✔ fixed persona replay (not live): ルース・パッシブ (2.319339ms)
+✔ fixed persona replay (not live): ルース・アグレッシブ (0.408138ms)
+✔ fixed persona replay (not live): コーリングステーション (0.486045ms)
+✔ fixed persona replay (not live): マニアック (0.635061ms)
+✔ fixed persona replay (not live): 超慎重な上級者 (0.569111ms)
+✔ fixed persona replay (not live): 熟練したLAG (1.088817ms)
+✔ fixed persona replay (not live): 熟練したTAG (0.956367ms)
+✔ fixed persona replay (not live): ブラフ嫌い (0.196457ms)
+✔ fixed persona replay (not live): ブラフ多用型 (0.263429ms)
+✔ fixed persona replay (not live): ギャンブラー (0.240514ms)
+✔ fixed persona replay (not live): リスク回避型 (0.313194ms)
+✔ fixed persona replay (not live): バランス型 (0.285933ms)
+✔ fixed persona replay (not live): 相手依存型 (0.223719ms)
+✔ fixed persona replay (not live): 感情的なティルト型 (0.220554ms)
+✔ fixed persona replay (not live): トーナメント生存重視型 (0.486015ms)
+✔ fixed persona replay (not live): トーナメント攻撃型 (0.188054ms)
+✔ fixed persona replay (not live): キャッシュゲーム堅実派 (0.188866ms)
+✔ fixed persona replay (not live): 初心者の無謀型 (0.170728ms)
+✔ fixed persona replay (not live): 上級者の柔軟型 (0.171049ms)
+✔ fixed persona replay (not live): フィット・オア・フォールド型 (0.321446ms)
+✔ fixed persona replay (not live): バリュー重視型 (0.183898ms)
+✔ fixed persona replay (not live): トラップ好き (0.166012ms)
+✔ fixed persona replay (not live): プリフロップ超ルース型 (0.549531ms)
+✔ fixed persona replay (not live): ポストフロップ消極型 (0.216988ms)
+✔ fixed persona replay (not live): 勝負好きだがブラフしない型 (0.243309ms)
+✔ fixed persona replay (not live): 理論重視の冷静型 (0.464643ms)
+✔ question bank validation rejects incomplete or contradictory data (3.365641ms)
+✔ a late result cannot win after a new request, restart or unmount (0.187374ms)
+✔ audit wording corrections apply only to the displayed copy, without mutating saved data (0.432545ms)
+✔ wording correction leaves unrelated copy unchanged (0.173232ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 59.90738
+✔ stale or forged question mode is rejected before RPC (1.273216ms)
+✔ stale or forged normal mode is rejected before RPC (0.10552ms)
+✔ stale or forged  mode is rejected before RPC (0.071759ms)
+✔ stale or forged QUESTION mode is rejected before RPC (0.06618ms)
+✔ 2 poll choices and privacy mode produce poll-only contract (0.785048ms)
+✔ 3 poll choices and privacy mode produce poll-only contract (0.11234ms)
+✔ 4 poll choices and privacy mode produce poll-only contract (0.315147ms)
+✔ invalid poll parameters [["A"],24] fail closed (0.18526ms)
+✔ invalid poll parameters [["A","B","C","D","E"],24] fail closed (0.146331ms)
+✔ invalid poll parameters [["A"," a "],24] fail closed (0.208896ms)
+✔ invalid poll parameters [["","B"],24] fail closed (0.157338ms)
+✔ invalid poll parameters [["xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx","B"],24] fail closed (0.565306ms)
+✔ invalid poll parameters [["A","B"],0] fail closed (0.072369ms)
+✔ invalid poll parameters [["A","B"],null] fail closed (0.044147ms)
+✔ empty and overlong content fail closed (0.127293ms)
+✔ anonymous presentation drops identities even in unexpected server payload without mutating it (0.320345ms)
+✔ both composers use guarded creation; public card cannot mount historical question thread (1.119584ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15.096108
+✔ same prompt and option text set with different correct meanings yields a conflict candidate (2.539672ms)
+✔ option ID differences alone are not a conflicting answer (0.365723ms)
+✔ different display order does not change an answer meaning (0.278641ms)
+✔ different option text set is not falsely matched (1.322261ms)
+✔ different prompt is not falsely matched (0.300855ms)
+✔ existing NFKC whitespace case normalization only produces review candidates (0.279563ms)
+✔ duplicate option meanings are not used to invent a definite cross-question conflict (1.231493ms)
+✔ invalid or ambiguous answer keys do not produce conflict candidates (0.465645ms)
+✔ one three-question conflict group preserves all candidate IDs deterministically (0.62763ms)
+✔ orphan duplicate answer rows retain both independent referential issues (0.633027ms)
+✔ candidate report does not echo full private prompt or explanation text (0.278311ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15.93786
+✔ valid offline export reports counts and 1-based displayed answer position without mutating input (2.189732ms)
+✔ missing answer row remains review required (0.205471ms)
+✔ duplicate answer rows do not select one answer silently (0.280334ms)
+✔ orphan answer row is identified (5.409724ms)
+✔ answer outside question options is rejected (0.287665ms)
+✔ missing or invalid explanation () needs review (2.447252ms)
+✔ missing or invalid explanation (null) needs review (0.19849ms)
+✔ missing or invalid explanation (42) needs review (0.118519ms)
+✔ invalid rule references [] need review (0.228315ms)
+✔ invalid rule references [0] need review (0.187824ms)
+✔ invalid rule references [true] need review (0.11849ms)
+✔ invalid rule references [1.5] need review (0.131379ms)
+✔ invalid rule references [1,1] need review (0.09258ms)
+✔ invalid rule references null need review (0.075494ms)
+✔ non-four-choice question is reported rather than counted as 1400 (0.15856ms)
+✔ empty corpus never passes (0.082054ms)
+✔ malformed and sparse key rows fail closed without echoing payload (0.491243ms)
+✔ malformed and sparse questions retain established parser rejection (0.097878ms)
+✔ balanced synthetic answers expose all four positions without a quality approval (0.243829ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27.840499
+✔ malformed JSON never echoes payload fragments or parser details (2.881258ms)
+✔ malformed JSON never echoes payload fragments or parser details (0.252021ms)
+✔ malformed JSON never echoes payload fragments or parser details (0.195996ms)
+✔ read failures do not reveal paths or untrusted error text (0.242387ms)
+✔ invalid question shape has a stable failure code without raw data (0.500788ms)
+✔ invalid arguments fail before reading ([]) (1.811851ms)
+✔ invalid arguments fail before reading ([""]) (0.783696ms)
+✔ invalid arguments fail before reading (["export.json","1","ignored-before"]) (0.222597ms)
+✔ invalid arguments fail before reading (["export.json","0"]) (1.023058ms)
+✔ invalid arguments fail before reading (["export.json","-1"]) (2.331748ms)
+✔ invalid arguments fail before reading (["export.json","1.5"]) (0.296359ms)
+✔ invalid arguments fail before reading (["export.json","1e3"]) (0.893512ms)
+✔ invalid arguments fail before reading (["export.json","01"]) (0.137097ms)
+✔ invalid arguments fail before reading (["export.json","NaN"]) (0.102595ms)
+✔ invalid arguments fail before reading (["export.json","9007199254740992"]) (0.200338ms)
+✔ invalid arguments fail before reading (["export.json","999999999999999999999999999999999999999999999999999999999999999999999999999999999999) (0.108765ms)
+✔ valid report and count mismatch preserve the non-publication contract (0.702633ms)
+✔ safe integer upper boundary is accepted as a count, without rounding (0.196998ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22.554226
+✔ guest cannot start and does not make a user lookup (1.177151ms)
+✔ valid session and verified user can answer (0.876887ms)
+✔ user lookup transport error {"status":0} keeps retry guidance (5.273978ms)
+✔ user lookup transport error {"status":503} keeps retry guidance (0.13177ms)
+✔ user lookup transport error {"name":"AuthRetryableFetchError"} keeps retry guidance (0.105139ms)
+✔ expired authentication {"status":401} asks for login (0.119581ms)
+✔ expired authentication {"code":"session_not_found"} asks for login (0.114783ms)
+✔ expired authentication {"name":"AuthSessionMissingError"} asks for login (0.173022ms)
+✔ session transport error does not claim expiry (0.412494ms)
+✔ thrown transport error does not escape the UI action (0.255967ms)
+✔ missing verified user asks for login (0.159651ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 32.344548
+✔ question validation sorts a copy without changing option identity or original input (1.825782ms)
+✔ malformed null fails closed (0.290099ms)
+✔ malformed object fails closed (0.115815ms)
+✔ malformed no options fails closed (1.056949ms)
+✔ malformed one option fails closed (0.173042ms)
+✔ malformed empty text fails closed (0.08571ms)
+✔ malformed missing metadata fails closed (0.111249ms)
+✔ malformed duplicate question ID fails closed (0.108764ms)
+✔ malformed duplicate option ID fails closed (0.180683ms)
+✔ malformed duplicate option order fails closed (0.193252ms)
+✔ malformed fractional order fails closed (0.090837ms)
+✔ malformed empty option text fails closed (0.271641ms)
+✔ malformed negative order fails closed (0.102555ms)
+✔ rejected and synchronous transport failures become recoverable errors without retries (0.458704ms)
+✔ successful save data and RPC permission errors are preserved without reinterpretation (0.115064ms)
+✔ offline audit flags normalized question and option duplicate candidates only (0.612647ms)
+✔ audit report flags missing expected count and never claims publication approval (0.708302ms)
+✔ sparse quiz input rejects empty sparse question bank (0.113873ms)
+✔ sparse quiz input rejects question followed by missing row (0.087222ms)
+✔ sparse quiz input rejects entirely missing options (0.050577ms)
+✔ sparse quiz input rejects one present option (0.28437ms)
+✔ frozen dense valid input and empty bank remain valid (0.157278ms)
+✔ reviewed PR28 empty-audit guard remains present (0.120122ms)
+✔ optional filters default invalid rows and fields to empty lists (0.169366ms)
+✔ optional filters exclude nonstring items and preserve valid sibling fields (0.108975ms)
+✔ optional filters preserve string values order and copy frozen arrays (0.123176ms)
+✔ optional filters densify sparse lists without inventing choices (0.091398ms)
+✔ optional filters render and preserve quiz requests in four mocked mobile scenarios (7517.514322ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7534.93674
+✔ false remains false, valid statistics and saved explanation are preserved (1.398886ms)
+✔ reject malformed saved answer: string false (0.348327ms)
+✔ reject malformed saved answer: numeric correctness (0.09269ms)
+✔ reject malformed saved answer: foreign correct option (0.077707ms)
+✔ reject malformed saved answer: contradictory correctness (0.298842ms)
+✔ reject malformed saved answer: negative count (0.181484ms)
+✔ reject malformed saved answer: fractional count (0.111269ms)
+✔ reject malformed saved answer: correct count exceeds total (0.38979ms)
+✔ reject malformed saved answer: nonfinite rate (0.174114ms)
+✔ reject malformed saved answer: out of range rate (0.422329ms)
+✔ reject malformed saved answer: array result (0.103196ms)
+✔ selected option must belong to this question (0.113401ms)
+✔ null low-sample rate is retained, malformed optional explanation cannot replace saved result (0.864588ms)
+✔ valid detail references are used without changing authoritative correctness (0.34333ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14.465945
+✔ latest request wins even when older search resolves last (2763.886755ms)
+12:37:02 AM [vite] (client) [optimizer] bundling dependencies...
+✔ new input invalidates an old response before debounce expires (3230.005772ms)
+✔ clearing search prevents late result resurrection and ends loading (2716.788543ms)
+✔ thrown transport ends loading and permits next search recovery (2175.165263ms)
+✔ old failed request cannot end newer request loading or show stale error (3311.567075ms)
+✔ malformed search non-array payload fails closed and permits retry (3009.997477ms)
+✔ malformed search null rule row fails closed and permits retry (3216.902889ms)
+✔ malformed search invalid title value fails closed and permits retry (2800.397882ms)
+12:37:23 AM [vite] (client) [optimizer] bundling dependencies...
+✔ malformed search invalid rule number fails closed and permits retry (3745.843136ms)
+✔ malformed displayed rule field summary object fails closed and permits retry (2395.149581ms)
+✔ malformed displayed rule field keyword string fails closed and permits retry (1987.169861ms)
+✔ malformed displayed rule field example object element fails closed and permits retry (1962.473153ms)
+✔ malformed displayed rule field caution null element fails closed and permits retry (2059.019745ms)
+✔ malformed displayed rule field related rule string fails closed and permits retry (2040.864672ms)
+✔ malformed displayed rule field official body object fails closed and permits retry (2074.298356ms)
+✔ well-typed optional text and collections retain normal rendering (1559.475015ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 41057.968446
