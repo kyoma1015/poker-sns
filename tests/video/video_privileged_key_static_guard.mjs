@@ -18,6 +18,13 @@ for (const file of runtime) {
  assert.doesNotMatch(code,/process\.env\.(?:SUPABASE_SERVICE_ROLE_KEY|SUPABASE_SECRET_KEY)|import\.meta\.env\.VITE_.*SERVICE_ROLE|service_role\s*:/i,
   file+' must not access privileged Supabase credentials')
 }
+// Detect accidental removal of the reservation fence or introduction of
+// mutable policies in the review-only Storage candidate.
+const storagePolicy=readFileSync('sql/post_short_videos_immutable_review_only.sql','utf8')
+assert.match(storagePolicy,/public\.video_reserved_key_is_owned\(name, \(select auth\.uid\(\)\)\)/,
+ 'Storage INSERT must require durable owner reservation')
+assert.doesNotMatch(storagePolicy,/^create policy[^\n]*\n\s*for (?:update|delete|all)\b/gim,
+ 'review-only Storage policy must not create mutation grants')
 const videoApi=readFileSync('src/videoApi.ts','utf8')
 assert.match(videoApi,/VITE_VIDEO_SERVER_ENABLED === 'true'/,
  'browser video feature must be explicit opt-in')
