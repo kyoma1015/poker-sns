@@ -36,6 +36,7 @@ class PrivilegedVideoApiBoundary(unittest.TestCase):
         self.assertIn('assertServerAttestationAvailable()', adapter)
         self.assertIn("process.env.VIDEO_PRODUCTION_FENCED_READY === 'true'", handler)
         self.assertIn('revoke all on function public.video_publish_attested_v1', sql.lower())
+        self.assertIn('from public,anon,authenticated,service_role;', sql.lower())
         self.assertNotRegex(sql, r'(?im)^\s*grant execute on function public\.video_publish_attested_v1')
         self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY', adapter)
         self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY', handler)
