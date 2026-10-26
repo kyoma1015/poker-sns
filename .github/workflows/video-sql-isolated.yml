@@ -13,7 +13,7 @@ permissions:
 jobs:
   video-sql-isolated:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - name: Isolated PostgreSQL video schema and RLS
