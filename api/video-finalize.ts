@@ -69,7 +69,7 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
     const host = url?.startsWith('https://') ? url.slice(8).split('/')[0] : ''
     if ((!isolatedReservation && (process.env.VIDEO_PRODUCTION_FENCED_READY !== 'true' ||
         !/^[a-z0-9-]+[.]supabase[.]co$/.test(host))) ||
-        !anon) return res.status(503).json({ error: 'video_reservation_not_enabled' })
+        !url || !anon) return res.status(503).json({ error: 'video_reservation_not_enabled' })
     try {
       const viewer = createClient(url, anon, {
         global: { headers: { Authorization: authorization } },
