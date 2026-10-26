@@ -29,7 +29,7 @@ const MAX_ARCHIVE_BYTES = expectedBytes
 try {
   const archive = join(work, 'ffmpeg.tar.xz')
   const response = await fetch(url, { redirect: 'follow', headers: { Accept: 'application/octet-stream', 'User-Agent': 'poker-id-ffprobe-build' }, signal: AbortSignal.timeout(180000) })
-  if (!response.ok || !response.body) throw new Error('pinned ffprobe archive download failed')
+  if (!response.ok || !response.body || !response.headers.get('content-type')?.includes('application/')) throw new Error(`pinned ffprobe archive download failed (HTTP ${response.status}; content-type ${response.headers.get('content-type') || 'missing'})`)
   // Redirects and intermediary compression can report a different HTTP
   // Content-Length than the decoded stream. Never trust that header for
   // integrity or safety; enforce the pinned limit on actual received bytes.
