@@ -69,7 +69,7 @@ def policy_value(state, policy, *, samples, seed, confidence=0.95, max_steps=100
 
 def belief_value(native, game, hero_cards, deals, public_cards, history, policy, *,
                  samples_per_deal, seed, confidence=0.95, max_deals=128,
-                 max_total_samples=100000, max_steps=1000, intervention=None):
+                 max_total_samples=100000, max_steps=1000, intervention=None,max_infosets=100000):
     """Preflop-capable EV under an explicit heads-up opponent-hand belief.
 
     Reuses exact public-observation/blocker conditioning and per-player reach.
@@ -93,7 +93,7 @@ def belief_value(native, game, hero_cards, deals, public_cards, history, policy,
     root=native.NativeState(game)
     if root.audit()['n']!=2 or game.fixture is not None or game.root_actions:
         raise ValueError('full-deck heads-up native game required')
-    checked=infoset_consistent_policy(policy)
+    checked=infoset_consistent_policy(policy,max_infosets=max_infosets)
     targets=[];evidence=Fraction(0);common=None
     for cards,prior in conditioned['deals']:
         state=root.clone()
@@ -148,7 +148,8 @@ def belief_value(native, game, hero_cards, deals, public_cards, history, policy,
 
 
 def action_values(native,game,hero_cards,deals,public_cards,history,actions,policy,*,
-                  samples_per_deal,seed,confidence=0.95,max_total_samples=100000,max_deals=128):
+                  samples_per_deal,seed,confidence=0.95,max_total_samples=100000,max_deals=128,
+                  max_infosets=100000):
     """Common-prefix action EVs; target policy probability is not multiplied in.
 
     Explicit support and sampling uncertainty stay visible. Confidence is shared
@@ -162,14 +163,15 @@ def action_values(native,game,hero_cards,deals,public_cards,history,actions,poli
             or type(confidence) not in (int,float) or not math.isfinite(confidence)
             or not 0<confidence<1):
         raise ValueError('bounded unique actions and aggregate sampling budget required')
-    checked=infoset_consistent_policy(policy)
+    checked=infoset_consistent_policy(policy,max_infosets=max_infosets)
     results={};used=0
     per_confidence=1-(1-confidence)/len(actions)
     for action in actions:
         if used>=max_total_samples:raise ValueError('aggregate action sample budget exceeded')
         result=belief_value(native,game,hero_cards,deals,public_cards,history,checked,
             samples_per_deal=samples_per_deal,seed=seed,confidence=per_confidence,
-            max_total_samples=max_total_samples-used,intervention=action,max_deals=max_deals)
+            max_total_samples=max_total_samples-used,intervention=action,max_deals=max_deals,
+            max_infosets=max_infosets)
         used+=result['samples'];results[action]=result
     return {'actions':results,'samples':used,'confidence':confidence,
             'scope':'sampled common-hero action values under explicit support; not equilibrium',
@@ -177,7 +179,8 @@ def action_values(native,game,hero_cards,deals,public_cards,history,actions,poli
 
 
 def preflop_action_report(native,game,hero_cards,deals,history,actions,policy,*,
-                          samples_per_deal,seed,confidence=0.95,max_total_samples=100000,max_deals=128):
+                          samples_per_deal,seed,confidence=0.95,max_total_samples=100000,max_deals=128,
+                          max_infosets=100000):
     """Bind a sampled preflop comparison to immutable policy/config/input data.
 
     This uses a separate schema from exact expectation/169 exports. Hashes bind
@@ -203,7 +206,7 @@ def preflop_action_report(native,game,hero_cards,deals,history,actions,policy,*,
     description=describe(target)
     result=action_values(native,game,hero_cards,deals,[],history,actions,policy,
         samples_per_deal=samples_per_deal,seed=seed,confidence=confidence,
-        max_total_samples=max_total_samples,max_deals=max_deals)
+        max_total_samples=max_total_samples,max_deals=max_deals,max_infosets=max_infosets)
     identity={'config':configuration,'hero_cards':list(hero_cards),'history':list(history),
         'actions':list(actions),'policy_digest':policy.digest,
         'support':[[list(cards),str(prior)] for cards,prior in deals],

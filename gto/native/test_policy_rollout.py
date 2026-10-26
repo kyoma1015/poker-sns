@@ -221,5 +221,27 @@ class Rollout(unittest.TestCase):
         self.assertEqual(len(result['actions'][0]['posterior']),129)
         self.assertEqual(result['actions'][0]['sample_mean_values'],[Fraction(-1),Fraction(1)])
 
+    def test_infoset_budget_is_explicit_and_still_fail_closed(self):
+        prefix=[1,8,20,44]
+        def policy(node):
+            history=node.audit()['history']
+            return {prefix[len(history)] if len(history)<len(prefix) else 1:Fraction(1)}
+        args=(self.native,NativeGame([200,200]),[48,49],[([0,1],Fraction(1))],[],prefix,[0],policy)
+        with self.assertRaisesRegex(ValueError,'infoset consistency budget exceeded'):
+            action_values(*args,samples_per_deal=1,seed=17,max_infosets=1)
+        result=action_values(*args,samples_per_deal=1,seed=17,max_infosets=2)
+        self.assertEqual(result['actions'][0]['sample_mean_values'],[Fraction(-18),Fraction(18)])
+
+    def test_fixed_state_ev_for_two_to_nine_players_and_unequal_stacks(self):
+        for players in range(2,10):
+            for ante in (0,2):
+                game=NativeGame([2*p+2 for p in range(players)],bba=ante)
+                state=decision(self.native,game,[])
+                policy=lambda node:{0:Fraction(1)}
+                result=policy_value(state,policy,samples=3,seed=17)
+                # All seats fold to BB: only the SB's one-chip blind changes owner.
+                self.assertEqual(result['values'],[Fraction(-1),Fraction(1)]+[Fraction(0)]*(players-2))
+                self.assertEqual(sum(result['values']),0)
+
 
 if __name__=='__main__':unittest.main()

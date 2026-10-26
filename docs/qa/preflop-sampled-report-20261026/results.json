@@ -1,17 +1,17 @@
 [
   {
     "variant": "g12_next",
-    "methods": 18,
+    "methods": 20,
     "returncode": 0
   },
   {
     "variant": "g12_p1_cache",
-    "methods": 18,
+    "methods": 20,
     "returncode": 0
   },
   {
     "variant": "g12_p1_packed",
-    "methods": 18,
+    "methods": 20,
     "returncode": 0
   }
 ]
