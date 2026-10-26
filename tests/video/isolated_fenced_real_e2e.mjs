@@ -47,8 +47,7 @@ try {
 } finally {rmSync(dir,{recursive:true,force:true})}
 assert.ok(bytes.length>0&&bytes.length<20*1024*1024)
 const storage=client.storage.from('post-videos')
-const reservationAdmin=createClient(url,service,{auth:{persistSession:false,autoRefreshToken:false}})
-assert.ifError((await reservationAdmin.rpc('video_reserve_object_key',{
+assert.ifError((await client.rpc('video_reserve_object_key',{
   p_owner:owner,p_path:path,
 })).error)
 assert.ifError((await storage.upload(path,bytes,{contentType:'video/webm',upsert:false})).error)
