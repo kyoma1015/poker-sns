@@ -26,6 +26,9 @@ reset role;
 insert into storage.objects(id,bucket_id,name,owner_id) values
  ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa','post-videos',
  '10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.webm',
+ '10000000-0000-0000-0000-000000000001'),
+ ('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb','post-videos',
+ '10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000002.webm',
  '10000000-0000-0000-0000-000000000001');
 set role authenticated;
 select set_config('request.jwt.claim.sub','10000000-0000-0000-0000-000000000001',false);
@@ -90,8 +93,8 @@ begin
  begin
   forged := public.video_production_publish_fenced(
    '10000000-0000-0000-0000-000000000001',
-   '10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.webm',
-   'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',repeat('b',64),29.9,
+   '10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000002.webm',
+   'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb',repeat('b',64),29.9,
    'forged unverified ffprobe metadata');
  exception when others then
   return;
