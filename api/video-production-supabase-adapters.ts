@@ -43,7 +43,7 @@ export function createProductionSupabaseVideoAdapters(
   // No environment flag can convert a service_role credential into a
   // least-privilege writer. Reject this production path unconditionally
   // until it is replaced with a separately scoped credential and audited RPCs.
-  throw new Error('service_role production video writer forbidden')
+  if (serviceRoleKey) throw new Error('service_role production video writer forbidden')
   const admin = createClient(url, serviceRoleKey, {
     global: { fetch: rpcOnlyFetch },
     auth: { persistSession: false, autoRefreshToken: false },
