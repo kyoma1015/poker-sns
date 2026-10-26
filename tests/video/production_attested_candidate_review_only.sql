@@ -73,6 +73,6 @@ begin
  if v_id is null then raise exception 'publication failed'; end if;
  return v_id;
 end $fn$;
-revoke all on function public.video_publish_attested_v1(uuid,text,uuid,text,integer,text,bigint,text,text,smallint) from public,anon,service_role;
+revoke all on function public.video_publish_attested_v1(uuid,text,uuid,text,integer,text,bigint,text,text,smallint) from public,anon,authenticated,service_role;
 -- Grant to authenticated only after production-equivalent isolated tests and secret provisioning.
 -- grant execute on function public.video_publish_attested_v1(uuid,text,uuid,text,integer,text,bigint,text,text,smallint) to authenticated;
