@@ -49,14 +49,9 @@ begin
  exception when raise_exception then
   if sqlerrm='foreign generation accepted' then raise; end if;
  end;
- begin
- perform public.video_production_publish_fenced('10000000-0000-0000-0000-000000000001',
- '10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.webm',
- 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',repeat('a',64),2,'hello');
- raise exception 'foreign publish accepted';
- exception when raise_exception then
-  if sqlerrm='foreign publish accepted' then raise; end if;
- end;
+ if has_function_privilege(current_user,
+ 'public.video_production_publish_fenced(uuid,text,uuid,text,double precision,text)','EXECUTE')
+ then raise exception 'foreign owner can invoke forbidden publish RPC'; end if;
 end $foreign_owner$;
 reset role;
 select 'PASS: owner JWT metadata read, direct publish denied, foreign denial' as result;
@@ -66,18 +61,10 @@ select 'PASS: owner JWT metadata read, direct publish denied, foreign denial' as
 set role authenticated;
 select set_config('request.jwt.claim.sub','10000000-0000-0000-0000-000000000001',false);
 do $untrusted_metadata_gate$
-declare forged uuid;
 begin
- begin
-  forged := public.video_production_publish_fenced(
-   '10000000-0000-0000-0000-000000000001',
-   '10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000002.webm',
-   'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb',repeat('b',64),29.9,
-   'forged unverified ffprobe metadata');
- exception when others then
-  return;
- end;
- raise exception 'NO-GO: owner JWT can publish without server ffprobe attestation';
+ if has_function_privilege(current_user,
+ 'public.video_production_publish_fenced(uuid,text,uuid,text,double precision,text)','EXECUTE')
+ then raise exception 'NO-GO: owner JWT can invoke unattested publish RPC'; end if;
 end $untrusted_metadata_gate$;
 reset role;
 
