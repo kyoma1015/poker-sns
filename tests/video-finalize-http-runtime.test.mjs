@@ -96,3 +96,24 @@ test('preview runtime attestation fails closed for missing absolute ffprobe bina
     else process.env.FFPROBE_BINARY_PATH = previousBinary
   }
 })
+
+// A deployment flag and apparently valid runtime secrets are not sufficient
+// to authorize production publication before the independent DB/RLS release gate.
+test('production attested adapter stays fail-closed with release flag and keys present', async () => {
+  const { createProductionSupabaseVideoAdapters } = await import('../api/video-production-supabase-adapters.ts')
+  const names = ['VIDEO_PRODUCTION_FENCED_READY', 'VIDEO_ATTESTATION_KEY_HEX', 'VIDEO_ATTESTATION_KEY_ID']
+  const previous = Object.fromEntries(names.map(name => [name, process.env[name]]))
+  try {
+    process.env.VIDEO_PRODUCTION_FENCED_READY = 'true'
+    process.env.VIDEO_ATTESTATION_KEY_HEX = 'a'.repeat(64)
+    process.env.VIDEO_ATTESTATION_KEY_ID = '2'
+    assert.throws(() => createProductionSupabaseVideoAdapters(
+      'https://example.supabase.co', 'fixture-anon', 'fixture-user-jwt',
+    ), /production video publish requires server-attested database authorization/)
+  } finally {
+    for (const name of names) {
+      if (previous[name] === undefined) delete process.env[name]
+      else process.env[name] = previous[name]
+    }
+  }
+})
