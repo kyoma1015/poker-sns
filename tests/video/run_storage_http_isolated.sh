@@ -34,6 +34,8 @@ psql "$dburl" -v ON_ERROR_STOP=1 -f sql/post_short_videos_immutable_review_only.
 VIDEO_QA_ENV="$qa/local.env" node tests/video/isolated_immutable_storage_http_e2e.mjs
 # Enforce the single reserved-key writer only after legacy mutation tests.
 psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/isolated_enforce_reserved_writers.sql
+# Exercise production-candidate quota RPC in the disposable local DB only.
+bash tests/video/isolated_reservation_quota.sh "$dburl"
 VIDEO_QA_ENV="$qa/local.env" node tests/video/isolated_reserved_writer_http_e2e.mjs
 
 # Real isolated Auth + Storage HTTP + PostgREST RPC + ffprobe composition.
