@@ -1,0 +1,13 @@
+test_explicit_optin_and_active_guard_required (__main__.PreparedBoundary.test_explicit_optin_and_active_guard_required) ... ok
+test_persistence_failure_refuses_finish_and_retains_unknown (__main__.PreparedBoundary.test_persistence_failure_refuses_finish_and_retains_unknown) ... ok
+test_protected_drift_refuses_before_dispatch (__main__.PreparedBoundary.test_protected_drift_refuses_before_dispatch) ... ok
+test_real_finish_after_safe_callback (__main__.PreparedBoundary.test_real_finish_after_safe_callback) ... ok
+test_stop_before_dispatch_preserves_prepared_row (__main__.PreparedBoundary.test_stop_before_dispatch_preserves_prepared_row) ... ok
+test_stop_saved_work_defer_resume_under_unchanged_cap (__main__.PreparedBoundary.test_stop_saved_work_defer_resume_under_unchanged_cap) ... ok
+test_unknown_after_dispatch_retains_context_and_blocks_other_lane (__main__.PreparedBoundary.test_unknown_after_dispatch_retains_context_and_blocks_other_lane) ... ok
+test_wrong_token_never_dispatches (__main__.PreparedBoundary.test_wrong_token_never_dispatches) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.392s
+
+OK

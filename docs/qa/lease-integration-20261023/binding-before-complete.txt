@@ -1,0 +1,55 @@
+test_context_task_cannot_change_reviewed_instruction (__main__.ActivationBinding.test_context_task_cannot_change_reviewed_instruction) ... FAIL
+test_corrupt_row_spec_hash_refuses (__main__.ActivationBinding.test_corrupt_row_spec_hash_refuses) ... FAIL
+test_incoming_claimed_hash_cannot_replace_acquired_identity (__main__.ActivationBinding.test_incoming_claimed_hash_cannot_replace_acquired_identity) ... FAIL
+test_matching_task_context_and_normal_completion (__main__.ActivationBinding.test_matching_task_context_and_normal_completion) ... ok
+test_mismatched_running_spec_blocks_other_lane_without_mutation (__main__.ActivationBinding.test_mismatched_running_spec_blocks_other_lane_without_mutation) ... FAIL
+test_retry_spec_mismatch_rolls_back (__main__.ActivationBinding.test_retry_spec_mismatch_rolls_back) ... ok
+test_wrong_token_never_changes_row (__main__.ActivationBinding.test_wrong_token_never_changes_row) ... ok
+
+======================================================================
+FAIL: test_context_task_cannot_change_reviewed_instruction (__main__.ActivationBinding.test_context_task_cannot_change_reviewed_instruction)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_activation_binding.py", line 28, in test_context_task_cannot_change_reviewed_instruction
+    changed=dict(self.t,instruction='different');self.refuse({'task':changed})
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_activation_binding.py", line 22, in refuse
+    with self.assertRaises(w.LeaseActivationRefused):self.l.activate('owned',self.token if token is None else token,context,now=101)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: LeaseActivationRefused not raised
+
+======================================================================
+FAIL: test_corrupt_row_spec_hash_refuses (__main__.ActivationBinding.test_corrupt_row_spec_hash_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_activation_binding.py", line 26, in test_corrupt_row_spec_hash_refuses
+    self.l.db.execute("update development_jobs set spec_hash=? where id='owned'",('b'*64,));self.refuse({})
+                                                                                            ^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_activation_binding.py", line 22, in refuse
+    with self.assertRaises(w.LeaseActivationRefused):self.l.activate('owned',self.token if token is None else token,context,now=101)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: LeaseActivationRefused not raised
+
+======================================================================
+FAIL: test_incoming_claimed_hash_cannot_replace_acquired_identity (__main__.ActivationBinding.test_incoming_claimed_hash_cannot_replace_acquired_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_activation_binding.py", line 30, in test_incoming_claimed_hash_cannot_replace_acquired_identity
+    self.refuse({'claimed_spec_hash':'b'*64})
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_activation_binding.py", line 22, in refuse
+    with self.assertRaises(w.LeaseActivationRefused):self.l.activate('owned',self.token if token is None else token,context,now=101)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: LeaseActivationRefused not raised
+
+======================================================================
+FAIL: test_mismatched_running_spec_blocks_other_lane_without_mutation (__main__.ActivationBinding.test_mismatched_running_spec_blocks_other_lane_without_mutation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_activation_binding.py", line 33, in test_mismatched_running_spec_blocks_other_lane_without_mutation
+    self.assertTrue(self.l.claim(task('other','B'),now=10000) is None,'mismatched task metadata was expired/taken over')
+AssertionError: False is not true : mismatched task metadata was expired/taken over
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.006s
+
+FAILED (failures=4)

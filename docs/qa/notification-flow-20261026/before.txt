@@ -1,0 +1,92 @@
+✖ notifications signout removes private actor and subscription (4346.022317ms)
+✖ notifications switch account replaces private state and scopes realtime (4020.358036ms)
+✖ notifications pending profile cannot mark old account read after switch (3742.703169ms)
+✖ notifications failed reads recover explicitly without backend details (3457.574572ms)
+✖ notifications update uses owner filter and handles zero-row denial (1389.042887ms)
+✖ notifications reject auth error even when user is returned (3103.493501ms)
+✔ notifications filter unexpected foreign rows and navigate own event to post (1607.656224ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 1
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 21677.945859
+
+✖ failing tests:
+
+test at tests/notifications-flow.test.mjs:29:1
+✖ notifications signout removes private actor and subscription (4346.022317ms)
+  locator.waitFor: Timeout 1800ms exceeded.
+  Call log:
+  [2m  - waiting for getByText('Synthetic login') to be visible[22m
+  
+      at /workspace/work/issue22-published-A-ca29d209/tests/notifications-flow.test.mjs:29:220
+      at async withNotifications (/workspace/work/issue22-published-A-ca29d209/tests/notifications-flow.test.mjs:24:5) {
+    log: [ "  - waiting for getByText('Synthetic login') to be visible" ],
+    name: 'TimeoutError'
+  }
+
+test at tests/notifications-flow.test.mjs:30:1
+✖ notifications switch account replaces private state and scopes realtime (4020.358036ms)
+  locator.waitFor: Timeout 1800ms exceeded.
+  Call log:
+  [2m  - waiting for getByText('PRIVATE_ACTOR_B', { exact: true }) to be visible[22m
+  
+      at /workspace/work/issue22-published-A-ca29d209/tests/notifications-flow.test.mjs:30:247
+      at async withNotifications (/workspace/work/issue22-published-A-ca29d209/tests/notifications-flow.test.mjs:24:5) {
+    log: [ "  - waiting for getByText('PRIVATE_ACTOR_B', { exact: true }) to be visible" ],
+    name: 'TimeoutError'
+  }
+
+test at tests/notifications-flow.test.mjs:31:1
+✖ notifications pending profile cannot mark old account read after switch (3742.703169ms)
+  page.waitForFunction: Timeout 1800ms exceeded.
+      at /workspace/work/issue22-published-A-ca29d209/tests/notifications-flow.test.mjs:31:243
+      at async withNotifications (/workspace/work/issue22-published-A-ca29d209/tests/notifications-flow.test.mjs:24:5) {
+    log: [],
+    name: 'TimeoutError'
+  }
+
+test at tests/notifications-flow.test.mjs:32:1
+✖ notifications failed reads recover explicitly without backend details (3457.574572ms)
+  locator.waitFor: Timeout 1800ms exceeded.
+  Call log:
+  [2m  - waiting for getByRole('button', { name: '通知を再読み込み', exact: true }) to be visible[22m
+  
+      at /workspace/work/issue22-published-A-ca29d209/tests/notifications-flow.test.mjs:32:287
+      at async withNotifications (/workspace/work/issue22-published-A-ca29d209/tests/notifications-flow.test.mjs:24:5) {
+    log: [ "  - waiting for getByRole('button', { name: '通知を再読み込み', exact: true }) to be visible" ],
+    name: 'TimeoutError'
+  }
+
+test at tests/notifications-flow.test.mjs:33:1
+✖ notifications update uses owner filter and handles zero-row denial (1389.042887ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  undefined !== 'me'
+  
+      at file:///workspace/work/issue22-published-A-ca29d209/tests/notifications-flow.test.mjs:33:135
+      at async withNotifications (file:///workspace/work/issue22-published-A-ca29d209/tests/notifications-flow.test.mjs:24:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'me',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/notifications-flow.test.mjs:34:1
+✖ notifications reject auth error even when user is returned (3103.493501ms)
+  locator.waitFor: Timeout 1800ms exceeded.
+  Call log:
+  [2m  - waiting for getByRole('button', { name: '通知を再読み込み', exact: true }) to be visible[22m
+  
+      at /workspace/work/issue22-published-A-ca29d209/tests/notifications-flow.test.mjs:34:352
+      at async withNotifications (/workspace/work/issue22-published-A-ca29d209/tests/notifications-flow.test.mjs:24:5) {
+    log: [ "  - waiting for getByRole('button', { name: '通知を再読み込み', exact: true }) to be visible" ],
+    name: 'TimeoutError'
+  }

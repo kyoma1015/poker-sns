@@ -1,0 +1,112 @@
+[
+  {
+    "command": [
+      "node",
+      "tests/direct-message-inbox.test.mjs"
+    ],
+    "exit": 0,
+    "log": "docs/qa/notification-flow-20261026/direct-message-inbox.test.txt"
+  },
+  {
+    "command": [
+      "node",
+      "tests/direct-message-send.test.mjs"
+    ],
+    "exit": 0,
+    "log": "docs/qa/notification-flow-20261026/direct-message-send.test.txt"
+  },
+  {
+    "command": [
+      "node",
+      "tests/f03-notification.test.mjs"
+    ],
+    "exit": 0,
+    "log": "docs/qa/notification-flow-20261026/f03-notification.test.txt"
+  },
+  {
+    "command": [
+      "node",
+      "tests/interactive-requests.test.mjs"
+    ],
+    "exit": 0,
+    "log": "docs/qa/notification-flow-20261026/interactive-requests.test.txt"
+  },
+  {
+    "command": [
+      "node",
+      "tests/notifications-flow.test.mjs"
+    ],
+    "exit": 0,
+    "log": "docs/qa/notification-flow-20261026/notifications-flow.test.txt"
+  },
+  {
+    "command": [
+      "node",
+      "tests/player-type.test.mjs"
+    ],
+    "exit": 0,
+    "log": "docs/qa/notification-flow-20261026/player-type.test.txt"
+  },
+  {
+    "command": [
+      "node",
+      "tests/poll-only.test.mjs"
+    ],
+    "exit": 0,
+    "log": "docs/qa/notification-flow-20261026/poll-only.test.txt"
+  },
+  {
+    "command": [
+      "node",
+      "tests/tda-quiz-auth.test.mjs"
+    ],
+    "exit": 0,
+    "log": "docs/qa/notification-flow-20261026/tda-quiz-auth.test.txt"
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 0,
+    "log": "docs/qa/notification-flow-20261026/build.txt"
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exit": 0,
+    "log": "docs/qa/notification-flow-20261026/lint.txt"
+  },
+  {
+    "command": [
+      "python",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests/automation",
+      "-v"
+    ],
+    "exit": 0,
+    "log": "docs/qa/notification-flow-20261026/automation.txt"
+  },
+  {
+    "command": [
+      "python",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests/worker_acceptance",
+      "-v"
+    ],
+    "exit": 0,
+    "log": "docs/qa/notification-flow-20261026/worker.txt"
+  }
+]

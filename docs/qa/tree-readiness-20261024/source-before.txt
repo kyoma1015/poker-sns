@@ -1,0 +1,16 @@
+F
+======================================================================
+FAIL: test_partial_write_cannot_be_observed_as_complete_source (__main__.WorkerPublishReadiness.test_partial_write_cannot_be_observed_as_complete_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_worker_publish_readiness.py", line 24, in test_partial_write_cannot_be_observed_as_complete_source
+    with patch.object(Path,'write_text',delayed),patch.object(Path,'read_bytes',snapshot):test.test_parent_death_during_stdin_retains_file_and_unknown_worker()
+                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_worker_tree_boundaries.py", line 40, in test_parent_death_during_stdin_retains_file_and_unknown_worker
+    self.assertEqual((base/'source.py').read_bytes(),retained)
+AssertionError: b'uncommitted=1\n' != b''
+
+----------------------------------------------------------------------
+Ran 1 test in 0.275s
+
+FAILED (failures=1)

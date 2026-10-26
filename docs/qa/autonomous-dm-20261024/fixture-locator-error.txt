@@ -1,0 +1,52 @@
+✖ DM repeated Enter during block verification sends exactly once (1325.976961ms)
+✖ DM repeated Enter while insert is pending cannot create another message (1181.597981ms)
+✖ DM rejected transport unlocks retry and does not display backend details (1010.305675ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3522.781648
+
+✖ failing tests:
+
+test at tests/direct-message-send.test.mjs:29:1
+✖ DM repeated Enter during block verification sends exactly once (1325.976961ms)
+  locator.waitFor: Error: strict mode violation: getByText('Synthetic player', { exact: true }) resolved to 2 elements:
+      1) <div>Synthetic player</div> aka locator('header').getByText('Synthetic player')
+      2) <div>Synthetic player</div> aka getByText('Synthetic player').nth(1)
+  
+  Call log:
+  [2m  - waiting for getByText('Synthetic player', { exact: true }) to be visible[22m
+  
+      at withChat (/workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:23:96) {
+    log: [ "  - waiting for getByText('Synthetic player', { exact: true }) to be visible" ]
+  }
+
+test at tests/direct-message-send.test.mjs:39:1
+✖ DM repeated Enter while insert is pending cannot create another message (1181.597981ms)
+  locator.waitFor: Error: strict mode violation: getByText('Synthetic player', { exact: true }) resolved to 2 elements:
+      1) <div>Synthetic player</div> aka locator('header').getByText('Synthetic player')
+      2) <div>Synthetic player</div> aka getByText('Synthetic player').nth(1)
+  
+  Call log:
+  [2m  - waiting for getByText('Synthetic player', { exact: true }) to be visible[22m
+  
+      at withChat (/workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:23:96) {
+    log: [ "  - waiting for getByText('Synthetic player', { exact: true }) to be visible" ]
+  }
+
+test at tests/direct-message-send.test.mjs:47:1
+✖ DM rejected transport unlocks retry and does not display backend details (1010.305675ms)
+  locator.waitFor: Error: strict mode violation: getByText('Synthetic player', { exact: true }) resolved to 2 elements:
+      1) <div>Synthetic player</div> aka locator('header').getByText('Synthetic player')
+      2) <div>Synthetic player</div> aka getByText('Synthetic player').nth(1)
+  
+  Call log:
+  [2m  - waiting for getByText('Synthetic player', { exact: true }) to be visible[22m
+  
+      at withChat (/workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:23:96) {
+    log: [ "  - waiting for getByText('Synthetic player', { exact: true }) to be visible" ]
+  }

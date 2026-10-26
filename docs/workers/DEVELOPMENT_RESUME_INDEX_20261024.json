@@ -1,0 +1,232 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-10-25T02:30:15.915790+00:00",
+  "repository": "kyoma1015/poker-sns",
+  "issue": 22,
+  "record_kind": "non-executable development continuation index, not controller jobs",
+  "main_sha": "781f038415503ece850c25a26e72ef67dee9c8a1",
+  "github_snapshot": {
+    "open_prs": 77,
+    "non_pr_open_issues": [
+      22
+    ]
+  },
+  "lanes": [
+    {
+      "lane": "A",
+      "branch": "codex/a-lease-integration-20261023",
+      "controller_source_sha": "df0e31150ae9f1b68c337eecad9b7bfb36dc3a3f",
+      "tests": {
+        "controller_and_readonly": 239,
+        "javascript": 108,
+        "browser_dm": 19
+      },
+      "ci": {
+        "status": "awaiting automatic publication run; query current PR121 head, never infer from local PASS"
+      },
+      "evidence": [
+        "docs/qa/tree-readiness-20261024/",
+        "docs/qa/retained-inspection-20261025/",
+        "docs/qa/dm-auth-20261025/"
+      ],
+      "next": "Authentic isolated DM policy/idempotency QA needs reviewed schema; preserve19 account/realtime/read retry cases; source publication commit metadata may differ but source blobs must match",
+      "source_origin_local_sha": "fce53e0a1d0ac1309e6af976b9c4e19d4c9889d7",
+      "publication_ref": "refs/heads/codex/a-lease-integration-20261023",
+      "resolve_published_head_on_resume": true,
+      "source_git_blobs": {
+        "src/DirectMessageChat.tsx": "11e21c0735402f1dc6d4a020ea1c312040edfc5f",
+        "scripts/code_worker.py": "f0e9f8f60f550d783f99faedaac1be660478940c",
+        "scripts/inspect_retained_state.py": "ceff80506ce5d255aca35cbe23914fd5c9339020",
+        "tests/direct-message-send.test.mjs": "07be5f7eb286a95b37b2988b39285c097d258d51"
+      },
+      "pr": 121
+    },
+    {
+      "lane": "B",
+      "branch": "codex/b-snapshot-integrity-audit-20261023",
+      "published_sha": "245d55bae1f03073dc519e5c307bc1fc4b96138b",
+      "tests": {
+        "local_and_CI": 273
+      },
+      "ci": {
+        "id": 40153776950,
+        "job": 121050617998,
+        "result": "SUCCESS",
+        "head": "245d55bae1f03073dc519e5c307bc1fc4b96138b"
+      },
+      "evidence": [
+        "docs/qa/b-real-offline-entrypoints-20261024/"
+      ],
+      "next": "authoritative350 snapshot/key/source/translation/review receipt; unknown schema uniqueness must not be invented",
+      "pr": 119
+    },
+    {
+      "lane": "C",
+      "branch": "codex/c-initial-chance-reach-20261023",
+      "published_sha": "a9e62b37d65d6f8e9883bdf74709fa5167172b1b",
+      "publication_note": "One child git push auth failure was not repeated. Official GitHub tools saved the identical tested tree as8be36e0. After the root publisher independently succeeded on A, it fetched that public commit, verified identical trees and merged the two C histories without source changes, then normally pushed the resulting fast-forward. Original local commits and API publication are both ancestors; no force/reset/rebase.",
+      "tests": {
+        "local_and_CI": 349
+      },
+      "ci": {
+        "id": 40153781154,
+        "job": 121050631925,
+        "result": "SUCCESS",
+        "head": "a9e62b37d65d6f8e9883bdf74709fa5167172b1b"
+      },
+      "evidence": [
+        "docs/qa/infoset-actions-20261024/"
+      ],
+      "next": "Provenance-carrying action values per hero combo with strict observation/config/policy identity; coverage-aware169 aggregation must retain unknown EV null",
+      "pr": 120
+    },
+    {
+      "lane": "D",
+      "branch": "codex/d-strategy-evidence-20261023",
+      "published_sha": "22ac8ce8eb858bca8d96aef636dd26e8a8fb7e5c",
+      "pr": 124,
+      "tests": {
+        "local_and_CI": 115
+      },
+      "ci": {
+        "id": 40110799631,
+        "job": 120921914667,
+        "result": "SUCCESS",
+        "head": "22ac8ce8eb858bca8d96aef636dd26e8a8fb7e5c"
+      },
+      "evidence": [
+        "docs/qa/d-png-cleanup-20261024/"
+      ],
+      "next": "Browser PNG and existing redaction patch inheritance review; authoritative classifier/labels remain missing"
+    }
+  ],
+  "retained_state_readonly": {
+    "at": "2026-10-25T02:16:37.231457+00:00",
+    "total": 45,
+    "counts": {
+      "blocked": 2,
+      "implemented": 43
+    },
+    "full_rows_digest": "1c8a7b5ce1da677398154490f6f4c74545efd11ec64a8ec69a1db6b2ad002f65",
+    "run_count": 1,
+    "run_limit": 28,
+    "original4": [
+      {
+        "id": "issue22-host-a",
+        "match": true,
+        "status": "implemented"
+      },
+      {
+        "id": "issue22-host-b",
+        "match": true,
+        "status": "implemented"
+      },
+      {
+        "id": "issue22-host-c",
+        "match": true,
+        "status": "implemented"
+      },
+      {
+        "id": "issue22-host-d",
+        "match": true,
+        "status": "implemented"
+      }
+    ],
+    "checkpoint_sha256": "b8afdc9feb93d142f723c41850d5806c0efc5917cafe6cd2324255cdab2555c0"
+  },
+  "runtime": {
+    "independent_startup": "UNKNOWN",
+    "unattended_enabled": false,
+    "current_trigger": "explicit user conversation; not scheduler evidence",
+    "auto_resume": "OFF",
+    "provider_observation": "Both old finite reservations disabled, no provider run/result IDs; no schedule changes",
+    "review": "docs/workers/AUTO_RESUME_CAPABILITY_REVIEW_20261025.md"
+  },
+  "gates": {
+    "new_pr": false,
+    "manual_ci": false,
+    "main_merge": false,
+    "production": false,
+    "paid_services": false,
+    "host_controller_connection": false,
+    "schedule_changes": false,
+    "poll_publication": "NO-GO",
+    "existing_draft_fast_forward_updates": true
+  },
+  "resume": [
+    "Read docs/progress/DEVELOPMENT_MASTER_20261024.md and relevant lane evidence",
+    "Recheck fresh GitHub branch/PR/CI once; distinguish source blob/tree equality from commit identity",
+    "Read held SQLite mode=ro and compare45-row digest/original4 hashes/run1-limit28/checkpoint; never mutate or recreate it",
+    "Keep incomplete artifacts and fixed baselines; do not replay completed IDs or old BLOCKED rows",
+    "Select objective independent defects, preserve fixedFAIL, minimal source change, local regression/build/lint, existing-branch publication and updated evidence",
+    "No runtime/scheduler/production activation without separate explicit approval"
+  ],
+  "blocked": [
+    "Official TDA350 provenance and clause reviewer evidence unavailable",
+    "Authoritative36-animal classifier thresholds ties expert labels unavailable",
+    "G9/G11 original ABI/historicalcheckpoint and real-poker convergence unproved",
+    "Formal external journal-store auth/durability/deadlines and host adoption unproved"
+  ],
+  "last_successful_step": "B/C existing Draft heads fast-forwarded under existing update permission; automatic exact-head CI succeeded; A final source and read-only probe verified locally, publication CI pending",
+  "last_C_publish_issue": "Prior publication histories retained; current C normal remote/local HEAD matched at start",
+  "current_feature_batch": {
+    "updated_at": "2026-10-25T15:10:51.336716+00:00",
+    "ledger": "docs/workers/FEATURE_COMPLETION_20261025.md",
+    "A": {
+      "local_tests": {
+        "frontend": 116,
+        "automation": 154,
+        "worker": 85
+      },
+      "publication": "resolve latest PR121 and exact-head CI"
+    },
+    "B": {
+      "publication": "resolve latest PR119 and exact-head CI",
+      "scope": "quiz save and result continuation"
+    },
+    "C": {
+      "local_source": "04b5b808b58e313c6f0d63c8ddab5681e6618e1a",
+      "comparable_ci_target": 394,
+      "publication": "resolve latest PR120 and exact-head CI"
+    },
+    "D": {
+      "local_source": "8df9384c505ca811033d1d87e2ff02e2a17fdeaa",
+      "local_tests": 128,
+      "publication": "resolve latest PR124 and exact-head CI"
+    }
+  },
+  "latest_completion_batch": {
+    "updated_at": "2026-10-26T04:00:32.116799+00:00",
+    "readiness": "docs/workers/INTEGRATION_READINESS_20261026.md",
+    "classification": "A implementable / B integration QA / C external evidence / D substantial development",
+    "A": {
+      "local_tests": {
+        "frontend": 123,
+        "automation": 154,
+        "worker": 85
+      },
+      "scope": "notifications account/read/realtime/retry",
+      "public_ref": "codex/a-lease-integration-20261023",
+      "resolve_exact_head_ci": true
+    },
+    "B": {
+      "local_source": "68b0e73cfcea775494b436a97d7a85f31ae1f1b0",
+      "tests": 278,
+      "scope": "quiz account scope",
+      "public_ref": "codex/b-snapshot-integrity-audit-20261023",
+      "resolve_exact_head_ci": true
+    },
+    "C": {
+      "local_source": "40ff6ca863e48726db26ec7abe14fb0e78387f60",
+      "comparable_ci_tests": 439,
+      "scope": "bounded native-report JSON/HTML consumer",
+      "public_ref": "codex/c-initial-chance-reach-20261023",
+      "resolve_exact_head_ci": true
+    },
+    "D": {
+      "scope": "result/share/presentation continuation; fresh PR124 final source is authoritative",
+      "public_ref": "codex/d-strategy-evidence-20261023",
+      "resolve_exact_head_ci": true
+    }
+  }
+}

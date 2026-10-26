@@ -1,0 +1,27 @@
+test_context_corruption_during_liveness_observation_refuses (__main__.PreparedRace.test_context_corruption_during_liveness_observation_refuses) ... FAIL
+test_expiry_during_liveness_observation_refuses (__main__.PreparedRace.test_expiry_during_liveness_observation_refuses) ... FAIL
+
+======================================================================
+FAIL: test_context_corruption_during_liveness_observation_refuses (__main__.PreparedRace.test_context_corruption_during_liveness_observation_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_prepared_boundary_race.py", line 21, in test_context_corruption_during_liveness_observation_refuses
+    self.check_race(lambda f:f.f.store.db.execute("update development_jobs set evidence=NULL where id='next-a'"))
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_prepared_boundary_race.py", line 16, in check_race
+    self.assertEqual(f.calls,0,'dispatch crossed stale task boundary')
+AssertionError: 1 != 0 : dispatch crossed stale task boundary
+
+======================================================================
+FAIL: test_expiry_during_liveness_observation_refuses (__main__.PreparedRace.test_expiry_during_liveness_observation_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_prepared_boundary_race.py", line 19, in test_expiry_during_liveness_observation_refuses
+    self.check_race(lambda f:f.f.store.db.execute("update development_jobs set expires=0 where id='next-a'"))
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_prepared_boundary_race.py", line 16, in check_race
+    self.assertEqual(f.calls,0,'dispatch crossed stale task boundary')
+AssertionError: 1 != 0 : dispatch crossed stale task boundary
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.040s
+
+FAILED (failures=2)

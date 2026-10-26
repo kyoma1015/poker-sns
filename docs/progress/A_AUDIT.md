@@ -30,3 +30,32 @@ New phased fixed baselines5/4FAIL +1/1FAIL +4/1FAIL +5/4FAIL, then15PASS/ten rou
 
 ## Trusted host stop boundary — 2026-10-23
 PR113-based opt-in InvocationGuard.call_host preparation: pre/post stop/deadline, positive liveness, preserve-before-return. Eleven missing-capability cases1FAIL/10ERROR ->11PASS, ten rounds110PASS; old85/22/15/9/8/1/5PASS. Temporary callbacks/DB only, no actual formalhost or scheduler connection. Source-only finite guard reuse, retained45jobs untouched. See docs/workers/HOST_CALL_BOUNDARY_20261023.md. Hard watchdog/containment and real cancellation remain gates; pollNO-GO.
+
+## Corrupt running evidence fail-closed — 2026-10-23
+PR117 follow-up: exact-parent corrected8test/37failure observations →8PASS; activation race4FAIL→4PASS, supporting2CAS/resumePASS, ten rounds140PASS. Existing156PASS. All running malformed/legacy/missing evidence preserved and blocks all lanes; new typed not_started leases plus token/status/expiry activationCAS preserve normal expiry/retry while refusing old-owner dispatch. No heldstate mutation or host activation. Evidence docs/workers/CORRUPT_EVIDENCE_20261023.md and docs/qa/corrupt-evidence-20261023/. Independent read-only review conditional, formalhost/watchdog incomplete, pollNO-GO.
+
+## Quota recovery and acquired identity —2026-10-24
+Resumed existing WIP on PR121 base, fixed7/4FAIL→7PASS. Independent completion-binding reproduction2FAIL→2PASS; actual temporary SQLite/Git plus source-pinned32pair and8processWAL QA. Local191PASS +new11×10=110PASS. No oldtests modified. Draft/CI not attempted after new-PR automatic approval rejection in parallel lanes; branch evidence only, not CI PASS. See docs/workers/LEASE_IDENTITY_RESUME_20261024.md. No retainedstate/controller/main/production operation.
+
+## Prepared boundary integration —2026-10-24
+Preserved spec binding; new opt-in same-state prepared adapter with pre-dispatch identity recheck, UNKNOWN CAS retention and cooperative stop through acceptance/staging/commit. Missing API1importERROR/0methods ->8PASS; observation races2FAIL→2PASS; independent stop gap3FAIL→3PASS. Final205PASS, old110/new140 repeatedPASS; actual temp SQLite/Git/private-file/fresh-Python only, no real host/coldstart. Source/limits/blocked2 review in docs/workers/PREPARED_HOST_BOUNDARY_20261024.md. No new PR/CI dispatch/runtime/main/production adoption.
+
+## 2026-10-24 isolated private journal follow-up
+
+See `docs/workers/PRIVATE_JOURNAL_20261024.md`: private append-only hash-chain primitive and fixed temporary crash/integrity acceptance added, with external pinned-head requirement. No formal host/controller connection. Actual temporary Git reproduction confirms cooperative stop cannot atomically prevent a commit after the final check; this remains an explicit limitation. Retained state and production untouched; no new PR/manual CI.
+
+## 2026-10-24 trusted-pin recovery follow-up
+
+`JOURNAL_CHECKPOINT_20261024.md` records the opt-in external trusted intent/CAS lifecycle, crash recovery, operation-ID deduplication and temporary queue/finite-budget integration. No formal store/controller adoption; authenticated external callback implementation remains an integration gate. Inherited tree-fixture timing failures and bounded retry are retained in QA evidence.
+
+## 2026-10-24 process-fixture timing root causes
+
+Two fixed fixture failures now pass after bounded topology readiness and atomic generated-source publication. See `TREE_FIXTURE_READINESS_20261024.md`; automation142 + worker85 =227PASS. Assertions/timeouts retained; two existing fixture files intentionally changed and original SHA references retained. Runtime adoption and independent startup remain unproved.
+
+## 2026-10-25 DM inbox functional continuation
+
+The individual chat guards are now extended to the inbox: synchronous auth invalidation, keyed account identity, latest-generation reads, scoped query/client filtering, cleanup and explicit redacted reload. Fixed original8FAIL→8PASS in actual React/mobile Chromium with synthetic transport; full commands and results in docs/qa/dm-inbox-20261025/. Authentic isolated RLS/idempotency remain separate BLOCKED gates; no DB/schema/runtime adoption. Product-level acceptance ledger: docs/workers/FEATURE_COMPLETION_20261025.md.
+
+## 2026-10-26 notification flow completion
+
+Actual notification screen now isolates accounts, denies stale loads/acknowledgements, confirms owner-scoped returned UPDATE rows, recovers generic failures and subscribes to scoped realtime. Seven fixed mobile cases and full123frontend/239Python local regressions pass; see docs/qa/notification-flow-20261026/. Read-only77PR reconciliation and main-conflict evidence are in docs/qa/integration-readiness-20261026/. DM authoritative SQL unavailable across those tracked heads; reviewed artifact/isolation conditions are in docs/workers/DM_ISOLATED_QA_REQUIREMENTS_20261026.md. No production/schema/state/runtime adoption.

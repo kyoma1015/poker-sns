@@ -1,0 +1,6 @@
+test_saved_private_result_and_work_resume_without_run_reset (__main__.DurableResume.test_saved_private_result_and_work_resume_without_run_reset) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.186s
+
+OK

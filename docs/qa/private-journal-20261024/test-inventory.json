@@ -1,0 +1,420 @@
+{
+  "baseline": "f71a980270e74a60d48e7b2a1278d3e4a0c7b164",
+  "baseline_discovered_executions": 206,
+  "baseline_unique_ids": 206,
+  "final_discovered_executions": 216,
+  "final_unique_ids": 216,
+  "added_ids": [
+    "test_git_stop_race_limit.GitStopRaceLimit.test_stop_after_final_check_can_still_commit_expected_limitation",
+    "test_private_journal.JournalTests.test_crossprocess_same_head_one_winner",
+    "test_private_journal.JournalTests.test_lock_timeout_is_bounded_and_permissions_rechecked",
+    "test_private_journal.JournalTests.test_missing_reordered_and_truncated_rejected",
+    "test_private_journal.JournalTests.test_nonfinite_and_symlink_refused",
+    "test_private_journal.JournalTests.test_partial_publish_and_processdeath_leave_prior_head",
+    "test_private_journal.JournalTests.test_processdeath_after_publish_requires_external_reconciliation",
+    "test_private_journal.JournalTests.test_reordered_records_and_truncated_tail",
+    "test_private_journal.JournalTests.test_roundtrip_private_and_immutable",
+    "test_private_journal.JournalTests.test_tamper_rejected"
+  ],
+  "removed_ids": [],
+  "duplicate_ids": {},
+  "baseline_test_files": [
+    {
+      "path": "tests/automation/owned_tree_probe.py",
+      "sha256": "2c15b9a67d4320368e5315a96d8ffa292b311e2a977f7f27380165e4ac681773",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_activation_binding.py",
+      "sha256": "9eb205ac136e662756a03d143a9d09edcbf236025c51e5c71a63201140b23306",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_activation_cas.py",
+      "sha256": "47b492b45e0b9e4238f4ad75fb39570152698aa77ffd62fa1978ef4892df3b19",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_code_worker.py",
+      "sha256": "71216186a80df56b8b5b0a832948f8c54b25f4fc0fcda119856f66db15e99e8f",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_command_process_cleanup.py",
+      "sha256": "24bf84b2a4e6512fffbca899c71d4dc8cb20cca2702994fb75f5226be28e77b0",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_controller_integration.py",
+      "sha256": "31bf1cdd4d4218fc68bab3d02bc67a3a041e7c30ac6ffdf974b1858e0e7f891f",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_corrupt_evidence.py",
+      "sha256": "d6bd4f8baf4ce19d0f9b3b15aa68455568ff08d9c01d60cb2a823bcb6e85454b",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_development_queue.py",
+      "sha256": "7e2e24a7464cd5b14b4e87aff0f00833044f4479fbf6b12b8d24cafa0e79879f",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_evidence_activation.py",
+      "sha256": "55a71cf11bdeb7abc7aa4d48dd5d59d79aeb075a6bc9999d897ad197ee49efac",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_finish_binding.py",
+      "sha256": "1b26e1de69cacaf01e4ca0ecef5e16a48b1db68137f87a3f4ce21db6e3035a0b",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_host_boundary_restart.py",
+      "sha256": "3164df673e78cd664e666845f61206f730db309707ee247c3c600672878baba6",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_host_call_boundary.py",
+      "sha256": "29036a792749c4696227af9c3359acc26b7b7d97dabb9a476b358e02dea0b1f4",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_host_unknown_liveness.py",
+      "sha256": "a34ef2d72eb3b55fd3883b3654637514598c1ca928f66de03dad13738d4a3184",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_lease_integration_matrix.py",
+      "sha256": "14f053a6d54b21c2d4aed74c0f624be3a74a5996820e86f3813394eebe13edcd",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_prepared_boundary_race.py",
+      "sha256": "8598f52c5574337870af108efe701f2eea1bfc61103f34cfb30437098ec049d2",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_prepared_commit_stop.py",
+      "sha256": "22fc34be0a40ebe6eeda2cf4791806b1e229903321d33efc3c85de344923f029",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_prepared_durable_resume.py",
+      "sha256": "52e5e5a5f0af05bf0dbd2a1f5ace3db96402637fbc123693e6a9a0054181cc1a",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_prepared_host_boundary.py",
+      "sha256": "171811121d222d3e1a7fcc09075726efd9ec784c4618470d69dc254bdd516f80",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_unknown_liveness_expiry.py",
+      "sha256": "f1f280fb11a7f61228f25c09678677d11dd8f85f67fc68c422f40d05d707c2dc",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_worker_io_bounds.py",
+      "sha256": "eb1dceed67f3972c8cc7981efcc1abe4b28c8a8ad3b902446d812b546212c90a",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_worker_recovery_lifecycle.py",
+      "sha256": "7bac082b87a29eda75782b94666f415583dc52d71fac7720185637b52954deae",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_worker_tree_boundaries.py",
+      "sha256": "4a5d5c3804741646709bd64929a61e5572473177cf9b5b628ce6851fba7af218",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/browser/entry.tsx",
+      "sha256": "d6318e96cbe6318736c2d17348aa91a7dc57704705a0967c92d44ad3098f9584",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/browser/poll-only.mjs",
+      "sha256": "3397e39662b47b7cd21bb7567d163ac0650347a6dd7d65d1c00261fd5e867eab",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/browser/supabase.ts",
+      "sha256": "ec67e421eaba3640e9bf1cf8cf889cc5acd783ba2931d6d4b6682faa371b39d0",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/f03-notification.test.mjs",
+      "sha256": "87542ccd9acfcf31d6caa11be071401ea75411ca32ecbace6a427c75313b9896",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/fixtures/player-type-v2.json",
+      "sha256": "ef15e04c485f090f72707656a9127c54a855c98e2453771ad86c68068cfe4d2c",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/interactive-requests.test.mjs",
+      "sha256": "6f80875b0ddc39f5dc94393f38c6fb4a6fa161b3b373172d3ab7adb9ac7cd1dc",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/player-type.test.mjs",
+      "sha256": "b45c46e5a1ffd100440391209d96f23db5e6d06db2ef62063b7864a3ddd7e003",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/poll-only.test.mjs",
+      "sha256": "45cc00bfd30b4d68913088b9d284d589ccab775fa5a42e9569ca7437e8395a83",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/tda-quiz-auth.test.mjs",
+      "sha256": "bfcb25a3ec432b2b99f85c9deae5fb68c819d31d1b7dbdd8ba2c1e8af0299696",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_continuation_recovery.py",
+      "sha256": "1d6d8d526006494d869921892dc3ff7d75f1f3cf18f8e0eeeb96a65aa47d8480",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_discovery_preview.py",
+      "sha256": "61de61d1c67ea9db1443a501a703fe0d845cb65d75d6590cdf861a13996c0617",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_discovery_store.py",
+      "sha256": "f47a506749c98265db23a37fd629c3fd597e29066882444686effcf247fc3fa8",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_finite_lease.py",
+      "sha256": "d497616524d2bdee11afcb9fd39519bc0e270bdea29a2f6dd4d17cb60fa2456f",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_finite_setup.py",
+      "sha256": "d6b0a334d65dd70bc000d296144e471d7f4cef301191fd84be9e7b07aee4a7e7",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_invocation_clock.py",
+      "sha256": "a131098e56526a47e53d16b518f766fd37710cbf17939e0579178c1f26097eb1",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_invocation_guard.py",
+      "sha256": "f8593516179c8f0e2dc112a1e00b56af77cf56935419567932f4e73989b5e732",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_lease_initialization.py",
+      "sha256": "f9957c370e68934dc4bf6caa4080c1672e08901a06c6f8d6de76c9a87aa793c0",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_pr_overlap.py",
+      "sha256": "7a7d4988fbdca1bb720f59701973fee1975fe173b2d9006356a256c648129a0d",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_publication_checkpoint.py",
+      "sha256": "66f0518fa9a5dafef69ee75cdd19320651ae261ab005cab313a4b14faa9efb6a",
+      "byte_identical": true
+    }
+  ],
+  "all_baseline_test_files_identical": true,
+  "protected37_base": "6daef0ac8e7d1766f83605c554c6100723ac8730",
+  "protected37_files": [
+    {
+      "path": "tests/automation/owned_tree_probe.py",
+      "sha256": "2c15b9a67d4320368e5315a96d8ffa292b311e2a977f7f27380165e4ac681773",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_activation_binding.py",
+      "sha256": "9eb205ac136e662756a03d143a9d09edcbf236025c51e5c71a63201140b23306",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_activation_cas.py",
+      "sha256": "47b492b45e0b9e4238f4ad75fb39570152698aa77ffd62fa1978ef4892df3b19",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_code_worker.py",
+      "sha256": "71216186a80df56b8b5b0a832948f8c54b25f4fc0fcda119856f66db15e99e8f",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_command_process_cleanup.py",
+      "sha256": "24bf84b2a4e6512fffbca899c71d4dc8cb20cca2702994fb75f5226be28e77b0",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_controller_integration.py",
+      "sha256": "31bf1cdd4d4218fc68bab3d02bc67a3a041e7c30ac6ffdf974b1858e0e7f891f",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_corrupt_evidence.py",
+      "sha256": "d6bd4f8baf4ce19d0f9b3b15aa68455568ff08d9c01d60cb2a823bcb6e85454b",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_development_queue.py",
+      "sha256": "7e2e24a7464cd5b14b4e87aff0f00833044f4479fbf6b12b8d24cafa0e79879f",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_evidence_activation.py",
+      "sha256": "55a71cf11bdeb7abc7aa4d48dd5d59d79aeb075a6bc9999d897ad197ee49efac",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_finish_binding.py",
+      "sha256": "1b26e1de69cacaf01e4ca0ecef5e16a48b1db68137f87a3f4ce21db6e3035a0b",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_host_boundary_restart.py",
+      "sha256": "3164df673e78cd664e666845f61206f730db309707ee247c3c600672878baba6",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_host_call_boundary.py",
+      "sha256": "29036a792749c4696227af9c3359acc26b7b7d97dabb9a476b358e02dea0b1f4",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_host_unknown_liveness.py",
+      "sha256": "a34ef2d72eb3b55fd3883b3654637514598c1ca928f66de03dad13738d4a3184",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_lease_integration_matrix.py",
+      "sha256": "14f053a6d54b21c2d4aed74c0f624be3a74a5996820e86f3813394eebe13edcd",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_unknown_liveness_expiry.py",
+      "sha256": "f1f280fb11a7f61228f25c09678677d11dd8f85f67fc68c422f40d05d707c2dc",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_worker_io_bounds.py",
+      "sha256": "eb1dceed67f3972c8cc7981efcc1abe4b28c8a8ad3b902446d812b546212c90a",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_worker_recovery_lifecycle.py",
+      "sha256": "7bac082b87a29eda75782b94666f415583dc52d71fac7720185637b52954deae",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/automation/test_worker_tree_boundaries.py",
+      "sha256": "4a5d5c3804741646709bd64929a61e5572473177cf9b5b628ce6851fba7af218",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/browser/entry.tsx",
+      "sha256": "d6318e96cbe6318736c2d17348aa91a7dc57704705a0967c92d44ad3098f9584",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/browser/poll-only.mjs",
+      "sha256": "3397e39662b47b7cd21bb7567d163ac0650347a6dd7d65d1c00261fd5e867eab",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/browser/supabase.ts",
+      "sha256": "ec67e421eaba3640e9bf1cf8cf889cc5acd783ba2931d6d4b6682faa371b39d0",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/f03-notification.test.mjs",
+      "sha256": "87542ccd9acfcf31d6caa11be071401ea75411ca32ecbace6a427c75313b9896",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/fixtures/player-type-v2.json",
+      "sha256": "ef15e04c485f090f72707656a9127c54a855c98e2453771ad86c68068cfe4d2c",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/interactive-requests.test.mjs",
+      "sha256": "6f80875b0ddc39f5dc94393f38c6fb4a6fa161b3b373172d3ab7adb9ac7cd1dc",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/player-type.test.mjs",
+      "sha256": "b45c46e5a1ffd100440391209d96f23db5e6d06db2ef62063b7864a3ddd7e003",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/poll-only.test.mjs",
+      "sha256": "45cc00bfd30b4d68913088b9d284d589ccab775fa5a42e9569ca7437e8395a83",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/tda-quiz-auth.test.mjs",
+      "sha256": "bfcb25a3ec432b2b99f85c9deae5fb68c819d31d1b7dbdd8ba2c1e8af0299696",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_continuation_recovery.py",
+      "sha256": "1d6d8d526006494d869921892dc3ff7d75f1f3cf18f8e0eeeb96a65aa47d8480",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_discovery_preview.py",
+      "sha256": "61de61d1c67ea9db1443a501a703fe0d845cb65d75d6590cdf861a13996c0617",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_discovery_store.py",
+      "sha256": "f47a506749c98265db23a37fd629c3fd597e29066882444686effcf247fc3fa8",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_finite_lease.py",
+      "sha256": "d497616524d2bdee11afcb9fd39519bc0e270bdea29a2f6dd4d17cb60fa2456f",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_finite_setup.py",
+      "sha256": "d6b0a334d65dd70bc000d296144e471d7f4cef301191fd84be9e7b07aee4a7e7",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_invocation_clock.py",
+      "sha256": "a131098e56526a47e53d16b518f766fd37710cbf17939e0579178c1f26097eb1",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_invocation_guard.py",
+      "sha256": "f8593516179c8f0e2dc112a1e00b56af77cf56935419567932f4e73989b5e732",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_lease_initialization.py",
+      "sha256": "f9957c370e68934dc4bf6caa4080c1672e08901a06c6f8d6de76c9a87aa793c0",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_pr_overlap.py",
+      "sha256": "7a7d4988fbdca1bb720f59701973fee1975fe173b2d9006356a256c648129a0d",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/worker_acceptance/test_publication_checkpoint.py",
+      "sha256": "66f0518fa9a5dafef69ee75cdd19320651ae261ab005cab313a4b14faa9efb6a",
+      "byte_identical": true
+    }
+  ],
+  "protected37_all_identical": true,
+  "historical205_omitted_existing_test": "test_host_unknown_liveness.HostUnknownLiveness.test_acceptance_cleanup_unknown_preserves_running_context",
+  "count_explanation": "Historical selected suites recorded205; baseline complete discovery206 includes one existing host_unknown_liveness test omitted by that selected suite list. Current complete discovery216 = baseline206 + journal9 + Git race limitation1. No duplicate test IDs."
+}

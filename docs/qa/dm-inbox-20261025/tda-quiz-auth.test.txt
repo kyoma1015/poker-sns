@@ -1,0 +1,19 @@
+✔ guest cannot start and does not make a user lookup (1.691937ms)
+✔ valid session and verified user can answer (1.059641ms)
+✔ user lookup transport error {"status":0} keeps retry guidance (0.424061ms)
+✔ user lookup transport error {"status":503} keeps retry guidance (0.209116ms)
+✔ user lookup transport error {"name":"AuthRetryableFetchError"} keeps retry guidance (0.146862ms)
+✔ expired authentication {"status":401} asks for login (0.184539ms)
+✔ expired authentication {"code":"session_not_found"} asks for login (0.182906ms)
+✔ expired authentication {"name":"AuthSessionMissingError"} asks for login (0.18538ms)
+✔ session transport error does not claim expiry (0.332743ms)
+✔ thrown transport error does not escape the UI action (0.371332ms)
+✔ missing verified user asks for login (0.269838ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 31.946165

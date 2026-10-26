@@ -1,0 +1,7 @@
+test_context_corruption_during_liveness_observation_refuses (__main__.PreparedRace.test_context_corruption_during_liveness_observation_refuses) ... ok
+test_expiry_during_liveness_observation_refuses (__main__.PreparedRace.test_expiry_during_liveness_observation_refuses) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.055s
+
+OK

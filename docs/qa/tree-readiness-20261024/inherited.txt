@@ -1,0 +1,13 @@
+.F..
+======================================================================
+FAIL: test_parent_death_during_stdin_retains_file_and_unknown_worker (test_worker_tree_boundaries.WorkerTreeBoundaries.test_parent_death_during_stdin_retains_file_and_unknown_worker)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_worker_tree_boundaries.py", line 40, in test_parent_death_during_stdin_retains_file_and_unknown_worker
+    self.assertEqual((base/'source.py').read_bytes(),retained)
+AssertionError: b'uncommitted=1\n' != b''
+
+----------------------------------------------------------------------
+Ran 4 tests in 3.614s
+
+FAILED (failures=1)

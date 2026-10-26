@@ -1,0 +1,341 @@
+test_bad_active_evidence_refuses_other_lane_before_expiry (__main__.CorruptEvidence.test_bad_active_evidence_refuses_other_lane_before_expiry) ... FAIL
+test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) ... 
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='malformed', lane='A') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='malformed', lane='B') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='null', lane='A') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='null', lane='B') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='jsonnull', lane='A') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='jsonnull', lane='B') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='bool', lane='A') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='bool', lane='B') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='number', lane='A') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='number', lane='B') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='string', lane='A') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='string', lane='B') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='array', lane='A') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='array', lane='B') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='empty', lane='A') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='empty', lane='B') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='missing_liveness', lane='A') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='missing_liveness', lane='B') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='missing_version', lane='A') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='missing_version', lane='B') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='unknown', lane='A') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='unknown', lane='B') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='null_liveness', lane='A') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='null_liveness', lane='B') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='flag_string', lane='A') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='flag_string', lane='B') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='duplicate', lane='A') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='duplicate', lane='B') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='nan', lane='A') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='nan', lane='B') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='exponent', lane='A') ... FAIL
+  test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='exponent', lane='B') ... FAIL
+test_expired_known_running_is_not_a_death_certificate (__main__.CorruptEvidence.test_expired_known_running_is_not_a_death_certificate) ... FAIL
+test_host_boundary_unknown_with_corrupt_context_refuses_new_claim (__main__.CorruptEvidence.test_host_boundary_unknown_with_corrupt_context_refuses_new_claim) ... FAIL
+test_multiprocess_corrupt_expiry_has_zero_winners_and_preserves_row (__main__.CorruptEvidence.test_multiprocess_corrupt_expiry_has_zero_winners_and_preserves_row) ... FAIL
+test_normal_claim_has_explicit_nonexecuting_evidence (__main__.CorruptEvidence.test_normal_claim_has_explicit_nonexecuting_evidence) ... FAIL
+test_normal_nonstarted_expiry_completion_and_retry_remain_bounded (__main__.CorruptEvidence.test_normal_nonstarted_expiry_completion_and_retry_remain_bounded) ... ok
+test_rollback_after_later_claim_validation_error_keeps_expired_row (__main__.CorruptEvidence.test_rollback_after_later_claim_validation_error_keeps_expired_row) ... ok
+
+======================================================================
+FAIL: test_bad_active_evidence_refuses_other_lane_before_expiry (__main__.CorruptEvidence.test_bad_active_evidence_refuses_other_lane_before_expiry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 59, in test_bad_active_evidence_refuses_other_lane_before_expiry
+    self.assertTrue(self.l.claim(task('new','B'),now=101) is None,'active NULL allowed another lane')
+AssertionError: False is not true : active NULL allowed another lane
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='malformed', lane='A')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for malformed/A
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='malformed', lane='B')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for malformed/B
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='null', lane='A')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for null/A
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='null', lane='B')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for null/B
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='jsonnull', lane='A')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for jsonnull/A
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='jsonnull', lane='B')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for jsonnull/B
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='bool', lane='A')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for bool/A
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='bool', lane='B')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for bool/B
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='number', lane='A')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for number/A
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='number', lane='B')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for number/B
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='string', lane='A')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for string/A
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='string', lane='B')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for string/B
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='array', lane='A')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for array/A
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='array', lane='B')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for array/B
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='empty', lane='A')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for empty/A
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='empty', lane='B')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for empty/B
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='missing_liveness', lane='A')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for missing_liveness/A
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='missing_liveness', lane='B')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for missing_liveness/B
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='missing_version', lane='A')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for missing_version/A
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='missing_version', lane='B')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for missing_version/B
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='unknown', lane='A')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for unknown/A
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='unknown', lane='B')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for unknown/B
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='null_liveness', lane='A')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for null_liveness/A
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='null_liveness', lane='B')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for null_liveness/B
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='flag_string', lane='A')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for flag_string/A
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='flag_string', lane='B')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for flag_string/B
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='duplicate', lane='A')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for duplicate/A
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='duplicate', lane='B')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for duplicate/B
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='nan', lane='A')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for nan/A
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='nan', lane='B')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for nan/B
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='exponent', lane='A')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for exponent/A
+
+======================================================================
+FAIL: test_bad_evidence_refuses_same_and_other_lane_without_any_row_change (__main__.CorruptEvidence.test_bad_evidence_refuses_same_and_other_lane_without_any_row_change) (value='exponent', lane='B')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 55, in test_bad_evidence_refuses_same_and_other_lane_without_any_row_change
+    self.assertTrue(claimed is None,'unsafe claim succeeded for '+name+'/'+lane)
+AssertionError: False is not true : unsafe claim succeeded for exponent/B
+
+======================================================================
+FAIL: test_expired_known_running_is_not_a_death_certificate (__main__.CorruptEvidence.test_expired_known_running_is_not_a_death_certificate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 63, in test_expired_known_running_is_not_a_death_certificate
+    self.assertTrue(self.l.claim(task('new','B'),now=200) is None,'expired running was taken over')
+AssertionError: False is not true : expired running was taken over
+
+======================================================================
+FAIL: test_host_boundary_unknown_with_corrupt_context_refuses_new_claim (__main__.CorruptEvidence.test_host_boundary_unknown_with_corrupt_context_refuses_new_claim)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 106, in test_host_boundary_unknown_with_corrupt_context_refuses_new_claim
+    self.assertTrue(f.store.leases.claim(f.task('next-b','B'),now=10000) is None)
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_multiprocess_corrupt_expiry_has_zero_winners_and_preserves_row (__main__.CorruptEvidence.test_multiprocess_corrupt_expiry_has_zero_winners_and_preserves_row)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 83, in test_multiprocess_corrupt_expiry_has_zero_winners_and_preserves_row
+    self.assertEqual(sum(f.result(timeout=15) for f in futures),0)
+AssertionError: 4 != 0
+
+======================================================================
+FAIL: test_normal_claim_has_explicit_nonexecuting_evidence (__main__.CorruptEvidence.test_normal_claim_has_explicit_nonexecuting_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-corrupt-evidence/tests/automation/test_corrupt_evidence.py", line 67, in test_normal_claim_has_explicit_nonexecuting_evidence
+    self.assertTrue(isinstance(raw,str),'new claim has NULL evidence')
+AssertionError: False is not true : new claim has NULL evidence
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.412s
+
+FAILED (failures=37)

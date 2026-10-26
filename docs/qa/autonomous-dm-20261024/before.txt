@@ -1,0 +1,68 @@
+✖ DM repeated Enter during block verification sends exactly once (1714.285488ms)
+✖ DM repeated Enter while insert is pending cannot create another message (1232.442569ms)
+3:36:15 PM [vite] (client) [Unhandled rejection] Error: SYNTHETIC_PRIVATE_ERROR
+ > Object.insert tests/browser/dm-supabase.ts:17:76
+    15 |      insert(value: unknown) {
+    16 |        qa.inserts.push(value)
+    17 |        if (qa.rejectInsert) { qa.rejectInsert = false; return Promise.reject(new Error('SYNTHETIC_PRIVATE_ERROR')) }
+       |                                                                              ^
+    18 |        if (qa.holdInsert) return new Promise(done => qa.insertWaiters.push(done))
+    19 |        return Promise.resolve({ error: null })
+ > handleSend src/DirectMessageChat.tsx:368:9
+
+✖ DM rejected transport unlocks retry and does not display backend details (2441.140802ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5392.909501
+
+✖ failing tests:
+
+test at tests/direct-message-send.test.mjs:29:1
+✖ DM repeated Enter during block verification sends exactly once (1714.285488ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 1
+  
+      at file:///workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:37:10
+      at async withChat (file:///workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:25:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/direct-message-send.test.mjs:39:1
+✖ DM repeated Enter while insert is pending cannot create another message (1232.442569ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 1
+  
+      at file:///workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:45:10
+      at async withChat (file:///workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:25:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/direct-message-send.test.mjs:47:1
+✖ DM rejected transport unlocks retry and does not display backend details (2441.140802ms)
+  page.waitForFunction: Timeout 1200ms exceeded.
+      at /workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:50:14
+      at async withChat (/workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:25:5) {
+    log: [],
+    name: 'TimeoutError'
+  }

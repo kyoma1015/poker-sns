@@ -1,0 +1,49 @@
+name: Acquired lease identity integration (isolated)
+on:
+  pull_request:
+    branches: [codex/a-corrupt-evidence-20261023]
+    paths:
+      - 'scripts/code_worker.py'
+      - 'scripts/prepared_host_boundary.py'
+      - 'tests/automation/test_prepared_host_boundary.py'
+      - 'tests/automation/test_prepared_boundary_race.py'
+      - 'tests/automation/test_prepared_commit_stop.py'
+      - 'tests/automation/test_prepared_durable_resume.py'
+      - 'tests/automation/test_activation_binding.py'
+      - 'tests/automation/test_finish_binding.py'
+      - 'tests/automation/test_lease_integration_matrix.py'
+      - '.github/workflows/lease-acquisition-binding.yml'
+permissions:
+  contents: read
+concurrency:
+  group: lease-acquisition-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+jobs:
+  isolated-identity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Existing immutable and recovery suites
+        run: |
+          python -B -m unittest discover -s tests/worker_acceptance -v
+          for suite in test_code_worker test_development_queue test_controller_integration test_worker_recovery_lifecycle test_host_call_boundary test_host_boundary_restart test_unknown_liveness_expiry test_corrupt_evidence test_evidence_activation test_activation_cas test_worker_io_bounds test_worker_tree_boundaries test_command_process_cleanup; do
+            python -B tests/automation/$suite.py -v || exit 1
+          done
+      - name: Ten acquired identity and source pinned matrix rounds
+        run: |
+          for round in $(seq 1 10); do
+            python -B tests/automation/test_activation_binding.py -v || exit 1
+            python -B tests/automation/test_finish_binding.py -v || exit 1
+            python -B tests/automation/test_lease_integration_matrix.py -v || exit 1
+            python -B tests/automation/test_prepared_host_boundary.py -v || exit 1
+            python -B tests/automation/test_prepared_boundary_race.py -v || exit 1
+            python -B tests/automation/test_prepared_commit_stop.py -v || exit 1
+            python -B tests/automation/test_prepared_durable_resume.py -v || exit 1
+          done

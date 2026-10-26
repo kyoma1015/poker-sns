@@ -1,0 +1,36 @@
+✔ DM repeated Enter during block verification sends exactly once (1595.633077ms)
+✔ DM repeated Enter while insert is pending cannot create another message (1297.047564ms)
+✔ DM rejected transport unlocks retry and does not display backend details (1255.355654ms)
+✔ DM returned insert error preserves draft, redacts details and permits explicit retry (1382.474441ms)
+✔ DM block verification error fails closed without writing (1269.818859ms)
+✔ DM accepted write followed by reload failure is reported as sent without restoring draft (1189.322762ms)
+✔ DM whitespace and IME composition never write a message (1235.317589ms)
+✖ DM a late response from the previous conversation cannot replace the current messages (1278.26212ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10509.279029
+
+✖ failing tests:
+
+test at tests/direct-message-send.test.mjs:83:1
+✖ DM a late response from the previous conversation cannot replace the current messages (1278.26212ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /THIRD_SYNTHETIC/. Input:
+  
+  '‹\n♠\nAnother synthetic player\n@synthetic\n今日\nOTHER_SYNTHETIC\n00:00\n↑'
+  
+      at file:///workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:94:10
+      at async withChat (file:///workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:25:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '‹\n♠\nAnother synthetic player\n@synthetic\n今日\nOTHER_SYNTHETIC\n00:00\n↑',
+    expected: /THIRD_SYNTHETIC/,
+    operator: 'match',
+    diff: 'simple'
+  }

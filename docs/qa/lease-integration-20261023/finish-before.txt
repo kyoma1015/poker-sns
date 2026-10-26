@@ -1,0 +1,25 @@
+test_finish_rejects_changed_spec_without_mutation (__main__.FinishBinding.test_finish_rejects_changed_spec_without_mutation) ... FAIL
+test_host_context_task_mismatch_refuses_before_source_commit (__main__.FinishBinding.test_host_context_task_mismatch_refuses_before_source_commit) ... FAIL
+
+======================================================================
+FAIL: test_finish_rejects_changed_spec_without_mutation (__main__.FinishBinding.test_finish_rejects_changed_spec_without_mutation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_finish_binding.py", line 14, in test_finish_rejects_changed_spec_without_mutation
+    with self.assertRaises(ValueError):l.finish('owned',token,'implemented',{},now=102)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_host_context_task_mismatch_refuses_before_source_commit (__main__.FinishBinding.test_host_context_task_mismatch_refuses_before_source_commit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-lease-integration/tests/automation/test_finish_binding.py", line 24, in test_host_context_task_mismatch_refuses_before_source_commit
+    with self.assertRaises(ValueError):w.finish_host_session(f.state,'next-a',q['lease_token'],{'task_id':'next-a','dispatch_source':'collaboration','completed':True,'agent_id':'/root/owned_fixture','test_fixture':True},now=101)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.102s
+
+FAILED (failures=2)

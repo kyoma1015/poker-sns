@@ -1,4 +1,6 @@
 # Poker ID | 通常開発ボード
+
+Latest cross-product continuation navigation (2026-10-24 UTC): `DEVELOPMENT_MASTER_20261024.md` and `../workers/DEVELOPMENT_RESUME_INDEX_20261024.json`. These preserve implementation/test/CI/integration/release distinctions and do not authorize schedules or production actions. Older sections below remain historical evidence, not current HEAD/runtime claims.
 更新: 2026-10-20 JST
 
 通常開発再開: YES（開発ブランチ限定）。本番リリース: BLOCKED。

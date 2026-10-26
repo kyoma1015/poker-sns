@@ -1,0 +1,182 @@
+[
+  {
+    "round": 1,
+    "suite": "test_corrupt_evidence.py",
+    "exit": 0,
+    "log": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.367s\n\nOK\n"
+  },
+  {
+    "round": 1,
+    "suite": "test_evidence_activation.py",
+    "exit": 0,
+    "log": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.081s\n\nOK\n"
+  },
+  {
+    "round": 1,
+    "suite": "test_activation_cas.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.339s\n\nOK\n"
+  },
+  {
+    "round": 2,
+    "suite": "test_corrupt_evidence.py",
+    "exit": 0,
+    "log": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.363s\n\nOK\n"
+  },
+  {
+    "round": 2,
+    "suite": "test_evidence_activation.py",
+    "exit": 0,
+    "log": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.073s\n\nOK\n"
+  },
+  {
+    "round": 2,
+    "suite": "test_activation_cas.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.410s\n\nOK\n"
+  },
+  {
+    "round": 3,
+    "suite": "test_corrupt_evidence.py",
+    "exit": 0,
+    "log": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.373s\n\nOK\n"
+  },
+  {
+    "round": 3,
+    "suite": "test_evidence_activation.py",
+    "exit": 0,
+    "log": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.093s\n\nOK\n"
+  },
+  {
+    "round": 3,
+    "suite": "test_activation_cas.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.386s\n\nOK\n"
+  },
+  {
+    "round": 4,
+    "suite": "test_corrupt_evidence.py",
+    "exit": 0,
+    "log": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.352s\n\nOK\n"
+  },
+  {
+    "round": 4,
+    "suite": "test_evidence_activation.py",
+    "exit": 0,
+    "log": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.072s\n\nOK\n"
+  },
+  {
+    "round": 4,
+    "suite": "test_activation_cas.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.373s\n\nOK\n"
+  },
+  {
+    "round": 5,
+    "suite": "test_corrupt_evidence.py",
+    "exit": 0,
+    "log": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.372s\n\nOK\n"
+  },
+  {
+    "round": 5,
+    "suite": "test_evidence_activation.py",
+    "exit": 0,
+    "log": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.073s\n\nOK\n"
+  },
+  {
+    "round": 5,
+    "suite": "test_activation_cas.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.397s\n\nOK\n"
+  },
+  {
+    "round": 6,
+    "suite": "test_corrupt_evidence.py",
+    "exit": 0,
+    "log": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.355s\n\nOK\n"
+  },
+  {
+    "round": 6,
+    "suite": "test_evidence_activation.py",
+    "exit": 0,
+    "log": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.070s\n\nOK\n"
+  },
+  {
+    "round": 6,
+    "suite": "test_activation_cas.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.386s\n\nOK\n"
+  },
+  {
+    "round": 7,
+    "suite": "test_corrupt_evidence.py",
+    "exit": 0,
+    "log": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.362s\n\nOK\n"
+  },
+  {
+    "round": 7,
+    "suite": "test_evidence_activation.py",
+    "exit": 0,
+    "log": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.076s\n\nOK\n"
+  },
+  {
+    "round": 7,
+    "suite": "test_activation_cas.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.359s\n\nOK\n"
+  },
+  {
+    "round": 8,
+    "suite": "test_corrupt_evidence.py",
+    "exit": 0,
+    "log": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.333s\n\nOK\n"
+  },
+  {
+    "round": 8,
+    "suite": "test_evidence_activation.py",
+    "exit": 0,
+    "log": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.077s\n\nOK\n"
+  },
+  {
+    "round": 8,
+    "suite": "test_activation_cas.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.351s\n\nOK\n"
+  },
+  {
+    "round": 9,
+    "suite": "test_corrupt_evidence.py",
+    "exit": 0,
+    "log": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.334s\n\nOK\n"
+  },
+  {
+    "round": 9,
+    "suite": "test_evidence_activation.py",
+    "exit": 0,
+    "log": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.077s\n\nOK\n"
+  },
+  {
+    "round": 9,
+    "suite": "test_activation_cas.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.370s\n\nOK\n"
+  },
+  {
+    "round": 10,
+    "suite": "test_corrupt_evidence.py",
+    "exit": 0,
+    "log": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.351s\n\nOK\n"
+  },
+  {
+    "round": 10,
+    "suite": "test_evidence_activation.py",
+    "exit": 0,
+    "log": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.082s\n\nOK\n"
+  },
+  {
+    "round": 10,
+    "suite": "test_activation_cas.py",
+    "exit": 0,
+    "log": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.377s\n\nOK\n"
+  }
+]

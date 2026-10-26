@@ -1,0 +1,21 @@
+(node:19151) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ notification entry points use verified events and the saved comment ID (1.953764ms)
+✔ successful verified event returns null once (2.786042ms)
+✔ authorization/validation 401/unauthorized is never retried (0.862023ms)
+✔ authorization/validation 403/denied is never retried (0.838959ms)
+✔ authorization/validation 400/22023 is never retried (0.886891ms)
+✔ authorization/validation 200/42501 is never retried (0.819049ms)
+✔ HTTP 429 retries with the same event and recovers (1.440679ms)
+✔ HTTP 500 retries with the same event and recovers (0.768993ms)
+✔ HTTP 503 retries with the same event and recovers (1.238272ms)
+✔ network failure is retried at most three times (1.644937ms)
+✔ transport ignoring abort still finishes and aborts each of three attempts (4.102042ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 58.508952

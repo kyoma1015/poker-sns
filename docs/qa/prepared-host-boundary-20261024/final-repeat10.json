@@ -1,0 +1,362 @@
+[
+  {
+    "round": 1,
+    "suite": "test_activation_binding",
+    "exit": 0,
+    "tests": 7
+  },
+  {
+    "round": 1,
+    "suite": "test_finish_binding",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 1,
+    "suite": "test_lease_integration_matrix",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 1,
+    "suite": "test_prepared_host_boundary",
+    "exit": 0,
+    "tests": 8
+  },
+  {
+    "round": 1,
+    "suite": "test_prepared_boundary_race",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 1,
+    "suite": "test_prepared_commit_stop",
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "round": 2,
+    "suite": "test_activation_binding",
+    "exit": 0,
+    "tests": 7
+  },
+  {
+    "round": 2,
+    "suite": "test_finish_binding",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 2,
+    "suite": "test_lease_integration_matrix",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 2,
+    "suite": "test_prepared_host_boundary",
+    "exit": 0,
+    "tests": 8
+  },
+  {
+    "round": 2,
+    "suite": "test_prepared_boundary_race",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 2,
+    "suite": "test_prepared_commit_stop",
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "round": 3,
+    "suite": "test_activation_binding",
+    "exit": 0,
+    "tests": 7
+  },
+  {
+    "round": 3,
+    "suite": "test_finish_binding",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 3,
+    "suite": "test_lease_integration_matrix",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 3,
+    "suite": "test_prepared_host_boundary",
+    "exit": 0,
+    "tests": 8
+  },
+  {
+    "round": 3,
+    "suite": "test_prepared_boundary_race",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 3,
+    "suite": "test_prepared_commit_stop",
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "round": 4,
+    "suite": "test_activation_binding",
+    "exit": 0,
+    "tests": 7
+  },
+  {
+    "round": 4,
+    "suite": "test_finish_binding",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 4,
+    "suite": "test_lease_integration_matrix",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 4,
+    "suite": "test_prepared_host_boundary",
+    "exit": 0,
+    "tests": 8
+  },
+  {
+    "round": 4,
+    "suite": "test_prepared_boundary_race",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 4,
+    "suite": "test_prepared_commit_stop",
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "round": 5,
+    "suite": "test_activation_binding",
+    "exit": 0,
+    "tests": 7
+  },
+  {
+    "round": 5,
+    "suite": "test_finish_binding",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 5,
+    "suite": "test_lease_integration_matrix",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 5,
+    "suite": "test_prepared_host_boundary",
+    "exit": 0,
+    "tests": 8
+  },
+  {
+    "round": 5,
+    "suite": "test_prepared_boundary_race",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 5,
+    "suite": "test_prepared_commit_stop",
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "round": 6,
+    "suite": "test_activation_binding",
+    "exit": 0,
+    "tests": 7
+  },
+  {
+    "round": 6,
+    "suite": "test_finish_binding",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 6,
+    "suite": "test_lease_integration_matrix",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 6,
+    "suite": "test_prepared_host_boundary",
+    "exit": 0,
+    "tests": 8
+  },
+  {
+    "round": 6,
+    "suite": "test_prepared_boundary_race",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 6,
+    "suite": "test_prepared_commit_stop",
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "round": 7,
+    "suite": "test_activation_binding",
+    "exit": 0,
+    "tests": 7
+  },
+  {
+    "round": 7,
+    "suite": "test_finish_binding",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 7,
+    "suite": "test_lease_integration_matrix",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 7,
+    "suite": "test_prepared_host_boundary",
+    "exit": 0,
+    "tests": 8
+  },
+  {
+    "round": 7,
+    "suite": "test_prepared_boundary_race",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 7,
+    "suite": "test_prepared_commit_stop",
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "round": 8,
+    "suite": "test_activation_binding",
+    "exit": 0,
+    "tests": 7
+  },
+  {
+    "round": 8,
+    "suite": "test_finish_binding",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 8,
+    "suite": "test_lease_integration_matrix",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 8,
+    "suite": "test_prepared_host_boundary",
+    "exit": 0,
+    "tests": 8
+  },
+  {
+    "round": 8,
+    "suite": "test_prepared_boundary_race",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 8,
+    "suite": "test_prepared_commit_stop",
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "round": 9,
+    "suite": "test_activation_binding",
+    "exit": 0,
+    "tests": 7
+  },
+  {
+    "round": 9,
+    "suite": "test_finish_binding",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 9,
+    "suite": "test_lease_integration_matrix",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 9,
+    "suite": "test_prepared_host_boundary",
+    "exit": 0,
+    "tests": 8
+  },
+  {
+    "round": 9,
+    "suite": "test_prepared_boundary_race",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 9,
+    "suite": "test_prepared_commit_stop",
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "round": 10,
+    "suite": "test_activation_binding",
+    "exit": 0,
+    "tests": 7
+  },
+  {
+    "round": 10,
+    "suite": "test_finish_binding",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 10,
+    "suite": "test_lease_integration_matrix",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 10,
+    "suite": "test_prepared_host_boundary",
+    "exit": 0,
+    "tests": 8
+  },
+  {
+    "round": 10,
+    "suite": "test_prepared_boundary_race",
+    "exit": 0,
+    "tests": 2
+  },
+  {
+    "round": 10,
+    "suite": "test_prepared_commit_stop",
+    "exit": 0,
+    "tests": 3
+  }
+]

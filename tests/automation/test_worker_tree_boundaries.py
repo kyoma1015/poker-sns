@@ -21,7 +21,7 @@ class WorkerTreeBoundaries(unittest.TestCase):
     def test_parent_death_during_stdin_retains_file_and_unknown_worker(self):
         with tempfile.TemporaryDirectory(prefix='owned-stdin-death-') as directory:
             base=Path(directory);exe=base/'owned-worker'
-            exe.write_text('#!'+sys.executable+'\nfrom pathlib import Path\nimport time\nPath("source.py").write_text("uncommitted=1\\n")\ntime.sleep(30)\n');exe.chmod(0o700)
+            exe.write_text('#!'+sys.executable+'\nfrom pathlib import Path\nimport time\nPath("source.pending").write_text("uncommitted=1\\n");Path("source.pending").replace("source.py")\ntime.sleep(30)\n');exe.chmod(0o700)
             (base/'fixture-attestation.json').write_text(json.dumps({'auth_mode':'existing_chatgpt_subscription','owner_confirmed':True,'new_paid_services':False}))
             p=subprocess.Popen([sys.executable,'-B','-c',WATCHDOG,str(ROOT/'scripts'),str(base),'death'],
                                stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True,

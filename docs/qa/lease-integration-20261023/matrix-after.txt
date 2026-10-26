@@ -1,0 +1,8 @@
+test_eight_process_wal_claim_activation_has_one_owner_per_lane (__main__.LeaseIntegration.test_eight_process_wal_claim_activation_has_one_owner_per_lane) ... ok
+test_independent_exact_source_comparison_32_pairs (__main__.LeaseIntegration.test_independent_exact_source_comparison_32_pairs) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.532s
+
+OK
+Independent comparison: original32/32 unsafe; current0/32; all32 rows retained

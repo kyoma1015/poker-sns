@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import time
+from unittest.mock import patch
 
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'scripts'))
@@ -30,7 +31,8 @@ def reap(pid):
     return None
 
 
-def role(name,path,escaped):
+def role(name,path,escaped,setup_delay=0):
+    if name=='parent':time.sleep(setup_delay)
     signal.signal(signal.SIGTERM,signal.SIG_IGN)
     if name=='grand':
         print('READY',flush=True)
@@ -45,11 +47,14 @@ def role(name,path,escaped):
             print(json.dumps({'child':os.getpid(),'grand':child.pid}),flush=True)
         else:
             ids=json.loads(line);ids['leader']=os.getpid()
-            path.write_text(json.dumps(ids))
+            pending=path.with_suffix('.pending')
+            pending.write_text(json.dumps(ids))
+            os.replace(pending,path)
     time.sleep(30)
 
 
-def probe(path,escaped):
+def probe(path,escaped,setup_delay=0):
+    if not 0<=setup_delay<=1:raise ValueError('bounded fixture setup delay required')
     path=path.resolve()
     if (not path.is_relative_to(Path(tempfile.gettempdir()).resolve())
             or not path.parent.name.startswith('owned-tree-qa-')):
@@ -59,13 +64,30 @@ def probe(path,escaped):
     ids={}
     try:
         started=time.monotonic()
+        real_popen=subprocess.Popen
+        setup_seconds=None
+        def ready_popen(*args,**kwargs):
+            nonlocal setup_seconds
+            process=real_popen(*args,**kwargs)
+            deadline=time.monotonic()+2
+            while not path.exists():
+                if process.poll() is not None or time.monotonic()>=deadline:
+                    error=RuntimeError('fixture setup failed before readiness; cleanup not exercised')
+                    worker.cleanup_owned_process(process,error)
+                    raise error
+                time.sleep(.005)
+            setup_seconds=time.monotonic()-started
+            return process
         try:
-            worker.command([sys.executable,'-B',__file__,'--role','parent',str(path),str(int(escaped))],path.parent,timeout=.4)
+            # Fixture-only readiness gate; actual worker.command and its .4s
+            # runtime timeout/cleanup assertions remain unchanged.
+            with patch.object(worker.subprocess,'Popen',side_effect=ready_popen):
+                worker.command([sys.executable,'-B',__file__,'--role','parent',str(path),str(int(escaped)),str(setup_delay)],path.parent,timeout=.4)
             raise AssertionError('fixture must timeout')
         except subprocess.TimeoutExpired as error:
             unknown=getattr(error,'worker_liveness_unknown',False)
         ids=json.loads(path.read_text())
-        result={'ids':ids,'command_seconds':time.monotonic()-started,
+        result={'ids':ids,'setup_seconds':setup_seconds,'command_seconds':time.monotonic()-started,
                 'escaped_survived':alive(ids['grand']),'worker_liveness_unknown':unknown,
                 'child_reaped_signal':reap(ids['child'])}
         if escaped:
@@ -82,5 +104,5 @@ def probe(path,escaped):
 
 
 if __name__=='__main__':
-    if sys.argv[1]=='--role':role(sys.argv[2],Path(sys.argv[3]),sys.argv[4]=='1')
-    else:probe(Path(sys.argv[1]),sys.argv[2]=='1')
+    if sys.argv[1]=='--role':role(sys.argv[2],Path(sys.argv[3]),sys.argv[4]=='1',float(sys.argv[5]) if len(sys.argv)>5 else 0)
+    else:probe(Path(sys.argv[1]),sys.argv[2]=='1',float(sys.argv[3]) if len(sys.argv)>3 else 0)

@@ -1,0 +1,39 @@
+✔ DM repeated Enter during block verification sends exactly once (1510.902675ms)
+✔ DM repeated Enter while insert is pending cannot create another message (1625.29203ms)
+✔ DM rejected transport unlocks retry and does not display backend details (1162.201714ms)
+✔ DM returned insert error preserves draft, redacts details and permits explicit retry (1153.728072ms)
+✔ DM block verification error fails closed without writing (1150.827958ms)
+✔ DM accepted write followed by reload failure is reported as sent without restoring draft (1229.221742ms)
+✔ DM whitespace and IME composition never write a message (1147.134716ms)
+✔ DM a late response from the previous conversation cannot replace the current messages (1118.944585ms)
+✖ DM leaving and returning to the same peer cannot let an old send clear a new draft (1202.072817ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 8
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11307.068593
+
+✖ failing tests:
+
+test at tests/direct-message-send.test.mjs:97:1
+✖ DM leaving and returning to the same peer cannot let an old send clear a new draft (1202.072817ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + ''
+  - 'New visit draft'
+  
+      at file:///workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:107:10
+      at async withChat (file:///workspace/work/issue22-lease-integration/tests/direct-message-send.test.mjs:25:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '',
+    expected: 'New visit draft',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -221,6 +221,60 @@ def finite_lease_number(value, label):
     return value
 
 
+def running_evidence_state(raw):
+    """Fail closed on legacy/corrupt/ambiguous running state; never repair it here."""
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError('duplicate evidence key')
+            result[key] = value
+        return result
+
+    def invalid_constant(value):
+        raise ValueError('nonfinite evidence constant')
+
+    def finite_float(value):
+        parsed = float(value)
+        if not math.isfinite(parsed):
+            raise ValueError('nonfinite evidence number')
+        return parsed
+
+    if not isinstance(raw, str) or len(raw) > 1024 * 1024:
+        return 'unknown'
+    try:
+        prior = json.loads(raw, object_pairs_hook=unique, parse_constant=invalid_constant, parse_float=finite_float)
+    except (TypeError, ValueError, RecursionError):
+        return 'unknown'
+    if (type(prior) is not dict or type(prior.get('lease_evidence_version')) is not int
+            or prior.get('lease_evidence_version') != 1
+            or type(prior.get('worker_liveness')) is not str
+            or prior.get('worker_liveness') not in ('not_started', 'running', 'stopped')
+            or ('worker_liveness_unknown' in prior
+                and prior['worker_liveness_unknown'] is not False)):
+        return 'unknown'
+    return prior['worker_liveness']
+
+
+def bound_evidence_spec(raw, stored_spec, task_id):
+    if running_evidence_state(raw) == 'unknown':
+        return None
+    prior = json.loads(raw)
+    bound = prior.get('claimed_spec_hash')
+    if not isinstance(bound, str) or not re.fullmatch(r'[0-9a-f]{64}', bound) or bound != stored_spec:
+        return None
+    if 'task' in prior:
+        reviewed = prior['task']
+        if (type(reviewed) is not dict or reviewed.get('id') != task_id
+                or hashlib.sha256(json.dumps(reviewed, sort_keys=True).encode()).hexdigest() != bound):
+            return None
+    return bound
+
+
+class LeaseActivationRefused(ValueError):
+    lease_state_preserved = True
+
+
 class Leases:
     def __init__(self, path):
         with setup_lock(path):
@@ -248,13 +302,16 @@ class Leases:
         digest = hashlib.sha256(json.dumps(task, sort_keys=True).encode()).hexdigest()
         self.db.execute('BEGIN IMMEDIATE')
         try:
-            for (raw,) in self.db.execute("SELECT evidence FROM development_jobs WHERE status='running'"):
-                try:
-                    prior = json.loads(raw)
-                except (TypeError, ValueError):
-                    continue
-                if isinstance(prior, dict) and (prior.get('worker_liveness_unknown') is True
-                                                or prior.get('worker_liveness') == 'unknown'):
+            for raw, expiry, stored_spec, ident in self.db.execute("SELECT evidence,expires,spec_hash,id FROM development_jobs WHERE status='running'"):
+                liveness = running_evidence_state(raw)
+                # A deadline is not positive evidence that an executing worker died.
+                # A fresh never-dispatched lease may expire normally; executing or
+                # legacy/corrupt context requires ownership/liveness review first.
+                bound = bound_evidence_spec(raw, stored_spec, ident)
+                if (not isinstance(bound, str) or not re.fullmatch(r'[0-9a-f]{64}', bound)
+                        or bound != stored_spec or liveness == 'unknown' or type(expiry) not in (int, float)
+                        or not math.isfinite(expiry)
+                        or (liveness == 'running' and expiry <= now)):
                     self.db.execute('COMMIT')
                     return None
             self.db.execute("UPDATE development_jobs SET status='blocked', token=NULL, evidence='lease expired; review required' WHERE status='running' AND expires<=?", (now,))
@@ -266,12 +323,52 @@ class Leases:
                 self.db.execute('COMMIT')
                 return None
             token = uuid.uuid4().hex
+            initial = json.dumps({'lease_evidence_version': 1, 'worker_liveness': 'not_started',
+                                  'claimed_spec_hash': digest})
             if old:
-                self.db.execute("UPDATE development_jobs SET status='running',attempts=attempts+1,token=?,expires=? WHERE id=?", (token, expires, task['id']))
+                self.db.execute("UPDATE development_jobs SET status='running',attempts=attempts+1,token=?,expires=?,evidence=? WHERE id=?", (token, expires, initial, task['id']))
             else:
-                self.db.execute("INSERT INTO development_jobs(id,lane,spec_hash,status,attempts,token,expires) VALUES(?,?,?,'running',1,?,?)", (task['id'], task['lane'], digest, token, expires))
+                self.db.execute("INSERT INTO development_jobs(id,lane,spec_hash,status,attempts,token,expires,evidence) VALUES(?,?,?,'running',1,?,?,?)", (task['id'], task['lane'], digest, token, expires, initial))
             self.db.execute('COMMIT')
             return token
+        except BaseException:
+            self.db.execute('ROLLBACK')
+            raise
+
+    def activate(self, task_id, token, evidence, now=None):
+        """CAS known ownership/specification to possible execution before dispatch.
+
+        Unknown/legacy/acquired-task mismatch never repairs the original row.
+        A lease token authorizes only the exact immutable specification acquired.
+        """
+        try:
+            context = dict(evidence)
+        except (TypeError, ValueError):
+            raise LeaseActivationRefused('activation context requires review') from None
+        self.db.execute('BEGIN IMMEDIATE')
+        try:
+            current = finite_lease_number(time.time() if now is None else now, 'activation clock')
+            row = self.db.execute("SELECT evidence,spec_hash FROM development_jobs WHERE id=? AND token=? AND status='running' AND expires>?", (task_id, token, current)).fetchone()
+            if row is None or running_evidence_state(row[0]) != 'not_started':
+                raise LeaseActivationRefused('activation ownership, expiry or evidence requires review')
+            acquired = bound_evidence_spec(row[0], row[1], task_id)
+            if (not isinstance(acquired, str) or not re.fullmatch(r'[0-9a-f]{64}', acquired)
+                    or acquired != row[1]
+                    or ('claimed_spec_hash' in context and context['claimed_spec_hash'] != acquired)):
+                raise LeaseActivationRefused('activation specification binding requires review')
+            if 'task' in context:
+                reviewed = context['task']
+                if (type(reviewed) is not dict or reviewed.get('id') != task_id
+                        or hashlib.sha256(json.dumps(reviewed, sort_keys=True).encode()).hexdigest() != acquired):
+                    raise LeaseActivationRefused('activation task differs from acquired specification')
+            context.update(lease_evidence_version=1, worker_liveness='running', claimed_spec_hash=acquired)
+            encoded = json.dumps(context, allow_nan=False)
+            if running_evidence_state(encoded) != 'running':
+                raise LeaseActivationRefused('activation evidence requires review')
+            cursor = self.db.execute("UPDATE development_jobs SET evidence=? WHERE id=? AND token=? AND spec_hash=? AND status='running' AND expires>?", (encoded, task_id, token, acquired, current))
+            if cursor.rowcount != 1:
+                raise LeaseActivationRefused('activation compare-and-swap refused')
+            self.db.execute('COMMIT')
         except BaseException:
             self.db.execute('ROLLBACK')
             raise
@@ -280,8 +377,13 @@ class Leases:
         if status not in ('implemented', 'blocked', 'failed', 'retry_wait'):
             raise ValueError('invalid terminal status')
         now = finite_lease_number(time.time() if now is None else now, 'clock')
-        cursor = self.db.execute("UPDATE development_jobs SET status=?,token=NULL,expires=NULL,evidence=? WHERE id=? AND token=? AND status='running' AND expires>?",
-                                 (status, json.dumps(evidence), task_id, token, now))
+        row = self.db.execute("SELECT evidence,spec_hash FROM development_jobs WHERE id=? AND token=? AND status='running' AND expires>?", (task_id, token, now)).fetchone()
+        if row is None or bound_evidence_spec(row[0], row[1], task_id) is None:
+            raise LeaseActivationRefused('completion ownership or specification requires review')
+        # A single conditional write works both in autocommit and defer_host's
+        # existing transaction; evidence changes between read/write refuse too.
+        cursor = self.db.execute("UPDATE development_jobs SET status=?,token=NULL,expires=NULL,evidence=? WHERE id=? AND token=? AND spec_hash=? AND evidence=? AND status='running' AND expires>?",
+                                 (status, json.dumps(evidence), task_id, token, row[1], row[0], now))
         if cursor.rowcount != 1:
             raise ValueError('invalid/expired lease; cannot publish completion')
 
@@ -459,7 +561,13 @@ class GitHubPublisher:
         return {'draft_pr': pr['html_url'], 'head': evidence['commit'], 'state': 'draft'}
 
 
-def validate_and_commit(task, worktree, base, before, evidence):
+def validate_and_commit(task, worktree, base, before, evidence, *, stop_check=None):
+    if stop_check is not None and not callable(stop_check):
+        raise ValueError('trusted stop check must be callable')
+    def check_stop():
+        if stop_check is not None:
+            stop_check()
+    check_stop()
     if command(['git', 'rev-parse', 'HEAD'], worktree) != base:
         raise ValueError('executor changed git HEAD; publish forbidden')
     paths = checked_changes(worktree, task['allowed_paths'])
@@ -471,7 +579,9 @@ def validate_and_commit(task, worktree, base, before, evidence):
     evidence['tested_source_sha256'] = tested_source_hashes
     evidence['tests'] = []
     for argv in PROFILES[task['test_profile']]:
+        check_stop()
         output = command(list(argv), worktree, timeout=60, env=child_env(), include_stderr=True)
+        check_stop()
         count = acceptance_count(output)
         if count < 1:
             raise ValueError('acceptance command reported no executed tests')
@@ -484,10 +594,12 @@ def validate_and_commit(task, worktree, base, before, evidence):
     if protected_hashes(worktree, paths) != tested_source_hashes:
         raise ValueError('source changed during tests; no tested commit can be produced')
     command(['git', 'diff', '--check'], worktree)
+    check_stop()
     command(['git', 'add', '--', *paths], worktree)
     for path, blob in tested_git_blobs.items():
         if command(['git', 'rev-parse', ':' + path], worktree) != blob:
             raise ValueError('staged source differs from tested source')
+    check_stop()
     command(['git', '-c', 'user.name=Poker ID worker', '-c', 'user.email=worker@users.noreply.github.com',
              'commit', '-m', 'worker(' + task['lane'] + '): ' + task['id']], worktree)
     evidence['commit'] = command(['git', 'rev-parse', 'HEAD'], worktree)
@@ -513,6 +625,9 @@ def run_task(repository, work_root, state, task, executor, timeout=180):
         with setup_lock(state):
             command(['git', 'worktree', 'add', '-b', task['branch'], str(worktree), base], repository)
         before = protected_hashes(worktree, task['protected_tests'])
+        evidence.update(lease_evidence_version=1, worker_liveness='running',
+                        claimed_spec_hash=hashlib.sha256(json.dumps(task, sort_keys=True).encode()).hexdigest())
+        leases.activate(task['id'], token, evidence)
         evidence['execution'] = executor(task, worktree, timeout)
         validate_and_commit(task, worktree, base, before, evidence)
         evidence['status'] = 'implemented_local'
@@ -522,7 +637,9 @@ def run_task(repository, work_root, state, task, executor, timeout=180):
     except Exception as error:
         evidence.update(status='blocked', error=scrub(error))
         # Failed output/worktree retained for review, never reset/deleted automatically.
-        if getattr(error, 'worker_liveness_unknown', False):
+        if getattr(error, 'lease_state_preserved', False):
+            evidence['lease_status'] = 'activation refused; original row preserved'
+        elif getattr(error, 'worker_liveness_unknown', False):
             evidence.update(worker_liveness='unknown', lease_status='running; termination unconfirmed')
             leases.db.execute("UPDATE development_jobs SET evidence=? WHERE id=? AND token=? AND status='running'",
                               (json.dumps(evidence), task['id'], token))
@@ -554,20 +671,21 @@ def prepare_host_session(repository, work_root, state, task, now=None):
         with setup_lock(state):
             command(['git', 'worktree', 'add', '-b', task['branch'], str(worktree), base], repository)
         context = {'task': task, 'worktree': str(worktree), 'before': protected_hashes(worktree, task['protected_tests']),
-                   'base_sha': base, 'prepared_for': 'host_session'}
-        leases.db.execute('UPDATE development_jobs SET evidence=? WHERE id=? AND token=?',
-                          (json.dumps(context), task['id'], token))
+                   'base_sha': base, 'prepared_for': 'host_session',
+                   'lease_evidence_version': 1, 'worker_liveness': 'running'}
+        leases.activate(task['id'], token, context, now=now)
         return {'id': task['id'], 'lane': task['lane'], 'status': 'prepared', 'worktree': str(worktree),
                 'lease_token': token, 'executor': 'host_session', 'real_ai_implementation': False,
                 'next': 'Trusted coordinator dispatches a formal collaboration agent; never treat preparation as execution.'}
     except Exception as error:
-        leases.finish(task['id'], token, 'blocked', {'error': scrub(error)}, now=now)
+        if not getattr(error, 'lease_state_preserved', False):
+            leases.finish(task['id'], token, 'blocked', {'error': scrub(error)}, now=now)
         raise
     finally:
         leases.close()
 
 
-def finish_host_session(state, task_id, token, receipt, now=None):
+def finish_host_session(state, task_id, token, receipt, now=None, *, stop_check=None):
     """Verify host-agent changes and commit. Receipt must come from trusted coordinator.
 
     This is not an API that cryptographically verifies a collaboration identity.
@@ -579,10 +697,13 @@ def finish_host_session(state, task_id, token, receipt, now=None):
         raise ValueError('trusted coordinator collaboration receipt required')
     leases = Leases(state)
     current = time.time() if now is None else now
-    row = leases.db.execute("SELECT evidence FROM development_jobs WHERE id=? AND token=? AND status='running' AND expires>?", (task_id, token, current)).fetchone()
+    row = leases.db.execute("SELECT evidence,spec_hash FROM development_jobs WHERE id=? AND token=? AND status='running' AND expires>?", (task_id, token, current)).fetchone()
     if row is None:
         leases.close()
         raise ValueError('host lease missing, expired or replayed')
+    if bound_evidence_spec(row[0], row[1], task_id) is None:
+        leases.close()
+        raise LeaseActivationRefused('host completion specification requires review')
     context = json.loads(row[0])
     if context.get('prepared_for') != 'host_session':
         leases.close()
@@ -593,12 +714,17 @@ def finish_host_session(state, task_id, token, receipt, now=None):
                 'real_ai_implementation': False, 'production': False,
                 'receipt_source': 'trusted_host_coordinator', 'daemon_running': False}
     try:
-        validate_and_commit(task, Path(context['worktree']), context['base_sha'], context['before'], evidence)
+        if stop_check is None:
+            validate_and_commit(task, Path(context['worktree']), context['base_sha'], context['before'], evidence)
+        else:
+            validate_and_commit(task, Path(context['worktree']), context['base_sha'], context['before'], evidence, stop_check=stop_check)
         evidence['status'] = 'implemented_local'
         evidence['real_ai_implementation'] = receipt.get('test_fixture') is not True
         evidence['publication'] = 'not_attempted'
         leases.finish(task_id, token, 'implemented', evidence, now=now)
     except Exception as error:
+        if getattr(error, 'host_boundary_stopped', False):
+            raise  # retain original prepared context and uncommitted/staged work
         evidence.update(status='blocked', error=scrub(error))
         if getattr(error, 'worker_liveness_unknown', False):
             evidence.update(worker_liveness='unknown', lease_status='running; termination unconfirmed')
