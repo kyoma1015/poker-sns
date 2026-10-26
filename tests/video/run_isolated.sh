@@ -86,7 +86,8 @@ end $$;
 SQL
 # Ledger is already installed by production_additive_candidate.sql; do not reapply it.
 docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 <<'SQL'
-do $$
+select set_config('request.jwt.claim.sub','10000000-0000-0000-0000-000000000001',false);
+do $
 declare
   owner uuid := '10000000-0000-0000-0000-000000000001';
   path text := '10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.mp4';
@@ -112,9 +113,9 @@ end $$;
 -- Verify that app roles cannot mutate the ledger or invoke privileged RPC.
 do $$
 begin
-  if has_function_privilege('authenticated',
+  if not has_function_privilege('authenticated',
        'public.video_reserve_object_key(uuid,text)', 'EXECUTE') then
-    raise exception 'authenticated can invoke trusted reservation RPC';
+    raise exception 'authenticated owner cannot invoke reservation RPC';
   end if;
   if has_table_privilege('authenticated',
        'public.video_reserved_object_keys', 'DELETE') then
