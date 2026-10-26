@@ -61,6 +61,14 @@ return async function handler(req: VercelRequest, res: VercelResponse) {
       signal: AbortSignal.timeout(30000),
     })
     if (!media.ok || !media.body) return res.status(503).end()
+    // Never serve HTML/error pages or a mismatched container as trusted video.
+    // Storage metadata is untrusted; fail closed before buffering its body.
+    const expectedMime = path.endsWith('.mp4') ? 'video/mp4' : 'video/webm'
+    const receivedMime = media.headers.get('content-type')?.split(';', 1)[0]?.trim().toLowerCase()
+    if (receivedMime !== expectedMime) {
+      await media.body.cancel()
+      return res.status(503).end()
+    }
     const declared = media.headers.get('content-length')
     if (declared && (!Number.isSafeInteger(Number(declared)) ||
       Number(declared) < 1 || Number(declared) > MAX_BYTES)) {
@@ -94,7 +102,7 @@ return async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(403).end()
     }
     if (bytes.byteLength === 0 || bytes.byteLength > MAX_BYTES) return res.status(503).end()
-    res.setHeader('Content-Type', path.endsWith('.mp4') ? 'video/mp4' : 'video/webm')
+    res.setHeader('Content-Type', expectedMime)
     res.setHeader('Content-Length', String(bytes.byteLength))
     return res.status(200).send(bytes)
   } catch {
