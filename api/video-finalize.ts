@@ -63,18 +63,13 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
     if (!match) return res.status(400).end()
     const url = process.env.VITE_SUPABASE_URL
     const anon = process.env.VITE_SUPABASE_ANON_KEY
-    const service = process.env.SUPABASE_SERVICE_ROLE_KEY
     // Production release requires a separately audited Storage writer fence.
     // Isolated local QA may reserve against its disposable ledger only.
     const isolatedReservation = options.isolatedLocalOnly === true && url === 'http://127.0.0.1:56321'
-    // Fail closed: a service_role fetch allowlist is not least privilege.
-    if (!isolatedReservation) {
-      return res.status(503).json({ error: 'video_privileged_writer_not_attested' })
-    }
     const host = url?.startsWith('https://') ? url.slice(8).split('/')[0] : ''
     if ((!isolatedReservation && (process.env.VIDEO_PRODUCTION_FENCED_READY !== 'true' ||
         !/^[a-z0-9-]+[.]supabase[.]co$/.test(host))) ||
-        !anon || !service) return res.status(503).json({ error: 'video_reservation_not_enabled' })
+        !anon) return res.status(503).json({ error: 'video_reservation_not_enabled' })
     try {
       const viewer = createClient(url, anon, {
         global: { headers: { Authorization: authorization } },
@@ -84,28 +79,14 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
       const { data, error } = await viewer.auth.getUser(token)
       if (error || !data.user || !UUID.test(data.user.id)) return res.status(401).end()
       if (data.user.id !== match[1]) return res.status(403).end()
-      // Restrict this privileged client to the reservation RPC. Even if
-      // future code accidentally calls Storage, the request is denied here.
-      // This does not revoke external service_role Storage permissions.
-      const reserveOnlyFetch: typeof fetch = (input, init) => {
-        const target = new URL(typeof input === 'string' ? input : input instanceof URL ? input.href : input.url)
-        if (target.origin !== new URL(url).origin ||
-            target.pathname !== '/rest/v1/rpc/video_reserve_object_key' ||
-            target.search || (init?.method ?? 'GET').toUpperCase() !== 'POST') {
-          throw new Error('privileged reservation request denied')
-        }
-        return fetch(input, init)
-      }
-      const admin = createClient(url, service, {
-        global: { fetch: reserveOnlyFetch },
-        auth: { persistSession: false, autoRefreshToken: false },
-      })
+      // Use the verified caller JWT for the owner-scoped reservation RPC.
+      // The candidate SQL checks auth.uid() = p_owner before ledger insertion.
       // Reauthenticate immediately before committing a permanent reservation.
       // A token revoked while the trusted RPC client was being constructed
       // must not reserve a key for an invalid session.
       const { data: fresh, error: freshError } = await viewer.auth.getUser(token)
       if (freshError || fresh.user?.id !== data.user.id) return res.status(401).end()
-      const { data: reservation, error: reservationError } = await admin.rpc('video_reserve_object_key', {
+      const { data: reservation, error: reservationError } = await viewer.rpc('video_reserve_object_key', {
         p_owner: data.user.id, p_path: path,
       })
       if (reservationError || typeof reservation !== 'string' || !UUID.test(reservation)) {
