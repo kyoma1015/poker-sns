@@ -7,7 +7,7 @@ import { mkdtempSync, readFileSync, rmSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { signBinaryVideoAttestation, videoAttestationDigest } from '../../server/video-attestation.ts'
+import { signBinaryVideoAttestation, videoAttestationDigest } from '../../server/video-attestation.js'
 import { probeVideoBytes } from '../../api/video-ffprobe.ts'
 import { verifyRealBrowserPlayback } from './isolated_browser_playback.mjs'
 const env=Object.fromEntries(readFileSync(process.env.VIDEO_QA_ENV,'utf8').split('\n')
