@@ -80,6 +80,22 @@ begin
   if SQLERRM='cross-key attestation accepted' then raise; end if;
  end;
  update video_private.attestation_keys set active=false where key_id=2;
+ -- Retiring the original signing key must revoke otherwise valid old proofs.
+ update video_private.attestation_keys set active=false where key_id=1;
+ begin
+  perform public.video_publish_attested_v1(o,p,g,h,2000,content,expires,n,signature,1::smallint);
+  raise exception 'retired original key accepted';
+ exception when raise_exception then
+  if SQLERRM='retired original key accepted' then raise; end if;
+ end;
+ update video_private.attestation_keys set active=true where key_id=1;
+ -- Even a valid HMAC must be rejected outside the proof time window.
+ begin
+  perform public.video_publish_attested_v1(o,p,g,h,2000,content,expires-1000,n,signature,1::smallint);
+  raise exception 'expired proof accepted';
+ exception when raise_exception then
+  if SQLERRM='expired proof accepted' then raise; end if;
+ end;
  begin
   perform public.video_publish_attested_v1(o,p,g,h,2000,content,expires,n,repeat('0',64),1::smallint);
   raise exception 'forged signature accepted';
