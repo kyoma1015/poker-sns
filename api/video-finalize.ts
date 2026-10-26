@@ -68,7 +68,7 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
     // Isolated local QA may reserve against its disposable ledger only.
     const isolatedReservation = options.isolatedLocalOnly === true && url === 'http://127.0.0.1:56321'
     // Fail closed: a service_role fetch allowlist is not least privilege.
-    if (!isolatedReservation && process.env.VIDEO_PRIVILEGED_WRITER_ATTESTED !== 'true') {
+    if (!isolatedReservation) {
       return res.status(503).json({ error: 'video_privileged_writer_not_attested' })
     }
     const host = url?.startsWith('https://') ? url.slice(8).split('/')[0] : ''
