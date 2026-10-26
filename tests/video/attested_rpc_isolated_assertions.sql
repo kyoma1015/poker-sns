@@ -5,7 +5,7 @@ insert into public.video_reserved_object_keys(bucket_id,object_path,owner_id)
 values('post-videos','10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000009.mp4',
 '10000000-0000-0000-0000-000000000001');
 insert into storage.objects(id,bucket_id,name,owner_id) values
-('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb','post-videos',
+('d71e6f03-8ac2-4a55-91bf-fc3296e7184d','post-videos',
 '10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000009.mp4',
 '10000000-0000-0000-0000-000000000001');
 grant execute on function public.video_publish_attested_v1(uuid,text,uuid,text,integer,text,bigint,text,text,smallint) to authenticated;
@@ -23,7 +23,7 @@ do $test$
 declare
  o uuid:='10000000-0000-0000-0000-000000000001';
  p text:='10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000009.mp4';
- g uuid:='bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb';
+ g uuid:='d71e6f03-8ac2-4a55-91bf-fc3296e7184d';
  h text:=repeat('a',64); n text:=repeat('b',32); content text:='test';
  expires bigint:=extract(epoch from clock_timestamp())::bigint+120;
  payload bytea;signature text;result uuid;
