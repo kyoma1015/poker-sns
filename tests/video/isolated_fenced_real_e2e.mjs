@@ -20,6 +20,19 @@ assert.throws(() => createProductionSupabaseVideoAdapters(
 ), /production video fenced release gate disabled/,
 'production adapter must fail closed without an explicit release gate')
 console.log('PASS: production video adapter remains fail-closed without audited release gate')
+// Even a mistakenly enabled deployment flag must not authorize client-supplied
+// ffprobe metadata while the server-attested DB commit path is absent.
+const previousReleaseGate=process.env.VIDEO_PRODUCTION_FENCED_READY
+try {
+ process.env.VIDEO_PRODUCTION_FENCED_READY='true'
+ assert.throws(() => createProductionSupabaseVideoAdapters(
+  'https://example.supabase.co','anon-test','jwt-test',
+ ), /production video publish requires server-attested database authorization/)
+} finally {
+ if(previousReleaseGate===undefined) delete process.env.VIDEO_PRODUCTION_FENCED_READY
+ else process.env.VIDEO_PRODUCTION_FENCED_READY=previousReleaseGate
+}
+console.log('PASS: production video publish rejects accidental release flag activation')
 const url=env.API_URL
 assert.equal(url,'http://127.0.0.1:56321','NEVER contact production')
 const anon=env.ANON_KEY||env.PUBLISHABLE_KEY
