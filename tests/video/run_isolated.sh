@@ -92,7 +92,8 @@ do $attested_acl$ begin
   raise exception 'attestation key must not be provisioned by migration'; end if;
 end $attested_acl$;
 SQL
-echo 'PASS: disposable PostgreSQL parses attested publish RPC and enforces closed ACL'
+docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 < tests/video/attested_rpc_isolated_assertions.sql
+echo 'PASS: disposable PostgreSQL executes attested RPC, rejects forgery and nonce replay'
 
 
 # Permanent-key ledger candidate is exercised ONLY in disposable PostgreSQL.
