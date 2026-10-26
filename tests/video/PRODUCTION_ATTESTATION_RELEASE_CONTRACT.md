@@ -37,3 +37,9 @@ At commit `29959fb67ab1b1149f2db5e61a85197dd9c70dcd`, GitHub Actions Video SQL `
 
 **Status: NO-GO.** Isolated signed-RPC E2E is proven; production runtime, secret provisioning, effective RLS and release authorization are not.
 
+
+## Production read-only inventory (2026-10-26)
+
+The connected `poker-id` Supabase project (`ephptepeuespnxtzdqby`) was inspected using read-only catalog queries. No `video_%` functions were present, `storage.buckets` had no `post-videos` bucket, and the effective `storage.objects` policy list had no `post-videos` policy. This is **absence of production prerequisites**, not permission to create them. No production SQL or Storage mutation was performed. Re-run the read-only inventory before any separately authorized release, including function EXECUTE grants, schema privileges, bucket privacy, and every overlapping Storage policy.
+
+Vercel's GitHub commit status for `9bc2abda` reported `Deployment rate limited — retry in 24 hours`; there is no verified preview deployment of that HEAD. Do not bypass the build rate limit or purchase an upgrade. Preview ffprobe execution and HMAC provisioning remain release-blocking.
