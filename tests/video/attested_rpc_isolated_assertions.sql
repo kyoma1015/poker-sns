@@ -1,4 +1,23 @@
 -- Disposable PostgreSQL only: real attested RPC execution and rejection cases.
+-- Independent deterministic Node.js binary-HMAC vector (also checked by Node in CI).
+-- Fixture-only key 0x41 * 32, expiration deliberately in the future for vector stability.
+do $vector$
+declare
+ o uuid:='10000000-0000-0000-0000-000000000001';
+ p text:='10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000009.mp4';
+ g uuid:='d71e6f03-8ac2-4a55-91bf-fc3296e7184d';
+ payload bytea;actual text;
+begin
+ payload:=decode('01','hex')||decode(replace(o::text,'-',''),'hex')||
+  set_byte(decode('00','hex'),0,octet_length(convert_to(p,'UTF8')))||convert_to(p,'UTF8')||
+  decode(replace(g::text,'-',''),'hex')||decode(repeat('a',64),'hex')||
+  pg_catalog.int4send(2000)||extensions.digest(convert_to('test','UTF8'),'sha256')||
+  pg_catalog.int8send(1893456000::bigint)||decode(repeat('b',32),'hex');
+ actual:=encode(extensions.hmac(payload,decode(repeat('41',32),'hex'),'sha256'),'hex');
+ if actual<>'d50ae4bb28c6c60b60f7e39b9acec328d537e188b78567ff4ddeab0de0a34779'
+ then raise exception 'Node/Postgres HMAC vector mismatch'; end if;
+end $vector$;
+
 insert into video_private.attestation_keys(key_id,secret,active)
 values(1,decode(repeat('41',32),'hex'),true);
 insert into public.video_reserved_object_keys(bucket_id,object_path,owner_id)
