@@ -1076,6 +1076,671 @@
   },
   "current_snapshot": {
     "id": "current-v1",
+    "at": "2026-10-26T16:33:00Z",
+    "assessed_commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+    "features": {
+      "sns.timeline": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.posts": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.comments": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.images": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.repost": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.follow": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.notifications": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.dm": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.profiles": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.records": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.search": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.tags": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.video": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.mobile": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.store_tournament": {
+        "status": "UNKNOWN",
+        "evidence": [],
+        "release_gates": {
+          "scope": null,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.dealer": {
+        "status": "UNKNOWN",
+        "evidence": [],
+        "release_gates": {
+          "scope": null,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.rating": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.quality": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.polls": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "tda.official": {
+        "status": "UNKNOWN",
+        "evidence": [],
+        "release_gates": {
+          "scope": null,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "tda.integrity": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "tda.quiz": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "tda.history": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "tda.search": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "tda.recovery": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "diag.questions": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "diag.scores": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "diag.classifier": {
+        "status": "UNKNOWN",
+        "evidence": [],
+        "release_gates": {
+          "scope": null,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "diag.payload": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "diag.account_share": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "diag.png_mobile": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "diag.profile": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "audit.inventory": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "audit.dependencies": {
+        "status": "統合確認済み",
+        "evidence": [
+          "https://github.com/kyoma1015/poker-sns/pull/125",
+          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799702",
+          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799298"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": true,
+          "release_review": null
+        }
+      },
+      "audit.authorization": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "audit.state": {
+        "status": "UNKNOWN",
+        "evidence": [],
+        "release_gates": {
+          "scope": null,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "audit.release_record": {
+        "status": "統合確認済み",
+        "evidence": [
+          "https://github.com/kyoma1015/poker-sns/pull/125",
+          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799702",
+          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799298"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": true,
+          "release_review": null
+        }
+      },
+      "integration.scope": {
+        "status": "統合確認済み",
+        "evidence": [
+          "https://github.com/kyoma1015/poker-sns/pull/125",
+          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799702",
+          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799298"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": true,
+          "release_review": null
+        }
+      },
+      "integration.tests": {
+        "status": "統合確認済み",
+        "evidence": [
+          "https://github.com/kyoma1015/poker-sns/pull/125",
+          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799702",
+          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799298"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": true,
+          "release_review": null
+        }
+      },
+      "integration.frontend": {
+        "status": "統合確認済み",
+        "evidence": [
+          "https://github.com/kyoma1015/poker-sns/pull/125",
+          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799702",
+          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799298"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": true,
+          "release_review": null
+        }
+      },
+      "integration.auth": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "integration.wip": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "integration.external": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      }
+    },
+    "blockers": [
+      {
+        "id": "ENV_CAPACITY",
+        "scope": "environment",
+        "status": "OPEN",
+        "condition": "supported workspace capacity recovery preserving source/WIP/state; current capacity+inode cannot be measured before sandbox launch"
+      },
+      {
+        "id": "VERCEL_RATE",
+        "scope": "external_check",
+        "status": "OPEN",
+        "condition": "provider supported rate-limit recovery; no retry/upgrade/bypass"
+      },
+      {
+        "id": "REAL_AUTH_RLS",
+        "scope": "sns_diagnosis",
+        "status": "OPEN",
+        "condition": "reviewed schema and truly isolated auth/RLS/idempotency acceptance"
+      },
+      {
+        "id": "TDA_ORIGINALS",
+        "scope": "tda",
+        "status": "OPEN",
+        "condition": "350-question immutable export/key/original/translation/reviewer receipts"
+      },
+      {
+        "id": "DIAG_CLASSIFIER",
+        "scope": "diagnosis",
+        "status": "OPEN",
+        "condition": "versioned classifier thresholds/tie order/expert labels"
+      },
+      {
+        "id": "SNS_FULL_QA",
+        "scope": "sns",
+        "status": "OPEN",
+        "condition": "complete cross-feature/ownership/Storage/mobile acceptance and named missing scope"
+      }
+    ],
+    "tests": {
+      "retained": {
+        "suite_id": "abd-retained-methods-v1",
+        "total": 381,
+        "pass": 381,
+        "fail": 0,
+        "ci": 40354321317
+      },
+      "browser": {
+        "suite_id": "abd-browser-v1",
+        "total": 93,
+        "pass": 93,
+        "fail": 0,
+        "ci": 40352940000
+      },
+      "next_probe": {
+        "suite_id": "tda-next-three-v1",
+        "total": 3,
+        "pass": 3,
+        "fail": 0,
+        "before": {
+          "pass": 1,
+          "fail": 2,
+          "ci": 40352121918
+        },
+        "ci": 40352940000
+      },
+      "metrics_units": {
+        "suite_id": "progress-policy-v1",
+        "total": 8,
+        "pass": 8,
+        "fail": 0,
+        "ci": 40354321317
+      },
+      "dm_participant_probe": {
+        "suite_id": "dm-participant-three-v1",
+        "total": 3,
+        "pass": null,
+        "fail": null,
+        "status": "before/after CI pending",
+        "before": {
+          "pass": 1,
+          "fail": 2,
+          "ci": 40359352861,
+          "commit": "aebe88d66346be4d3ea6d59f381aa7408d6fd831"
+        }
+      }
+    },
+    "note": "first retrospective baseline under frozen v1 policy; earlier reports had no comparable completion percentage",
+    "work": {
+      "new_commits_before_snapshot": 2,
+      "snapshot_commit_adds": 1,
+      "new_prs": 0,
+      "updated_prs": 1,
+      "completed_major_work": [
+        "measured same-tick next defect fixed and verified",
+        "fixed-scope progress baseline and comparison engine"
+      ],
+      "product_public_ready_added": 0
+    }
+  },
+  "previous_snapshot": {
+    "id": "current-v1",
     "at": "2026-10-26T15:55:49Z",
     "assessed_commit": "cb47525f14b598ec5f184d625057793f82353ae0",
     "features": {
@@ -1726,7 +2391,6 @@
       "product_public_ready_added": 0
     }
   },
-  "previous_snapshot": null,
   "held_state_note": {
     "last_verified_total": 45,
     "implemented": 43,
@@ -1736,7 +2400,7 @@
     "mutated": false
   },
   "environment": {
-    "observed_at": "2026-10-26T15:33:56Z",
+    "observed_at": "2026-10-26T16:21:00Z",
     "shell": "bwrap: Can't create file /workspace/.git: No space left on device",
     "capacity_current": "UNKNOWN",
     "inode_current": "UNKNOWN",
@@ -1744,10 +2408,11 @@
     "uncommitted_restore": "BLOCKED, not declared lost"
   },
   "next_tasks": [
-    "Restore capacity without deleting source/heldstate/QA and finish PlayerSearch and payload regressions+commit",
-    "Confirm same fixed next-navigation input after measured beforeFAIL",
-    "Maintain selected PR125, formal auth/RLS and original-data gates",
-    "Re-use this single ledger and its previous/current slots; no unbounded new ledgers"
+    "Restore capacity preserving .git/WIP/QA/heldSQLite; no uninspected deletion",
+    "Recover exact PlayerSearch/payload worktrees and finish final regression/build/lint/commit",
+    "Verify DM participant fixed-input before/after CI",
+    "Obtain authentic isolated DM/diagnosis schema/grants/RLS/function contracts; no invented schema proof",
+    "Obtain official350/classifier/expert evidence"
   ],
   "source_catalog_refs": [
     {
@@ -1773,5 +2438,1030 @@
     "independent_restart": "UNKNOWN",
     "local_execution": "BLOCKED ENOSPC",
     "github_ci_execution": "observed; not a model worker"
+  },
+  "implementation_metric": {
+    "version": "abd-implementation-evidence-v1",
+    "defined_at": "2026-10-26T16:33:00Z",
+    "definition": "Explicit frozen source-level acceptance, pinned source/test blobs and exact-head CI. Client proof never certifies RLS/official-data/expert validity or publication. PARTIAL means unfinished code; UNKNOWN is not inferred from existence/status.",
+    "missing_evidence": "Exact percent null while any UNKNOWN exists; confirmed_percent is only a lower bound, never an exact implementation estimate.",
+    "baseline_note": "First retrospective implementation assessment at prior HEAD3a4aaf5; original release-v1 baseline untouched.",
+    "snapshots": {
+      "baseline_snapshot": {
+        "at": "2026-10-26T16:04:42Z",
+        "assessed_commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+        "features": {
+          "sns.timeline": {
+            "state": "UNKNOWN",
+            "reason": "横断認証・遅延・公開QA不足"
+          },
+          "sns.posts": {
+            "state": "UNKNOWN",
+            "reason": "書込み認可・重複・Storage統合未確認"
+          },
+          "sns.comments": {
+            "state": "UNKNOWN",
+            "reason": "実DBイベント真正性・認可未確認"
+          },
+          "sns.images": {
+            "state": "UNKNOWN",
+            "reason": "Storage所有権・物理端末未確認"
+          },
+          "sns.repost": {
+            "state": "UNKNOWN",
+            "reason": "公開・競合横断QA未確認"
+          },
+          "sns.follow": {
+            "state": "UNKNOWN",
+            "reason": "実認可・切替QA未確認"
+          },
+          "sns.notifications": {
+            "state": "UNKNOWN",
+            "reason": "実DB真正性・冪等性未確認"
+          },
+          "sns.dm": {
+            "state": "UNKNOWN",
+            "reason": "正式schema・RLS・サーバー冪等性不足"
+          },
+          "sns.profiles": {
+            "state": "UNKNOWN",
+            "reason": "保存・公開範囲・共有QA未確認"
+          },
+          "sns.records": {
+            "state": "UNKNOWN",
+            "reason": "所有者認可・集計QA未確認"
+          },
+          "sns.search": {
+            "state": "PARTIAL",
+            "reason": "未コミット修正の最終回帰・保存待ち"
+          },
+          "sns.tags": {
+            "state": "PARTIAL",
+            "reason": "他担当PR122未統合、変更しない"
+          },
+          "sns.video": {
+            "state": "PARTIAL",
+            "reason": "他担当PR123未統合、変更しない"
+          },
+          "sns.mobile": {
+            "state": "UNKNOWN",
+            "reason": "一部Chromium検証のみ、物理端末未確認"
+          },
+          "sns.store_tournament": {
+            "state": "UNKNOWN",
+            "reason": "正式受入条件・実装対応不足"
+          },
+          "sns.dealer": {
+            "state": "UNKNOWN",
+            "reason": "正式受入条件・実装対応不足"
+          },
+          "sns.rating": {
+            "state": "UNKNOWN",
+            "reason": "実認可・分類QA未確認"
+          },
+          "sns.quality": {
+            "state": "UNKNOWN",
+            "reason": "管理権限と運用QA未確認"
+          },
+          "sns.polls": {
+            "state": "IMPLEMENTED",
+            "contract": "poll-only vote/close/notification implementation; publication remains NO-GO",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "src/TimelineInteractive.tsx",
+                "blob": "d8bbda50bc7b0acbdfcb2d478e786042c1cfbf6e"
+              },
+              {
+                "path": "sql/poll_only/forward_candidate.sql",
+                "blob": "74a811d3c604b40be48248ff8639315ee843fdad"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/poll-only.test.mjs",
+                "blob": "24868f053425d57b8c889d7739a661126e18716f"
+              },
+              {
+                "path": "tests/poll-vote-shape.test.mjs",
+                "blob": "07dff182fe36092d60ca4eb70f690e5f39ed1227"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321226,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "隔離poll70PASSは本番公開承認でない、NO-GO"
+          },
+          "tda.official": {
+            "state": "UNKNOWN",
+            "reason": "不変export・原文版・正式訳不足"
+          },
+          "tda.integrity": {
+            "state": "IMPLEMENTED",
+            "contract": "offline strict snapshot and answer-key/conflict audit; no official-content certification",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "scripts/tda-snapshot-audit.mjs",
+                "blob": "8a8a2500f59c3373f95ffde32e93c99caad2fb40"
+              },
+              {
+                "path": "src/tdaQuizAnswerAudit.ts",
+                "blob": "7e08a521d5ec1b6ce78248d5e149cd8a869cf06c"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/tda-snapshot-integrity.test.mjs",
+                "blob": "a92c55fd881cd6b7693429b10fe7eb3dd2f6d330"
+              },
+              {
+                "path": "tests/tda-answer-key-audit.test.mjs",
+                "blob": "b49a1f575cf809f3d21081883fbf84b71d0612da"
+              },
+              {
+                "path": "tests/tda-answer-conflict-audit.test.mjs",
+                "blob": "35b07fb494ce5e71d0fa6e882d0b8c77328c7c60"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "構造と合成入力のみ、実350問逐条レビュー未確認"
+          },
+          "tda.quiz": {
+            "state": "IMPLEMENTED",
+            "contract": "client question/answer/score validation and display; official answers separate",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "src/TDA.tsx",
+                "blob": "52bfe53fb6af741acced6553a29d912e6c8139d1"
+              },
+              {
+                "path": "src/tdaQuizData.ts",
+                "blob": "488c72de516ba4ccdfb67f99edf1ac07a4f26497"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/tda-quiz-data.test.mjs",
+                "blob": "ccd3fff32aeae58c0eece3cf888f9cb09c26c210"
+              },
+              {
+                "path": "tests/tda-saved-answer.test.mjs",
+                "blob": "d9f2ae8766caeb2f49554dd23b4cbd9baedc1745"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "実DB採点契約・公式正答未確認"
+          },
+          "tda.history": {
+            "state": "IMPLEMENTED",
+            "contract": "client identity/history/result isolation; authentic server RLS separate",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "src/TDA.tsx",
+                "blob": "52bfe53fb6af741acced6553a29d912e6c8139d1"
+              },
+              {
+                "path": "src/tdaQuizAuth.ts",
+                "blob": "d26b9cceba77948628a26f5b88e1f0a19f051bc4"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/selected/tda-account-isolation.test.mjs",
+                "blob": "d4804e82e24ae5dc26899c75cd3b17f42a12c402"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "実認証統合未確認"
+          },
+          "tda.search": {
+            "state": "IMPLEMENTED",
+            "contract": "validated latest-only rule search and filters; official reference precision separate",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "src/TDA.tsx",
+                "blob": "52bfe53fb6af741acced6553a29d912e6c8139d1"
+              },
+              {
+                "path": "src/tdaQuizData.ts",
+                "blob": "488c72de516ba4ccdfb67f99edf1ac07a4f26497"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/selected/tda-rule-search.test.mjs",
+                "blob": "278a8a87620a977573aa5fadd53e8abd47974bf8"
+              },
+              {
+                "path": "tests/tda-quiz-data.test.mjs",
+                "blob": "ccd3fff32aeae58c0eece3cf888f9cb09c26c210"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "実データ参照精度未確認"
+          },
+          "tda.recovery": {
+            "state": "IMPLEMENTED",
+            "contract": "explicit client save recovery and one-shot next; not server idempotency proof",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "src/TDA.tsx",
+                "blob": "52bfe53fb6af741acced6553a29d912e6c8139d1"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/selected/tda-save-recovery.test.mjs",
+                "blob": "5de869450cb01ad5bf4f329f5f99f07259364150"
+              },
+              {
+                "path": "tests/tda-next-navigation.test.mjs",
+                "blob": "aba69be7b3674b9a163e415684b9dc2f54debe01"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "固定next追加QAを別記、実DB再送契約未確認"
+          },
+          "diag.questions": {
+            "state": "IMPLEMENTED",
+            "contract": "strict question/option parsing and client answer flow; classifier separate",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "src/playerTypeQuestions.ts",
+                "blob": "623aec43c5aecf0f1125cca56aefc9e39500f656"
+              },
+              {
+                "path": "src/PlayerTypeDiagnosis.tsx",
+                "blob": "7bb4431a75c8c3637ca40d0312ca68e32d6bb8c7"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/player-type.test.mjs",
+                "blob": "624ee8288fd1301cfc02d7d4e2555c3c10fd501b"
+              },
+              {
+                "path": "tests/selected/player-type-result-browser.test.mjs",
+                "blob": "f5a53129c34090a5c9e78f084d4d0cddddd3a3e9"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "正式実データ・実DB保存未確認"
+          },
+          "diag.scores": {
+            "state": "IMPLEMENTED",
+            "contract": "offline 32-axis/historical reference audit; not semantic validity",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "scripts/audit-player-type.mjs",
+                "blob": "418525e668af9ddcebc0f97b18d53a19b4e1ece0"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/player-type-reference.test.mjs",
+                "blob": "3b5d77f3b1f54cf693f5bdf4090d29c99e491eec"
+              },
+              {
+                "path": "tests/player-type-score-schema.test.mjs",
+                "blob": "ef3ba3a0598792091a50fe65ad83cf1162201605"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "960参照一致は意味妥当性証明でない"
+          },
+          "diag.classifier": {
+            "state": "UNKNOWN",
+            "reason": "正式classifier・閾値・expert labels不足"
+          },
+          "diag.payload": {
+            "state": "PARTIAL",
+            "reason": "厳密payload新修正は未コミット、最終検証待ち"
+          },
+          "diag.account_share": {
+            "state": "UNKNOWN",
+            "reason": "実DB所有者認可・冪等性未確認"
+          },
+          "diag.png_mobile": {
+            "state": "IMPLEMENTED",
+            "contract": "PNG handling/mobile share UI code; physical device gate separate",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "src/playerTypeShareImage.ts",
+                "blob": "221a3eda6ebf0ff61fbde12394516eeb74c50c33"
+              },
+              {
+                "path": "src/PlayerTypeDiagnosis.tsx",
+                "blob": "7bb4431a75c8c3637ca40d0312ca68e32d6bb8c7"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/player-type-png-cleanup.test.mjs",
+                "blob": "26f2edb13577614c2e08d94084e00ae8c9afc819"
+              },
+              {
+                "path": "tests/selected/player-type-share-browser.test.mjs",
+                "blob": "498632b0e497bd643cadb294434b4306948d5389"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "物理端末・iOS未確認"
+          },
+          "diag.profile": {
+            "state": "UNKNOWN",
+            "reason": "公開設定・結果所有者の実DBQA未確認"
+          },
+          "audit.inventory": {
+            "state": "UNKNOWN",
+            "reason": "全体受入条件の網羅性は未確定、v1を固定"
+          },
+          "audit.dependencies": {
+            "state": "IMPLEMENTED",
+            "contract": "dependency pin plus executable production audit gate; not broad security approval",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "package-lock.json",
+                "blob": "e2ed090ea6459519bc0c822820a4bfc8b42628fa"
+              }
+            ],
+            "tests": [
+              {
+                "path": ".github/workflows/poll-release.yml",
+                "blob": "90078c6198b2ec807572a331cbf8d4657704fc91"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321226,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "40344799298のnpm audit high gate PASS、包括セキュリティ証明ではない"
+          },
+          "audit.authorization": {
+            "state": "UNKNOWN",
+            "reason": "実認可RLS証拠不足"
+          },
+          "audit.state": {
+            "state": "UNKNOWN",
+            "reason": "過去開始時一致、今回終了時再読取り不能"
+          },
+          "audit.release_record": {
+            "state": "IMPLEMENTED",
+            "contract": "selected-source record and explicit unresolved release constraints",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "docs/workers/SELECTED_ABD_INTEGRATION_20261026.md",
+                "blob": "dd67bd9a71d28bbba0628da8e3a684d167549fd2"
+              }
+            ],
+            "tests": [
+              {
+                "path": "scripts/verify-selected-abd.mjs",
+                "blob": "7ff02027438c91338a002828b53eb7382eeab98c"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "PR125でNO-GO/失敗/未確認を区別し保存"
+          },
+          "integration.scope": {
+            "state": "IMPLEMENTED",
+            "contract": "exact selected/protected bytes and unreviewed diff rejection",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "scripts/verify-selected-abd.mjs",
+                "blob": "7ff02027438c91338a002828b53eb7382eeab98c"
+              }
+            ],
+            "tests": [
+              {
+                "path": ".github/workflows/selected-abd.yml",
+                "blob": "dfbb8bac1f8173e5ec5313e4e571f1841ca940b6"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "68source/37protected bytes検証PASS"
+          },
+          "integration.tests": {
+            "state": "IMPLEMENTED",
+            "contract": "bounded selected regression orchestration",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "scripts/run-selected-abd.mjs",
+                "blob": "d6a6f376722d902b87001f29d901e47da96c2420"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/selected-browser.test.mjs",
+                "blob": "5201f01d8342006448601a697193905083ea7eff"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "381 preserved methods PASS、wrapper8は別計上"
+          },
+          "integration.frontend": {
+            "state": "IMPLEMENTED",
+            "contract": "frontend build/lint and mock-transport Chromium pipeline",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": ".github/workflows/selected-abd.yml",
+                "blob": "dfbb8bac1f8173e5ec5313e4e571f1841ca940b6"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/selected-browser.test.mjs",
+                "blob": "5201f01d8342006448601a697193905083ea7eff"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "93 browser cases、build/lint PASS"
+          },
+          "integration.auth": {
+            "state": "UNKNOWN",
+            "reason": "DM/診断の正式隔離DB証拠不足"
+          },
+          "integration.wip": {
+            "state": "UNKNOWN",
+            "reason": "PlayerSearch/payloadが容量障害で停止"
+          },
+          "integration.external": {
+            "state": "UNKNOWN",
+            "reason": "Vercel rate limit FAIL、権限回避・課金なし"
+          }
+        }
+      },
+      "current_snapshot": {
+        "at": "2026-10-26T16:33:00Z",
+        "assessed_commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+        "features": {
+          "sns.timeline": {
+            "state": "UNKNOWN",
+            "reason": "横断認証・遅延・公開QA不足"
+          },
+          "sns.posts": {
+            "state": "UNKNOWN",
+            "reason": "書込み認可・重複・Storage統合未確認"
+          },
+          "sns.comments": {
+            "state": "UNKNOWN",
+            "reason": "実DBイベント真正性・認可未確認"
+          },
+          "sns.images": {
+            "state": "UNKNOWN",
+            "reason": "Storage所有権・物理端末未確認"
+          },
+          "sns.repost": {
+            "state": "UNKNOWN",
+            "reason": "公開・競合横断QA未確認"
+          },
+          "sns.follow": {
+            "state": "UNKNOWN",
+            "reason": "実認可・切替QA未確認"
+          },
+          "sns.notifications": {
+            "state": "UNKNOWN",
+            "reason": "実DB真正性・冪等性未確認"
+          },
+          "sns.dm": {
+            "state": "UNKNOWN",
+            "reason": "正式schema・RLS・サーバー冪等性不足"
+          },
+          "sns.profiles": {
+            "state": "UNKNOWN",
+            "reason": "保存・公開範囲・共有QA未確認"
+          },
+          "sns.records": {
+            "state": "UNKNOWN",
+            "reason": "所有者認可・集計QA未確認"
+          },
+          "sns.search": {
+            "state": "PARTIAL",
+            "reason": "未コミット修正の最終回帰・保存待ち"
+          },
+          "sns.tags": {
+            "state": "PARTIAL",
+            "reason": "他担当PR122未統合、変更しない"
+          },
+          "sns.video": {
+            "state": "PARTIAL",
+            "reason": "他担当PR123未統合、変更しない"
+          },
+          "sns.mobile": {
+            "state": "UNKNOWN",
+            "reason": "一部Chromium検証のみ、物理端末未確認"
+          },
+          "sns.store_tournament": {
+            "state": "UNKNOWN",
+            "reason": "正式受入条件・実装対応不足"
+          },
+          "sns.dealer": {
+            "state": "UNKNOWN",
+            "reason": "正式受入条件・実装対応不足"
+          },
+          "sns.rating": {
+            "state": "UNKNOWN",
+            "reason": "実認可・分類QA未確認"
+          },
+          "sns.quality": {
+            "state": "UNKNOWN",
+            "reason": "管理権限と運用QA未確認"
+          },
+          "sns.polls": {
+            "state": "IMPLEMENTED",
+            "contract": "poll-only vote/close/notification implementation; publication remains NO-GO",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "src/TimelineInteractive.tsx",
+                "blob": "d8bbda50bc7b0acbdfcb2d478e786042c1cfbf6e"
+              },
+              {
+                "path": "sql/poll_only/forward_candidate.sql",
+                "blob": "74a811d3c604b40be48248ff8639315ee843fdad"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/poll-only.test.mjs",
+                "blob": "24868f053425d57b8c889d7739a661126e18716f"
+              },
+              {
+                "path": "tests/poll-vote-shape.test.mjs",
+                "blob": "07dff182fe36092d60ca4eb70f690e5f39ed1227"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321226,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "隔離poll70PASSは本番公開承認でない、NO-GO"
+          },
+          "tda.official": {
+            "state": "UNKNOWN",
+            "reason": "不変export・原文版・正式訳不足"
+          },
+          "tda.integrity": {
+            "state": "IMPLEMENTED",
+            "contract": "offline strict snapshot and answer-key/conflict audit; no official-content certification",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "scripts/tda-snapshot-audit.mjs",
+                "blob": "8a8a2500f59c3373f95ffde32e93c99caad2fb40"
+              },
+              {
+                "path": "src/tdaQuizAnswerAudit.ts",
+                "blob": "7e08a521d5ec1b6ce78248d5e149cd8a869cf06c"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/tda-snapshot-integrity.test.mjs",
+                "blob": "a92c55fd881cd6b7693429b10fe7eb3dd2f6d330"
+              },
+              {
+                "path": "tests/tda-answer-key-audit.test.mjs",
+                "blob": "b49a1f575cf809f3d21081883fbf84b71d0612da"
+              },
+              {
+                "path": "tests/tda-answer-conflict-audit.test.mjs",
+                "blob": "35b07fb494ce5e71d0fa6e882d0b8c77328c7c60"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "構造と合成入力のみ、実350問逐条レビュー未確認"
+          },
+          "tda.quiz": {
+            "state": "IMPLEMENTED",
+            "contract": "client question/answer/score validation and display; official answers separate",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "src/TDA.tsx",
+                "blob": "52bfe53fb6af741acced6553a29d912e6c8139d1"
+              },
+              {
+                "path": "src/tdaQuizData.ts",
+                "blob": "488c72de516ba4ccdfb67f99edf1ac07a4f26497"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/tda-quiz-data.test.mjs",
+                "blob": "ccd3fff32aeae58c0eece3cf888f9cb09c26c210"
+              },
+              {
+                "path": "tests/tda-saved-answer.test.mjs",
+                "blob": "d9f2ae8766caeb2f49554dd23b4cbd9baedc1745"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "実DB採点契約・公式正答未確認"
+          },
+          "tda.history": {
+            "state": "IMPLEMENTED",
+            "contract": "client identity/history/result isolation; authentic server RLS separate",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "src/TDA.tsx",
+                "blob": "52bfe53fb6af741acced6553a29d912e6c8139d1"
+              },
+              {
+                "path": "src/tdaQuizAuth.ts",
+                "blob": "d26b9cceba77948628a26f5b88e1f0a19f051bc4"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/selected/tda-account-isolation.test.mjs",
+                "blob": "d4804e82e24ae5dc26899c75cd3b17f42a12c402"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "実認証統合未確認"
+          },
+          "tda.search": {
+            "state": "IMPLEMENTED",
+            "contract": "validated latest-only rule search and filters; official reference precision separate",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "src/TDA.tsx",
+                "blob": "52bfe53fb6af741acced6553a29d912e6c8139d1"
+              },
+              {
+                "path": "src/tdaQuizData.ts",
+                "blob": "488c72de516ba4ccdfb67f99edf1ac07a4f26497"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/selected/tda-rule-search.test.mjs",
+                "blob": "278a8a87620a977573aa5fadd53e8abd47974bf8"
+              },
+              {
+                "path": "tests/tda-quiz-data.test.mjs",
+                "blob": "ccd3fff32aeae58c0eece3cf888f9cb09c26c210"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "実データ参照精度未確認"
+          },
+          "tda.recovery": {
+            "state": "IMPLEMENTED",
+            "contract": "explicit client save recovery and one-shot next; not server idempotency proof",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "src/TDA.tsx",
+                "blob": "52bfe53fb6af741acced6553a29d912e6c8139d1"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/selected/tda-save-recovery.test.mjs",
+                "blob": "5de869450cb01ad5bf4f329f5f99f07259364150"
+              },
+              {
+                "path": "tests/tda-next-navigation.test.mjs",
+                "blob": "aba69be7b3674b9a163e415684b9dc2f54debe01"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "固定next追加QAを別記、実DB再送契約未確認"
+          },
+          "diag.questions": {
+            "state": "IMPLEMENTED",
+            "contract": "strict question/option parsing and client answer flow; classifier separate",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "src/playerTypeQuestions.ts",
+                "blob": "623aec43c5aecf0f1125cca56aefc9e39500f656"
+              },
+              {
+                "path": "src/PlayerTypeDiagnosis.tsx",
+                "blob": "7bb4431a75c8c3637ca40d0312ca68e32d6bb8c7"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/player-type.test.mjs",
+                "blob": "624ee8288fd1301cfc02d7d4e2555c3c10fd501b"
+              },
+              {
+                "path": "tests/selected/player-type-result-browser.test.mjs",
+                "blob": "f5a53129c34090a5c9e78f084d4d0cddddd3a3e9"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "正式実データ・実DB保存未確認"
+          },
+          "diag.scores": {
+            "state": "IMPLEMENTED",
+            "contract": "offline 32-axis/historical reference audit; not semantic validity",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "scripts/audit-player-type.mjs",
+                "blob": "418525e668af9ddcebc0f97b18d53a19b4e1ece0"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/player-type-reference.test.mjs",
+                "blob": "3b5d77f3b1f54cf693f5bdf4090d29c99e491eec"
+              },
+              {
+                "path": "tests/player-type-score-schema.test.mjs",
+                "blob": "ef3ba3a0598792091a50fe65ad83cf1162201605"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "960参照一致は意味妥当性証明でない"
+          },
+          "diag.classifier": {
+            "state": "UNKNOWN",
+            "reason": "正式classifier・閾値・expert labels不足"
+          },
+          "diag.payload": {
+            "state": "PARTIAL",
+            "reason": "厳密payload新修正は未コミット、最終検証待ち"
+          },
+          "diag.account_share": {
+            "state": "UNKNOWN",
+            "reason": "実DB所有者認可・冪等性未確認"
+          },
+          "diag.png_mobile": {
+            "state": "IMPLEMENTED",
+            "contract": "PNG handling/mobile share UI code; physical device gate separate",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "src/playerTypeShareImage.ts",
+                "blob": "221a3eda6ebf0ff61fbde12394516eeb74c50c33"
+              },
+              {
+                "path": "src/PlayerTypeDiagnosis.tsx",
+                "blob": "7bb4431a75c8c3637ca40d0312ca68e32d6bb8c7"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/player-type-png-cleanup.test.mjs",
+                "blob": "26f2edb13577614c2e08d94084e00ae8c9afc819"
+              },
+              {
+                "path": "tests/selected/player-type-share-browser.test.mjs",
+                "blob": "498632b0e497bd643cadb294434b4306948d5389"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "物理端末・iOS未確認"
+          },
+          "diag.profile": {
+            "state": "UNKNOWN",
+            "reason": "公開設定・結果所有者の実DBQA未確認"
+          },
+          "audit.inventory": {
+            "state": "UNKNOWN",
+            "reason": "全体受入条件の網羅性は未確定、v1を固定"
+          },
+          "audit.dependencies": {
+            "state": "IMPLEMENTED",
+            "contract": "dependency pin plus executable production audit gate; not broad security approval",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "package-lock.json",
+                "blob": "e2ed090ea6459519bc0c822820a4bfc8b42628fa"
+              }
+            ],
+            "tests": [
+              {
+                "path": ".github/workflows/poll-release.yml",
+                "blob": "90078c6198b2ec807572a331cbf8d4657704fc91"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321226,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "40344799298のnpm audit high gate PASS、包括セキュリティ証明ではない"
+          },
+          "audit.authorization": {
+            "state": "UNKNOWN",
+            "reason": "実認可RLS証拠不足"
+          },
+          "audit.state": {
+            "state": "UNKNOWN",
+            "reason": "過去開始時一致、今回終了時再読取り不能"
+          },
+          "audit.release_record": {
+            "state": "IMPLEMENTED",
+            "contract": "selected-source record and explicit unresolved release constraints",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "docs/workers/SELECTED_ABD_INTEGRATION_20261026.md",
+                "blob": "dd67bd9a71d28bbba0628da8e3a684d167549fd2"
+              }
+            ],
+            "tests": [
+              {
+                "path": "scripts/verify-selected-abd.mjs",
+                "blob": "7ff02027438c91338a002828b53eb7382eeab98c"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "PR125でNO-GO/失敗/未確認を区別し保存"
+          },
+          "integration.scope": {
+            "state": "IMPLEMENTED",
+            "contract": "exact selected/protected bytes and unreviewed diff rejection",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "scripts/verify-selected-abd.mjs",
+                "blob": "7ff02027438c91338a002828b53eb7382eeab98c"
+              }
+            ],
+            "tests": [
+              {
+                "path": ".github/workflows/selected-abd.yml",
+                "blob": "dfbb8bac1f8173e5ec5313e4e571f1841ca940b6"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "68source/37protected bytes検証PASS"
+          },
+          "integration.tests": {
+            "state": "IMPLEMENTED",
+            "contract": "bounded selected regression orchestration",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": "scripts/run-selected-abd.mjs",
+                "blob": "d6a6f376722d902b87001f29d901e47da96c2420"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/selected-browser.test.mjs",
+                "blob": "5201f01d8342006448601a697193905083ea7eff"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "381 preserved methods PASS、wrapper8は別計上"
+          },
+          "integration.frontend": {
+            "state": "IMPLEMENTED",
+            "contract": "frontend build/lint and mock-transport Chromium pipeline",
+            "commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+            "sources": [
+              {
+                "path": ".github/workflows/selected-abd.yml",
+                "blob": "dfbb8bac1f8173e5ec5313e4e571f1841ca940b6"
+              }
+            ],
+            "tests": [
+              {
+                "path": "tests/selected-browser.test.mjs",
+                "blob": "5201f01d8342006448601a697193905083ea7eff"
+              }
+            ],
+            "ci": {
+              "run_id": 40354321317,
+              "head": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
+              "conclusion": "success"
+            },
+            "limitations": "93 browser cases、build/lint PASS"
+          },
+          "integration.auth": {
+            "state": "UNKNOWN",
+            "reason": "DM/診断の正式隔離DB証拠不足"
+          },
+          "integration.wip": {
+            "state": "UNKNOWN",
+            "reason": "PlayerSearch/payloadが容量障害で停止"
+          },
+          "integration.external": {
+            "state": "UNKNOWN",
+            "reason": "Vercel rate limit FAIL、権限回避・課金なし"
+          }
+        }
+      }
+    }
   }
 }

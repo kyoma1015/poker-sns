@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
+import {createHash} from 'node:crypto'
 import {execFileSync} from 'node:child_process'
 import {pathToFileURL} from 'node:url'
 const states=new Set(['未着手','実装中','実装済み・未検証','隔離テスト合格','実DB認可確認済み','統合確認済み','公開可能','UNKNOWN'])
@@ -24,6 +25,52 @@ export function validate(data){
   for(const b of snap.blockers){assert(!blockers.has(b.id),'duplicate blocker');blockers.add(b.id)}
  }
  return data
+}
+export function implementationMeasure(data,snapshot='current_snapshot'){
+ validate(data)
+ const metric=data.implementation_metric
+ assert.equal(metric?.version,'abd-implementation-evidence-v1','implementation policy required')
+ const s=metric.snapshots[snapshot];assert(s,'implementation snapshot required')
+ assert.deepEqual(Object.keys(s.features).sort(),data.catalogue.map(f=>f.id).sort(),'implementation frozen catalogue')
+ const groups={}
+ for(const [id] of Object.entries(data.groups)){
+  const fs=data.catalogue.filter(f=>f.group===id), rows=fs.map(f=>s.features[f.id])
+  for(const row of rows){
+   assert(['IMPLEMENTED','PARTIAL','NOT_STARTED','UNKNOWN'].includes(row.state),'implementation state')
+   if(row.state==='IMPLEMENTED'){
+    assert(typeof row.contract==='string'&&row.contract.length>0,'explicit implementation acceptance required')
+    assert(/^[0-9a-f]{40}$/.test(row.commit),'implementation pinned commit')
+    assert(row.sources.length>0&&row.tests.length>0,'source and test evidence required')
+    for(const e of [...row.sources,...row.tests]){
+     assert(typeof e.path==='string'&&e.path.length>0&&/^[0-9a-f]{40}$/.test(e.blob),'pinned blob evidence')
+    }
+    assert(Number.isSafeInteger(row.ci?.run_id)&&row.ci.run_id>0&&row.ci.head===row.commit&&row.ci.conclusion==='success','exact-head CI evidence required')
+   }
+  }
+  const implemented=rows.filter(r=>r.state==='IMPLEMENTED').length,unknown=rows.filter(r=>r.state==='UNKNOWN').length
+  groups[id]={required:fs.length,implemented,known_incomplete:rows.filter(r=>['PARTIAL','NOT_STARTED'].includes(r.state)).length,unknown,
+   confirmed_percent:Math.round(implemented*10000/fs.length)/100,
+   percent:unknown?null:Math.round(implemented*10000/fs.length)/100}
+ }
+ return {policy:metric.version,groups,overall_percent:null,note:'confirmed_percent is an evidence lower bound; exact percent remains UNKNOWN where any feature is UNKNOWN; implementation is never publication approval'}
+}
+export function verifyImplementationEvidence(data){
+ implementationMeasure(data)
+ for(const snapshot of Object.values(data.implementation_metric.snapshots)){
+  for(const row of Object.values(snapshot.features)){
+   if(row.state!=='IMPLEMENTED')continue
+   for(const e of [...row.sources,...row.tests]){
+    const bytes=execFileSync('git',['show',row.commit+':'+e.path])
+    const blob=createHash('sha1').update(Buffer.from('blob '+bytes.length+'\\0')).update(bytes).digest('hex')
+    assert.equal(blob,e.blob,'implementation historical blob '+e.path)
+   }
+  }
+ }
+ return true
+}
+export function compareImplementation(data){
+ const a=implementationMeasure(data,'baseline_snapshot'),b=implementationMeasure(data)
+ return Object.fromEntries(Object.keys(a.groups).map(k=>[k,{before:a.groups[k],after:b.groups[k],confirmed_points:b.groups[k].confirmed_percent-a.groups[k].confirmed_percent,points:a.groups[k].percent===null||b.groups[k].percent===null?null:b.groups[k].percent-a.groups[k].percent}]))
 }
 export function measure(data,snapshot='current_snapshot'){
  validate(data);const s=data[snapshot];assert(s,'snapshot required');const groups={}
@@ -50,6 +97,7 @@ export function compare(data){
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  const data=JSON.parse(readFileSync(process.argv[2]||'docs/progress/ABD_PROGRESS.json','utf8'))
+ verifyImplementationEvidence(data)
  const head=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim()
- console.log(JSON.stringify({evaluated_head:head,evaluated_at:new Date().toISOString(),snapshot:measure(data),comparison:compare(data),note:'evidence coverage, no stage weighting; unknown is not not-started; real DB and full GTO excluded from inferred success'},null,2))
+ console.log(JSON.stringify({evaluated_head:head,evaluated_at:new Date().toISOString(),snapshot:measure(data),comparison:compare(data),implementation:implementationMeasure(data),implementation_comparison:compareImplementation(data),note:'evidence coverage, no stage weighting; unknown is not not-started; real DB and full GTO excluded from inferred success'},null,2))
 }

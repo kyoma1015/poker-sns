@@ -13,3 +13,15 @@ Same retained381 methods and browser93 baseline are separate from new next-navig
 The JSON pins the last assessed source commit. CLI output adds the actual evaluated Git HEAD and timestamp, avoiding a self-referential commit hash. The publishing CI artifact/PR125 final record establishes the exact current checkpoint commit and outcomes. Self-validation results are not predicted inside the dataset before its CI executes.
 
 Environment remains BLOCKED at sandbox creation (ENOSPC). Current capacity/inode/WIP/end-SQLite checks are UNKNOWN, not loss claims. Existing held blocked2 jobs are separate from this ledger's6 release blocker categories. No production, scheduler, controller, GTO, secret or billing operations are authorized by this policy.
+
+## Separate implementation metric v1
+
+Original release-readiness v1 catalogue, baseline, gates and rates are retained unchanged. Implementation never promotes release status.
+
+Implementation uses the same 43 IDs (32 product units +11 control deliverables). Each IMPLEMENTED row requires an explicit source-level acceptance contract, commit SHA, pinned source/test Git blobs and successful exact-head CI. Database authorization, official TDA correctness and expert classification remain separate gates. File existence, old state labels or unrelated green CI cannot imply implementation.
+
+PARTIAL means identified unfinished code. UNKNOWN means insufficient evidence, never zero or not-started. Exact implementation rate is UNKNOWN while any row is UNKNOWN. confirmed_percent = confirmed IMPLEMENTED / required fixed units is explicitly only an evidence lower bound, not an exact whole-feature completion estimate.
+
+First implementation baseline retrospectively assesses previous PR125 HEAD3a4aaf5b9c68a8204b01cafea7ee3367879ff440; no earlier implementation measurement is invented. Contract/scope changes require a policy version. Existing release and test-suite comparison rules remain intact. Existing JSON slots and abd-progress artifact are reused.
+
+Commands: node scripts/measure-abd-progress.mjs; node tests/abd-progress.test.mjs.

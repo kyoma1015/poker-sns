@@ -830,18 +830,18 @@
     },
     {
       "path": "docs/progress/ABD_PROGRESS.md",
-      "sha": "4788fde172d2c4f3efc51b32603475150fd72780",
-      "reason": "versioned fixed-scope measurement policy and invariant tests; not feature publication approval"
+      "sha": "ba4f6acc9261f843830f8a3deb5c8f32bb12e684",
+      "reason": "add independent implementation evidence policy while preserving release v1; pinned historical source/test/CI evidence"
     },
     {
       "path": "scripts/measure-abd-progress.mjs",
-      "sha": "a7a4093cd88a89a6be59c0cf9161e62e57b0b7fb",
-      "reason": "versioned fixed-scope measurement policy and invariant tests; not feature publication approval"
+      "sha": "1f073d8dd364ba9cb36f65c60ae7a65e6dd540a8",
+      "reason": "add independent implementation evidence policy while preserving release v1; pinned historical source/test/CI evidence"
     },
     {
       "path": "tests/abd-progress.test.mjs",
-      "sha": "78c18128f655492c6ecb493a48f29829f91c5140",
-      "reason": "versioned fixed-scope measurement policy and invariant tests; not feature publication approval"
+      "sha": "9c6e0b83aa46124ce70e39a8d9735e9f186987f2",
+      "reason": "add independent implementation evidence policy while preserving release v1; pinned historical source/test/CI evidence"
     }
   ],
   "overrides": [
@@ -872,6 +872,22 @@
       "sha": "77478eefee769e23da2429e46fcad816b116aef8",
       "origin_blob": "d7be63612e9b729c48d90d50f79a6e264929af07",
       "reason": "append fixed conversation-participant response regression; preserved previous acceptance; synthetic-only transport extension"
+    },
+    {
+      "path": "src/DirectMessageChat.tsx",
+      "sha": "7797b719d0e6b3b59e5e62b95248ebc87d63acc0",
+      "origin_blob": "11e21c0735402f1dc6d4a020ea1c312040edfc5f",
+      "reason": "filter query results by both current account and requested peer; does not replace RLS",
+      "before_ci": 40359352861,
+      "before_result": {
+        "tests": 3,
+        "pass": 1,
+        "fail": 2
+      },
+      "fixed_input_paths": [
+        "tests/selected/direct-message-send.test.mjs",
+        "tests/browser/dm-supabase.ts"
+      ]
     }
   ],
   "measured_test_expansion": {

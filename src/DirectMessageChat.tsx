@@ -238,7 +238,12 @@ function DirectMessageConversation({ userId, accountId, authIdentity }: {
         throw new Error('MESSAGE_READ_FAILED')
       }
 
-      setMessages(dmData || [])
+      // Defense in depth: never render rows outside the requested participant
+      // pair, even if a stale/misconfigured response contains extra conversations.
+      // This does not replace server-side RLS.
+      setMessages((dmData || []).filter((row: DirectMessage) => row &&
+        ((row.sender_id === accountId && row.receiver_id === userId) ||
+          (row.sender_id === userId && row.receiver_id === accountId))))
       setStatusMessage('')
 
       scrollToBottom('auto')
