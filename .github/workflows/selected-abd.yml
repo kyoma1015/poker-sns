@@ -1,0 +1,36 @@
+name: Selected ABD integration
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'docs/qa/selected-abd-20261026/**'
+      - '.github/workflows/selected-abd.yml'
+permissions:
+  contents: read
+concurrency:
+  group: selected-abd-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Verify exact source and protected main bytes
+        run: node scripts/verify-selected-abd.mjs
+      - run: npm ci --cache "$RUNNER_TEMP/npm-selected-abd"
+      - name: Preserved selected unit and browser regressions
+        env:
+          CHROMIUM_PATH: /usr/bin/google-chrome
+        run: node scripts/run-selected-abd.mjs
+      - run: npm run build
+      - run: npm run lint

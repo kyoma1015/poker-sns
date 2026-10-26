@@ -1,5 +1,6 @@
 import {
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from 'react'
@@ -20,6 +21,32 @@ type DirectMessage = {
 
 function DirectMessageChat() {
   const { userId } = useParams()
+  const navigate = useNavigate()
+  const [accountId, setAccountId] = useState<string | null | undefined>(undefined)
+  const authIdentity = useRef<string | null>(null)
+  useEffect(() => {
+    let active = true
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!active) return
+      const id = session?.user?.id ?? null
+      // Invalidate in-flight work synchronously. Never call Supabase or await
+      // inside its auth callback; React remounts after the callback returns.
+      authIdentity.current = id
+      setAccountId(id)
+    })
+    return () => { active = false; authIdentity.current = null; subscription.unsubscribe() }
+  }, [])
+  useEffect(() => { if (accountId === null) navigate('/login') }, [accountId, navigate])
+  if (accountId === undefined) return <main className="app"><p>読み込み中...</p></main>
+  if (accountId === null) return <main className="app"><p>ログインが必要です。</p></main>
+  return <DirectMessageConversation key={`${accountId}:${userId ?? 'missing'}`} userId={userId} accountId={accountId} authIdentity={authIdentity} />
+}
+
+function DirectMessageConversation({ userId, accountId, authIdentity }: {
+  userId: string | undefined
+  accountId: string
+  authIdentity: { current: string | null }
+}) {
   const navigate = useNavigate()
 
   const [currentUserId, setCurrentUserId] =
@@ -46,9 +73,20 @@ function DirectMessageChat() {
   ] = useState('読み込み中...')
 
   const [isBlocked, setIsBlocked] = useState(false)
+  const [readFailed, setReadFailed] = useState(false)
 
   const [isSending, setIsSending] =
     useState(false)
+
+  // React state alone cannot exclude overlapping key/click handlers before
+  // their first await or a subsequent render.
+  const sendingRef = useRef(false)
+  const lifecycleRef = useRef({ active: false, request: 0 })
+  useLayoutEffect(() => {
+    const lifecycle = lifecycleRef.current
+    lifecycle.active = true
+    return () => { lifecycle.active = false; lifecycle.request++ }
+  }, [])
 
   const bottomRef =
     useRef<HTMLDivElement | null>(null)
@@ -56,7 +94,9 @@ function DirectMessageChat() {
   const scrollToBottom = (
     behavior: ScrollBehavior = 'smooth'
   ) => {
+    const lifecycle = lifecycleRef.current
     setTimeout(() => {
+      if (!lifecycle.active) return
       bottomRef.current?.scrollIntoView({
         behavior,
       })
@@ -67,6 +107,7 @@ function DirectMessageChat() {
     myUserId: string,
     otherUserId: string
   ) => {
+    if (!lifecycleRef.current.active || authIdentity.current !== myUserId) return
     const { error } = await supabase
       .from('direct_messages')
       .update({
@@ -92,6 +133,10 @@ function DirectMessageChat() {
   }
 
   const loadMessages = async () => {
+    const lifecycle = lifecycleRef.current
+    if (!lifecycle.active || authIdentity.current !== accountId) return
+    const request = ++lifecycle.request
+    const isCurrent = () => lifecycle.active && request === lifecycle.request && authIdentity.current === accountId
     if (!userId) {
       setStatusMessage(
         '相手が見つかりませんでした。'
@@ -99,107 +144,113 @@ function DirectMessageChat() {
       return
     }
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
+    setReadFailed(false)
+    try {
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser()
+      if (!isCurrent()) return
+      if (authError) throw new Error('AUTH_READ_FAILED')
 
-    if (!user) {
-      navigate('/login')
-      return
-    }
+      if (!user || user.id !== accountId) {
+        navigate('/login')
+        return
+      }
 
-    setCurrentUserId(user.id)
-    const { data: blockRows, error: blockError } = await supabase.from('user_blocks')
-      .select('blocker_id')
-      .or(`and(blocker_id.eq.${user.id},blocked_id.eq.${userId}),and(blocker_id.eq.${userId},blocked_id.eq.${user.id})`)
-    if (blockError) { setIsBlocked(true); setMessages([]); setStatusMessage('ブロック状態を確認できませんでした。'); return }
-    if ((blockRows || []).length > 0) {
-      setIsBlocked(true)
+      setCurrentUserId(user.id)
+      const { data: blockRows, error: blockError } = await supabase.from('user_blocks')
+        .select('blocker_id')
+        .or(`and(blocker_id.eq.${user.id},blocked_id.eq.${userId}),and(blocker_id.eq.${userId},blocked_id.eq.${user.id})`)
+      if (!isCurrent()) return
+      if (blockError) { setIsBlocked(true); throw new Error('BLOCK_READ_FAILED') }
+      if ((blockRows || []).length > 0) {
+        setIsBlocked(true)
+        setMessages([])
+        setStatusMessage('ブロック中のため、このユーザーとメッセージを送受信できません。')
+        return
+      }
+      setIsBlocked(false)
+
+      if (user.id === userId) {
+        setStatusMessage(
+          '自分自身にはDMできません。'
+        )
+        return
+      }
+
+      const {
+        data: profile,
+        error: profileError,
+      } = await supabase
+        .from('profiles')
+        .select(
+          'display_name, poker_id, avatar_url'
+        )
+        .eq('id', userId)
+        .maybeSingle()
+      if (!isCurrent()) return
+
+      if (profileError) {
+        throw new Error('PROFILE_READ_FAILED')
+      }
+
+      if (!profile) {
+        setStatusMessage(
+          '相手が見つかりませんでした。'
+        )
+        return
+      }
+
+      setPlayerName(
+        profile.display_name
+      )
+
+      setPokerId(
+        profile.poker_id
+      )
+
+      setAvatarUrl(
+        profile.avatar_url || null
+      )
+
+      await markMessagesAsRead(
+        user.id,
+        userId
+      )
+      if (!isCurrent()) return
+
+      const {
+        data: dmData,
+        error: dmError,
+      } = await supabase
+        .from('direct_messages')
+        .select('*')
+        .or(
+          `and(sender_id.eq.${user.id},receiver_id.eq.${userId}),and(sender_id.eq.${userId},receiver_id.eq.${user.id})`
+        )
+        .order('created_at', {
+          ascending: true,
+        })
+      if (!isCurrent()) return
+
+      if (dmError) {
+        throw new Error('MESSAGE_READ_FAILED')
+      }
+
+      setMessages(dmData || [])
+      setStatusMessage('')
+
+      scrollToBottom('auto')
+      return true
+    } catch {
+      if (!isCurrent()) return
       setMessages([])
-      setStatusMessage('ブロック中のため、このユーザーとメッセージを送受信できません。')
-      return
+      setCurrentUserId('')
+      setReadFailed(true)
+      setStatusMessage('DMの読み込みに失敗しました。もう一度お試しください。')
+      return false
     }
-    setIsBlocked(false)
-
-    if (user.id === userId) {
-      setStatusMessage(
-        '自分自身にはDMできません。'
-      )
-      return
-    }
-
-    const {
-      data: profile,
-      error: profileError,
-    } = await supabase
-      .from('profiles')
-      .select(
-        'display_name, poker_id, avatar_url'
-      )
-      .eq('id', userId)
-      .maybeSingle()
-
-    if (profileError) {
-      console.error(profileError)
-
-      setStatusMessage(
-        `プロフィールの取得に失敗しました：${profileError.message}`
-      )
-
-      return
-    }
-
-    if (!profile) {
-      setStatusMessage(
-        '相手が見つかりませんでした。'
-      )
-      return
-    }
-
-    setPlayerName(
-      profile.display_name
-    )
-
-    setPokerId(
-      profile.poker_id
-    )
-
-    setAvatarUrl(
-      profile.avatar_url || null
-    )
-
-    await markMessagesAsRead(
-      user.id,
-      userId
-    )
-
-    const {
-      data: dmData,
-      error: dmError,
-    } = await supabase
-      .from('direct_messages')
-      .select('*')
-      .or(
-        `and(sender_id.eq.${user.id},receiver_id.eq.${userId}),and(sender_id.eq.${userId},receiver_id.eq.${user.id})`
-      )
-      .order('created_at', {
-        ascending: true,
-      })
-
-    if (dmError) {
-      console.error(dmError)
-
-      setStatusMessage(
-        `DMの取得に失敗しました：${dmError.message}`
-      )
-
-      return
-    }
-
-    setMessages(dmData || [])
-    setStatusMessage('')
-
-    scrollToBottom('auto')
   }
 
   useEffect(() => {
@@ -227,6 +278,7 @@ function DirectMessageChat() {
             'direct_messages',
         },
         async (payload) => {
+          if (!lifecycleRef.current.active || authIdentity.current !== currentUserId) return
           if (
             payload.eventType ===
             'INSERT'
@@ -324,6 +376,10 @@ function DirectMessageChat() {
   }, [messages.length])
 
   const handleSend = async () => {
+    if (sendingRef.current) return
+    const lifecycle = lifecycleRef.current
+    const isCurrent = () => lifecycle.active && authIdentity.current === accountId
+    if (!isCurrent()) return
     const trimmedInput =
       input.trim()
 
@@ -350,47 +406,58 @@ function DirectMessageChat() {
       return
     }
 
-    const { data: currentBlocks, error: blockCheckError } = await supabase.from('user_blocks')
-      .select('blocker_id')
-      .or(`and(blocker_id.eq.${currentUserId},blocked_id.eq.${userId}),and(blocker_id.eq.${userId},blocked_id.eq.${currentUserId})`)
-    if (blockCheckError || (currentBlocks || []).length > 0) {
-      setIsBlocked(true)
-      setStatusMessage('ブロック中のためメッセージを送信できません。')
-      return
-    }
+    sendingRef.current = true
     setIsSending(true)
-
-    const { error } =
-      await supabase
-        .from(
-          'direct_messages'
-        )
-        .insert({
-          sender_id:
-            currentUserId,
-          receiver_id: userId,
-          content:
-            trimmedInput,
-        })
-
-    if (error) {
-      console.error(error)
-
-      setStatusMessage(
-        `DMを送信できませんでした：${error.message}`
-      )
-
-      setIsSending(false)
-      return
+    let sent = false
+    try {
+      const { data: { user }, error: authError } = await supabase.auth.getUser()
+      if (!isCurrent()) return
+      if (authError || !user || user.id !== accountId || currentUserId !== accountId) {
+        setMessages([])
+        setInput('')
+        setCurrentUserId('')
+        setPlayerName('')
+        setPokerId('')
+        setAvatarUrl(null)
+        setStatusMessage('アカウントを確認できませんでした。ページを再読み込みしてください。')
+        return
+      }
+      const { data: currentBlocks, error: blockCheckError } = await supabase.from('user_blocks')
+        .select('blocker_id')
+        .or(`and(blocker_id.eq.${currentUserId},blocked_id.eq.${userId}),and(blocker_id.eq.${userId},blocked_id.eq.${currentUserId})`)
+      if (!isCurrent()) return
+      if (blockCheckError || (currentBlocks || []).length > 0) {
+        setIsBlocked(true)
+        setStatusMessage('ブロック中のためメッセージを送信できません。')
+        return
+      }
+      const { error } = await supabase.from('direct_messages').insert({
+        sender_id: currentUserId,
+        receiver_id: userId,
+        content: trimmedInput,
+      })
+      if (!isCurrent()) return
+      if (error) {
+        setStatusMessage('DMを送信できませんでした。もう一度お試しください。')
+        return
+      }
+      sent = true
+      setInput('')
+      setStatusMessage('')
+      const refreshed = await loadMessages()
+      if (refreshed === false && isCurrent()) {
+        setStatusMessage('送信しましたが、表示の更新に失敗しました。ページを再読み込みしてください。')
+      }
+      scrollToBottom()
+    } catch {
+      if (!isCurrent()) return
+      setStatusMessage(sent
+        ? '送信しましたが、表示の更新に失敗しました。ページを再読み込みしてください。'
+        : 'DMを送信できませんでした。もう一度お試しください。')
+    } finally {
+      sendingRef.current = false
+      if (isCurrent()) setIsSending(false)
     }
-
-    setInput('')
-    setStatusMessage('')
-    setIsSending(false)
-
-    await loadMessages()
-
-    scrollToBottom()
   }
 
   const handleKeyDown = (
@@ -671,6 +738,7 @@ function DirectMessageChat() {
             {statusMessage}
           </div>
         )}
+        {readFailed && <button type="button" onClick={() => { void loadMessages() }}>DMを再読み込み</button>}
 
         {/* メッセージなし */}
         {messages.length === 0 &&

@@ -1,0 +1,818 @@
+{
+  "schema": 1,
+  "repository": "kyoma1015/poker-sns",
+  "base_main": "781f038415503ece850c25a26e72ef67dee9c8a1",
+  "scope": "ABD selected-source integration; GTO excluded after exclusive transfer",
+  "sources": [
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "src/TDA.tsx",
+      "target_path": "src/TDA.tsx",
+      "source_blob": "2d3da347fd3f2f09e63a30e34f8fd84c114898c2",
+      "selected_blob": "2d3da347fd3f2f09e63a30e34f8fd84c114898c2",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "src/tdaQuizAuth.ts",
+      "target_path": "src/tdaQuizAuth.ts",
+      "source_blob": "d26b9cceba77948628a26f5b88e1f0a19f051bc4",
+      "selected_blob": "d26b9cceba77948628a26f5b88e1f0a19f051bc4",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "src/tdaQuizData.ts",
+      "target_path": "src/tdaQuizData.ts",
+      "source_blob": "488c72de516ba4ccdfb67f99edf1ac07a4f26497",
+      "selected_blob": "488c72de516ba4ccdfb67f99edf1ac07a4f26497",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "src/tdaQuizAnswerAudit.ts",
+      "target_path": "src/tdaQuizAnswerAudit.ts",
+      "source_blob": "7e08a521d5ec1b6ce78248d5e149cd8a869cf06c",
+      "selected_blob": "7e08a521d5ec1b6ce78248d5e149cd8a869cf06c",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "scripts/audit-tda-questions.mjs",
+      "target_path": "scripts/audit-tda-questions.mjs",
+      "source_blob": "179559f6193b55a2f48dd88226e5494ec9aedc03",
+      "selected_blob": "179559f6193b55a2f48dd88226e5494ec9aedc03",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "scripts/tda-audit-cli.mjs",
+      "target_path": "scripts/tda-audit-cli.mjs",
+      "source_blob": "34a6c43b09ac54777ebad189bca572fdbdf04406",
+      "selected_blob": "34a6c43b09ac54777ebad189bca572fdbdf04406",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "scripts/tda-snapshot-audit.mjs",
+      "target_path": "scripts/tda-snapshot-audit.mjs",
+      "source_blob": "8a8a2500f59c3373f95ffde32e93c99caad2fb40",
+      "selected_blob": "8a8a2500f59c3373f95ffde32e93c99caad2fb40",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "scripts/strict-json.mjs",
+      "target_path": "scripts/strict-json.mjs",
+      "source_blob": "77218fbc4f986311e69ed9a0e36cac70ffe3e91d",
+      "selected_blob": "77218fbc4f986311e69ed9a0e36cac70ffe3e91d",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/browser/tda-account-entry.tsx",
+      "target_path": "tests/browser/tda-account-entry.tsx",
+      "source_blob": "fedda48f51281344c7ce7223141c5f6ab6fa94a6",
+      "selected_blob": "fedda48f51281344c7ce7223141c5f6ab6fa94a6",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/browser/tda-account-isolation.mjs",
+      "target_path": "tests/browser/tda-account-isolation.mjs",
+      "source_blob": "1746692abedaa032bdf14d80f6247f40db5afde9",
+      "selected_blob": "1746692abedaa032bdf14d80f6247f40db5afde9",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/browser/tda-account-supabase.ts",
+      "target_path": "tests/browser/tda-account-supabase.ts",
+      "source_blob": "d9bf3c031acc396240b5404589d67313b166c96b",
+      "selected_blob": "d9bf3c031acc396240b5404589d67313b166c96b",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/browser/tda-entry.tsx",
+      "target_path": "tests/browser/tda-entry.tsx",
+      "source_blob": "e74d3d11634fc3e2125d9f7388f420d05a9d0180",
+      "selected_blob": "e74d3d11634fc3e2125d9f7388f420d05a9d0180",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/browser/tda-filters-supabase.ts",
+      "target_path": "tests/browser/tda-filters-supabase.ts",
+      "source_blob": "caa7c5b23117403ef0f12df22163f2585de132d3",
+      "selected_blob": "caa7c5b23117403ef0f12df22163f2585de132d3",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/browser/tda-filters.mjs",
+      "target_path": "tests/browser/tda-filters.mjs",
+      "source_blob": "6901c64648e14fb14c36eebab506ee39f987e6f2",
+      "selected_blob": "6901c64648e14fb14c36eebab506ee39f987e6f2",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/browser/tda-quiz.mjs",
+      "target_path": "tests/browser/tda-quiz.mjs",
+      "source_blob": "08383e9b9b6f8b53919c3202998db5af405ec2b1",
+      "selected_blob": "08383e9b9b6f8b53919c3202998db5af405ec2b1",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/browser/tda-save-recovery.mjs",
+      "target_path": "tests/browser/tda-save-recovery.mjs",
+      "source_blob": "c2cb71586ad2a1e0e424aedd925b9f367ddf8494",
+      "selected_blob": "c2cb71586ad2a1e0e424aedd925b9f367ddf8494",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/browser/tda-search-supabase.ts",
+      "target_path": "tests/browser/tda-search-supabase.ts",
+      "source_blob": "549908b1ebdaf0e2439574ef08241547add8ae18",
+      "selected_blob": "549908b1ebdaf0e2439574ef08241547add8ae18",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/browser/tda-supabase.ts",
+      "target_path": "tests/browser/tda-supabase.ts",
+      "source_blob": "38f3e68bad4e35c6a85a0db8b6e513c2bfc5e44b",
+      "selected_blob": "38f3e68bad4e35c6a85a0db8b6e513c2bfc5e44b",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/tda-answer-conflict-audit.test.mjs",
+      "target_path": "tests/tda-answer-conflict-audit.test.mjs",
+      "source_blob": "35b07fb494ce5e71d0fa6e882d0b8c77328c7c60",
+      "selected_blob": "35b07fb494ce5e71d0fa6e882d0b8c77328c7c60",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/tda-answer-key-audit.test.mjs",
+      "target_path": "tests/tda-answer-key-audit.test.mjs",
+      "source_blob": "b49a1f575cf809f3d21081883fbf84b71d0612da",
+      "selected_blob": "b49a1f575cf809f3d21081883fbf84b71d0612da",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/tda-audit-cli.test.mjs",
+      "target_path": "tests/tda-audit-cli.test.mjs",
+      "source_blob": "a3bfabe00874dc61dc08a04e8c3a9d72b0eaa238",
+      "selected_blob": "a3bfabe00874dc61dc08a04e8c3a9d72b0eaa238",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/tda-json-ambiguity.test.mjs",
+      "target_path": "tests/tda-json-ambiguity.test.mjs",
+      "source_blob": "acb613b59b8cdb130e71ccbefdcf424624d57d16",
+      "selected_blob": "acb613b59b8cdb130e71ccbefdcf424624d57d16",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/tda-legacy-strict-json.test.mjs",
+      "target_path": "tests/tda-legacy-strict-json.test.mjs",
+      "source_blob": "b1297210bf674cd7a3ebd02a54f4c5351049746d",
+      "selected_blob": "b1297210bf674cd7a3ebd02a54f4c5351049746d",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/tda-offline-entrypoints.test.mjs",
+      "target_path": "tests/tda-offline-entrypoints.test.mjs",
+      "source_blob": "62026ee588e4e5d32c80a3b0b3672180cb086d58",
+      "selected_blob": "62026ee588e4e5d32c80a3b0b3672180cb086d58",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/tda-quiz-auth.test.mjs",
+      "target_path": "tests/tda-quiz-auth.test.mjs",
+      "source_blob": "7a972985105075f99c19cfb1d6d481a2a9717b7a",
+      "selected_blob": "7a972985105075f99c19cfb1d6d481a2a9717b7a",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/tda-quiz-data.test.mjs",
+      "target_path": "tests/tda-quiz-data.test.mjs",
+      "source_blob": "ccd3fff32aeae58c0eece3cf888f9cb09c26c210",
+      "selected_blob": "ccd3fff32aeae58c0eece3cf888f9cb09c26c210",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/tda-saved-answer.test.mjs",
+      "target_path": "tests/tda-saved-answer.test.mjs",
+      "source_blob": "d9f2ae8766caeb2f49554dd23b4cbd9baedc1745",
+      "selected_blob": "d9f2ae8766caeb2f49554dd23b4cbd9baedc1745",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/tda-snapshot-integrity.test.mjs",
+      "target_path": "tests/tda-snapshot-integrity.test.mjs",
+      "source_blob": "a92c55fd881cd6b7693429b10fe7eb3dd2f6d330",
+      "selected_blob": "a92c55fd881cd6b7693429b10fe7eb3dd2f6d330",
+      "adaptation": null
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/tda-strict-json-boundary.test.mjs",
+      "target_path": "tests/tda-strict-json-boundary.test.mjs",
+      "source_blob": "8f09291a1860011ec7e9042bf34ec7138169faaa",
+      "selected_blob": "8f09291a1860011ec7e9042bf34ec7138169faaa",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "src/PlayerTypeDiagnosis.tsx",
+      "target_path": "src/PlayerTypeDiagnosis.tsx",
+      "source_blob": "7bb4431a75c8c3637ca40d0312ca68e32d6bb8c7",
+      "selected_blob": "7bb4431a75c8c3637ca40d0312ca68e32d6bb8c7",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "src/PlayerTypeDiagnosis.css",
+      "target_path": "src/PlayerTypeDiagnosis.css",
+      "source_blob": "817978b560400b70d63053a5d8bc2bfc8269f39c",
+      "selected_blob": "817978b560400b70d63053a5d8bc2bfc8269f39c",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "src/playerTypeAnimals.ts",
+      "target_path": "src/playerTypeAnimals.ts",
+      "source_blob": "606c067394cd496bca5d2450e5a19a7a05ac1f6f",
+      "selected_blob": "606c067394cd496bca5d2450e5a19a7a05ac1f6f",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "src/playerTypePresentation.ts",
+      "target_path": "src/playerTypePresentation.ts",
+      "source_blob": "2a01415e64ec33c43209f2f79306bf9fe1e6b1c4",
+      "selected_blob": "2a01415e64ec33c43209f2f79306bf9fe1e6b1c4",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "src/playerTypeQuestions.ts",
+      "target_path": "src/playerTypeQuestions.ts",
+      "source_blob": "623aec43c5aecf0f1125cca56aefc9e39500f656",
+      "selected_blob": "623aec43c5aecf0f1125cca56aefc9e39500f656",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "src/playerTypeShareImage.ts",
+      "target_path": "src/playerTypeShareImage.ts",
+      "source_blob": "221a3eda6ebf0ff61fbde12394516eeb74c50c33",
+      "selected_blob": "221a3eda6ebf0ff61fbde12394516eeb74c50c33",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "scripts/audit-player-type.mjs",
+      "target_path": "scripts/audit-player-type.mjs",
+      "source_blob": "418525e668af9ddcebc0f97b18d53a19b4e1ece0",
+      "selected_blob": "418525e668af9ddcebc0f97b18d53a19b4e1ece0",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "scripts/player-type-strategy-evidence.mjs",
+      "target_path": "scripts/player-type-strategy-evidence.mjs",
+      "source_blob": "ff1391d86fec8b443acafa678c676323d53a1972",
+      "selected_blob": "ff1391d86fec8b443acafa678c676323d53a1972",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "tests/browser/player-type-result-entry.tsx",
+      "target_path": "tests/browser/player-type-result-entry.tsx",
+      "source_blob": "16a3c26dcb7ddcfb52538010b9ac99122f97854d",
+      "selected_blob": "16a3c26dcb7ddcfb52538010b9ac99122f97854d",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "tests/browser/player-type-result-supabase.ts",
+      "target_path": "tests/browser/player-type-result-supabase.ts",
+      "source_blob": "bdc0ad47c5442570b060eec3d3486331ef32c0a1",
+      "selected_blob": "bdc0ad47c5442570b060eec3d3486331ef32c0a1",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "tests/browser/player-type-share-entry.tsx",
+      "target_path": "tests/browser/player-type-share-entry.tsx",
+      "source_blob": "719fd470afab73f12d26d4a3abf7b79a32e51796",
+      "selected_blob": "719fd470afab73f12d26d4a3abf7b79a32e51796",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "tests/browser/player-type-share-supabase.ts",
+      "target_path": "tests/browser/player-type-share-supabase.ts",
+      "source_blob": "fa4245f5b59eb71955f621356294cc24e6808b8f",
+      "selected_blob": "fa4245f5b59eb71955f621356294cc24e6808b8f",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "tests/fixtures/player-type-v2.json",
+      "target_path": "tests/fixtures/player-type-v2.json",
+      "source_blob": "de59a61b3a311eec5ea02dffd145d2927e201605",
+      "selected_blob": "de59a61b3a311eec5ea02dffd145d2927e201605",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "tests/player-type-audit.test.mjs",
+      "target_path": "tests/player-type-audit.test.mjs",
+      "source_blob": "893ef2c3de5e06837fd1d998f3f4c1a3a961fc54",
+      "selected_blob": "893ef2c3de5e06837fd1d998f3f4c1a3a961fc54",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "tests/player-type-distribution.test.mjs",
+      "target_path": "tests/player-type-distribution.test.mjs",
+      "source_blob": "b3bf3ca56c55233b1b2154591ea1cada0848e7eb",
+      "selected_blob": "b3bf3ca56c55233b1b2154591ea1cada0848e7eb",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "tests/player-type-png-cleanup.test.mjs",
+      "target_path": "tests/player-type-png-cleanup.test.mjs",
+      "source_blob": "26f2edb13577614c2e08d94084e00ae8c9afc819",
+      "selected_blob": "26f2edb13577614c2e08d94084e00ae8c9afc819",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "tests/player-type-presentation-values.test.mjs",
+      "target_path": "tests/player-type-presentation-values.test.mjs",
+      "source_blob": "afda5828826be1e34a4780a5bf6418c513c095f0",
+      "selected_blob": "afda5828826be1e34a4780a5bf6418c513c095f0",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "tests/player-type-reference.test.mjs",
+      "target_path": "tests/player-type-reference.test.mjs",
+      "source_blob": "3b5d77f3b1f54cf693f5bdf4090d29c99e491eec",
+      "selected_blob": "3b5d77f3b1f54cf693f5bdf4090d29c99e491eec",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "tests/player-type-score-schema.test.mjs",
+      "target_path": "tests/player-type-score-schema.test.mjs",
+      "source_blob": "ef3ba3a0598792091a50fe65ad83cf1162201605",
+      "selected_blob": "ef3ba3a0598792091a50fe65ad83cf1162201605",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "tests/player-type-share-image.test.mjs",
+      "target_path": "tests/player-type-share-image.test.mjs",
+      "source_blob": "171cb33aeaf622285de3ee87778eaa1f48f7e95f",
+      "selected_blob": "171cb33aeaf622285de3ee87778eaa1f48f7e95f",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "tests/player-type-strategy-evidence.test.mjs",
+      "target_path": "tests/player-type-strategy-evidence.test.mjs",
+      "source_blob": "d0fa7622fd451af3e20556dbf88b2908fa51340d",
+      "selected_blob": "d0fa7622fd451af3e20556dbf88b2908fa51340d",
+      "adaptation": null
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "tests/player-type.test.mjs",
+      "target_path": "tests/player-type.test.mjs",
+      "source_blob": "624ee8288fd1301cfc02d7d4e2555c3c10fd501b",
+      "selected_blob": "624ee8288fd1301cfc02d7d4e2555c3c10fd501b",
+      "adaptation": null
+    },
+    {
+      "lane": "A",
+      "source_commit": "99587abe0aa98a16e3db2c5cf609b1c265a876b8",
+      "source_path": "src/DirectMessageChat.tsx",
+      "target_path": "src/DirectMessageChat.tsx",
+      "source_blob": "11e21c0735402f1dc6d4a020ea1c312040edfc5f",
+      "selected_blob": "11e21c0735402f1dc6d4a020ea1c312040edfc5f",
+      "adaptation": null
+    },
+    {
+      "lane": "A",
+      "source_commit": "99587abe0aa98a16e3db2c5cf609b1c265a876b8",
+      "source_path": "src/DirectMessages.tsx",
+      "target_path": "src/DirectMessages.tsx",
+      "source_blob": "d9efdaac3888295c0098c7e34bd264213e01b99e",
+      "selected_blob": "d9efdaac3888295c0098c7e34bd264213e01b99e",
+      "adaptation": null
+    },
+    {
+      "lane": "A",
+      "source_commit": "99587abe0aa98a16e3db2c5cf609b1c265a876b8",
+      "source_path": "src/Notifications.tsx",
+      "target_path": "src/Notifications.tsx",
+      "source_blob": "5db08b1d7c955d6ac3c6817b6132bbac5068fb86",
+      "selected_blob": "5db08b1d7c955d6ac3c6817b6132bbac5068fb86",
+      "adaptation": null
+    },
+    {
+      "lane": "A",
+      "source_commit": "99587abe0aa98a16e3db2c5cf609b1c265a876b8",
+      "source_path": "tests/browser/dm-entry.tsx",
+      "target_path": "tests/browser/dm-entry.tsx",
+      "source_blob": "ce8751deadc50e7b1b9bd9c87a5535f984bfc868",
+      "selected_blob": "ce8751deadc50e7b1b9bd9c87a5535f984bfc868",
+      "adaptation": null
+    },
+    {
+      "lane": "A",
+      "source_commit": "99587abe0aa98a16e3db2c5cf609b1c265a876b8",
+      "source_path": "tests/browser/dm-inbox-entry.tsx",
+      "target_path": "tests/browser/dm-inbox-entry.tsx",
+      "source_blob": "7c9449be98493ac064a203d8e72d7229138d2286",
+      "selected_blob": "7c9449be98493ac064a203d8e72d7229138d2286",
+      "adaptation": null
+    },
+    {
+      "lane": "A",
+      "source_commit": "99587abe0aa98a16e3db2c5cf609b1c265a876b8",
+      "source_path": "tests/browser/dm-inbox-supabase.ts",
+      "target_path": "tests/browser/dm-inbox-supabase.ts",
+      "source_blob": "091d321d8b04cf6fcc91276ddfcf4732c6547908",
+      "selected_blob": "091d321d8b04cf6fcc91276ddfcf4732c6547908",
+      "adaptation": null
+    },
+    {
+      "lane": "A",
+      "source_commit": "99587abe0aa98a16e3db2c5cf609b1c265a876b8",
+      "source_path": "tests/browser/dm-supabase.ts",
+      "target_path": "tests/browser/dm-supabase.ts",
+      "source_blob": "d7be63612e9b729c48d90d50f79a6e264929af07",
+      "selected_blob": "d7be63612e9b729c48d90d50f79a6e264929af07",
+      "adaptation": null
+    },
+    {
+      "lane": "A",
+      "source_commit": "99587abe0aa98a16e3db2c5cf609b1c265a876b8",
+      "source_path": "tests/browser/notifications-flow-entry.tsx",
+      "target_path": "tests/browser/notifications-flow-entry.tsx",
+      "source_blob": "1779930d6a89e8659e1dcf646611102a5b047a90",
+      "selected_blob": "1779930d6a89e8659e1dcf646611102a5b047a90",
+      "adaptation": null
+    },
+    {
+      "lane": "A",
+      "source_commit": "99587abe0aa98a16e3db2c5cf609b1c265a876b8",
+      "source_path": "tests/browser/notifications-flow-supabase.ts",
+      "target_path": "tests/browser/notifications-flow-supabase.ts",
+      "source_blob": "cab2795123c30f955a4a129b43d249b27fee4d56",
+      "selected_blob": "cab2795123c30f955a4a129b43d249b27fee4d56",
+      "adaptation": null
+    },
+    {
+      "lane": "A",
+      "source_commit": "99587abe0aa98a16e3db2c5cf609b1c265a876b8",
+      "source_path": "tests/direct-message-inbox.test.mjs",
+      "target_path": "tests/selected/direct-message-inbox.test.mjs",
+      "source_blob": "41cedc0d216ac242b64bc6962f071c5296cc2c06",
+      "selected_blob": null,
+      "adaptation": "only resource root/import adjusted for tests/selected relocation; assertions retained"
+    },
+    {
+      "lane": "A",
+      "source_commit": "99587abe0aa98a16e3db2c5cf609b1c265a876b8",
+      "source_path": "tests/direct-message-send.test.mjs",
+      "target_path": "tests/selected/direct-message-send.test.mjs",
+      "source_blob": "07be5f7eb286a95b37b2988b39285c097d258d51",
+      "selected_blob": null,
+      "adaptation": "only resource root/import adjusted for tests/selected relocation; assertions retained"
+    },
+    {
+      "lane": "A",
+      "source_commit": "99587abe0aa98a16e3db2c5cf609b1c265a876b8",
+      "source_path": "tests/notifications-flow.test.mjs",
+      "target_path": "tests/selected/notifications-flow.test.mjs",
+      "source_blob": "25e087169134593df76f3fd75114a903f786fd12",
+      "selected_blob": null,
+      "adaptation": "only resource root/import adjusted for tests/selected relocation; assertions retained"
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/tda-account-isolation.test.mjs",
+      "target_path": "tests/selected/tda-account-isolation.test.mjs",
+      "source_blob": "d4804e82e24ae5dc26899c75cd3b17f42a12c402",
+      "selected_blob": null,
+      "adaptation": "byte-identical rename"
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/tda-save-recovery.test.mjs",
+      "target_path": "tests/selected/tda-save-recovery.test.mjs",
+      "source_blob": "c6f88d2518c7905c0f0ce4c25818ef4737b0fde2",
+      "selected_blob": null,
+      "adaptation": "only resource root/import adjusted for tests/selected relocation; assertions retained"
+    },
+    {
+      "lane": "B",
+      "source_commit": "8fc0dc9fb1ecbe95d465a005ba2c6a78b9947ada",
+      "source_path": "tests/worker-acceptance.test.mjs",
+      "target_path": "tests/selected/tda-rule-search.test.mjs",
+      "source_blob": "05325f194f50840bda45868cd745f3bfa03b6672",
+      "selected_blob": null,
+      "adaptation": "only resource root/import adjusted for tests/selected relocation; assertions retained"
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "tests/player-type-share-browser.test.mjs",
+      "target_path": "tests/selected/player-type-share-browser.test.mjs",
+      "source_blob": "68970a07203cfe149fcc25233c8519e320c746ac",
+      "selected_blob": null,
+      "adaptation": "only resource root/import adjusted for tests/selected relocation; assertions retained"
+    },
+    {
+      "lane": "D",
+      "source_commit": "73baccf20ac770ad28dd52cdf9aa4125542e0ccd",
+      "source_path": "tests/player-type-result-browser.test.mjs",
+      "target_path": "tests/selected/player-type-result-browser.test.mjs",
+      "source_blob": "f346dae45604ebe2fc096ad99f58ecc1f4684379",
+      "selected_blob": null,
+      "adaptation": "only resource root/import adjusted for tests/selected relocation; assertions retained"
+    }
+  ],
+  "protected_main_blobs": [
+    {
+      "path": "package.json",
+      "sha": "59c1e9c0b845f49ea33d29c449fb18107f04200f"
+    },
+    {
+      "path": "package-lock.json",
+      "sha": "e2ed090ea6459519bc0c822820a4bfc8b42628fa"
+    },
+    {
+      "path": "src/App.tsx",
+      "sha": "195a88e7ca261d4930e58bd9b2b75104003d0d1a"
+    },
+    {
+      "path": "src/Timeline.tsx",
+      "sha": "8256092dcb50df8cf9b9dd6ce182cc44ff44b52a"
+    },
+    {
+      "path": "src/PostDetail.tsx",
+      "sha": "e158b839a9bd6560a2bcf827b4fa386a0b192c0b"
+    },
+    {
+      "path": "src/TimelineInteractive.tsx",
+      "sha": "d8bbda50bc7b0acbdfcb2d478e786042c1cfbf6e"
+    },
+    {
+      "path": "src/interactiveRequests.ts",
+      "sha": "6571b6eed03af039248c81b8e49ec37e6937b9a9"
+    },
+    {
+      "path": ".github/workflows/poll-age-synthetic.yml",
+      "sha": "0cade366318d6584c73171b982232badb25a1ee9"
+    },
+    {
+      "path": ".github/workflows/poll-close-concurrency-isolated.yml",
+      "sha": "6fe701da5495aebb65d8ca10cf8709fff75e7074"
+    },
+    {
+      "path": ".github/workflows/poll-cron-cutover-isolated.yml",
+      "sha": "d9e9d337ddcbcdc96df48e50f421418538370be9"
+    },
+    {
+      "path": ".github/workflows/poll-cron-vault-runtime.yml",
+      "sha": "787a2b8b582c9a19f78a2dc7e2d030cfb4e36dbd"
+    },
+    {
+      "path": ".github/workflows/poll-gate0-integrated-recovery.yml",
+      "sha": "f81cb11d8ed783a4c4f6ddd21b093e89a021fd6f"
+    },
+    {
+      "path": ".github/workflows/poll-gate0-recovery-policy.yml",
+      "sha": "e9a6ab8c93284e18e154cc310e0b80a6b8ca8cc6"
+    },
+    {
+      "path": ".github/workflows/poll-pg17-synthetic-restore.yml",
+      "sha": "334e2aded667b6439eb6255c9c039702787bc482"
+    },
+    {
+      "path": ".github/workflows/poll-release.yml",
+      "sha": "90078c6198b2ec807572a331cbf8d4657704fc91"
+    },
+    {
+      "path": ".github/workflows/poll-supabase-pg17-extension-compat.yml",
+      "sha": "d918c97d505fb28d333d4ca6442cdc71e2e85d7a"
+    },
+    {
+      "path": "sql/poker_id_card_og_storage.sql",
+      "sha": "8086aabf4fd57b5fc80089b5bb1473db5a7a4ae4"
+    },
+    {
+      "path": "sql/poker_id_cards.sql",
+      "sha": "bae81cd723b896ec417dd4cb303e51139ec9c5b2"
+    },
+    {
+      "path": "sql/poll_only/block_legacy_question_inserts_candidate.sql",
+      "sha": "6ef2de6cf0d9250eb29fdeb53fb5c7d1f66190b6"
+    },
+    {
+      "path": "sql/poll_only/core_without_notifications_candidate.sql",
+      "sha": "6d12a3dea54374a07e1d6f35f050f6780635db4c"
+    },
+    {
+      "path": "sql/poll_only/disable_candidate.sql",
+      "sha": "da4bda5f1c8aebf1d9de95a3c7945bd897085ac4"
+    },
+    {
+      "path": "sql/poll_only/forward_candidate.sql",
+      "sha": "74a811d3c604b40be48248ff8639315ee843fdad"
+    },
+    {
+      "path": "sql/poll_only/preflight_readonly.sql",
+      "sha": "b7c1b929e2371c49881bd4efa8dddfebd89dae2a"
+    },
+    {
+      "path": "sql/poll_only/schedule_candidate.sql",
+      "sha": "45264a0e78fa51c80572c83114ef0ff6d761d86f"
+    },
+    {
+      "path": "tests/polls/authenticator_fixture.sql",
+      "sha": "b0edd6554cefff7c501ff1af6a258ff87d684b2b"
+    },
+    {
+      "path": "tests/polls/bootstrap_fixture.sql",
+      "sha": "b291555c64a0c185f9efd7bc089b6ba591db7f30"
+    },
+    {
+      "path": "tests/polls/docker-compose.yml",
+      "sha": "6af5186e2f59282bc8c74174567c73d2a9733f7f"
+    },
+    {
+      "path": "tests/polls/legacy_schema_fixture.sql",
+      "sha": "90e0aafaf896046fce9dc24639e0601eec6b2d67"
+    },
+    {
+      "path": "tests/polls/live_rpc_contract_assertions.sql",
+      "sha": "d78ef441f4e6cd162a39d91d206c86668100c6d0"
+    },
+    {
+      "path": "tests/polls/official_auth_functions_fixture.sql",
+      "sha": "ab674912825a565268121b4320f646e4a2001909"
+    },
+    {
+      "path": "tests/polls/production_catalog_parity_fixture.sql",
+      "sha": "335985109f248789c13f3be549bc5f714912a084"
+    },
+    {
+      "path": "tests/polls/run_isolated.sh",
+      "sha": "b852a9b397dd8920216bcf52bdfc835b3e2e858d"
+    },
+    {
+      "path": "tests/polls/verify_age_synthetic.sh",
+      "sha": "2e4147505c33d3b593855da39d30742bf4fd2297"
+    },
+    {
+      "path": "tests/polls/verify_backup_restore.sh",
+      "sha": "a952bb40d866a8bf6c80e8c75dbc350c69eacbf4"
+    },
+    {
+      "path": "tests/polls/verify_gate0_integrated_recovery.py",
+      "sha": "e90a3fdde17507a4993c819839f60d519551d8cf"
+    },
+    {
+      "path": "tests/polls/verify_gate0_recovery_policy.py",
+      "sha": "360b1fb1c3ac37b23eb31e82671bf2cf2338ba1d"
+    },
+    {
+      "path": "tests/polls/verify_isolated.py",
+      "sha": "14fcca21fa51cd53119f0188e2db142ecfee5bb9"
+    }
+  ],
+  "gates": {
+    "production": false,
+    "main_merge": false,
+    "held_state_writes": false,
+    "gto_changes": false,
+    "official_tda_accuracy": "UNVERIFIED",
+    "diagnosis_classifier": "UNVERIFIED",
+    "auth_rls": "BLOCKED pending authentic isolated artifacts"
+  },
+  "environment": {
+    "local": "BLOCKED ENOSPC before sandbox launch; original WIP preserved",
+    "candidate_validation": "remote CI required, do not infer from source provenance"
+  },
+  "unit_suites": [
+    "tests/player-type-audit.test.mjs",
+    "tests/player-type-distribution.test.mjs",
+    "tests/player-type-png-cleanup.test.mjs",
+    "tests/player-type-presentation-values.test.mjs",
+    "tests/player-type-reference.test.mjs",
+    "tests/player-type-score-schema.test.mjs",
+    "tests/player-type-share-image.test.mjs",
+    "tests/player-type-strategy-evidence.test.mjs",
+    "tests/player-type.test.mjs",
+    "tests/tda-answer-conflict-audit.test.mjs",
+    "tests/tda-answer-key-audit.test.mjs",
+    "tests/tda-audit-cli.test.mjs",
+    "tests/tda-json-ambiguity.test.mjs",
+    "tests/tda-legacy-strict-json.test.mjs",
+    "tests/tda-offline-entrypoints.test.mjs",
+    "tests/tda-quiz-auth.test.mjs",
+    "tests/tda-quiz-data.test.mjs",
+    "tests/tda-saved-answer.test.mjs",
+    "tests/tda-snapshot-integrity.test.mjs",
+    "tests/tda-strict-json-boundary.test.mjs"
+  ],
+  "browser_suites": [
+    "tests/selected/direct-message-inbox.test.mjs",
+    "tests/selected/direct-message-send.test.mjs",
+    "tests/selected/notifications-flow.test.mjs",
+    "tests/selected/tda-account-isolation.test.mjs",
+    "tests/selected/tda-save-recovery.test.mjs",
+    "tests/selected/tda-rule-search.test.mjs",
+    "tests/selected/player-type-share-browser.test.mjs",
+    "tests/selected/player-type-result-browser.test.mjs"
+  ],
+  "browser_cases": 93,
+  "original_method_count": 381,
+  "test_relocation": "All original assertions retained. Only resource root/import adapted; verifier compares against source Git blobs from pinned commits."
+}
