@@ -69,6 +69,19 @@ end $untrusted_metadata_gate$;
 reset role;
 
 
+-- The old privileged role must not silently retain a bypass to the
+-- unattested publication function. Also reject PUBLIC/anon exposure.
+do $publish_acl_gate$
+begin
+ if has_function_privilege('service_role',
+   'public.video_production_publish_fenced(uuid,text,uuid,text,double precision,text)','EXECUTE')
+ or has_function_privilege('anon',
+   'public.video_production_publish_fenced(uuid,text,uuid,text,double precision,text)','EXECUTE')
+ or has_function_privilege('authenticated',
+   'public.video_production_publish_fenced(uuid,text,uuid,text,double precision,text)','EXECUTE')
+ then raise exception 'NO-GO: unattested video publish RPC is executable'; end if;
+end $publish_acl_gate$;
+
 -- SECURITY REGRESSION: even a permanent reservation + authenticated INSERT RLS
 -- cannot prevent service_role from directly mutating Storage objects.
 -- This is a release blocker, not a passing writer-fence assertion.
