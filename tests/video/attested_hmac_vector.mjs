@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { signBinaryVideoAttestation, videoAttestationDigest } from '../../api/video-attestation.ts'
+import { signBinaryVideoAttestation, videoAttestationDigest } from '../../server/video-attestation.ts'
 // Fixture-only key; PostgreSQL checks this same independent deterministic vector.
 const owner='10000000-0000-0000-0000-000000000001'
 const claims={
