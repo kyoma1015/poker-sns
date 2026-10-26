@@ -32,7 +32,10 @@ jobs:
           for source in api/video-*.ts; do
             rm -- "${source%.ts}.js"
           done
-      - run: npm run build
+      - name: Frontend build (server-only ffprobe bundle not required)
+        env:
+          VIDEO_SKIP_FFPROBE_BUNDLE: '1'
+        run: npm run build
       - run: npm run lint
       - name: Mobile browser QA (mock transport)
         env:
