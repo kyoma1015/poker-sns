@@ -28,6 +28,8 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
+      - name: Verify cryptographic video attestation invariants
+        run: node --experimental-strip-types tests/video/attestation.test.mjs
       - name: Install local PostgreSQL client
         run: sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client
       - name: Restore pinned Supabase Docker image cache
