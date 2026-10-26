@@ -62,6 +62,17 @@ begin
   then
     raise exception 'invalid video reservation';
   end if;
+  -- Serialize reservations per owner to prevent concurrent calls bypassing
+  -- rolling-window quotas. This ledger is append-only, so abandoned uploads
+  -- consume quota instead of allowing unbounded permanent key reservations.
+  perform pg_catalog.pg_advisory_xact_lock(pg_catalog.hashtextextended(p_owner::text, 72941));
+  if (select count(*) from public.video_reserved_object_keys
+      where owner_id=p_owner and created_at>pg_catalog.clock_timestamp()-interval '1 hour') >= 12
+     or (select count(*) from public.video_reserved_object_keys
+      where owner_id=p_owner and created_at>pg_catalog.clock_timestamp()-interval '24 hours') >= 80
+  then
+    raise exception 'video reservation rate limit exceeded';
+  end if;
   -- Do not use ON CONFLICT DO UPDATE or return an existing reservation.
   -- A collision must fail permanently, including a deleted Storage object.
   insert into public.video_reserved_object_keys(bucket_id,object_path,owner_id)
