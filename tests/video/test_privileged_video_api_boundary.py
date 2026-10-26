@@ -28,6 +28,18 @@ class PrivilegedVideoApiBoundary(unittest.TestCase):
             self.assertIn("viewer.rpc('" + rpc + "'", text)
         self.assertIn("viewer.from('posts')", text)
 
+    def test_production_attestation_remains_hard_disabled_until_release(self):
+        adapter = (ROOT / 'api/video-production-supabase-adapters.ts').read_text()
+        handler = (ROOT / 'api/video-finalize.ts').read_text()
+        sql = (ROOT / 'tests/video/production_attested_candidate_review_only.sql').read_text()
+        self.assertRegex(adapter, r'function assertServerAttestationAvailable\(\): void \{\s*throw new Error\(')
+        self.assertIn('assertServerAttestationAvailable()', adapter)
+        self.assertIn("process.env.VIDEO_PRODUCTION_FENCED_READY === 'true'", handler)
+        self.assertIn('revoke all on function public.video_publish_attested_v1', sql.lower())
+        self.assertNotRegex(sql, r'(?im)^\s*grant execute on function public\.video_publish_attested_v1')
+        self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY', adapter)
+        self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY', handler)
+
     def test_media_transport_never_uses_service_role(self):
         text = (ROOT / 'api/video-media.ts').read_text()
         self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY', text)
