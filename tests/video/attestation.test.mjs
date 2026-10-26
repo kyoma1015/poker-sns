@@ -31,3 +31,14 @@ assert.throws(()=>signVideoAttestation(Buffer.alloc(16),claims),/signing key/)
 assert.throws(()=>canonicalVideoAttestation({...claims,durationMs:31000}),/invalid/)
 assert.throws(()=>canonicalVideoAttestation({...claims,nonce:'bad'}),/invalid/)
 console.log('PASS: canonical video attestation, tampering, key isolation and bounds')
+
+// Rotation regression: each key verifies only its own evidence; malformed
+// key lengths and cross-key signatures never authenticate.
+const rotatedKey=Buffer.alloc(32,0x43)
+const rotatedSignature=signVideoAttestation(rotatedKey,claims)
+assert.equal(verifyVideoAttestation(rotatedKey,claims,rotatedSignature),true)
+assert.equal(verifyVideoAttestation(key,claims,rotatedSignature),false)
+assert.equal(verifyVideoAttestation(rotatedKey,claims,sig),false)
+assert.equal(verifyVideoAttestation(Buffer.alloc(0),claims,sig),false)
+assert.equal(verifyVideoAttestation(rotatedKey,{...claims,expiresAt:claims.expiresAt+1},rotatedSignature),false)
+console.log('PASS: attestation key rotation and cross-key mismatch fail closed')
