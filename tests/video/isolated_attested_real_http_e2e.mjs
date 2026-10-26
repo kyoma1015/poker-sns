@@ -3,7 +3,10 @@
 import assert from 'node:assert/strict'
 import { createClient } from '@supabase/supabase-js'
 import { createHash, randomUUID } from 'node:crypto'
-import { readFileSync } from 'node:fs'
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs'
+import { execFileSync } from 'node:child_process'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import { signBinaryVideoAttestation, videoAttestationDigest } from '../../api/video-attestation.ts'
 const env=Object.fromEntries(readFileSync(process.env.VIDEO_QA_ENV,'utf8').split('\n')
  .filter(x=>x.includes('=')).map(x=>{const i=x.indexOf('=');return [x.slice(0,i),x.slice(i+1).replace(/^["']|["']$/g,'')]}))
@@ -17,7 +20,16 @@ for(const [client,label] of [[ownerClient,'owner'],[attacker,'attacker']]) {
 }
 const owner=(await ownerClient.auth.getUser()).data.user.id
 const path=`${owner}/${randomUUID()}.webm`
-const bytes=Buffer.from('isolated-attested-storage-bytes')
+const dir=mkdtempSync(join(tmpdir(),'attested-real-http-'))
+let bytes
+try {
+ const file=join(dir,'video.webm')
+ execFileSync('ffmpeg',['-hide_banner','-loglevel','error','-f','lavfi','-i',
+  'color=c=black:s=64x64:r=10','-t','2','-c:v','libvpx','-b:v','150k',
+  '-pix_fmt','yuv420p','-y',file],{timeout:30000})
+ bytes=readFileSync(file)
+} finally {rmSync(dir,{recursive:true,force:true})}
+assert.ok(bytes.length>0 && bytes.length<20*1024*1024)
 assert.ifError((await ownerClient.rpc('video_reserve_object_key',{p_owner:owner,p_path:path})).error)
 assert.ifError((await ownerClient.storage.from('post-videos').upload(path,bytes,{contentType:'video/webm',upsert:false})).error)
 const {data:gen,error:genError}=await ownerClient.rpc('video_production_storage_generation',{p_owner:owner,p_path:path})
