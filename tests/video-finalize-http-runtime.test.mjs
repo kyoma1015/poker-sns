@@ -117,3 +117,28 @@ test('production attested adapter stays fail-closed with release flag and keys p
     }
   }
 })
+
+test('production reservation cannot be enabled by a release flag and HMAC keys', async () => {
+  const names = ['VITE_SUPABASE_URL', 'VITE_SUPABASE_ANON_KEY', 'VIDEO_PRODUCTION_FENCED_READY',
+    'VIDEO_ATTESTATION_KEY_HEX', 'VIDEO_ATTESTATION_KEY_ID']
+  const previous = Object.fromEntries(names.map(name => [name, process.env[name]]))
+  try {
+    process.env.VITE_SUPABASE_URL = 'https://example.supabase.co'
+    process.env.VITE_SUPABASE_ANON_KEY = 'fixture-anon'
+    process.env.VIDEO_PRODUCTION_FENCED_READY = 'true'
+    process.env.VIDEO_ATTESTATION_KEY_HEX = 'a'.repeat(64)
+    process.env.VIDEO_ATTESTATION_KEY_ID = '2'
+    const body = { action: 'reserve', object_path: '11111111-1111-4111-8111-111111111111/22222222-2222-4222-8222-222222222222.mp4' }
+    for (const h of [handler, createVideoFinalizeHandler(undefined, { isolatedLocalOnly: true })]) {
+      const res = response()
+      await h(request({ body }), res)
+      assert.equal(res.statusCode, 503)
+      assert.deepEqual(res.body, { error: 'video_reservation_not_enabled' })
+    }
+  } finally {
+    for (const name of names) {
+      if (previous[name] === undefined) delete process.env[name]
+      else process.env[name] = previous[name]
+    }
+  }
+})
