@@ -93,4 +93,36 @@ process.env.VIDEO_PRODUCTION_FENCED_READY='true'
 await verifyRealBrowserPlayback({postId,jwt:ownerSession.session.access_token,
  deniedJwt:attackerSession.session.access_token,anon,service:env.SERVICE_ROLE_KEY,
  bytes,expectedContent:content})
+// Same signed-publication pipeline: an uploaded but unfinalized reserved object
+// must be recoverable without deleting or publishing it. The Storage backend
+// has no proven atomic generation-aware delete, so recovery is quarantine-only.
+const orphanPath=`${owner}/${randomUUID()}.webm`
+assert.ifError((await ownerClient.rpc('video_reserve_object_key',{
+ p_owner:owner,p_path:orphanPath})).error)
+assert.ifError((await ownerClient.storage.from('post-videos').upload(orphanPath,bytes,{
+ contentType:'video/webm',upsert:false})).error)
+const {data:orphanGeneration,error:orphanGenerationError}=await ownerClient.rpc(
+ 'video_production_storage_generation',{p_owner:owner,p_path:orphanPath})
+assert.ifError(orphanGenerationError)
+assert.match(orphanGeneration,/^[0-9a-f-]{36}$/)
+const {data:orphanPosts,error:orphanPostsError}=await ownerClient.from('posts')
+ .select('id').eq('video_path',orphanPath)
+assert.ifError(orphanPostsError)
+assert.equal(orphanPosts.length,0,'unfinalized upload must never appear in feed')
+assert.ok((await attacker.storage.from('post-videos').download(orphanPath)).error,
+ 'orphan must remain private')
+assert.ok((await ownerClient.storage.from('post-videos').upload(orphanPath,bytes,{
+ contentType:'video/webm',upsert:true})).error,
+ 'recovery must not permit orphan overwrite')
+assert.ok((await ownerClient.storage.from('post-videos').remove([orphanPath])).error,
+ 'recovery must not permit unsafe client-side delete')
+const {data:recoveredBytes,error:recoveredError}=await ownerClient.storage
+ .from('post-videos').download(orphanPath)
+assert.ifError(recoveredError)
+assert.deepEqual(Buffer.from(await recoveredBytes.arrayBuffer()),bytes)
+const {data:stillOrphan,error:stillOrphanError}=await ownerClient.from('posts')
+ .select('id').eq('video_path',orphanPath)
+assert.ifError(stillOrphanError)
+assert.equal(stillOrphan.length,0)
+console.log('PASS: attested-path orphan quarantined without publish, overwrite or unsafe delete; original bytes preserved')
 console.log('PASS: attested real JWT/RPC/nonce + private Storage RLS + Chromium React playback')
