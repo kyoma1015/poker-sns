@@ -77,6 +77,12 @@ assert.ok((await ownerClient.rpc('video_publish_attested_v1',{
 assert.ok((await ownerClient.rpc('video_publish_attested_v1',{
  ...params,p_key_id:32767,
 })).error,'real authenticated RPC must reject an unknown key ID')
+// Exercise live PostgREST key rotation against a disposable database: the
+// signature for key 1 must not authenticate under the independently provisioned
+// key 2, even while that second key is active.
+assert.ok((await ownerClient.rpc('video_publish_attested_v1',{
+ ...params,p_key_id:2,
+})).error,'real authenticated RPC must reject cross-key rotation signatures')
 
 assert.ok((await ownerClient.rpc('video_publish_attested_v1',{...params,p_duration_ms:3000})).error,'duration tampering rejected')
 assert.ok((await ownerClient.rpc('video_publish_attested_v1',{...params,p_generation:randomUUID()})).error,'Storage generation tampering rejected')
