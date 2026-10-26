@@ -79,6 +79,27 @@ begin
 end $foreign_owner$;
 reset role;
 select 'PASS: owner JWT fenced publication, idempotency, foreign denial' as result;
+-- SECURITY REGRESSION: an authenticated owner must NOT be able to forge
+-- server-only ffprobe evidence and directly publish an uninspected object.
+-- This must fail until the RPC verifies an unforgeable server attestation.
+set role authenticated;
+select set_config('request.jwt.claim.sub','10000000-0000-0000-0000-000000000001',false);
+do $untrusted_metadata_gate$
+declare forged uuid;
+begin
+ begin
+  forged := public.video_production_publish_fenced(
+   '10000000-0000-0000-0000-000000000001',
+   '10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.webm',
+   'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',repeat('b',64),29.9,
+   'forged unverified ffprobe metadata');
+ exception when others then
+  return;
+ end;
+ raise exception 'NO-GO: owner JWT can publish without server ffprobe attestation';
+end $untrusted_metadata_gate$;
+reset role;
+
 
 -- SECURITY REGRESSION: even a permanent reservation + authenticated INSERT RLS
 -- cannot prevent service_role from directly mutating Storage objects.
