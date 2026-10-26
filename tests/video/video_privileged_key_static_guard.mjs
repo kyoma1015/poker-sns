@@ -15,8 +15,11 @@ const runtime=[
 ]
 for (const file of runtime) {
  const code=readFileSync(file,'utf8')
- assert.doesNotMatch(code,/process\.env\.(?:SUPABASE_SERVICE_ROLE_KEY|SUPABASE_SECRET_KEY)|import\.meta\.env\.VITE_.*SERVICE_ROLE|service_role\s*:/i,
+ assert.doesNotMatch(code,/process\\.env\\.(?:SUPABASE_SERVICE_ROLE_KEY|SUPABASE_SECRET_KEY)|import\\.meta\\.env\\.VITE_.*SERVICE_ROLE|service_role\\s*:/i,
   file+' must not access privileged Supabase credentials')
+ // Dot notation is not the only way to read process.env or import.meta.env.
+ assert.doesNotMatch(code,/(?:process\\.env|import\\.meta\\.env)\\s*\\[\\s*['"`](?:SUPABASE_SERVICE_ROLE_KEY|SUPABASE_SECRET_KEY|VITE_[^'"`]*(?:SERVICE_ROLE|SECRET_KEY)[^'"`]*)['"`]\\s*\\]/i,
+  file+' must not access privileged credentials through bracket notation')
 }
 // Detect accidental removal of the reservation fence or introduction of
 // mutable policies in the review-only Storage candidate.
