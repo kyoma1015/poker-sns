@@ -21,6 +21,16 @@ for (const file of runtime) {
  assert.doesNotMatch(code,/(?:process\.env|import\.meta\.env)\s*\[\s*['"`](?:SUPABASE_SERVICE_ROLE_KEY|SUPABASE_SECRET_KEY|VITE_[^'"`]*(?:SERVICE_ROLE|SECRET_KEY)[^'"`]*)['"`]\s*\]/i,
   file+' must not access privileged credentials through bracket notation')
 }
+// Verify the detector itself rejects known privileged-key access forms.
+const bracketKeyPattern=/(?:process\.env|import\.meta\.env)\s*\[\s*['"`](?:SUPABASE_SERVICE_ROLE_KEY|SUPABASE_SECRET_KEY|VITE_[^'"`]*(?:SERVICE_ROLE|SECRET_KEY)[^'"`]*)['"`]\s*\]/i
+for (const forbidden of [
+ "process.env['SUPABASE_SERVICE_ROLE_KEY']",
+ 'process.env["SUPABASE_SECRET_KEY"]',
+ "import.meta.env['VITE_SUPABASE_SERVICE_ROLE_KEY']",
+]) {
+ assert.match(forbidden,bracketKeyPattern,'bracket-notation privileged key must be detected')
+}
+
 // Detect accidental removal of the reservation fence or introduction of
 // mutable policies in the review-only Storage candidate.
 const storagePolicy=readFileSync('sql/post_short_videos_immutable_review_only.sql','utf8')
