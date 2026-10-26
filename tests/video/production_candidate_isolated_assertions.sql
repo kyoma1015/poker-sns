@@ -13,43 +13,29 @@ begin
    (coalesce(qual,'') ilike '%post-videos%' or coalesce(with_check,'') ilike '%post-videos%'))
  then raise exception 'video mutation policy exists'; end if;
 end $$;
--- Verify real client roles cannot execute the privileged RPCs.
+-- JWT-scoped SECURITY DEFINER RPCs: verify grants and owner fencing.
 set role authenticated;
 do $client_grants$
 begin
- if has_function_privilege(current_user, 'public.video_production_publish_fenced(uuid,text,uuid,text,double precision,text)','EXECUTE')
- or has_function_privilege(current_user, 'public.video_production_storage_generation(uuid,text)','EXECUTE')
- or has_function_privilege(current_user, 'public.video_production_reconcile_fenced(uuid,text,uuid)','EXECUTE')
- then raise exception 'authenticated role can execute privileged video RPC'; end if;
+ if not has_function_privilege(current_user,'public.video_production_publish_fenced(uuid,text,uuid,text,double precision,text)','EXECUTE')
+ or not has_function_privilege(current_user,'public.video_production_storage_generation(uuid,text)','EXECUTE')
+ or not has_function_privilege(current_user,'public.video_production_reconcile_fenced(uuid,text,uuid)','EXECUTE')
+ then raise exception 'authenticated owner RPC grant missing'; end if;
 end $client_grants$;
 reset role;
--- Service RPC must not be executable by regular authenticated users.
-set role video_owner;
-do $$
-begin
- if has_function_privilege(current_user,
- 'public.video_production_publish_fenced(uuid,text,uuid,text,double precision,text)','EXECUTE')
- then raise exception 'client can call privileged publish RPC'; end if;
-end $$;
-reset role;
--- Exercise idempotency, owner, generation and payload fencing as the actual service_role.
 insert into storage.objects(id,bucket_id,name,owner_id) values
  ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa','post-videos',
  '10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.webm',
  '10000000-0000-0000-0000-000000000001');
-set role service_role;
-do $service_privileges$
-begin
- if not has_table_privilege(current_user,'public.posts','SELECT') or not has_table_privilege(current_user,'public.posts','INSERT')
- or not has_table_privilege(current_user,'storage.objects','SELECT')
- or not has_table_privilege(current_user,'storage.objects','UPDATE') then
- raise exception 'service_role posts privilege mismatch'; end if;
-end $service_privileges$;
-do $service_test$
+set role authenticated;
+select set_config('request.jwt.claim.sub','10000000-0000-0000-0000-000000000001',false);
+do $owner_test$
 declare
  a uuid; b uuid;
  p text:='10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.webm';
 begin
+ if public.video_production_storage_generation('10000000-0000-0000-0000-000000000001',p)
+    <> 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'::uuid then raise exception 'generation mismatch'; end if;
  a:=public.video_production_publish_fenced('10000000-0000-0000-0000-000000000001',p,
  'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',repeat('a',64),2,'hello');
  b:=public.video_production_publish_fenced('10000000-0000-0000-0000-000000000001',p,
@@ -71,9 +57,28 @@ begin
  exception when raise_exception then
   if sqlerrm='conflicting replay accepted' then raise; end if;
  end;
-end $service_test$;
+end $owner_test$;
+select set_config('request.jwt.claim.sub','20000000-0000-0000-0000-000000000002',false);
+do $foreign_owner$
+begin
+ begin
+ perform public.video_production_storage_generation('10000000-0000-0000-0000-000000000001',
+ '10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.webm');
+ raise exception 'foreign generation accepted';
+ exception when raise_exception then
+  if sqlerrm='foreign generation accepted' then raise; end if;
+ end;
+ begin
+ perform public.video_production_publish_fenced('10000000-0000-0000-0000-000000000001',
+ '10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.webm',
+ 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',repeat('a',64),2,'hello');
+ raise exception 'foreign publish accepted';
+ exception when raise_exception then
+  if sqlerrm='foreign publish accepted' then raise; end if;
+ end;
+end $foreign_owner$;
 reset role;
-select 'PASS: production candidate isolated preservation, private bucket, RPC grants, generation and replay' as result;
+select 'PASS: owner JWT fenced publication, idempotency, foreign denial' as result;
 
 -- SECURITY REGRESSION: even a permanent reservation + authenticated INSERT RLS
 -- cannot prevent service_role from directly mutating Storage objects.
