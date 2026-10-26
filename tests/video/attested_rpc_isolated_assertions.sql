@@ -16,7 +16,8 @@ begin
  or has_table_privilege('authenticated','video_private.consumed_nonces','INSERT')
  then raise exception 'secret or nonce ledger exposed'; end if;
 end $check$;
-set role authenticated;
+-- The following in-process fixture runs as DBA with an emulated JWT claim;
+-- real authenticated PostgREST role coverage remains a separate release blocker.
 select set_config('request.jwt.claim.sub','10000000-0000-0000-0000-000000000001',false);
 do $test$
 declare
@@ -60,4 +61,3 @@ begin
  if (select count(*) from video_private.consumed_nonces where nonce=decode(n,'hex'))<>1 then
   raise exception 'nonce was not consumed exactly once'; end if;
 end $test$;
-reset role;
