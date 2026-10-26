@@ -49,6 +49,13 @@ begin
  exception when raise_exception then
   if SQLERRM='tampered content accepted' then raise; end if;
  end;
+ -- A valid signature cannot authorize a different post body or duration.
+ begin
+  perform public.video_publish_attested_v1(o,p,g,h,2001,content,expires,n,signature,1::smallint);
+  raise exception 'altered duration accepted';
+ exception when raise_exception then
+  if SQLERRM='altered duration accepted' then raise; end if;
+ end;
  -- A correctly signed proof must still fail for a different Storage generation.
  begin
   perform public.video_publish_attested_v1(o,p,'f0000000-0000-0000-0000-000000000001'::uuid,h,2000,content,expires,n,signature,1::smallint);
