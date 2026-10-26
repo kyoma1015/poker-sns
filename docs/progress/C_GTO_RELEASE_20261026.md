@@ -3,6 +3,12 @@
 Scope: PR120 / codex/c-native-hand169-bridge-20261023. Input HEAD
 fa5e7553acf50241214a5a975f6b90d951c94bbb. Initial release remains UNFINISHED.
 
+Latest completed publication: 9427f6bf3c57c9f90a64c8c4ca31762489a83360,
+same tree8b7c2993f6d3391bc64c3c0c81feda7d2fff1ff6 as local8597439. CI
+https://github.com/kyoma1015/poker-sns/actions/runs/40351061844 SUCCESS.
+Next continuation: `C_GTO_SAMPLED_BELIEF_20261026.md` records sampled explicit
+opponent-belief EV and common-hero four-bet-response action comparisons.
+
 Acceptance criteria chosen before implementation: native legality through four
 bets and response, no fabricated unvisited policy, preserved action identity and
 frequency sum, explicit EV scope, all existing native variants retained. No
