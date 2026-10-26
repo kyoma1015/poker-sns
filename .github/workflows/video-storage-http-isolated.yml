@@ -54,7 +54,7 @@ jobs:
       - name: Enforce real ffprobe runtime tests without skip
         env:
           REQUIRE_FFPROBE_RUNTIME: 'true'
-          FFPROBE_BINARY_PATH: './api/bin/ffprobe'
+          FFPROBE_BINARY_PATH: '/home/runner/work/poker-sns/poker-sns/api/bin/ffprobe'
           FFMPEG_BINARY_PATH: './api/bin/ffmpeg'
         run: node --test tests/video-ffprobe-runtime.test.mjs
       - name: Verify pinned ffprobe build bundle without deploying
