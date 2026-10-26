@@ -75,6 +75,25 @@ SQL
 docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 < tests/video/production_additive_candidate.sql
 docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 < tests/video/production_candidate_isolated_assertions.sql
 echo 'PASS: isolated production-schema-compatible additive migration and fenced RPC assertions'
+# Exercise the attested SQL candidate on the disposable production-compatible DB.
+# PostgreSQL fixture installs pgcrypto in public; move it to Supabase's extensions
+# schema so the fully-qualified production candidate resolves the same functions.
+docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 <<'SQL'
+create schema if not exists extensions;
+alter extension pgcrypto set schema extensions;
+SQL
+docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 < tests/video/production_attested_candidate_review_only.sql
+docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 <<'SQL'
+do $ begin
+ if has_function_privilege('authenticated',
+  'public.video_publish_attested_v1(uuid,text,uuid,text,integer,text,bigint,text,text,smallint)','EXECUTE')
+ then raise exception 'unverified attested RPC executable'; end if;
+ if (select count(*) from video_private.attestation_keys)<>0 then
+  raise exception 'attestation key must not be provisioned by migration'; end if;
+end $;
+SQL
+echo 'PASS: disposable PostgreSQL parses attested publish RPC and enforces closed ACL'
+
 
 # Permanent-key ledger candidate is exercised ONLY in disposable PostgreSQL.
 docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 <<'SQL'
