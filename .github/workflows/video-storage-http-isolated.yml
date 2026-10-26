@@ -64,6 +64,7 @@ jobs:
       - name: Verify pinned ffprobe build bundle without deploying
         run: test -x api/bin/ffprobe
       - name: Install Chromium for actual React playback QA
+        timeout-minutes: 6
         run: npx playwright-core install --with-deps chromium
       - name: Isolated Supabase Storage HTTP E2E
         run: bash tests/video/run_storage_http_isolated.sh
