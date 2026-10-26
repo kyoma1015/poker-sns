@@ -24,7 +24,7 @@ class PrivilegedVideoApiBoundary(unittest.TestCase):
         self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY', handler)
         self.assertNotIn('admin.rpc(', text)
         self.assertIn("Authorization: 'Bearer ' + accessToken", text)
-        for rpc in ('video_production_storage_generation', 'video_production_publish_fenced', 'video_production_reconcile_fenced'):
+        for rpc in ('video_production_storage_generation', 'video_publish_attested_v1', 'video_production_reconcile_fenced'):
             self.assertIn("viewer.rpc('" + rpc + "'", text)
         self.assertIn("viewer.from('posts')", text)
 
