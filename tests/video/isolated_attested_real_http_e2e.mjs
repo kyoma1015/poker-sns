@@ -8,6 +8,7 @@ import { execFileSync } from 'node:child_process'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { signBinaryVideoAttestation, videoAttestationDigest } from '../../api/video-attestation.ts'
+import { inspectVideoWithFfprobe } from '../../api/video-ffprobe.ts'
 const env=Object.fromEntries(readFileSync(process.env.VIDEO_QA_ENV,'utf8').split('\n')
  .filter(x=>x.includes('=')).map(x=>{const i=x.indexOf('=');return [x.slice(0,i),x.slice(i+1).replace(/^["']|["']$/g,'')]}))
 assert.equal(env.API_URL,'http://127.0.0.1:56321','refuse remote Supabase')
@@ -40,7 +41,9 @@ assert.ifError(readError)
 assert.deepEqual(Buffer.from(await privateRead.arrayBuffer()),bytes)
 assert.ok((await attacker.storage.from('post-videos').download(path)).error,'other user cannot read private Storage')
 const sha256=createHash('sha256').update(bytes).digest('hex')
-const content='isolated attested post', durationMs=2000
+const inspected=await inspectVideoWithFfprobe(bytes,'webm')
+assert.equal(inspected.size,bytes.length)
+const content='isolated attested post', durationMs=Math.round(inspected.duration*1000)
 const expiresAt=Math.floor(Date.now()/1000)+120,nonce=randomUUID().replaceAll('-','')
 const signature=signBinaryVideoAttestation(Buffer.alloc(32,0x41),{
  owner,path,generation:gen,sha256,durationMs,
