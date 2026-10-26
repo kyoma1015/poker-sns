@@ -16,7 +16,7 @@ import { verifyRealBrowserPlayback } from './isolated_browser_playback.mjs'
 const env=Object.fromEntries(readFileSync(process.env.VIDEO_QA_ENV,'utf8').split('\n')
   .filter(x=>x.includes('=')).map(x=>{const i=x.indexOf('=');return [x.slice(0,i),x.slice(i+1).replace(/^["']|["']$/g,'')]}))
 assert.throws(() => createProductionSupabaseVideoAdapters(
-  'https://example.supabase.co','anon-test','service-test','jwt-test',
+  'https://example.supabase.co','anon-test','jwt-test',
 ), /production video fenced release gate disabled/,
 'production adapter must fail closed without an explicit release gate')
 console.log('PASS: production video adapter remains fail-closed without audited release gate')
