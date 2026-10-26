@@ -22,14 +22,14 @@ const unreserved=await owner.storage.from('post-videos').upload(path,bytes,{cont
 assert.ok(unreserved.error,'unreserved Storage INSERT must be rejected')
 const forged=await other.storage.from('post-videos').upload(path,bytes,{contentType:'video/webm',upsert:false})
 assert.ok(forged.error,'foreign Storage writer must be rejected')
-const {data:reservation,error:reservationError}=await admin.rpc('video_reserve_object_key',{p_owner:ownerId,p_path:path})
+const {data:reservation,error:reservationError}=await owner.rpc('video_reserve_object_key',{p_owner:ownerId,p_path:path})
 assert.ifError(reservationError)
-assert.ok(reservation,'trusted server must reserve permanent key')
+assert.ok(reservation,'authenticated owner must reserve permanent key')
 const duplicate=await admin.rpc('video_reserve_object_key',{p_owner:ownerId,p_path:path})
 assert.ok(duplicate.error,'permanent key must never be reserved twice')
-const unauthorized=await owner.rpc('video_reserve_object_key',{p_owner:ownerId,p_path:`${ownerId}/${randomUUID()}.webm`})
-assert.ok(unauthorized.error,'authenticated client must not invoke privileged reservation RPC')
-const {data:foreignReservation,error:foreignReservationError}=await admin.rpc('video_reserve_object_key',{
+const unauthorized=await other.rpc('video_reserve_object_key',{p_owner:ownerId,p_path:`${ownerId}/${randomUUID()}.webm`})
+assert.ok(unauthorized.error,'different authenticated owner must not reserve foreign key')
+const {data:foreignReservation,error:foreignReservationError}=await owner.rpc('video_reserve_object_key',{
   p_owner:ownerId,p_path:`${(await other.auth.getUser()).data.user.id}/${randomUUID()}.webm`,
 })
 assert.ok(foreignReservationError,'privileged RPC must reject mismatched owner and path')
