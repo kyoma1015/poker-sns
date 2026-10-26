@@ -7,6 +7,12 @@ const UUID = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
 const PATH = new RegExp('^(' + UUID + ')/(' + UUID + ')\\.(mp4|webm)$')
 const PRODUCTION_URL = /^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/
 
+// Deliberately has no deployment flag override: a release toggle alone cannot
+// establish the DB-side authenticity of server-verified media metadata.
+function assertServerAttestationAvailable(): void {
+  throw new Error('production video publish requires server-attested database authorization')
+}
+
 /** Production candidate: disabled until the audited production migration and runtime preflight pass. No Storage deletion. */
 export function createProductionSupabaseVideoAdapters(
   url: string, anonKey: string, accessToken: string,
@@ -17,8 +23,7 @@ export function createProductionSupabaseVideoAdapters(
   // A deployment flag is not proof that client-supplied ffprobe metadata was
   // verified. Until a server-attested DB publish path exists, reject even
   // deployments that accidentally enable VIDEO_PRODUCTION_FENCED_READY.
-  throw new Error('production video publish requires server-attested database authorization')
-  // eslint-disable-next-line no-unreachable
+  assertServerAttestationAvailable()
   const ownerPath = (owner: string, path: string) => {
     const match = PATH.exec(path)
     if (!match || match[1] !== owner) throw new Error('owner/path mismatch')
