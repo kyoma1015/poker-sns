@@ -66,10 +66,13 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
     // Production release requires a separately audited Storage writer fence.
     // Isolated local QA may reserve against its disposable ledger only.
     const isolatedReservation = options.isolatedLocalOnly === true && url === 'http://127.0.0.1:56321'
-    const host = url?.startsWith('https://') ? url.slice(8).split('/')[0] : ''
-    if ((!isolatedReservation && (process.env.VIDEO_PRODUCTION_FENCED_READY !== 'true' ||
-        !/^[a-z0-9-]+[.]supabase[.]co$/.test(host))) ||
-        !url || !anon) return res.status(503).json({ error: 'video_reservation_not_enabled' })
+    // The production publish adapter is still hard-gated. Do not permit a
+    // permanent reservation ledger write merely by setting a release flag:
+    // otherwise an attacker could exhaust reserved keys without publication.
+    // Only the disposable, explicitly injected local test environment may reserve.
+    if (!isolatedReservation || !url || !anon) {
+      return res.status(503).json({ error: 'video_reservation_not_enabled' })
+    }
     try {
       const viewer = createClient(url, anon, {
         global: { headers: { Authorization: authorization } },
