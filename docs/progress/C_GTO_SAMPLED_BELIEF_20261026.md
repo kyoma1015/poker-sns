@@ -1,5 +1,10 @@
 # Sampled explicit-belief EV continuation
 
+Published continuation HEAD8916b7e9ed3383cdcbeae778b807a150eb8fe94b,
+tree02e3ad0b21587e59e8e77e6deeb2120ea97159fd; local56c80f1 has same tree.
+CI40353157734 SUCCESS. Follow-up sampled report transport is recorded in
+`C_GTO_SAMPLED_REPORT_20261026.md`.
+
 Input public HEAD9427f6bf3c57c9f90a64c8c4ca31762489a83360 / local8597439,
 identical tested tree8b7c2993f6d3391bc64c3c0c81feda7d2fff1ff6. Existing CI
 40351061844 SUCCESS. No uncommitted input changes discarded.

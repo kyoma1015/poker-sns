@@ -9,7 +9,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
 from gto.native.training import NativeGame
 from gto.native.preflop import decision
 from gto.native.poker_oracle import exact_policy_value
-from gto.native.policy_rollout import policy_value, belief_value, action_values
+from gto.native.policy_rollout import policy_value, belief_value, action_values, preflop_action_report
 
 
 class Rollout(unittest.TestCase):
@@ -173,6 +173,53 @@ class Rollout(unittest.TestCase):
             args={'samples':1,'seed':1,**kwargs}
             with self.subTest(kwargs=kwargs),self.assertRaises(ValueError):
                 policy_value(self.state(),lambda node:{0:Fraction(1)},**args)
+
+    def test_frozen_preflop_report_has_distinct_sampled_schema_and_identity(self):
+        from gto.native.infoset_export import PolicySnapshot, report_json
+        import json
+        rows={};prefix=[1,8,20,44]
+        def recording(node):
+            h=node.audit()['history'];selected=prefix[len(h)] if len(h)<len(prefix) else 1
+            row={a:Fraction(int(a==selected)) for a in node.legal_actions()}
+            rows[node.information_state_string(node.current_player())]=row
+            return row
+        args=(self.native,NativeGame([200,200]),[48,49],[([0,1],Fraction(1))],[],prefix,[0,1,92])
+        action_values(*args,recording,samples_per_deal=2,seed=17)
+        snapshot=PolicySnapshot(rows)
+        report_args=(args[0],args[1],args[2],args[3],prefix,[0,1,92],snapshot)
+        report=preflop_action_report(*report_args,samples_per_deal=2,seed=17)
+        self.assertEqual(report['schema'],'pokerid-sampled-preflop-action-v1')
+        self.assertEqual(report['policy_digest'],snapshot.digest)
+        self.assertEqual(report['decision']['stage'],'vs_4bet')
+        self.assertEqual(report['samples'],6)
+        self.assertFalse(report['equilibrium_verified'])
+        self.assertIsNone(report['hand169_ev'])
+        self.assertEqual(json.loads(report_json(report))['estimate_kind'],'sample_mean_with_sampling_intervals')
+        again=preflop_action_report(*report_args,samples_per_deal=2,seed=17)
+        self.assertEqual(report_json(report),report_json(again))
+        with self.assertRaises(ValueError):
+            preflop_action_report(*report_args[:-1],recording,samples_per_deal=2,seed=17)
+
+    def test_report_rejects_stale_native_configuration_manifest(self):
+        from gto.native.infoset_export import PolicySnapshot
+        snapshot=PolicySnapshot({'placeholder':{0:Fraction(1)}})
+        for field in ('stacks','rules'):
+            game=NativeGame([20,20])
+            if field=='stacks':game.stacks[0]=40
+            else:game._native_rules['bba']=2
+            with self.subTest(field=field),self.assertRaisesRegex(ValueError,'configuration differs'):
+                preflop_action_report(self.native,game,[48,49],[([0,1],Fraction(1))],[],[0],snapshot,
+                    samples_per_deal=1,seed=17)
+
+    def test_explicit_support_budget_can_exceed_default_without_pruning(self):
+        from itertools import combinations, islice
+        deals=[(list(cards),Fraction(1,129)) for cards in islice(combinations(range(48),2),129)]
+        args=(self.native,NativeGame([20,20]),[48,49],deals,[],[],[0],lambda node:{1:Fraction(1)})
+        with self.assertRaises(ValueError):action_values(*args,samples_per_deal=1,seed=17)
+        result=action_values(*args,samples_per_deal=1,seed=17,max_deals=129)
+        self.assertEqual(result['samples'],129)
+        self.assertEqual(len(result['actions'][0]['posterior']),129)
+        self.assertEqual(result['actions'][0]['sample_mean_values'],[Fraction(-1),Fraction(1)])
 
 
 if __name__=='__main__':unittest.main()

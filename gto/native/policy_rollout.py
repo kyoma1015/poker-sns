@@ -148,7 +148,7 @@ def belief_value(native, game, hero_cards, deals, public_cards, history, policy,
 
 
 def action_values(native,game,hero_cards,deals,public_cards,history,actions,policy,*,
-                  samples_per_deal,seed,confidence=0.95,max_total_samples=100000):
+                  samples_per_deal,seed,confidence=0.95,max_total_samples=100000,max_deals=128):
     """Common-prefix action EVs; target policy probability is not multiplied in.
 
     Explicit support and sampling uncertainty stay visible. Confidence is shared
@@ -169,8 +169,47 @@ def action_values(native,game,hero_cards,deals,public_cards,history,actions,poli
         if used>=max_total_samples:raise ValueError('aggregate action sample budget exceeded')
         result=belief_value(native,game,hero_cards,deals,public_cards,history,checked,
             samples_per_deal=samples_per_deal,seed=seed,confidence=per_confidence,
-            max_total_samples=max_total_samples-used,intervention=action)
+            max_total_samples=max_total_samples-used,intervention=action,max_deals=max_deals)
         used+=result['samples'];results[action]=result
     return {'actions':results,'samples':used,'confidence':confidence,
             'scope':'sampled common-hero action values under explicit support; not equilibrium',
             'native_infoset_ev':None,'hand169_ev':None,'strategy_convergence':'UNKNOWN'}
+
+
+def preflop_action_report(native,game,hero_cards,deals,history,actions,policy,*,
+                          samples_per_deal,seed,confidence=0.95,max_total_samples=100000,max_deals=128):
+    """Bind a sampled preflop comparison to immutable policy/config/input data.
+
+    This uses a separate schema from exact expectation/169 exports. Hashes bind
+    supplied data; they do not attest that it is complete or strategically solved.
+    """
+    import json
+    from gto.native.infoset_export import PolicySnapshot, _digest
+    from gto.native.preflop import decision, describe
+    if type(policy) is not PolicySnapshot:
+        raise ValueError('immutable PolicySnapshot required for report transport')
+    configuration=json.loads(game._public_config_json)
+    manifest=configuration['rules']
+    expected_rules={key:value for key,value in manifest.items() if key!='version'}
+    rate=Fraction(manifest['rake_rate'])
+    expected_rules.update(rate_num=rate.numerator,rate_den=rate.denominator)
+    if game.stacks!=configuration['stacks'] or game._native_rules!=expected_rules:
+        raise ValueError('native configuration differs from advertised manifest')
+    # Validate prior/card support before selecting the replay representative.
+    from gto.native.belief_observation import condition_public_cards
+    support=condition_public_cards(hero_cards,deals,[],max_deals=max_deals)
+    representative=support['deals'][0][0]
+    target=decision(native,game,history,cards=list(hero_cards)+representative)
+    description=describe(target)
+    result=action_values(native,game,hero_cards,deals,[],history,actions,policy,
+        samples_per_deal=samples_per_deal,seed=seed,confidence=confidence,
+        max_total_samples=max_total_samples,max_deals=max_deals)
+    identity={'config':configuration,'hero_cards':list(hero_cards),'history':list(history),
+        'actions':list(actions),'policy_digest':policy.digest,
+        'support':[[list(cards),str(prior)] for cards,prior in deals],
+        'samples_per_deal':samples_per_deal,'seed':seed,'confidence':confidence}
+    return {'schema':'pokerid-sampled-preflop-action-v1',**result,
+            'decision':description,'config_digest':_digest(configuration),
+            'policy_digest':policy.digest,'input_digest':_digest(identity),
+            'estimate_kind':'sample_mean_with_sampling_intervals',
+            'support_complete':False,'equilibrium_verified':False}
