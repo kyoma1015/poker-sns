@@ -1,0 +1,79 @@
+{
+  "base": "c523f5473048615f6f8f937c0811a2ee6ea94d52",
+  "fixed_input_commit": "a606b4ebcf530d5e756347ac37ba5233ba77ba6c",
+  "ancestor_source_commit": "93d9948f8f829432fa66c5aafd294bf8924421fa",
+  "ancestor_source_sha256": "ad8d60499ed43847c12bab2868ad4b31a78e46bd8d5388b6ccdd497de920f8b7",
+  "reused": "question/result request lifecycle, generic save/share errors, URL restart/persistence; audit PR30 already present; PNG PR60 correction retained",
+  "protected": [
+    {
+      "path": "src/playerTypePresentation.ts",
+      "sha256": "3385ebfde519184f4428f92e29810b9d319d21d5959edee1c47f30bb4ee0a849",
+      "unchanged": true
+    },
+    {
+      "path": "src/playerTypeQuestions.ts",
+      "sha256": "9d7b929682d2a4a03874f95a47df82197e0395a0c0d33ce3bc9579a0364b37b7",
+      "unchanged": true
+    },
+    {
+      "path": "src/playerTypeShareImage.ts",
+      "sha256": "8b3e7dead67f567791224fe241f4d7c6051d0846aa599cdf7363fe19e6913dec",
+      "unchanged": true
+    },
+    {
+      "path": "tests/fixtures/player-type-v2.json",
+      "sha256": "ef15e04c485f090f72707656a9127c54a855c98e2453771ad86c68068cfe4d2c",
+      "unchanged": true
+    },
+    {
+      "path": "tests/player-type.test.mjs",
+      "sha256": "03d5bff766b176a45bf0897ffdc5107fa2da057ee36633ed724bc2f07d14777e",
+      "unchanged": true
+    },
+    {
+      "path": "tests/player-type-audit.test.mjs",
+      "sha256": "4ce555bb1a92bf356ff796a786f651a32c464292eacca4b3b1daa29282911c42",
+      "unchanged": true
+    },
+    {
+      "path": "tests/player-type-distribution.test.mjs",
+      "sha256": "957afcab50957ce04f0802bef6fbe2dcaf20577c2062672d6745ce2555ec1b0a",
+      "unchanged": true
+    },
+    {
+      "path": "tests/player-type-reference.test.mjs",
+      "sha256": "ae521ed54500adff46c22cd30f27a83d5a80c3585e8523210f500c8eb522609a",
+      "unchanged": true
+    },
+    {
+      "path": "tests/player-type-strategy-evidence.test.mjs",
+      "sha256": "45a98b39f5c49c7fe2ec142ab71e654e56e3d654ecd770eba293672947dd57b5",
+      "unchanged": true
+    },
+    {
+      "path": "tests/player-type-score-schema.test.mjs",
+      "sha256": "0a097ed167b8191b16ee7ea0318e9c16f11c7ef6844cb73eded4900c489905c7",
+      "unchanged": true
+    },
+    {
+      "path": "tests/player-type-presentation-values.test.mjs",
+      "sha256": "168e4da584edf8db79627ac621c84a9908edfcbc2f8aa4167b6079d9ecbeec2b",
+      "unchanged": true
+    },
+    {
+      "path": "tests/player-type-png-cleanup.test.mjs",
+      "sha256": "b5fc9df1cf830727d1607ebde7da2f1d0dfdb2b083373b3d5e1ffb3442092c63",
+      "unchanged": true
+    },
+    {
+      "path": "tests/player-type-share-image.test.mjs",
+      "sha256": "a03b4dc1984dff75089c2fbe907e7d5a5ed7a8d112f219a719c1ed18bbefb6f1",
+      "unchanged": true
+    },
+    {
+      "path": "tests/player-type-share-browser.test.mjs",
+      "sha256": "a53152e2db2c64a1c6519677257adfba1323304622e85eca4760cafbb87a0fe8",
+      "unchanged": true
+    }
+  ]
+}

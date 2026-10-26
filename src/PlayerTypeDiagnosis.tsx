@@ -3,16 +3,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { supabase } from './supabase'
 import './PlayerTypeDiagnosis.css'
 import { loadShareImage, encodeSharePng } from './playerTypeShareImage'
-
-type QuestionRow = {
-  question_id: string
-  question_key: string
-  question_order: number
-  question_text: string
-  option_id: string
-  option_order: number
-  option_text: string
-}
+import { parseQuestions, LatestRequest } from './playerTypeQuestions'
+import { topPersonalTraits, personalAdvice } from './playerTypePresentation'
 
 type Option = {
   id: string
@@ -94,80 +86,17 @@ const animalEmoji: Record<string, string> = {
 }
 
 
-const traitCopy: Record<string, { label: string; text: string }> = {
-  initiative: { label: '自分から動く', text: '受け身で待つより、自分からアクションを起こして相手に判断を迫る傾向があります。' },
-  risk_tolerance: { label: 'リスクを取れる', text: 'リスクがあること自体を理由に避けるより、見返りがあるなら踏み込める傾向があります。' },
-  patience: { label: '待てる', text: 'すぐ結果を取りにいかず、より条件の良い場面まで待てる傾向があります。' },
-  analytical: { label: '理屈から組み立てる', text: 'その場の印象だけでなく、レンジやアクションの流れを整理して判断する傾向があります。' },
-  player_read: { label: '相手を見る', text: '一般論だけでなく、目の前の相手の反応や傾向を意思決定へ強く反映します。' },
-  adaptability: { label: '戦い方を変えられる', text: '相手や卓の傾向が変われば、自分の基準に固執せず戦い方も変えられる側です。' },
-  deception: { label: 'イメージを利用する', text: '相手が自分をどう見ているかまで考え、その予想を外す選択を使いやすい傾向があります。' },
-  value_directness: { label: '取れる時に取り切る', text: '有利だと判断した場面では、回りくどくせず利益を取りにいく傾向があります。' },
-  threat_sensitivity: { label: '危険信号を拾う', text: '状況が悪化したサインを軽視せず、損失が大きくなる前に警戒できる側です。' },
-  novelty: { label: '新しい選択を試す', text: 'いつもの形だけに固定せず、新しい戦術やラインを試すことへの抵抗が小さい傾向があります。' },
-  stability: { label: '基準がぶれにくい', text: '短期的な結果や空気に流されすぎず、自分の基準を保ちやすい傾向があります。' },
-  confidence: { label: '判断を信じられる', text: '根拠を持って決めた後は、自分の判断を信じて実行しやすい側です。' },
-  exploit: { label: '弱点を利益に変える', text: '相手の偏りやミスを見つけると、普段の戦い方から変えてでもそこを狙う傾向があります。' },
-  tempo: { label: '反応が速い', text: '弱さや変化を感じたとき、様子見を長く続けるより早めにアクションへ移しやすい傾向があります。' },
-  learning_receptivity: { label: '学びを取り込む', text: '自分だけの感覚に閉じず、他者の考えや新しい知識をプレーへ取り込みやすい側です。' },
-  overview: { label: '卓全体を見る', text: '一人の相手だけでなく、テーブル全体の傾向や力関係まで見て判断する傾向があります。' },
-  planning_horizon: { label: '先まで考える', text: '今の一手だけでなく、その後のストリートや展開まで見越してプランを作る傾向があります。' },
-  history_use: { label: '過去の情報を使う', text: '以前のショーダウンや行動履歴を覚え、現在の判断材料として使いやすい側です。' },
-  small_edge_accumulation: { label: '小さな利益を積む', text: '派手な一撃だけでなく、小さな有利を繰り返し拾うことを重視する傾向があります。' },
-  action_efficiency: { label: '無駄な複雑さを減らす', text: '薄い利益のために難しい判断を増やすより、効率の良い場面へ集中する傾向があります。' },
-  interaction_read: { label: '相手との読み合いを見る', text: '自分と相手の間で起きている読み合いや、相手からの見られ方を判断へ反映しやすい側です。' },
-  pressure_resistance: { label: '圧力に崩れにくい', text: '強いベットやプレッシャーを受けても、それだけで判断を曲げにくい傾向があります。' },
-  independent_judgment: { label: '自分の根拠で決める', text: '周囲と意見が違っても、自分なりの根拠があるなら判断を保てる側です。' },
-  selective_burst: { label: '勝負所で一気に行く', text: '常に攻め続けるより、ここだと判断した場面で攻撃量を大きく上げる傾向があります。' },
-  pot_size_comfort: { label: '大きなポットを怖がらない', text: 'ポットが大きくなること自体には過度に萎縮せず、必要なら大きな勝負へ入れる側です。' },
-  fun_orientation: { label: '面白さも大事にする', text: '利益だけでなく「この展開をやってみたい」という面白さも意思決定へ入りやすい傾向があります。' },
-  attack_momentum: { label: '攻めの流れを続ける', text: '一度作った攻撃の流れを簡単には手放さず、継続して圧力をかけやすい側です。' },
-  balance_awareness: { label: '偏りすぎを避ける', text: '相手に簡単に対応されないよう、自分のベットやレイズの頻度が偏りすぎないことを意識する傾向があります。' },
-  retreat_response: { label: '危険なら引き返せる', text: '途中で状況が悪化したと判断すれば、最初のプランに固執せず撤退へ切り替えられる側です。' },
-  improvisation: { label: 'その場で組み直せる', text: '予定外の展開でも、その場で増えた情報を使って新しいプランを作り直す傾向があります。' },
-  stimulus_orientation: { label: '動きのある展開を好む', text: '静かに待ち続けるより、判断やアクションが多い展開に入りやすい傾向があります。' },
-  collision_avoidance: { label: '難しい衝突を避ける', text: '利益がありそうでも、後で大きく難しい衝突になりやすいなら最初から見送る傾向があります。' },
-}
-
-function topPersonalTraits(detail: ResultDetail) {
-  const all = { ...detail.trait_scores, ...detail.discriminator_scores }
-  return Object.entries(all)
-    .filter(([key, value]) => traitCopy[key] && Number.isFinite(Number(value)))
-    .sort((a, b) => Number(b[1]) - Number(a[1]))
-    .slice(0, 3)
-    .map(([key]) => ({ key, ...traitCopy[key] }))
-}
-
-function personalAdvice(detail: ResultDetail) {
-  const s = { ...detail.trait_scores, ...detail.discriminator_scores }
-  const value = (key: string) => Number(s[key] ?? 0)
-
-  if (value('initiative') > 0 && value('confidence') > 0 && value('threat_sensitivity') <= 0) {
-    return '自分から動ける強みはそのままに、途中で前提が崩れたサインだけは意識して拾うと、攻撃性がさらに安定します。'
-  }
-  if (value('exploit') > 0 && value('adaptability') > 0) {
-    return '相手に合わせて変えられるのが武器です。少ないサンプルだけで調整しすぎていないかを途中で確認すると、その強みをより活かせます。'
-  }
-  if (value('analytical') > 0 && value('action_efficiency') < 0) {
-    return '深く考えられるのが武器です。薄い場面まで複雑にしすぎない基準を持つと、思考力を重要な局面へ集中できます。'
-  }
-  if (value('fun_orientation') > 0 && value('risk_tolerance') > 0) {
-    return '面白い展開へ踏み込めるのが持ち味です。「面白い」と「利益がある」を一度だけ切り分ける癖をつけると、楽しさを残したままリークを抑えられます。'
-  }
-  if (value('attack_momentum') > 0 && value('adaptability') <= 0) {
-    return '攻めを継続できるのが武器です。相手やボードの変化で攻撃理由が消えたときだけ、流れをリセットできるとさらに強くなります。'
-  }
-  if (value('patience') > 0 && value('selective_burst') > 0) {
-    return '待てることと勝負所で踏み込めることの両方が武器です。待つこと自体が目的になっていないかだけ確認すると、取り逃しを減らせます。'
-  }
-  return 'このタイプの持ち味を消して平均型になる必要はありません。自分の強い判断軸を残しながら、外れたときに修正できる余地だけ持っておくのが相性の良い伸ばし方です。'
-}
-
 function PlayerTypeDiagnosis() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const imageResultId = searchParams.get('result')
   const clickLock = useRef(false)
+  const questionRequest = useRef(new LatestRequest())
+  const resultRequest = useRef(new LatestRequest())
+  const questionPending = useRef(false)
+  const sharePending = useRef(false)
+  const activeResultId = useRef<string | null>(null)
+  const savedResultId = searchParams.get('result')
   const imageOperation = useRef({ generation: 0, pending: false })
 
   const [screen, setScreen] = useState<'intro' | 'quiz' | 'result'>('intro')
@@ -175,7 +104,8 @@ function PlayerTypeDiagnosis() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answerIds, setAnswerIds] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
-  const [loadingQuestions, setLoadingQuestions] = useState(true)
+  const [loadingQuestions, setLoadingQuestions] = useState(!savedResultId)
+  const [questionError, setQuestionError] = useState('')
   const [error, setError] = useState('')
   const [result, setResult] = useState<SavedResult | null>(null)
   const [detail, setDetail] = useState<ResultDetail | null>(null)
@@ -201,69 +131,39 @@ function PlayerTypeDiagnosis() {
   }, [result?.result_id, imageResultId])
 
   useEffect(() => {
+    const questionsGate = questionRequest.current
+    const resultsGate = resultRequest.current
     void loadQuestions()
+    return () => {
+      questionsGate.invalidate()
+      questionPending.current = false
+      resultsGate.invalidate()
+      activeResultId.current = null
+      sharePending.current = false
+    }
   }, [])
 
   async function loadQuestions() {
-    setLoadingQuestions(true)
-    setError('')
-
-    const { data, error: rpcError } = await supabase.rpc(
-      'get_player_type_v2_questions',
-    )
-
-    if (rpcError) {
-      setError(`質問を読み込めませんでした：${rpcError.message}`)
-      setLoadingQuestions(false)
-      return
-    }
-
-    const rows = (data ?? []) as QuestionRow[]
-    const map = new Map<string, Question>()
-
-    rows.forEach((row) => {
-      const existing = map.get(row.question_id)
-
-      if (existing) {
-        existing.options.push({
-          id: row.option_id,
-          order: row.option_order,
-          text: row.option_text,
-        })
-      } else {
-        map.set(row.question_id, {
-          id: row.question_id,
-          key: row.question_key,
-          order: row.question_order,
-          text: row.question_text,
-          options: [
-            {
-              id: row.option_id,
-              order: row.option_order,
-              text: row.option_text,
-            },
-          ],
-        })
-      }
-    })
-
-    const grouped = Array.from(map.values())
-      .map((question) => ({
-        ...question,
-        options: [...question.options].sort((a, b) => a.order - b.order),
-      }))
-      .sort((a, b) => a.order - b.order)
-
-    if (grouped.length !== QUESTION_COUNT) {
-      setError(
-        `質問数が正しくありません（${grouped.length}/${QUESTION_COUNT}）`,
-      )
+    if (questionPending.current) return
+    questionPending.current = true
+    const request = questionRequest.current.start()
+    setLoadingQuestions(!activeResultId.current)
+    setQuestionError('')
+    try {
+      const { data, error: rpcError } = await supabase.rpc('get_player_type_v2_questions')
+      if (!questionRequest.current.isCurrent(request)) return
+      if (rpcError) throw rpcError
+      setQuestions(parseQuestions(data))
+    } catch {
+      if (!questionRequest.current.isCurrent(request)) return
       setQuestions([])
-    } else {
-      setQuestions(grouped)
+      setQuestionError('質問を読み込めませんでした。通信状況やログイン状態を確認して、もう一度お試しください。')
+    } finally {
+      if (questionRequest.current.isCurrent(request)) {
+        questionPending.current = false
+        setLoadingQuestions(false)
+      }
     }
-
-    setLoadingQuestions(false)
   }
 
   const currentQuestion = useMemo(
@@ -277,9 +177,26 @@ function PlayerTypeDiagnosis() {
   function startDiagnosis() {
     imageOperation.current.generation++
     imageOperation.current.pending = false
+    sharePending.current = false
+    resultRequest.current.invalidate()
+    activeResultId.current = null
+    setShareEditorOpen(false)
+    setSharePosting(false)
     setImageSaving(false)
+    setShareMessage('')
     setExternalShareError('')
-    if (questions.length !== QUESTION_COUNT) return
+    setIsOwner(null)
+    setDetailLoading(false)
+    if (questions.length !== QUESTION_COUNT) {
+      navigate('/player-type', { replace: true })
+      setResult(null)
+      setDetail(null)
+      setScreen('intro')
+      void loadQuestions()
+      return
+    }
+    // A restarted diagnosis must not retain the previous result's deep link.
+    if (searchParams.has('result')) navigate('/player-type', { replace: true })
 
     setScreen('quiz')
     setCurrentIndex(0)
@@ -312,16 +229,22 @@ function PlayerTypeDiagnosis() {
     }
 
     setLoading(true)
+    const request = resultRequest.current.start()
 
     try {
-      await saveResult(nextAnswers)
+      await saveResult(nextAnswers, request)
+    } catch {
+      if (!resultRequest.current.isCurrent(request)) return
+      setError('結果を保存できませんでした。通信状況を確認して、最後の回答をもう一度選んでください。')
     } finally {
-      setLoading(false)
-      clickLock.current = false
+      if (resultRequest.current.isCurrent(request)) {
+        setLoading(false)
+        clickLock.current = false
+      }
     }
   }
 
-  async function saveResult(finalAnswers: string[]) {
+  async function saveResult(finalAnswers: string[], request: number) {
     if (finalAnswers.length !== QUESTION_COUNT) {
       setError(
         `回答数が正しくありません（${finalAnswers.length}/${QUESTION_COUNT}）`,
@@ -337,11 +260,13 @@ function PlayerTypeDiagnosis() {
       },
     )
 
+    if (!resultRequest.current.isCurrent(request)) return
+
     if (saveError) {
       // IMPORTANT:
       // The 50th answer is not committed to answerIds until the RPC succeeds.
       // A retry therefore sends exactly 50 answers instead of duplicating Q50.
-      setError(`結果を保存できませんでした：${saveError.message}`)
+      setError('結果を保存できませんでした。通信状況を確認して、最後の回答をもう一度選んでください。')
       return
     }
 
@@ -353,83 +278,56 @@ function PlayerTypeDiagnosis() {
     }
 
     setAnswerIds(finalAnswers)
+    setLoading(false)
+    clickLock.current = false
     setResult(saved)
+    // Persist the newly created result ID in the browser URL (refresh/share/back).
+    navigate(`/player-type?result=${encodeURIComponent(saved.result_id)}`, { replace: true })
     setIsOwner(true)
     setScreen('result')
-    void loadResultDetail(saved.result_id)
+    void loadSavedResult(saved.result_id)
   }
 
   async function loadSavedResult(resultId: string) {
+    const request = resultRequest.current.start()
+    activeResultId.current = resultId
+    // Share drafts and async outcomes belong to this result only.
+    setShareEditorOpen(false)
+    setShareText('')
+    setShareMessage('')
+    setSharePosting(false)
+    sharePending.current = false
+    setExternalShareError('')
+    setImageSaving(false)
     setLoadingQuestions(false)
     setError('')
+    setResult(null)
     setDetail(null)
     setIsOwner(null)
-    setDetailLoading(true)
-
-    const { data, error: detailError } = await supabase.rpc(
-      'get_player_type_v2_result_detail',
-      { p_result_id: resultId },
-    )
-
-    if (detailError) {
-      setError(`保存済みの診断結果を読み込めませんでした：${detailError.message}`)
-      setDetailLoading(false)
-      return
-    }
-
-    const row = (data?.[0] ?? null) as ResultDetail | null
-
-    if (!row) {
-      setError('保存済みの診断結果が見つかりませんでした。')
-      setDetailLoading(false)
-      return
-    }
-
-    // Ownership is checked by a security-definer RPC; never query the protected table directly.
-    const { data: ownedResult, error: ownerError } = await supabase.rpc(
-      'is_my_player_type_v2_result',
-      { p_result_id: resultId },
-    )
-    if (ownerError) {
-      setError(`診断結果の所有者を確認できませんでした：${ownerError.message}`)
-      setDetailLoading(false)
-      return
-    }
-    setIsOwner(ownedResult === true)
-
-    setResult({
-      result_id: row.result_id,
-      result_type_key: row.result_type_key,
-      animal_name_ja: row.animal_name_ja,
-      catchphrase: row.catchphrase,
-      confidence: row.confidence,
-      top_margin: row.top_margin,
-      core_answer_count: row.core_answer_count,
-      is_public: row.is_public,
-      completed_at: row.completed_at,
-    })
-    setDetail(row)
     setScreen('result')
-    setDetailLoading(false)
-  }
-
-  async function loadResultDetail(resultId: string) {
     setDetailLoading(true)
-
-    const { data, error: detailError } = await supabase.rpc(
-      'get_player_type_v2_result_detail',
-      { p_result_id: resultId },
-    )
-
-    if (detailError) {
-      setError(`詳細結果を読み込めませんでした：${detailError.message}`)
-      setDetailLoading(false)
-      return
+    try {
+      const { data, error: detailError } = await supabase.rpc(
+        'get_player_type_v2_result_detail', { p_result_id: resultId },
+      )
+      if (!resultRequest.current.isCurrent(request)) return
+      if (detailError) throw detailError
+      const row = (data?.[0] ?? null) as ResultDetail | null
+      if (!row || row.result_id !== resultId) throw new Error('not found')
+      const { data: ownedResult, error: ownerError } = await supabase.rpc(
+        'is_my_player_type_v2_result', { p_result_id: resultId },
+      )
+      if (!resultRequest.current.isCurrent(request)) return
+      if (ownerError) throw ownerError
+      setIsOwner(ownedResult === true)
+      setResult(row)
+      setDetail(row)
+    } catch {
+      if (!resultRequest.current.isCurrent(request)) return
+      setError('診断結果を読み込めませんでした。公開状態や通信状況を確認し、もう一度お試しください。')
+    } finally {
+      if (resultRequest.current.isCurrent(request)) setDetailLoading(false)
     }
-
-    const row = (data?.[0] ?? null) as ResultDetail | null
-    setDetail(row)
-    setDetailLoading(false)
   }
 
   function restart() {
@@ -437,15 +335,33 @@ function PlayerTypeDiagnosis() {
   }
 
   useEffect(() => {
-    const savedResultId = searchParams.get('result')
-    if (!savedResultId) return
-    void loadSavedResult(savedResultId)
-  }, [searchParams])
+    if (savedResultId) {
+      if (savedResultId !== activeResultId.current) void loadSavedResult(savedResultId)
+    } else if (activeResultId.current) {
+      resultRequest.current.invalidate()
+      activeResultId.current = null
+      setResult(null)
+      setDetail(null)
+      setIsOwner(null)
+      setDetailLoading(false)
+      setError('')
+      setScreen('intro')
+    }
+  }, [savedResultId])
 
-  useEffect(() => {
-    if (screen !== 'result' || !result?.result_id || detail || detailLoading) return
-    void loadResultDetail(result.result_id)
-  }, [screen, result?.result_id, detail, detailLoading])
+  if (screen === 'result' && !result) {
+    return (
+      <main className="ptd-page">
+        <div className="ptd-shell ptd-center">
+          {detailLoading ? <p role="status">診断結果を読み込んでいます...</p> : <>
+            <p className="ptd-error" role="alert">{error}</p>
+            <button className="ptd-secondary" type="button" onClick={() => savedResultId && void loadSavedResult(savedResultId)}>結果を再読み込み</button>
+            <button className="ptd-secondary" type="button" onClick={restart}>診断の最初へ</button>
+          </>}
+        </div>
+      </main>
+    )
+  }
 
   if (loadingQuestions) {
     return (
@@ -501,7 +417,8 @@ function PlayerTypeDiagnosis() {
               <span>✓ 全50問</span>
             </div>
 
-            {error && <div className="ptd-error">{error}</div>}
+            {questionError && <div className="ptd-error" role="alert">{questionError}</div>}
+            {questionError && <button className="ptd-secondary" type="button" onClick={() => void loadQuestions()}>質問を再読み込み</button>}
 
             <button
               className="ptd-primary"
@@ -528,11 +445,14 @@ function PlayerTypeDiagnosis() {
   }
 
   async function shareToTimeline() {
-    if (!result || isOwner !== true || sharePosting || !shareText.trim() || shareText.length > 500) return
+    if (!result || isOwner !== true || sharePosting || sharePending.current || !shareText.trim() || shareText.length > 500) return
+    const request = resultRequest.current.capture()
+    sharePending.current = true
     setSharePosting(true)
     setShareMessage('')
     try {
       const { data: { user }, error: authError } = await supabase.auth.getUser()
+      if (!resultRequest.current.isCurrent(request)) return
       if (authError || !user) throw new Error('ログイン情報を確認できませんでした')
       const { error: postError } = await supabase.from('posts').insert({
         user_id: user.id,
@@ -541,13 +461,18 @@ function PlayerTypeDiagnosis() {
         result_id: result.result_id,
         content: shareText.trim(),
       })
+      if (!resultRequest.current.isCurrent(request)) return
       if (postError) throw postError
       setShareMessage('タイムラインに投稿しました。')
       setShareEditorOpen(false)
-    } catch (e) {
-      setShareMessage(`投稿に失敗しました：${e instanceof Error ? e.message : String(e)}`)
+    } catch {
+      if (!resultRequest.current.isCurrent(request)) return
+      setShareMessage('投稿に失敗しました。通信状況を確認して、もう一度お試しください。')
     } finally {
-      setSharePosting(false)
+      if (resultRequest.current.isCurrent(request)) {
+        sharePending.current = false
+        setSharePosting(false)
+      }
     }
   }
 

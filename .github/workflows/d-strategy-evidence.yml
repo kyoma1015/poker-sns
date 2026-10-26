@@ -4,6 +4,9 @@ on:
     branches: [codex/d-persona-reference-20261023]
     paths:
       - 'src/PlayerTypeDiagnosis.tsx'
+      - 'tests/player-type-result-browser.test.mjs'
+      - 'tests/browser/player-type-result-entry.tsx'
+      - 'tests/browser/player-type-result-supabase.ts'
       - 'src/playerTypeShareImage.ts'
       - 'tests/player-type-share-image.test.mjs'
       - 'tests/player-type-share-browser.test.mjs'
@@ -45,6 +48,9 @@ jobs:
       - run: node scripts/audit-player-type.mjs > "$RUNNER_TEMP/d-strategy-report.json"
       - run: npm ci --cache "$RUNNER_TEMP/npm-cache"
       - run: node tests/player-type-share-browser.test.mjs
+        env:
+          CHROMIUM_PATH: /usr/bin/google-chrome
+      - run: node tests/player-type-result-browser.test.mjs
         env:
           CHROMIUM_PATH: /usr/bin/google-chrome
       - run: npm run build

@@ -1,0 +1,68 @@
+{
+  "results": [
+    {
+      "file": "tests/player-type.test.mjs",
+      "code": 0,
+      "tests": 53,
+      "passed": 53,
+      "failed": 0
+    },
+    {
+      "file": "tests/player-type-audit.test.mjs",
+      "code": 0,
+      "tests": 5,
+      "passed": 5,
+      "failed": 0
+    },
+    {
+      "file": "tests/player-type-distribution.test.mjs",
+      "code": 0,
+      "tests": 6,
+      "passed": 6,
+      "failed": 0
+    },
+    {
+      "file": "tests/player-type-reference.test.mjs",
+      "code": 0,
+      "tests": 14,
+      "passed": 14,
+      "failed": 0
+    },
+    {
+      "file": "tests/player-type-strategy-evidence.test.mjs",
+      "code": 0,
+      "tests": 6,
+      "passed": 6,
+      "failed": 0
+    },
+    {
+      "file": "tests/player-type-score-schema.test.mjs",
+      "code": 0,
+      "tests": 18,
+      "passed": 18,
+      "failed": 0
+    },
+    {
+      "file": "tests/player-type-presentation-values.test.mjs",
+      "code": 0,
+      "tests": 8,
+      "passed": 8,
+      "failed": 0
+    },
+    {
+      "file": "tests/player-type-png-cleanup.test.mjs",
+      "code": 0,
+      "tests": 5,
+      "passed": 5,
+      "failed": 0
+    },
+    {
+      "file": "tests/player-type-share-image.test.mjs",
+      "code": 0,
+      "tests": 6,
+      "passed": 6,
+      "failed": 0
+    }
+  ],
+  "total": 121
+}

@@ -1,0 +1,40 @@
+3:47:54 AM [vite] (client) [Unhandled rejection] Error: qa-private-save-transport
+ > Object.rpc tests/browser/player-type-result-supabase.ts:29:60
+    27 |    }
+    28 |    if(name==='complete_player_type_v2_diagnosis'){
+    29 |     if(mode==='questions-save-error' && failures++===0)throw Error('qa-private-save-transport')
+       |                                                              ^
+    30 |     return {data:[row('qa-saved')],error:null}
+    31 |    }
+ > saveResult src/PlayerTypeDiagnosis.tsx:332:54
+ > chooseOption src/PlayerTypeDiagnosis.tsx:317:12
+ > onClick src/PlayerTypeDiagnosis.tsx:898:38
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:20804:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:1045:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:20854:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:21423:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3437:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:21008:6
+
+✖ final answer transport failure retries exactly50 answers and persists the new result URL (6610.67137ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6679.663704
+
+✖ failing tests:
+
+test at tests/player-type-result-browser.test.mjs:33:1
+✖ final answer transport failure retries exactly50 answers and persists the new result URL (6610.67137ms)
+  locator.waitFor: Timeout 2000ms exceeded.
+  Call log:
+  [2m  - waiting for getByText('結果を保存できませんでした。通信状況を確認して、最後の回答をもう一度選んでください。', { exact: true }) to be visible[22m
+  
+      at TestContext.<anonymous> (/workspace/work/issue22-published-D-c523f547/tests/player-type-result-browser.test.mjs:38:80) {
+    log: [ "  - waiting for getByText('結果を保存できませんでした。通信状況を確認して、最後の回答をもう一度選んでください。', { exact: true }) to be visible" ],
+    name: 'TimeoutError'
+  }

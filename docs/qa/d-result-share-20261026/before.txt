@@ -1,0 +1,275 @@
+3:49:56 AM [vite] (client) Re-optimizing dependencies because vite config has changed
+✖ late old result cannot replace the newer requested result (1495.474467ms)
+✖ late ownership cannot expose old result or owner actions on the newer nonowned result (922.296698ms)
+3:49:59 AM [vite] (client) [Unhandled rejection] Error: qa-private-result-transport
+ > Object.rpc tests/browser/player-type-result-supabase.ts:20:52
+    18 |    if(name==='get_player_type_v2_result_detail'){
+    19 |     if(mode==='result-race' && args?.p_result_id==='qa-result')return await wait('detail')
+    20 |     if(mode==='detail-error' && failures++===0)throw Error('qa-private-result-transport')
+       |                                                      ^
+    21 |     if(mode==='wrong-result')return {data:[row('qa-unrequested')],error:null}
+    22 |     return {data:[row(args?.p_result_id || 'qa-result')],error:null}
+ > loadSavedResult src/PlayerTypeDiagnosis.tsx:369:56
+ > src/PlayerTypeDiagnosis.tsx:442:9
+ > Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:28656:19
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:1045:29
+ > commitHookEffectListMount node_modules/react-dom/cjs/react-dom-client.development.js:13748:28
+ > commitHookPassiveMountEffects node_modules/react-dom/cjs/react-dom-client.development.js:13835:10
+ > commitPassiveMountOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:16906:12
+ > recursivelyTraversePassiveMountEffects node_modules/react-dom/cjs/react-dom-client.development.js:16851:12
+ > commitPassiveMountOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:16898:10
+
+✖ failed result read is redacted and retry recovers the requested result (2624.010185ms)
+✖ mismatched result identity is refused without rendering its data (2593.450783ms)
+✖ post error is redacted, keeps the draft and permits retry (2859.267279ms)
+✖ result navigation before authentication completes refuses the old post write (1061.202719ms)
+✖ unmount before authentication completes refuses the old post write (904.553149ms)
+✖ late post completion cannot close the newer result draft (2939.025626ms)
+✖ same-tick duplicate share activation creates one write (775.47965ms)
+✖ restart clears the saved-result URL while opening question one (701.92444ms)
+3:50:13 AM [vite] (client) [Unhandled rejection] Error: qa-private-question-transport
+ > Object.rpc tests/browser/player-type-result-supabase.ts:15:55
+    13 |    calls.push({name,args})
+    14 |    if(name==='get_player_type_v2_questions'){
+    15 |     if(mode==='questions-error' && failures++===0)throw Error('qa-private-question-transport')
+       |                                                         ^
+    16 |     return {data:fixture.rows,error:null}
+    17 |    }
+ > loadQuestions src/PlayerTypeDiagnosis.tsx:211:53
+ > src/PlayerTypeDiagnosis.tsx:204:9
+ > Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:28656:19
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:1045:29
+ > commitHookEffectListMount node_modules/react-dom/cjs/react-dom-client.development.js:13748:28
+ > commitHookPassiveMountEffects node_modules/react-dom/cjs/react-dom-client.development.js:13835:10
+ > commitPassiveMountOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:16906:12
+ > recursivelyTraversePassiveMountEffects node_modules/react-dom/cjs/react-dom-client.development.js:16851:12
+ > commitPassiveMountOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:16898:10
+
+✖ question transport failure has safe retry and recovers all50 questions (2540.587443ms)
+3:50:18 AM [vite] (client) [Unhandled rejection] Error: qa-private-save-transport
+ > Object.rpc tests/browser/player-type-result-supabase.ts:29:60
+    27 |    }
+    28 |    if(name==='complete_player_type_v2_diagnosis'){
+    29 |     if(mode==='questions-save-error' && failures++===0)throw Error('qa-private-save-transport')
+       |                                                              ^
+    30 |     return {data:[row('qa-saved')],error:null}
+    31 |    }
+ > saveResult src/PlayerTypeDiagnosis.tsx:332:54
+ > chooseOption src/PlayerTypeDiagnosis.tsx:317:12
+ > onClick src/PlayerTypeDiagnosis.tsx:898:38
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:20804:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:1045:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:20854:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:21423:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3437:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:21008:6
+
+✖ final answer transport failure retries exactly50 answers and persists the new result URL (5089.921268ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 0
+ℹ fail 12
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24596.903489
+
+✖ failing tests:
+
+test at tests/player-type-result-browser.test.mjs:22:1
+✖ late old result cannot replace the newer requested result (1495.474467ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-published-D-c523f547/tests/player-type-result-browser.test.mjs:22:366)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type-result-browser.test.mjs:23:1
+✖ late ownership cannot expose old result or owner actions on the newer nonowned result (922.296698ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-published-D-c523f547/tests/player-type-result-browser.test.mjs:23:369)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type-result-browser.test.mjs:24:1
+✖ failed result read is redacted and retry recovers the requested result (2624.010185ms)
+  locator.waitFor: Timeout 2000ms exceeded.
+  Call log:
+  [2m  - waiting for getByRole('button', { name: '結果を再読み込み', exact: true }) to be visible[22m
+  
+      at TestContext.<anonymous> (/workspace/work/issue22-published-D-c523f547/tests/player-type-result-browser.test.mjs:24:191) {
+    log: [ "  - waiting for getByRole('button', { name: '結果を再読み込み', exact: true }) to be visible" ],
+    name: 'TimeoutError'
+  }
+
+test at tests/player-type-result-browser.test.mjs:25:1
+✖ mismatched result identity is refused without rendering its data (2593.450783ms)
+  locator.waitFor: Timeout 2000ms exceeded.
+  Call log:
+  [2m  - waiting for getByRole('button', { name: '結果を再読み込み', exact: true }) to be visible[22m
+  
+      at TestContext.<anonymous> (/workspace/work/issue22-published-D-c523f547/tests/player-type-result-browser.test.mjs:25:185) {
+    log: [ "  - waiting for getByRole('button', { name: '結果を再読み込み', exact: true }) to be visible" ],
+    name: 'TimeoutError'
+  }
+
+test at tests/player-type-result-browser.test.mjs:26:1
+✖ post error is redacted, keeps the draft and permits retry (2859.267279ms)
+  locator.waitFor: Timeout 2000ms exceeded.
+  Call log:
+  [2m  - waiting for getByText('投稿に失敗しました。通信状況を確認して、もう一度お試しください。', { exact: true }) to be visible[22m
+  
+      at TestContext.<anonymous> (/workspace/work/issue22-published-D-c523f547/tests/player-type-result-browser.test.mjs:26:221) {
+    log: [ "  - waiting for getByText('投稿に失敗しました。通信状況を確認して、もう一度お試しください。', { exact: true }) to be visible" ],
+    name: 'TimeoutError'
+  }
+
+test at tests/player-type-result-browser.test.mjs:27:1
+✖ result navigation before authentication completes refuses the old post write (1061.202719ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   {
+  +     args: {
+  +       content: '保存前の文章',
+  +       post_type: 'result',
+  +       result_id: 'qa-result',
+  +       result_type: 'player_type',
+  +       user_id: 'qa-owner'
+  +     },
+  +     name: 'insert:posts'
+  +   }
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-published-D-c523f547/tests/player-type-result-browser.test.mjs:27:312)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type-result-browser.test.mjs:28:1
+✖ unmount before authentication completes refuses the old post write (904.553149ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   {
+  +     args: {
+  +       content: '保存前の文章',
+  +       post_type: 'result',
+  +       result_id: 'qa-result',
+  +       result_type: 'player_type',
+  +       user_id: 'qa-owner'
+  +     },
+  +     name: 'insert:posts'
+  +   }
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-published-D-c523f547/tests/player-type-result-browser.test.mjs:28:329)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type-result-browser.test.mjs:29:1
+✖ late post completion cannot close the newer result draft (2939.025626ms)
+  locator.click: Timeout 2000ms exceeded.
+  Call log:
+  [2m  - waiting for getByRole('button', { name: 'Poker IDのタイムラインに投稿' })[22m
+  
+      at editor (/workspace/work/issue22-published-D-c523f547/tests/player-type-result-browser.test.mjs:20:108)
+      at TestContext.<anonymous> (/workspace/work/issue22-published-D-c523f547/tests/player-type-result-browser.test.mjs:29:199) {
+    log: [ "  - waiting for getByRole('button', { name: 'Poker IDのタイムラインに投稿' })" ],
+    name: 'TimeoutError'
+  }
+
+test at tests/player-type-result-browser.test.mjs:30:1
+✖ same-tick duplicate share activation creates one write (775.47965ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-published-D-c523f547/tests/player-type-result-browser.test.mjs:30:284)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type-result-browser.test.mjs:31:1
+✖ restart clears the saved-result URL while opening question one (701.92444ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/player-type?result=qa-result'
+  - '/player-type'
+                 ^
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-published-D-c523f547/tests/player-type-result-browser.test.mjs:31:234)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/player-type?result=qa-result',
+    expected: '/player-type',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type-result-browser.test.mjs:32:1
+✖ question transport failure has safe retry and recovers all50 questions (2540.587443ms)
+  locator.waitFor: Timeout 2000ms exceeded.
+  Call log:
+  [2m  - waiting for getByRole('button', { name: '質問を再読み込み', exact: true }) to be visible[22m
+  
+      at TestContext.<anonymous> (/workspace/work/issue22-published-D-c523f547/tests/player-type-result-browser.test.mjs:32:194) {
+    log: [ "  - waiting for getByRole('button', { name: '質問を再読み込み', exact: true }) to be visible" ],
+    name: 'TimeoutError'
+  }
+
+test at tests/player-type-result-browser.test.mjs:33:1
+✖ final answer transport failure retries exactly50 answers and persists the new result URL (5089.921268ms)
+  locator.waitFor: Timeout 2000ms exceeded.
+  Call log:
+  [2m  - waiting for getByText('結果を保存できませんでした。通信状況を確認して、最後の回答をもう一度選んでください。', { exact: true }) to be visible[22m
+  
+      at TestContext.<anonymous> (/workspace/work/issue22-published-D-c523f547/tests/player-type-result-browser.test.mjs:38:80) {
+    log: [ "  - waiting for getByText('結果を保存できませんでした。通信状況を確認して、最後の回答をもう一度選んでください。', { exact: true }) to be visible" ],
+    name: 'TimeoutError'
+  }
