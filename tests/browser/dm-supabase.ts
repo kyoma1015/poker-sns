@@ -5,6 +5,7 @@ const qa = {
   authListeners: new Set<(event: string, session: unknown) => void>(),
   insideAuthCallback: false, authCallsInsideCallback: 0,
   readUpdates: 0,
+  extraRows: [] as unknown[],
   channels: [] as Array<{ handler: (payload: any) => unknown, active: boolean }>,
   emitAuth(id: string | null, event = id ? 'SIGNED_IN' : 'SIGNED_OUT') {
     this.userId = id
@@ -30,7 +31,7 @@ function query(table: string) {
     maybeSingle() { return Promise.resolve({ data: { display_name: peer === 'third' ? 'Another synthetic player' : 'Synthetic player', poker_id: 'synthetic', avatar_url: null }, error: null }) },
     order() {
       if (qa.holdOldMessages && filter.includes('other')) return new Promise(done => qa.oldMessages.push(done))
-      return Promise.resolve({ data: filter.includes('third') ? [{ id: 'third-message', sender_id: 'third', receiver_id: qa.userId, content: qa.userId === 'newme' ? 'NEW_ACCOUNT_SYNTHETIC' : 'THIRD_SYNTHETIC', created_at: '2026-10-24T00:00:00Z', read_at: null }] : [], error: null })
+      return Promise.resolve({ data: [...(filter.includes('third') ? [{ id: 'third-message', sender_id: 'third', receiver_id: qa.userId, content: qa.userId === 'newme' ? 'NEW_ACCOUNT_SYNTHETIC' : 'THIRD_SYNTHETIC', created_at: '2026-10-24T00:00:00Z', read_at: null }] : []), ...qa.extraRows], error: null })
     },
     insert(value: unknown) {
       qa.inserts.push(value)

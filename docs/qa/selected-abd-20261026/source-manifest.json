@@ -860,6 +860,18 @@
         "tests/browser/tda-next-navigation.mjs",
         "tests/tda-next-navigation.test.mjs"
       ]
+    },
+    {
+      "path": "tests/selected/direct-message-send.test.mjs",
+      "sha": "98f5c8b6c794f08c3bce57373ef1ff6c5251c19a",
+      "origin_blob": "12ce7b7e54dd1d64ffcc95a64057c8ca1a1c8227",
+      "reason": "append fixed conversation-participant response regression; preserved previous acceptance; synthetic-only transport extension"
+    },
+    {
+      "path": "tests/browser/dm-supabase.ts",
+      "sha": "77478eefee769e23da2429e46fcad816b116aef8",
+      "origin_blob": "d7be63612e9b729c48d90d50f79a6e264929af07",
+      "reason": "append fixed conversation-participant response regression; preserved previous acceptance; synthetic-only transport extension"
     }
   ],
   "measured_test_expansion": {

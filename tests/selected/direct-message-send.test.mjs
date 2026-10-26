@@ -192,3 +192,37 @@ test('DM returned auth error never trusts accompanying user data or marks messag
   assert.doesNotMatch(await page.locator('body').innerText(), /SYNTHETIC_PRIVATE_AUTH/)
   await retry.click(); await page.getByText('THIRD_SYNTHETIC', { exact: true }).waitFor()
 }))
+
+async function conversationRows(page, rows) {
+  await page.evaluate(async rows => {
+    window.dmQA.extraRows = rows
+    const channel = window.dmQA.channels.findLast(channel => channel.active)
+    await channel.handler({ eventType: 'INSERT', new: { id: 'third-message', sender_id: 'third', receiver_id: 'me', content: 'THIRD_SYNTHETIC', created_at: '2026-10-24T00:00:00Z', read_at: null } })
+  }, rows)
+}
+const syntheticRow = (id, sender_id, receiver_id, content) => ({ id, sender_id, receiver_id, content, created_at: '2026-10-24T00:00:00Z', read_at: null })
+test('conversation rejects query rows for two unrelated actors', () => withChat(async page => {
+  await page.evaluate(() => window.dmQA.navigate('/dm/third'))
+  await page.getByText('THIRD_SYNTHETIC', { exact: true }).waitFor()
+  await conversationRows(page, [syntheticRow('foreign', 'stranger', 'someone', 'FOREIGN_CONVERSATION_PRIVATE')])
+  await page.getByText('THIRD_SYNTHETIC', { exact: true }).waitFor()
+  assert.equal(await page.getByText('FOREIGN_CONVERSATION_PRIVATE', { exact: true }).count(), 0)
+}))
+test('conversation rejects same-account rows belonging to another peer', () => withChat(async page => {
+  await page.evaluate(() => window.dmQA.navigate('/dm/third'))
+  await page.getByText('THIRD_SYNTHETIC', { exact: true }).waitFor()
+  await conversationRows(page, [
+    syntheticRow('other-out', 'me', 'other', 'OTHER_PEER_OUTGOING_PRIVATE'),
+    syntheticRow('other-in', 'other', 'me', 'OTHER_PEER_INCOMING_PRIVATE'),
+  ])
+  await page.getByText('THIRD_SYNTHETIC', { exact: true }).waitFor()
+  assert.equal(await page.getByText('OTHER_PEER_OUTGOING_PRIVATE', { exact: true }).count(), 0)
+  assert.equal(await page.getByText('OTHER_PEER_INCOMING_PRIVATE', { exact: true }).count(), 0)
+}))
+test('conversation preserves both valid directions after defensive query filtering', () => withChat(async page => {
+  await page.evaluate(() => window.dmQA.navigate('/dm/third'))
+  await page.getByText('THIRD_SYNTHETIC', { exact: true }).waitFor()
+  await conversationRows(page, [syntheticRow('valid-out', 'me', 'third', 'CURRENT_PEER_OUTGOING')])
+  await page.getByText('CURRENT_PEER_OUTGOING', { exact: true }).waitFor()
+  assert.equal(await page.getByText('THIRD_SYNTHETIC', { exact: true }).count(), 1)
+}))
