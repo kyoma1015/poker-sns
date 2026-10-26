@@ -12,3 +12,7 @@ begin
 end $$;
 revoke all on function public.video_production_storage_generation(uuid,text) from public,anon,service_role;
 grant execute on function public.video_production_storage_generation(uuid,text) to authenticated;
+
+-- Align the disposable posts table with the production candidate INSERT shape.
+-- The isolated seed intentionally omits these application columns.
+alter table public.posts add column if not exists post_type text not null default 'normal';
