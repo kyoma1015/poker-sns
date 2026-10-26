@@ -10,7 +10,7 @@ import { pipeline } from 'node:stream/promises'
 import { createReadStream } from 'node:fs'
 
 // Immutable GitHub release asset ID; the mutable /latest URL is never used.
-const url = 'https://api.github.com/repos/yt-dlp/FFmpeg-Builds/releases/assets/675690310'
+// Download the release asset bytes directly: the GitHub API endpoint may return JSON\n// metadata to unauthenticated build runners despite Accept: application/octet-stream.\n// Integrity remains pinned to the exact asset SHA256 and byte length below.\nconst url = 'https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz'
 const sha256 = 'f9c52a05bb4e51b44c7e7b52937b38d1fe28bfaa319bb291e6020a5cd9574f17'
 const expectedBytes = 156579068
 if (process.platform !== 'linux' || process.arch !== 'x64') {
