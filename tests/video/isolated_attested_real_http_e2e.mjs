@@ -53,6 +53,18 @@ const signature=signBinaryVideoAttestation(Buffer.alloc(32,0x41),{
 const params={p_owner:owner,p_path:path,p_generation:gen,p_sha256:sha256,
  p_duration_ms:durationMs,p_content:content,p_expires_at:expiresAt,
  p_nonce:nonce,p_signature:signature,p_key_id:1}
+const anonymous=createClient(url,anon,{auth:{persistSession:false,autoRefreshToken:false}})
+assert.ok((await anonymous.rpc('video_publish_attested_v1',params)).error,
+ 'anonymous PostgREST role must not execute attested publication RPC')
+assert.ok((await anonymous.storage.from('post-videos').download(path)).error,
+ 'anonymous viewer must not read owner private Storage')
+for (const [client,label] of [[ownerClient,'owner'],[attacker,'attacker'],[anonymous,'anonymous']]) {
+ for (const table of ['attestation_keys','consumed_nonces']) {
+  const {error}=await client.schema('video_private').from(table).select('*').limit(1)
+  assert.ok(error, `${label} must not query private ${table} via PostgREST`)
+ }
+}
+
 assert.ok((await attacker.rpc('video_publish_attested_v1',params)).error,'foreign real JWT rejected')
 assert.ok((await ownerClient.rpc('video_publish_attested_v1',{...params,p_signature:'0'.repeat(64)})).error,'forged signature rejected')
 const mismatchedSignature=signBinaryVideoAttestation(Buffer.alloc(32,0x42),{
