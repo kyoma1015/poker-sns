@@ -32,6 +32,8 @@ jobs:
         run: node --experimental-strip-types tests/video/attestation.test.mjs
       - name: Install local PostgreSQL client
         run: sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client
+      - name: Verify privileged-key isolation before Docker bootstrap
+        run: node tests/video/video_privileged_key_static_guard.mjs
       - name: Restore pinned Supabase Docker image cache
         id: image-cache
         uses: actions/cache/restore@v4
