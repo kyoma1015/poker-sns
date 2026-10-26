@@ -8,7 +8,7 @@ import { createVideoMediaHandler } from '../../api/video-media.ts'
 import { createVideoFinalizeHandler } from '../../api/video-finalize.ts'
 import { createIsolatedSupabaseVideoAdapters } from '../../api/video-isolated-supabase-adapters.ts'
 
-export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, service, bytes }) {
+export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, service, bytes, expectedContent = 'real isolated end-to-end' }) {
   assert.ok(service && bytes?.length,'isolated full upload test credentials and media required')
   assert.ok(anon,'isolated anon key required')
   assert.equal(process.env.VITE_SUPABASE_URL, 'http://127.0.0.1:56321')
@@ -155,7 +155,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     timelinePage.on('console',message=>{if(message.type()==='error')timelineErrors.push(message.text())})
     try {
       await timelinePage.getByRole('button',{name:'おすすめ'}).click({timeout:20000})
-      await timelinePage.getByText('real isolated end-to-end',{exact:true}).waitFor({timeout:20000})
+      await timelinePage.getByText(expectedContent,{exact:true}).waitFor({timeout:20000})
     } catch(error) {
       throw new Error('Actual Timeline mount/feed failed: '+JSON.stringify({
         body:(await timelinePage.locator('body').allTextContents()).slice(0,2).map(t=>t.slice(0,900)),
