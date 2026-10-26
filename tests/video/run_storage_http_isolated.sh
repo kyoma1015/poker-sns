@@ -53,5 +53,5 @@ VIDEO_QA_ENV="$qa/local.env" node tests/video/isolated_fenced_real_e2e.mjs
 # Never reuse these fixture credentials or enable the production release gate.
 psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/isolated_attested_generation.sql
 psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/production_attested_candidate_review_only.sql
-psql "$dburl" -v ON_ERROR_STOP=1 -c "insert into video_private.attestation_keys(key_id,secret,active) values(1,decode(repeat('41',32),'hex'),true); grant execute on function public.video_publish_attested_v1(uuid,text,uuid,text,integer,text,bigint,text,text,smallint) to authenticated; notify pgrst, 'reload schema';"
+psql "$dburl" -v ON_ERROR_STOP=1 -c "insert into video_private.attestation_keys(key_id,secret,active) values(1,decode(repeat('41',32),'hex'),true),(2,decode(repeat('42',32),'hex'),true); grant execute on function public.video_publish_attested_v1(uuid,text,uuid,text,integer,text,bigint,text,text,smallint) to authenticated; notify pgrst, 'reload schema';"
 VIDEO_QA_ENV="$qa/local.env" node tests/video/isolated_attested_real_http_e2e.mjs
