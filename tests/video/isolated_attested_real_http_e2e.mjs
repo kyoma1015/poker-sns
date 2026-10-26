@@ -55,6 +55,17 @@ const params={p_owner:owner,p_path:path,p_generation:gen,p_sha256:sha256,
  p_nonce:nonce,p_signature:signature,p_key_id:1}
 assert.ok((await attacker.rpc('video_publish_attested_v1',params)).error,'foreign real JWT rejected')
 assert.ok((await ownerClient.rpc('video_publish_attested_v1',{...params,p_signature:'0'.repeat(64)})).error,'forged signature rejected')
+const mismatchedSignature=signBinaryVideoAttestation(Buffer.alloc(32,0x42),{
+ owner,path,generation:gen,sha256,durationMs,
+ contentSha256:videoAttestationDigest(content),expiresAt,nonce,
+})
+assert.ok((await ownerClient.rpc('video_publish_attested_v1',{
+ ...params,p_signature:mismatchedSignature,
+})).error,'real authenticated RPC must reject a correctly formatted HMAC signed with the wrong key')
+assert.ok((await ownerClient.rpc('video_publish_attested_v1',{
+ ...params,p_key_id:32767,
+})).error,'real authenticated RPC must reject an unknown key ID')
+
 assert.ok((await ownerClient.rpc('video_publish_attested_v1',{...params,p_duration_ms:3000})).error,'duration tampering rejected')
 assert.ok((await ownerClient.rpc('video_publish_attested_v1',{...params,p_generation:randomUUID()})).error,'Storage generation tampering rejected')
 const {data:postId,error:publishError}=await ownerClient.rpc('video_publish_attested_v1',params)
