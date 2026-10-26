@@ -68,6 +68,12 @@ export function createProductionSupabaseVideoAdapters(
         signal: AbortSignal.timeout(30000),
       })
       if (!response.ok || !response.body) throw new Error('private Storage read denied')
+      const expectedMime = path.endsWith('.mp4') ? 'video/mp4' : 'video/webm'
+      const receivedMime = response.headers.get('content-type')?.split(';', 1)[0]?.trim().toLowerCase()
+      if (receivedMime !== expectedMime) {
+        await response.body.cancel()
+        throw new Error('Storage media type mismatch')
+      }
       const declared = response.headers.get('content-length')
       if (declared && (!Number.isSafeInteger(Number(declared)) || Number(declared) < 0 || Number(declared) > MAX_VIDEO_BYTES)) {
         await response.body.cancel()
