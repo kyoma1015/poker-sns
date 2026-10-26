@@ -1,0 +1,101 @@
+{
+  "main": "781f038415503ece850c25a26e72ef67dee9c8a1",
+  "targets": {
+    "119": {
+      "head": "5416f6c283bf723d551b069fca9a6215b80b562c",
+      "base": "fedfa620a440f0abf92417e00d90687d3cdb0464",
+      "base_ref": "codex/b-answer-key-audit-20261023",
+      "head_ref": "codex/b-answer-conflict-audit-20261023",
+      "ancestor_open_pr_heads": [
+        116,
+        98,
+        83,
+        62,
+        59,
+        32,
+        23,
+        14,
+        13
+      ],
+      "main_merge_exit": 1,
+      "conflict_files": [
+        "Merge conflict in docs/progress/MASTER.md",
+        "Merge conflict in docs/progress/SNS_INTERACTIVE.md",
+        "Merge conflict in src/Timeline.tsx",
+        "Merge conflict in src/TimelineInteractive.tsx",
+        "Merge conflict in src/interactiveRequests.ts",
+        "Merge conflict in tests/browser/poll-only.mjs",
+        "Merge conflict in tests/poll-only.test.mjs"
+      ]
+    },
+    "120": {
+      "head": "4a98851371fab0edf20b58cb3fd1eb182dfff1fd",
+      "base": "13c4e7d3ea9250ecfb63044ae3711b0d12a91eae",
+      "base_ref": "codex/c-native-training-batch-20261023",
+      "head_ref": "codex/c-native-hand169-bridge-20261023",
+      "ancestor_open_pr_heads": [
+        115,
+        20,
+        13
+      ],
+      "main_merge_exit": 1,
+      "conflict_files": [
+        "Merge conflict in docs/progress/MASTER.md",
+        "Merge conflict in docs/progress/SNS_INTERACTIVE.md",
+        "Merge conflict in src/Timeline.tsx",
+        "Merge conflict in src/TimelineInteractive.tsx",
+        "Merge conflict in src/interactiveRequests.ts",
+        "Merge conflict in tests/browser/poll-only.mjs",
+        "Merge conflict in tests/poll-only.test.mjs"
+      ]
+    },
+    "121": {
+      "head": "ca29d209ab960454eba46cf4df2365fca32098f3",
+      "base": "c373286fbe402144148d7862465c2c0ba49d1bea",
+      "base_ref": "codex/a-host-stop-boundary-20261023",
+      "head_ref": "codex/a-corrupt-evidence-20261023",
+      "ancestor_open_pr_heads": [
+        117,
+        113,
+        112,
+        111,
+        107,
+        106,
+        104,
+        102,
+        96,
+        85,
+        80,
+        69,
+        36,
+        34,
+        26,
+        16,
+        13
+      ],
+      "main_merge_exit": 1,
+      "conflict_files": [
+        "Merge conflict in docs/progress/MASTER.md",
+        "Merge conflict in docs/progress/SNS_INTERACTIVE.md",
+        "Merge conflict in src/Timeline.tsx",
+        "Merge conflict in src/TimelineInteractive.tsx",
+        "Merge conflict in src/interactiveRequests.ts",
+        "Merge conflict in tests/browser/poll-only.mjs",
+        "Merge conflict in tests/poll-only.test.mjs"
+      ]
+    },
+    "124": {
+      "head": "c523f5473048615f6f8f937c0811a2ee6ea94d52",
+      "base": "f07b65135f43f413c41c9b124e37062d20e5197a",
+      "base_ref": "codex/d-persona-reference-20261023",
+      "head_ref": "codex/d-strategy-evidence-20261023",
+      "ancestor_open_pr_heads": [
+        118,
+        114,
+        100
+      ],
+      "main_merge_exit": 0,
+      "conflict_files": []
+    }
+  }
+}

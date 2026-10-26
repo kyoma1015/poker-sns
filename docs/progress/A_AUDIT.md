@@ -55,3 +55,7 @@ Two fixed fixture failures now pass after bounded topology readiness and atomic 
 ## 2026-10-25 DM inbox functional continuation
 
 The individual chat guards are now extended to the inbox: synchronous auth invalidation, keyed account identity, latest-generation reads, scoped query/client filtering, cleanup and explicit redacted reload. Fixed original8FAIL→8PASS in actual React/mobile Chromium with synthetic transport; full commands and results in docs/qa/dm-inbox-20261025/. Authentic isolated RLS/idempotency remain separate BLOCKED gates; no DB/schema/runtime adoption. Product-level acceptance ledger: docs/workers/FEATURE_COMPLETION_20261025.md.
+
+## 2026-10-26 notification flow completion
+
+Actual notification screen now isolates accounts, denies stale loads/acknowledgements, confirms owner-scoped returned UPDATE rows, recovers generic failures and subscribes to scoped realtime. Seven fixed mobile cases and full123frontend/239Python local regressions pass; see docs/qa/notification-flow-20261026/. Read-only77PR reconciliation and main-conflict evidence are in docs/qa/integration-readiness-20261026/. DM authoritative SQL unavailable across those tracked heads; reviewed artifact/isolation conditions are in docs/workers/DM_ISOLATED_QA_REQUIREMENTS_20261026.md. No production/schema/state/runtime adoption.

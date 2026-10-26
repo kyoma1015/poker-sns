@@ -22,3 +22,7 @@ Other product scope retained: timeline/post/repost/quote/share, comments/replies
 5. Safe local edits/tests/commits and existing Draft updates are separate from runtime adoption. No new PR/manual CI/schedule/controller/main/production/billing actions in this batch.
 
 AUTO-RESUME OFF; independent provider startup UNKNOWN. Existing finite-disabled schedules are not extended. No statement here proves background workers survive the conversation or restart after usage recovery. The next concrete work is real isolated DM policy/idempotency evidence, safe consumption of exact partial GTO reports, official TDA input receipts and formal diagnosis labels; continue objective product defects independently when those gates cannot be satisfied.
+
+## 2026-10-26 continuation
+
+Current classification,77PR dependency/main-conflict review and selected-main candidate: INTEGRATION_READINESS_20261026.md. Actual notification/quiz account scope, native report consumer and diagnosis result/share/presentation source continue on existing Drafts. Always resolve latest public HEAD/CI; initial tables above are historical scope, not current runtime.

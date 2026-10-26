@@ -29,180 +29,121 @@ type NotificationItem = {
 
 function Notifications() {
   const navigate = useNavigate()
+  const [accountId, setAccountId] = useState<string | null | undefined>(undefined)
+  const authIdentity = useRef<string | null>(null)
+  useEffect(() => {
+    let active = true
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!active) return
+      const id = session?.user?.id ?? null
+      // Never call/await the SDK in its auth callback; invalidate before render.
+      authIdentity.current = id
+      setAccountId(id)
+    })
+    return () => { active = false; authIdentity.current = null; subscription.unsubscribe() }
+  }, [])
+  useEffect(() => { if (accountId === null) navigate('/login') }, [accountId, navigate])
+  if (accountId === undefined) return <main className="app"><p>読み込み中...</p></main>
+  if (accountId === null) return <main className="app"><p>ログインが必要です。</p></main>
+  return <AccountNotifications key={accountId} accountId={accountId} authIdentity={authIdentity} />
+}
+
+function AccountNotifications({ accountId, authIdentity }: {
+  accountId: string
+  authIdentity: { current: string | null }
+}) {
+  const navigate = useNavigate()
   const refreshRootRef = useRef<HTMLElement | null>(null)
   const reloadNotificationsRef = useRef<() => Promise<void>>(async () => {})
   const { pullDistance, isRefreshing, refreshError } = usePullToRefresh(
-    refreshRootRef,
-    { onRefresh: () => reloadNotificationsRef.current() },
+    refreshRootRef, { onRefresh: () => reloadNotificationsRef.current() },
   )
-
-  const [notifications, setNotifications] =
-    useState<NotificationItem[]>([])
-
-  const [message, setMessage] =
-    useState('読み込み中...')
+  const [notifications, setNotifications] = useState<NotificationItem[]>([])
+  const [message, setMessage] = useState('読み込み中...')
   const [openedUnreadIds, setOpenedUnreadIds] = useState<string[]>([])
+  const [readFailed, setReadFailed] = useState(false)
 
   useEffect(() => {
+    let active = true
+    let generation = 0
+    const valid = () => active && authIdentity.current === accountId
     const loadNotifications = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-
-      if (!user) {
-        navigate('/login')
-        return
-      }
-
-      const { data, error } = await supabase
-        .from('notifications')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', {
-          ascending: false,
-        })
-
-      if (error) {
-        console.error(error)
-        setMessage(
-          `通知の取得に失敗しました：${error.message}`
-        )
-        return
-      }
-
-      if (!data || data.length === 0) {
-        setNotifications([])
-        setOpenedUnreadIds([])
-        setMessage('')
-        return
-      }
-
-      let blockedUserIds: Set<string>
+      if (!valid()) return
+      const request = ++generation
+      const current = () => valid() && generation === request
+      let displayed = false
       try {
-        blockedUserIds = await getBlockedUserIds(user.id)
-      } catch (blockError) {
-        console.error('ブロック情報取得エラー:', blockError)
-        setNotifications([])
-        setMessage('ブロック情報を取得できませんでした。再読み込みしてください。')
-        return
-      }
-      const visibleData = data.filter(notification => !blockedUserIds.has(notification.actor_id))
-      if (visibleData.length === 0) {
-        setNotifications([])
-        setOpenedUnreadIds([])
-        setMessage('')
-        return
-      }
-
-      const actorIds = [
-        ...new Set(
-          visibleData.map(
-            (notification) =>
-              notification.actor_id
-          )
-        ),
-      ]
-
-      const {
-        data: profiles,
-        error: profileError,
-      } = await supabase
-        .from('profiles')
-        .select(
-          'id, display_name, poker_id, avatar_url'
-        )
-        .in('id', actorIds)
-
-      if (profileError) {
-        console.error(profileError)
-        setMessage(
-          `プロフィールの取得に失敗しました：${profileError.message}`
-        )
-        return
-      }
-
-      const notificationList: NotificationItem[] =
-        visibleData.map((notification) => {
-          const actor = profiles?.find(
-            (profile) =>
-              profile.id ===
-              notification.actor_id
-          )
-
-          return {
-            ...notification,
-            actorName:
-              actor?.display_name ||
-              'Unknown Player',
-            actorPokerId:
-              actor?.poker_id ||
-              'unknown',
-            actorAvatarUrl:
-              actor?.avatar_url ||
-              null,
-          }
-        })
-
-      setNotifications(
-        notificationList
-      )
-
-      setMessage('')
-
-      const unreadIds = visibleData
-        .filter(
-          (notification) =>
-            notification.read_at ===
-            null
-        )
-        .map(
-          (notification) =>
-            notification.id
-        )
-
-      setOpenedUnreadIds(unreadIds)
-
-      if (unreadIds.length > 0) {
-        const readAt =
-          new Date().toISOString()
-
-        const { error: readError } =
-          await supabase
-            .from('notifications')
-            .update({
-              read_at: readAt,
-            })
-            .in('id', unreadIds)
-
-        if (readError) {
-          console.error(
-            '通知既読エラー:',
-            readError
-          )
-        } else {
-          window.dispatchEvent(new Event('poker-id-notifications-updated'))
-          setNotifications(
-            (previous) =>
-              previous.map(
-                (notification) =>
-                  unreadIds.includes(
-                    notification.id
-                  )
-                    ? {
-                        ...notification,
-                        read_at:
-                          readAt,
-                      }
-                    : notification
-              )
-          )
+        const { data: { user }, error: authError } = await supabase.auth.getUser()
+        if (!current()) return
+        if (authError || user?.id !== accountId) throw new Error('Authentication unavailable')
+        const { data, error } = await supabase.from('notifications').select('*')
+          .eq('user_id', accountId).order('created_at', { ascending: false })
+        if (!current()) return
+        if (error) throw error
+        const owned = (data || []).filter(n => n.user_id === accountId)
+        const blocked = owned.length ? await getBlockedUserIds(accountId) : new Set<string>()
+        if (!current()) return
+        const visible = owned.filter(n => !blocked.has(n.actor_id))
+        const actors = [...new Set(visible.map(n => n.actor_id))]
+        let profiles: { id: string; display_name: string | null; poker_id: string | null; avatar_url: string | null }[] = []
+        if (actors.length) {
+          const result = await supabase.from('profiles')
+            .select('id, display_name, poker_id, avatar_url').in('id', actors)
+          if (!current()) return
+          if (result.error) throw result.error
+          profiles = result.data || []
         }
+        const items: NotificationItem[] = visible.map(n => {
+          const actor = profiles.find(p => p.id === n.actor_id)
+          return { ...n, actorName: actor?.display_name || 'Unknown Player',
+            actorPokerId: actor?.poker_id || 'unknown', actorAvatarUrl: actor?.avatar_url || null }
+        })
+        const unreadIds = visible.filter(n => n.read_at === null).map(n => n.id)
+        setNotifications(items); setOpenedUnreadIds(unreadIds); setMessage(''); setReadFailed(false)
+        displayed = true
+        if (!unreadIds.length) return
+        // A missed auth event must not let the prior account acknowledge rows.
+        const verified = await supabase.auth.getUser()
+        if (!current()) return
+        if (verified.error || verified.data.user?.id !== accountId) {
+          displayed = false
+          throw new Error('Authentication changed')
+        }
+        const readAt = new Date().toISOString()
+        const updated = await supabase.from('notifications').update({ read_at: readAt })
+          .eq('user_id', accountId).in('id', unreadIds).is('read_at', null).select('id, read_at')
+        if (!current()) return
+        if (updated.error) throw updated.error
+        // UPDATE may silently affect zero rows when policy denies access. Only
+        // confirmed returned rows can become read in this client.
+        const confirmed = new Set((updated.data || []).filter(n =>
+          unreadIds.includes(n.id) && typeof n.read_at === 'string').map(n => n.id))
+        if (confirmed.size) {
+          setNotifications(previous => previous.map(n => confirmed.has(n.id) ? { ...n, read_at: readAt } : n))
+          window.dispatchEvent(new Event('poker-id-notifications-updated'))
+        }
+        if (confirmed.size !== unreadIds.length) throw new Error('Read acknowledgement unavailable')
+      } catch {
+        if (!current()) return
+        if (!displayed) { setNotifications([]); setOpenedUnreadIds([]) }
+        setMessage(displayed
+          ? '通知は表示できましたが、既読に更新できませんでした。もう一度お試しください。'
+          : '通知を読み込めませんでした。もう一度お試しください。')
+        setReadFailed(true)
       }
     }
-
     reloadNotificationsRef.current = loadNotifications
+    const channel = supabase.channel(`notifications-${accountId}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'notifications', filter: `user_id=eq.${accountId}` },
+        () => { if (valid()) void loadNotifications() })
+      .subscribe()
     void loadNotifications()
-  }, [navigate])
+    return () => {
+      active = false; generation++
+      reloadNotificationsRef.current = async () => {}
+      void supabase.removeChannel(channel)
+    }
+  }, [accountId, authIdentity])
 
   const getNotificationText = (
     notification: NotificationItem
@@ -405,6 +346,7 @@ function Notifications() {
             }}
           >
             {message}
+            {readFailed && <div><button type="button" onClick={() => { void reloadNotificationsRef.current() }}>通知を再読み込み</button></div>}
           </div>
         )}
 

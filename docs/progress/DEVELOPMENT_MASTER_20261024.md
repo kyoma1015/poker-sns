@@ -44,3 +44,7 @@ AUTO-RESUME remains OFF. Both old reservations are disabled with missing provide
 ## Feature completion continuation — 2026-10-25
 
 See ../workers/FEATURE_COMPLETION_20261025.md for acceptance gates rather than inferred whole-product percentages. This batch closes related inbox recovery/account isolation, quiz save-result continuation, bounded PNG export and provenance/coverage-aware finite GTO output slices. Query existing PR119/120/121/124 for exact final HEAD/CI; original canonical source and authority gaps remain. No runtime/scheduler/main/production activation.
+
+## 2026-10-26 completion/integration batch
+
+Classification A/B/C/D (implementable / integratable / external evidence / substantial development) and actual77PR dependency/main-conflict evidence: ../workers/INTEGRATION_READINESS_20261026.md. Notification account/read/realtime, quiz account isolation, native report consumer and diagnosis result/share/presentation are actual source changes. Latest exact-head CI is in existing PR119/120/121/124 bodies; no whole old-branch merge or production readiness is implied. Main-based selected-file candidate preserves main dependencies and excludes other-owner tags/video/poll/backup work.
