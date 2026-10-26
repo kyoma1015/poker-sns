@@ -9,6 +9,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { signBinaryVideoAttestation, videoAttestationDigest } from '../../api/video-attestation.ts'
 import { probeVideoBytes } from '../../api/video-ffprobe.ts'
+import { verifyRealBrowserPlayback } from './isolated_browser_playback.mjs'
 const env=Object.fromEntries(readFileSync(process.env.VIDEO_QA_ENV,'utf8').split('\n')
  .filter(x=>x.includes('=')).map(x=>{const i=x.indexOf('=');return [x.slice(0,i),x.slice(i+1).replace(/^["']|["']$/g,'')]}))
 assert.equal(env.API_URL,'http://127.0.0.1:56321','refuse remote Supabase')
@@ -76,4 +77,20 @@ const {data:foreignPosts,error:foreignPostsError}=await attacker.from('posts')
  .select('id,video_path').eq('video_path',path)
 assert.ifError(foreignPostsError)
 assert.equal(foreignPosts.length,0,'foreign viewer must not discover private post')
-console.log('PASS: real local JWT/PostgREST attested RPC rejects attacks, publishes once, and private Storage RLS holds')
+// The actual React PostVideo and Timeline components now consume the post
+// created by the signed RPC, rather than a separately fenced QA publication.
+// Service-role credentials are confined to the disposable browser test harness;
+// media retrieval itself uses the real viewer JWT and posts/Storage RLS.
+const {data:ownerSession,error:ownerSessionError}=await ownerClient.auth.getSession()
+const {data:attackerSession,error:attackerSessionError}=await attacker.auth.getSession()
+assert.ifError(ownerSessionError)
+assert.ifError(attackerSessionError)
+assert.ok(ownerSession.session?.access_token && attackerSession.session?.access_token)
+process.env.VITE_SUPABASE_URL=url
+process.env.VITE_SUPABASE_ANON_KEY=anon
+process.env.SUPABASE_SERVICE_ROLE_KEY=env.SERVICE_ROLE_KEY
+process.env.VIDEO_PRODUCTION_FENCED_READY='true'
+await verifyRealBrowserPlayback({postId,jwt:ownerSession.session.access_token,
+ deniedJwt:attackerSession.session.access_token,anon,service:env.SERVICE_ROLE_KEY,
+ bytes,expectedContent:content})
+console.log('PASS: attested real JWT/RPC/nonce + private Storage RLS + Chromium React playback')
