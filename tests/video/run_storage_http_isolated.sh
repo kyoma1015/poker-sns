@@ -4,6 +4,7 @@ cd "$(dirname "$0")/../.."
 for k in SUPABASE_URL SUPABASE_SERVICE_ROLE_KEY VITE_SUPABASE_URL SUPABASE_DB_URL; do
  if [[ -n "${!k:-}" ]]; then echo "BLOCKED: inherited $k"; exit 2; fi
 done
+node tests/video/video_privileged_key_static_guard.mjs
 export DOCKER_HOST=unix:///var/run/docker.sock
 unset DOCKER_CONTEXT DOCKER_TLS DOCKER_TLS_VERIFY DOCKER_CERT_PATH
 qa="$(mktemp -d)"
