@@ -2,6 +2,7 @@ import { DefinitivePublishRejection } from './video-finalize-core.js'
 import { createClient } from '@supabase/supabase-js'
 import type { FinalizeCandidateAdapters, ImmutableStagedSnapshot } from './video-finalize-core.js'
 import { MAX_VIDEO_BYTES } from './video-ffprobe.js'
+import { createVideoAttestationNonce, signBinaryVideoAttestation, videoAttestationDigest } from './video-attestation.js'
 
 const UUID = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
 const PATH = new RegExp('^(' + UUID + ')/(' + UUID + ')\\.(mp4|webm)$')
@@ -20,9 +21,8 @@ export function createProductionSupabaseVideoAdapters(
   if (!PRODUCTION_URL.test(url) || !anonKey || !accessToken || process.env.VIDEO_PRODUCTION_FENCED_READY !== 'true') {
     throw new Error('production video fenced release gate disabled')
   }
-  // A deployment flag is not proof that client-supplied ffprobe metadata was
-  // verified. Until a server-attested DB publish path exists, reject even
-  // deployments that accidentally enable VIDEO_PRODUCTION_FENCED_READY.
+  // The attested SQL candidate is not release-approved yet. Keep this hard
+  // gate until real JWT HTTP E2E and independent key provisioning are proven.
   assertServerAttestationAvailable()
   const ownerPath = (owner: string, path: string) => {
     const match = PATH.exec(path)
@@ -104,9 +104,23 @@ export function createProductionSupabaseVideoAdapters(
     async publish(ownerId, path, generation, sha256, duration, content) {
       if (await authenticate(accessToken) !== ownerId) throw new Error('unauthorized owner')
       ownerPath(ownerId, path)
-      const { data, error } = await viewer.rpc('video_production_publish_fenced', {
+      const secretHex = process.env.VIDEO_ATTESTATION_KEY_HEX
+      if (!secretHex || !/^[0-9a-f]{64}$/.test(secretHex)) throw new Error('server attestation key unavailable')
+      if (!Number.isFinite(duration)) throw new DefinitivePublishRejection('invalid media duration')
+      const durationMs = Math.round(duration * 1000)
+      if (Math.abs(durationMs / 1000 - duration) > 0.0005) {
+        throw new DefinitivePublishRejection('media duration precision mismatch')
+      }
+      const expiresAt = Math.floor(Date.now() / 1000) + 120
+      const nonce = createVideoAttestationNonce()
+      const signature = signBinaryVideoAttestation(Buffer.from(secretHex, 'hex'), {
+        owner: ownerId, path, generation, sha256, durationMs,
+        contentSha256: videoAttestationDigest(content), expiresAt, nonce,
+      })
+      const { data, error } = await viewer.rpc('video_publish_attested_v1', {
         p_owner: ownerId, p_path: path, p_generation: generation,
-        p_sha256: sha256, p_duration: duration, p_content: content,
+        p_sha256: sha256, p_duration_ms: durationMs, p_content: content,
+        p_expires_at: expiresAt, p_nonce: nonce, p_signature: signature, p_key_id: 1,
       })
       if (error?.code === 'P0001' && /conflicting prior video publication|Storage generation mismatch|invalid fenced publication/.test(error.message)) {
         throw new DefinitivePublishRejection('fenced publication rejected')
