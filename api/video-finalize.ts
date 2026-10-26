@@ -128,9 +128,7 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
         if (!adapters) return res.status(503).json({ error: 'video_finalize_not_enabled' })
         activeAdapters = adapters
       } else {
-        const service = process.env.SUPABASE_SERVICE_ROLE_KEY
-        if (!service) return res.status(503).json({ error: 'video_finalize_not_enabled' })
-        activeAdapters = createProductionSupabaseVideoAdapters(url, anon, service, authorization.slice(7))
+        activeAdapters = createProductionSupabaseVideoAdapters(url, anon, authorization.slice(7))
       }
     } catch {
       return res.status(503).json({ error: 'video_finalize_not_enabled' })
