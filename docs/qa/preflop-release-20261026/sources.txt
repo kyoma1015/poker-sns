@@ -1,0 +1,4 @@
+PASS g12_next: 31431 bytes; SHA-256=57a03f3cc6fafb0bbf5d1f333b18188b35720a69693519b5e955a8656507c09a
+PASS g12_p1_cache: 34044 bytes; SHA-256=3ae79dfef498306b87bfc536be919d8a54b58313b8f9647b86793d7840e1d90a
+PASS g12_p1_packed: 32084 bytes; SHA-256=f3b31a0703d130372e84b53ee7b05ab37b7a40fcf3856f6be5b45b7dfedfdb0b
+PASS: all three G12 native solver variants are byte-verified

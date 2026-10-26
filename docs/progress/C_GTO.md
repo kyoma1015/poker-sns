@@ -1,4 +1,9 @@
 # C | GTO handoff closure and remaining gates
+
+2026-10-26 release continuation: see `C_GTO_RELEASE_20261026.md` for native
+preflop four-bet query, seven rake profiles, unvisited-policy guard and bounded
+fixed-policy EV sampling. Full-strategy convergence/verified169EV/app wiring
+remain unfinished; no reduced release specification or production adoption.
 Date: 2026-10-20 JST
 Source: chore/codex-handoff-artifacts-20261020 @ 8509484bf9186534ca10694eb62aba7075395aee.
 Status: latest active milestone below supersedes the initial handoff-only state: reconstructed native build PASS; original G11 parity/historical resume BLOCKED.

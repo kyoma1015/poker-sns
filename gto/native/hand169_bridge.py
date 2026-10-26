@@ -93,7 +93,9 @@ def export_context(solver, context, reach_weights):
         if actions is None:actions=list(offered)
         elif list(offered)!=actions:raise ValueError('action identity differs within selected context')
         totals=[_number(a) for a in average]; total=sum(totals)
-        policy=[a/total for a in totals] if total else [Fraction(1,len(totals))]*len(totals)
+        if not total:
+            raise ValueError('unvisited native policy is unavailable, not uniform strategy')
+        policy=[a/total for a in totals]
         combo=tuple(sorted(card_name(card) for card in info['hand']))
         combinations.setdefault(combo,[]).append((weight,policy))
     records=[]

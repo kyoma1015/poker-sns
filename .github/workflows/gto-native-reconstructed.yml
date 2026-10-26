@@ -34,6 +34,8 @@ jobs:
         run: |
           for variant in g12_next g12_p1_cache g12_p1_packed; do
             GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_training_batch.py -v
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_preflop.py -v
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_policy_rollout.py -v
           done
       - name: Native poker throughput and toy-only NashConv observations
         run: |
