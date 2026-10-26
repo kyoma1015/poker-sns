@@ -800,7 +800,8 @@
     "tests/tda-quiz-data.test.mjs",
     "tests/tda-saved-answer.test.mjs",
     "tests/tda-snapshot-integrity.test.mjs",
-    "tests/tda-strict-json-boundary.test.mjs"
+    "tests/tda-strict-json-boundary.test.mjs",
+    "tests/tda-next-navigation.test.mjs"
   ],
   "browser_suites": [
     "tests/selected/direct-message-inbox.test.mjs",
@@ -814,5 +815,18 @@
   ],
   "browser_cases": 93,
   "original_method_count": 381,
-  "test_relocation": "All original assertions retained. Only resource root/import adapted; verifier compares against source Git blobs from pinned commits."
+  "test_relocation": "All original assertions retained. Only resource root/import adapted; verifier compares against source Git blobs from pinned commits.",
+  "additions": [
+    {
+      "path": "tests/browser/tda-next-navigation.mjs",
+      "sha": "920b3ef421fc5b6ab667e69d63693cbd33cc85c9",
+      "reason": "fixed prospective next-navigation regression; baseline runtime result pending"
+    },
+    {
+      "path": "tests/tda-next-navigation.test.mjs",
+      "sha": "aba69be7b3674b9a163e415684b9dc2f54debe01",
+      "reason": "fixed prospective next-navigation regression; baseline runtime result pending"
+    }
+  ],
+  "overrides": []
 }
