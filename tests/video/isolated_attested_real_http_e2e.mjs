@@ -8,7 +8,7 @@ import { execFileSync } from 'node:child_process'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { signBinaryVideoAttestation, videoAttestationDigest } from '../../api/video-attestation.ts'
-import { inspectVideoWithFfprobe } from '../../api/video-ffprobe.ts'
+import { probeVideoBytes } from '../../api/video-ffprobe.ts'
 const env=Object.fromEntries(readFileSync(process.env.VIDEO_QA_ENV,'utf8').split('\n')
  .filter(x=>x.includes('=')).map(x=>{const i=x.indexOf('=');return [x.slice(0,i),x.slice(i+1).replace(/^["']|["']$/g,'')]}))
 assert.equal(env.API_URL,'http://127.0.0.1:56321','refuse remote Supabase')
