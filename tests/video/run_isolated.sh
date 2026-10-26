@@ -87,7 +87,7 @@ SQL
 # Ledger is already installed by production_additive_candidate.sql; do not reapply it.
 docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 <<'SQL'
 select set_config('request.jwt.claim.sub','10000000-0000-0000-0000-000000000001',false);
-do $
+do $$
 declare
   owner uuid := '10000000-0000-0000-0000-000000000001';
   path text := '10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.mp4';
