@@ -56,6 +56,30 @@ begin
  -- In real deployment this signature is created by the finalizer, not DB.
  -- Test-only key is supplied as a literal in the disposable fixture.
  signature:=encode(extensions.hmac(payload,decode(repeat('41',32),'hex'),'sha256'),'hex');
+ -- Rotation isolation: inactive key IDs, unknown key IDs, and active keys
+ -- with a different secret must never validate an old signature.
+ insert into video_private.attestation_keys(key_id,secret,active)
+ values(2,decode(repeat('42',32),'hex'),false);
+ begin
+  perform public.video_publish_attested_v1(o,p,g,h,2000,content,expires,n,signature,2::smallint);
+  raise exception 'inactive rotation key accepted';
+ exception when raise_exception then
+  if SQLERRM='inactive rotation key accepted' then raise; end if;
+ end;
+ begin
+  perform public.video_publish_attested_v1(o,p,g,h,2000,content,expires,n,signature,3::smallint);
+  raise exception 'unknown rotation key accepted';
+ exception when raise_exception then
+  if SQLERRM='unknown rotation key accepted' then raise; end if;
+ end;
+ update video_private.attestation_keys set active=true where key_id=2;
+ begin
+  perform public.video_publish_attested_v1(o,p,g,h,2000,content,expires,n,signature,2::smallint);
+  raise exception 'cross-key attestation accepted';
+ exception when raise_exception then
+  if SQLERRM='cross-key attestation accepted' then raise; end if;
+ end;
+ update video_private.attestation_keys set active=false where key_id=2;
  begin
   perform public.video_publish_attested_v1(o,p,g,h,2000,content,expires,n,repeat('0',64),1::smallint);
   raise exception 'forged signature accepted';
