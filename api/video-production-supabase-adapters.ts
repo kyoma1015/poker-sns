@@ -120,10 +120,18 @@ export function createProductionSupabaseVideoAdapters(
       }
       const expiresAt = Math.floor(Date.now() / 1000) + 120
       const nonce = createVideoAttestationNonce()
-      const signature = signBinaryVideoAttestation(Buffer.from(secretHex, 'hex'), {
-        owner: ownerId, path, generation, sha256, durationMs,
-        contentSha256: videoAttestationDigest(content), expiresAt, nonce,
-      })
+      // Materialize the secret only for the signing operation. Never persist it
+      // in adapter state or retain the decoded key beyond the HMAC call.
+      const signingKey = Buffer.from(secretHex, 'hex')
+      let signature: string
+      try {
+        signature = signBinaryVideoAttestation(signingKey, {
+          owner: ownerId, path, generation, sha256, durationMs,
+          contentSha256: videoAttestationDigest(content), expiresAt, nonce,
+        })
+      } finally {
+        signingKey.fill(0)
+      }
       const { data, error } = await viewer.rpc('video_publish_attested_v1', {
         p_owner: ownerId, p_path: path, p_generation: generation,
         p_sha256: sha256, p_duration_ms: durationMs, p_content: content,
