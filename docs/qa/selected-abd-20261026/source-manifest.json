@@ -801,7 +801,8 @@
     "tests/tda-saved-answer.test.mjs",
     "tests/tda-snapshot-integrity.test.mjs",
     "tests/tda-strict-json-boundary.test.mjs",
-    "tests/tda-next-navigation.test.mjs"
+    "tests/tda-next-navigation.test.mjs",
+    "tests/abd-progress.test.mjs"
   ],
   "browser_suites": [
     "tests/selected/direct-message-inbox.test.mjs",
@@ -826,6 +827,21 @@
       "path": "tests/tda-next-navigation.test.mjs",
       "sha": "aba69be7b3674b9a163e415684b9dc2f54debe01",
       "reason": "fixed prospective next-navigation regression; baseline runtime result pending"
+    },
+    {
+      "path": "docs/progress/ABD_PROGRESS.md",
+      "sha": "4788fde172d2c4f3efc51b32603475150fd72780",
+      "reason": "versioned fixed-scope measurement policy and invariant tests; not feature publication approval"
+    },
+    {
+      "path": "scripts/measure-abd-progress.mjs",
+      "sha": "a7a4093cd88a89a6be59c0cf9161e62e57b0b7fb",
+      "reason": "versioned fixed-scope measurement policy and invariant tests; not feature publication approval"
+    },
+    {
+      "path": "tests/abd-progress.test.mjs",
+      "sha": "78c18128f655492c6ecb493a48f29829f91c5140",
+      "reason": "versioned fixed-scope measurement policy and invariant tests; not feature publication approval"
     }
   ],
   "overrides": [
@@ -845,5 +861,14 @@
         "tests/tda-next-navigation.test.mjs"
       ]
     }
-  ]
+  ],
+  "measured_test_expansion": {
+    "retained_method_suite": 381,
+    "existing_orchestration": 8,
+    "added_next_wrapper": 1,
+    "added_next_browser_cases": 3,
+    "added_metrics_units": 8,
+    "actual_browser_baseline": 93,
+    "actual_browser_current": 96
+  }
 }

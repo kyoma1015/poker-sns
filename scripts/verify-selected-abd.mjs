@@ -17,7 +17,7 @@ for(const row of m.sources){
 }
 for(const row of m.additions||[])assert.equal(hash(readFileSync(row.path)),row.sha,row.path+' reviewed addition')
 for(const row of m.protected_main_blobs) assert.equal(hash(readFileSync(row.path)),row.sha,row.path+' must retain main bytes')
-const allowed=new Set([...m.sources.map(r=>r.target_path),...(m.additions||[]).map(r=>r.path),'scripts/verify-selected-abd.mjs','scripts/run-selected-abd.mjs','tests/selected-browser.test.mjs','.github/workflows/selected-abd.yml','docs/qa/selected-abd-20261026/source-manifest.json','docs/workers/SELECTED_ABD_INTEGRATION_20261026.md'])
+const allowed=new Set([...m.sources.map(r=>r.target_path),...(m.additions||[]).map(r=>r.path),'docs/progress/ABD_PROGRESS.json','scripts/verify-selected-abd.mjs','scripts/run-selected-abd.mjs','tests/selected-browser.test.mjs','.github/workflows/selected-abd.yml','docs/qa/selected-abd-20261026/source-manifest.json','docs/workers/SELECTED_ABD_INTEGRATION_20261026.md'])
 for(const path of execFileSync('git',['diff','--name-only',m.base_main,'HEAD'],{encoding:'utf8'}).trim().split('\n').filter(Boolean)) assert(allowed.has(path),'unreviewed diff '+path)
 assert(!m.sources.some(r=>/gto/i.test(r.target_path)))
 console.log(JSON.stringify({status:'PASS',source_files:m.sources.length,protected_files:m.protected_main_blobs.length,gto:'EXCLUDED',sql:'UNCHANGED',base:m.base_main}))
