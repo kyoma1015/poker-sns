@@ -50,3 +50,11 @@ Vercel's GitHub commit status for `9bc2abda` reported `Deployment rate limited â
 - Provision a new independently generated 256-bit secret in the non-exposed `video_private.attestation_keys` table using a separately authorized DBA-controlled procedure; install the matching key and ID in the preview runtime's secret store. Never commit secret values, print them in logs, or put them in SQL migration text.
 - During a separately authorized rotation, retain the old DB verification key only for the bounded lifetime of already-issued proofs; switch the runtime key and ID together, confirm a valid new-key proof and wrong-key rejection on an isolated stack, then deactivate and securely remove the old key after its proof window. The candidate proof lifetime is 120 seconds; allow for clock skew and in-flight operations before retiring the old key.
 - A matching key ID alone is not proof of matching secrets. Test an actual signed proof against the DB before enabling the production finalizer. Production adapter's unconditional hard gate and the frontend feature flag must remain disabled until separately authorized.
+
+## Latest isolated CI and preview rate-limit evidence (2026-10-27)
+
+At commit `809c3cb58f206cc58ca39319092dc379f379fddb`, all three GitHub Actions completed successfully: Video SQL `40346102119`, Storage HTTP `40346102121`, and Poll-only `40346102165`. The preceding `3b0488f4` run also passed all three. These are **disposable-stack tests**, not evidence of production secrets, effective production grants, or deployment.
+
+The GitHub Vercel status for `809c3cb5` remains `Deployment rate limited â€” retry in 24 hours.` The newest verified READY preview is still `c151e7cf` (`dpl_CmQsLSUn3zzGtv62wn48DJFZ8Tgh`), where the preview-only ffprobe endpoint returned HTTP 200 and `executable`. Do not attribute that runtime proof to `809c3cb5`; do not trigger manual deploys, upgrade billing, or remove the hard gate to bypass the limit.
+
+The SQL fixture now rejects inactive, unknown, mismatched and retired key IDs and expired proofs; those tests do not constitute actual secret provisioning. The finalizer adapter must remain fail-closed and `VIDEO_SERVER_ENABLED=false` until a separately authorized release validates DB-private key provisioning, effective production RLS/RPC privileges, and actual latest-HEAD runtime behavior.
