@@ -89,12 +89,25 @@ begin
   if SQLERRM='retired original key accepted' then raise; end if;
  end;
  update video_private.attestation_keys set active=true where key_id=1;
- -- Even a valid HMAC must be rejected outside the proof time window.
+ -- A correctly signed, already-expired proof must fail specifically on
+ -- the expiration guard, not incidentally on an HMAC mismatch.
+ declare
+  expired_at bigint:=extract(epoch from clock_timestamp())::bigint-60;
+  expired_payload bytea;
+  expired_signature text;
  begin
-  perform public.video_publish_attested_v1(o,p,g,h,2000,content,expires-1000,n,signature,1::smallint);
-  raise exception 'expired proof accepted';
- exception when raise_exception then
-  if SQLERRM='expired proof accepted' then raise; end if;
+  expired_payload:=decode('01','hex')||decode(replace(o::text,'-',''),'hex')||
+   set_byte(decode('00','hex'),0,octet_length(convert_to(p,'UTF8')))||convert_to(p,'UTF8')||
+   decode(replace(g::text,'-',''),'hex')||decode(h,'hex')||
+   pg_catalog.int4send(2000)||extensions.digest(convert_to(content,'UTF8'),'sha256')||
+   pg_catalog.int8send(expired_at)||decode(n,'hex');
+  expired_signature:=encode(extensions.hmac(expired_payload,decode(repeat('41',32),'hex'),'sha256'),'hex');
+  begin
+   perform public.video_publish_attested_v1(o,p,g,h,2000,content,expired_at,n,expired_signature,1::smallint);
+   raise exception 'expired proof accepted';
+  exception when raise_exception then
+   if SQLERRM<>'invalid attestation claims' then raise; end if;
+  end;
  end;
  begin
   perform public.video_publish_attested_v1(o,p,g,h,2000,content,expires,n,repeat('0',64),1::smallint);
