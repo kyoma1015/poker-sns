@@ -17,7 +17,7 @@ end $$;
 set role authenticated;
 do $client_grants$
 begin
- if not has_function_privilege(current_user,'public.video_production_publish_fenced(uuid,text,uuid,text,double precision,text)','EXECUTE')
+ if has_function_privilege(current_user,'public.video_production_publish_fenced(uuid,text,uuid,text,double precision,text)','EXECUTE')
  or not has_function_privilege(current_user,'public.video_production_storage_generation(uuid,text)','EXECUTE')
  or not has_function_privilege(current_user,'public.video_production_reconcile_fenced(uuid,text,uuid)','EXECUTE')
  then raise exception 'authenticated owner RPC grant missing'; end if;
@@ -33,33 +33,11 @@ insert into storage.objects(id,bucket_id,name,owner_id) values
 set role authenticated;
 select set_config('request.jwt.claim.sub','10000000-0000-0000-0000-000000000001',false);
 do $owner_test$
-declare
- a uuid; b uuid;
- p text:='10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.webm';
 begin
- if public.video_production_storage_generation('10000000-0000-0000-0000-000000000001',p)
-    <> 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'::uuid then raise exception 'generation mismatch'; end if;
- a:=public.video_production_publish_fenced('10000000-0000-0000-0000-000000000001',p,
- 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',repeat('a',64),2,'hello');
- b:=public.video_production_publish_fenced('10000000-0000-0000-0000-000000000001',p,
- 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',repeat('a',64),2,'hello');
- if a<>b then raise exception 'idempotency failure'; end if;
- if public.video_production_reconcile_fenced('10000000-0000-0000-0000-000000000001',p,
- 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa')<>a then raise exception 'reconcile failure'; end if;
- begin
- perform public.video_production_publish_fenced('10000000-0000-0000-0000-000000000001',p,
- 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb',repeat('a',64),2,'hello');
- raise exception 'wrong generation accepted';
- exception when raise_exception then
-  if sqlerrm='wrong generation accepted' then raise; end if;
- end;
- begin
- perform public.video_production_publish_fenced('10000000-0000-0000-0000-000000000001',p,
- 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',repeat('a',64),2,'changed');
- raise exception 'conflicting replay accepted';
- exception when raise_exception then
-  if sqlerrm='conflicting replay accepted' then raise; end if;
- end;
+ if public.video_production_storage_generation('10000000-0000-0000-0000-000000000001',
+ '10000000-0000-0000-0000-000000000001/30000000-0000-0000-0000-000000000001.webm')
+ <> 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'::uuid then
+ raise exception 'generation mismatch'; end if;
 end $owner_test$;
 select set_config('request.jwt.claim.sub','20000000-0000-0000-0000-000000000002',false);
 do $foreign_owner$
@@ -81,7 +59,7 @@ begin
  end;
 end $foreign_owner$;
 reset role;
-select 'PASS: owner JWT fenced publication, idempotency, foreign denial' as result;
+select 'PASS: owner JWT metadata read, direct publish denied, foreign denial' as result;
 -- SECURITY REGRESSION: an authenticated owner must NOT be able to forge
 -- server-only ffprobe evidence and directly publish an uninspected object.
 -- This must fail until the RPC verifies an unforgeable server attestation.
