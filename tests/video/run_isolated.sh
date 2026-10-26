@@ -84,13 +84,13 @@ alter extension pgcrypto set schema extensions;
 SQL
 docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 < tests/video/production_attested_candidate_review_only.sql
 docker exec -i "$name" psql -U postgres -d video_production_candidate -v ON_ERROR_STOP=1 <<'SQL'
-do $ begin
+do $attested_acl$ begin
  if has_function_privilege('authenticated',
   'public.video_publish_attested_v1(uuid,text,uuid,text,integer,text,bigint,text,text,smallint)','EXECUTE')
  then raise exception 'unverified attested RPC executable'; end if;
  if (select count(*) from video_private.attestation_keys)<>0 then
   raise exception 'attestation key must not be provisioned by migration'; end if;
-end $;
+end $attested_acl$;
 SQL
 echo 'PASS: disposable PostgreSQL parses attested publish RPC and enforces closed ACL'
 
