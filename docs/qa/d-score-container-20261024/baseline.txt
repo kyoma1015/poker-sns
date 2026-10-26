@@ -1,0 +1,184 @@
+✔ historical score schema remains valid and all960 references remain unchanged (30.853752ms)
+✔ inherited score dimension cannot masquerade as an own exported value (3.594275ms)
+✔ inherited option identifier cannot supply a score-row join key (2.861847ms)
+✔ unknown extra score dimension cannot be silently ignored (3.162352ms)
+✔ array decorated as a complete score object is rejected (3.302383ms)
+✔ null score row produces auditFAIL rather than crashing (2.919494ms)
+✔ non-number score payload remains invalid without emitting evidence (2.911182ms)
+✖ invalid null score container fails closed without throwing (1.405885ms)
+✖ invalid object score container fails closed without throwing (3.089431ms)
+✖ invalid string score container fails closed without throwing (1.287637ms)
+✖ invalid number score container fails closed without throwing (4.176575ms)
+✖ invalid boolean score container fails closed without throwing (1.156128ms)
+✔ sparse score array fails closed without emitting evidence (3.195001ms)
+✖ inherited array entry cannot supply an exported score row (17.050882ms)
+✖ polluted score-row prototype cannot hide unreviewed metadata (14.52984ms)
+✔ JSON own __proto__ payload is rejected without global prototype mutation (2.314489ms)
+✖ hidden and symbol score fields cannot escape exact schema validation (15.236238ms)
+✖ score accessor is rejected without executing user code (1.283721ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 9
+ℹ fail 9
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 129.108027
+
+✖ failing tests:
+
+test at tests/player-type-score-schema.test.mjs:41:2
+✖ invalid null score container fails closed without throwing (1.405885ms)
+  TypeError: Cannot read properties of null (reading 'entries')
+      at auditPlayerType (file:///workspace/work/issue22-d-strategy-evidence/scripts/audit-player-type.mjs:62:48)
+      at audit (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:7:16)
+      at reject (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:9:15)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:42:51)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/player-type-score-schema.test.mjs:41:2
+✖ invalid object score container fails closed without throwing (3.089431ms)
+  TypeError: fixture.scores.entries is not a function or its return value is not iterable
+      at auditPlayerType (file:///workspace/work/issue22-d-strategy-evidence/scripts/audit-player-type.mjs:62:48)
+      at audit (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:7:16)
+      at reject (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:9:15)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:42:51)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/player-type-score-schema.test.mjs:41:2
+✖ invalid string score container fails closed without throwing (1.287637ms)
+  TypeError: fixture.scores.entries is not a function or its return value is not iterable
+      at auditPlayerType (file:///workspace/work/issue22-d-strategy-evidence/scripts/audit-player-type.mjs:62:48)
+      at audit (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:7:16)
+      at reject (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:9:15)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:42:51)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/player-type-score-schema.test.mjs:41:2
+✖ invalid number score container fails closed without throwing (4.176575ms)
+  TypeError: fixture.scores.entries is not a function or its return value is not iterable
+      at auditPlayerType (file:///workspace/work/issue22-d-strategy-evidence/scripts/audit-player-type.mjs:62:48)
+      at audit (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:7:16)
+      at reject (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:9:15)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:42:51)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/player-type-score-schema.test.mjs:41:2
+✖ invalid boolean score container fails closed without throwing (1.156128ms)
+  TypeError: fixture.scores.entries is not a function or its return value is not iterable
+      at auditPlayerType (file:///workspace/work/issue22-d-strategy-evidence/scripts/audit-player-type.mjs:62:48)
+      at audit (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:7:16)
+      at reject (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:9:15)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:42:51)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/player-type-score-schema.test.mjs:48:1
+✖ inherited array entry cannot supply an exported score row (17.050882ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+  
+      at reject (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:10:9)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:50:72)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type-score-schema.test.mjs:52:1
+✖ polluted score-row prototype cannot hide unreviewed metadata (14.52984ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+  
+      at reject (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:10:9)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:53:92)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type-score-schema.test.mjs:60:1
+✖ hidden and symbol score fields cannot escape exact schema validation (15.236238ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+  
+      at reject (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:10:9)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:62:85)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type-score-schema.test.mjs:65:1
+✖ score accessor is rejected without executing user code (1.283721ms)
+  Error: must not execute
+      at Object.get [as initiative] (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:67:70)
+      at file:///workspace/work/issue22-d-strategy-evidence/scripts/audit-player-type.mjs:69:69
+      at Array.every (<anonymous>)
+      at auditPlayerType (file:///workspace/work/issue22-d-strategy-evidence/scripts/audit-player-type.mjs:69:37)
+      at audit (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:7:16)
+      at reject (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:9:15)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:68:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)

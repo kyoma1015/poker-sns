@@ -1,0 +1,7 @@
+# Result presentation numeric boundary
+Start954276a649f29c2682591ca2ae8af9d8b4c19d4c, existing PR124. This is display-only, not score calculation/classification.
+Fixed8 cases before1PASS/7FAIL ->8PASS/0FAIL. Existing102regressionsPASS; total110PASS/0FAIL.
+Before: numeric strings/bools/arrays/valueOf objects could be coerced into diagnostic tendencies/advice; throwing valueOf/accessors/null detail could crash. After: only own finite numeric known axes feed presentation, malformed detail/records fall back; accessor and valueOf counters remain0. Valid numerical historical wording/53player tests retained.
+No new classifier/threshold/expert label supplied:36animal semantic accuracy remainsBLOCKED. Numeric shape enforcement does not prove diagnosis semantics.
+Inheritance review: prior source commits43e2bae1f5de33fc0d94a1d30b974492fbfbf238(PR30 lineage),1d8fdfe8e69b645796ff85ac18c8d2b4f026c69f and4aed33e77d35912b39c4c0e55c642562b802f7d2(PR100 main-port lineage) retain Number(value) and Number(scores[key]); current patch is new boundary fix, not reimplementation of their navigation/image/double-click work. UI missing patches are not reintroduced in this audit branch.
+Scope ordinary RPC JSON or constructed plain JS payloads. No arbitrary hostile Proxy isolation guarantee. UI/DB/questions/scores/classifier unchanged. Only existing branch push and automatic PR124 CI permitted; no new PR/manual CI/main/production/heldstate/host/scheduler changes.

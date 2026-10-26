@@ -4,6 +4,7 @@ import { pathToFileURL } from 'node:url'
 import { parseQuestions } from '../src/playerTypeQuestions.ts'
 import { animalEmoji } from '../src/playerTypeAnimals.ts'
 import { traitPositiveMax } from '../src/playerTypePresentation.ts'
+import { buildStrategyReviewEvidence } from './player-type-strategy-evidence.mjs'
 // Uniform independent option sampling is a reproducible stress fixture, not a
 // model of real players and not evidence for animal meaning or prevalence.
 function scoreDistribution(questions, scores, personas) {
@@ -57,7 +58,27 @@ export function auditPlayerType(fixture, assets) {
   const errors = []
   const scores = new Map()
   const optionIds = new Set(questions.flatMap(question => question.options.map(option => option.id)))
-  for (const row of fixture.scores) {
+  const scoreKeys = ['option_id', ...Object.keys(traitPositiveMax)]
+  const scoreRows = Array.isArray(fixture.scores) ? fixture.scores : []
+  if (!Array.isArray(fixture.scores)) errors.push({ code: 'INVALID_SCORE_ROW_SCHEMA', row: null })
+  for (let rowIndex = 0; rowIndex < scoreRows.length; rowIndex++) {
+    const entry = Object.getOwnPropertyDescriptor(scoreRows, String(rowIndex))
+    const row = entry && Object.hasOwn(entry, 'value') ? entry.value : null
+    // The checked-in export contract has exactly one own option ID and all32
+    // own finite numeric axes. Unknown fields require review, never silent loss.
+    const descriptors = row !== null && typeof row === 'object' && !Array.isArray(row)
+      ? Object.getOwnPropertyDescriptors(row) : null
+    const valid = descriptors !== null &&
+      [Object.prototype, null].includes(Object.getPrototypeOf(row)) &&
+      Reflect.ownKeys(row).length === scoreKeys.length &&
+      scoreKeys.every(key => Object.hasOwn(descriptors, key) &&
+        Object.hasOwn(descriptors[key], 'value') && descriptors[key].enumerable) &&
+      typeof descriptors.option_id.value === 'string' && descriptors.option_id.value.trim().length > 0 &&
+      Object.keys(traitPositiveMax).every(key => Number.isFinite(descriptors[key].value))
+    if (!valid) {
+      errors.push({ code: 'INVALID_SCORE_ROW_SCHEMA', row: rowIndex })
+      continue
+    }
     if (scores.has(row.option_id)) errors.push({ code: 'DUPLICATE_OPTION_SCORE', option: row.option_id })
     if (!optionIds.has(row.option_id)) errors.push({ code: 'ORPHAN_OPTION_SCORE', option: row.option_id })
     scores.set(row.option_id, row)
@@ -131,6 +152,7 @@ export function auditPlayerType(fixture, assets) {
   const report = { status: errors.length ? 'FAIL' : 'CONDITIONAL PASS', source: 'checked-in historical fixture; not live DB', questions: questions.length, options: questions.reduce((n,q) => n + q.options.length, 0), scoreDimensions: Object.keys(traitPositiveMax).length,
     animalDisplayKeys: configured.length, pngAssets: assets.length, personas: fixture.personas.length, errors, warnings,
     scoreDistribution: distribution,
+    strategyReviewEvidence: errors.length ? null : buildStrategyReviewEvidence(questions, scores, dimensionKeys),
     personaReferenceComparison: { status: comparedValues === fixture.personas.length * dimensionKeys.length && !errors.length ? 'PASS' : 'FAIL', personas: fixture.personas.length, dimensions: dimensionKeys.length, comparedValues, sourceCommit: fixture.source_commit, classification: 'NOT VERIFIED' },
     classificationSemanticValidity: 'UNKNOWN: fixture includes option scores/personas, not authoritative 36-animal classifier definitions or human-reviewed labels', liveSchemaAndQuestions: 'NOT CHECKED', scoringChanges: 'none', sqlExecuted: false }
   return report

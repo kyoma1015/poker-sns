@@ -1,0 +1,149 @@
+✔ historical score schema remains valid and all960 references remain unchanged (36.739341ms)
+✖ inherited score dimension cannot masquerade as an own exported value (19.892318ms)
+✖ inherited option identifier cannot supply a score-row join key (21.194506ms)
+✖ unknown extra score dimension cannot be silently ignored (20.410741ms)
+✖ array decorated as a complete score object is rejected (17.69804ms)
+✖ null score row produces auditFAIL rather than crashing (2.355602ms)
+✖ non-number score payload remains invalid without emitting evidence (8.719965ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 1
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 140.029185
+
+✖ failing tests:
+
+test at tests/player-type-score-schema.test.mjs:20:1
+✖ inherited score dimension cannot masquerade as an own exported value (19.892318ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+  
+      at reject (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:10:9)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:22:70)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type-score-schema.test.mjs:24:1
+✖ inherited option identifier cannot supply a score-row join key (21.194506ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+  
+      at reject (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:10:9)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:26:65)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type-score-schema.test.mjs:28:1
+✖ unknown extra score dimension cannot be silently ignored (20.410741ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+  
+      at reject (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:10:9)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:29:67)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type-score-schema.test.mjs:31:1
+✖ array decorated as a complete score object is rejected (17.69804ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'CONDITIONAL PASS'
+  - 'FAIL'
+  
+      at reject (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:10:9)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:32:77)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'CONDITIONAL PASS',
+    expected: 'FAIL',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type-score-schema.test.mjs:34:1
+✖ null score row produces auditFAIL rather than crashing (2.355602ms)
+  TypeError: Cannot read properties of null (reading 'option_id')
+      at auditPlayerType (file:///workspace/work/issue22-d-strategy-evidence/scripts/audit-player-type.mjs:62:24)
+      at audit (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:7:16)
+      at reject (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:9:15)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:35:52)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/player-type-score-schema.test.mjs:37:1
+✖ non-number score payload remains invalid without emitting evidence (8.719965ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(result.errors.some(error=>error.code==='INVALID_SCORE_ROW_SCHEMA'))
+  
+      at reject (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:11:9)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-score-schema.test.mjs:38:62)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

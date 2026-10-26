@@ -1,0 +1,4833 @@
+{
+  "status": "CONDITIONAL PASS",
+  "source": "checked-in historical fixture; not live DB",
+  "questions": 50,
+  "options": 222,
+  "scoreDimensions": 32,
+  "animalDisplayKeys": 36,
+  "pngAssets": 36,
+  "personas": 30,
+  "errors": [],
+  "warnings": [],
+  "scoreDistribution": {
+    "sampling": "uniform independent option choices; synthetic stress evidence, not player prevalence",
+    "seed": 5261636,
+    "samples": 1000,
+    "traits": {
+      "initiative": {
+        "minimum": 0,
+        "maximum": 19,
+        "sampleMinimum": 0,
+        "sampleMaximum": 14,
+        "mean": 4.5560000000000045,
+        "variance": 9.124863999999997
+      },
+      "risk_tolerance": {
+        "minimum": 0,
+        "maximum": 4,
+        "sampleMinimum": 0,
+        "sampleMaximum": 4,
+        "mean": 0.7520000000000001,
+        "variance": 1.2504959999999998
+      },
+      "patience": {
+        "minimum": 0,
+        "maximum": 23,
+        "sampleMinimum": 0,
+        "sampleMaximum": 16,
+        "mean": 4.968999999999996,
+        "variance": 10.652038999999997
+      },
+      "analytical": {
+        "minimum": 0,
+        "maximum": 26,
+        "sampleMinimum": 0,
+        "sampleMaximum": 21,
+        "mean": 6.297000000000004,
+        "variance": 12.572791000000013
+      },
+      "player_read": {
+        "minimum": 0,
+        "maximum": 14,
+        "sampleMinimum": 0,
+        "sampleMaximum": 14,
+        "mean": 2.9220000000000037,
+        "variance": 6.299916000000003
+      },
+      "adaptability": {
+        "minimum": 0,
+        "maximum": 28,
+        "sampleMinimum": 0,
+        "sampleMaximum": 22,
+        "mean": 6.593000000000001,
+        "variance": 13.82735099999999
+      },
+      "deception": {
+        "minimum": -3,
+        "maximum": 10,
+        "sampleMinimum": -3,
+        "sampleMaximum": 10,
+        "mean": 1.2710000000000001,
+        "variance": 8.287558999999993
+      },
+      "value_directness": {
+        "minimum": 0,
+        "maximum": 10,
+        "sampleMinimum": 0,
+        "sampleMaximum": 9,
+        "mean": 2.2260000000000018,
+        "variance": 5.112923999999999
+      },
+      "threat_sensitivity": {
+        "minimum": 0,
+        "maximum": 20,
+        "sampleMinimum": 0,
+        "sampleMaximum": 17,
+        "mean": 4.029999999999998,
+        "variance": 9.423100000000005
+      },
+      "novelty": {
+        "minimum": -3,
+        "maximum": 16,
+        "sampleMinimum": -3,
+        "sampleMaximum": 12,
+        "mean": 2.5740000000000025,
+        "variance": 9.752524000000001
+      },
+      "stability": {
+        "minimum": -5,
+        "maximum": 28,
+        "sampleMinimum": -5,
+        "sampleMaximum": 18,
+        "mean": 5.206000000000003,
+        "variance": 16.895564
+      },
+      "confidence": {
+        "minimum": -2,
+        "maximum": 11,
+        "sampleMinimum": -2,
+        "sampleMaximum": 9,
+        "mean": 1.9540000000000006,
+        "variance": 4.683884000000003
+      },
+      "exploit": {
+        "minimum": -3,
+        "maximum": 48,
+        "sampleMinimum": -3,
+        "sampleMaximum": 27,
+        "mean": 10.775000000000002,
+        "variance": 26.372375000000016
+      },
+      "tempo": {
+        "minimum": -3,
+        "maximum": 12,
+        "sampleMinimum": -3,
+        "sampleMaximum": 10,
+        "mean": 1.944,
+        "variance": 8.614864000000004
+      },
+      "learning_receptivity": {
+        "minimum": 0,
+        "maximum": 7,
+        "sampleMinimum": 0,
+        "sampleMaximum": 7,
+        "mean": 1.7899999999999983,
+        "variance": 3.1599000000000017
+      },
+      "overview": {
+        "minimum": 0,
+        "maximum": 14,
+        "sampleMinimum": 0,
+        "sampleMaximum": 12,
+        "mean": 2.671,
+        "variance": 6.310759000000005
+      },
+      "planning_horizon": {
+        "minimum": 0,
+        "maximum": 12,
+        "sampleMinimum": 0,
+        "sampleMaximum": 9,
+        "mean": 2.4119999999999964,
+        "variance": 5.684256
+      },
+      "history_use": {
+        "minimum": -3,
+        "maximum": 25,
+        "sampleMinimum": -3,
+        "sampleMaximum": 19,
+        "mean": 4.836999999999998,
+        "variance": 16.498430999999993
+      },
+      "small_edge_accumulation": {
+        "minimum": -3,
+        "maximum": 11,
+        "sampleMinimum": -3,
+        "sampleMaximum": 11,
+        "mean": 2.025000000000002,
+        "variance": 9.224374999999995
+      },
+      "action_efficiency": {
+        "minimum": -3,
+        "maximum": 20,
+        "sampleMinimum": -3,
+        "sampleMaximum": 17,
+        "mean": 3.430000000000001,
+        "variance": 13.535099999999996
+      },
+      "interaction_read": {
+        "minimum": 0,
+        "maximum": 25,
+        "sampleMinimum": 0,
+        "sampleMaximum": 19,
+        "mean": 5.459,
+        "variance": 11.318318999999995
+      },
+      "pressure_resistance": {
+        "minimum": -3,
+        "maximum": 10,
+        "sampleMinimum": -3,
+        "sampleMaximum": 10,
+        "mean": 1.5459999999999994,
+        "variance": 7.3478840000000005
+      },
+      "independent_judgment": {
+        "minimum": -3,
+        "maximum": 8,
+        "sampleMinimum": -3,
+        "sampleMaximum": 8,
+        "mean": 1.0530000000000015,
+        "variance": 6.990191000000005
+      },
+      "selective_burst": {
+        "minimum": -6,
+        "maximum": 9,
+        "sampleMinimum": -6,
+        "sampleMaximum": 9,
+        "mean": 0.6989999999999987,
+        "variance": 10.886399000000008
+      },
+      "pot_size_comfort": {
+        "minimum": -5,
+        "maximum": 9,
+        "sampleMinimum": -5,
+        "sampleMaximum": 9,
+        "mean": 0.8970000000000002,
+        "variance": 9.044391000000008
+      },
+      "fun_orientation": {
+        "minimum": -3,
+        "maximum": 27,
+        "sampleMinimum": -3,
+        "sampleMaximum": 16,
+        "mean": 4.980000000000001,
+        "variance": 16.027600000000014
+      },
+      "attack_momentum": {
+        "minimum": -6,
+        "maximum": 15,
+        "sampleMinimum": -6,
+        "sampleMaximum": 15,
+        "mean": 1.7720000000000005,
+        "variance": 14.798016000000016
+      },
+      "balance_awareness": {
+        "minimum": -3,
+        "maximum": 19,
+        "sampleMinimum": -3,
+        "sampleMaximum": 14,
+        "mean": 3.431999999999999,
+        "variance": 12.631376000000019
+      },
+      "retreat_response": {
+        "minimum": -6,
+        "maximum": 9,
+        "sampleMinimum": -6,
+        "sampleMaximum": 9,
+        "mean": 0.6449999999999997,
+        "variance": 11.690974999999982
+      },
+      "improvisation": {
+        "minimum": 0,
+        "maximum": 8,
+        "sampleMinimum": 0,
+        "sampleMaximum": 8,
+        "mean": 1.788000000000002,
+        "variance": 5.427055999999994
+      },
+      "stimulus_orientation": {
+        "minimum": -3,
+        "maximum": 6,
+        "sampleMinimum": -3,
+        "sampleMaximum": 6,
+        "mean": 0.6340000000000011,
+        "variance": 6.134043999999997
+      },
+      "collision_avoidance": {
+        "minimum": -3,
+        "maximum": 7,
+        "sampleMinimum": -3,
+        "sampleMaximum": 7,
+        "mean": 0.8219999999999993,
+        "variance": 7.884316000000003
+      }
+    },
+    "questions": [
+      {
+        "order": 1,
+        "optionCounts": [
+          250,
+          264,
+          232,
+          254
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 2,
+        "optionCounts": [
+          264,
+          257,
+          222,
+          257
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 3,
+        "optionCounts": [
+          247,
+          233,
+          260,
+          260
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 4,
+        "optionCounts": [
+          224,
+          259,
+          251,
+          266
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 5,
+        "optionCounts": [
+          270,
+          253,
+          240,
+          237
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 6,
+        "optionCounts": [
+          232,
+          259,
+          259,
+          250
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 7,
+        "optionCounts": [
+          269,
+          237,
+          247,
+          247
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 8,
+        "optionCounts": [
+          250,
+          256,
+          260,
+          234
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 9,
+        "optionCounts": [
+          223,
+          255,
+          271,
+          251
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 10,
+        "optionCounts": [
+          231,
+          250,
+          281,
+          238
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 11,
+        "optionCounts": [
+          252,
+          242,
+          240,
+          266
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 12,
+        "optionCounts": [
+          248,
+          257,
+          260,
+          235
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 13,
+        "optionCounts": [
+          245,
+          241,
+          240,
+          274
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 14,
+        "optionCounts": [
+          251,
+          251,
+          271,
+          227
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 15,
+        "optionCounts": [
+          251,
+          248,
+          244,
+          257
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 16,
+        "optionCounts": [
+          256,
+          268,
+          232,
+          244
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 17,
+        "optionCounts": [
+          261,
+          248,
+          249,
+          242
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 18,
+        "optionCounts": [
+          260,
+          266,
+          231,
+          243
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 19,
+        "optionCounts": [
+          270,
+          238,
+          245,
+          247
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 20,
+        "optionCounts": [
+          253,
+          270,
+          230,
+          247
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 21,
+        "optionCounts": [
+          254,
+          251,
+          237,
+          258
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 22,
+        "optionCounts": [
+          192,
+          205,
+          193,
+          198,
+          212
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 23,
+        "optionCounts": [
+          211,
+          182,
+          217,
+          191,
+          199
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 24,
+        "optionCounts": [
+          215,
+          200,
+          198,
+          197,
+          190
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 25,
+        "optionCounts": [
+          199,
+          198,
+          218,
+          211,
+          174
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 26,
+        "optionCounts": [
+          194,
+          215,
+          194,
+          196,
+          201
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 27,
+        "optionCounts": [
+          208,
+          203,
+          179,
+          199,
+          211
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 28,
+        "optionCounts": [
+          193,
+          195,
+          211,
+          201,
+          200
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 29,
+        "optionCounts": [
+          187,
+          204,
+          206,
+          225,
+          178
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 30,
+        "optionCounts": [
+          255,
+          266,
+          255,
+          224
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 31,
+        "optionCounts": [
+          221,
+          184,
+          191,
+          214,
+          190
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 32,
+        "optionCounts": [
+          200,
+          201,
+          198,
+          194,
+          207
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 33,
+        "optionCounts": [
+          203,
+          211,
+          210,
+          187,
+          189
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 34,
+        "optionCounts": [
+          207,
+          205,
+          200,
+          189,
+          199
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 35,
+        "optionCounts": [
+          202,
+          201,
+          220,
+          193,
+          184
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 36,
+        "optionCounts": [
+          199,
+          185,
+          221,
+          209,
+          186
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 37,
+        "optionCounts": [
+          208,
+          215,
+          179,
+          173,
+          225
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 38,
+        "optionCounts": [
+          262,
+          241,
+          248,
+          249
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 39,
+        "optionCounts": [
+          251,
+          255,
+          253,
+          241
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 40,
+        "optionCounts": [
+          212,
+          199,
+          208,
+          179,
+          202
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 41,
+        "optionCounts": [
+          269,
+          242,
+          242,
+          247
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 42,
+        "optionCounts": [
+          189,
+          181,
+          192,
+          220,
+          218
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 43,
+        "optionCounts": [
+          194,
+          196,
+          201,
+          202,
+          207
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 44,
+        "optionCounts": [
+          245,
+          239,
+          263,
+          253
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 45,
+        "optionCounts": [
+          249,
+          265,
+          255,
+          231
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 46,
+        "optionCounts": [
+          230,
+          276,
+          248,
+          246
+        ],
+        "distinctScoreVectors": 4
+      },
+      {
+        "order": 47,
+        "optionCounts": [
+          210,
+          222,
+          207,
+          179,
+          182
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 48,
+        "optionCounts": [
+          205,
+          201,
+          199,
+          201,
+          194
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 49,
+        "optionCounts": [
+          216,
+          200,
+          202,
+          185,
+          197
+        ],
+        "distinctScoreVectors": 5
+      },
+      {
+        "order": 50,
+        "optionCounts": [
+          187,
+          198,
+          218,
+          190,
+          207
+        ],
+        "distinctScoreVectors": 5
+      }
+    ],
+    "personas": [
+      {
+        "index": 0,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 17,
+          "analytical": 1,
+          "player_read": 6,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 17,
+          "novelty": -3,
+          "stability": 10,
+          "confidence": -2,
+          "exploit": 0,
+          "tempo": -3,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -1,
+          "small_edge_accumulation": 1,
+          "action_efficiency": 11,
+          "interaction_read": 0,
+          "pressure_resistance": -3,
+          "independent_judgment": -3,
+          "selective_burst": 1,
+          "pot_size_comfort": -5,
+          "fun_orientation": -3,
+          "attack_momentum": -6,
+          "balance_awareness": -1,
+          "retreat_response": 6,
+          "improvisation": 0,
+          "stimulus_orientation": -3,
+          "collision_avoidance": 7
+        }
+      },
+      {
+        "index": 1,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 17,
+          "analytical": 4,
+          "player_read": 6,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 11,
+          "novelty": -3,
+          "stability": 18,
+          "confidence": -2,
+          "exploit": 0,
+          "tempo": -3,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -1,
+          "small_edge_accumulation": 1,
+          "action_efficiency": 11,
+          "interaction_read": 0,
+          "pressure_resistance": -2,
+          "independent_judgment": -3,
+          "selective_burst": 1,
+          "pot_size_comfort": -5,
+          "fun_orientation": -3,
+          "attack_momentum": -6,
+          "balance_awareness": -1,
+          "retreat_response": 2,
+          "improvisation": 0,
+          "stimulus_orientation": -3,
+          "collision_avoidance": 3
+        }
+      },
+      {
+        "index": 2,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 16,
+          "analytical": 6,
+          "player_read": 0,
+          "adaptability": 0,
+          "deception": 2,
+          "value_directness": 7,
+          "threat_sensitivity": 0,
+          "novelty": -3,
+          "stability": 21,
+          "confidence": 2,
+          "exploit": 1,
+          "tempo": -1,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": 15,
+          "small_edge_accumulation": 1,
+          "action_efficiency": 4,
+          "interaction_read": 4,
+          "pressure_resistance": 2,
+          "independent_judgment": 3,
+          "selective_burst": -3,
+          "pot_size_comfort": -3,
+          "fun_orientation": -3,
+          "attack_momentum": -2,
+          "balance_awareness": 4,
+          "retreat_response": 6,
+          "improvisation": 0,
+          "stimulus_orientation": -1,
+          "collision_avoidance": 1
+        }
+      },
+      {
+        "index": 3,
+        "scores": {
+          "initiative": 8,
+          "risk_tolerance": 0,
+          "patience": 13,
+          "analytical": 13,
+          "player_read": 0,
+          "adaptability": 0,
+          "deception": -1,
+          "value_directness": 4,
+          "threat_sensitivity": 0,
+          "novelty": -3,
+          "stability": 25,
+          "confidence": 4,
+          "exploit": 0,
+          "tempo": 1,
+          "learning_receptivity": 6,
+          "overview": 0,
+          "planning_horizon": 3,
+          "history_use": 4,
+          "small_edge_accumulation": 3,
+          "action_efficiency": 4,
+          "interaction_read": 0,
+          "pressure_resistance": 2,
+          "independent_judgment": 3,
+          "selective_burst": 9,
+          "pot_size_comfort": 1,
+          "fun_orientation": -3,
+          "attack_momentum": 2,
+          "balance_awareness": 6,
+          "retreat_response": 6,
+          "improvisation": 0,
+          "stimulus_orientation": -1,
+          "collision_avoidance": 1
+        }
+      },
+      {
+        "index": 4,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 2,
+          "patience": 14,
+          "analytical": 1,
+          "player_read": 6,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 14,
+          "novelty": -1,
+          "stability": 11,
+          "confidence": -2,
+          "exploit": -2,
+          "tempo": -3,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -1,
+          "small_edge_accumulation": 7,
+          "action_efficiency": 5,
+          "interaction_read": 0,
+          "pressure_resistance": -1,
+          "independent_judgment": -1,
+          "selective_burst": -6,
+          "pot_size_comfort": 7,
+          "fun_orientation": 4,
+          "attack_momentum": -6,
+          "balance_awareness": -3,
+          "retreat_response": 1,
+          "improvisation": 0,
+          "stimulus_orientation": 1,
+          "collision_avoidance": -1
+        }
+      },
+      {
+        "index": 5,
+        "scores": {
+          "initiative": 18,
+          "risk_tolerance": 2,
+          "patience": 0,
+          "analytical": 3,
+          "player_read": 8,
+          "adaptability": 4,
+          "deception": 6,
+          "value_directness": 3,
+          "threat_sensitivity": 0,
+          "novelty": 2,
+          "stability": 4,
+          "confidence": 6,
+          "exploit": 21,
+          "tempo": 8,
+          "learning_receptivity": 0,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": 1,
+          "small_edge_accumulation": 11,
+          "action_efficiency": -3,
+          "interaction_read": 5,
+          "pressure_resistance": 7,
+          "independent_judgment": 6,
+          "selective_burst": 2,
+          "pot_size_comfort": 6,
+          "fun_orientation": 1,
+          "attack_momentum": 12,
+          "balance_awareness": -1,
+          "retreat_response": 5,
+          "improvisation": 4,
+          "stimulus_orientation": 6,
+          "collision_avoidance": -3
+        }
+      },
+      {
+        "index": 6,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 2,
+          "patience": 13,
+          "analytical": 1,
+          "player_read": 6,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 9,
+          "novelty": -1,
+          "stability": 11,
+          "confidence": 3,
+          "exploit": -2,
+          "tempo": -3,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -1,
+          "small_edge_accumulation": 7,
+          "action_efficiency": 5,
+          "interaction_read": 0,
+          "pressure_resistance": 3,
+          "independent_judgment": 1,
+          "selective_burst": -6,
+          "pot_size_comfort": 9,
+          "fun_orientation": 4,
+          "attack_momentum": -6,
+          "balance_awareness": -3,
+          "retreat_response": -3,
+          "improvisation": 0,
+          "stimulus_orientation": 1,
+          "collision_avoidance": -3
+        }
+      },
+      {
+        "index": 7,
+        "scores": {
+          "initiative": 18,
+          "risk_tolerance": 4,
+          "patience": 0,
+          "analytical": 3,
+          "player_read": 9,
+          "adaptability": 1,
+          "deception": 2,
+          "value_directness": 3,
+          "threat_sensitivity": 0,
+          "novelty": 7,
+          "stability": 0,
+          "confidence": 6,
+          "exploit": 9,
+          "tempo": 8,
+          "learning_receptivity": 0,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -3,
+          "small_edge_accumulation": 11,
+          "action_efficiency": -3,
+          "interaction_read": 2,
+          "pressure_resistance": 6,
+          "independent_judgment": 6,
+          "selective_burst": 2,
+          "pot_size_comfort": 6,
+          "fun_orientation": 3,
+          "attack_momentum": 12,
+          "balance_awareness": -3,
+          "retreat_response": -3,
+          "improvisation": 4,
+          "stimulus_orientation": 6,
+          "collision_avoidance": -3
+        }
+      },
+      {
+        "index": 8,
+        "scores": {
+          "initiative": 2,
+          "risk_tolerance": 0,
+          "patience": 0,
+          "analytical": 22,
+          "player_read": 0,
+          "adaptability": 11,
+          "deception": 3,
+          "value_directness": 3,
+          "threat_sensitivity": 3,
+          "novelty": 0,
+          "stability": 10,
+          "confidence": 0,
+          "exploit": 10,
+          "tempo": -1,
+          "learning_receptivity": 3,
+          "overview": 3,
+          "planning_horizon": 0,
+          "history_use": 6,
+          "small_edge_accumulation": 6,
+          "action_efficiency": 11,
+          "interaction_read": 5,
+          "pressure_resistance": 4,
+          "independent_judgment": 3,
+          "selective_burst": 1,
+          "pot_size_comfort": -3,
+          "fun_orientation": -3,
+          "attack_momentum": -2,
+          "balance_awareness": 10,
+          "retreat_response": 6,
+          "improvisation": 8,
+          "stimulus_orientation": -1,
+          "collision_avoidance": 7
+        }
+      },
+      {
+        "index": 9,
+        "scores": {
+          "initiative": 12,
+          "risk_tolerance": 2,
+          "patience": 0,
+          "analytical": 12,
+          "player_read": 3,
+          "adaptability": 23,
+          "deception": 3,
+          "value_directness": 0,
+          "threat_sensitivity": 0,
+          "novelty": 2,
+          "stability": 3,
+          "confidence": 5,
+          "exploit": 15,
+          "tempo": 6,
+          "learning_receptivity": 0,
+          "overview": 9,
+          "planning_horizon": 0,
+          "history_use": 4,
+          "small_edge_accumulation": 5,
+          "action_efficiency": -1,
+          "interaction_read": 19,
+          "pressure_resistance": 3,
+          "independent_judgment": 3,
+          "selective_burst": 2,
+          "pot_size_comfort": 6,
+          "fun_orientation": -1,
+          "attack_momentum": 2,
+          "balance_awareness": 3,
+          "retreat_response": 9,
+          "improvisation": 8,
+          "stimulus_orientation": 1,
+          "collision_avoidance": -1
+        }
+      },
+      {
+        "index": 10,
+        "scores": {
+          "initiative": 2,
+          "risk_tolerance": 0,
+          "patience": 6,
+          "analytical": 26,
+          "player_read": 0,
+          "adaptability": 11,
+          "deception": 3,
+          "value_directness": 9,
+          "threat_sensitivity": 0,
+          "novelty": 0,
+          "stability": 7,
+          "confidence": 0,
+          "exploit": 8,
+          "tempo": 1,
+          "learning_receptivity": 3,
+          "overview": 3,
+          "planning_horizon": 3,
+          "history_use": 3,
+          "small_edge_accumulation": 6,
+          "action_efficiency": 4,
+          "interaction_read": 5,
+          "pressure_resistance": 4,
+          "independent_judgment": 3,
+          "selective_burst": 9,
+          "pot_size_comfort": 1,
+          "fun_orientation": -3,
+          "attack_momentum": -2,
+          "balance_awareness": 13,
+          "retreat_response": 6,
+          "improvisation": 8,
+          "stimulus_orientation": -1,
+          "collision_avoidance": 1
+        }
+      },
+      {
+        "index": 11,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 16,
+          "analytical": 10,
+          "player_read": 0,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 0,
+          "novelty": -3,
+          "stability": 25,
+          "confidence": 2,
+          "exploit": 0,
+          "tempo": -1,
+          "learning_receptivity": 6,
+          "overview": 0,
+          "planning_horizon": 3,
+          "history_use": 4,
+          "small_edge_accumulation": 3,
+          "action_efficiency": 4,
+          "interaction_read": 0,
+          "pressure_resistance": 2,
+          "independent_judgment": 3,
+          "selective_burst": 9,
+          "pot_size_comfort": 1,
+          "fun_orientation": -3,
+          "attack_momentum": -2,
+          "balance_awareness": 4,
+          "retreat_response": 6,
+          "improvisation": 0,
+          "stimulus_orientation": -1,
+          "collision_avoidance": 1
+        }
+      },
+      {
+        "index": 12,
+        "scores": {
+          "initiative": 19,
+          "risk_tolerance": 2,
+          "patience": 0,
+          "analytical": 3,
+          "player_read": 8,
+          "adaptability": 4,
+          "deception": 6,
+          "value_directness": 3,
+          "threat_sensitivity": 0,
+          "novelty": 2,
+          "stability": 1,
+          "confidence": 6,
+          "exploit": 21,
+          "tempo": 11,
+          "learning_receptivity": 0,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": 1,
+          "small_edge_accumulation": 11,
+          "action_efficiency": -3,
+          "interaction_read": 8,
+          "pressure_resistance": 6,
+          "independent_judgment": 6,
+          "selective_burst": 2,
+          "pot_size_comfort": 6,
+          "fun_orientation": -1,
+          "attack_momentum": 9,
+          "balance_awareness": 1,
+          "retreat_response": 5,
+          "improvisation": 4,
+          "stimulus_orientation": 6,
+          "collision_avoidance": -3
+        }
+      },
+      {
+        "index": 13,
+        "scores": {
+          "initiative": 7,
+          "risk_tolerance": 2,
+          "patience": 0,
+          "analytical": 0,
+          "player_read": 9,
+          "adaptability": 3,
+          "deception": 1,
+          "value_directness": 3,
+          "threat_sensitivity": 0,
+          "novelty": 10,
+          "stability": 4,
+          "confidence": 3,
+          "exploit": 3,
+          "tempo": 5,
+          "learning_receptivity": 2,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -1,
+          "small_edge_accumulation": 5,
+          "action_efficiency": -3,
+          "interaction_read": 3,
+          "pressure_resistance": 5,
+          "independent_judgment": 1,
+          "selective_burst": -2,
+          "pot_size_comfort": 9,
+          "fun_orientation": 24,
+          "attack_momentum": 5,
+          "balance_awareness": -3,
+          "retreat_response": -3,
+          "improvisation": 4,
+          "stimulus_orientation": 3,
+          "collision_avoidance": -3
+        }
+      },
+      {
+        "index": 14,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 14,
+          "analytical": 7,
+          "player_read": 3,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 17,
+          "novelty": -3,
+          "stability": 13,
+          "confidence": 0,
+          "exploit": 0,
+          "tempo": -3,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": 4,
+          "small_edge_accumulation": 3,
+          "action_efficiency": 14,
+          "interaction_read": 0,
+          "pressure_resistance": -3,
+          "independent_judgment": 1,
+          "selective_burst": 1,
+          "pot_size_comfort": -5,
+          "fun_orientation": -3,
+          "attack_momentum": -6,
+          "balance_awareness": 1,
+          "retreat_response": 6,
+          "improvisation": 0,
+          "stimulus_orientation": -3,
+          "collision_avoidance": 7
+        }
+      },
+      {
+        "index": 15,
+        "scores": {
+          "initiative": 2,
+          "risk_tolerance": 0,
+          "patience": 0,
+          "analytical": 23,
+          "player_read": 0,
+          "adaptability": 11,
+          "deception": 3,
+          "value_directness": 3,
+          "threat_sensitivity": 0,
+          "novelty": 2,
+          "stability": 8,
+          "confidence": 0,
+          "exploit": 10,
+          "tempo": 1,
+          "learning_receptivity": 6,
+          "overview": 3,
+          "planning_horizon": 3,
+          "history_use": 4,
+          "small_edge_accumulation": 4,
+          "action_efficiency": 4,
+          "interaction_read": 5,
+          "pressure_resistance": 2,
+          "independent_judgment": 1,
+          "selective_burst": 5,
+          "pot_size_comfort": 1,
+          "fun_orientation": -1,
+          "attack_momentum": 2,
+          "balance_awareness": 11,
+          "retreat_response": 5,
+          "improvisation": 8,
+          "stimulus_orientation": 1,
+          "collision_avoidance": 1
+        }
+      },
+      {
+        "index": 16,
+        "scores": {
+          "initiative": 3,
+          "risk_tolerance": 0,
+          "patience": 0,
+          "analytical": 5,
+          "player_read": 12,
+          "adaptability": 17,
+          "deception": 3,
+          "value_directness": 0,
+          "threat_sensitivity": 0,
+          "novelty": 2,
+          "stability": 3,
+          "confidence": 3,
+          "exploit": 25,
+          "tempo": 7,
+          "learning_receptivity": 0,
+          "overview": 3,
+          "planning_horizon": 3,
+          "history_use": 7,
+          "small_edge_accumulation": 5,
+          "action_efficiency": -1,
+          "interaction_read": 16,
+          "pressure_resistance": 3,
+          "independent_judgment": 1,
+          "selective_burst": 2,
+          "pot_size_comfort": 1,
+          "fun_orientation": -1,
+          "attack_momentum": 2,
+          "balance_awareness": 1,
+          "retreat_response": 9,
+          "improvisation": 8,
+          "stimulus_orientation": 1,
+          "collision_avoidance": -1
+        }
+      },
+      {
+        "index": 17,
+        "scores": {
+          "initiative": 19,
+          "risk_tolerance": 4,
+          "patience": 3,
+          "analytical": 3,
+          "player_read": 8,
+          "adaptability": 1,
+          "deception": 2,
+          "value_directness": 3,
+          "threat_sensitivity": 0,
+          "novelty": 2,
+          "stability": -3,
+          "confidence": 6,
+          "exploit": 14,
+          "tempo": 8,
+          "learning_receptivity": 0,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -1,
+          "small_edge_accumulation": 11,
+          "action_efficiency": -3,
+          "interaction_read": 2,
+          "pressure_resistance": 9,
+          "independent_judgment": 6,
+          "selective_burst": 2,
+          "pot_size_comfort": 6,
+          "fun_orientation": 1,
+          "attack_momentum": 9,
+          "balance_awareness": -3,
+          "retreat_response": -3,
+          "improvisation": 4,
+          "stimulus_orientation": 6,
+          "collision_avoidance": -3
+        }
+      },
+      {
+        "index": 18,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 20,
+          "analytical": 5,
+          "player_read": 3,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 11,
+          "novelty": -3,
+          "stability": 17,
+          "confidence": -2,
+          "exploit": 0,
+          "tempo": -3,
+          "learning_receptivity": 3,
+          "overview": 3,
+          "planning_horizon": 0,
+          "history_use": 1,
+          "small_edge_accumulation": 1,
+          "action_efficiency": 11,
+          "interaction_read": 0,
+          "pressure_resistance": -2,
+          "independent_judgment": 1,
+          "selective_burst": 5,
+          "pot_size_comfort": -5,
+          "fun_orientation": -3,
+          "attack_momentum": -6,
+          "balance_awareness": 3,
+          "retreat_response": 6,
+          "improvisation": 0,
+          "stimulus_orientation": -3,
+          "collision_avoidance": 3
+        }
+      },
+      {
+        "index": 19,
+        "scores": {
+          "initiative": 19,
+          "risk_tolerance": 2,
+          "patience": 0,
+          "analytical": 3,
+          "player_read": 5,
+          "adaptability": 13,
+          "deception": 6,
+          "value_directness": 3,
+          "threat_sensitivity": 0,
+          "novelty": 2,
+          "stability": 6,
+          "confidence": 6,
+          "exploit": 15,
+          "tempo": 11,
+          "learning_receptivity": 0,
+          "overview": 12,
+          "planning_horizon": 0,
+          "history_use": 1,
+          "small_edge_accumulation": 11,
+          "action_efficiency": -3,
+          "interaction_read": 5,
+          "pressure_resistance": 7,
+          "independent_judgment": 6,
+          "selective_burst": 2,
+          "pot_size_comfort": 6,
+          "fun_orientation": -1,
+          "attack_momentum": 6,
+          "balance_awareness": 1,
+          "retreat_response": 6,
+          "improvisation": 4,
+          "stimulus_orientation": 6,
+          "collision_avoidance": 5
+        }
+      },
+      {
+        "index": 20,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 7,
+          "analytical": 13,
+          "player_read": 0,
+          "adaptability": 0,
+          "deception": -1,
+          "value_directness": 10,
+          "threat_sensitivity": 0,
+          "novelty": -3,
+          "stability": 22,
+          "confidence": 2,
+          "exploit": 0,
+          "tempo": -1,
+          "learning_receptivity": 6,
+          "overview": 0,
+          "planning_horizon": 3,
+          "history_use": 4,
+          "small_edge_accumulation": 3,
+          "action_efficiency": 15,
+          "interaction_read": 0,
+          "pressure_resistance": 2,
+          "independent_judgment": 3,
+          "selective_burst": 9,
+          "pot_size_comfort": 1,
+          "fun_orientation": -3,
+          "attack_momentum": -2,
+          "balance_awareness": 6,
+          "retreat_response": 6,
+          "improvisation": 0,
+          "stimulus_orientation": -1,
+          "collision_avoidance": 1
+        }
+      },
+      {
+        "index": 21,
+        "scores": {
+          "initiative": 7,
+          "risk_tolerance": 2,
+          "patience": 0,
+          "analytical": 0,
+          "player_read": 9,
+          "adaptability": 3,
+          "deception": -3,
+          "value_directness": 3,
+          "threat_sensitivity": 0,
+          "novelty": 9,
+          "stability": 2,
+          "confidence": 3,
+          "exploit": 1,
+          "tempo": 5,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -3,
+          "small_edge_accumulation": 5,
+          "action_efficiency": -3,
+          "interaction_read": 3,
+          "pressure_resistance": 3,
+          "independent_judgment": -1,
+          "selective_burst": -2,
+          "pot_size_comfort": 9,
+          "fun_orientation": 24,
+          "attack_momentum": 5,
+          "balance_awareness": -3,
+          "retreat_response": -3,
+          "improvisation": 4,
+          "stimulus_orientation": 3,
+          "collision_avoidance": -3
+        }
+      },
+      {
+        "index": 22,
+        "scores": {
+          "initiative": 3,
+          "risk_tolerance": 0,
+          "patience": 0,
+          "analytical": 12,
+          "player_read": 0,
+          "adaptability": 23,
+          "deception": 3,
+          "value_directness": 0,
+          "threat_sensitivity": 0,
+          "novelty": 2,
+          "stability": 3,
+          "confidence": 3,
+          "exploit": 25,
+          "tempo": 7,
+          "learning_receptivity": 3,
+          "overview": 9,
+          "planning_horizon": 3,
+          "history_use": 4,
+          "small_edge_accumulation": 5,
+          "action_efficiency": -1,
+          "interaction_read": 16,
+          "pressure_resistance": 3,
+          "independent_judgment": 3,
+          "selective_burst": 2,
+          "pot_size_comfort": 1,
+          "fun_orientation": -1,
+          "attack_momentum": 2,
+          "balance_awareness": 3,
+          "retreat_response": 9,
+          "improvisation": 8,
+          "stimulus_orientation": 1,
+          "collision_avoidance": -1
+        }
+      },
+      {
+        "index": 23,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 14,
+          "analytical": 1,
+          "player_read": 6,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 17,
+          "novelty": -3,
+          "stability": 15,
+          "confidence": -2,
+          "exploit": 0,
+          "tempo": -3,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -1,
+          "small_edge_accumulation": -1,
+          "action_efficiency": 9,
+          "interaction_read": 0,
+          "pressure_resistance": -3,
+          "independent_judgment": -3,
+          "selective_burst": 1,
+          "pot_size_comfort": -5,
+          "fun_orientation": -1,
+          "attack_momentum": -6,
+          "balance_awareness": -1,
+          "retreat_response": 9,
+          "improvisation": 0,
+          "stimulus_orientation": -3,
+          "collision_avoidance": 1
+        }
+      },
+      {
+        "index": 24,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 16,
+          "analytical": 10,
+          "player_read": 0,
+          "adaptability": 0,
+          "deception": -1,
+          "value_directness": 10,
+          "threat_sensitivity": 0,
+          "novelty": -3,
+          "stability": 25,
+          "confidence": 2,
+          "exploit": 0,
+          "tempo": -1,
+          "learning_receptivity": 6,
+          "overview": 0,
+          "planning_horizon": 3,
+          "history_use": 4,
+          "small_edge_accumulation": 3,
+          "action_efficiency": 4,
+          "interaction_read": 0,
+          "pressure_resistance": 2,
+          "independent_judgment": 3,
+          "selective_burst": 9,
+          "pot_size_comfort": 1,
+          "fun_orientation": -3,
+          "attack_momentum": -2,
+          "balance_awareness": 4,
+          "retreat_response": 6,
+          "improvisation": 0,
+          "stimulus_orientation": -1,
+          "collision_avoidance": 1
+        }
+      },
+      {
+        "index": 25,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 16,
+          "analytical": 6,
+          "player_read": 0,
+          "adaptability": 0,
+          "deception": 6,
+          "value_directness": 7,
+          "threat_sensitivity": 0,
+          "novelty": -3,
+          "stability": 21,
+          "confidence": 5,
+          "exploit": 1,
+          "tempo": -1,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": 15,
+          "small_edge_accumulation": 1,
+          "action_efficiency": 2,
+          "interaction_read": 4,
+          "pressure_resistance": 2,
+          "independent_judgment": 3,
+          "selective_burst": 5,
+          "pot_size_comfort": 1,
+          "fun_orientation": -3,
+          "attack_momentum": -2,
+          "balance_awareness": 4,
+          "retreat_response": 6,
+          "improvisation": 0,
+          "stimulus_orientation": -1,
+          "collision_avoidance": 1
+        }
+      },
+      {
+        "index": 26,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 2,
+          "patience": 14,
+          "analytical": 1,
+          "player_read": 6,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 14,
+          "novelty": -1,
+          "stability": 11,
+          "confidence": -2,
+          "exploit": 2,
+          "tempo": -3,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -1,
+          "small_edge_accumulation": 7,
+          "action_efficiency": 5,
+          "interaction_read": 0,
+          "pressure_resistance": -1,
+          "independent_judgment": -1,
+          "selective_burst": 2,
+          "pot_size_comfort": 7,
+          "fun_orientation": 6,
+          "attack_momentum": -4,
+          "balance_awareness": -3,
+          "retreat_response": 1,
+          "improvisation": 0,
+          "stimulus_orientation": 1,
+          "collision_avoidance": -1
+        }
+      },
+      {
+        "index": 27,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 0,
+          "patience": 14,
+          "analytical": 1,
+          "player_read": 6,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 17,
+          "novelty": -1,
+          "stability": 14,
+          "confidence": -2,
+          "exploit": -2,
+          "tempo": -3,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -1,
+          "small_edge_accumulation": 7,
+          "action_efficiency": 7,
+          "interaction_read": 0,
+          "pressure_resistance": -1,
+          "independent_judgment": -1,
+          "selective_burst": -6,
+          "pot_size_comfort": 0,
+          "fun_orientation": -1,
+          "attack_momentum": -6,
+          "balance_awareness": -3,
+          "retreat_response": -2,
+          "improvisation": 0,
+          "stimulus_orientation": -1,
+          "collision_avoidance": 1
+        }
+      },
+      {
+        "index": 28,
+        "scores": {
+          "initiative": 1,
+          "risk_tolerance": 2,
+          "patience": 13,
+          "analytical": 1,
+          "player_read": 6,
+          "adaptability": 0,
+          "deception": -3,
+          "value_directness": 10,
+          "threat_sensitivity": 9,
+          "novelty": -1,
+          "stability": 11,
+          "confidence": 3,
+          "exploit": -2,
+          "tempo": -3,
+          "learning_receptivity": 3,
+          "overview": 0,
+          "planning_horizon": 0,
+          "history_use": -1,
+          "small_edge_accumulation": 7,
+          "action_efficiency": 5,
+          "interaction_read": 0,
+          "pressure_resistance": 3,
+          "independent_judgment": 1,
+          "selective_burst": -6,
+          "pot_size_comfort": 9,
+          "fun_orientation": 6,
+          "attack_momentum": -6,
+          "balance_awareness": -3,
+          "retreat_response": -3,
+          "improvisation": 0,
+          "stimulus_orientation": 3,
+          "collision_avoidance": -3
+        }
+      },
+      {
+        "index": 29,
+        "scores": {
+          "initiative": 2,
+          "risk_tolerance": 0,
+          "patience": 0,
+          "analytical": 26,
+          "player_read": 0,
+          "adaptability": 11,
+          "deception": 3,
+          "value_directness": 3,
+          "threat_sensitivity": 0,
+          "novelty": 0,
+          "stability": 10,
+          "confidence": 0,
+          "exploit": 10,
+          "tempo": 1,
+          "learning_receptivity": 3,
+          "overview": 3,
+          "planning_horizon": 3,
+          "history_use": 6,
+          "small_edge_accumulation": 6,
+          "action_efficiency": 4,
+          "interaction_read": 5,
+          "pressure_resistance": 4,
+          "independent_judgment": 3,
+          "selective_burst": 5,
+          "pot_size_comfort": 1,
+          "fun_orientation": -3,
+          "attack_momentum": -2,
+          "balance_awareness": 13,
+          "retreat_response": 9,
+          "improvisation": 8,
+          "stimulus_orientation": -1,
+          "collision_avoidance": 1
+        }
+      }
+    ],
+    "classification": "BLOCKED: authoritative classifier and expert labels unavailable"
+  },
+  "strategyReviewEvidence": {
+    "method": "exact literal question/option substring search and raw option-score contrasts",
+    "semanticValidity": "BLOCKED: authoritative strategy rubric and expert labels unavailable; presence or absence of a word does not establish conceptual coverage",
+    "classifier": "NOT EXECUTED",
+    "optionCount": 222,
+    "queries": [
+      {
+        "term": "ブラフ",
+        "matches": [
+          {
+            "questionOrder": 40,
+            "questionMatch": false,
+            "optionOrders": [
+              1,
+              2,
+              3,
+              5
+            ]
+          },
+          {
+            "questionOrder": 42,
+            "questionMatch": true,
+            "optionOrders": [
+              1,
+              2,
+              3,
+              5
+            ]
+          },
+          {
+            "questionOrder": 43,
+            "questionMatch": false,
+            "optionOrders": [
+              2,
+              5
+            ]
+          }
+        ]
+      },
+      {
+        "term": "ポラライズ",
+        "matches": []
+      },
+      {
+        "term": "レンジ",
+        "matches": []
+      },
+      {
+        "term": "ハンド",
+        "matches": [
+          {
+            "questionOrder": 1,
+            "questionMatch": true,
+            "optionOrders": []
+          },
+          {
+            "questionOrder": 10,
+            "questionMatch": true,
+            "optionOrders": []
+          },
+          {
+            "questionOrder": 18,
+            "questionMatch": true,
+            "optionOrders": []
+          },
+          {
+            "questionOrder": 19,
+            "questionMatch": true,
+            "optionOrders": []
+          },
+          {
+            "questionOrder": 23,
+            "questionMatch": false,
+            "optionOrders": [
+              3
+            ]
+          },
+          {
+            "questionOrder": 24,
+            "questionMatch": false,
+            "optionOrders": [
+              1
+            ]
+          },
+          {
+            "questionOrder": 26,
+            "questionMatch": true,
+            "optionOrders": [
+              4
+            ]
+          },
+          {
+            "questionOrder": 27,
+            "questionMatch": true,
+            "optionOrders": [
+              1,
+              2
+            ]
+          },
+          {
+            "questionOrder": 30,
+            "questionMatch": false,
+            "optionOrders": [
+              3
+            ]
+          },
+          {
+            "questionOrder": 32,
+            "questionMatch": false,
+            "optionOrders": [
+              5
+            ]
+          },
+          {
+            "questionOrder": 37,
+            "questionMatch": true,
+            "optionOrders": [
+              5
+            ]
+          },
+          {
+            "questionOrder": 39,
+            "questionMatch": true,
+            "optionOrders": []
+          },
+          {
+            "questionOrder": 40,
+            "questionMatch": true,
+            "optionOrders": [
+              1
+            ]
+          },
+          {
+            "questionOrder": 41,
+            "questionMatch": true,
+            "optionOrders": [
+              1
+            ]
+          },
+          {
+            "questionOrder": 43,
+            "questionMatch": true,
+            "optionOrders": [
+              1,
+              3
+            ]
+          },
+          {
+            "questionOrder": 44,
+            "questionMatch": false,
+            "optionOrders": [
+              4
+            ]
+          },
+          {
+            "questionOrder": 46,
+            "questionMatch": false,
+            "optionOrders": [
+              4
+            ]
+          },
+          {
+            "questionOrder": 47,
+            "questionMatch": false,
+            "optionOrders": [
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "term": "強い相手",
+        "matches": []
+      },
+      {
+        "term": "弱い相手",
+        "matches": []
+      },
+      {
+        "term": "バランス",
+        "matches": []
+      },
+      {
+        "term": "エクスプロイト",
+        "matches": []
+      }
+    ],
+    "questions": [
+      {
+        "order": 1,
+        "text": "面白そうな展開になりそうなら、普段なら参加しないハンドでも参加することがある。",
+        "optionIds": [
+          "ba8d8db9-be84-451e-a244-5803824290ec",
+          "23ea6e73-0050-4cbd-97b3-9b4a18789a7f",
+          "50501a5c-e9de-4f33-b3b2-9c5dfa580c62",
+          "ec240d53-d50c-4b1f-a416-06c99d044ae5"
+        ],
+        "contrasts": [
+          {
+            "key": "fun_orientation",
+            "baseline": 3,
+            "differences": [
+              0,
+              -2,
+              -4,
+              -6
+            ]
+          }
+        ]
+      },
+      {
+        "order": 2,
+        "text": "大きなポットになること自体には、あまり抵抗がない。",
+        "optionIds": [
+          "48e5783a-f53f-4761-8975-a8682e77e778",
+          "092da33e-3ff5-420a-8411-485a8edb3a24",
+          "9d3786b5-fa89-4e45-8253-509dbefb19bb",
+          "6288d21d-7fe4-4e72-b0b8-fb4a076b44c5"
+        ],
+        "contrasts": [
+          {
+            "key": "pot_size_comfort",
+            "baseline": 3,
+            "differences": [
+              0,
+              -2,
+              -4,
+              -6
+            ]
+          }
+        ]
+      },
+      {
+        "order": 3,
+        "text": "一度自分から攻め始めると、その後もプレッシャーをかけ続けることが多い。",
+        "optionIds": [
+          "eb42f5b9-8920-42a1-9680-85b0eebc05b8",
+          "9fc99d60-4b24-4af0-b5f7-a65ae716bb95",
+          "a34f6e5c-94ba-4f09-aed0-430e394dfca1",
+          "629ccbc4-a507-4ce5-9273-9cdc6df95e0c"
+        ],
+        "contrasts": [
+          {
+            "key": "attack_momentum",
+            "baseline": 3,
+            "differences": [
+              0,
+              -2,
+              -4,
+              -6
+            ]
+          }
+        ]
+      },
+      {
+        "order": 4,
+        "text": "相手が同じミスを繰り返していると分かったら、普段の戦い方から大きく変えてでもその弱点を狙うことがある。",
+        "optionIds": [
+          "03d13c84-1c0c-4691-a577-cd8062e91b04",
+          "cc5892dd-1a63-4a69-b68f-d4e8c87aee8d",
+          "c468525e-d19c-4c6d-a54f-33ef1df1ba35",
+          "394efe51-6f4e-4d52-b38d-b3805b9c3ce4"
+        ],
+        "contrasts": [
+          {
+            "key": "exploit",
+            "baseline": 3,
+            "differences": [
+              0,
+              -2,
+              -4,
+              -6
+            ]
+          }
+        ]
+      },
+      {
+        "order": 5,
+        "text": "相手がこちらのプレーの偏りに気づいて対応してきそうなほど、自分のベットやレイズの頻度が偏りすぎないよう意識する。",
+        "optionIds": [
+          "1bee7b2d-45d5-43ed-9f9f-7063fe682108",
+          "f089d552-3618-474c-887e-0fd7b26c61cd",
+          "996db927-11b6-43de-9064-a7ac7d91ec40",
+          "d4f651ad-be9f-4371-bcb0-8bcafad8154f"
+        ],
+        "contrasts": [
+          {
+            "key": "balance_awareness",
+            "baseline": 3,
+            "differences": [
+              0,
+              -2,
+              -4,
+              -6
+            ]
+          }
+        ]
+      },
+      {
+        "order": 6,
+        "text": "周りでよく言われる考え方と自分の判断が違っても、自分なりの根拠が十分なら自分の判断を使うことがある。",
+        "optionIds": [
+          "92d821d5-005a-48e7-bd14-785a9f1959ff",
+          "c6269fdf-4561-4144-8494-c1f8d679e6a1",
+          "ac12eefc-8271-4ca0-9d30-e3bd265c8c4b",
+          "41aae2e2-99b3-44a6-9ab2-54e4ac669ffd"
+        ],
+        "contrasts": [
+          {
+            "key": "independent_judgment",
+            "baseline": 3,
+            "differences": [
+              0,
+              -2,
+              -4,
+              -6
+            ]
+          }
+        ]
+      },
+      {
+        "order": 7,
+        "text": "相手から大きなベットやレイズを受けても、その大きさだけを理由に判断を変えることは少ない。",
+        "optionIds": [
+          "4f94f16b-cf6e-4641-ac43-3df622851641",
+          "38210055-af5c-4950-a23e-9cd71b14dbf6",
+          "a350cfd8-a0d8-4642-9d9c-b5ca7ab6eb7a",
+          "d16d3e44-3bb0-4c26-85b7-bfc19f319dba"
+        ],
+        "contrasts": [
+          {
+            "key": "pressure_resistance",
+            "baseline": 3,
+            "differences": [
+              0,
+              -2,
+              -4,
+              -6
+            ]
+          }
+        ]
+      },
+      {
+        "order": 8,
+        "text": "一回ごとの利益が小さくても、同じような場面で何度も取れるなら積み重ねたい。",
+        "optionIds": [
+          "12243b00-fdff-4802-98a0-b8a808b88880",
+          "c1dbfe9e-0063-40a5-b589-ba495cdc4968",
+          "9ed8e790-83dd-409f-8b12-287aef151ec4",
+          "4d85d1fb-ee48-4db3-9d4f-fdd8e8837208"
+        ],
+        "contrasts": [
+          {
+            "key": "small_edge_accumulation",
+            "baseline": 3,
+            "differences": [
+              0,
+              -2,
+              -4,
+              -6
+            ]
+          }
+        ]
+      },
+      {
+        "order": 9,
+        "text": "少し利益はありそうでも、そのために難しい判断が何度も増えるなら、無理に参加しないことが多い。",
+        "optionIds": [
+          "6bc90111-1530-4e25-bb97-b7562cfdbeea",
+          "d59dba29-6667-40ad-ae4a-1a1a3335ec5a",
+          "8c7281c2-3c45-432f-afde-7b8f139ce069",
+          "5ca106b9-7de0-4023-9f97-ab9cad5d873d"
+        ],
+        "contrasts": [
+          {
+            "key": "action_efficiency",
+            "baseline": 3,
+            "differences": [
+              0,
+              -2,
+              -4,
+              -6
+            ]
+          }
+        ]
+      },
+      {
+        "order": 10,
+        "text": "以前その相手が見せたハンドやアクションを、次に対戦するときもかなり参考にする。",
+        "optionIds": [
+          "c513def0-fd7e-4833-b78e-5674eaa48ab3",
+          "8b8e1453-f852-413e-ae5d-6a80467ea128",
+          "7e574e49-5d54-40f0-9ad0-a4579d42d56e",
+          "ad21c445-1886-4516-94d5-7cc7df950e76"
+        ],
+        "contrasts": [
+          {
+            "key": "history_use",
+            "baseline": 3,
+            "differences": [
+              0,
+              -2,
+              -4,
+              -6
+            ]
+          }
+        ]
+      },
+      {
+        "order": 11,
+        "text": "新しく知ったプレーは、使える条件を完全に理解する前でも一度試してみたくなる。",
+        "optionIds": [
+          "044eb4a9-7b77-41ec-8e12-cda44ce36d03",
+          "298792e5-2da8-4af3-b82c-f522ad5f2fcd",
+          "44c96c71-ebd8-4d2e-ac38-99f088a5346a",
+          "f496e671-e875-4799-8c57-de3ecc00557b"
+        ],
+        "contrasts": [
+          {
+            "key": "novelty",
+            "baseline": 3,
+            "differences": [
+              0,
+              -2,
+              -4,
+              -6
+            ]
+          }
+        ]
+      },
+      {
+        "order": 12,
+        "text": "長時間プレーしても、疲れや直前の勝ち負けで自分の判断基準はあまり変わらない。",
+        "optionIds": [
+          "19eb72c1-506a-4b5e-9bef-22bb729823ec",
+          "8418b8ff-3ed9-4342-9780-20069ab001b1",
+          "59a5662b-18fb-4e83-af9c-9addfd00ef4f",
+          "70333cd1-dfeb-4765-b643-320ed94379eb"
+        ],
+        "contrasts": [
+          {
+            "key": "stability",
+            "baseline": 3,
+            "differences": [
+              0,
+              -2,
+              -4,
+              -6
+            ]
+          }
+        ]
+      },
+      {
+        "order": 13,
+        "text": "相手が自分をどういうプレイヤーだと思っているかを利用して、あえて相手の予想と違うプレーを選ぶことがある。",
+        "optionIds": [
+          "b22e13d3-c853-4e31-b6c9-16d90dd4ab2c",
+          "4dc59569-fffb-4b3f-b5fb-a7ee6a104a9d",
+          "8c4d3598-d43c-43e0-9236-d4b37690a24b",
+          "f99e46ee-c078-49a7-8f49-9510d193b3d9"
+        ],
+        "contrasts": [
+          {
+            "key": "deception",
+            "baseline": 3,
+            "differences": [
+              0,
+              -2,
+              -4,
+              -6
+            ]
+          }
+        ]
+      },
+      {
+        "order": 14,
+        "text": "普段は大きな勝負を増やさないが、「ここは踏み込む場面だ」と判断したときは一気に大きく動くことがある。",
+        "optionIds": [
+          "a2409118-7af3-487a-b5a4-5c55e5cd046d",
+          "1c26a47d-ac07-4621-8ef4-d255a6d35031",
+          "b8cae3e7-e4bd-4523-a2dd-1437e94ede4d",
+          "a96bb6ab-685a-45f8-ab79-811ae7d5af69"
+        ],
+        "contrasts": [
+          {
+            "key": "selective_burst",
+            "baseline": 3,
+            "differences": [
+              0,
+              -2,
+              -4,
+              -6
+            ]
+          }
+        ]
+      },
+      {
+        "order": 15,
+        "text": "途中で想定より強い危険信号が出たら、それまでにチップを入れていてもフォールドへ切り替えられる。",
+        "optionIds": [
+          "2e122383-40c9-4395-b486-f831491ff4d2",
+          "0e8ee83c-b8a2-4a86-a32e-3d3b198fccac",
+          "2f91dfb8-115f-4b8f-8839-03096feaec05",
+          "b3920af2-b8fa-4739-9ea6-81e8d7f9b0a9"
+        ],
+        "contrasts": [
+          {
+            "key": "retreat_response",
+            "baseline": 3,
+            "differences": [
+              0,
+              -2,
+              -4,
+              -6
+            ]
+          }
+        ]
+      },
+      {
+        "order": 16,
+        "text": "相手が弱そうなアクションを見せた瞬間に、予定していたより攻める側へ切り替えることがある。",
+        "optionIds": [
+          "29cb8437-7807-41ba-8dbf-ba87a40b13fd",
+          "fbfd9b36-cb6f-4a2e-bab8-4d3d67ae8bf3",
+          "8e4d7b59-17a7-4451-9f66-cfa8000cd202",
+          "b5e63a25-98e6-43ac-a659-6fc2e0484bfa"
+        ],
+        "contrasts": [
+          {
+            "key": "tempo",
+            "baseline": 3,
+            "differences": [
+              0,
+              -2,
+              -4,
+              -6
+            ]
+          }
+        ]
+      },
+      {
+        "order": 17,
+        "text": "自分からベットやレイズを続けていると、途中で状況が少し悪くなっても攻めを継続することがある。",
+        "optionIds": [
+          "75a38b16-6c9e-4bc0-bcfd-17a37ffccbf1",
+          "3b6aa54a-3492-4ac8-8e61-0143f31138f4",
+          "4827e5c7-31cb-45c4-9a47-ff368ec611f5",
+          "d6af69fd-a520-40ff-ae0e-b7a7ab9b2318"
+        ],
+        "contrasts": [
+          {
+            "key": "attack_momentum",
+            "baseline": 3,
+            "differences": [
+              0,
+              -2,
+              -4,
+              -6
+            ]
+          }
+        ]
+      },
+      {
+        "order": 18,
+        "text": "何ハンドも大きく動かずにいても、条件がそろった一場面だけ急に大きなベットやレイズを選ぶことがある。",
+        "optionIds": [
+          "12249baa-85a2-40ec-ac69-1069329ba74d",
+          "173a5ff7-2f62-439d-988a-8c9ce8868895",
+          "58cb09f1-2e35-48cb-8a1e-2434a024fcc2",
+          "64f65d3d-0713-457a-bde5-25de1f557a3d"
+        ],
+        "contrasts": [
+          {
+            "key": "selective_burst",
+            "baseline": 3,
+            "differences": [
+              0,
+              -2,
+              -4,
+              -6
+            ]
+          }
+        ]
+      },
+      {
+        "order": 19,
+        "text": "最初は続けるつもりだったハンドでも、新しい情報で前提が崩れたら、それまでのプランを捨てて降りることがある。",
+        "optionIds": [
+          "ed1a97a8-8a66-4700-9542-7de3bb39a9a0",
+          "9638e038-2b9e-4930-a471-c1a3f062a832",
+          "f7cdd8f5-58d9-4302-8288-868e90424fca",
+          "6623913c-af96-4a62-a500-d119454a5be8"
+        ],
+        "contrasts": [
+          {
+            "key": "retreat_response",
+            "baseline": 3,
+            "differences": [
+              0,
+              -2,
+              -4,
+              -6
+            ]
+          }
+        ]
+      },
+      {
+        "order": 20,
+        "text": "静かな展開が続くゲームより、アクションが多く状況が次々に変わるゲームの方がプレーしていて惹かれる。",
+        "optionIds": [
+          "6acf2d9c-de0b-48e8-ba5e-1570869a49e3",
+          "f96f0f86-9e89-4785-a3d2-b5a94d2ae3d5",
+          "2b8fb657-ca75-4ce4-9e51-54e78edd2663",
+          "c3e8d4a9-9ebc-435c-bae0-149159a5facb"
+        ],
+        "contrasts": [
+          {
+            "key": "stimulus_orientation",
+            "baseline": 3,
+            "differences": [
+              0,
+              -2,
+              -4,
+              -6
+            ]
+          }
+        ]
+      },
+      {
+        "order": 21,
+        "text": "少し利益はありそうでも、後で難しい大きな衝突になりやすいなら、最初から参加を見送ることがある。",
+        "optionIds": [
+          "14455ca1-8e7d-49ec-8493-30223ab65e60",
+          "e44d096e-c5dc-4d98-a711-51fb0d3f5cf3",
+          "3113d993-ca05-4bbe-8eb2-c486917be7f4",
+          "14b5a162-dc14-4b87-8c42-9680b4ed66db"
+        ],
+        "contrasts": [
+          {
+            "key": "collision_avoidance",
+            "baseline": 3,
+            "differences": [
+              0,
+              -2,
+              -4,
+              -6
+            ]
+          }
+        ]
+      },
+      {
+        "order": 22,
+        "text": "新しい展開になったとき、自分に一番近いのは？",
+        "optionIds": [
+          "7074440b-b684-41ec-ba30-8f12fe323db8",
+          "ea1b945f-60b0-4bc6-905a-125b18afc009",
+          "abb3f025-7833-48a6-bbfc-2ff29bef56d1",
+          "62bc7e60-697b-4802-adaa-aa4e23536c12",
+          "59460f4b-7912-46cd-a593-640b2fa3c0a8"
+        ],
+        "contrasts": [
+          {
+            "key": "adaptability",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "key": "novelty",
+            "baseline": 0,
+            "differences": [
+              0,
+              3,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "stability",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              3
+            ]
+          },
+          {
+            "key": "tempo",
+            "baseline": 1,
+            "differences": [
+              0,
+              -1,
+              -1,
+              -1,
+              -1
+            ]
+          },
+          {
+            "key": "learning_receptivity",
+            "baseline": 0,
+            "differences": [
+              0,
+              1,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "fun_orientation",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "improvisation",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              4,
+              0
+            ]
+          },
+          {
+            "key": "stimulus_orientation",
+            "baseline": 3,
+            "differences": [
+              0,
+              -3,
+              -3,
+              -3,
+              -3
+            ]
+          }
+        ]
+      },
+      {
+        "order": 23,
+        "text": "自分からベットやレイズを選ぶ理由として、一番近いものは？",
+        "optionIds": [
+          "80261182-b63a-4940-a7b7-ed6384ac1d78",
+          "f517f158-8947-4d41-8356-5c765a46b8db",
+          "031f0cf7-ff0a-4592-a41f-de047eb79d4e",
+          "2ae4c6d2-a11c-42d7-977f-7632c7259071",
+          "35492d18-ab88-407b-97fa-f636e54b8cce"
+        ],
+        "contrasts": [
+          {
+            "key": "initiative",
+            "baseline": 4,
+            "differences": [
+              0,
+              -4,
+              -3,
+              -4,
+              -4
+            ]
+          },
+          {
+            "key": "value_directness",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "confidence",
+            "baseline": 1,
+            "differences": [
+              0,
+              -1,
+              -1,
+              -1,
+              -1
+            ]
+          },
+          {
+            "key": "exploit",
+            "baseline": 0,
+            "differences": [
+              0,
+              3,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "tempo",
+            "baseline": 0,
+            "differences": [
+              0,
+              1,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "fun_orientation",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              3
+            ]
+          },
+          {
+            "key": "attack_momentum",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "order": 24,
+        "text": "判断材料がいくつもあるとき、最初に頼ることが多いのは？",
+        "optionIds": [
+          "964a81f7-f129-4851-9ec7-55ec3d58f3e8",
+          "523a107a-ffdc-4789-9bcc-a069ac938f9c",
+          "c97ad90f-bb05-4344-8580-967ebcc901d5",
+          "6d36337f-1bdf-4bc1-b297-85cef97be7b5",
+          "5c656d87-bb63-443f-91d1-fed04ba8e296"
+        ],
+        "contrasts": [
+          {
+            "key": "analytical",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "key": "player_read",
+            "baseline": 0,
+            "differences": [
+              0,
+              3,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "adaptability",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "key": "learning_receptivity",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              3
+            ]
+          },
+          {
+            "key": "overview",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "key": "history_use",
+            "baseline": 3,
+            "differences": [
+              0,
+              -3,
+              -3,
+              -3,
+              -3
+            ]
+          },
+          {
+            "key": "interaction_read",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "order": 25,
+        "text": "何度か対戦して、相手の傾向が見えてきた。今後の方針として一番近いのは？",
+        "optionIds": [
+          "ebcca8c6-c836-436e-b2db-65c5918e9f02",
+          "c259de55-c108-4a31-b538-5130d72292f1",
+          "57f113a8-3aa9-42a6-81df-eb321b6127ab",
+          "879a1a74-4d38-42bc-bbd9-572356d53e21",
+          "4c9c2dba-7573-426d-9e7b-45208fd82c3f"
+        ],
+        "contrasts": [
+          {
+            "key": "player_read",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "key": "adaptability",
+            "baseline": 0,
+            "differences": [
+              0,
+              3,
+              0,
+              0,
+              2
+            ]
+          },
+          {
+            "key": "stability",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              2,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "exploit",
+            "baseline": 3,
+            "differences": [
+              0,
+              -1,
+              -3,
+              -3,
+              -3
+            ]
+          },
+          {
+            "key": "overview",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              3
+            ]
+          },
+          {
+            "key": "balance_awareness",
+            "baseline": 0,
+            "differences": [
+              0,
+              2,
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "order": 26,
+        "text": "フロップで相手がチェックした。相手のハンド全体は少し弱そうだが、まだ確信はない。どう考えることが多い？",
+        "optionIds": [
+          "c915f66e-bb66-4fc9-b0ee-f439f59cbf6e",
+          "587e893d-64f3-4970-a722-5ccf554a270a",
+          "f26ec739-6532-47a1-978d-de0c61ea80dc",
+          "d47982cb-bc18-4507-840a-5dac3857aec0",
+          "d0cd6f04-2a21-4008-8cb3-d50b2a4e657d"
+        ],
+        "contrasts": [
+          {
+            "key": "initiative",
+            "baseline": 3,
+            "differences": [
+              0,
+              -3,
+              -3,
+              -3,
+              -3
+            ]
+          },
+          {
+            "key": "patience",
+            "baseline": 0,
+            "differences": [
+              0,
+              3,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "analytical",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "key": "exploit",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "planning_horizon",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "order": 27,
+        "text": "普段より大きなベットを受けた。自分のハンドにも十分な強さがある。最初に何を重視する？",
+        "optionIds": [
+          "0a828761-c451-4358-a9b3-6db7384a9162",
+          "f477b496-13b6-405f-b11b-f6acc29cc28f",
+          "9ae3fd24-13ec-4ce4-8d7c-797245937812",
+          "9c2263df-b66f-4136-a591-a8e05699ed44",
+          "9eace12d-b3ea-449a-b2a8-1b312660928d"
+        ],
+        "contrasts": [
+          {
+            "key": "analytical",
+            "baseline": 3,
+            "differences": [
+              0,
+              -3,
+              -3,
+              -3,
+              -3
+            ]
+          },
+          {
+            "key": "threat_sensitivity",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "confidence",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              3
+            ]
+          },
+          {
+            "key": "history_use",
+            "baseline": 0,
+            "differences": [
+              0,
+              3,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "interaction_read",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "order": 28,
+        "text": "相手が特定の場面で何度もフォールドしている。どう対応することが多い？",
+        "optionIds": [
+          "1642be66-6688-4b6e-b711-a3c2696d7281",
+          "0bf565d0-4af8-4ad9-a49e-b8394dbfd4d2",
+          "e19e5165-d75d-4392-91e4-82fbe9fa80c1",
+          "b00fec82-28be-49da-b3b4-f1c1226c48f6",
+          "eed56ca7-3501-4b8f-96bc-883f8e814aea"
+        ],
+        "contrasts": [
+          {
+            "key": "patience",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "adaptability",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              2,
+              3
+            ]
+          },
+          {
+            "key": "deception",
+            "baseline": 0,
+            "differences": [
+              0,
+              2,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "exploit",
+            "baseline": 3,
+            "differences": [
+              0,
+              -1,
+              -3,
+              -1,
+              -3
+            ]
+          },
+          {
+            "key": "tempo",
+            "baseline": 1,
+            "differences": [
+              0,
+              -1,
+              -1,
+              -1,
+              -1
+            ]
+          },
+          {
+            "key": "overview",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "order": 29,
+        "text": "こちらの偏りにも対応してきそうな相手と長く対戦する。方針として一番近いのは？",
+        "optionIds": [
+          "b9219ddd-1e85-48c9-8831-060e8f13bfbd",
+          "65b7d426-13d6-4a71-a9d5-1207ad67c6fe",
+          "e235d9b5-7a40-4381-9b18-e436767e0922",
+          "4beea4c3-ec7c-4947-bbbb-d5b03cbfc096",
+          "a36632b3-b87d-4300-9288-d642c916f598"
+        ],
+        "contrasts": [
+          {
+            "key": "analytical",
+            "baseline": 1,
+            "differences": [
+              0,
+              -1,
+              -1,
+              -1,
+              -1
+            ]
+          },
+          {
+            "key": "player_read",
+            "baseline": 0,
+            "differences": [
+              0,
+              2,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "adaptability",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "key": "stability",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "exploit",
+            "baseline": 0,
+            "differences": [
+              0,
+              2,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "action_efficiency",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              3
+            ]
+          },
+          {
+            "key": "interaction_read",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "key": "balance_awareness",
+            "baseline": 3,
+            "differences": [
+              0,
+              -3,
+              -3,
+              -3,
+              -3
+            ]
+          }
+        ]
+      },
+      {
+        "order": 30,
+        "text": "しばらく、自分から参加したいと思える場面が来ていない。自分に一番近いのは？",
+        "optionIds": [
+          "d8930f59-5a42-4975-b03a-17109e9c9c60",
+          "6c6ff473-70ab-4fb7-b915-7d98b0b9ecaa",
+          "ba452e55-f14e-4e0f-8c4c-74452598c90a",
+          "bb73022d-7836-4697-9300-04fe6da262a9"
+        ],
+        "contrasts": [
+          {
+            "key": "initiative",
+            "baseline": 0,
+            "differences": [
+              0,
+              2,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "patience",
+            "baseline": 3,
+            "differences": [
+              0,
+              -3,
+              -3,
+              -3
+            ]
+          },
+          {
+            "key": "stability",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3
+            ]
+          },
+          {
+            "key": "small_edge_accumulation",
+            "baseline": 0,
+            "differences": [
+              0,
+              2,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "fun_orientation",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "order": 31,
+        "text": "少し利益はありそうだが、その後に難しい判断が続きそうな場面。自分に一番近いのは？",
+        "optionIds": [
+          "ef0c6b7d-3637-42a2-b8fc-dfd8737f9382",
+          "ac240dea-474f-4650-811b-4f095f576c2c",
+          "f2f5cb9c-9071-42b9-adbc-c347c27a1afd",
+          "f62a631d-8b6b-47c2-9d52-a3dd81affcbd",
+          "e39944a7-c923-41c7-99f6-f4aa2052ca6f"
+        ],
+        "contrasts": [
+          {
+            "key": "threat_sensitivity",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              3
+            ]
+          },
+          {
+            "key": "exploit",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "planning_horizon",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "key": "small_edge_accumulation",
+            "baseline": 3,
+            "differences": [
+              0,
+              -3,
+              -3,
+              -3,
+              -3
+            ]
+          },
+          {
+            "key": "action_efficiency",
+            "baseline": 0,
+            "differences": [
+              0,
+              3,
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "order": 32,
+        "text": "相手が自分に対してだけ、ベットやレイズを増やしているように感じる。どう対応することが多い？",
+        "optionIds": [
+          "1612d0fe-afbb-45c5-aff3-15b5b0aeb789",
+          "a1273f75-84c7-4585-9b70-acc482f577bd",
+          "44d3063f-e342-4e3e-9ce9-59db4dc9c874",
+          "f1b60c45-d01d-4eee-b0c3-bfa9cbcee348",
+          "b829b47a-3bab-4494-a812-f881c93e2382"
+        ],
+        "contrasts": [
+          {
+            "key": "adaptability",
+            "baseline": 2,
+            "differences": [
+              0,
+              -2,
+              -2,
+              -2,
+              -2
+            ]
+          },
+          {
+            "key": "threat_sensitivity",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "key": "stability",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "exploit",
+            "baseline": 0,
+            "differences": [
+              0,
+              3,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "history_use",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              3
+            ]
+          },
+          {
+            "key": "interaction_read",
+            "baseline": 3,
+            "differences": [
+              0,
+              -3,
+              -3,
+              -3,
+              -3
+            ]
+          },
+          {
+            "key": "pressure_resistance",
+            "baseline": 0,
+            "differences": [
+              0,
+              1,
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "order": 33,
+        "text": "大きなポットになりそうだが、自分の判断では十分に戦える場面。踏み込むか決めるとき一番近いのは？",
+        "optionIds": [
+          "c43cbfe4-f756-4e09-85e2-ebcf5ab7db21",
+          "c8a4925d-2715-46a6-b060-eb4a6e30a5e3",
+          "5c2f9b8f-3c91-472e-83c4-b70e1e694b0b",
+          "0afa40d4-70cd-4d80-a120-4510d4acccb5",
+          "5304dd70-a4b5-4921-9735-27119ce4b594"
+        ],
+        "contrasts": [
+          {
+            "key": "risk_tolerance",
+            "baseline": 2,
+            "differences": [
+              0,
+              -2,
+              -2,
+              -2,
+              -2
+            ]
+          },
+          {
+            "key": "confidence",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "planning_horizon",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "key": "action_efficiency",
+            "baseline": 0,
+            "differences": [
+              0,
+              2,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "pot_size_comfort",
+            "baseline": 3,
+            "differences": [
+              0,
+              -5,
+              -3,
+              -3,
+              -3
+            ]
+          },
+          {
+            "key": "fun_orientation",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "order": 34,
+        "text": "フロップで自分からベットした。ターンは自分にとって少し嫌なカードだが、相手もまだ明確な強さを示していない。一番近いのは？",
+        "optionIds": [
+          "a942715a-1309-4a14-85c7-b4de45f72f64",
+          "80fdacd8-880e-4938-ac7d-36a206158134",
+          "426cb2d1-1a26-45a4-a4a8-81813b454cf4",
+          "7c423721-1d4e-43f8-a26a-8c6d957f3481",
+          "2e699f6a-b76b-4920-a158-51d624250a71"
+        ],
+        "contrasts": [
+          {
+            "key": "analytical",
+            "baseline": 3,
+            "differences": [
+              0,
+              -3,
+              -3,
+              -3,
+              -3
+            ]
+          },
+          {
+            "key": "threat_sensitivity",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              3
+            ]
+          },
+          {
+            "key": "exploit",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "overview",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "key": "attack_momentum",
+            "baseline": 0,
+            "differences": [
+              0,
+              3,
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "order": 35,
+        "text": "同じ相手に以前よく通っていた攻め方が、最近は通らなくなってきた。どう対応することが多い？",
+        "optionIds": [
+          "c4a447c7-ffd3-4cd1-a674-5e33ed9f2074",
+          "1dad847c-a8a5-4416-b4c2-979a0195a443",
+          "56be1a31-115d-4efc-b4b4-e72c44efa74d",
+          "1a1361e1-eb30-4d09-9f96-da8dc319c3c4",
+          "beace912-0485-4b73-a2b1-67bd2aaefcf6"
+        ],
+        "contrasts": [
+          {
+            "key": "patience",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              3
+            ]
+          },
+          {
+            "key": "adaptability",
+            "baseline": 3,
+            "differences": [
+              0,
+              -3,
+              -3,
+              -3,
+              -3
+            ]
+          },
+          {
+            "key": "novelty",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "key": "stability",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "history_use",
+            "baseline": 0,
+            "differences": [
+              0,
+              3,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "interaction_read",
+            "baseline": 3,
+            "differences": [
+              0,
+              -3,
+              -3,
+              -3,
+              -3
+            ]
+          },
+          {
+            "key": "balance_awareness",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              2,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "order": 36,
+        "text": "信頼できるプレイヤーと、自分の戦略上の結論が違った。どうすることが多い？",
+        "optionIds": [
+          "bba8bbb1-26ce-4aa8-9f41-d57f7baf9012",
+          "98d0dce1-b8b1-4f6c-ab49-ed42b9c12d24",
+          "5a33cb2d-b42b-42ee-89bb-f983d36d416f",
+          "0a9b3b90-f9f9-413f-9e09-2fbdc8446e97",
+          "e625395d-26e2-4d1a-b55a-4537beafd6d3"
+        ],
+        "contrasts": [
+          {
+            "key": "analytical",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0,
+              2
+            ]
+          },
+          {
+            "key": "novelty",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "key": "exploit",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "key": "learning_receptivity",
+            "baseline": 3,
+            "differences": [
+              0,
+              -3,
+              -3,
+              -1,
+              -3
+            ]
+          },
+          {
+            "key": "independent_judgment",
+            "baseline": 0,
+            "differences": [
+              0,
+              3,
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "order": 37,
+        "text": "大きなポットを失った直後、次のハンドではどうすることが多い？",
+        "optionIds": [
+          "473700bf-ba5e-4a32-addd-66183652cd73",
+          "82fae2c9-ad35-4365-9ee8-37f00b835179",
+          "754f6371-25c2-4840-aa9a-c6fa9b922891",
+          "b954afee-a8ba-434e-8375-378184f2660b",
+          "c13cea9f-26e0-4233-8520-2dbc498f7792"
+        ],
+        "contrasts": [
+          {
+            "key": "risk_tolerance",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              2,
+              0
+            ]
+          },
+          {
+            "key": "threat_sensitivity",
+            "baseline": 0,
+            "differences": [
+              0,
+              3,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "stability",
+            "baseline": 3,
+            "differences": [
+              0,
+              -3,
+              -3,
+              -5,
+              -3
+            ]
+          },
+          {
+            "key": "interaction_read",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "pressure_resistance",
+            "baseline": 1,
+            "differences": [
+              0,
+              -1,
+              -1,
+              -1,
+              -1
+            ]
+          },
+          {
+            "key": "fun_orientation",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "order": 38,
+        "text": "小さな利益を取れそうな場面が何度も続いている。一番近いのは？",
+        "optionIds": [
+          "ee228549-493f-4b0f-84fa-02c052255edb",
+          "aaf3e2a0-c61b-44d5-a477-6c0cc1a84603",
+          "0df156f7-0f25-45ee-9f95-394c608dbb0b",
+          "84b623cc-aca1-4efc-adf5-2beb26bc83b3"
+        ],
+        "contrasts": [
+          {
+            "key": "patience",
+            "baseline": 0,
+            "differences": [
+              0,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "adaptability",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "key": "small_edge_accumulation",
+            "baseline": 3,
+            "differences": [
+              0,
+              -3,
+              -3,
+              -3
+            ]
+          },
+          {
+            "key": "action_efficiency",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "order": 39,
+        "text": "相手はコールすることがかなり多い。自分は強いハンドを持っている。どう取りにいく？",
+        "optionIds": [
+          "922cedd8-0dec-49ad-a95d-6f400276de1a",
+          "613d6320-38ff-4e27-9f02-13c2d0a1600c",
+          "bdedbcce-81a0-4ef2-82f2-b2f2e601eb95",
+          "8041f539-aacd-40f7-b602-904b658c00a9"
+        ],
+        "contrasts": [
+          {
+            "key": "value_directness",
+            "baseline": 3,
+            "differences": [
+              0,
+              -3,
+              -3,
+              -3
+            ]
+          },
+          {
+            "key": "exploit",
+            "baseline": 1,
+            "differences": [
+              0,
+              -1,
+              -1,
+              -1
+            ]
+          },
+          {
+            "key": "history_use",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "key": "interaction_read",
+            "baseline": 0,
+            "differences": [
+              0,
+              2,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "balance_awareness",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "order": 40,
+        "text": "相手がよくフォールドする場面で、自分のハンドは弱い。どう対応することが多い？",
+        "optionIds": [
+          "93707856-92b4-4325-be76-ad43ef4a4bee",
+          "be5d1441-646a-4e40-b2b8-63c7dce7db61",
+          "cac5e46e-6a0e-4301-8bd8-d12518ae7560",
+          "1a33ac57-258d-48f6-a5b6-163e4c467e34",
+          "0d9c1525-829c-467d-b028-1770f2536ef6"
+        ],
+        "contrasts": [
+          {
+            "key": "patience",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "key": "adaptability",
+            "baseline": 0,
+            "differences": [
+              0,
+              2,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "confidence",
+            "baseline": 1,
+            "differences": [
+              0,
+              -1,
+              -1,
+              -1,
+              -1
+            ]
+          },
+          {
+            "key": "exploit",
+            "baseline": 3,
+            "differences": [
+              0,
+              -1,
+              -3,
+              -3,
+              -3
+            ]
+          },
+          {
+            "key": "fun_orientation",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              3
+            ]
+          },
+          {
+            "key": "balance_awareness",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "order": 41,
+        "text": "相手の動作は弱そうに見えるが、以前は同じような動作で強いハンドも見ている。何を一番重視する？",
+        "optionIds": [
+          "9d1b67e0-2cdd-4964-ba92-881288d32e1d",
+          "a2288259-c2cd-4d55-8053-1d6dfab87249",
+          "42a7b872-1751-40dc-8154-d165799ccb5c",
+          "b05af7c4-c41e-48c0-874b-8aa98e310173"
+        ],
+        "contrasts": [
+          {
+            "key": "analytical",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              1
+            ]
+          },
+          {
+            "key": "player_read",
+            "baseline": 0,
+            "differences": [
+              0,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "confidence",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              -2
+            ]
+          },
+          {
+            "key": "history_use",
+            "baseline": 3,
+            "differences": [
+              0,
+              -3,
+              -3,
+              -3
+            ]
+          }
+        ]
+      },
+      {
+        "order": 42,
+        "text": "相手はこちらを「この場面ではあまりブラフしない人」だと思っていそう。一番近い考えは？",
+        "optionIds": [
+          "631eeec0-af80-4be6-ac36-3a1e0ce2a1a2",
+          "d1142aa3-d13e-4fe5-a9a9-dd1011f8091e",
+          "28c5317c-7da3-4e5d-98aa-2e9dc6262246",
+          "7ae6dfef-15e0-4d7e-9ce8-e549cbfcf341",
+          "95ec3dbf-c0c6-4ab6-bf1a-a0ca6e676ed5"
+        ],
+        "contrasts": [
+          {
+            "key": "deception",
+            "baseline": 3,
+            "differences": [
+              0,
+              -3,
+              -3,
+              -3,
+              -3
+            ]
+          },
+          {
+            "key": "novelty",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "key": "stability",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "key": "exploit",
+            "baseline": 0,
+            "differences": [
+              0,
+              2,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "interaction_read",
+            "baseline": 2,
+            "differences": [
+              0,
+              0,
+              -2,
+              -2,
+              -2
+            ]
+          },
+          {
+            "key": "fun_orientation",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              2
+            ]
+          },
+          {
+            "key": "balance_awareness",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "order": 43,
+        "text": "自分のハンド自体は弱い。ただ、この場面では自分側に強いハンドが多く残っている。どうすることが多い？",
+        "optionIds": [
+          "2cb42a1f-98d1-4077-ab77-54c522cbab32",
+          "d6e5d833-f942-4b29-92d4-6a79953788a9",
+          "a622dd36-3de5-41d6-b507-2d42098b94aa",
+          "720a58f3-4051-4754-a5be-2714e77276f2",
+          "0389c427-960e-45c1-915b-fc23ed8cf24f"
+        ],
+        "contrasts": [
+          {
+            "key": "initiative",
+            "baseline": 1,
+            "differences": [
+              0,
+              -1,
+              -1,
+              -1,
+              -1
+            ]
+          },
+          {
+            "key": "analytical",
+            "baseline": 3,
+            "differences": [
+              0,
+              -3,
+              -3,
+              -3,
+              -3
+            ]
+          },
+          {
+            "key": "value_directness",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              1,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "novelty",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              1
+            ]
+          },
+          {
+            "key": "exploit",
+            "baseline": 0,
+            "differences": [
+              0,
+              3,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "planning_horizon",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "key": "fun_orientation",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "order": 44,
+        "text": "相手が一度だけ、弱そうなアクションを見せた。まだ同じ傾向を繰り返すかは分からない。どうすることが多い？",
+        "optionIds": [
+          "e2096cc9-e442-43dd-9bf5-47d3ea1883ae",
+          "dee8e2f6-8413-4a08-964a-6438df65857c",
+          "b8a5d322-22ca-4dc4-a338-f3205a6b7d95",
+          "dd2e632a-7fa1-4e62-b8f6-03caa922a325"
+        ],
+        "contrasts": [
+          {
+            "key": "initiative",
+            "baseline": 2,
+            "differences": [
+              0,
+              -2,
+              -2,
+              -2
+            ]
+          },
+          {
+            "key": "patience",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "key": "analytical",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3
+            ]
+          },
+          {
+            "key": "stability",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              2,
+              0
+            ]
+          },
+          {
+            "key": "exploit",
+            "baseline": 0,
+            "differences": [
+              0,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "tempo",
+            "baseline": 3,
+            "differences": [
+              0,
+              -3,
+              -3,
+              -3
+            ]
+          },
+          {
+            "key": "history_use",
+            "baseline": 0,
+            "differences": [
+              0,
+              1,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "order": 45,
+        "text": "想定していなかった展開になり、事前に考えていたプランが使えなくなった。どうすることが多い？",
+        "optionIds": [
+          "0a893299-d445-4fc9-bbe3-4a1c2d02446a",
+          "b8b11005-eebd-4f2e-a910-bcd854d7604d",
+          "4c23f41f-69fa-42ce-a3f9-9594bb64137d",
+          "e9b88780-14d7-4cd8-af3c-b74a0885c148"
+        ],
+        "contrasts": [
+          {
+            "key": "adaptability",
+            "baseline": 1,
+            "differences": [
+              0,
+              -1,
+              -1,
+              -1
+            ]
+          },
+          {
+            "key": "novelty",
+            "baseline": 1,
+            "differences": [
+              0,
+              -1,
+              -1,
+              -1
+            ]
+          },
+          {
+            "key": "stability",
+            "baseline": 0,
+            "differences": [
+              0,
+              2,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "exploit",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "key": "action_efficiency",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3
+            ]
+          },
+          {
+            "key": "improvisation",
+            "baseline": 4,
+            "differences": [
+              0,
+              -4,
+              -4,
+              -4
+            ]
+          }
+        ]
+      },
+      {
+        "order": 46,
+        "text": "相手から何度も大きなベットやレイズを受け、継続的にプレッシャーをかけられている。自分に一番近いのは？",
+        "optionIds": [
+          "c874d5df-4de6-460e-b81f-b5c49ab047cc",
+          "17882cac-f98c-4853-b891-0186113a5022",
+          "e2e1af67-ef69-4bc3-94fd-663833b8f5b3",
+          "8658e722-efc3-4c14-b756-fffe8a1dc07e"
+        ],
+        "contrasts": [
+          {
+            "key": "initiative",
+            "baseline": 2,
+            "differences": [
+              0,
+              -2,
+              -2,
+              -2
+            ]
+          },
+          {
+            "key": "patience",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "key": "analytical",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3
+            ]
+          },
+          {
+            "key": "threat_sensitivity",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              2,
+              0
+            ]
+          },
+          {
+            "key": "confidence",
+            "baseline": 0,
+            "differences": [
+              0,
+              2,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "pressure_resistance",
+            "baseline": 2,
+            "differences": [
+              0,
+              -2,
+              -2,
+              -2
+            ]
+          },
+          {
+            "key": "independent_judgment",
+            "baseline": 0,
+            "differences": [
+              0,
+              2,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "order": 47,
+        "text": "自分からベットやレイズを選べそうな場面。攻めると決める理由として、一番近いのは？",
+        "optionIds": [
+          "0f481a1b-a4c8-4637-8f5b-906dc9dce66e",
+          "652a2d9f-0eee-415c-9b9d-f793a4d14283",
+          "df36c945-4aa4-4fee-9bb9-55b9410b961b",
+          "a721a33c-7eb9-4f1a-a13a-9d5cbd3fd556",
+          "9a447cca-709b-4644-a4e7-218e14235e0a"
+        ],
+        "contrasts": [
+          {
+            "key": "initiative",
+            "baseline": 4,
+            "differences": [
+              0,
+              -4,
+              -4,
+              -4,
+              -4
+            ]
+          },
+          {
+            "key": "value_directness",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "novelty",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "key": "confidence",
+            "baseline": 1,
+            "differences": [
+              0,
+              -1,
+              -1,
+              -1,
+              -1
+            ]
+          },
+          {
+            "key": "exploit",
+            "baseline": 0,
+            "differences": [
+              0,
+              3,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "fun_orientation",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              3
+            ]
+          }
+        ]
+      },
+      {
+        "order": 48,
+        "text": "参加しても悪くなさそうだが、後で難しい判断になりやすい場面。見送る、または慎重に進める理由として一番近いのは？",
+        "optionIds": [
+          "ef186036-653e-4ddf-9a3f-5712af9cea22",
+          "c03516e4-6cdf-4fd7-a201-c179d4b4b83a",
+          "d7f6734f-b066-40af-bd61-05e89f18ec69",
+          "69231ffc-7b65-49ba-8cb9-e08f6a337fc4",
+          "1ee51e56-bb29-4609-870a-53aa08b577c0"
+        ],
+        "contrasts": [
+          {
+            "key": "patience",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "key": "threat_sensitivity",
+            "baseline": 0,
+            "differences": [
+              0,
+              3,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "action_efficiency",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              3
+            ]
+          },
+          {
+            "key": "retreat_response",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "collision_avoidance",
+            "baseline": 4,
+            "differences": [
+              0,
+              -4,
+              -4,
+              -4,
+              -4
+            ]
+          }
+        ]
+      },
+      {
+        "order": 49,
+        "text": "相手によって自分のプレーを変えるとき、一番近い考え方は？",
+        "optionIds": [
+          "c06de727-fcd6-472e-a0b3-11a7a82ad222",
+          "f95f8724-02fe-4b59-b536-271b438ea5b9",
+          "ff06a51f-1c76-4beb-a3b6-10f9236834eb",
+          "3dbc592a-e80d-43f3-b26e-c8027e7c9513",
+          "dde373a4-b2e3-4634-8daf-7dd02fba9167"
+        ],
+        "contrasts": [
+          {
+            "key": "player_read",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "key": "adaptability",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              4
+            ]
+          },
+          {
+            "key": "deception",
+            "baseline": 0,
+            "differences": [
+              0,
+              2,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "exploit",
+            "baseline": 3,
+            "differences": [
+              0,
+              -3,
+              -3,
+              -3,
+              -3
+            ]
+          },
+          {
+            "key": "overview",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              3
+            ]
+          },
+          {
+            "key": "history_use",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "interaction_read",
+            "baseline": 0,
+            "differences": [
+              0,
+              3,
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "order": 50,
+        "text": "普段より大きなベットやレイズを選ぶとしたら、一番近い理由は？",
+        "optionIds": [
+          "07cbccc9-6f86-40dc-ab1a-618d4a774227",
+          "9edcecf5-1059-418d-85b4-d076beca0e7e",
+          "8c26b430-24cc-45db-8e48-065fd0358dd0",
+          "a8bda221-d6dc-4aa0-bcf1-b740b21ab89d",
+          "3f471f8c-1330-4085-b02f-206351e52464"
+        ],
+        "contrasts": [
+          {
+            "key": "initiative",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ]
+          },
+          {
+            "key": "tempo",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "key": "pressure_resistance",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              0,
+              0,
+              3
+            ]
+          },
+          {
+            "key": "selective_burst",
+            "baseline": 3,
+            "differences": [
+              0,
+              -3,
+              -3,
+              -3,
+              -3
+            ]
+          },
+          {
+            "key": "pot_size_comfort",
+            "baseline": 0,
+            "differences": [
+              0,
+              0,
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "key": "attack_momentum",
+            "baseline": 0,
+            "differences": [
+              0,
+              3,
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "personaReferenceComparison": {
+    "status": "PASS",
+    "personas": 30,
+    "dimensions": 32,
+    "comparedValues": 960,
+    "sourceCommit": "88cbf26b6f839914a9f867868f03b4d77a991ce3",
+    "classification": "NOT VERIFIED"
+  },
+  "classificationSemanticValidity": "UNKNOWN: fixture includes option scores/personas, not authoritative 36-animal classifier definitions or human-reviewed labels",
+  "liveSchemaAndQuestions": "NOT CHECKED",
+  "scoringChanges": "none",
+  "sqlExecuted": false
+}

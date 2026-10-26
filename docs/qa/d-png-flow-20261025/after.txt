@@ -1,0 +1,15 @@
+✔ mobile real canvas exports a nonempty PNG with the existing filename (2954.208082ms)
+✔ image failures redact details and allow the same result to retry successfully (2937.005566ms)
+✔ hang reaches a finite deadline and enables retry (2148.378402ms)
+✔ encode-hang reaches a finite deadline and enables retry (2974.288941ms)
+✔ an old pending image cannot download after restarting diagnosis (2379.944365ms)
+✔ two synchronous save activations start only one image operation (1556.764723ms)
+✔ changing to another saved result invalidates a pending PNG operation (2703.925349ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17835.459827

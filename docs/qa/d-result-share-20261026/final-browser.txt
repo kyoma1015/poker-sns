@@ -1,0 +1,23 @@
+✔ late old result cannot replace the newer requested result (1209.981811ms)
+✔ late ownership cannot expose old result or owner actions on the newer nonowned result (893.715908ms)
+✔ failed result read is redacted and retry recovers the requested result (722.482338ms)
+✔ mismatched result identity is refused without rendering its data (680.68776ms)
+✔ post error is redacted, keeps the draft and permits retry (850.04936ms)
+✔ result navigation before authentication completes refuses the old post write (993.599628ms)
+✔ unmount before authentication completes refuses the old post write (1361.145193ms)
+✔ late post completion cannot close the newer result draft (3264.073367ms)
+✔ same-tick duplicate share activation creates one write (2720.07296ms)
+✔ restart clears the saved-result URL while opening question one (2178.312713ms)
+✔ question transport failure has safe retry and recovers all50 questions (1980.790635ms)
+✔ final answer transport failure retries exactly50 answers and persists the new result URL (9723.462579ms)
+✔ presentation-invalid does not invent positive traits from malformed or nonpositive scores (1184.891902ms)
+✔ presentation-negative does not invent positive traits from malformed or nonpositive scores (1130.879526ms)
+✔ presentation-normalized ranks actual result traits by the existing per-axis ceilings (1221.652418ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30258.973755

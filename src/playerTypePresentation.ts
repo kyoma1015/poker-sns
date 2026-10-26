@@ -57,11 +57,29 @@ export function relativePositiveScore(key: string, score: number): number {
   return cap && Number.isFinite(score) ? Math.max(0, Math.min(1, score / cap)) : 0
 }
 
+// Display-only runtime boundary: RPC JSON scores are numbers, never coerced
+// strings/booleans/arrays. Malformed inputs must not execute accessors/valueOf.
+function presentationScores(detail: ScoreDetail): Record<string, number> {
+  const scores: Record<string, number> = Object.create(null)
+  if (!detail || typeof detail !== 'object' || Array.isArray(detail)) return scores
+  const fields = Object.getOwnPropertyDescriptors(detail)
+  for (const name of ['trait_scores', 'discriminator_scores']) {
+    const record = fields[name]?.value
+    if (!record || typeof record !== 'object' || Array.isArray(record)) continue
+    for (const [key, descriptor] of Object.entries(Object.getOwnPropertyDescriptors(record))) {
+      if (!Object.hasOwn(traitPositiveMax, key)) continue
+      scores[key] = Object.hasOwn(descriptor, 'value') && Number.isFinite(descriptor.value)
+        ? descriptor.value : NaN
+    }
+  }
+  return scores
+}
+
 export function topPersonalTraits(detail: ScoreDetail) {
-  const all = { ...detail.trait_scores, ...detail.discriminator_scores }
+  const all = presentationScores(detail)
   return Object.entries(all)
-    .filter(([key, value]) => Object.hasOwn(traitCopy, key) && Number.isFinite(Number(value)) && Number(value) > 0)
-    .sort((a, b) => relativePositiveScore(b[0], Number(b[1])) - relativePositiveScore(a[0], Number(a[1])))
+    .filter(([key, value]) => Object.hasOwn(traitCopy, key) && Number.isFinite(value) && value > 0)
+    .sort((a, b) => relativePositiveScore(b[0], b[1]) - relativePositiveScore(a[0], a[1]))
     .slice(0, 3)
     .map(([key]) => ({ key, ...traitCopy[key] }))
 }
@@ -69,8 +87,8 @@ export function topPersonalTraits(detail: ScoreDetail) {
 // These thresholds select wording, not skill ratings or animal classification.
 // At least 40% of the positive scale is required before asserting a tendency.
 export function personalAdvice(detail: ScoreDetail) {
-  const scores = { ...detail.trait_scores, ...detail.discriminator_scores }
-  const raw = (key: string) => Number(scores[key] ?? 0)
+  const scores = presentationScores(detail)
+  const raw = (key: string) => scores[key] ?? 0
   const relative = (key: string) => relativePositiveScore(key, raw(key))
 
   if (relative('initiative') >= 0.45 && relative('confidence') >= 0.3 &&

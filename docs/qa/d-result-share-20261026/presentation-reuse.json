@@ -1,0 +1,24 @@
+{
+  "before_source_commit": "1002657",
+  "fixed_input_commit": "fb8b73d7907606cb18fdcdaa8f085105ab497b73",
+  "existing_helper": "src/playerTypePresentation.ts",
+  "helper_git_blob": "2a01415e64ec33c43209f2f79306bf9fe1e6b1c4",
+  "before": {
+    "tests": 3,
+    "pass": 0,
+    "fail": 3
+  },
+  "after_browser": {
+    "tests": 15,
+    "pass": 15,
+    "fail": 0
+  },
+  "full_tests": {
+    "unit": 121,
+    "prior_png_browser": 7,
+    "result_browser": 15,
+    "pass": 143,
+    "fail": 0
+  },
+  "claim": "existing presentation helper selectively wired; no helper score/threshold/advice definitions modified"
+}

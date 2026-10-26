@@ -1,0 +1,13 @@
+✔ unchanged historical fixture remains conditional and semantically unverified (292.780203ms)
+✔ equal duplicate score rows cannot silently pass through Map overwrite (78.302613ms)
+✔ duplicate score row cannot conceal corrupt earlier values (18.784602ms)
+✔ orphan option score rows are rejected even if all real scores are complete (9.666365ms)
+✔ existing missing-score detection is preserved (62.87634ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 495.259836

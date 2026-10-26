@@ -1,0 +1,14 @@
+✔ strategy review pack exposes literal evidence and retains semantic BLOCKED (86.923948ms)
+✔ all strategy term matches are traceable to exact question and option text (29.93257ms)
+✔ every contrast reconstructs original option weights without changing axes or their meaning (63.421558ms)
+✔ added literal terms never upgrade semantic validity or execute a classifier (32.104384ms)
+✔ invalid score/reference evidence suppresses strategy pack (24.4816ms)
+✔ evidence generation preserves source fixture and all 960 historical reference values (56.554877ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 313.96684

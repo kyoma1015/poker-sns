@@ -1,0 +1,13 @@
+✔ successful PNG download preserves filename, click and delayed URL cleanup (40.838468ms)
+✔ PNG create failure still schedules object URL cleanup and preserves exception (2.687824ms)
+✔ PNG append failure still schedules object URL cleanup and preserves exception (1.776906ms)
+✔ PNG click failure still schedules object URL cleanup and preserves exception (4.774318ms)
+✔ PNG remove failure still schedules object URL cleanup and preserves exception (6.667901ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 69.694961

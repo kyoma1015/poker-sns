@@ -1,0 +1,16 @@
+✔ string score cannot produce a top tendency or strategic advice (5.525195ms)
+✔ boolean score cannot produce a top tendency or strategic advice (0.157779ms)
+✔ array score cannot produce a top tendency or strategic advice (0.598966ms)
+✔ coercible object score cannot produce a top tendency or strategic advice (0.221695ms)
+✔ throwing numeric coercion is never evaluated (0.173843ms)
+✔ malformed detail and score records fall back without exceptions (0.739158ms)
+✔ score accessors are not evaluated during result presentation (0.150057ms)
+✔ finite negative and positive numeric presentation is preserved (0.299453ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22.754227

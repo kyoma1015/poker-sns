@@ -1,0 +1,171 @@
+✖ string score cannot produce a top tendency or strategic advice (3.040777ms)
+✖ boolean score cannot produce a top tendency or strategic advice (0.411522ms)
+✖ array score cannot produce a top tendency or strategic advice (0.414987ms)
+✖ coercible object score cannot produce a top tendency or strategic advice (0.360004ms)
+✖ throwing numeric coercion is never evaluated (0.239802ms)
+✖ malformed detail and score records fall back without exceptions (0.227564ms)
+✖ score accessors are not evaluated during result presentation (0.217118ms)
+✔ finite negative and positive numeric presentation is preserved (0.665316ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 1
+ℹ fail 7
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15.746821
+
+✖ failing tests:
+
+test at tests/player-type-presentation-values.test.mjs:7:2
+✖ string score cannot produce a top tendency or strategic advice (3.040777ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   {
+  +     key: 'initiative',
+  +     label: '自分から動く',
+  +     text: '受け身で待つより、自分からアクションを起こして相手に判断を迫る傾向があります。'
+  +   }
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-presentation-values.test.mjs:8:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type-presentation-values.test.mjs:7:2
+✖ boolean score cannot produce a top tendency or strategic advice (0.411522ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   {
+  +     key: 'initiative',
+  +     label: '自分から動く',
+  +     text: '受け身で待つより、自分からアクションを起こして相手に判断を迫る傾向があります。'
+  +   }
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-presentation-values.test.mjs:8:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type-presentation-values.test.mjs:7:2
+✖ array score cannot produce a top tendency or strategic advice (0.414987ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   {
+  +     key: 'initiative',
+  +     label: '自分から動く',
+  +     text: '受け身で待つより、自分からアクションを起こして相手に判断を迫る傾向があります。'
+  +   }
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-presentation-values.test.mjs:8:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type-presentation-values.test.mjs:7:2
+✖ coercible object score cannot produce a top tendency or strategic advice (0.360004ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   {
+  +     key: 'initiative',
+  +     label: '自分から動く',
+  +     text: '受け身で待つより、自分からアクションを起こして相手に判断を迫る傾向があります。'
+  +   }
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-presentation-values.test.mjs:8:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type-presentation-values.test.mjs:12:1
+✖ throwing numeric coercion is never evaluated (0.239802ms)
+  Error: must not evaluate
+      at Object.valueOf (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-presentation-values.test.mjs:13:51)
+      at Number (<anonymous>)
+      at file:///workspace/work/issue22-d-strategy-evidence/src/playerTypePresentation.ts:63:80
+      at Array.filter (<anonymous>)
+      at topPersonalTraits (file:///workspace/work/issue22-d-strategy-evidence/src/playerTypePresentation.ts:63:6)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-presentation-values.test.mjs:14:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+
+test at tests/player-type-presentation-values.test.mjs:17:1
+✖ malformed detail and score records fall back without exceptions (0.227564ms)
+  TypeError: Cannot read properties of null (reading 'trait_scores')
+      at topPersonalTraits (file:///workspace/work/issue22-d-strategy-evidence/src/playerTypePresentation.ts:61:27)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-presentation-values.test.mjs:19:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/player-type-presentation-values.test.mjs:23:1
+✖ score accessors are not evaluated during result presentation (0.217118ms)
+  Error: no
+      at Object.get [as initiative] (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-presentation-values.test.mjs:24:109)
+      at topPersonalTraits (file:///workspace/work/issue22-d-strategy-evidence/src/playerTypePresentation.ts:61:27)
+      at TestContext.<anonymous> (file:///workspace/work/issue22-d-strategy-evidence/tests/player-type-presentation-values.test.mjs:25:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)

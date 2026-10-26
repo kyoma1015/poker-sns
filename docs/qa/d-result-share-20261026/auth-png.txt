@@ -1,0 +1,16 @@
+4:02:38 AM [vite] (client) Re-optimizing dependencies because vite config has changed
+✔ mobile real canvas exports a nonempty PNG with the existing filename (2386.059472ms)
+✔ image failures redact details and allow the same result to retry successfully (2883.720886ms)
+✔ hang reaches a finite deadline and enables retry (2816.509964ms)
+✔ encode-hang reaches a finite deadline and enables retry (2767.812853ms)
+✔ an old pending image cannot download after restarting diagnosis (2417.130679ms)
+✔ two synchronous save activations start only one image operation (1953.17192ms)
+✔ changing to another saved result invalidates a pending PNG operation (1804.54715ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17256.715138

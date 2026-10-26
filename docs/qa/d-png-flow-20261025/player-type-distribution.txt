@@ -1,0 +1,14 @@
+✔ score audit measures all 50 questions and 32 axes without claiming a classifier (83.187989ms)
+✔ exact reachable extrema equal sums of per-question extrema including negative scores (40.948239ms)
+✔ seeded samples are reproducible, complete and do not mutate historical source (59.821653ms)
+✔ historical persona totals remain within exact bounds without invented animal labels (44.968851ms)
+✔ invalid scores cannot generate apparently valid distribution evidence (6.763063ms)
+✔ finite individual weights cannot produce nonfinite aggregate evidence (28.316535ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 278.967564

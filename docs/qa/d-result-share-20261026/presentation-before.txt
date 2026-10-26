@@ -1,0 +1,70 @@
+✖ presentation-invalid does not invent positive traits from malformed or nonpositive scores (1186.037461ms)
+✖ presentation-negative does not invent positive traits from malformed or nonpositive scores (681.104635ms)
+✖ presentation-normalized ranks actual result traits by the existing per-axis ceilings (742.49788ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2685.056506
+
+✖ failing tests:
+
+test at tests/player-type-result-browser.test.mjs:46:68
+✖ presentation-invalid does not invent positive traits from malformed or nonpositive scores (1186.037461ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-published-D-c523f547/tests/player-type-result-browser.test.mjs:46:198)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type-result-browser.test.mjs:46:68
+✖ presentation-negative does not invent positive traits from malformed or nonpositive scores (681.104635ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-published-D-c523f547/tests/player-type-result-browser.test.mjs:46:198)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-type-result-browser.test.mjs:47:1
+✖ presentation-normalized ranks actual result traits by the existing per-axis ceilings (742.49788ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   '弱点を利益に変える',
+      '待てる',
+      'リスクを取れる',
+  -   '弱点を利益に変える'
+    ]
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-published-D-c523f547/tests/player-type-result-browser.test.mjs:47:160)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

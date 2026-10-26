@@ -1,0 +1,22 @@
+✔ all historical persona score references are explicitly verified without classifying animals (29.231806ms)
+✔ one altered reference score is rejected instead of silently passing the audit (17.719211ms)
+✔ malformed missing reference blocks evidence (15.758009ms)
+✔ malformed null reference blocks evidence (17.11653ms)
+✔ malformed array reference blocks evidence (15.256551ms)
+✔ malformed string reference blocks evidence (22.544452ms)
+✔ invalid missing dimension cannot masquerade as reference verification (17.012013ms)
+✔ invalid extra dimension cannot masquerade as reference verification (16.774695ms)
+✔ invalid nonfinite cannot masquerade as reference verification (19.984895ms)
+✔ invalid numeric string cannot masquerade as reference verification (32.878926ms)
+✔ invalid boolean cannot masquerade as reference verification (17.36798ms)
+✔ inherited score value cannot replace an own reference dimension (16.523816ms)
+✔ valid reference audit does not mutate fixture answers or scores (19.133819ms)
+✔ empty persona input cannot produce a zero-comparison PASS (11.991938ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 277.436216
