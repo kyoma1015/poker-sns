@@ -153,9 +153,10 @@ def export_action_classes(records,*,max_records=1326):
             'coverage_complete':complete,'explicit_hero_mass':mass,'observed_action_values':means,
             'complete_class_action_values':means if complete else None,'ev':None}
     return {'schema':'pokerid-explicit-belief-action169-v1','actions':list(first.actions),'hands':hands,
-        'concrete_combinations':len(seen),
+        'concrete_combinations':len(seen),'public_cards':list(first.public_cards),
         'combo_provenance':[{'cards':list(r.cards),'hero_information_digest':r.hero_information_digest,
             'support_digest':r.support_digest,'support_size':r.support_size,'support_complete':r.support_complete,
+            'action_values':list(r.action_values) if r.action_values is not None else None,
             'explicit_hero_mass':r.hero_mass,'observation_evidence_mass':r.observation_evidence_mass,
             'hero_counterfactual_mass':r.hero_counterfactual_mass} for r in records],
         'observation_digest':first.observation_digest,

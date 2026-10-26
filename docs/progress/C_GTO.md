@@ -124,3 +124,13 @@ existing CI suite394=old349+45new. Three serialized reports exactly match SHA
 418f0a4bdca743b6d4e44fad0440654e01270e89aeb543b2a50e65d41d48d036.
 See GTO_COMBO_ACTION_EXPORT_20261025.md. No production/main/checkpoint/controller
 adoption, no originalG9/G11 or convergence claim. CI is pending parent publication.
+
+## Coverage-preserving offline consumer — 2026-10-26
+Native exactJSON now has a usable read-only CLI/reusable view/staticHTML consumer.
+It pins observation/config/policy, recomputes cardcoverage/counts/masses/conditional
+means from additive board+percombo data, withholds legacy unverified values, and
+labels frequencies unavailable. Generic native/169EVnull and convergenceUNKNOWN
+remain. Local445PASS includes6repeatstub cases; comparableCI439=old394+45new.
+See GTO_ACTION_REPORT_CONSUMER_20261026.md and action-report-consumer-20261026 QA.
+No frontend integration/production/runtime/oldcheckpoint claim. G9/G11 original
+vendor/ABI/expected outputs/history gates remain blocked; parentpublication CI pending.
