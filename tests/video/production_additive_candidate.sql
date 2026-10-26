@@ -162,7 +162,9 @@ begin
  return v;
 end $$;
 revoke all on function public.video_production_publish_fenced(uuid,text,uuid,text,double precision,text) from public,anon,service_role;
-grant execute on function public.video_production_publish_fenced(uuid,text,uuid,text,double precision,text) to authenticated;
+-- FAIL CLOSED: owner JWT cannot supply trusted ffprobe metadata. A future
+-- server-attested publication path must be independently verified before grant.
+-- No authenticated or service_role EXECUTE until that implementation exists.
 create or replace function public.video_production_reconcile_fenced(p_owner uuid,p_path text,p_generation uuid)
 returns uuid language plpgsql security definer set search_path='' as $$
 declare v uuid;
