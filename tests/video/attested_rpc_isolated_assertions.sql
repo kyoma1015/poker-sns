@@ -49,6 +49,22 @@ begin
  exception when raise_exception then
   if SQLERRM='tampered content accepted' then raise; end if;
  end;
+ -- A correctly signed proof must still fail for a different Storage generation.
+ begin
+  perform public.video_publish_attested_v1(o,p,'f0000000-0000-0000-0000-000000000001'::uuid,h,2000,content,expires,n,signature,1::smallint);
+  raise exception 'mismatched generation accepted';
+ exception when raise_exception then
+  if SQLERRM='mismatched generation accepted' then raise; end if;
+ end;
+ -- A different caller cannot publish the owner's media, even with a valid signature.
+ perform set_config('request.jwt.claim.sub','10000000-0000-0000-0000-000000000002',true);
+ begin
+  perform public.video_publish_attested_v1(o,p,g,h,2000,content,expires,n,signature,1::smallint);
+  raise exception 'foreign JWT accepted';
+ exception when raise_exception then
+  if SQLERRM='foreign JWT accepted' then raise; end if;
+ end;
+ perform set_config('request.jwt.claim.sub',o::text,true);
  result:=public.video_publish_attested_v1(o,p,g,h,2000,content,expires,n,signature,1::smallint);
  if result is null then raise exception 'valid attestation rejected'; end if;
  begin
