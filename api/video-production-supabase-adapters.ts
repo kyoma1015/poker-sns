@@ -105,7 +105,14 @@ export function createProductionSupabaseVideoAdapters(
       if (await authenticate(accessToken) !== ownerId) throw new Error('unauthorized owner')
       ownerPath(ownerId, path)
       const secretHex = process.env.VIDEO_ATTESTATION_KEY_HEX
-      if (!secretHex || !/^[0-9a-f]{64}$/.test(secretHex)) throw new Error('server attestation key unavailable')
+      const keyIdRaw = process.env.VIDEO_ATTESTATION_KEY_ID
+      // Require an explicit DB key identifier for rotation; never silently fall back
+      // to key 1 or sign with a malformed / mismatched runtime configuration.
+      if (!secretHex || !/^[0-9a-f]{64}$/.test(secretHex) ||
+          !keyIdRaw || !/^[1-9][0-9]{0,4}$/.test(keyIdRaw) || Number(keyIdRaw) > 32767) {
+        throw new Error('server attestation key unavailable')
+      }
+      const keyId = Number(keyIdRaw)
       if (!Number.isFinite(duration)) throw new DefinitivePublishRejection('invalid media duration')
       const durationMs = Math.round(duration * 1000)
       if (Math.abs(durationMs / 1000 - duration) > 0.0005) {
@@ -120,7 +127,7 @@ export function createProductionSupabaseVideoAdapters(
       const { data, error } = await viewer.rpc('video_publish_attested_v1', {
         p_owner: ownerId, p_path: path, p_generation: generation,
         p_sha256: sha256, p_duration_ms: durationMs, p_content: content,
-        p_expires_at: expiresAt, p_nonce: nonce, p_signature: signature, p_key_id: 1,
+        p_expires_at: expiresAt, p_nonce: nonce, p_signature: signature, p_key_id: keyId,
       })
       if (error?.code === 'P0001' && /conflicting prior video publication|Storage generation mismatch|invalid fenced publication/.test(error.message)) {
         throw new DefinitivePublishRejection('fenced publication rejected')
