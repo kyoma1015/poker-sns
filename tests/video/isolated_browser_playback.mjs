@@ -183,7 +183,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     },{foreignOwner:'33333333-3333-4333-8333-333333333333',foreignDraft})
     await timelinePage.reload()
     await timelinePage.getByRole('button',{name:'おすすめ'}).click({timeout:20000})
-    await timelinePage.getByText('real isolated end-to-end',{exact:true}).waitFor({timeout:20000})
+    await timelinePage.getByText(expectedContent,{exact:true}).waitFor({timeout:20000})
     // Wait for the asynchronous authenticated restore to finish rather than
     // using a fixed delay that can pass before getUser resolves on slow CI.
     await timelinePage.waitForFunction(() =>
