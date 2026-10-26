@@ -60,6 +60,7 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
       (body as Record<string, unknown>).action === 'reserve' &&
       typeof (body as Record<string, unknown>).object_path === 'string') {
     const path = (body as Record<string, unknown>).object_path as string
+    if (Buffer.byteLength(JSON.stringify(body), 'utf8') > MAX_BODY_BYTES) return res.status(413).end()
     const match = VIDEO_PATH.exec(path)
     if (!match) return res.status(400).end()
     const url = process.env.VITE_SUPABASE_URL
