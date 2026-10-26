@@ -40,9 +40,10 @@ export function createProductionSupabaseVideoAdapters(
   // credential. Until a genuinely restricted credential and audited RPC grants
   // are provisioned, reject production publication even when a feature flag
   // is accidentally enabled. Isolated adapters do not use this path.
-  if (process.env.VIDEO_PRIVILEGED_WRITER_ATTESTED !== 'true') {
-    throw new Error('privileged video writer not independently attested')
-  }
+  // No environment flag can convert a service_role credential into a
+  // least-privilege writer. Reject this production path unconditionally
+  // until it is replaced with a separately scoped credential and audited RPCs.
+  throw new Error('service_role production video writer forbidden')
   const admin = createClient(url, serviceRoleKey, {
     global: { fetch: rpcOnlyFetch },
     auth: { persistSession: false, autoRefreshToken: false },
