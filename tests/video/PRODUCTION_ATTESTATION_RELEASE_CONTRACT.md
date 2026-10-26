@@ -22,4 +22,18 @@ The browser can invoke authenticated PostgREST RPCs directly. Consequently the b
 - Real HTTP reservation → upload → ffprobe → attested publish → viewer playback and ambiguous-commit recovery on disposable stack.
 - Both release toggles remain disabled in production until a separately authorized release.
 
-**Status:** NO-GO. Existing isolated QA tests use a different privileged publication adapter and cannot prove the production attestation path. A green CI is not release evidence until these cases are implemented against the same code.
+## Verified isolated evidence (2026-10-26)
+
+At commit `29959fb67ab1b1149f2db5e61a85197dd9c70dcd`, GitHub Actions Video SQL `40319339001`, Storage HTTP `40319339286`, and Poll-only `40319338889` all succeeded. The Storage HTTP log explicitly confirms `PASS: attested real JWT/RPC/nonce + private Storage RLS + Chromium React playback` and `PASS: attested-path orphan quarantined without publish, overwrite or unsafe delete; original bytes preserved`. These checks run against a disposable local Supabase stack and exercise the signed `video_publish_attested_v1` SQL candidate. They do **not** attest to a deployed production runtime or key provisioning.
+
+## Release blockers requiring separately authorized evidence
+
+- The production adapter's `assertServerAttestationAvailable()` intentionally throws. Never remove this gate solely because isolated CI is green.
+- Verify the pinned ffprobe executable **inside an actual Vercel preview function** via the existing preview-only runtime-attestation route; local/CI execution is insufficient. No production deployment is authorized by this document.
+- Provision and rotate independent signing keys on the runtime and DB-private side without placing them in source, SQL migrations, client-visible variables or logs; verify mismatched, expired and revoked keys fail closed.
+- Review production schema/RPC grants and every effective Storage SELECT/INSERT/UPDATE/DELETE/ALL policy, including broad existing policies. The candidate `video_publish_attested_v1` grant is commented out by design.
+- Confirm ambiguous-commit reconciliation and orphan quarantine behavior under production-equivalent constraints. Safe atomic conditional Storage deletion remains unproven; never enable blind cleanup.
+- Require a separate release authorization before toggles, production SQL, Storage changes, main merge or Vercel production deployment.
+
+**Status: NO-GO.** Isolated signed-RPC E2E is proven; production runtime, secret provisioning, effective RLS and release authorization are not.
+
