@@ -173,6 +173,37 @@ process.env.VIDEO_PRODUCTION_FENCED_READY='true'
 await verifyRealBrowserPlayback({postId,jwt:ownerSession.session.access_token,
  deniedJwt:attackerSession.session.access_token,anon,service:env.SERVICE_ROLE_KEY,
  bytes,expectedContent:content})
+// Live key rotation: the independent active key 2 must successfully sign a
+// NEW object, while key 1 signatures cannot be replayed under key ID 2.
+const rotatedPath=`${owner}/${randomUUID()}.webm`
+assert.ifError((await ownerClient.rpc('video_reserve_object_key',{
+ p_owner:owner,p_path:rotatedPath})).error)
+assert.ifError((await ownerClient.storage.from('post-videos').upload(rotatedPath,bytes,{
+ contentType:'video/webm',upsert:false})).error)
+const {data:rotatedGeneration,error:rotatedGenerationError}=await ownerClient.rpc(
+ 'video_production_storage_generation',{p_owner:owner,p_path:rotatedPath})
+assert.ifError(rotatedGenerationError)
+const rotatedContent='independent key 2 signed post'
+const rotatedClaims={owner,path:rotatedPath,generation:rotatedGeneration,sha256,
+ durationMs,contentSha256:videoAttestationDigest(rotatedContent),
+ expiresAt:Math.floor(Date.now()/1000)+120,nonce:randomUUID().replaceAll('-','')}
+const rotatedSignature=signBinaryVideoAttestation(Buffer.alloc(32,0x42),rotatedClaims)
+const rotatedParams={p_owner:owner,p_path:rotatedPath,p_generation:rotatedGeneration,
+ p_sha256:sha256,p_duration_ms:durationMs,p_content:rotatedContent,
+ p_expires_at:rotatedClaims.expiresAt,p_nonce:rotatedClaims.nonce,
+ p_signature:rotatedSignature,p_key_id:2}
+assert.ok((await ownerClient.rpc('video_publish_attested_v1',{
+ ...rotatedParams,p_key_id:1})).error,'rotated signature must fail under prior key')
+const {data:rotatedPostId,error:rotatedPublishError}=await ownerClient.rpc(
+ 'video_publish_attested_v1',rotatedParams)
+assert.ifError(rotatedPublishError)
+assert.match(rotatedPostId,/^[0-9a-f-]{36}$/)
+assert.ok((await ownerClient.rpc('video_publish_attested_v1',rotatedParams)).error,
+ 'rotated key nonce replay must fail')
+assert.ok((await attacker.from('posts').select('id').eq('id',rotatedPostId)).data?.length===0,
+ 'rotated key publication must retain private RLS')
+console.log('PASS: independently provisioned key 2 publishes through authenticated HTTP RPC; cross-key and nonce replay rejected')
+
 // Same signed-publication pipeline: an uploaded but unfinalized reserved object
 // must be recoverable without deleting or publishing it. The Storage backend
 // has no proven atomic generation-aware delete, so recovery is quarantine-only.
