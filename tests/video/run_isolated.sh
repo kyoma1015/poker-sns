@@ -126,7 +126,8 @@ begin
   exception when raise_exception then
     if SQLERRM <> 'invalid video reservation' then raise; end if;
   end;
-  if (select count(*) from public.video_reserved_object_keys) <> 1 then
+  if (select count(*) from public.video_reserved_object_keys) <> 2 or
+     (select count(*) from public.video_reserved_object_keys where object_path=path and owner_id=owner) <> 1 then
     raise exception 'reservation ledger mutated';
   end if;
 end $$;
