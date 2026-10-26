@@ -3,6 +3,8 @@
 import assert from 'node:assert/strict'
 import { createClient } from '@supabase/supabase-js'
 import { createHash, randomUUID } from 'node:crypto'
+import { createServer } from 'node:http'
+import { createVideoFinalizeHandler } from '../../api/video-finalize.ts'
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import { tmpdir } from 'node:os'
@@ -32,7 +34,52 @@ try {
  bytes=readFileSync(file)
 } finally {rmSync(dir,{recursive:true,force:true})}
 assert.ok(bytes.length>0 && bytes.length<20*1024*1024)
-assert.ifError((await ownerClient.rpc('video_reserve_object_key',{p_owner:owner,p_path:path})).error)
+// Exercise the actual Vercel reservation handler over HTTP, rather than
+// bypassing its bearer-token, owner-path and request-size checks with SDK RPC.
+process.env.VITE_SUPABASE_URL=url
+process.env.VITE_SUPABASE_ANON_KEY=anon
+const reservationHandler=createVideoFinalizeHandler(undefined,{isolatedLocalOnly:true})
+const reservationServer=createServer((req,res)=>{
+ void (async()=>{
+  const chunks=[]
+  for await(const chunk of req) chunks.push(chunk)
+  const raw=Buffer.concat(chunks)
+  let body
+  try {body=JSON.parse(raw.toString('utf8'))} catch {res.writeHead(400);res.end();return}
+  const response={
+   setHeader:(name,value)=>{res.setHeader(name,value);return response},
+   status:code=>{res.statusCode=code;return response},
+   json:value=>{res.setHeader('Content-Type','application/json');res.end(JSON.stringify(value));return response},
+   end:()=>{res.end();return response},
+  }
+  await reservationHandler({method:req.method,headers:req.headers,body},response)
+ })().catch(()=>{if(!res.headersSent)res.statusCode=503;if(!res.writableEnded)res.end()})
+})
+await new Promise(resolve=>reservationServer.listen(0,'127.0.0.1',resolve))
+try {
+ const address=reservationServer.address()
+ assert.ok(address && typeof address!=='string')
+ const endpoint='http://127.0.0.1:'+address.port
+ const {data:{session},error:sessionError}=await ownerClient.auth.getSession()
+ assert.ifError(sessionError)
+ assert.ok(session?.access_token)
+ const reserve=async(jwt,objectPath)=>fetch(endpoint,{
+  method:'POST',headers:{Authorization:'Bearer '+jwt,'Content-Type':'application/json'},
+  body:JSON.stringify({action:'reserve',object_path:objectPath}),
+ })
+ const foreignSession=(await attacker.auth.getSession()).data.session
+ assert.ok(foreignSession?.access_token)
+ assert.equal((await reserve(foreignSession.access_token,path)).status,403,
+  'foreign JWT must not reserve owner Storage key')
+ assert.equal((await reserve('invalid.jwt.token',path)).status,401,
+  'invalid bearer token must not reserve Storage key')
+ const reserved=await reserve(session.access_token,path)
+ assert.equal(reserved.status,201,'real HTTP owner reservation must succeed')
+ assert.deepEqual(await reserved.json(),{reserved:true})
+} finally {
+ await new Promise((resolve,reject)=>reservationServer.close(error=>error?reject(error):resolve()))
+}
+console.log('PASS: actual HTTP JWT owner reservation, foreign-user and invalid-token denial')
 assert.ifError((await ownerClient.storage.from('post-videos').upload(path,bytes,{contentType:'video/webm',upsert:false})).error)
 const {data:gen,error:genError}=await ownerClient.rpc('video_production_storage_generation',{p_owner:owner,p_path:path})
 assert.ifError(genError)
