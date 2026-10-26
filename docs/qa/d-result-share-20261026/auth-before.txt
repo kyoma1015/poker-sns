@@ -1,0 +1,67 @@
+4:04:01 AM [vite] (client) Re-optimizing dependencies because vite config has changed
+✖ account transition qa-other clears the loaded result and draft synchronously (3280.825846ms)
+✖ account transition signout clears the loaded result and draft synchronously (2815.435471ms)
+✖ account transition during pending share authentication refuses the old write (909.714638ms)
+✔ anonymous public-result viewing remains available without owner actions (717.710079ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7807.620432
+
+✖ failing tests:
+
+test at tests/player-type-result-browser.test.mjs:50:35
+✖ account transition qa-other clears the loaded result and draft synchronously (3280.825846ms)
+  locator.waitFor: Timeout 2000ms exceeded.
+  Call log:
+  [2m  - waiting for getByRole('button', { name: '診断をはじめる', exact: true }) to be visible[22m
+  
+      at TestContext.<anonymous> (/workspace/work/issue22-published-D-c523f547/tests/player-type-result-browser.test.mjs:50:296) {
+    log: [ "  - waiting for getByRole('button', { name: '診断をはじめる', exact: true }) to be visible" ],
+    name: 'TimeoutError'
+  }
+
+test at tests/player-type-result-browser.test.mjs:50:35
+✖ account transition signout clears the loaded result and draft synchronously (2815.435471ms)
+  locator.waitFor: Timeout 2000ms exceeded.
+  Call log:
+  [2m  - waiting for getByRole('button', { name: '診断をはじめる', exact: true }) to be visible[22m
+  
+      at TestContext.<anonymous> (/workspace/work/issue22-published-D-c523f547/tests/player-type-result-browser.test.mjs:50:296) {
+    log: [ "  - waiting for getByRole('button', { name: '診断をはじめる', exact: true }) to be visible" ],
+    name: 'TimeoutError'
+  }
+
+test at tests/player-type-result-browser.test.mjs:51:1
+✖ account transition during pending share authentication refuses the old write (909.714638ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   {
+  +     args: {
+  +       content: '保存前の文章',
+  +       post_type: 'result',
+  +       result_id: 'qa-result',
+  +       result_type: 'player_type',
+  +       user_id: 'qa-other'
+  +     },
+  +     name: 'insert:posts'
+  +   }
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///workspace/work/issue22-published-D-c523f547/tests/player-type-result-browser.test.mjs:51:335)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

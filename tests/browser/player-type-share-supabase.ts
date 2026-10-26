@@ -1,7 +1,7 @@
 import fixture from '../fixtures/player-type-v2.json'
 // Fixture transport only. The actual SDK/credentials are never imported.
 export const supabase = {
-  auth: { getUser: async () => ({ data: { user: { id: 'qa-owner' } }, error: null }) },
+  auth: { onAuthStateChange: () => ({ data: { subscription: { unsubscribe() {} } } }), getUser: async () => ({ data: { user: { id: 'qa-owner' } }, error: null }) },
   rpc: async (name: string, args?: { p_result_id?: string }) => {
     if (name === 'get_player_type_v2_questions') return { data: fixture.rows, error: null }
     if (name === 'is_my_player_type_v2_result') return { data: true, error: null }

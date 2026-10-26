@@ -1,0 +1,27 @@
+✔ late old result cannot replace the newer requested result (1105.999026ms)
+✔ late ownership cannot expose old result or owner actions on the newer nonowned result (1354.915468ms)
+✔ failed result read is redacted and retry recovers the requested result (1759.75987ms)
+✔ mismatched result identity is refused without rendering its data (1198.209556ms)
+✔ post error is redacted, keeps the draft and permits retry (1416.378107ms)
+✔ result navigation before authentication completes refuses the old post write (1516.315554ms)
+✔ unmount before authentication completes refuses the old post write (1300.784921ms)
+✔ late post completion cannot close the newer result draft (1250.39356ms)
+✔ same-tick duplicate share activation creates one write (1117.585608ms)
+✔ restart clears the saved-result URL while opening question one (1152.576921ms)
+✔ question transport failure has safe retry and recovers all50 questions (1100.862032ms)
+✔ final answer transport failure retries exactly50 answers and persists the new result URL (2931.012239ms)
+✔ presentation-invalid does not invent positive traits from malformed or nonpositive scores (693.557029ms)
+✔ presentation-negative does not invent positive traits from malformed or nonpositive scores (695.222935ms)
+✔ presentation-normalized ranks actual result traits by the existing per-axis ceilings (700.724518ms)
+✔ account transition qa-other clears the loaded result and draft synchronously (750.250257ms)
+✔ account transition signout clears the loaded result and draft synchronously (732.294246ms)
+✔ account transition during pending share authentication refuses the old write (840.379213ms)
+✔ anonymous public-result viewing remains available without owner actions (630.396771ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22315.376065

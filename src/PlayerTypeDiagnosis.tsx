@@ -97,6 +97,10 @@ function PlayerTypeDiagnosis() {
   const sharePending = useRef(false)
   const activeResultId = useRef<string | null>(null)
   const savedResultId = searchParams.get('result')
+  const authEpoch = useRef(0)
+  const ownerSubject = useRef<string | null>(null)
+  const authSubject = useRef<string | null | undefined>(undefined)
+  const [authRevision, setAuthRevision] = useState(0)
   const imageOperation = useRef({ generation: 0, pending: false })
 
   const [screen, setScreen] = useState<'intro' | 'quiz' | 'result'>('intro')
@@ -117,6 +121,57 @@ function PlayerTypeDiagnosis() {
   const [shareText, setShareText] = useState('')
   const [externalShareError, setExternalShareError] = useState('')
   const [imageSaving, setImageSaving] = useState(false)
+
+  // Synchronous invalidation only. SDK work is performed by effects/handlers.
+  function clearAccountState() {
+    authEpoch.current++
+    resultRequest.current.invalidate()
+    questionRequest.current.invalidate()
+    questionPending.current = false
+    activeResultId.current = null
+    ownerSubject.current = null
+    sharePending.current = false
+    clickLock.current = false
+    imageOperation.current.generation++
+    imageOperation.current.pending = false
+    setResult(null)
+    setDetail(null)
+    setIsOwner(null)
+    setAnswerIds([])
+    setCurrentIndex(0)
+    setQuestions([])
+    setShareText('')
+    setShareEditorOpen(false)
+    setSharePosting(false)
+    setShareMessage('')
+    setExternalShareError('')
+    setImageSaving(false)
+    setLoading(false)
+    setLoadingQuestions(false)
+    setDetailLoading(false)
+    setError('')
+    setQuestionError('')
+    setScreen('intro')
+    navigate('/player-type', { replace: true })
+    setAuthRevision(value => value + 1)
+  }
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      const next = session?.user?.id ?? null
+      const previous = authSubject.current
+      authSubject.current = next
+      if ((previous !== undefined && previous !== next) ||
+          (previous === undefined && event !== 'INITIAL_SESSION') ||
+          (ownerSubject.current !== null && ownerSubject.current !== next) ||
+          event === 'SIGNED_OUT') clearAccountState()
+    })
+    return () => subscription.unsubscribe()
+  }, [])
+
+  useEffect(() => {
+    if (authRevision > 0) void loadQuestions()
+  }, [authRevision])
 
   useEffect(() => {
     const operation = imageOperation.current
@@ -144,6 +199,7 @@ function PlayerTypeDiagnosis() {
   }, [])
 
   async function loadQuestions() {
+    if (authRevision !== authEpoch.current) return
     if (questionPending.current) return
     questionPending.current = true
     const request = questionRequest.current.start()
@@ -175,6 +231,7 @@ function PlayerTypeDiagnosis() {
   const progress = Math.min(100, (visibleNumber / QUESTION_COUNT) * 100)
 
   function startDiagnosis() {
+    if (authRevision !== authEpoch.current) return
     imageOperation.current.generation++
     imageOperation.current.pending = false
     sharePending.current = false
@@ -209,6 +266,7 @@ function PlayerTypeDiagnosis() {
   }
 
   async function chooseOption(optionId: string) {
+    if (authRevision !== authEpoch.current) return
     if (loading || clickLock.current || !currentQuestion) return
     if (answerIds.length !== currentIndex) return
 
@@ -289,6 +347,7 @@ function PlayerTypeDiagnosis() {
   }
 
   async function loadSavedResult(resultId: string) {
+    if (authRevision !== authEpoch.current) return
     const request = resultRequest.current.start()
     activeResultId.current = resultId
     // Share drafts and async outcomes belong to this result only.
@@ -314,11 +373,15 @@ function PlayerTypeDiagnosis() {
       if (detailError) throw detailError
       const row = (data?.[0] ?? null) as ResultDetail | null
       if (!row || row.result_id !== resultId) throw new Error('not found')
+      const { data: { user: ownerUser }, error: authError } = await supabase.auth.getUser()
+      if (!resultRequest.current.isCurrent(request)) return
+      if (authError || (authSubject.current !== undefined && authSubject.current !== (ownerUser?.id ?? null))) throw authError || new Error('account changed')
       const { data: ownedResult, error: ownerError } = await supabase.rpc(
         'is_my_player_type_v2_result', { p_result_id: resultId },
       )
       if (!resultRequest.current.isCurrent(request)) return
-      if (ownerError) throw ownerError
+      if (ownerError || (ownedResult === true && !ownerUser)) throw ownerError || new Error('owner unavailable')
+      ownerSubject.current = ownedResult === true ? ownerUser!.id : null
       setIsOwner(ownedResult === true)
       setResult(row)
       setDetail(row)
@@ -438,6 +501,7 @@ function PlayerTypeDiagnosis() {
   }
 
   function openShareEditor() {
+    if (authRevision !== authEpoch.current) return
     if (!result || isOwner !== true) return
     setShareText(`プレイヤータイプ診断の結果は「${result.animal_name_ja}」でした！\n\n`)
     setShareMessage('')
@@ -445,6 +509,7 @@ function PlayerTypeDiagnosis() {
   }
 
   async function shareToTimeline() {
+    if (authRevision !== authEpoch.current) return
     if (!result || isOwner !== true || sharePosting || sharePending.current || !shareText.trim() || shareText.length > 500) return
     const request = resultRequest.current.capture()
     sharePending.current = true
@@ -453,7 +518,10 @@ function PlayerTypeDiagnosis() {
     try {
       const { data: { user }, error: authError } = await supabase.auth.getUser()
       if (!resultRequest.current.isCurrent(request)) return
-      if (authError || !user) throw new Error('ログイン情報を確認できませんでした')
+      if (authError || !user || user.id !== ownerSubject.current) {
+        clearAccountState()
+        return
+      }
       const { error: postError } = await supabase.from('posts').insert({
         user_id: user.id,
         post_type: 'result',
@@ -617,6 +685,7 @@ function PlayerTypeDiagnosis() {
   }
 
   async function saveShareImage() {
+    if (authRevision !== authEpoch.current) return
     const operation = imageOperation.current
     if (!result || !detail || operation.pending) return
     const generation = operation.generation

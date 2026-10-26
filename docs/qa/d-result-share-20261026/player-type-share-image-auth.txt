@@ -1,0 +1,14 @@
+✔ image handlers exist before a synchronous load and timers are cleared (2.227473ms)
+✔ image errors clean callback references and deadline (0.392713ms)
+✔ image timeout settles once and clears callbacks (0.56163ms)
+✔ image src exceptions clean timer without disclosing raw failure (0.221885ms)
+✔ PNG null encoding and thrown encoding both clean deadlines (0.530862ms)
+✔ PNG callback after deadline cannot turn the failed request into success (0.364221ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12.874581
