@@ -14,6 +14,11 @@ export function createProductionSupabaseVideoAdapters(
   if (!PRODUCTION_URL.test(url) || !anonKey || !accessToken || process.env.VIDEO_PRODUCTION_FENCED_READY !== 'true') {
     throw new Error('production video fenced release gate disabled')
   }
+  // A deployment flag is not proof that client-supplied ffprobe metadata was
+  // verified. Until a server-attested DB publish path exists, reject even
+  // deployments that accidentally enable VIDEO_PRODUCTION_FENCED_READY.
+  throw new Error('production video publish requires server-attested database authorization')
+  // eslint-disable-next-line no-unreachable
   const ownerPath = (owner: string, path: string) => {
     const match = PATH.exec(path)
     if (!match || match[1] !== owner) throw new Error('owner/path mismatch')
