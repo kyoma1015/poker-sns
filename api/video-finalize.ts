@@ -53,7 +53,8 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
   // Reject inherited fields and exotic prototypes at the HTTP trust boundary.
   if (Object.getPrototypeOf(body) !== Object.prototype && Object.getPrototypeOf(body) !== null) return res.status(400).end()
   // Reservation shares the existing serverless function (Hobby function cap).
-  // Only trusted service_role can invoke the append-only permanent ledger.
+  // Never use service_role here: the caller JWT and owner-scoped RPC enforce authorization.
+  // Production reservation stays disabled until writer fencing and abuse controls are audited.
   // A failed or ambiguous reservation is never treated as success.
   if (Object.keys(body).length === 2 &&
       (body as Record<string, unknown>).action === 'reserve' &&
