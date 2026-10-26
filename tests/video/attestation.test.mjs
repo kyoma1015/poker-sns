@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { createHash } from 'node:crypto'
-import { canonicalVideoAttestation, createVideoAttestationNonce, signVideoAttestation, verifyVideoAttestation } from '../../api/video-attestation.ts'
+import { canonicalVideoAttestation, createVideoAttestationNonce, signVideoAttestation, verifyVideoAttestation } from '../../server/video-attestation.ts'
 
 const owner='10000000-0000-0000-0000-000000000001'
 const key=Buffer.alloc(32,0x41)
