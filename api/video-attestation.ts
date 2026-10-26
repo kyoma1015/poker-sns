@@ -31,8 +31,12 @@ export function signVideoAttestation(key: Buffer, claims: VideoAttestationClaims
 }
 export function verifyVideoAttestation(key: Buffer, claims: VideoAttestationClaims, signature: string): boolean {
   if (!digest.test(signature)) return false
-  const expected=Buffer.from(signVideoAttestation(key,claims),'hex')
-  return timingSafeEqual(expected,Buffer.from(signature,'hex'))
+  try {
+    const expected=Buffer.from(signVideoAttestation(key,claims),'hex')
+    return timingSafeEqual(expected,Buffer.from(signature,'hex'))
+  } catch {
+    return false // malformed or inconsistent claims must fail verification
+  }
 }
 export function createVideoAttestationNonce(): string {
   return randomBytes(16).toString('hex')
