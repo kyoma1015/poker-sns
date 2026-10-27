@@ -28,7 +28,8 @@ class FullGame(unittest.TestCase):
         self.assertEqual(result['clairvoyant_response_upper_chips'],[F(4),F(-2)])
         self.assertFalse(result['full_game_convergence_verified'])
     def test_real_board_chance_paths_are_not_replaced_by_showdown(self):
-        game=NativeGame([4,4]);state=decision(self.native,game,[1,1],cards=[48,49,0,1])
+        game=NativeGame([4,4]);state=decision(self.native,game,[],cards=[48,49,0,1])
+        for action in (1,1):state.apply_action(action)
         deck=state.audit()['deck'];value=world_bounds(state,lambda n:{1:F(1)},deck,[4,4],max_nodes=1000)
         self.assertGreater(value['traversals'][0]['terminals'],0)
         self.assertGreater(value['traversals'][0]['nodes'],5)

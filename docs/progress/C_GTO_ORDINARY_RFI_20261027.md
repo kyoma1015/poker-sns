@@ -47,3 +47,14 @@ ORDINARY_SUMMARY, fix any failing assertion without relaxing evidence. Preserve
 oneBB raw evidence/generated-data check and all651baseline executions. Source
 search for20stack/sizes remains unfulfilled; independent learning continues.
 No production/main/billing/restart changes. AUTO-RESUME unavailable.
+
+First publicatione88cb23f30f6069bc86482b1e4b5791ca3e5cb18:
+UI40464868456 SUCCESS; native40464868619 failed1of7new native tests in
+Next process. Existing preceding suites passed. Test mistakenly used preflop-only
+`decision(...,[1,1])` after betting had advanced to flop chance; adapter correctly
+rejected it. Fix creates the legal initial decision then applies actual actions
+(1,1), retaining all real board chance/strategy checks. No production logic or
+assertion weakened. Study increases to50000iterations per seed,100000total,
+with2000/20000/50000checkpoints. Final169RFI frequencies and full-continuation
+bounds are printed as provenance-bound JSON to preserve actual computed data.
+These remain research outputs until full-game convergence is justified.
