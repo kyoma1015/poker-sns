@@ -7,8 +7,8 @@ begin
   for p in select * from pg_policies
     where schemaname='storage' and tablename='objects'
       and cmd in ('INSERT','ALL') and permissive='PERMISSIVE'
-      and (roles @> array['authenticated']::name[]
-        or roles @> array['public']::name[])
+      -- Inspect every permissive policy, including inherited/custom roles.
+      -- PostgreSQL combines applicable permissive policies with OR.
   loop
     if p.policyname <> 'post_videos_immutable_insert_own' then
       -- Fail closed even for generic policies: their OR semantics can bypass
@@ -19,8 +19,8 @@ begin
   for p in select * from pg_policies
     where schemaname='storage' and tablename='objects'
       and cmd in ('UPDATE','DELETE','ALL') and permissive='PERMISSIVE'
-      and (roles @> array['authenticated']::name[]
-        or roles @> array['public']::name[])
+      -- Inspect every permissive policy, including inherited/custom roles.
+      -- PostgreSQL combines applicable permissive policies with OR.
   loop
     raise exception 'unreviewed mutating Storage writer policy: %', p.policyname;
   end loop;
