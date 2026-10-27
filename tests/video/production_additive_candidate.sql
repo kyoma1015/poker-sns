@@ -134,6 +134,21 @@ begin
      or (cmd in ('ALL','UPDATE') and coalesce(with_check,'') not like '%bucket_id%'))
  ) then raise exception 'unscoped Storage mutation policy blocks video release'; end if;
 end $guard$;
+-- Release blocker: permissive INSERT/ALL policies combine by OR, including
+-- policies whose names never mention post-videos. Reject any unscoped writer.
+-- A textual bucket predicate is only a screening check; review every policy
+-- expression and every privileged writer before production application.
+do $video_insert_or_guard$
+begin
+ if exists (
+   select 1 from pg_policies
+   where schemaname='storage' and tablename='objects'
+     and permissive='PERMISSIVE' and cmd in ('INSERT','ALL')
+     and (coalesce(with_check,'') not ilike '%bucket_id%')
+ ) then
+   raise exception 'unscoped permissive Storage INSERT/ALL policy blocks video release';
+ end if;
+end $video_insert_or_guard$;
 -- No authenticated UPDATE/DELETE policy for post-videos. No public read policy.
 create or replace function public.video_production_storage_generation(p_owner uuid,p_path text)
 returns uuid language plpgsql security definer set search_path='' as $$
