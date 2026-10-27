@@ -52,29 +52,29 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
         {catalog.length === 0 && <p className="gto-notice">検証済みレンジデータは準備中です。条件を指定できますが、現在表示できるGTO戦略はありません。</p>}
         <form aria-label="プリフロップ検索条件" onSubmit={search}>
           <fieldset className="gto-fields"><legend>計算条件</legend>
-            <label>ゲーム形式<select value={form.format} onChange={event => change({ format: event.target.value as RangeQuery['format'], rakePct: '0', rakeCapBb: null })}>
+            <label>ゲーム形式<select aria-label="ゲーム形式" value={form.format} onChange={event => change({ format: event.target.value as RangeQuery['format'], rakePct: '0', rakeCapBb: null })}>
               <option value="mtt">MTT（chipEV）</option><option value="ring">リングゲーム</option>
             </select></label>
-            <label>人数<select value={form.players} onChange={event => {
+            <label>人数<select aria-label="人数" value={form.players} onChange={event => {
               const players = Number(event.target.value); change({ players, seat: positions(players)[0].seat })
             }}>{Array.from({ length: 8 }, (_, i) => i + 2).map(n => <option key={n} value={n}>{n}人</option>)}</select></label>
-            <label>ポジション<select value={form.seat} onChange={event => change({ seat: Number(event.target.value) })}>
+            <label>ポジション<select aria-label="ポジション" value={form.seat} onChange={event => change({ seat: Number(event.target.value) })}>
               {positions(form.players).map(position => <option key={position.seat} value={position.seat}>{position.label}</option>)}
             </select></label>
-            <label>有効スタック（BB）<input required inputMode="decimal" value={form.stackBb} placeholder="例：100" onChange={event => change({ stackBb: event.target.value })} /></label>
-            <label>BBアンティ<select value={form.anteBb} onChange={event => change({ anteBb: event.target.value as RangeQuery['anteBb'] })}>
+            <label>有効スタック（BB）<input aria-label="有効スタック（BB）" required inputMode="decimal" value={form.stackBb} placeholder="例：100" onChange={event => change({ stackBb: event.target.value })} /></label>
+            <label>BBアンティ<select aria-label="BBアンティ" value={form.anteBb} onChange={event => change({ anteBb: event.target.value as RangeQuery['anteBb'] })}>
               <option value="0">なし</option><option value="1">1 BB</option>
             </select></label>
-            <label>レーキ<select disabled={form.format === 'mtt'} value={form.rakePct} onChange={event => change({ rakePct: event.target.value as RangeQuery['rakePct'] })}>
+            <label>レーキ<select aria-label="レーキ" disabled={form.format === 'mtt'} value={form.rakePct} onChange={event => change({ rakePct: event.target.value as RangeQuery['rakePct'] })}>
               <option value="0">0%</option><option value="5">5%</option><option value="10">10%</option>
             </select></label>
-            <label>レーキ上限<select disabled={form.format === 'mtt'} value={form.rakeCapBb ?? 'none'} onChange={event => change({ rakeCapBb: event.target.value === 'none' ? null : event.target.value as '5' | '10' })}>
+            <label>レーキ上限<select aria-label="レーキ上限" disabled={form.format === 'mtt'} value={form.rakeCapBb ?? 'none'} onChange={event => change({ rakeCapBb: event.target.value === 'none' ? null : event.target.value as '5' | '10' })}>
               <option value="none">上限なし</option><option value="5">5 BB</option><option value="10">10 BB</option>
             </select></label>
-            <label>オープンサイズ（BB）<input required inputMode="decimal" value={form.openBb} placeholder="合計額" onChange={event => change({ openBb: event.target.value })} /></label>
-            <label>3ベットサイズ（BB）<input required inputMode="decimal" value={form.threeBetBb} placeholder="合計額" onChange={event => change({ threeBetBb: event.target.value })} /></label>
-            <label>4ベットサイズ（BB）<input required inputMode="decimal" value={form.fourBetBb} placeholder="合計額" onChange={event => change({ fourBetBb: event.target.value })} /></label>
-            <label className="gto-wide">対象局面<select value={form.stage} onChange={event => change({ stage: event.target.value as RangeQuery['stage'] })}>
+            <label>オープンサイズ（BB）<input aria-label="オープンサイズ（BB）" required inputMode="decimal" value={form.openBb} placeholder="合計額" onChange={event => change({ openBb: event.target.value })} /></label>
+            <label>3ベットサイズ（BB）<input aria-label="3ベットサイズ（BB）" required inputMode="decimal" value={form.threeBetBb} placeholder="合計額" onChange={event => change({ threeBetBb: event.target.value })} /></label>
+            <label>4ベットサイズ（BB）<input aria-label="4ベットサイズ（BB）" required inputMode="decimal" value={form.fourBetBb} placeholder="合計額" onChange={event => change({ fourBetBb: event.target.value })} /></label>
+            <label className="gto-wide">対象局面<select aria-label="対象局面" value={form.stage} onChange={event => change({ stage: event.target.value as RangeQuery['stage'] })}>
               {Object.entries(stages).map(([key, label]) => <option key={key} value={key}>{label}</option>)}
             </select></label>
           </fieldset>

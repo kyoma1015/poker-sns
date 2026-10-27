@@ -59,3 +59,13 @@ UI implementation is not evidence that any real GTO release condition is solved.
 Next: full opponent reach/169aggregation and convergence evidence, then populate
 only independently reviewed full-game data. No production/main/billing actions,
 no independent restart or scheduler enabled.
+
+## Browser failure retained and repaired
+Public0aa2b6c38279950b1727691831daad982bad12a3 UI CI40453919928/job122022706008
+failed in browser B02 after B01passed. Dependency install,8Node tests, full app
+build/typecheck and lint all succeeded (48warnings/0errors). Browser could not
+resolve getByLabel('人数',exact=true) for the nested select label. Added explicit
+accessible names equal to visible labels for all controls; kept exact selectors
+and assertions. Removed ignored legacy esbuild JSX setting from isolated Vite
+server (React plugin already supplies automatic JSX). No test disabled. Latest
+head must rerun both UI and native CI; historical failure remains evidence.
