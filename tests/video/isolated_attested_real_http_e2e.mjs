@@ -157,6 +157,24 @@ const {data:foreignPosts,error:foreignPostsError}=await attacker.from('posts')
  .select('id,video_path').eq('video_path',path)
 assert.ifError(foreignPostsError)
 assert.equal(foreignPosts.length,0,'foreign viewer must not discover private post')
+// Viewer RLS parity: a foreign user may download only while the linked post
+// is visible to that same user. Staging and private posts remain inaccessible.
+const qaAdmin=createClient(url,env.SERVICE_ROLE_KEY,{auth:{persistSession:false,autoRefreshToken:false}})
+assert.ok((await attacker.storage.from('post-videos').download(path)).error,
+ 'private published post must not expose video bytes')
+assert.ifError((await qaAdmin.from('posts').update({is_public:true}).eq('id',postId)).error)
+const {data:visiblePost,error:visiblePostError}=await attacker.from('posts')
+ .select('id,video_path').eq('id',postId).maybeSingle()
+assert.ifError(visiblePostError)
+assert.equal(visiblePost?.video_path,path,'foreign JWT should see public post')
+const {data:visibleVideo,error:visibleVideoError}=await attacker.storage.from('post-videos').download(path)
+assert.ifError(visibleVideoError)
+assert.deepEqual(Buffer.from(await visibleVideo.arrayBuffer()),bytes,
+ 'foreign JWT must read RLS-visible published video')
+assert.ifError((await qaAdmin.from('posts').update({is_public:false}).eq('id',postId)).error)
+assert.ok((await attacker.storage.from('post-videos').download(path)).error,
+ 'revoking post visibility must revoke private Storage read')
+console.log('PASS: foreign JWT published-video playback follows posts SELECT RLS; private and staging remain denied')
 // The actual React PostVideo and Timeline components now consume the post
 // created by the signed RPC, rather than a separately fenced QA publication.
 // Service-role credentials are confined to the disposable browser test harness;
