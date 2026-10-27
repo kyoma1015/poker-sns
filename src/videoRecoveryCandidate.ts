@@ -20,11 +20,11 @@ async function requestRecovery(body: Record<string,unknown>,signal?:AbortSignal)
 
 /** Call between confirmed reservation and upload in a future approved flow.
  * The hash is a pre-upload commitment, never a trusted ffprobe claim. */
-export async function bindVideoRecoveryCandidate(path:string,file:File,signal?:AbortSignal) {
+export async function bindVideoRecoveryCandidate(path:string,file:File,content:string,signal?:AbortSignal) {
   if(!VIDEO_RECOVERY_CANDIDATE_ENABLED) throw new Error('動画の自動復旧は安全確認待ちです。')
   if(file.size<1||file.size>20*1024*1024||!['video/mp4','video/webm'].includes(file.type)) throw new Error('動画を確認してください。')
   const sha256=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',await file.arrayBuffer()))).map(n=>n.toString(16).padStart(2,'0')).join('')
-  const result=await requestRecovery({action:'bind_recovery',object_path:path,sha256,size:file.size,type:file.type},signal)
+  const result=await requestRecovery({action:'bind_recovery',object_path:path,sha256,size:file.size,type:file.type,content},signal)
   if(result.bound!==true||!Number.isSafeInteger(result.expires)) throw new Error('復旧予約を確認できません。')
   return result
 }

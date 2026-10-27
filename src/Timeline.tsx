@@ -1,4 +1,5 @@
-import { handOffVideoTransfer, hasVideoTransferJournal, VIDEO_TRANSFER_RECOVERY_MESSAGE, VideoTransferRecoveryRequiredError } from './videoTransferJournal'
+import { VIDEO_RECOVERY_CANDIDATE_ENABLED, inspectVideoRecoveryCandidate, finalizeRecoveredVideoCandidate } from './videoRecoveryCandidate'
+import { handOffVideoTransfer, hasVideoTransferJournal, readVideoTransferHint, finishRecoveredVideoTransfer, VIDEO_TRANSFER_RECOVERY_MESSAGE, VideoTransferRecoveryRequiredError } from './videoTransferJournal'
 import { createPollRequest, pollDisplayResult } from './interactiveRequests'
 import { useEffect, useRef, useState } from 'react'
 
@@ -180,6 +181,38 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   useEffect(() => {
     let cancelled = false
     const lifetime = composerLifetimeRef.current
+    const controller = new AbortController()
+    const recover = async (owner:string,path:string,hint?:{sha256:string;size:number;raw:string},expectedContent?:string) => {
+      setVideoRecoveryBlocked(true)
+      setIsPosting(true)
+      postSubmitInFlightRef.current=true
+      videoRequestAbortRef.current=controller
+      try {
+        const status=await inspectVideoRecoveryCandidate(path,controller.signal)
+        if(cancelled||lifetime!==composerLifetimeRef.current) return
+        if(!['verified_ready','published'].includes(String(status.state))||status.ffprobe_verified!==true||
+          typeof status.content!=='string'||status.content.length>10000||
+          (hint&&(hint.sha256!==status.sha256||hint.size!==status.size))||
+          (expectedContent!==undefined&&expectedContent!==status.content)) throw new VideoTransferRecoveryRequiredError()
+        await finalizeRecoveredVideoCandidate(path,status.content,controller.signal)
+        if(cancelled||lifetime!==composerLifetimeRef.current) return
+        finishRecoveredVideoTransfer(owner,path,hint?.raw)
+        const pendingRaw=sessionStorage.getItem('poker-id-pending-video-v1')
+        if(pendingRaw) {const pending=JSON.parse(pendingRaw);if(pending.owner===owner&&pending.path===path)sessionStorage.removeItem('poker-id-pending-video-v1')}
+        pendingVideoRef.current=null
+        setPendingVideo(null)
+        setVideoRecoveryBlocked(false)
+        setComposeOpen(false)
+        setMessage('動画投稿を安全に復旧しました。')
+        await loadPosts()
+      } catch {
+        if(!cancelled&&lifetime===composerLifetimeRef.current) {setVideoRecoveryBlocked(true);setComposeOpen(true)}
+      } finally {
+        if(videoRequestAbortRef.current===controller)videoRequestAbortRef.current=null
+        postSubmitInFlightRef.current=false
+        if(!cancelled)setIsPosting(false)
+      }
+    }
     const restore = async () => {
     try {
       const { data: { user }, error } = await supabase.auth.getUser()
@@ -189,6 +222,10 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       if (hasVideoTransferJournal(user.id)) {
         setVideoRecoveryBlocked(true)
         setComposeOpen(true)
+        if (VIDEO_RECOVERY_CANDIDATE_ENABLED) {
+          const hint=readVideoTransferHint(user.id)
+          await recover(user.id,hint.path,hint)
+        }
         return
       }
       const raw = sessionStorage.getItem('poker-id-pending-video-v1')
@@ -209,6 +246,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         sessionStorage.removeItem('poker-id-pending-video-v1')
         return
       }
+      if (VIDEO_RECOVERY_CANDIDATE_ENABLED) {await recover(user.id,record.path,undefined,record.content);return}
       const staged = { owner: record.owner, path: record.path, content: record.content }
       // The restored path is untrusted client state; server JWT, owner and generation checks remain authoritative.
       pendingVideoRef.current = staged
@@ -218,7 +256,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     } catch { /* Untrusted or unavailable session storage: stay fail-closed. */ }
     }
     void restore()
-    return () => { cancelled = true }
+    return () => { cancelled = true; controller.abort() }
   }, [])
   const videoSubmitInFlightRef = useRef(false)
   const videoRequestAbortRef = useRef<AbortController | null>(null)
@@ -1084,7 +1122,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         if (pendingVideoRef.current && (pendingVideoRef.current.owner !== user.id || pendingVideoRef.current.content !== content.trim())) {
           throw new Error('前回の投稿内容またはアカウントが異なります。元の内容で再試行してください。')
         }
-        const path = pendingVideoRef.current?.path ?? (videoFile ? await uploadPostVideo(user.id, videoFile, requestController.signal) : '')
+        const path = pendingVideoRef.current?.path ?? (videoFile ? await uploadPostVideo(user.id, videoFile, requestController.signal, content.trim()) : '')
         // An abandoned upload stays quarantined; never finalize it for a new screen/account.
         if (!isCurrent()) return
         if (!path) throw new Error('動画を再選択してください。')
@@ -1097,7 +1135,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           sessionStorage.setItem('poker-id-pending-video-v1', JSON.stringify(pendingVideoRef.current))
           handOffVideoTransfer(user.id, path)
         } catch { throw new VideoTransferRecoveryRequiredError() }
-        await finalizeUploadedVideo(path, content.trim(), requestController.signal)
+        if (VIDEO_RECOVERY_CANDIDATE_ENABLED) await finalizeRecoveredVideoCandidate(path, content.trim(), requestController.signal)
+        else await finalizeUploadedVideo(path, content.trim(), requestController.signal)
         if (!isCurrent()) return
         pendingVideoRef.current = null
         setPendingVideo(null)

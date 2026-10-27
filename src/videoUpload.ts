@@ -1,3 +1,4 @@
+import { bindVideoRecoveryCandidate, VIDEO_RECOVERY_CANDIDATE_ENABLED } from './videoRecoveryCandidate'
 import { beginVideoTransfer, confirmVideoReservation, isVideoTransferBlocked, setVideoTransferPhase, VideoTransferRecoveryRequiredError, type VideoTransferRecord } from './videoTransferJournal'
 import { withVideoUploadRequest } from './videoUploadTransport'
 import { supabase } from './supabase'
@@ -58,7 +59,7 @@ export async function validateVideo(file: File): Promise<string | null> {
 const reservedUploads = new WeakMap<File, { owner: string; path: string; attempted: boolean; journal: VideoTransferRecord }>()
 
 /** Staged only: caller must enforce server-side duration and reviewed RLS before enabling. */
-export async function uploadPostVideo(userId: string, file: File, signal?: AbortSignal): Promise<string> {
+export async function uploadPostVideo(userId: string, file: File, signal?: AbortSignal, recoveryContent?: string): Promise<string> {
   if (!VIDEO_SERVER_ENABLED) throw new Error('動画投稿は安全確認待ちです。')
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   signal?.throwIfAborted()
@@ -81,6 +82,11 @@ export async function uploadPostVideo(userId: string, file: File, signal?: Abort
     beginVideoTransfer(journal)
     try { await reserveVideoObjectPath(path, signal) }
     catch { throw new VideoTransferRecoveryRequiredError() }
+    if (VIDEO_RECOVERY_CANDIDATE_ENABLED) {
+      if (typeof recoveryContent !== 'string') throw new VideoTransferRecoveryRequiredError()
+      try { await bindVideoRecoveryCandidate(path, file, recoveryContent, signal) }
+      catch { throw new VideoTransferRecoveryRequiredError() }
+    }
     confirmVideoReservation(journal)
     record = { owner: user.id, path, attempted: false, journal }
     reservedUploads.set(file, record)

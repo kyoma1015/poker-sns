@@ -50,7 +50,7 @@ test('video cleanup validates owner path but fails closed without atomic delete'
 })
 test('client upload and finalize remain behind disabled server gate', () => {
   assert.match(timeline, /if \(!VIDEO_SERVER_ENABLED\)/)
-  assert.match(timeline, /await uploadPostVideo\(user\.id, videoFile, requestController\.signal\)/)
+  assert.match(timeline, /await uploadPostVideo\(user\.id, videoFile, requestController\.signal, content\.trim\(\)\)/)
   assert.match(timeline, /await finalizeUploadedVideo\(path, content\.trim\(\), requestController\.signal\)/)
   assert.match(api, /VIDEO_SERVER_ENABLED = import\.meta\.env\.VITE_VIDEO_SERVER_ENABLED === 'true'/)
   assert.match(sql, /server-side (?:duration|30s)/i)

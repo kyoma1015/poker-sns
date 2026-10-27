@@ -4,6 +4,7 @@ import assert from 'node:assert/strict'
 import { createServer as createHttpServer } from 'node:http'
 import { createServer as createViteServer } from 'vite'
 import { chromium } from 'playwright-core'
+import { verifyRecoveryTimeline } from './isolated_recovery_timeline.mjs'
 import { verifyUploadReload } from './isolated_upload_reload.mjs'
 import { verifyUploadInterruptions } from './isolated_upload_interruptions.mjs'
 import { verifyComposerLifecycle } from './isolated_composer_lifecycle.mjs'
@@ -12,7 +13,7 @@ import { createVideoMediaHandler } from '../../api/video-media.ts'
 import { createVideoFinalizeHandler } from '../../api/video-finalize.ts'
 import { createIsolatedSupabaseVideoAdapters } from '../../api/video-isolated-supabase-adapters.ts'
 
-export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, service, bytes, expectedContent = 'real isolated end-to-end' }) {
+export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, service, bytes, expectedContent = 'real isolated end-to-end', recoveryOnly=false, recoveryFixtures }) {
   assert.ok(service && bytes?.length,'isolated full upload test credentials and media required')
   assert.ok(anon,'isolated anon key required')
   assert.equal(process.env.VITE_SUPABASE_URL, 'http://127.0.0.1:56321')
@@ -74,6 +75,10 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
             storage: client.storage,
           }`
         }
+        if (recoveryOnly && filename.endsWith('/src/videoRecoveryCandidate.ts')) {
+          assert.ok(source.includes('VIDEO_RECOVERY_CANDIDATE_ENABLED = false as boolean'))
+          return source.replace('VIDEO_RECOVERY_CANDIDATE_ENABLED = false as boolean', "VIDEO_RECOVERY_CANDIDATE_ENABLED = (location.hostname === '127.0.0.1' && location.protocol === 'http:') as boolean")
+        }
         if (filename.endsWith('/src/videoApi.ts')) {
           assert.ok(source.includes("VIDEO_SERVER_ENABLED = import.meta.env.VITE_VIDEO_SERVER_ENABLED === 'true'"),
             'production video feature gate unexpectedly changed')
@@ -133,6 +138,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     browser = await chromium.launch({
       headless: true, args: ['--no-sandbox', '--autoplay-policy=no-user-gesture-required'] })
     const origin = 'http://127.0.0.1:' + address.port
+    if (recoveryOnly) {await verifyRecoveryTimeline({browser,origin,jwt,anon,bytes,...recoveryFixtures});return}
     const page = await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true})
     const errors = []
     page.on('pageerror', error => errors.push(String(error)))

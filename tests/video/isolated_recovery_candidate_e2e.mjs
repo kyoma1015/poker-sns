@@ -8,6 +8,7 @@ import {execFileSync,spawn} from 'node:child_process'
 import {tmpdir} from 'node:os'
 import {join} from 'node:path'
 import {createServer} from 'node:http'
+import {verifyRealBrowserPlayback} from './isolated_browser_playback.mjs'
 import {createVideoFinalizeHandler} from '../../api/video-finalize.ts'
 import {signBinaryVideoAttestation,videoAttestationDigest} from '../../server/video-attestation.js'
 const env=Object.fromEntries(readFileSync(process.env.VIDEO_QA_ENV,'utf8').split('\n').filter(x=>x.includes('=')).map(x=>{const n=x.indexOf('=');return[x.slice(0,n),x.slice(n+1).replace(/^["']|["']$/g,'')]}))
@@ -42,7 +43,7 @@ try {
  execFileSync('ffmpeg',['-hide_banner','-loglevel','error','-f','lavfi','-i','color=c=black:s=64x64:r=10','-t','2','-c:v','libvpx','-b:v','150k','-y',file],{timeout:30000})
  const bytes=readFileSync(file)
  const reserve=async()=>{const path=uid+'/'+randomUUID()+'.webm';assert.ifError((await owner.rpc('video_reserve_object_key',{p_owner:uid,p_path:path})).error);return path}
- const bind=(path,sha=hash(bytes),size=bytes.length)=>call({action:'bind_recovery',object_path:path,sha256:sha,size,type:'video/webm'})
+ const bind=(path,sha=hash(bytes),size=bytes.length,content='recovery race fixture')=>call({action:'bind_recovery',object_path:path,sha256:sha,size,type:'video/webm',content})
  const upload=async(path,data=bytes)=>{assert.ifError((await owner.storage.from('post-videos').upload(path,data,{contentType:'video/webm',upsert:false})).error)}
  const path=await reserve()
  assert.equal((await bind(path)).status,200)
@@ -107,7 +108,7 @@ try {
  // Hold Storage's row past the recovery deadline. Parent publication can
  // only proceed after the lock releases; the wrapper's final clock check
  // must roll back BOTH its post and newly consumed nonce.
- const delayed=await reserve();assert.equal((await bind(delayed)).status,200);await upload(delayed)
+ const delayed=await reserve();assert.equal((await bind(delayed,hash(bytes),bytes.length,'late lock fixture')).status,200);await upload(delayed)
  const {data:delayedGeneration}=await owner.rpc('video_production_storage_generation',{p_owner:uid,p_path:delayed})
  const delayedNonce=randomUUID().replaceAll('-',''),delayedExpiry=Math.floor(Date.now()/1000)+120
  const delayedClaims={p_owner:uid,p_path:delayed,p_generation:delayedGeneration,p_sha256:hash(bytes),p_duration_ms:2000,p_content:'late lock fixture',p_expires_at:delayedExpiry,p_nonce:delayedNonce,p_key_id:1}
@@ -128,6 +129,7 @@ try {
  assert.match(delayedResult.error.message,/recovery expired during publication/,'deadline must be rechecked after the blocking parent call')
  assert.equal(sql(`select count(*) from video_private.consumed_nonces where nonce=decode('${delayedNonce}','hex');`),'0')
  assert.equal((await owner.from('posts').select('id').eq('video_path',delayed)).data.length,0)
+ await verifyRealBrowserPlayback({postId:posts.data[0].id,jwt,deniedJwt:foreignJwt,anon,service:env.SERVICE_ROLE_KEY||env.SECRET_KEY,bytes,recoveryOnly:true,recoveryFixtures:{legacyPath:late,expire:path=>sql(`update video_private.recovery_manifests set expires_at=clock_timestamp()-interval '1 second' where object_path='${path}';`)}})
  console.log('PASS: recovery atomic publication rejects nonce replay/foreign owner and rolls back post+nonce after expiry during real Storage row-lock wait')
  console.log('PASS: real recovery candidate JWT/auth.uid owner, private manifest RLS, immutable concurrent bind, server expiry, SHA256/ffprobe, missing/late object, overwrite rejection, published state and concurrent publication race')
 } finally {await new Promise(resolve=>server.close(resolve));rmSync(dir,{recursive:true,force:true})}

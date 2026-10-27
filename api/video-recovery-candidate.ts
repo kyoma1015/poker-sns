@@ -14,13 +14,13 @@ export async function handleVideoRecoveryCandidate(req: VercelRequest,res: Verce
   const body=req.body as Record<string,unknown>
   const bind=body.action==='bind_recovery'
   const finalize=body.action==='recovery_finalize'
-  const expected=bind?['action','object_path','sha256','size','type']:finalize?['action','object_path','content']:['action','object_path']
+  const expected=bind?['action','object_path','sha256','size','type','content']:finalize?['action','object_path','content']:['action','object_path']
   if (Object.keys(body).length!==expected.length || expected.some(key=>!Object.hasOwn(body,key)) ||
       typeof body.object_path!=='string' || !pathPattern.test(body.object_path)) return res.status(400).end()
   if (bind && (typeof body.sha256!=='string'||!/^[0-9a-f]{64}$/.test(body.sha256)||
       !Number.isSafeInteger(body.size)||Number(body.size)<1||Number(body.size)>MAX_BYTES||
       !['video/mp4','video/webm'].includes(String(body.type)))) return res.status(400).end()
-  if(finalize && (typeof body.content!=='string'||body.content.length>10000)) return res.status(400).end()
+  if((finalize||bind) && (typeof body.content!=='string'||body.content.length>10000)) return res.status(400).end()
   const token=String(req.headers.authorization).slice(7)
   const client=createClient(url,anon,{global:{headers:{Authorization:'Bearer '+token}},auth:{persistSession:false,autoRefreshToken:false}})
   const authenticate=async()=>{
@@ -32,7 +32,7 @@ export async function handleVideoRecoveryCandidate(req: VercelRequest,res: Verce
     const owner=await authenticate(),path=body.object_path
     if(pathPattern.exec(path)?.[1]!==owner) return res.status(403).end()
     if(bind) {
-      const {data,error}=await client.rpc('video_bind_recovery_manifest_v1',{p_path:path,p_sha256:body.sha256,p_size:body.size,p_type:body.type})
+      const {data,error}=await client.rpc('video_bind_recovery_manifest_v1',{p_path:path,p_sha256:body.sha256,p_size:body.size,p_type:body.type,p_content:body.content})
       if(error||!Number.isSafeInteger(data)) return res.status(409).json({error:'recovery_binding_unavailable'})
       if(await authenticate()!==owner) return res.status(401).end()
       return res.status(200).json({bound:true,expires:data})
@@ -43,6 +43,7 @@ export async function handleVideoRecoveryCandidate(req: VercelRequest,res: Verce
       return data
     }
     const before=await state()
+    if(finalize && body.content!==before.content) return res.status(409).json({error:'recovery_content_mismatch'})
     if(before.active!==true) return res.status(410).json({error:'recovery_expired'})
     if(finalize && !before.generation) return res.status(409).json({error:'recovery_object_missing'})
     if(!before.generation) return res.status(200).json({state:'waiting_for_upload',allow_resume:false,expires:before.expires})
@@ -93,6 +94,6 @@ export async function handleVideoRecoveryCandidate(req: VercelRequest,res: Verce
       return res.status(200).json({state:'published',post_id:data})
     }
     return res.status(200).json({state:after.post_id?'published':'verified_ready',allow_resume:false,
-      post_id:after.post_id,generation:after.generation,sha256:inspected.sha256,size,ffprobe_verified:true,expires:after.expires})
+      content:after.content,post_id:after.post_id,generation:after.generation,sha256:inspected.sha256,size,ffprobe_verified:true,expires:after.expires})
   } catch {return res.status(409).json({error:'recovery_unavailable'})}
 }

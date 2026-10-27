@@ -62,3 +62,25 @@ export function handOffVideoTransfer(owner: string, path: string) {
     live.delete(owner)
   } catch { throw new VideoTransferRecoveryRequiredError() }
 }
+
+/** Untrusted locator only. Server-owned manifest and bytes decide eligibility. */
+export function readVideoTransferHint(owner:string) {
+  const raw=sessionStorage.getItem(key(owner))
+  if(raw===null||raw.length>4096) throw new VideoTransferRecoveryRequiredError()
+  const hint=JSON.parse(raw)
+  if(!hint||hint.owner!==owner||typeof hint.path!=='string'||
+    !new RegExp('^'+owner+'/[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}\\.(mp4|webm)$').test(hint.path)||
+    typeof hint.sha256!=='string'||!/^[0-9a-f]{64}$/.test(hint.sha256)||
+    !Number.isSafeInteger(hint.size)||hint.size<1||hint.size>20971520) throw new VideoTransferRecoveryRequiredError()
+  return {path:hint.path as string,sha256:hint.sha256 as string,size:hint.size as number,raw}
+}
+
+/** Only after the server's recovered-publication response. Cannot authorize IO. */
+export function finishRecoveredVideoTransfer(owner:string,path:string,expectedRaw?:string) {
+  const raw=sessionStorage.getItem(key(owner))
+  if(raw!==null) {
+    if(raw!==expectedRaw||JSON.parse(raw).path!==path) throw new VideoTransferRecoveryRequiredError()
+    sessionStorage.removeItem(key(owner))
+  }
+  live.delete(owner)
+}
