@@ -3,6 +3,8 @@ on:
   pull_request:
     branches: [main, codex/integration-poll-only-20261020, codex/c-gto-active-milestones-20261020, codex/c-native-training-batch-20261023, codex/c-native-hand169-bridge-20261023]
     paths:
+      - 'src/gto/**'
+      - 'src/GtoPreflop*'
       - 'gto/**'
       - 'handoff/gto/**'
       - '.github/workflows/gto-native-reconstructed.yml'

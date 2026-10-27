@@ -36,6 +36,7 @@ import PlayerTypeDiagnosis from './PlayerTypeDiagnosis'
 import AdminReports from './AdminReports'
 import Settings from './Settings'
 import PokerTools from './PokerTools'
+import GtoPreflop from './GtoPreflop'
 import PokerResults from './PokerResults'
 import PastTournamentAchievementForm from './PastTournamentAchievementForm'
 import PokerIdCard from './PokerIdCard'
@@ -256,6 +257,7 @@ function AppLayout() {
 
         <Route path="/timeline" element={<Timeline />} />
         <Route path="/tools" element={<PokerTools />} />
+        <Route path="/gto/preflop" element={<GtoPreflop />} />
         <Route path="/results" element={<PokerResults />} />
         <Route path="/admin/reports" element={<AdminReports />} />
 

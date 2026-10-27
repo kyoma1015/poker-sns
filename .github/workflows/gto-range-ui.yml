@@ -1,0 +1,26 @@
+name: GTO preflop search verification
+on:
+  pull_request:
+    paths:
+      - 'src/gto/**'
+      - 'src/GtoPreflop*'
+      - 'tests/gto-*'
+      - 'tests/gto-browser/**'
+      - '.github/workflows/gto-range-ui.yml'
+permissions:
+  contents: read
+jobs:
+  range-search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: node --test --test-isolation=none tests/gto-range.test.mjs
+      - run: npm run build
+      - run: npm run lint
+      - run: npx --no-install playwright-core install chromium
+      - run: node tests/gto-browser.mjs

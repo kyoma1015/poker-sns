@@ -1,0 +1,10 @@
+{
+  "head": "74bddc3338e0d532d9cff4286b7204116fc0915e",
+  "run": 40452812571,
+  "job": 122019228959,
+  "status": "success",
+  "unittest": 585,
+  "packed": 25,
+  "total": 610,
+  "joint_three_variant_sha256": "3e4d696fc68d8f4add121de7223d4453c59ae2dd235e323932c8501827dafa25"
+}
