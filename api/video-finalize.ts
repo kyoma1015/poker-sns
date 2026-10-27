@@ -53,7 +53,7 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
   if (!body || typeof body !== 'object' || Array.isArray(body)) return res.status(400).end()
   // Reject inherited fields and exotic prototypes at the HTTP trust boundary.
   if (Object.getPrototypeOf(body) !== Object.prototype && Object.getPrototypeOf(body) !== null) return res.status(400).end()
-  if (['bind_recovery','recovery_status'].includes(String((body as Record<string,unknown>).action))) {
+  if (['bind_recovery','recovery_status','recovery_finalize'].includes(String((body as Record<string,unknown>).action))) {
     return handleVideoRecoveryCandidate(req,res,options.isolatedLocalOnly===true)
   }
   // Reservation shares the existing serverless function (Hobby function cap).

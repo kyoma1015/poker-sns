@@ -35,3 +35,11 @@ export async function inspectVideoRecoveryCandidate(path:string,signal?:AbortSig
   if(result.allow_resume!==false||!['waiting_for_upload','verified_ready','published'].includes(String(result.state))) throw new Error('復旧応答を確認できません。')
   return result
 }
+
+/** Still disabled. A future approved UI must authenticate the owner and preserve
+ * its immutable content; server re-probes and DB atomically rechecks manifest. */
+export async function finalizeRecoveredVideoCandidate(path:string,content:string,signal?:AbortSignal):Promise<string> {
+  const result=await requestRecovery({action:'recovery_finalize',object_path:path,content},signal)
+  if(result.state!=='published'||typeof result.post_id!=='string'||!/^[0-9a-f-]{36}$/.test(result.post_id)) throw new Error('動画の復旧確定を確認できません。')
+  return result.post_id
+}

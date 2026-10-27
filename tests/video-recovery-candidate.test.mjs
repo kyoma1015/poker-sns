@@ -10,7 +10,7 @@ test('recovery candidate cannot be activated against production or by release fl
  try {
   for(const [url,isolated] of [['http://127.0.0.1:56321',false],['https://example.supabase.co',true]]) {
    process.env.VITE_SUPABASE_URL=url;process.env.VITE_SUPABASE_ANON_KEY='fixture-anon'
-   for(const action of ['bind_recovery','recovery_status']) {
+   for(const action of ['bind_recovery','recovery_status','recovery_finalize']) {
     const body={action,object_path:'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb.webm'}
     let status
     const res={setHeader(){return res},status(n){status=n;return res},json(){return res},end(){return res}}

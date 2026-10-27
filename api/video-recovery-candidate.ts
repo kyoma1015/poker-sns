@@ -1,3 +1,4 @@
+import { createVideoAttestationNonce, signBinaryVideoAttestation, videoAttestationDigest } from '../server/video-attestation.js'
 import { createClient } from '@supabase/supabase-js'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { inspectStagedVideo } from './video-preflight.js'
@@ -12,12 +13,14 @@ export async function handleVideoRecoveryCandidate(req: VercelRequest,res: Verce
   if (!isolated || url!=='http://127.0.0.1:56321' || !anon) return res.status(503).json({error:'recovery_not_enabled'})
   const body=req.body as Record<string,unknown>
   const bind=body.action==='bind_recovery'
-  const expected=bind?['action','object_path','sha256','size','type']:['action','object_path']
+  const finalize=body.action==='recovery_finalize'
+  const expected=bind?['action','object_path','sha256','size','type']:finalize?['action','object_path','content']:['action','object_path']
   if (Object.keys(body).length!==expected.length || expected.some(key=>!Object.hasOwn(body,key)) ||
       typeof body.object_path!=='string' || !pathPattern.test(body.object_path)) return res.status(400).end()
   if (bind && (typeof body.sha256!=='string'||!/^[0-9a-f]{64}$/.test(body.sha256)||
       !Number.isSafeInteger(body.size)||Number(body.size)<1||Number(body.size)>MAX_BYTES||
       !['video/mp4','video/webm'].includes(String(body.type)))) return res.status(400).end()
+  if(finalize && (typeof body.content!=='string'||body.content.length>10000)) return res.status(400).end()
   const token=String(req.headers.authorization).slice(7)
   const client=createClient(url,anon,{global:{headers:{Authorization:'Bearer '+token}},auth:{persistSession:false,autoRefreshToken:false}})
   const authenticate=async()=>{
@@ -41,6 +44,7 @@ export async function handleVideoRecoveryCandidate(req: VercelRequest,res: Verce
     }
     const before=await state()
     if(before.active!==true) return res.status(410).json({error:'recovery_expired'})
+    if(finalize && !before.generation) return res.status(409).json({error:'recovery_object_missing'})
     if(!before.generation) return res.status(200).json({state:'waiting_for_upload',allow_resume:false,expires:before.expires})
     const response=await fetch(url+'/storage/v1/object/authenticated/post-videos/'+path,{
       headers:{apikey:anon,Authorization:'Bearer '+token},redirect:'error',signal:AbortSignal.timeout(30000),cache:'no-store',
@@ -50,7 +54,7 @@ export async function handleVideoRecoveryCandidate(req: VercelRequest,res: Verce
     let size=0
     try {
       const declared=response.headers.get('content-length')
-      if(response.headers.get('content-type')?.split(';')[0]!==before.type ||
+      if(response.headers.get('content-type')?.split(';')[0]?.trim().toLowerCase()!==before.type ||
         (declared!==null&&(!/^[0-9]+$/.test(declared)||Number(declared)!==before.size))) throw Error('media mismatch')
       while(true) {
         const {done,value}=await reader.read();if(done)break
@@ -67,8 +71,26 @@ export async function handleVideoRecoveryCandidate(req: VercelRequest,res: Verce
     // Detect generation/manifest/post races. This is advisory; finalize MUST
     // repeat verification and enforce the atomic generation fence itself.
     if(JSON.stringify(before)!==JSON.stringify(after)||after.active!==true) return res.status(409).json({error:'recovery_state_changed'})
-    if(after.post_id && (after.post_generation!==after.generation||after.post_sha256!==inspected.sha256||after.post_duration!==inspected.duration)) {
+    if(after.post_id && (after.post_generation!==after.generation||after.post_sha256!==inspected.sha256||after.post_duration!==Math.round(inspected.duration*1000)/1000)) {
       return res.status(409).json({error:'recovery_post_mismatch'})
+    }
+    if(finalize) {
+      // This synthetic-key configuration is accepted ONLY beyond the exact
+      // localhost + explicit isolated-mode fence above. Production stays off.
+      const keyHex=process.env.VIDEO_RECOVERY_ISOLATED_KEY_HEX
+      if(!keyHex||!/^[0-9a-f]{64}$/.test(keyHex)) return res.status(503).json({error:'recovery_signer_unavailable'})
+      const nonce=createVideoAttestationNonce(),expires=Math.floor(Date.now()/1000)+120
+      const key=Buffer.from(keyHex,'hex')
+      let signature:string
+      try {signature=signBinaryVideoAttestation(key,{owner,path,generation:after.generation,sha256:inspected.sha256,
+        durationMs:Math.round(inspected.duration*1000),contentSha256:videoAttestationDigest(body.content as string),expiresAt:expires,nonce})}
+      finally {key.fill(0)}
+      if(await authenticate()!==owner) return res.status(401).end()
+      const {data,error}=await client.rpc('video_publish_recovered_attested_v1',{p_owner:owner,p_path:path,
+        p_generation:after.generation,p_sha256:inspected.sha256,p_duration_ms:Math.round(inspected.duration*1000),
+        p_content:body.content,p_expires_at:expires,p_nonce:nonce,p_signature:signature,p_key_id:1})
+      if(error||typeof data!=='string'||!/^[0-9a-f-]{36}$/.test(data)) return res.status(409).json({error:'recovery_publication_unconfirmed'})
+      return res.status(200).json({state:'published',post_id:data})
     }
     return res.status(200).json({state:after.post_id?'published':'verified_ready',allow_resume:false,
       post_id:after.post_id,generation:after.generation,sha256:inspected.sha256,size,ffprobe_verified:true,expires:after.expires})

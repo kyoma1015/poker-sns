@@ -20,6 +20,7 @@ for(const c of [owner,foreign]) assert.ifError((await c.auth.signUp({email:`reco
 const uid=(await owner.auth.getUser()).data.user.id,jwt=(await owner.auth.getSession()).data.session.access_token
 const foreignJwt=(await foreign.auth.getSession()).data.session.access_token
 process.env.VITE_SUPABASE_URL=url;process.env.VITE_SUPABASE_ANON_KEY=anon
+process.env.VIDEO_RECOVERY_ISOLATED_KEY_HEX='41'.repeat(32)
 const handler=createVideoFinalizeHandler(undefined,{isolatedLocalOnly:true})
 const server=createServer((req,res)=>{void(async()=>{
  const chunks=[];let size=0
@@ -71,22 +72,22 @@ try {
  const late=await reserve();await upload(late);assert.equal((await bind(late)).status,409,'cannot invent original identity after upload')
  // Race an independently verified attested publication against a real bounded
  // Storage read. The first inspection must reject its changed snapshot.
- let release,reached
+ let release,reached,held=false
  const reachedPromise=new Promise(resolve=>{reached=resolve}),originalFetch=globalThis.fetch
  globalThis.fetch=async(input,init)=>{
   const response=await originalFetch(input,init)
-  if(String(input)===url+'/storage/v1/object/authenticated/post-videos/'+path){reached();await new Promise(resolve=>{release=resolve})}
+  if(String(input)===url+'/storage/v1/object/authenticated/post-videos/'+path && !held){held=true;reached();await new Promise(resolve=>{release=resolve})}
   return response
  }
  try {
   const race=status(path);await reachedPromise
-  const {data:generation,error}=await owner.rpc('video_production_storage_generation',{p_owner:uid,p_path:path});assert.ifError(error)
-  const content='recovery race fixture',nonce=randomUUID().replaceAll('-',''),expiresAt=Math.floor(Date.now()/1000)+120
-  const signature=signBinaryVideoAttestation(Buffer.from('41'.repeat(32),'hex'),{owner:uid,path,generation,sha256:hash(bytes),durationMs:2000,contentSha256:videoAttestationDigest(content),expiresAt,nonce})
-  const published=await owner.rpc('video_publish_recovered_attested_v1',{p_owner:uid,p_path:path,p_generation:generation,p_sha256:hash(bytes),p_duration_ms:2000,p_content:content,p_expires_at:expiresAt,p_nonce:nonce,p_signature:signature,p_key_id:1})
-  assert.ifError(published.error);release();assert.equal((await race).status,409,'concurrent publish invalidates inspection snapshot')
+  const published=await call({action:'recovery_finalize',object_path:path,content:'recovery race fixture'})
+  assert.equal(published.status,200,'actual recovered-finalize API must commit via attested recovery RPC')
+  release();assert.equal((await race).status,409,'concurrent publish invalidates inspection snapshot')
  } finally {release?.();globalThis.fetch=originalFetch}
  result=await status(path);assert.equal(result.status,200);assert.equal((await result.json()).state,'published')
+ assert.equal((await call({action:'recovery_finalize',object_path:path,content:'recovery race fixture'})).status,200,'same HTTP recovery is idempotent')
+ assert.equal((await call({action:'recovery_finalize',object_path:path,content:'changed content'})).status,409,'changed retry content cannot reconcile to an old post')
  const posts=await owner.from('posts').select('id').eq('video_path',path);assert.ifError(posts.error);assert.equal(posts.data.length,1)
  // Reusing the original signed nonce must fail even through the recovery wrapper.
  const {data:currentGeneration}=await owner.rpc('video_production_storage_generation',{p_owner:uid,p_path:path})
