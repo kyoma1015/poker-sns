@@ -47,7 +47,9 @@ test('direct signed Storage playback URLs are blocked', () => {
 })
 
 test('pending draft restore verifies current authenticated account before showing content', () => {
-  const restoreStart = timeline.indexOf("sessionStorage.getItem('poker-id-pending-video-v1')")
+  const restoreRoutine = timeline.indexOf('const restore = async () =>')
+  assert.ok(restoreRoutine >= 0)
+  const restoreStart = timeline.indexOf("sessionStorage.getItem('poker-id-pending-video-v1')", restoreRoutine)
   const authStart = timeline.lastIndexOf('await supabase.auth.getUser()', restoreStart)
   const ownerCheck = timeline.indexOf('record.owner !== user.id', restoreStart)
   const renderDraft = timeline.indexOf('setContent(staged.content)', restoreStart)

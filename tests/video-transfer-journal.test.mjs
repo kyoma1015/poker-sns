@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import {beginVideoTransfer, confirmVideoReservation, setVideoTransferPhase, handOffVideoTransfer, isVideoTransferBlocked, hasVideoTransferJournal} from '../src/videoTransferJournal.ts'
+import {beginVideoTransfer, confirmVideoReservation, setVideoTransferPhase, handOffVideoTransfer, isVideoTransferBlocked, hasVideoTransferJournal, readVideoTransferHint, finishRecoveredVideoTransfer} from '../src/videoTransferJournal.ts'
 const values=new Map()
 Object.defineProperty(globalThis,'sessionStorage',{configurable:true,value:{getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,value),removeItem:key=>values.delete(key)}})
 const record=owner=>({owner,path:owner+'/bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb.webm',sha256:'a'.repeat(64),size:100,type:'video/webm',startedAt:Date.now(),phase:'reserving'})
@@ -40,4 +40,19 @@ test('malformed and inaccessible storage fail closed; foreign journals are not l
     assert.equal(hasVideoTransferJournal('owner'),true)
     assert.throws(()=>beginVideoTransfer(record('owner')))
   } finally {Object.defineProperty(globalThis,'sessionStorage',{configurable:true,value:storage})}
+})
+
+test('recovery hints are owner-scoped and confirmed cleanup cannot erase a newer record',()=>{
+ const owner='dddddddd-dddd-4ddd-8ddd-dddddddddddd',r=record(owner),key='poker-id-video-transfer-v1:'+owner
+ values.set(key,JSON.stringify(r))
+ const hint=readVideoTransferHint(owner)
+ assert.equal(hint.path,r.path)
+ values.set(key,JSON.stringify({...r,sha256:'b'.repeat(64)}))
+ assert.throws(()=>finishRecoveredVideoTransfer(owner,hint.path,hint.raw))
+ assert.equal(hasVideoTransferJournal(owner),true)
+ values.set(key,hint.raw)
+ finishRecoveredVideoTransfer(owner,hint.path,hint.raw)
+ assert.equal(hasVideoTransferJournal(owner),false)
+ values.set(key,JSON.stringify({...r,path:'different-owner/path.webm'}))
+ assert.throws(()=>readVideoTransferHint(owner))
 })

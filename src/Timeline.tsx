@@ -198,7 +198,10 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         if(cancelled||lifetime!==composerLifetimeRef.current) return
         finishRecoveredVideoTransfer(owner,path,hint?.raw)
         const pendingRaw=sessionStorage.getItem('poker-id-pending-video-v1')
-        if(pendingRaw) {const pending=JSON.parse(pendingRaw);if(pending.owner===owner&&pending.path===path)sessionStorage.removeItem('poker-id-pending-video-v1')}
+        if(pendingRaw) {
+          try {const pending=JSON.parse(pendingRaw);if(pending.owner===owner&&pending.path===path)sessionStorage.removeItem('poker-id-pending-video-v1')}
+          catch { /* Untrusted unrelated pointer cannot undo a confirmed server recovery. */ }
+        }
         pendingVideoRef.current=null
         setPendingVideo(null)
         setVideoRecoveryBlocked(false)
