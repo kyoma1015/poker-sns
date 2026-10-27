@@ -166,6 +166,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const [resultsLoading, setResultsLoading] = useState(false)
   const imageInputRef = useRef<HTMLInputElement>(null)
   const videoInputRef = useRef<HTMLInputElement>(null)
+  const videoSelectionRef = useRef(0)
   const [videoFile, setVideoFile] = useState<File | null>(null)
   // Retain the exact immutable object path after an uncertain finalize result.
   type PendingVideo = { path: string; owner: string; content: string }
@@ -837,9 +838,11 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
   const chooseVideo = async (file: File | undefined) => {
     if (!file) return
+    const selection = ++videoSelectionRef.current
     if (pendingVideoRef.current || videoSubmitInFlightRef.current) { setMessage('保留中の動画を先に再試行してください。'); return }
     if (imageFiles.length || selectedResult || selectedDiagnosis || styleSnapshot || interactiveMode !== 'normal') { setMessage('動画は画像・戦績・診断・アンケートと同時に添付できません。'); return }
     const error = await validateVideo(file)
+    if (selection !== videoSelectionRef.current) return
     if (error) { setMessage(error); return }
     // Re-check after async metadata validation: finalize may have started meanwhile.
     if (pendingVideoRef.current || videoSubmitInFlightRef.current) { setMessage('保留中の動画を先に再試行してください。'); return }
@@ -2289,7 +2292,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     return <div style={{ marginTop: 12 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 7 }}>
         <span style={{ fontSize: 12, color: '#aaa', fontWeight: 700 }}>添付プレビュー（投稿時の表示）</span>
-        <button type="button" disabled={isPosting || Boolean(pendingVideo)} onClick={() => { if (videoSubmitInFlightRef.current || pendingVideoRef.current) return; setSelectedResult(null); setSelectedDiagnosis(null); setStyleSnapshot(null); setImageFiles([]); setVideoFile(null) }} aria-label="添付を解除" style={{ width: 'auto', padding: '4px 9px', background: '#292929', border: '1px solid #444', borderRadius: 8, color: '#ddd', fontSize: 12 }}>× 解除</button>
+        <button type="button" disabled={isPosting || Boolean(pendingVideo)} onClick={() => { if (videoSubmitInFlightRef.current || pendingVideoRef.current) return; videoSelectionRef.current++; setSelectedResult(null); setSelectedDiagnosis(null); setStyleSnapshot(null); setImageFiles([]); setVideoFile(null) }} aria-label="添付を解除" style={{ width: 'auto', padding: '4px 9px', background: '#292929', border: '1px solid #444', borderRadius: 8, color: '#ddd', fontSize: 12 }}>× 解除</button>
       </div>
       {selectedResult?.type === 'tournament' && renderTournamentResultCard(previewPost)}
       {selectedResult?.type === 'amusement' && renderAmusementResultCard(previewPost)}

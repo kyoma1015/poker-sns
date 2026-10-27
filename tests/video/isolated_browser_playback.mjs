@@ -301,6 +301,55 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     await timelinePage.evaluate(() => sessionStorage.removeItem('poker-id-pending-video-v1'))
     await timelinePage.reload()
     console.log('PASS: REAL Chromium restores same-owner pending draft after reload')
+    // Resolve two metadata checks in reverse order. The first selection must
+    // never overwrite the latest accepted file in the actual Timeline UI.
+    const selectionPage=await browser.newPage()
+    await selectionPage.addInitScript(({jwt,anon})=>{
+      window.__VIDEO_QA_JWT=jwt
+      window.__VIDEO_QA_ANON=anon
+    },{jwt,anon})
+    await selectionPage.goto(origin+'/tests/video/browser-real-timeline.html')
+    await selectionPage.evaluate(()=>window.dispatchEvent(new Event('poker-id-open-compose')))
+    const selectionComposer=selectionPage.getByRole('dialog',{name:'新しい投稿'})
+    await selectionComposer.waitFor()
+    await selectionPage.locator('article video').first().waitFor({timeout:20000})
+    await selectionPage.waitForFunction(()=>![...document.querySelectorAll('article')].some(a=>a.textContent?.includes('動画を読み込み中')) )
+    await selectionPage.evaluate(()=>{
+      const create=document.createElement.bind(document)
+      const createUrl=URL.createObjectURL.bind(URL)
+      window.__VIDEO_SELECTION_CHECKS=[]
+      window.__VIDEO_SELECTION_URLS={}
+      document.createElement=(tag,...args)=>{
+        if(tag!=='video') return create(tag,...args)
+        const fake={duration:2,preload:'',src:'',onloadedmetadata:null,onerror:null,removeAttribute(){},load(){}}
+        window.__VIDEO_SELECTION_CHECKS.push(fake)
+        return fake
+      }
+      URL.createObjectURL=value=>{
+        const url=createUrl(value)
+        if(value instanceof File) window.__VIDEO_SELECTION_URLS[value.name]=url
+        return url
+      }
+      window.__VIDEO_SELECTION_RESTORE=()=>{document.createElement=create}
+    })
+    const picker=selectionPage.locator('input[accept="video/mp4,video/webm"]')
+    await picker.setInputFiles({name:'older.webm',mimeType:'video/webm',buffer:bytes})
+    await picker.setInputFiles({name:'latest.webm',mimeType:'video/webm',buffer:bytes})
+    await selectionPage.waitForFunction(()=>window.__VIDEO_SELECTION_CHECKS.length===2)
+    await selectionPage.evaluate(()=>{
+      window.__VIDEO_SELECTION_RESTORE()
+      window.__VIDEO_SELECTION_CHECKS[1].onloadedmetadata()
+    })
+    const selectedPreview=selectionComposer.locator('video')
+    await selectedPreview.waitFor()
+    const latestUrl=await selectedPreview.getAttribute('src')
+    assert.equal(latestUrl,await selectionPage.evaluate(()=>window.__VIDEO_SELECTION_URLS['latest.webm']))
+    await selectionPage.evaluate(()=>window.__VIDEO_SELECTION_CHECKS[0].onloadedmetadata())
+    // Flush React's next rendering turn after the older Promise settles.
+    await selectionPage.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))))
+    assert.equal(await selectedPreview.getAttribute('src'),latestUrl,'older metadata completion cannot replace latest preview')
+    console.log('PASS: actual Timeline reverse metadata completion preserves latest video selection')
+    await selectionPage.close()
     // Verify the real browser duration reader cannot hang on a corrupt video.
     // Advance Chromium's virtual clock by 15 seconds without a real 15s delay.
     const timeoutPage=await browser.newPage()
@@ -382,14 +431,14 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     await composer.getByRole('button',{name:'投稿する'}).click({timeout:20000})
     await composer.getByRole('status').filter({hasText:'動画はアップロード済みです。'}).waitFor()
     await composer.getByRole('button',{name:'投稿する'}).waitFor({state:'visible'})
-    await timelinePage.getByText(/動画を投稿できませんでした：/).waitFor()
+    await composer.getByText(/動画を投稿できませんでした：/).waitFor()
     assert.ok(committedButLost,'real publication must have committed before retry')
     const pendingBeforeRetry=await timelinePage.evaluate(()=>JSON.parse(sessionStorage.getItem('poker-id-pending-video-v1')))
     assert.equal(pendingBeforeRetry.content,uploadText)
     const requestsBeforeEdit=videoReservationResponses.length
     await composer.getByPlaceholder('ポーカーについて何を投稿する？').fill(uploadText+' edited')
     await composer.getByRole('button',{name:'投稿する'}).click()
-    await timelinePage.getByText(/前回の投稿内容またはアカウントが異なります/).waitFor()
+    await composer.getByText(/前回の投稿内容またはアカウントが異なります/).waitFor()
     assert.equal(videoReservationResponses.length,requestsBeforeEdit,'edited retry must not issue a network mutation')
     await composer.getByRole('button',{name:'投稿内容を元に戻す'}).click()
     assert.equal(await composer.getByPlaceholder('ポーカーについて何を投稿する？').inputValue(),uploadText)
