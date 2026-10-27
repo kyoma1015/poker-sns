@@ -41,6 +41,12 @@ jobs:
             GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_joint_reach.py -v
             GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_learned_preflop.py -v
           done
+      - name: Complete native HU1BB calibration and actual representative learning
+        run: |
+          python -B -m gto.native.onebb_certificate --runtime "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID" --output "$RUNNER_TEMP/onebb-evidence-$GITHUB_RUN_ID"
+          for variant in g12_next g12_p1_cache g12_p1_packed; do
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" GTO_ONEBB_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/onebb" python -B gto/native/test_onebb_sampler.py -v
+          done
       - name: Native poker throughput and toy-only NashConv observations
         run: |
           for variant in g12_next g12_p1_cache g12_p1_packed; do
