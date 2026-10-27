@@ -56,6 +56,29 @@ begin
  -- In real deployment this signature is created by the finalizer, not DB.
  -- Test-only key is supplied as a literal in the disposable fixture.
  signature:=encode(extensions.hmac(payload,decode(repeat('41',32),'hex'),'sha256'),'hex');
+ -- Regression: each NULL argument must reject explicitly before consuming
+ -- nonce or writing a post. Exceptions roll back their subtransactions.
+ for i in 1..10 loop
+  begin
+   perform public.video_publish_attested_v1(
+    case when i=1 then null else o end,
+    case when i=2 then null else p end,
+    case when i=3 then null else g end,
+    case when i=4 then null else h end,
+    case when i=5 then null else 2000 end,
+    case when i=6 then null else content end,
+    case when i=7 then null else expires end,
+    case when i=8 then null else n end,
+    case when i=9 then null else signature end,
+    case when i=10 then null::smallint else 1::smallint end);
+   raise exception 'NULL attestation accepted at argument %',i;
+  exception when raise_exception then
+   if SQLERRM not in ('invalid attestation claims','video owner mismatch') then raise; end if;
+  end;
+  if exists(select 1 from public.posts where video_path=p) or
+     exists(select 1 from video_private.consumed_nonces where nonce=decode(n,'hex'))
+  then raise exception 'NULL attestation mutated state'; end if;
+ end loop;
  -- Rotation isolation: inactive key IDs, unknown key IDs, and active keys
  -- with a different secret must never validate an old signature.
  insert into video_private.attestation_keys(key_id,secret,active)

@@ -24,7 +24,10 @@ declare
  v_path bytea;v_id uuid;v_existing public.posts%rowtype;
 begin
  if (select auth.uid()) is distinct from p_owner then raise exception 'video owner mismatch'; end if;
+ -- SQL three-valued logic must never turn a NULL proof into authorization.
  if p_owner is null or p_generation is null or p_path is null or
+  p_sha256 is null or p_nonce is null or p_signature is null or
+  p_duration_ms is null or p_expires_at is null or p_key_id is null or
   p_path !~ ('^'||p_owner::text||'/[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}[.](mp4|webm)$') or
   p_sha256 !~ '^[0-9a-f]{64}$' or p_nonce !~ '^[0-9a-f]{32}$' or
   p_signature !~ '^[0-9a-f]{64}$' or p_duration_ms not between 1 and 30000 or
@@ -45,7 +48,8 @@ begin
  v_expected:=extensions.hmac(v_payload,v_secret,'sha256');
  v_signature:=decode(p_signature,'hex');
  -- Compare all bytes, with no early exit on mismatched prefix.
- if octet_length(v_expected)<>octet_length(v_signature) or
+ if v_expected is null or v_signature is null or
+   octet_length(v_expected)<>octet_length(v_signature) or
    (select bit_or(get_byte(v_expected,n) # get_byte(v_signature,n))
     from generate_series(0,31) as n)<>0 then
   raise exception 'invalid video attestation'; end if;

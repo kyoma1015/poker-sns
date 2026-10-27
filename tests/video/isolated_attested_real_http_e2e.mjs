@@ -104,6 +104,18 @@ const signature=signBinaryVideoAttestation(Buffer.alloc(32,0x41),{
 const params={p_owner:owner,p_path:path,p_generation:gen,p_sha256:sha256,
  p_duration_ms:durationMs,p_content:content,p_expires_at:expiresAt,
  p_nonce:nonce,p_signature:signature,p_key_id:1}
+// Every nullable RPC argument is adversarial input. In particular a NULL
+// signature must not bypass PL/pgSQL IF through three-valued boolean logic.
+for (const field of Object.keys(params)) {
+ const {error}=await ownerClient.rpc('video_publish_attested_v1',{...params,[field]:null})
+ assert.ok(error, 'NULL '+field+' must be rejected before publication')
+ assert.equal(error.code,'P0001','NULL claims must fail at explicit authorization guard')
+ assert.match(error.message,/^(invalid attestation claims|video owner mismatch)$/)
+}
+const {data:beforeValid,error:beforeValidError}=await ownerClient.from('posts').select('id').eq('video_path',path)
+assert.ifError(beforeValidError)
+assert.equal(beforeValid.length,0,'NULL attestation attempts must create no posts')
+console.log('PASS: authenticated HTTP rejects all 10 NULL attestation fields without publishing')
 const anonymous=createClient(url,anon,{auth:{persistSession:false,autoRefreshToken:false}})
 assert.ok((await anonymous.rpc('video_publish_attested_v1',params)).error,
  'anonymous PostgREST role must not execute attested publication RPC')
