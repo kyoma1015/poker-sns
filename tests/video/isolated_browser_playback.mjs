@@ -573,8 +573,9 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     await timelinePage.evaluate(() => window.__VIDEO_QA_TRIGGER_SIGN_OUT?.())
     await timelinePage.waitForFunction(text => {
       const article=[...document.querySelectorAll('article')].find(a=>a.textContent?.includes(text))
-      return article && !article.querySelector('video')
+      return !article || !article.querySelector('video')
     },uploadText,{timeout:20000})
+    assert.equal(await timelinePage.locator('article').count(),0,'sign-out must discard the old private feed')
     assert.equal(await uploadedArticle.locator('video').count(),0,
       'authenticated video element must disappear after sign-out')
     const revokedUrls = await timelinePage.evaluate(() => window.__VIDEO_QA_REVOKED_URLS)

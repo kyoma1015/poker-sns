@@ -16,7 +16,8 @@ export async function verifyRecoveryBoundaries({browser,origin,jwt,anon,bytes,bo
  for(const [name,phase,action] of cases) {
   const page=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true})
   const errors=[],calls=[]
-  let release,feedRelease,feedDone,completed=false,newRaw
+  let release,feedRelease,feedDone,responseDone,completed=false,newRaw
+  const responseFinished=new Promise(resolve=>{responseDone=resolve})
   page.on('pageerror',e=>errors.push(String(e)))
   try {
    if(action==='timeout')await page.clock.install()
@@ -47,7 +48,7 @@ export async function verifyRecoveryBoundaries({browser,origin,jwt,anon,bytes,bo
     if(phase==='finalize')published=true
     await new Promise(resolve=>{release=resolve})
     try{await route.fulfill({response})}catch{/* actual request cancelled */}
-    completed=true
+    completed=true;responseDone()
    })
    await page.goto(origin+'/tests/video/browser-real-timeline.html')
    const composer=page.getByRole('dialog',{name:'新しい投稿'})
@@ -89,6 +90,7 @@ export async function verifyRecoveryBoundaries({browser,origin,jwt,anon,bytes,bo
      } else await page.clock.fastForward(30001)
      await aborted
      release();release=undefined
+     await responseFinished
      if(feedRelease){const done=new Promise(resolve=>{feedDone=resolve});feedRelease();feedRelease=undefined;await done}
      await settle()
      if(action==='account') {
