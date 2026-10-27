@@ -59,3 +59,27 @@ revoke all on function public.video_bind_recovery_manifest_v1(text,text,integer,
 revoke all on function public.video_recovery_state_v1(text) from public,anon,service_role;
 grant execute on function public.video_bind_recovery_manifest_v1(text,text,integer,text) to authenticated;
 grant execute on function public.video_recovery_state_v1(text) to authenticated;
+
+-- Recovery-specific atomic publication fence. A read-only status result is
+-- never authority: recheck owner, expiry and original hash in the transaction
+-- that validates HMAC/generation/nonce and inserts/reconciles the post.
+create or replace function public.video_publish_recovered_attested_v1(
+ p_owner uuid,p_path text,p_generation uuid,p_sha256 text,p_duration_ms integer,
+ p_content text,p_expires_at bigint,p_nonce text,p_signature text,p_key_id smallint
+) returns uuid language plpgsql security definer set search_path='' as $$
+declare m video_private.recovery_manifests%rowtype; r public.video_reserved_object_keys%rowtype; v_id uuid;
+begin
+ if p_owner is null or (select auth.uid()) is distinct from p_owner then raise exception 'recovery owner mismatch'; end if;
+ -- Match parent publish's reservation-before-Storage lock order.
+ select * into r from public.video_reserved_object_keys where bucket_id='post-videos' and object_path=p_path and owner_id=p_owner for update;
+ if not found or r.created_at+interval '1 hour' <= clock_timestamp() then raise exception 'recovery reservation unavailable'; end if;
+ select * into m from video_private.recovery_manifests where object_path=p_path and owner_id=p_owner for update;
+ if not found or m.expires_at<=clock_timestamp() or m.sha256 is distinct from p_sha256 then raise exception 'recovery manifest mismatch or expired'; end if;
+ v_id:=public.video_publish_attested_v1(p_owner,p_path,p_generation,p_sha256,p_duration_ms,p_content,p_expires_at,p_nonce,p_signature,p_key_id);
+ -- A lock wait inside parent publication must not outlive either deadline.
+ if m.expires_at<=clock_timestamp() or r.created_at+interval '1 hour'<=clock_timestamp() or
+ p_expires_at<=extract(epoch from clock_timestamp())::bigint then raise exception 'recovery expired during publication'; end if;
+ return v_id;
+end $$;
+revoke all on function public.video_publish_recovered_attested_v1(uuid,text,uuid,text,integer,text,bigint,text,text,smallint) from public,anon,service_role;
+grant execute on function public.video_publish_recovered_attested_v1(uuid,text,uuid,text,integer,text,bigint,text,text,smallint) to authenticated;

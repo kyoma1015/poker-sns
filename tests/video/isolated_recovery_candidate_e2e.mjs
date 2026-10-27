@@ -83,11 +83,25 @@ try {
   const {data:generation,error}=await owner.rpc('video_production_storage_generation',{p_owner:uid,p_path:path});assert.ifError(error)
   const content='recovery race fixture',nonce=randomUUID().replaceAll('-',''),expiresAt=Math.floor(Date.now()/1000)+120
   const signature=signBinaryVideoAttestation(Buffer.from('41'.repeat(32),'hex'),{owner:uid,path,generation,sha256:hash(bytes),durationMs:2000,contentSha256:videoAttestationDigest(content),expiresAt,nonce})
-  const published=await owner.rpc('video_publish_attested_v1',{p_owner:uid,p_path:path,p_generation:generation,p_sha256:hash(bytes),p_duration_ms:2000,p_content:content,p_expires_at:expiresAt,p_nonce:nonce,p_signature:signature,p_key_id:1})
+  const published=await owner.rpc('video_publish_recovered_attested_v1',{p_owner:uid,p_path:path,p_generation:generation,p_sha256:hash(bytes),p_duration_ms:2000,p_content:content,p_expires_at:expiresAt,p_nonce:nonce,p_signature:signature,p_key_id:1})
   assert.ifError(published.error);release();assert.equal((await race).status,409,'concurrent publish invalidates inspection snapshot')
  } finally {release?.();globalThis.fetch=originalFetch}
  result=await status(path);assert.equal(result.status,200);assert.equal((await result.json()).state,'published')
  const posts=await owner.from('posts').select('id').eq('video_path',path);assert.ifError(posts.error);assert.equal(posts.data.length,1)
+ // Reusing the original signed nonce must fail even through the recovery wrapper.
+ const {data:currentGeneration}=await owner.rpc('video_production_storage_generation',{p_owner:uid,p_path:path})
+ const recoveryClaims={p_owner:uid,p_path:path,p_generation:currentGeneration,p_sha256:hash(bytes),p_duration_ms:2000,p_content:'recovery race fixture',p_expires_at:Math.floor(Date.now()/1000)+120,p_nonce:randomUUID().replaceAll('-',''),p_key_id:1}
+ recoveryClaims.p_signature=signBinaryVideoAttestation(Buffer.from('41'.repeat(32),'hex'),{owner:uid,path,generation:currentGeneration,sha256:hash(bytes),durationMs:2000,contentSha256:videoAttestationDigest(recoveryClaims.p_content),expiresAt:recoveryClaims.p_expires_at,nonce:recoveryClaims.p_nonce})
+ assert.ifError((await owner.rpc('video_publish_recovered_attested_v1',recoveryClaims)).error)
+ assert.ok((await owner.rpc('video_publish_recovered_attested_v1',recoveryClaims)).error,'nonce replay rejected by atomic recovery wrapper')
+ assert.ok((await foreign.rpc('video_publish_recovered_attested_v1',recoveryClaims)).error,'foreign identity cannot reuse signed owner proof')
+ sql(`update video_private.recovery_manifests set expires_at=clock_timestamp()-interval '1 second' where object_path='${path}';`)
+ const newNonce=randomUUID().replaceAll('-','')
+ recoveryClaims.p_nonce=newNonce
+ recoveryClaims.p_signature=signBinaryVideoAttestation(Buffer.from('41'.repeat(32),'hex'),{owner:uid,path,generation:currentGeneration,sha256:hash(bytes),durationMs:2000,contentSha256:videoAttestationDigest(recoveryClaims.p_content),expiresAt:recoveryClaims.p_expires_at,nonce:newNonce})
+ assert.ok((await owner.rpc('video_publish_recovered_attested_v1',recoveryClaims)).error,'expiry after successful status rejects publication in DB transaction')
+ assert.equal(sql(`select count(*) from video_private.consumed_nonces where nonce=decode('${newNonce}','hex');`),'0','rejected recovery must not consume nonce')
+ assert.equal((await owner.from('posts').select('id').eq('video_path',path)).data.length,1)
  assert.equal(sql(`select count(*) from video_private.recovery_manifests where object_path='${path}';`),'1')
  console.log('PASS: real recovery candidate JWT/auth.uid owner, private manifest RLS, immutable concurrent bind, server expiry, SHA256/ffprobe, missing/late object, overwrite rejection, published state and concurrent publication race')
 } finally {await new Promise(resolve=>server.close(resolve));rmSync(dir,{recursive:true,force:true})}
