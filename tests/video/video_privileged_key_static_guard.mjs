@@ -26,8 +26,20 @@ for (const file of runtime) {
 // never issue a persistent signed/public Storage URL.
 for (const file of runtime) {
  const code=readFileSync(file,'utf8')
- assert.doesNotMatch(code,/\.\s*(?:createSignedUrl|createSignedUrls|getPublicUrl)\s*\(/,
-  file+' must not issue signed/public Storage URLs for revocable video')
+ assert.doesNotMatch(code,/\.\s*(?:createSignedUrl|createSignedUrls)\s*\(/,
+  file+' must not issue signed Storage URLs for revocable video')
+ if (file !== 'src/Timeline.tsx') {
+  assert.doesNotMatch(code,/\.\s*getPublicUrl\s*\(/,
+   file+' must not issue public Storage URLs for revocable video')
+ } else {
+  // Existing image posts use a public post-images bucket; do not break that
+  // unrelated feature while prohibiting public URLs for the video bucket.
+  const publicCalls=[...code.matchAll(/storage\.from\(['"]([^'"]+)['"]\)\.getPublicUrl\s*\(/g)]
+  assert.equal((code.match(/\.getPublicUrl\s*\(/g)||[]).length,publicCalls.length,
+   'Timeline public Storage URLs must have an explicit literal bucket')
+  assert.ok(publicCalls.every(m=>m[1]==='post-images'),
+   'Timeline video Storage must never issue public URLs')
+ }
 }
 const mediaHandler=readFileSync('api/video-media.ts','utf8')
 assert.match(mediaHandler,/Cache-Control', 'private, no-store/,
