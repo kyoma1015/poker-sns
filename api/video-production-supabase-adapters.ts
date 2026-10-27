@@ -65,6 +65,7 @@ export function createProductionSupabaseVideoAdapters(
       const response = await fetch((url.endsWith('/') ? url.slice(0, -1) : url) +
         '/storage/v1/object/authenticated/post-videos/' + path, {
         headers: { apikey: anonKey, Authorization: 'Bearer ' + accessToken },
+        redirect: 'error', // Never forward owner JWT to a redirected host.
         signal: AbortSignal.timeout(30000),
       })
       if (!response.ok || !response.body) throw new Error('private Storage read denied')
