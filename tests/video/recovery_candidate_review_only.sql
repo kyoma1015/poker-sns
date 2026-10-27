@@ -61,6 +61,28 @@ revoke all on function public.video_recovery_state_v1(text) from public,anon,ser
 grant execute on function public.video_bind_recovery_manifest_v1(text,text,integer,text,text) to authenticated;
 grant execute on function public.video_recovery_state_v1(text) to authenticated;
 
+-- Private, volatile check: PostgREST validates JWTs at request admission, but
+-- a reservation/Storage lock wait can cross expiry or a session revocation.
+-- Lock the exact Auth session AFTER reservation acquisition so revocation
+-- during that wait is observable; key-share fences deletion until commit.
+create or replace function video_private.assert_recovery_identity(p_owner uuid)
+returns void language plpgsql volatile security definer set search_path='' as $$
+declare v_exp text := auth.jwt()->>'exp'; v_session text := auth.jwt()->>'session_id';
+begin
+ if p_owner is null or auth.uid() is distinct from p_owner or
+ v_exp is null or v_exp !~ '^[0-9]{1,12}$' or
+ v_session is null or v_session !~ '^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$'
+ then raise exception 'recovery identity unavailable'; end if;
+ if v_exp::numeric <= extract(epoch from clock_timestamp()) then raise exception 'recovery JWT expired'; end if;
+ perform 1 from auth.sessions where id=v_session::uuid and user_id=p_owner
+ and (not_after is null or not_after>clock_timestamp()) for key share;
+ if not found then raise exception 'recovery session unavailable'; end if;
+ -- The session lookup itself can wait on Auth, so re-evaluate the clock.
+ if auth.uid() is distinct from p_owner or v_exp::numeric <= extract(epoch from clock_timestamp())
+ then raise exception 'recovery JWT expired'; end if;
+end $$;
+revoke all on function video_private.assert_recovery_identity(uuid) from public,anon,authenticated,service_role;
+
 -- Recovery-specific atomic publication fence. A read-only status result is
 -- never authority: recheck owner, expiry and original hash in the transaction
 -- that validates HMAC/generation/nonce and inserts/reconciles the post.
@@ -76,8 +98,10 @@ begin
  if not found or r.created_at+interval '1 hour' <= clock_timestamp() then raise exception 'recovery reservation unavailable'; end if;
  select * into m from video_private.recovery_manifests where object_path=p_path and owner_id=p_owner for update;
  if not found or m.expires_at<=clock_timestamp() or m.sha256 is distinct from p_sha256 or m.content is distinct from p_content then raise exception 'recovery manifest mismatch or expired'; end if;
+ perform video_private.assert_recovery_identity(p_owner);
  v_id:=public.video_publish_attested_v1(p_owner,p_path,p_generation,p_sha256,p_duration_ms,p_content,p_expires_at,p_nonce,p_signature,p_key_id);
- -- A lock wait inside parent publication must not outlive either deadline.
+ -- A lock wait inside parent publication must not outlive auth or either deadline.
+ perform video_private.assert_recovery_identity(p_owner);
  if m.expires_at<=clock_timestamp() or r.created_at+interval '1 hour'<=clock_timestamp() or
  p_expires_at<=extract(epoch from clock_timestamp())::bigint then raise exception 'recovery expired during publication'; end if;
  return v_id;

@@ -8,6 +8,7 @@ import {execFileSync,spawn} from 'node:child_process'
 import {tmpdir} from 'node:os'
 import {join} from 'node:path'
 import {createServer} from 'node:http'
+import {createRecoveryIdentityFixture} from './isolated_recovery_identity_fixture.mjs'
 import {createRecoveryMultitabFixture} from './isolated_recovery_multitab_fixture.mjs'
 import {verifyRealBrowserPlayback} from './isolated_browser_playback.mjs'
 import {createVideoFinalizeHandler} from '../../api/video-finalize.ts'
@@ -131,7 +132,7 @@ try {
  assert.equal(sql(`select count(*) from video_private.consumed_nonces where nonce=decode('${delayedNonce}','hex');`),'0')
  assert.equal((await owner.from('posts').select('id').eq('video_path',delayed)).data.length,0)
  const boundaryPath=await reserve();assert.equal((await bind(boundaryPath,hash(bytes),bytes.length,'boundary recovery fixture')).status,200);await upload(boundaryPath)
- await verifyRealBrowserPlayback({postId:posts.data[0].id,jwt,deniedJwt:foreignJwt,anon,service:env.SERVICE_ROLE_KEY||env.SECRET_KEY,bytes,recoveryOnly:true,recoveryFixtures:{createConcurrentFixture:async()=>{const path=await reserve();assert.equal((await bind(path,hash(bytes),bytes.length,'concurrent first publication fixture')).status,200);await upload(path);return createRecoveryMultitabFixture({owner,uid,url,path,bytes,sql,dbUrl:env.DB_URL})},boundaryPath,assertBoundaryPosts:async count=>{const result=await owner.from('posts').select('id').eq('video_path',boundaryPath);assert.ifError(result.error);assert.equal(result.data.length,count)},legacyPath:late,expire:path=>sql(`update video_private.recovery_manifests set expires_at=clock_timestamp()-interval '1 second' where object_path='${path}';`)}})
+ await verifyRealBrowserPlayback({postId:posts.data[0].id,jwt,deniedJwt:foreignJwt,anon,service:env.SERVICE_ROLE_KEY||env.SECRET_KEY,bytes,recoveryOnly:true,recoveryFixtures:{createIdentityFixture:()=>createRecoveryIdentityFixture({url,anon,bytes,sql,dbUrl:env.DB_URL,call}),createConcurrentFixture:async()=>{const path=await reserve();assert.equal((await bind(path,hash(bytes),bytes.length,'concurrent first publication fixture')).status,200);await upload(path);return createRecoveryMultitabFixture({owner,uid,url,path,bytes,sql,dbUrl:env.DB_URL})},boundaryPath,assertBoundaryPosts:async count=>{const result=await owner.from('posts').select('id').eq('video_path',boundaryPath);assert.ifError(result.error);assert.equal(result.data.length,count)},legacyPath:late,expire:path=>sql(`update video_private.recovery_manifests set expires_at=clock_timestamp()-interval '1 second' where object_path='${path}';`)}})
  console.log('PASS: recovery atomic publication rejects nonce replay/foreign owner and rolls back post+nonce after expiry during real Storage row-lock wait')
  console.log('PASS: real recovery candidate JWT/auth.uid owner, private manifest RLS, immutable concurrent bind, server expiry, SHA256/ffprobe, missing/late object, overwrite rejection, published state and concurrent publication race')
 } finally {await new Promise(resolve=>server.close(resolve));rmSync(dir,{recursive:true,force:true})}

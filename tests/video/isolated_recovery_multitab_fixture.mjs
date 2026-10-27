@@ -4,7 +4,9 @@ import {spawn} from 'node:child_process'
 import {createHash} from 'node:crypto'
 import {signBinaryVideoAttestation,videoAttestationDigest} from '../../server/video-attestation.js'
 
-export function createRecoveryMultitabFixture({owner,uid,url,path,bytes,sql,dbUrl}) {
+export function createRecoveryMultitabFixture({owner,uid,url,path,bytes,sql,dbUrl,transformPublication}) {
+ assert.equal(url,'http://127.0.0.1:56321')
+ assert.match(dbUrl,/127\.0\.0\.1:56322\//)
  const claims=[]
  const realFetch=globalThis.fetch
  let baseline,initial,lock,lockExit,lockTimer,stopped=false
@@ -25,12 +27,13 @@ export function createRecoveryMultitabFixture({owner,uid,url,path,bytes,sql,dbUr
     const address=typeof input==='string'?input:input instanceof URL?input.href:input.url
     if(address!==url+'/rest/v1/rpc/video_publish_recovered_attested_v1')return realFetch(input,init)
     const body=init?.body??(input instanceof Request?await input.clone().text():undefined)
-    const args=JSON.parse(body)
+    let args=JSON.parse(body)
     if(args.p_path!==path)return realFetch(input,init)
-    const item={args,completed:false};claims.push(item)
+    if(transformPublication){args=transformPublication(args,new Headers(init?.headers));init={...init,body:JSON.stringify(args)}}
+    const item={args,completed:false,issuedAt:Math.floor(Date.now()/1000)};claims.push(item)
     const response=await realFetch(input,init)
     const result=await response.clone().json()
-    item.ok=response.ok;item.id=typeof result==='string'?result:null;item.completed=true
+    item.ok=response.ok;item.id=typeof result==='string'?result:null;item.error=result?.message??'';item.completed=true
     return response
    }
   },
@@ -65,26 +68,51 @@ export function createRecoveryMultitabFixture({owner,uid,url,path,bytes,sql,dbUr
    assert.equal(await lockExit,0,'isolated lock transaction commits cleanly')
    lock=null
   },
-  async audit(expectedPosts,expectedClaims) {
+  async waitClaimExpiry(index) {
+   assert.ok(claims[index])
+   for(let n=0;n<200;n++) {
+    if(sql(`select (${claims[index].args.p_expires_at}::numeric <= extract(epoch from clock_timestamp()))::text;`)==='true')return
+    await new Promise(resolve=>setTimeout(resolve,20))
+   }
+   throw Error('trusted attestation did not expire on the real server clock')
+  },
+  assertRejected(index,pattern) {assert.equal(claims[index]?.ok,false);assert.match(claims[index].error,pattern)},
+  async expireManifestWhileBlocked() {
+   const before=JSON.parse(snapshot())
+   sql(`update video_private.recovery_manifests set expires_at=clock_timestamp()+interval '250 milliseconds' where object_path='${path}';`)
+   const after=JSON.parse(snapshot())
+   assert.deepEqual({...after.manifest,expires_at:before.manifest.expires_at},before.manifest,'only the controlled manifest deadline may change')
+   assert.deepEqual({...after,manifest:before.manifest},before,'deadline fixture must preserve every other invariant')
+   baseline=snapshot();initial.expires=(await state()).expires
+   for(let n=0;n<100;n++) {
+    if(sql(`select (expires_at<=clock_timestamp())::text from video_private.recovery_manifests where object_path='${path}';`)==='true')return
+    await new Promise(resolve=>setTimeout(resolve,20))
+   }
+   throw Error('manifest deadline did not cross on real server clock')
+  },
+  async audit(expectedPosts,expectedClaims,{rejected=[],active=true}={}) {
    assert.equal(snapshot(),baseline,'reservation, manifest, Storage generation/metadata and owner counts must remain unchanged')
    const current=await state()
    assert.equal(current.owner,uid);assert.equal(current.sha256,createHash('sha256').update(bytes).digest('hex'))
-   assert.equal(current.generation,initial.generation);assert.equal(current.expires,initial.expires);assert.equal(current.active,true)
+   assert.equal(current.generation,initial.generation);assert.equal(current.expires,initial.expires);assert.equal(current.active,active)
    const posts=await owner.from('posts').select('id,user_id,video_path,video_generation,video_sha256,video_duration_seconds,content').eq('video_path',path)
    assert.ifError(posts.error);assert.equal(posts.data.length,expectedPosts)
    assert.equal(claims.length,expectedClaims,'exact number of signed publication attempts')
    const completed=claims.filter(c=>c.completed)
    const consumed=JSON.parse(sql(`select coalesce(jsonb_agg(jsonb_build_object('nonce',encode(nonce,'hex'),'owner',owner_id,'path',object_path)),'[]'::jsonb)::text from video_private.consumed_nonces where object_path='${path}';`))
-   assert.equal(consumed.length,completed.length,'each successful retry consumes a fresh nonce, atomically')
+   assert.equal(consumed.length,completed.filter(c=>c.ok).length,'only successful retries consume fresh nonces atomically')
    assert.equal(new Set(claims.map(c=>c.args.p_nonce)).size,claims.length,'no signed nonce reuse across tabs/retries')
-   for(const item of claims) {
+   for(const [index,item] of claims.entries()) {
     const a=item.args
     assert.equal(a.p_owner,uid);assert.equal(a.p_path,path);assert.equal(a.p_generation,initial.generation)
     assert.equal(a.p_sha256,current.sha256);assert.equal(a.p_content,initial.content);assert.equal(a.p_duration_ms,2000)
-    assert.ok(a.p_expires_at>Math.floor(Date.now()/1000)&&a.p_expires_at<=Math.floor(Date.now()/1000)+300)
+    assert.ok(a.p_expires_at>item.issuedAt&&a.p_expires_at<=item.issuedAt+300)
     const signed=signBinaryVideoAttestation(Buffer.from('41'.repeat(32),'hex'),{owner:uid,path,generation:initial.generation,sha256:current.sha256,durationMs:2000,contentSha256:videoAttestationDigest(initial.content),expiresAt:a.p_expires_at,nonce:a.p_nonce})
     assert.equal(signed===a.p_signature,true,'server proof must cover the exact immutable claims')
-    if(item.completed){assert.equal(item.ok,true);assert.equal(item.id,posts.data[0]?.id);assert.equal(consumed.filter(n=>n.nonce===a.p_nonce&&n.owner===uid&&n.path===path).length,1)}
+    if(item.completed){
+     if(rejected.includes(index)){assert.equal(item.ok,false);assert.equal(consumed.some(n=>n.nonce===a.p_nonce),false,'rejected proof must leave no nonce')}
+     else{assert.equal(item.ok,true);assert.equal(item.id,posts.data[0]?.id);assert.equal(consumed.filter(n=>n.nonce===a.p_nonce&&n.owner===uid&&n.path===path).length,1)}
+    }
    }
    if(expectedPosts) {
     const p=posts.data[0]

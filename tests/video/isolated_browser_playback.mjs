@@ -4,6 +4,7 @@ import assert from 'node:assert/strict'
 import { createServer as createHttpServer } from 'node:http'
 import { createServer as createViteServer } from 'vite'
 import { chromium } from 'playwright-core'
+import { verifyRecoveryIdentityDeadlines } from './isolated_recovery_identity_deadlines.mjs'
 import { verifyRecoveryConcurrentTabs } from './isolated_recovery_multitab.mjs'
 import { verifyRecoveryBoundaries } from './isolated_recovery_boundaries.mjs'
 import { verifyRecoveryTimeline } from './isolated_recovery_timeline.mjs'
@@ -140,7 +141,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     browser = await chromium.launch({
       headless: true, args: ['--no-sandbox', '--autoplay-policy=no-user-gesture-required'] })
     const origin = 'http://127.0.0.1:' + address.port
-    if (recoveryOnly) {await verifyRecoveryTimeline({browser,origin,jwt,anon,bytes,...recoveryFixtures});await verifyRecoveryBoundaries({browser,origin,jwt,anon,bytes,...recoveryFixtures});await verifyRecoveryConcurrentTabs({browser,origin,jwt,anon,bytes,...recoveryFixtures});return}
+    if (recoveryOnly) {await verifyRecoveryTimeline({browser,origin,jwt,anon,bytes,...recoveryFixtures});await verifyRecoveryBoundaries({browser,origin,jwt,anon,bytes,...recoveryFixtures});await verifyRecoveryConcurrentTabs({browser,origin,jwt,anon,bytes,...recoveryFixtures});await verifyRecoveryIdentityDeadlines({browser,origin,anon,bytes,...recoveryFixtures});return}
     const page = await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true})
     const errors = []
     page.on('pageerror', error => errors.push(String(error)))
