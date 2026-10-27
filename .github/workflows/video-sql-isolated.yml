@@ -17,7 +17,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Private export safety regression (synthetic data only)
-        run: python3 -m unittest discover -s tests/video -p test_private_storage_export.py -v
+        run: |
+          python3 -m unittest discover -s tests/video -p test_private_storage_export.py -v
+          python3 -m unittest tests.video.test_startup_diagnostic -v
       - name: Isolated PostgreSQL video schema and RLS
         run: bash tests/video/run_isolated.sh
       - name: Install ffmpeg for isolated media validation

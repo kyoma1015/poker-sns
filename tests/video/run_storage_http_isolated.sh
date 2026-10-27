@@ -12,6 +12,7 @@ trap 'npx --yes supabase@2.81.3 stop --workdir tests/video/local-stack --no-back
 # CLI startup prints ephemeral API/S3 secrets. Keep its output private and
 # never upload it as an artifact or echo it into the public CI log.
 if ! npx --yes supabase@2.81.3 start --workdir tests/video/local-stack --exclude studio,imgproxy,mailpit,edge-runtime,realtime,vector,logflare >"$qa/start.log" 2>&1; then
+  python3 scripts/video_ci_startup_diagnostic.py "$qa/start.log"
   echo 'ERROR: isolated Supabase startup failed; credential-bearing startup log withheld'
   exit 1
 fi
