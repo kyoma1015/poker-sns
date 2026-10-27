@@ -173,6 +173,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const composerLifetimeRef = useRef(0)
   const composerIdentityRef = useRef<string | null | undefined>(undefined)
   const [videoRecoveryBlocked, setVideoRecoveryBlocked] = useState(false)
+  // Feed refreshes own the general message; they must not erase recovery's stop reason.
+  const [videoRecoveryNotice, setVideoRecoveryNotice] = useState('')
   const [videoFile, setVideoFile] = useState<File | null>(null)
   // Retain the exact immutable object path after an uncertain finalize result.
   type PendingVideo = { path: string; owner: string; content: string }
@@ -210,6 +212,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         pendingVideoRef.current=null
         setPendingVideo(null)
         setVideoRecoveryBlocked(false)
+        setVideoRecoveryNotice('')
         setComposeOpen(false)
         setMessage('動画投稿を安全に復旧しました。')
         try {await loadPosts()} catch {if(!cancelled&&lifetime===composerLifetimeRef.current)setMessage('動画投稿は復旧済みです。タイムラインを再読み込みしてください。')}
@@ -274,7 +277,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       if (VIDEO_RECOVERY_CANDIDATE_ENABLED && !cancelled && lifetime === composerLifetimeRef.current) {
         setVideoRecoveryBlocked(true)
         setComposeOpen(true)
-        setMessage('動画の復旧状態を確認できません。ログインと通信を確認して再読み込みしてください。')
+        setVideoRecoveryNotice('動画の復旧状態を確認できません。ログインと通信を確認して再読み込みしてください。')
       }
     }
     }
@@ -861,6 +864,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         setCurrentUserId('')
         setVideoFile(null)
         setVideoRecoveryBlocked(next ? hasVideoTransferJournal(next) : false)
+        setVideoRecoveryNotice('')
         setImageFiles([])
         setSelectedResult(null)
         setSelectedDiagnosis(null)
@@ -3006,6 +3010,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
             {renderSelectedResultPreview()}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 18 }}><span style={{ color: '#888', fontSize: 12 }}>{content.length}/500</span><button type="button" disabled={isPosting || !canSubmitPost} onClick={handlePost} style={{ width: 'auto', borderRadius: 99, background: '#fff', color: '#000', padding: '10px 24px', fontWeight: 800 }}>{isPosting ? '投稿中...' : '投稿する'}</button></div>
             {message && <div style={{ color: '#ccc', marginTop: 10, fontSize: 12 }}>{message}</div>}
+            {videoRecoveryNotice && <div role="status" style={{ color: '#ccc', marginTop: 10, fontSize: 12 }}>{videoRecoveryNotice}</div>}
           </div>
         </div>}
         {/* 投稿一覧 */}

@@ -42,7 +42,7 @@ export async function verifyRecoveryBoundaries({browser,origin,jwt,anon,bytes,bo
      window.__VIDEO_QA_GET_SESSION=()=>new Promise(resolve=>window.__BOUNDARY_SESSION_RESOLVERS.push(()=>resolve({data:{session:{access_token:jwt,user:{id:owner}}},error:null})))
     }
    },{jwt,anon,path:boundaryPath,hash:createHash('sha256').update(bytes).digest('hex'),size:bytes.length,invalid:action==='invalid',hang:phase==='session',strict:action==='double',authHang:phase==='auth'})
-   if(name==='status-account-switch') await page.route('**/rest/v1/posts*',async route=>{
+   if(name==='status-account-switch'||name==='initial-auth-timeout') await page.route('**/rest/v1/posts*',async route=>{
     if(route.request().method()!=='GET')return route.continue()
     const response=await route.fetch()
     await new Promise(resolve=>{feedRelease=resolve})
@@ -71,6 +71,12 @@ export async function verifyRecoveryBoundaries({browser,origin,jwt,anon,bytes,bo
      await page.clock.fastForward(30001)
      await composer.getByText(/重複を防ぐため動画の再送信を停止/).first().waitFor()
      await composer.getByText('動画の復旧状態を確認できません。ログインと通信を確認して再読み込みしてください。',{exact:true}).waitFor()
+     for(let wait=0;!feedRelease&&wait<1000;wait++)await page.waitForTimeout(20)
+     assert.ok(feedRelease,'real owner feed response is held until after the stop notice')
+     const feedFinished=new Promise(resolve=>{feedDone=resolve})
+     feedRelease();feedRelease=undefined;await feedFinished
+     await page.locator('article').first().waitFor()
+     assert.equal(await composer.getByRole('status').getByText('動画の復旧状態を確認できません。ログインと通信を確認して再読み込みしてください。',{exact:true}).isVisible(),true,'a later successful feed refresh must not erase the recovery stop reason')
     } else if(action==='unmount')await page.evaluate(()=>window.__VIDEO_QA_UNMOUNT())
     else await page.evaluate(()=>window.__VIDEO_QA_TRIGGER_AUTH('SIGNED_IN','ffffffff-ffff-4fff-8fff-ffffffffffff'))
     await page.evaluate(()=>Promise.all(window.__BOUNDARY_AUTH_RELEASES.map(resolve=>resolve())))
