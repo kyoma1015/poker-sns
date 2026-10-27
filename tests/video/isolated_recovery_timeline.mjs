@@ -60,6 +60,10 @@ export async function verifyRecoveryTimeline({browser,origin,jwt,anon,bytes,lega
       if(scenario==='uploaded-reload'||scenario==='published-response-loss') {
         const article=page.locator('article').filter({hasText:text})
         await article.waitFor({timeout:45000})
+        await page.waitForFunction(()=>{
+          const owner=JSON.parse(atob(window.__VIDEO_QA_JWT.split('.')[1].replaceAll('-','+').replaceAll('_','/'))).sub
+          return sessionStorage.getItem('poker-id-video-transfer-v1:'+owner)===null&&sessionStorage.getItem('poker-id-pending-video-v1')===null
+        },null,{timeout:45000})
         assert.equal(await article.count(),1,'recovery shows exactly one post')
         await article.locator('video').waitFor()
         await article.locator('video').evaluate(video=>video.play())

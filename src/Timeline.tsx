@@ -207,7 +207,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         setVideoRecoveryBlocked(false)
         setComposeOpen(false)
         setMessage('動画投稿を安全に復旧しました。')
-        await loadPosts()
+        try {await loadPosts()} catch {if(!cancelled)setMessage('動画投稿は復旧済みです。タイムラインを再読み込みしてください。')}
       } catch {
         if(!cancelled&&lifetime===composerLifetimeRef.current) {setVideoRecoveryBlocked(true);setComposeOpen(true)}
       } finally {
