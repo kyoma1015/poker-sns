@@ -70,7 +70,7 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
     // consume permanent reservation keys or create unpublishable uploads.
     const isolatedReservation = options.isolatedLocalOnly === true && url === 'http://127.0.0.1:56321'
     const productionReservation = options.isolatedLocalOnly !== true &&
-      typeof url === 'string' && /^https:\\/\\/[a-z0-9-]+\\.supabase\\.co\\/?$/.test(url) &&
+      typeof url === 'string' && /^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/.test(url) &&
       process.env.VIDEO_PRODUCTION_FENCED_READY === 'true'
     if ((!isolatedReservation && !productionReservation) || !url || !anon) {
       return res.status(503).json({ error: 'video_reservation_not_enabled' })
