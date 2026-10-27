@@ -16,7 +16,7 @@ export default function PostVideo({ postId }: { postId: string }) {
       // Discard the locally cached media as soon as the session ends or
       // changes, so an old authenticated video cannot keep playing.
       const identityChanged = (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') &&
-        (!viewerId || session?.user.id !== viewerId)
+        (viewerId !== undefined && session?.user.id !== viewerId)
       if (event === 'SIGNED_OUT' || event === 'USER_UPDATED' || identityChanged) {
         active = false
         if (objectUrl) URL.revokeObjectURL(objectUrl)
