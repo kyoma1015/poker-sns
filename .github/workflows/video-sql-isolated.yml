@@ -16,6 +16,8 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+      - name: Private export safety regression (synthetic data only)
+        run: python3 -m unittest discover -s tests/video -p test_private_storage_export.py -v
       - name: Isolated PostgreSQL video schema and RLS
         run: bash tests/video/run_isolated.sh
       - name: Install ffmpeg for isolated media validation
