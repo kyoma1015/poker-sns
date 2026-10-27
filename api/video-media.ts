@@ -58,6 +58,7 @@ return async function handler(req: VercelRequest, res: VercelResponse) {
     const media = await fetch((url.endsWith('/') ? url.slice(0, -1) : url) +
       '/storage/v1/object/authenticated/post-videos/' + path, {
       headers: { apikey: anon, Authorization: rawAuth },
+      redirect: 'error', // Never forward viewer Authorization to a redirected host.
       signal: AbortSignal.timeout(30000),
     })
     if (!media.ok || !media.body) return res.status(503).end()
