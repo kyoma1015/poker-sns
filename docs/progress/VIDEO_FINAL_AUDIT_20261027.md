@@ -25,3 +25,5 @@ Finding: preview renderer returned null when only pendingVideo existed, hiding i
 Additional finding: concurrent chooseVideo metadata promises could settle in reverse order and overwrite the latest selected File. Added monotonically increasing selection fence (also invalidated on attachment clear). Chromium holds two metadata validations, completes the latest first and the older second, and asserts the actual Timeline preview keeps the latest URL. Existing pending/in-flight guards retained.
 
 Recovery CI follow-up: Storage HTTP #40468430659 reached restored-draft checks, then Playwright rejected an ambiguous error-message selector matching both main and modal. Scoped it to the actual composer; assertions retained. SQL #40468430716 and Poll #40468430697 succeeded for that intermediate HEAD.
+
+Selection fence also invalidates unresolved metadata when submission starts, preventing a pre-submit selection from resurrecting the attachment after successful publication. Actual Timeline test holds a second selection until after lost-response recovery succeeds, then releases metadata and asserts no non-feed preview remains.

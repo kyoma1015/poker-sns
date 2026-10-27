@@ -928,6 +928,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         return
       }
       videoSubmitInFlightRef.current = true
+      // A validation started before submission must not restore an old draft later.
+      videoSelectionRef.current++
       setIsPosting(true)
       setMessage('動画を検証・投稿中...')
       try {

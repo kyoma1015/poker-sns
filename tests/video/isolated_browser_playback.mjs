@@ -413,6 +413,23 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     await timelinePage.locator('input[accept="video/mp4,video/webm"]').setInputFiles({
       name:'timeline-e2e.webm',mimeType:'video/webm',buffer:bytes,
     })
+    await composer.locator('video').waitFor()
+    // Keep another selection's metadata unresolved until AFTER this post is
+    // confirmed. Submission must invalidate it, or it resurrects an old draft.
+    await timelinePage.evaluate(()=>{
+      const create=document.createElement.bind(document)
+      document.createElement=(tag,...args)=>{
+        if(tag!=='video') return create(tag,...args)
+        document.createElement=create
+        const fake={duration:2,preload:'',src:'',onloadedmetadata:null,onerror:null,removeAttribute(){},load(){}}
+        window.__VIDEO_LATE_SELECTION=fake
+        return fake
+      }
+    })
+    await timelinePage.locator('input[accept="video/mp4,video/webm"]').setInputFiles({
+      name:'deferred-unposted.webm',mimeType:'video/webm',buffer:bytes,
+    })
+    await timelinePage.waitForFunction(()=>Boolean(window.__VIDEO_LATE_SELECTION?.onloadedmetadata))
     // Commit the actual finalization but suppress its successful response once.
     // A retry must reuse the existing object, not reserve/upload a second one.
     let committedButLost=false
@@ -457,6 +474,11 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
       'ambiguous finalize retry must show exactly one post')
     assert.deepEqual(reservedPaths,[pendingBeforeRetry.path],'retry must not reserve/upload another object')
     assert.deepEqual(finalizedPaths,[pendingBeforeRetry.path,pendingBeforeRetry.path],'both finalizations use the exact immutable object path')
+    await timelinePage.evaluate(()=>window.__VIDEO_LATE_SELECTION.onloadedmetadata())
+    await timelinePage.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))))
+    assert.equal(await timelinePage.locator('video:not(article video)').count(),0,
+      'late pre-submit metadata cannot resurrect an already cleared attachment')
+    console.log('PASS: pending pre-submit metadata cannot resurrect attachment after successful retry')
     console.log('PASS: REAL Timeline committed-but-lost finalize response recovers same draft without duplicate publication')
     assert.ok(videoReservationResponses.filter(x=>x.status===201&&x.method==='POST').length >= 2,
       'real browser must receive distinct trusted reservation AND finalize successes')
