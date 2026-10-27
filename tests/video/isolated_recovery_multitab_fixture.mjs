@@ -37,7 +37,7 @@ export function createRecoveryMultitabFixture({owner,uid,url,path,bytes,sql,dbUr
     return response
    }
   },
-  async acquireLock() {
+  async acquireLock({storage=false}={}) {
    assert.equal(Boolean(lock),false)
    lock=spawn('psql',[dbUrl,'-v','ON_ERROR_STOP=1','-qAt'],{stdio:['pipe','pipe','pipe']})
    lockExit=new Promise(resolve=>lock.once('close',resolve))
@@ -49,7 +49,8 @@ export function createRecoveryMultitabFixture({owner,uid,url,path,bytes,sql,dbUr
     lock.stdout.on('data',data=>{output+=data.toString();if(output.includes('MULTITAB_LOCKED')){clearTimeout(timer);resolve()}})
     lock.once('error',()=>{clearTimeout(timer);reject(Error('isolated reservation lock unavailable'))})
     lock.once('close',()=>{clearTimeout(timer);reject(Error('isolated reservation lock ended early'))})
-    lock.stdin.write(`begin; select 1 from public.video_reserved_object_keys where bucket_id='post-videos' and object_path='${path}' for update; select 'MULTITAB_LOCKED';\n`)
+    const row=storage?`storage.objects where bucket_id='post-videos' and name='${path}'`:`public.video_reserved_object_keys where bucket_id='post-videos' and object_path='${path}'`
+    lock.stdin.write(`begin; select 1 from ${row} for update; select 'MULTITAB_LOCKED';\n`)
    })
   },
   async waitBlocked(expected) {
@@ -68,6 +69,24 @@ export function createRecoveryMultitabFixture({owner,uid,url,path,bytes,sql,dbUr
    assert.equal(await lockExit,0,'isolated lock transaction commits cleanly')
    lock=null
   },
+  async ageReservation(seconds=2) {
+   assert.ok(seconds>0&&seconds<=10)
+   const before=JSON.parse(snapshot())
+   sql(`update public.video_reserved_object_keys set created_at=clock_timestamp()-interval '1 hour'+make_interval(secs=>${seconds}) where bucket_id='post-videos' and object_path='${path}';`)
+   const after=JSON.parse(snapshot())
+   assert.deepEqual({...after.reservation,created_at:before.reservation.created_at},before.reservation,'only the disposable reservation age may change')
+   assert.deepEqual({...after,reservation:before.reservation},before,'reservation age control preserves manifest/Storage and counts')
+   assert.ok(Date.parse(after.manifest.expires_at)>Date.now()+60000,'manifest must remain independently unexpired')
+   baseline=snapshot()
+   assert.equal((await state()).active,true,'aged reservation is still active before the real wait')
+  },
+  async waitReservationExpiry() {
+   for(let n=0;n<200;n++) {
+    if(sql(`select (created_at+interval '1 hour'<=clock_timestamp())::text from public.video_reserved_object_keys where object_path='${path}';`)==='true')return
+    await new Promise(resolve=>setTimeout(resolve,20))
+   }
+   throw Error('reservation one-hour deadline did not expire on the real DB clock')
+  },
   async waitClaimExpiry(index) {
    assert.ok(claims[index])
    for(let n=0;n<200;n++) {
@@ -76,6 +95,7 @@ export function createRecoveryMultitabFixture({owner,uid,url,path,bytes,sql,dbUr
    }
    throw Error('trusted attestation did not expire on the real server clock')
   },
+  rejectionMessages(){return claims.filter(item=>item.completed&&!item.ok).map(item=>item.error)},
   assertRejected(index,pattern) {assert.equal(claims[index]?.ok,false);assert.match(claims[index].error,pattern)},
   async expireManifestWhileBlocked() {
    const before=JSON.parse(snapshot())
