@@ -20,6 +20,10 @@ def _digest(value):
     return sha256(json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
 
 
+class UnknownPolicyRow(ValueError):
+    """No observed policy at the requested native information key."""
+
+
 class PolicySnapshot:
     """Immutable explicit native-information-key policies with exact row identity.
 
@@ -65,11 +69,17 @@ class PolicySnapshot:
             raise ValueError('solver changed during snapshot')
         return cls(rows,max_rows=max_rows)
     def __setattr__(self,key,value):raise AttributeError('policy snapshot is immutable')
-    def __call__(self,state):
+    def observed_row(self,state):
+        """Return a copied observed row or None; never fabricate missing policy."""
         if state.is_terminal() or state.is_chance_node():raise ValueError('decision policy required')
         key=state.information_state_string(state.current_player());row=self._rows.get(key)
-        if row is None or set(row)!=set(state.legal_actions()):raise ValueError('snapshot row missing or actions differ')
+        if row is None:return None
+        if set(row)!=set(state.legal_actions()):raise ValueError('snapshot actions differ')
         return dict(row)
+    def __call__(self,state):
+        row=self.observed_row(state)
+        if row is None:raise UnknownPolicyRow('snapshot row missing or actions differ')
+        return row
 
 
 @dataclass(frozen=True)

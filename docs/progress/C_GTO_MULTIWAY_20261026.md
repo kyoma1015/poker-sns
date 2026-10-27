@@ -48,3 +48,46 @@ search without guessing; block only dependent acceptance, not independent work.
 Next: bind multiway output to immutable policy/configuration; connect learning
 observations and honest convergence diagnostics, then verified-only range UI.
 No autonomous restart configured; no production/main/billing operations.
+
+## First public exact-head verification
+Published6888cd5ee41d3ee407bd80b8b810259ba2063aef, same treeac9f96c36b81be883592d7c9fac54eb2cafb9fad
+as local635e70f. CI40452009763/job122016675924 SUCCESS. Decoded log proves555
+unittest executions+25Packed cases=580PASS (previous526,+54), all3pinned
+native reconstructions PASS. Temporary local environment remains missing; CI is
+the fresh reconstruction evidence. Existing four historical commits retained.
+
+## Learning/evaluation continuation
+New learned_preflop.py freezes actual native policy at checkpoint iterations,
+queries finite joint-support preflop contexts and saves fresh checksummed
+checkpoints plus exact-rational JSON reports. Config/policy/input digests bind
+results. Typed missing-row errors preserve computed actions and mark unknown
+prefixes/continuations unavailable; failed attempts still reserve sample budget.
+Target frequency rows remain unknown when unobserved, never uniform guesses.
+
+New local deviation diagnostic reports unilateral improvement for the queried
+decision/belief only, with conservative intervals. Missing positive-mass profile
+actions prevent estimating the profile value. Omitted legal alternatives prevent
+a full local upper bound. Global exploitability/NashConv remain null; no division
+by2 or two-player zero-sum convergence claim is applied to multiplayer games.
+Policy total variation across training checkpoints is observational drift, not
+a convergence certificate. Formal verified-convergence condition count stays0.
+
+CLI (queries contain exact string priors, e.g."1/2"):
+python3 -B -m gto.native.learned_preflop --module-dir BUILD/g12_next --stacks 100 100 --seed 17 --checkpoints 200 400 --queries queries.json --output FRESH_OUTPUT
+Use --seed 17 (separate arguments); examples use legal illustrative sizes, not
+the missing formal size specification. Query histories []/[8,20]/[8,20,44] map
+to RFI/vs3bet/vs4bet with suitable hero seats0/0/1, BB2. These are scheduled
+contexts, not claims that the learned policy covers or solves those contexts.
+
+Fresh pure regression30PASS (+6). New actual-native integration8methods per
+variant is pending CI: expected610=580+6pure+24native. New cross-variant proof
+compares full400-iteration learned snapshot digest and deterministic three-way
+fold/call/re-raise report bytes. Native integration is not locally rerun because
+the temporary compiled modules disappeared and approval-gated local dependency
+reconstruction did not complete. All failures must be resolved in exact-head CI.
+
+Release acceptance is intentionally not counted from test totals: RFI/3bet/4bet
+verified-GTO settings0, full verified equilibrium169EV coverage0/169, UI not
+connected. Multiway explicit-support conditional engine now2..9 seats; complete
+learned joint support remains unproved. Missing formal configurations block only
+formal-spec acceptance. No other development-line source files were changed.
