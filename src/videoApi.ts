@@ -8,17 +8,18 @@ export const VIDEO_MEDIA_ROUTE = '/internal/video/media'
 // Never infer readiness from the presence of Supabase credentials.
 export const VIDEO_SERVER_ENABLED = import.meta.env.VITE_VIDEO_SERVER_ENABLED === 'true'
 
-async function authHeader(): Promise<string> {
+async function authHeader(signal?: AbortSignal): Promise<string> {
   const { data: { session }, error } = await supabase.auth.getSession()
+  signal?.throwIfAborted()
   if (error || !session?.access_token) throw new Error('再ログインしてください。')
   return `Bearer ${session.access_token}`
 }
 
-export async function finalizeUploadedVideo(objectPath: string, content: string): Promise<string> {
+export async function finalizeUploadedVideo(objectPath: string, content: string, signal?: AbortSignal): Promise<string> {
   if (!VIDEO_SERVER_ENABLED) throw new Error('動画投稿はサーバーAPIの安全確認待ちです。')
   const response = await fetch(VIDEO_FINALIZE_ROUTE, {
-    method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: await authHeader() },
-    redirect: 'error', signal: AbortSignal.timeout(30000),
+    method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: await authHeader(signal) },
+    redirect: 'error', signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(30000)]) : AbortSignal.timeout(30000),
     cache: 'no-store', body: JSON.stringify({ object_path: objectPath, content }),
   })
   if (!response.ok) throw new Error('動画投稿を確定できませんでした。')
@@ -32,12 +33,12 @@ export async function finalizeUploadedVideo(objectPath: string, content: string)
 
 /** Reserve an object path before ANY Storage write. The server is the sole
  * trusted caller of the permanent-key ledger. Never retry a rejected key. */
-export async function reserveVideoObjectPath(objectPath: string): Promise<void> {
+export async function reserveVideoObjectPath(objectPath: string, signal?: AbortSignal): Promise<void> {
   if (!VIDEO_SERVER_ENABLED) throw new Error('動画投稿はサーバーAPIの安全確認待ちです。')
   const response = await fetch(VIDEO_FINALIZE_ROUTE, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: await authHeader() },
-    redirect: 'error', signal: AbortSignal.timeout(30000),
+    headers: { 'Content-Type': 'application/json', Authorization: await authHeader(signal) },
+    redirect: 'error', signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(30000)]) : AbortSignal.timeout(30000),
     cache: 'no-store',
     body: JSON.stringify({ action: 'reserve', object_path: objectPath }),
   })

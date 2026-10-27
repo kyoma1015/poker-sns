@@ -4,6 +4,7 @@ import assert from 'node:assert/strict'
 import { createServer as createHttpServer } from 'node:http'
 import { createServer as createViteServer } from 'vite'
 import { chromium } from 'playwright-core'
+import { verifyUploadInterruptions } from './isolated_upload_interruptions.mjs'
 import { verifyComposerLifecycle } from './isolated_composer_lifecycle.mjs'
 import { verifyAttachmentRequestRaces } from './isolated_attachment_races.mjs'
 import { createVideoMediaHandler } from '../../api/video-media.ts'
@@ -26,10 +27,11 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
           // Only the session source is injected. The real videoApi.ts
           // loadAuthorizedVideo implementation and PostVideo component run.
           return `import { createClient } from '@supabase/supabase-js'
+          import { videoStorageFetch } from '/src/videoUploadTransport.ts'
           const jwt = window.__VIDEO_QA_JWT
           const viewerId = JSON.parse(atob(jwt.split('.')[1].replaceAll('-', '+').replaceAll('_', '/'))).sub
           const client = createClient('http://127.0.0.1:56321', window.__VIDEO_QA_ANON, {
-            global: { headers: { Authorization: 'Bearer ' + jwt } },
+            global: { headers: { Authorization: 'Bearer ' + jwt }, fetch: videoStorageFetch },
             auth: { persistSession:false, autoRefreshToken:false },
           })
           const authListeners = new Set()
@@ -394,6 +396,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     assert.equal(await selectionComposer.locator('video').count(),0,'poll mode cancels older pending video validation')
     console.log('PASS: actual Timeline image and poll selection cancel stale pending video metadata')
     await selectionPage.close()
+    await verifyUploadInterruptions({browser,origin,jwt,anon,bytes})
     await verifyComposerLifecycle({browser,origin,jwt,anon,bytes})
     await verifyAttachmentRequestRaces({browser,origin,jwt,anon,bytes})
     // Verify the real browser duration reader cannot hang on a corrupt video.

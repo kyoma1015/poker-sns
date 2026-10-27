@@ -13,7 +13,7 @@ test('video candidate declares required limits and MIME types', () => {
 })
 test('posting is gated by explicit default-off production readiness', () => {
   assert.match(timeline, /if \(!VIDEO_SERVER_ENABLED\)/)
-  assert.match(timeline, /videoFile \? await uploadPostVideo\(user\.id, videoFile\) : ''/)
+  assert.match(timeline, /videoFile \? await uploadPostVideo\(user\.id, videoFile, requestController\.signal\) : ''/)
   const api = readFileSync(new URL('../src/videoApi.ts', import.meta.url), 'utf8')
   assert.match(api, /VIDEO_SERVER_ENABLED = import\.meta\.env\.VITE_VIDEO_SERVER_ENABLED === 'true'/)
   assert.match(api, /if \(!VIDEO_SERVER_ENABLED\) throw new Error/)

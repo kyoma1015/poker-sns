@@ -214,6 +214,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     return () => { cancelled = true }
   }, [])
   const videoSubmitInFlightRef = useRef(false)
+  const videoRequestAbortRef = useRef<AbortController | null>(null)
   const postSubmitInFlightRef = useRef(false)
   const [videoPreview, setVideoPreview] = useState<string | null>(null)
   useEffect(() => { if (!videoFile) { setVideoPreview(null); return }; const url = URL.createObjectURL(videoFile); setVideoPreview(url); return () => URL.revokeObjectURL(url) }, [videoFile])
@@ -777,6 +778,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       const next = session?.user.id ?? null
       const changed = composerIdentityRef.current !== undefined && next !== composerIdentityRef.current
       if (event === 'SIGNED_OUT' || event === 'USER_UPDATED' || changed) {
+        videoRequestAbortRef.current?.abort()
         ++composerLifetimeRef.current
         ++videoSelectionRef.current
         setVideoFile(null)
@@ -801,6 +803,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       composerIdentityRef.current = next
     })
     return () => {
+      videoRequestAbortRef.current?.abort()
       ++composerLifetimeRef.current
       ++videoSelectionRef.current
       subscription.unsubscribe()
@@ -1050,6 +1053,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         setMessage('動画は他の添付と同時に投稿できません。')
         return
       }
+      const requestController = new AbortController()
+      videoRequestAbortRef.current = requestController
       videoSubmitInFlightRef.current = true
       // A validation started before submission must not restore an old draft later.
       beginAttachmentSelection()
@@ -1069,7 +1074,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         if (pendingVideoRef.current && (pendingVideoRef.current.owner !== user.id || pendingVideoRef.current.content !== content.trim())) {
           throw new Error('前回の投稿内容またはアカウントが異なります。元の内容で再試行してください。')
         }
-        const path = pendingVideoRef.current?.path ?? (videoFile ? await uploadPostVideo(user.id, videoFile) : '')
+        const path = pendingVideoRef.current?.path ?? (videoFile ? await uploadPostVideo(user.id, videoFile, requestController.signal) : '')
         // An abandoned upload stays quarantined; never finalize it for a new screen/account.
         if (!isCurrent()) return
         if (!path) throw new Error('動画を再選択してください。')
@@ -1079,7 +1084,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           setPendingVideo(staged)
           try { sessionStorage.setItem('poker-id-pending-video-v1', JSON.stringify(staged)) } catch { /* Recovery unavailable; do not delete staged media. */ }
         }
-        await finalizeUploadedVideo(path, content.trim())
+        await finalizeUploadedVideo(path, content.trim(), requestController.signal)
         if (!isCurrent()) return
         pendingVideoRef.current = null
         setPendingVideo(null)
@@ -1094,6 +1099,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         if (!isCurrent()) return
         setMessage(`動画を投稿できませんでした：${error instanceof Error ? error.message : '不明なエラー'}。アップロード済みファイルは安全な回収対象として保持されます。`)
       } finally {
+        if (videoRequestAbortRef.current === requestController) videoRequestAbortRef.current = null
         videoSubmitInFlightRef.current = false
         setIsPosting(false)
       }

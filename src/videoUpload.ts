@@ -1,3 +1,4 @@
+import { withVideoUploadRequest } from './videoUploadTransport'
 import { supabase } from './supabase'
 import { VIDEO_SERVER_ENABLED, reserveVideoObjectPath } from './videoApi'
 
@@ -51,21 +52,56 @@ export async function validateVideo(file: File): Promise<string | null> {
   catch { return '動画の長さを確認できませんでした。' }
 }
 
+// File identity pins retries to the same immutable reservation. No token or
+// File bytes are persisted. A reservation failure never authorizes upload.
+const reservedUploads = new WeakMap<File, { owner: string; path: string; attempted: boolean }>()
+
 /** Staged only: caller must enforce server-side duration and reviewed RLS before enabling. */
-export async function uploadPostVideo(userId: string, file: File): Promise<string> {
+export async function uploadPostVideo(userId: string, file: File, signal?: AbortSignal): Promise<string> {
   if (!VIDEO_SERVER_ENABLED) throw new Error('動画投稿は安全確認待ちです。')
   const { data: { user }, error: authError } = await supabase.auth.getUser()
+  signal?.throwIfAborted()
   if (authError || !user || user.id !== userId) throw new Error('ログイン情報を確認してください。')
   const validationError = await validateVideo(file)
   if (validationError) throw new Error(validationError)
-  const ext = file.type === 'video/mp4' ? 'mp4' : 'webm'
-  const path = `${user.id}/${crypto.randomUUID()}.${ext}`
-  // The permanent reservation must commit before Storage can receive bytes.
-  // A failed/ambiguous reservation never falls back to a direct upload.
-  await reserveVideoObjectPath(path)
-  const { error } = await supabase.storage.from(VIDEO_BUCKET).upload(path, file, { contentType: file.type, upsert: false })
-  if (error) throw error
-  return path
+  signal?.throwIfAborted()
+  let record = reservedUploads.get(file)
+  if (record && record.owner !== user.id) throw new Error('ログイン情報を確認してください。')
+  if (!record) {
+    const ext = file.type === 'video/mp4' ? 'mp4' : 'webm'
+    const path = `${user.id}/${crypto.randomUUID()}.${ext}`
+    // Only a confirmed reservation may ever send bytes. Never retry an
+    // ambiguous reservation; its key remains consumed without an upload.
+    await reserveVideoObjectPath(path, signal)
+    record = { owner: user.id, path, attempted: false }
+    reservedUploads.set(file, record)
+  }
+  signal?.throwIfAborted()
+  // Reservation/metadata work may span a token expiry or account switch.
+  const { data: fresh, error: freshError } = await supabase.auth.getUser()
+  signal?.throwIfAborted()
+  if (freshError || fresh.user?.id !== user.id) throw new Error('ログイン情報を確認してください。')
+  const retry = record.attempted
+  record.attempted = true
+  const { path } = record
+  try {
+    const { error } = await withVideoUploadRequest(path, signal, () =>
+      supabase.storage.from(VIDEO_BUCKET).upload(path, file, { contentType: file.type, upsert: false }))
+    signal?.throwIfAborted()
+    if (error) {
+      // A previous POST may have committed despite a lost response. A conflict
+      // on retry is NOT proof of valid media: trusted finalize still reads and
+      // validates the immutable object, owner, generation and fingerprint.
+      const conflict = error.statusCode === '409' || (error.statusCode === '400' && error.message === 'The resource already exists')
+      if (!retry || !conflict) throw new Error('動画の送信を確認できませんでした。同じ動画のまま再試行してください。')
+    }
+    reservedUploads.delete(file)
+    return path
+  } catch {
+    // Retain this exact File->path for retry. Never upsert, delete, or create a
+    // second reservation after an uncertain Storage result.
+    throw new Error('動画の送信を確認できませんでした。同じ動画のまま再試行してください。')
+  }
 }
 
 /** Reject path traversal, extra segments and mismatched owners. */
