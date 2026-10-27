@@ -32,7 +32,7 @@ def _verified_game(game):
         config=json.loads(game._public_config_json)
         rules=config['rules'];rate=Fraction(rules['rake_rate'])
         canonical=NativeGame(config['stacks'],bb=rules['bb'],bba=rules['bba'],
-                             rake_num=rate.numerator,rake_den=rate.denominator)
+                             rake_num=rate.numerator,rake_den=rate.denominator,rake_cap=rules['rake_cap'])
         if (canonical._public_config_json != game._public_config_json
                 or _canonical(canonical.stacks)!=_canonical(game.stacks)
                 or _canonical(canonical._native_rules)!=_canonical(game._native_rules)):

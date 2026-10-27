@@ -69,3 +69,19 @@ accessible names equal to visible labels for all controls; kept exact selectors
 and assertions. Removed ignored legacy esbuild JSX setting from isolated Vite
 server (React plugin already supplies automatic JSX). No test disabled. Latest
 head must rerun both UI and native CI; historical failure remains evidence.
+
+## Repaired browser exact-head result
+Public88cfa69737db91003f7a921c491b5f63bed1bfed UI CI40454174785/job122023525359
+SUCCESS:8Node checks, npm ci/build/typecheck/lint and6Chromium checks PASS.
+The previous failure40453919928 remains in history; assertions were retained.
+Production reviewed-catalog entries remain0; positive browser rendering uses
+isolated synthetic fixtures only. No actual GTO convergence/dataset claim.
+
+## Capped initial-reach regression found in follow-up review
+Existing initial_chance_reach._verified_game reconstructed NativeGame without
+passing the manifest's rake_cap, incorrectly rejecting supported capped profiles
+as config drift. Preserve rake_cap during canonical reconstruction. Added real
+native regression across5%/10%rate x5BB/10BBcap; exact initial ordered marginal
+remains1/2652 and unknown EV stays null. New1method per variant adds3executions
+to expected native total613; UI8+browser6=627combined, pending exact-head CI.
+Formal20stack/sizing provenance remains unknown; no guessed profiles added.

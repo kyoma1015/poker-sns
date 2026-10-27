@@ -2,6 +2,7 @@ name: GTO preflop search verification
 on:
   pull_request:
     paths:
+      - 'gto/**'
       - 'src/gto/**'
       - 'src/GtoPreflop*'
       - 'tests/gto-*'

@@ -105,4 +105,15 @@ class InitialReach(unittest.TestCase):
         clean=self.game()
         with self.assertRaises(ValueError):initial_chance_export(self.native,s,clean,self.context(clean))
 
+    def test_capped_native_rake_profiles_preserve_exact_initial_reach(self):
+        for denominator in (10,20):
+            for cap in (10,20):
+                with self.subTest(denominator=denominator,cap=cap):
+                    g=NativeGame([20,20],rake_num=1,rake_den=denominator,rake_cap=cap)
+                    solver=self.solver(g,iterations=4)
+                    report=initial_chance_export(self.native,solver,g,self.context(g))
+                    self.assertEqual(report['context']['public_config']['rules']['rake_cap'],cap)
+                    self.assertEqual(report['reach_evidence']['ordered_hand_probability'],{'numerator':1,'denominator':2652})
+                    self.assertTrue(all(row['ev'] is None for row in report['hands'].values()))
+
 if __name__=='__main__':unittest.main()
