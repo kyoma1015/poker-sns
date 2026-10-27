@@ -8,7 +8,7 @@ export async function verifyRecoveryIdentityDeadlines({browser,origin,anon,bytes
  const contexts=await Promise.all([browser.newContext(),browser.newContext()])
  const pages=await Promise.all(contexts.map(c=>c.newPage()))
  const holds=[],finished=[],calls=[[],[]],errors=[]
- let gates=[null,null],round=0,expectedStatus=[409,200]
+ let gates=[null,null],round=0,expectedStatus=[409,200],revokedReplyReady=false,releaseRevokedReply,revokedReplyFinished
  const wait=async(test,label)=>{for(let n=0;n<700;n++){if(test())return;await new Promise(r=>setTimeout(r,20))}throw Error(label)}
  const hint=page=>page.evaluate(()=>sessionStorage.getItem('poker-id-video-transfer-v1:'+window.__IDENTITY_OWNER))
  const idle=page=>page.waitForFunction(()=>![...document.querySelectorAll('[role="dialog"] button')].some(b=>b.textContent==='投稿中...'))
@@ -39,7 +39,7 @@ export async function verifyRecoveryIdentityDeadlines({browser,origin,anon,bytes
    })
    await page.route('**/internal/video/finalize',async route=>{
     let done
-    finished.push(new Promise(resolve=>{done=resolve}))
+    const completion=new Promise(resolve=>{done=resolve});finished.push(completion)
     const body=route.request().postDataJSON(),thisRound=round
     calls[index].push(body.action)
     try {
@@ -50,7 +50,13 @@ export async function verifyRecoveryIdentityDeadlines({browser,origin,anon,bytes
       const state=await response.json();assert.equal(state.ffprobe_verified,true)
       assert.equal(state.state,thisRound===0?'verified_ready':'published')
       await new Promise(resolve=>{gates[index]=resolve;holds.push(resolve)})
-     } else assert.equal(response.status(),expectedStatus[index],'exact real API denial/success at the blocked publication boundary')
+     } else {
+      assert.equal(response.status(),expectedStatus[index],'exact real API denial/success at the blocked publication boundary')
+      if(thisRound===0&&index===0){
+       revokedReplyReady=true;revokedReplyFinished=completion
+       await new Promise(resolve=>{releaseRevokedReply=resolve;holds.push(resolve)})
+      }
+     }
      try{await route.fulfill({response})}catch{/* deliberately obsolete component */}
     } catch(error){errors.push(String(error));try{await route.abort()}catch{/* disposed */}}
     finally{done()}
@@ -63,7 +69,7 @@ export async function verifyRecoveryIdentityDeadlines({browser,origin,anon,bytes
   await fixture.waitBlocked(2)
   await fixture.revokeLosingSession()
   await fixture.releaseLock()
-  await cleared(pages[1]);await idle(pages[0]);await Promise.all(finished)
+  await cleared(pages[1]);await wait(()=>revokedReplyReady,'revoked server reply must be held for the newer-session race')
   fixture.assertRevokedRejected()
   assert.equal(await hint(pages[0]),firstRaw,'revoked session cannot erase its uncertain recovery locator')
   const postId=await fixture.auditRevocation()
@@ -79,6 +85,9 @@ export async function verifyRecoveryIdentityDeadlines({browser,origin,anon,bytes
   await fixture.acquireLock()
   await Promise.all(pages.map(page=>page.reload()))
   await wait(()=>gates.every(Boolean),'both retry sessions independently inspect the same publication')
+  releaseRevokedReply();await revokedReplyFinished
+  assert.equal(await hint(pages[0]),newer,'late revoked-session reply cannot erase the replacement session record')
+  assert.equal(await pages[0].getByRole('dialog',{name:'新しい投稿'}).getByRole('button',{name:'投稿中...',exact:true}).isDisabled(),true,'late rejected reply cannot release the newer recovery lock')
   gates.forEach(release=>release());gates=[null,null]
   await fixture.waitBlocked(2)
   await fixture.waitLosingExpiry()
