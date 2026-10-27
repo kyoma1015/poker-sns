@@ -6,6 +6,7 @@ on:
       - 'sql/video_permanent_key_reservation_review_only.sql'
       - 'tests/video/run_isolated.sh'
       - 'tests/video/**'
+      - 'scripts/bundle-ffprobe.mjs'
       - '.github/workflows/video-sql-isolated.yml'
   workflow_dispatch:
 permissions:
@@ -16,14 +17,24 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
       - name: Private export safety regression (synthetic data only)
         run: |
           python3 -m unittest discover -s tests/video -p test_private_storage_export.py -v
           python3 -m unittest tests.video.test_startup_diagnostic -v
       - name: Isolated PostgreSQL video schema and RLS
         run: bash tests/video/run_isolated.sh
-      - name: Install ffmpeg for isolated media validation
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - name: Install pinned ffmpeg and ffprobe for isolated media validation
+        timeout-minutes: 4
+        run: |
+          set -euo pipefail
+          VIDEO_CI_FFMPEG_FIXTURES=true node scripts/bundle-ffprobe.mjs
+          test -x api/bin/ffmpeg
+          test -x api/bin/ffprobe
+          api/bin/ffprobe -version
+          echo "$PWD/api/bin" >> "$GITHUB_PATH"
       - name: Trusted finalization core unit tests
         run: python3 -m unittest tests.video.test_finalize_core -v
       - name: Authenticated finalize boundary unit tests
@@ -73,6 +84,10 @@ jobs:
       - name: Install isolated Node test dependencies
         run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Real Node.js ffprobe adapter regression tests
+        env:
+          REQUIRE_FFPROBE_RUNTIME: 'true'
+          FFPROBE_BINARY_PATH: '${{ github.workspace }}/api/bin/ffprobe'
+          FFMPEG_BINARY_PATH: './api/bin/ffmpeg'
         run: |
           for source in api/video-*.ts; do
             ln -s "$(basename "$source")" "${source%.ts}.js"
