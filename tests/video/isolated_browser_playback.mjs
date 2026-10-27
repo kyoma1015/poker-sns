@@ -49,6 +49,11 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
               getUser: async () => client.auth.getUser(jwt),
               onAuthStateChange: callback => {
                 authListeners.add(callback)
+                // Reproduce the SDK's initial same-session notification before
+                // PostVideo's asynchronous getSession() has resolved.
+                queueMicrotask(() => {
+                  if (authListeners.has(callback)) callback('SIGNED_IN', {user:{id:viewerId}})
+                })
                 return { data: { subscription: { unsubscribe: () => authListeners.delete(callback) } } }
               },
             },
@@ -148,6 +153,8 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     assert.equal(await page.evaluate(() => document.documentElement.clientWidth),390, 'mobile layout viewport must match device width')
     const videoBox = await video.boundingBox()
     assert.ok(videoBox && videoBox.width <= 390, 'mobile video must fit a 390px viewport')
+    assert.equal(await page.getByText('動画を再生するには再読み込みしてください。').count(),0,
+      'initial same-session SIGNED_IN must not invalidate playback')
     const playbackUrl = await video.getAttribute('src')
     const ownerId = JSON.parse(Buffer.from(jwt.split('.')[1], 'base64url').toString()).sub
     const otherId = JSON.parse(Buffer.from(deniedJwt.split('.')[1], 'base64url').toString()).sub
