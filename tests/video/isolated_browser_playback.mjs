@@ -52,7 +52,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
                 // Reproduce the SDK's initial same-session notification before
                 // PostVideo's asynchronous getSession() has resolved.
                 queueMicrotask(() => {
-                  if (authListeners.has(callback)) callback('SIGNED_IN', {user:{id:viewerId}})
+                  if (authListeners.has(callback)) callback('SIGNED_IN', {user:{id:window.__VIDEO_QA_INITIAL_AUTH_ID || viewerId}})
                 })
                 return { data: { subscription: { unsubscribe: () => authListeners.delete(callback) } } }
               },
@@ -174,6 +174,25 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     console.log('PASS: mobile 390px playback; same-user refresh preserved; direct SIGNED_IN switch revoked prior Blob')
     await page.close()
 
+    // A foreign SIGNED_IN notification racing with getSession must not let
+    // an old-session media request begin or render an old-account Blob.
+    const earlySwitch = await browser.newPage()
+    await earlySwitch.addInitScript(({postId,jwt,anon,otherId}) => {
+      window.__VIDEO_QA_POST_ID=postId
+      window.__VIDEO_QA_JWT=jwt
+      window.__VIDEO_QA_ANON=anon
+      window.__VIDEO_QA_INITIAL_AUTH_ID=otherId
+    },{postId,jwt,anon,otherId})
+    let staleMediaRequests=0
+    earlySwitch.on('request',request => {
+      if(request.url().includes('/internal/video/media/')) staleMediaRequests++
+    })
+    await earlySwitch.goto(origin+'/tests/video/browser-post-video.html')
+    await earlySwitch.getByText('動画を読み込めません。権限を確認してください。').waitFor({timeout:20000})
+    assert.equal(staleMediaRequests,0,'early foreign SIGNED_IN must prevent stale-session media fetch')
+    assert.equal(await earlySwitch.locator('video').count(),0,'early account switch must not render old video')
+    await earlySwitch.close()
+    console.log('PASS: early foreign SIGNED_IN prevents stale-session media request and playback')
     // Pause a real authorized media request, switch identities, then release it.
     // Its late response must be revoked without rendering a video element.
     const pending = await browser.newPage()
