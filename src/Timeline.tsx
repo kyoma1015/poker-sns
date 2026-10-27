@@ -1,3 +1,4 @@
+import { withVideoRecoveryDeadline } from './videoRecoveryDeadline'
 import { VIDEO_RECOVERY_CANDIDATE_ENABLED, inspectVideoRecoveryCandidate, finalizeRecoveredVideoCandidate } from './videoRecoveryCandidate'
 import { handOffVideoTransfer, hasVideoTransferJournal, readVideoTransferHint, finishRecoveredVideoTransfer, VIDEO_TRANSFER_RECOVERY_MESSAGE, VideoTransferRecoveryRequiredError } from './videoTransferJournal'
 import { createPollRequest, pollDisplayResult } from './interactiveRequests'
@@ -224,7 +225,11 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     }
     const restore = async () => {
     try {
-      const { data: { user }, error } = await supabase.auth.getUser()
+      const { data: { user }, error } = await withVideoRecoveryDeadline(controller.signal, async signal => {
+        const result = await supabase.auth.getUser()
+        signal.throwIfAborted()
+        return result
+      })
       if (cancelled || error || !user) return
       if (lifetime !== composerLifetimeRef.current) return
       if (composerIdentityRef.current !== undefined && composerIdentityRef.current !== user.id) return
@@ -262,7 +267,16 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       setPendingVideo(staged)
       setContent(staged.content)
       setComposeOpen(true)
-    } catch { /* Untrusted or unavailable session storage: stay fail-closed. */ }
+    } catch {
+      // No owner was established, so do not inspect saved pointers or start IO.
+      // An SDK auth Promise may still settle after timeout/unmount; the deadline
+      // signal above prevents that late result from entering recovery.
+      if (VIDEO_RECOVERY_CANDIDATE_ENABLED && !cancelled && lifetime === composerLifetimeRef.current) {
+        setVideoRecoveryBlocked(true)
+        setComposeOpen(true)
+        setMessage('動画の復旧状態を確認できません。ログインと通信を確認して再読み込みしてください。')
+      }
+    }
     }
     void restore()
     return () => { cancelled = true; controller.abort() }

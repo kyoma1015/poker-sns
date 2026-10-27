@@ -5,6 +5,7 @@ import {createHash} from 'node:crypto'
 // burn new reservation quota or upload replacement bytes.
 export async function verifyRecoveryBoundaries({browser,origin,jwt,anon,bytes,boundaryPath,assertBoundaryPosts}) {
  const cases=[
+  ['initial-auth-timeout','auth','timeout'],['initial-auth-unmount','auth','unmount'],['initial-auth-account-switch','auth','account'],
   ['status-navigation','status','navigate'],['status-unmount','status','unmount'],
   ['status-account-switch','status','account'],['session-invalid','none','invalid'],
   ['status-disconnect','status','disconnect'],['status-timeout','status','timeout'],
@@ -21,17 +22,26 @@ export async function verifyRecoveryBoundaries({browser,origin,jwt,anon,bytes,bo
   page.on('pageerror',e=>errors.push(String(e)))
   try {
    if(action==='timeout')await page.clock.install()
-   await page.addInitScript(({jwt,anon,path,hash,size,invalid,hang,strict})=>{
+   await page.addInitScript(({jwt,anon,path,hash,size,invalid,hang,strict,authHang})=>{
     window.__VIDEO_QA_JWT=jwt;window.__VIDEO_QA_ANON=anon;window.__VIDEO_QA_STRICT=strict
     const owner=JSON.parse(atob(jwt.split('.')[1].replaceAll('-','+').replaceAll('_','/'))).sub
     window.__BOUNDARY_OWNER=owner
     sessionStorage.setItem('poker-id-video-transfer-v1:'+owner,JSON.stringify({owner,path,sha256:hash,size,type:'video/webm',phase:'uploading',startedAt:Date.now()}))
+    if(authHang){
+     window.__BOUNDARY_AUTH_RELEASES=[]
+     let first=true
+     window.__VIDEO_QA_GET_USER=real=>{
+      if(!first)return real()
+      first=false
+      return new Promise(resolve=>window.__BOUNDARY_AUTH_RELEASES.push(()=>real().then(resolve)))
+     }
+    }
     if(invalid)window.__VIDEO_QA_GET_SESSION=()=>({data:{session:null},error:null})
     if(hang){
      window.__BOUNDARY_SESSION_RESOLVERS=[]
      window.__VIDEO_QA_GET_SESSION=()=>new Promise(resolve=>window.__BOUNDARY_SESSION_RESOLVERS.push(()=>resolve({data:{session:{access_token:jwt,user:{id:owner}}},error:null})))
     }
-   },{jwt,anon,path:boundaryPath,hash:createHash('sha256').update(bytes).digest('hex'),size:bytes.length,invalid:action==='invalid',hang:phase==='session',strict:action==='double'})
+   },{jwt,anon,path:boundaryPath,hash:createHash('sha256').update(bytes).digest('hex'),size:bytes.length,invalid:action==='invalid',hang:phase==='session',strict:action==='double',authHang:phase==='auth'})
    if(name==='status-account-switch') await page.route('**/rest/v1/posts*',async route=>{
     if(route.request().method()!=='GET')return route.continue()
     const response=await route.fetch()
@@ -41,7 +51,7 @@ export async function verifyRecoveryBoundaries({browser,origin,jwt,anon,bytes,bo
    await page.route('**/internal/video/finalize',async route=>{
     const body=route.request().postDataJSON();calls.push(body)
     const target=phase==='status'?'recovery_status':'recovery_finalize'
-    if(phase==='session'||phase==='none'||body.action!==target)return route.continue()
+    if(phase==='auth'||phase==='session'||phase==='none'||body.action!==target)return route.continue()
     if(action==='disconnect'){completed=true;return route.abort('internetdisconnected')}
     const response=await route.fetch()
     assert.equal(response.status(),200,'real boundary response before interruption')
@@ -55,7 +65,18 @@ export async function verifyRecoveryBoundaries({browser,origin,jwt,anon,bytes,bo
    const original=await page.evaluate(()=>sessionStorage.getItem('poker-id-video-transfer-v1:'+window.__BOUNDARY_OWNER))
    const settle=()=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))))
    const idle=()=>page.waitForFunction(()=>![...document.querySelectorAll('[role="dialog"] button')].some(b=>b.textContent==='投稿中...'))
-   if(action==='invalid'||action==='disconnect') {
+   if(phase==='auth') {
+    await page.waitForFunction(()=>window.__BOUNDARY_AUTH_RELEASES?.length===1)
+    if(action==='timeout') {
+     await page.clock.fastForward(30001)
+     await composer.getByText(/重複を防ぐため動画の再送信を停止/).first().waitFor()
+     await page.getByText('動画の復旧状態を確認できません。ログインと通信を確認して再読み込みしてください。',{exact:true}).waitFor()
+    } else if(action==='unmount')await page.evaluate(()=>window.__VIDEO_QA_UNMOUNT())
+    else await page.evaluate(()=>window.__VIDEO_QA_TRIGGER_AUTH('SIGNED_IN','ffffffff-ffff-4fff-8fff-ffffffffffff'))
+    await page.evaluate(()=>Promise.all(window.__BOUNDARY_AUTH_RELEASES.map(resolve=>resolve())))
+    await settle()
+    assert.equal(calls.length,0,'late initial auth cannot start inspection/finalize after timeout, disposal or identity change')
+   } else if(action==='invalid'||action==='disconnect') {
     await composer.getByText(/重複を防ぐため動画の再送信を停止/).first().waitFor()
     await idle()
     assert.equal(calls.filter(c=>c.action==='recovery_finalize').length,0)
@@ -140,4 +161,36 @@ export async function verifyRecoveryBoundaries({browser,origin,jwt,anon,bytes,bo
    console.log('PASS: actual Timeline recovery boundary '+name)
   } finally {release?.();feedRelease?.();await page.close()}
  }
+ // Two independent tab stores are untrusted locators for the same already
+ // published object. Both requests must still validate on the real server;
+ // neither tab can create a second post or clear the other tab's newer intent.
+ const tabs=await Promise.all([browser.newPage(),browser.newPage()])
+ const releases=[],failures=[],requests=[[],[]]
+ try {
+  await Promise.all(tabs.map(async(page,index)=>{
+   page.on('pageerror',error=>failures.push(String(error)))
+   await page.addInitScript(({jwt,anon,path,hash,size})=>{
+    window.__VIDEO_QA_JWT=jwt;window.__VIDEO_QA_ANON=anon
+    const owner=JSON.parse(atob(jwt.split('.')[1].replaceAll('-','+').replaceAll('_','/'))).sub
+    window.__BOUNDARY_OWNER=owner
+    sessionStorage.setItem('poker-id-video-transfer-v1:'+owner,JSON.stringify({owner,path,sha256:hash,size,type:'video/webm',phase:'uploading',startedAt:Date.now()}))
+   },{jwt,anon,path:boundaryPath,hash:createHash('sha256').update(bytes).digest('hex'),size:bytes.length})
+   await page.route('**/internal/video/finalize',async route=>{
+    const body=route.request().postDataJSON();requests[index].push(body.action)
+    if(body.action!=='recovery_status')return route.continue()
+    const response=await route.fetch();assert.equal(response.status(),200)
+    await new Promise(resolve=>{releases[index]=resolve})
+    await route.fulfill({response})
+   })
+   await page.goto(origin+'/tests/video/browser-real-timeline.html')
+  }))
+  for(let wait=0;releases.filter(Boolean).length!==2&&wait<1000;wait++)await tabs[0].waitForTimeout(20)
+  assert.equal(releases.filter(Boolean).length,2,'both tabs have independently inspected the published object')
+  releases.forEach(release=>release())
+  await Promise.all(tabs.map(page=>page.waitForFunction(()=>sessionStorage.getItem('poker-id-video-transfer-v1:'+window.__BOUNDARY_OWNER)===null)))
+  for(const calls of requests)assert.deepEqual(calls,['recovery_status','recovery_finalize'],'each tab performs exactly one verified idempotent recovery, without reserve/upload')
+  await assertBoundaryPosts(1)
+  assert.deepEqual(failures,[])
+  console.log('PASS: actual Timeline simultaneous two-tab published recovery remains one post')
+ } finally {releases.forEach(release=>release?.());await Promise.all(tabs.map(page=>page.close()))}
 }
