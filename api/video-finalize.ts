@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import { spawn } from 'node:child_process'
 import { isAbsolute, join } from 'node:path'
 import { finalizeImmutableCandidate, type FinalizeCandidateAdapters } from './video-finalize-core.js'
-import { createProductionSupabaseVideoAdapters } from './video-production-supabase-adapters.js'
+import { assertServerAttestationAvailable, createProductionSupabaseVideoAdapters } from './video-production-supabase-adapters.js'
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
 const VIDEO_PATH = /^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\.(mp4|webm)$/
@@ -65,15 +65,22 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
     if (!match) return res.status(400).end()
     const url = process.env.VITE_SUPABASE_URL
     const anon = process.env.VITE_SUPABASE_ANON_KEY
-    // Production release requires a separately audited Storage writer fence.
-    // Isolated local QA may reserve against its disposable ledger only.
+    // Both production reservation and publication share the same unconditional
+    // attestation hard stop. Merely enabling an environment flag can NEVER
+    // consume permanent reservation keys or create unpublishable uploads.
     const isolatedReservation = options.isolatedLocalOnly === true && url === 'http://127.0.0.1:56321'
-    // The production publish adapter is still hard-gated. Do not permit a
-    // permanent reservation ledger write merely by setting a release flag:
-    // otherwise an attacker could exhaust reserved keys without publication.
-    // Only the disposable, explicitly injected local test environment may reserve.
-    if (!isolatedReservation || !url || !anon) {
+    const productionReservation = options.isolatedLocalOnly !== true &&
+      typeof url === 'string' && /^https:\\/\\/[a-z0-9-]+\\.supabase\\.co\\/?$/.test(url) &&
+      process.env.VIDEO_PRODUCTION_FENCED_READY === 'true'
+    if ((!isolatedReservation && !productionReservation) || !url || !anon) {
       return res.status(503).json({ error: 'video_reservation_not_enabled' })
+    }
+    if (productionReservation) {
+      try {
+        assertServerAttestationAvailable()
+      } catch {
+        return res.status(503).json({ error: 'video_reservation_not_enabled' })
+      }
     }
     try {
       const viewer = createClient(url, anon, {
