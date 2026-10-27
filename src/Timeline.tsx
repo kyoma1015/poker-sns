@@ -757,25 +757,51 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     return () => window.removeEventListener('poker-id-open-compose', open)
   }, [profileUserId, navigate])
 
-  const loadShareableResults = async () => {
-    setResultsLoading(true)
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) { setResultsLoading(false); return }
-    const sources = [
-      { table: 'poker_results', type: 'tournament' as const, label: 'トーナメント' },
-      { table: 'amusement_ring_results', type: 'amusement' as const, label: 'リングゲーム' },
-      { table: 'cash_game_results', type: 'cash' as const, label: 'キャッシュ' },
-    ]
-    const lists = await Promise.all(sources.map(async source => {
-      const { data, error } = await supabase.from(source.table).select('*').eq('user_id', user.id).order('played_at', { ascending: false }).limit(30)
-      if (error) { console.error(error); return [] }
-      return (data || []).map(item => ({ id: String(item.id), type: source.type, label: `${source.label} · ${String(item.tournament_name || item.venue || '記録')}`, playedAt: String(item.played_at || ''), data: item }))
-    }))
-    setAvailableResults(lists.flat())
+  const beginAttachmentSelection = () => {
+    setMessage('')
+    setAttachmentBusy(false)
     setResultsLoading(false)
+    return ++videoSelectionRef.current
+  }
+
+  const canChooseNonVideo = () => {
+    if (videoFile || pendingVideoRef.current || videoSubmitInFlightRef.current) {
+      setMessage('動画を添付中です。別の添付を選ぶには先に動画を解除してください。')
+      return false
+    }
+    return true
+  }
+
+  const loadShareableResults = async () => {
+    if (!canChooseNonVideo()) return
+    const request = beginAttachmentSelection()
+    setAvailableResults([])
+    setResultsLoading(true)
+    try {
+      const { data: { user }, error: authError } = await supabase.auth.getUser()
+      if (request !== videoSelectionRef.current) return
+      if (authError || !user) throw new Error('ログイン情報を確認してください。')
+      const sources = [
+        { table: 'poker_results', type: 'tournament' as const, label: 'トーナメント' },
+        { table: 'amusement_ring_results', type: 'amusement' as const, label: 'リングゲーム' },
+        { table: 'cash_game_results', type: 'cash' as const, label: 'キャッシュ' },
+      ]
+      const lists = await Promise.all(sources.map(async source => {
+        const { data, error } = await supabase.from(source.table).select('*').eq('user_id', user.id).order('played_at', { ascending: false }).limit(30)
+        if (error) throw new Error('戦績を取得できませんでした。')
+        return (data || []).map(item => ({ id: String(item.id), type: source.type, label: `${source.label} · ${String(item.tournament_name || item.venue || '記録')}`, playedAt: String(item.played_at || ''), data: item }))
+      }))
+      if (request !== videoSelectionRef.current) return
+      setAvailableResults(lists.flat())
+    } catch {
+      if (request === videoSelectionRef.current) setMessage('戦績を取得できませんでした。もう一度お試しください。')
+    } finally {
+      if (request === videoSelectionRef.current) setResultsLoading(false)
+    }
   }
 
   const toggleAttachments = () => {
+    beginAttachmentSelection()
     setAttachmentsOpen(open => !open)
     setAttachmentScreen('menu')
   }
@@ -787,7 +813,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
   const renderAttachmentPicker = () => {
     const optionStyle = { display: 'block', width: '100%', padding: '11px 12px', textAlign: 'left' as const, background: '#202020', color: '#eee', borderRadius: 9, marginBottom: 7, fontSize: 13, border: '1px solid #333' }
-    const backButton = (target: 'menu' | 'results') => <button type="button" onClick={() => setAttachmentScreen(target)} style={{ width: 'auto', background: 'transparent', color: '#bbb', padding: '5px 0', fontSize: 12 }}>‹ 戻る</button>
+    const backButton = (target: 'menu' | 'results') => <button type="button" onClick={() => { beginAttachmentSelection(); setAttachmentScreen(target) }} style={{ width: 'auto', background: 'transparent', color: '#bbb', padding: '5px 0', fontSize: 12 }}>‹ 戻る</button>
     return <div style={{ marginTop: 12, padding: 12, background: '#151515', border: '1px solid #333', borderRadius: 12, maxHeight: 320, overflowY: 'auto' }}>
       {attachmentScreen === 'menu' ? <>
         <div style={{ fontSize: 12, color: '#aaa', marginBottom: 10 }}>添付するものを選択</div>
@@ -799,7 +825,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       </> : attachmentScreen === 'diagnosis' ? <>
         {backButton('menu')}
         <div style={{ fontSize: 12, color: '#aaa', marginBottom: 10 }}>保存済みの自己診断を選択</div>
-        {attachmentBusy ? <p>読み込み中...</p> : diagnoses.length === 0 ? <p style={{ color: '#aaa', fontSize: 12 }}>診断結果がありません。</p> : diagnoses.map(item => <button type="button" key={item.result_id} style={optionStyle} onClick={() => { videoSelectionRef.current++; setSelectedDiagnosis(item); setSelectedResult(null); setAttachmentsOpen(false); setAttachmentScreen('menu') }}>{playerTypeEmoji[item.result_type_key] || '♠'} {item.animal_name_ja} · {item.completed_at?.slice(0,10) || '日付不明'}</button>)}
+        {attachmentBusy ? <p>読み込み中...</p> : diagnoses.length === 0 ? <p style={{ color: '#aaa', fontSize: 12 }}>診断結果がありません。</p> : diagnoses.map(item => <button type="button" key={item.result_id} style={optionStyle} onClick={() => { if (!canChooseNonVideo()) return; beginAttachmentSelection(); setSelectedDiagnosis(item); setSelectedResult(null); setAttachmentsOpen(false); setAttachmentScreen('menu') }}>{playerTypeEmoji[item.result_type_key] || '♠'} {item.animal_name_ja} · {item.completed_at?.slice(0,10) || '日付不明'}</button>)}
       </> : attachmentScreen === 'results' ? <>
         {backButton('menu')}
         <div style={{ fontSize: 12, color: '#aaa', margin: '8px 0 10px' }}>戦績の種類を選択</div>
@@ -809,37 +835,61 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       </> : <>
         {backButton('results')}
         <div style={{ fontSize: 12, color: '#aaa', margin: '8px 0 10px' }}>保存済みの{attachmentScreen === 'tournament' ? 'トーナメント' : attachmentScreen === 'amusement' ? 'リングゲーム' : 'キャッシュゲーム'}戦績を選択</div>
-        {resultsLoading ? <p style={{ fontSize: 12 }}>読み込み中...</p> : availableResults.filter(result => result.type === attachmentScreen).length === 0 ? <p style={{ fontSize: 12, color: '#888' }}>この種類の戦績はありません。</p> : availableResults.filter(result => result.type === attachmentScreen).map(result => <button key={result.type + result.id} type="button" style={optionStyle} onClick={() => { videoSelectionRef.current++; setSelectedResult(result); setSelectedDiagnosis(null); setAttachmentsOpen(false); setAttachmentScreen('menu') }}><span style={{ display: 'block', fontWeight: 700 }}>{result.label}</span><span style={{ display: 'block', color: '#aaa', fontSize: 12, marginTop: 4 }}>プレイ日：{result.playedAt ? new Date(result.playedAt.slice(0,10) + 'T00:00:00').toLocaleDateString('ja-JP') : '日付不明'}</span></button>)}
+        {resultsLoading ? <p style={{ fontSize: 12 }}>読み込み中...</p> : availableResults.filter(result => result.type === attachmentScreen).length === 0 ? <p style={{ fontSize: 12, color: '#888' }}>この種類の戦績はありません。</p> : availableResults.filter(result => result.type === attachmentScreen).map(result => <button key={result.type + result.id} type="button" style={optionStyle} onClick={() => { if (!canChooseNonVideo()) return; beginAttachmentSelection(); setSelectedResult(result); setSelectedDiagnosis(null); setAttachmentsOpen(false); setAttachmentScreen('menu') }}><span style={{ display: 'block', fontWeight: 700 }}>{result.label}</span><span style={{ display: 'block', color: '#aaa', fontSize: 12, marginTop: 4 }}>プレイ日：{result.playedAt ? new Date(result.playedAt.slice(0,10) + 'T00:00:00').toLocaleDateString('ja-JP') : '日付不明'}</span></button>)}
       </>}
     </div>
   }
 
 
   const loadDiagnoses = async () => {
+    if (!canChooseNonVideo()) return
+    const request = beginAttachmentSelection()
     setAttachmentBusy(true)
-    const { data, error } = await supabase.rpc('get_my_latest_player_type_v2')
-    if (error) { setMessage(`診断取得エラー：${error.message}`); setAttachmentBusy(false); return }
-    setDiagnoses((data || []).map((item: any) => ({ result_id: String(item.result_id), animal_name_ja: String(item.animal_name_ja || ''), catchphrase: String(item.catchphrase || ''), result_type_key: String(item.result_type_key || ''), completed_at: String(item.completed_at || '') })))
-    setAttachmentScreen('diagnosis')
-    setAttachmentBusy(false)
+    try {
+      const { data, error } = await supabase.rpc('get_my_latest_player_type_v2')
+      if (request !== videoSelectionRef.current) return
+      if (error) throw error
+      setDiagnoses((data || []).map((item: any) => ({ result_id: String(item.result_id), animal_name_ja: String(item.animal_name_ja || ''), catchphrase: String(item.catchphrase || ''), result_type_key: String(item.result_type_key || ''), completed_at: String(item.completed_at || '') })))
+      setAttachmentScreen('diagnosis')
+    } catch {
+      if (request === videoSelectionRef.current) setMessage('診断結果を取得できませんでした。もう一度お試しください。')
+    } finally {
+      if (request === videoSelectionRef.current) setAttachmentBusy(false)
+    }
   }
 
   const loadStyleSnapshot = async () => {
+    if (!canChooseNonVideo()) return
+    const request = beginAttachmentSelection()
     setAttachmentBusy(true)
-    const { data, error } = await supabase.rpc('get_my_post_style_snapshot')
-    setAttachmentBusy(false)
-    if (error) { setMessage(`他者評価取得エラー：${error.message}（SQLの適用を確認してください）`); return }
-    const row = Array.isArray(data) ? data[0] : data
-    if (!row || Number(row.count) < 3) { setMessage('他者評価は3人以上集まると添付できます。'); return }
-    videoSelectionRef.current++
-    setStyleSnapshot({ count: Number(row.count), aggression: Number(row.aggression), looseness: Number(row.looseness), captured_at: new Date().toISOString() })
-    setAttachmentsOpen(false)
-    setMessage('')
+    try {
+      const { data, error } = await supabase.rpc('get_my_post_style_snapshot')
+      if (request !== videoSelectionRef.current) return
+      if (error) throw error
+      const row = Array.isArray(data) ? data[0] : data
+      const count = Number(row?.count)
+      const aggression = Number(row?.aggression)
+      const looseness = Number(row?.looseness)
+      if (!row || !Number.isSafeInteger(count) || count < 3) {
+        setMessage('他者評価は3人以上集まると添付できます。')
+        return
+      }
+      if (![aggression, looseness].every(value => Number.isFinite(value) && value >= 0 && value <= 100)) {
+        throw new Error('invalid rating aggregate')
+      }
+      setStyleSnapshot({ count, aggression, looseness, captured_at: new Date().toISOString() })
+      setAttachmentsOpen(false)
+      setMessage('')
+    } catch {
+      if (request === videoSelectionRef.current) setMessage('他者評価を取得できませんでした。もう一度お試しください。')
+    } finally {
+      if (request === videoSelectionRef.current) setAttachmentBusy(false)
+    }
   }
 
   const chooseVideo = async (file: File | undefined) => {
     if (!file) return
-    const selection = ++videoSelectionRef.current
+    const selection = beginAttachmentSelection()
     if (pendingVideoRef.current || videoSubmitInFlightRef.current) { setMessage('保留中の動画を先に再試行してください。'); return }
     if (imageFiles.length || selectedResult || selectedDiagnosis || styleSnapshot || interactiveMode !== 'normal') { setMessage('動画は画像・戦績・診断・アンケートと同時に添付できません。'); return }
     const error = await validateVideo(file)
@@ -859,7 +909,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     if (selected.some(file => !['image/jpeg','image/png','image/webp'].includes(file.type) || file.size > 5 * 1024 * 1024)) { setMessage('画像はJPEG・PNG・WebP、各5MB以内にしてください。'); return }
     if (imageFiles.length + selected.length > 4) { setMessage('画像は1投稿につき4枚までです。'); return }
     if (!selected.length) return
-    videoSelectionRef.current++
+    beginAttachmentSelection()
     setImageFiles(previous => [...previous, ...selected])
     setMessage('')
   }
@@ -869,7 +919,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       setMessage('添付を外してからアンケートに切り替えてください。')
       return
     }
-    videoSelectionRef.current++
+    beginAttachmentSelection()
     setInteractiveMode(current => current === mode ? 'normal' : mode)
     setAttachmentsOpen(false)
     setMessage('')
@@ -901,6 +951,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     if (interactiveMode !== 'normal') {
       if (isPosting) return
       if (!canSubmitPost) { setMessage('投稿内容と選択肢を確認してください。'); return }
+      beginAttachmentSelection()
       setIsPosting(true)
       setMessage('')
       try {
@@ -933,7 +984,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       }
       videoSubmitInFlightRef.current = true
       // A validation started before submission must not restore an old draft later.
-      videoSelectionRef.current++
+      beginAttachmentSelection()
       setIsPosting(true)
       setMessage('動画を検証・投稿中...')
       try {
@@ -1009,6 +1060,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
     }
 
+    beginAttachmentSelection()
     setIsPosting(true)
 
     setMessage('投稿中...')
@@ -2298,7 +2350,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     return <div style={{ marginTop: 12 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 7 }}>
         <span style={{ fontSize: 12, color: '#aaa', fontWeight: 700 }}>添付プレビュー（投稿時の表示）</span>
-        <button type="button" disabled={isPosting || Boolean(pendingVideo)} onClick={() => { if (videoSubmitInFlightRef.current || pendingVideoRef.current) return; videoSelectionRef.current++; setSelectedResult(null); setSelectedDiagnosis(null); setStyleSnapshot(null); setImageFiles([]); setVideoFile(null) }} aria-label="添付を解除" style={{ width: 'auto', padding: '4px 9px', background: '#292929', border: '1px solid #444', borderRadius: 8, color: '#ddd', fontSize: 12 }}>× 解除</button>
+        <button type="button" disabled={isPosting || Boolean(pendingVideo)} onClick={() => { if (videoSubmitInFlightRef.current || pendingVideoRef.current) return; beginAttachmentSelection(); setSelectedResult(null); setSelectedDiagnosis(null); setStyleSnapshot(null); setImageFiles([]); setVideoFile(null) }} aria-label="添付を解除" style={{ width: 'auto', padding: '4px 9px', background: '#292929', border: '1px solid #444', borderRadius: 8, color: '#ddd', fontSize: 12 }}>× 解除</button>
       </div>
       {selectedResult?.type === 'tournament' && renderTournamentResultCard(previewPost)}
       {selectedResult?.type === 'amusement' && renderAmusementResultCard(previewPost)}

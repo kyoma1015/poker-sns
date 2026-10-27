@@ -4,6 +4,7 @@ import assert from 'node:assert/strict'
 import { createServer as createHttpServer } from 'node:http'
 import { createServer as createViteServer } from 'vite'
 import { chromium } from 'playwright-core'
+import { verifyAttachmentRequestRaces } from './isolated_attachment_races.mjs'
 import { createVideoMediaHandler } from '../../api/video-media.ts'
 import { createVideoFinalizeHandler } from '../../api/video-finalize.ts'
 import { createIsolatedSupabaseVideoAdapters } from '../../api/video-isolated-supabase-adapters.ts'
@@ -39,10 +40,14 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
           }
           // Isolated-only stubs for unrelated social tables absent from local QA schema.
           const empty = { data:[], error:null }
-          const query = new Proxy({}, { get(_target, key) {
-            if (key === 'then') return (resolve, reject) => Promise.resolve(empty).then(resolve, reject)
-            return () => query
-          } })
+          const queryFor = table => {
+            const query = new Proxy({}, { get(_target, key) {
+              if (key === 'then') return (resolve, reject) => Promise.resolve().then(() =>
+                window.__VIDEO_QA_SOCIAL?.[table]?.() || empty).then(resolve, reject)
+              return () => query
+            } })
+            return query
+          }
           export const supabase = {
             auth: {
               getSession: async () => ({ data:{session:{access_token:jwt,user:{id:viewerId}}}, error:null }),
@@ -57,8 +62,8 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
                 return { data: { subscription: { unsubscribe: () => authListeners.delete(callback) } } }
               },
             },
-            from: table => table === 'posts' ? client.from('posts') : query,
-            rpc: async () => empty,
+            from: table => table === 'posts' ? client.from('posts') : queryFor(table),
+            rpc: async name => window.__VIDEO_QA_SOCIAL?.[name]?.() || empty,
             storage: client.storage,
           }`
         }
@@ -385,6 +390,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     assert.equal(await selectionComposer.locator('video').count(),0,'poll mode cancels older pending video validation')
     console.log('PASS: actual Timeline image and poll selection cancel stale pending video metadata')
     await selectionPage.close()
+    await verifyAttachmentRequestRaces({browser,origin,jwt,anon,bytes})
     // Verify the real browser duration reader cannot hang on a corrupt video.
     // Advance Chromium's virtual clock by 15 seconds without a real 15s delay.
     const timeoutPage=await browser.newPage()
