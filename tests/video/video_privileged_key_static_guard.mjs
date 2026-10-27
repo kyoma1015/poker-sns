@@ -82,8 +82,10 @@ assert.match(videoUpload,/upsert: false/,
  'browser video upload must never overwrite existing Storage object')
 const adapter=readFileSync('api/video-production-supabase-adapters.ts','utf8')
 assert.match(adapter,/assertServerAttestationAvailable\(\)/,'production attestation hard stop must remain')
-assert.match(adapter,/throw new Error\('production video publish requires server-attested database authorization'\)/,
- 'hard stop must throw until production fence is proven')
+assert.match(adapter,/VIDEO_ATTESTED_RPC_RELEASE_APPROVED !== 'true'/,
+ 'production release requires explicit attested RPC approval')
+assert.match(adapter,/production video publish requires provisioned server-attested database authorization/,
+ 'production release must fail closed without approval and key')
 const finalize=readFileSync('api/video-finalize.ts','utf8')
 assert.match(finalize,/!isolatedReservation/,'production reservation must remain disabled')
 console.log('PASS: video runtime privileged-key isolation and production fail-closed gates')
