@@ -59,6 +59,11 @@ class PolicySnapshot:
         rows={}
         for key in keys:
             row=solver.row(key);actions=row['actions'];values=row['average']
+            # Native rows start with positive pseudocounts before their owner's
+            # first update. Presence/visits alone is not a learned average.
+            if type(row.get('updates')) is not int or row['updates'] < 0:
+                raise ValueError('invalid native updater count')
+            if row['updates'] == 0:continue
             if (not actions or len(actions)!=len(values) or len(set(actions))!=len(actions)
                     or any(type(a) is not int for a in actions)
                     or any(type(p) not in (int,float) or not math.isfinite(p) or p<0 for p in values)):

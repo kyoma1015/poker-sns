@@ -102,6 +102,8 @@ def native_average_policy(native, solver):
         key=node.information_state_string(node.current_player())
         if key not in keys:raise ValueError('native policy row unobserved; EV remains unknown')
         row=solver.row(key);actions=row['actions'];average=row['average']
+        if type(row.get('updates')) is not int or row['updates'] <= 0:
+            raise ValueError('native policy row has no owner update; EV remains unknown')
         if (list(actions)!=list(node.legal_actions()) or len(average)!=len(actions)
                 or not average or any(type(x) not in (int,float) or not math.isfinite(x) or x<0 for x in average)):
             raise ValueError('invalid native average-policy row')

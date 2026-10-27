@@ -40,7 +40,10 @@ jobs:
             GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_policy_rollout.py -v
             GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_joint_reach.py -v
             GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_learned_preflop.py -v
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_full_game_bounds.py -v
           done
+      - name: Ordinary HU50BB learning and conservative full-continuation evaluation
+        run: python -B -m gto.native.ordinary_study --module-dir "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/g12_next" --output "$RUNNER_TEMP/ordinary-study-$GITHUB_RUN_ID"
       - name: Complete native HU1BB calibration and actual representative learning
         run: |
           python -B -m gto.native.onebb_certificate --runtime "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID" --output "$RUNNER_TEMP/onebb-evidence-$GITHUB_RUN_ID"

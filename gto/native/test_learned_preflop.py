@@ -26,7 +26,7 @@ class Learned(unittest.TestCase):
         for _ in range(200):solver.run_iteration()
         key=next(k for k in solver.keys() if json.loads(k)['seat']==0
             and not json.loads(k)['board'] and not json.loads(k)['betting_history']
-            and sum(solver.row(k)['average'])>0)
+            and solver.row(k)['updates']>0 and sum(solver.row(k)['average'])>0)
         hero=json.loads(key)['hand'];opponent=[c for c in range(52) if c not in hero][:2]
         policy=PolicySnapshot.from_solver(self.native,solver)
         r=learned_report(self.native,game,hero,[([opponent],F(1))],[],[0],policy,samples_per_deal=2)

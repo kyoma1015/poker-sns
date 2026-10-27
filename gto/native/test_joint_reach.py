@@ -145,7 +145,7 @@ class Joint(unittest.TestCase):
         for _ in range(400):solver.run_iteration()
         key=next(key for key in solver.keys() if json.loads(key)['seat']==2
             and not json.loads(key)['betting_history'] and not json.loads(key)['board']
-            and sum(solver.row(key)['average'])>0)
+            and solver.row(key)['updates']>0 and sum(solver.row(key)['average'])>0)
         hero=json.loads(key)['hand'];remaining=[c for c in range(52) if c not in hero]
         hands=[remaining[:2],remaining[2:4]];full=hands+[hero]
         state=decision(self.native,game,[],cards=[c for hand in full for c in hand])
