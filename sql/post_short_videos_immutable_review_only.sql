@@ -41,7 +41,7 @@ create policy "post_videos_immutable_read_own" on storage.objects
 -- Audit query: sql/video_storage_policy_audit_read_only.sql
 
 -- Future release: require a durable reservation before ANY new Storage INSERT.
--- The ledger is append-only and the RPC is service_role-only. This SQL is
+-- The ledger is append-only and reservation RPC execution is authenticated-owner scoped. This SQL is
 -- review-only; isolated tests apply the ledger separately before uploads.
 -- A permissive INSERT policy can bypass this predicate, so the full writer
 -- inventory and policy audit remain mandatory release blockers.
