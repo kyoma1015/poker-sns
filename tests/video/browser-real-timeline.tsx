@@ -5,6 +5,8 @@ import Timeline from '../../src/Timeline'
 
 // The actual production Timeline component, mounted in isolated Chromium.
 // Non-video social dependencies are stubbed by the test-only Vite transform.
-createRoot(document.getElementById('root')!).render(
+const root = createRoot(document.getElementById('root')!)
+Object.assign(window, { __VIDEO_QA_UNMOUNT: () => root.unmount() })
+root.render(
   <MemoryRouter><Timeline /></MemoryRouter>,
 )

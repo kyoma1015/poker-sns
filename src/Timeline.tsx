@@ -167,6 +167,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const imageInputRef = useRef<HTMLInputElement>(null)
   const videoInputRef = useRef<HTMLInputElement>(null)
   const videoSelectionRef = useRef(0)
+  const composerLifetimeRef = useRef(0)
   const [videoFile, setVideoFile] = useState<File | null>(null)
   // Retain the exact immutable object path after an uncertain finalize result.
   type PendingVideo = { path: string; owner: string; content: string }
@@ -175,10 +176,12 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   // Session-scoped recovery; never persist credentials or delete by path.
   useEffect(() => {
     let cancelled = false
+    const lifetime = composerLifetimeRef.current
     const restore = async () => {
     try {
       const { data: { user }, error } = await supabase.auth.getUser()
       if (cancelled || error || !user) return
+      if (lifetime !== composerLifetimeRef.current) return
       const raw = sessionStorage.getItem('poker-id-pending-video-v1')
       if (!raw) return
       const value: unknown = JSON.parse(raw)
@@ -764,6 +767,49 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     return ++videoSelectionRef.current
   }
 
+  // An attachment belongs to the editing session that requested it. Auth
+  // callbacks stay synchronous; no Supabase calls inside the auth lock.
+  useEffect(() => {
+    let viewer: string | null | undefined
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      const next = session?.user.id ?? null
+      const changed = viewer !== undefined && next !== viewer
+      if (event === 'SIGNED_OUT' || event === 'USER_UPDATED' || changed) {
+        ++composerLifetimeRef.current
+        ++videoSelectionRef.current
+        setVideoFile(null)
+        setImageFiles([])
+        setSelectedResult(null)
+        setSelectedDiagnosis(null)
+        setStyleSnapshot(null)
+        setAvailableResults([])
+        setDiagnoses([])
+        setContent('')
+        pendingVideoRef.current = null
+        setPendingVideo(null)
+        setAttachmentsOpen(false)
+        setAttachmentScreen('menu')
+        setAttachmentBusy(false)
+        setResultsLoading(false)
+        setInteractiveMode('normal')
+        setPollOptions(['', ''])
+        setComposeOpen(false)
+        setMessage('ログイン情報が変わりました。投稿内容を再確認してください。')
+      }
+      viewer = next
+    })
+    return () => {
+      ++composerLifetimeRef.current
+      ++videoSelectionRef.current
+      subscription.unsubscribe()
+    }
+  }, [])
+
+  const closeComposer = () => {
+    beginAttachmentSelection()
+    setComposeOpen(false)
+  }
+
   const canChooseNonVideo = () => {
     if (videoFile || pendingVideoRef.current || videoSubmitInFlightRef.current) {
       setMessage('動画を添付中です。別の添付を選ぶには先に動画を解除してください。')
@@ -974,6 +1020,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
     if (videoFile || pendingVideoRef.current) {
       if (isPosting || videoSubmitInFlightRef.current) return
+      const lifetime = composerLifetimeRef.current
+      const isCurrent = () => lifetime === composerLifetimeRef.current
       if (!VIDEO_SERVER_ENABLED) {
         setMessage('動画投稿はサーバーAPIの安全確認待ちです。')
         return
@@ -989,9 +1037,11 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       setMessage('動画を検証・投稿中...')
       try {
         const { data: { user }, error: authError } = await supabase.auth.getUser()
+        if (!isCurrent()) return
         if (authError || !user) throw new Error('ログイン情報を確認してください。')
         if (videoFile && !pendingVideoRef.current) {
           const videoError = await validateVideo(videoFile)
+          if (!isCurrent()) return
           if (videoError) throw new Error(videoError)
         }
         // Never upload a second object after an ambiguous server outcome.
@@ -1000,6 +1050,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           throw new Error('前回の投稿内容またはアカウントが異なります。元の内容で再試行してください。')
         }
         const path = pendingVideoRef.current?.path ?? (videoFile ? await uploadPostVideo(user.id, videoFile) : '')
+        // An abandoned upload stays quarantined; never finalize it for a new screen/account.
+        if (!isCurrent()) return
         if (!path) throw new Error('動画を再選択してください。')
         if (!pendingVideoRef.current) {
           const staged = { path, owner: user.id, content: content.trim() }
@@ -1008,6 +1060,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           try { sessionStorage.setItem('poker-id-pending-video-v1', JSON.stringify(staged)) } catch { /* Recovery unavailable; do not delete staged media. */ }
         }
         await finalizeUploadedVideo(path, content.trim())
+        if (!isCurrent()) return
         pendingVideoRef.current = null
         setPendingVideo(null)
         try { sessionStorage.removeItem('poker-id-pending-video-v1') } catch { /* best effort */ }
@@ -1018,6 +1071,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         setMessage('')
         await loadPosts()
       } catch (error) {
+        if (!isCurrent()) return
         setMessage(`動画を投稿できませんでした：${error instanceof Error ? error.message : '不明なエラー'}。アップロード済みファイルは安全な回収対象として保持されます。`)
       } finally {
         videoSubmitInFlightRef.current = false
@@ -2832,9 +2886,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         )}
 
         </>}
-        {!profileUserId && composeOpen && <div role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget) setComposeOpen(false) }} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.8)', zIndex: 9999, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', overflowY: 'auto', padding: '8vh 12px 24px' }}>
+        {!profileUserId && composeOpen && <div role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget) closeComposer() }} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.8)', zIndex: 9999, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', overflowY: 'auto', padding: '8vh 12px 24px' }}>
           <div role="dialog" aria-modal="true" aria-label="新しい投稿" style={{ width: '100%', maxWidth: 560, background: '#111', border: '1px solid #333', borderRadius: 18, padding: 20, color: '#fff' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}><strong>新しい投稿</strong><button type="button" onClick={() => setComposeOpen(false)} style={{ width: 'auto', background: 'transparent', color: '#ccc', fontSize: 22 }}>×</button></div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}><strong>新しい投稿</strong><button type="button" onClick={closeComposer} style={{ width: 'auto', background: 'transparent', color: '#ccc', fontSize: 22 }}>×</button></div>
             <textarea autoFocus placeholder="ポーカーについて何を投稿する？" maxLength={500} value={content} onChange={e => setContent(e.target.value)} style={{ width: '100%', minHeight: 180, padding: 8, background: 'transparent', color: '#fff', border: 'none', fontSize: 17, resize: 'vertical' }}/>
             {renderPostModeButtons()}
             {renderInteractiveFields()}

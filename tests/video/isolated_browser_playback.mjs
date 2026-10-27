@@ -4,6 +4,7 @@ import assert from 'node:assert/strict'
 import { createServer as createHttpServer } from 'node:http'
 import { createServer as createViteServer } from 'vite'
 import { chromium } from 'playwright-core'
+import { verifyComposerLifecycle } from './isolated_composer_lifecycle.mjs'
 import { verifyAttachmentRequestRaces } from './isolated_attachment_races.mjs'
 import { createVideoMediaHandler } from '../../api/video-media.ts'
 import { createVideoFinalizeHandler } from '../../api/video-finalize.ts'
@@ -51,7 +52,10 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
           export const supabase = {
             auth: {
               getSession: async () => ({ data:{session:{access_token:jwt,user:{id:viewerId}}}, error:null }),
-              getUser: async () => client.auth.getUser(jwt),
+              getUser: async () => {
+                window.__VIDEO_QA_GET_USER_CALLS=(window.__VIDEO_QA_GET_USER_CALLS || 0)+1
+                return client.auth.getUser(jwt)
+              },
               onAuthStateChange: callback => {
                 authListeners.add(callback)
                 // Reproduce the SDK's initial same-session notification before
@@ -390,6 +394,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     assert.equal(await selectionComposer.locator('video').count(),0,'poll mode cancels older pending video validation')
     console.log('PASS: actual Timeline image and poll selection cancel stale pending video metadata')
     await selectionPage.close()
+    await verifyComposerLifecycle({browser,origin,jwt,anon,bytes})
     await verifyAttachmentRequestRaces({browser,origin,jwt,anon,bytes})
     // Verify the real browser duration reader cannot hang on a corrupt video.
     // Advance Chromium's virtual clock by 15 seconds without a real 15s delay.
