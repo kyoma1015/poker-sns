@@ -1,6 +1,10 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { readFileSync, readdirSync, lstatSync } from 'node:fs'
+import { readFileSync, mkdtempSync, mkdirSync, writeFileSync, symlinkSync, rmSync } from 'node:fs'
+import {tmpdir} from 'node:os'
+import {join} from 'node:path'
+import {fileURLToPath} from 'node:url'
+import {assertApiFunctionBudget,listApiFunctionSources} from '../scripts/video_api_function_budget.mjs'
 
 const config = JSON.parse(readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'))
 const finalize = readFileSync(new URL('../api/video-finalize.ts', import.meta.url), 'utf8')
@@ -8,10 +12,28 @@ const bundler = readFileSync(new URL('../scripts/bundle-ffprobe.mjs', import.met
 const packageJson = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'))
 
 test('Hobby serverless function budget cannot regress', () => {
-  const entries = readdirSync(new URL('../api/', import.meta.url)).filter(name => (name.endsWith('.ts') || name.endsWith('.js')) && !lstatSync(new URL(`../api/${name}`, import.meta.url)).isSymbolicLink())
-  assert.ok(entries.length <= 12, `Hobby supports at most 12 API functions, found ${entries.length}`)
+  const entries = assertApiFunctionBudget(fileURLToPath(new URL('../api/', import.meta.url)))
+  assert.ok(entries.includes('og.mjs'),'existing MJS endpoint must count toward the same limit')
+  assert.ok(!entries.includes('video-recovery-candidate.ts'),'internal recovery module must not be deployed as a separate function')
+  assert.match(finalize,/from '\.\.\/server\/video-recovery-candidate\.js'/)
   assert.ok(!entries.includes('video-runtime-attestation.ts'))
   assert.ok(!Object.keys(config.functions || {}).some(path => path.includes('runtime-attestation')))
+})
+
+test('function inventory catches MJS overflow, nested endpoints and CJS without counting declarations or QA aliases',()=>{
+ const root=mkdtempSync(join(tmpdir(),'video-function-budget-'))
+ try {
+  for(let index=0;index<12;index++)writeFileSync(join(root,`handler${index}.ts`),'export default ()=>{}')
+  writeFileSync(join(root,'og.mjs'),'export default ()=>{}')
+  assert.throws(()=>assertApiFunctionBudget(root),/found 13/,'prior TS/JS-only check missed this exact production failure')
+  rmSync(join(root,'handler11.ts'))
+  writeFileSync(join(root,'types.d.ts'),'declare const a:string')
+  symlinkSync('handler0.ts',join(root,'handler0.js'))
+  assert.equal(assertApiFunctionBudget(root).length,12)
+  mkdirSync(join(root,'nested'));writeFileSync(join(root,'nested','route.cjs'),'module.exports=()=>{}')
+  assert.ok(listApiFunctionSources(root).includes(join('nested','route.cjs')))
+  assert.throws(()=>assertApiFunctionBudget(root),/found 13/)
+ } finally {rmSync(root,{recursive:true,force:true})}
 })
 
 test('ffprobe runtime attestation shares finalize function and stays preview-only', () => {

@@ -1,7 +1,7 @@
-import { createVideoAttestationNonce, signBinaryVideoAttestation, videoAttestationDigest } from '../server/video-attestation.js'
+import { createVideoAttestationNonce, signBinaryVideoAttestation, videoAttestationDigest } from './video-attestation.js'
 import { createClient } from '@supabase/supabase-js'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { inspectStagedVideo } from './video-preflight.js'
+import { inspectStagedVideo } from '../api/video-preflight.js'
 
 const pathPattern=/^([0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12})\/[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}\.(mp4|webm)$/
 const MAX_BYTES=20*1024*1024

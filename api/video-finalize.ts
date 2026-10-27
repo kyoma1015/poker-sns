@@ -1,4 +1,4 @@
-import { handleVideoRecoveryCandidate } from './video-recovery-candidate.js'
+import { handleVideoRecoveryCandidate } from '../server/video-recovery-candidate.js'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { createClient } from '@supabase/supabase-js'
 import { spawn } from 'node:child_process'

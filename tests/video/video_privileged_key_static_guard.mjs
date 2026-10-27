@@ -4,7 +4,7 @@ import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 const runtime=[
  'api/video-finalize.ts',
- 'api/video-recovery-candidate.ts',
+ 'server/video-recovery-candidate.ts',
  'src/videoRecoveryCandidate.ts',
  'api/video-media.ts',
  'api/video-production-supabase-adapters.ts',

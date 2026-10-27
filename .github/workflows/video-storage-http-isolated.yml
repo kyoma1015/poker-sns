@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'tests/video/**'
+      - 'server/video-recovery-candidate.ts'
       - 'api/video-*.ts'
       - 'src/PostVideo.tsx'
       - 'src/Timeline.tsx'
@@ -13,6 +14,8 @@ on:
       - 'sql/post_short_videos_immutable_review_only.sql'
       - 'sql/video_permanent_key_reservation_review_only.sql'
       - 'scripts/bundle-ffprobe.mjs'
+      - 'scripts/video_api_function_budget.mjs'
+      - 'tests/video-vercel-release-gates.test.mjs'
       - '.github/workflows/video-storage-http-isolated.yml'
   workflow_dispatch:
 permissions:

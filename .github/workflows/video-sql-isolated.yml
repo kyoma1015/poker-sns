@@ -6,6 +6,7 @@ on:
       - 'sql/video_permanent_key_reservation_review_only.sql'
       - 'tests/video/run_isolated.sh'
       - 'tests/video/**'
+      - 'server/video-recovery-candidate.ts'
       - 'scripts/bundle-ffprobe.mjs'
       - '.github/workflows/video-sql-isolated.yml'
   workflow_dispatch:
@@ -89,7 +90,7 @@ jobs:
           FFPROBE_BINARY_PATH: '${{ github.workspace }}/api/bin/ffprobe'
           FFMPEG_BINARY_PATH: './api/bin/ffmpeg'
         run: |
-          for source in api/video-*.ts; do
+          for source in api/video-*.ts server/video-recovery-candidate.ts; do
             ln -s "$(basename "$source")" "${source%.ts}.js"
           done
           node --experimental-strip-types --test tests/video-ffprobe-runtime.test.mjs tests/video-preflight-runtime.test.mjs tests/video-finalize-core-runtime.test.mjs tests/video-finalize-http-runtime.test.mjs tests/video-isolated-adapter-runtime.test.mjs

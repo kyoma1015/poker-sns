@@ -53,10 +53,10 @@ psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/isolated_fenced_publish.sql
 psql "$dburl" -v ON_ERROR_STOP=1 -c "notify pgrst, 'reload schema';"
 # Node 24 strips TS but does not resolve runtime .js specifiers to source .ts.
 # Use ephemeral aliases only in isolated QA; never commit generated .js files.
-for source in api/video-*.ts; do
+for source in api/video-*.ts server/video-recovery-candidate.ts; do
   ln -s "$(basename "$source")" "${source%.ts}.js"
 done
-trap 'for source in api/video-*.ts; do rm -f -- "${source%.ts}.js"; done; npx --yes supabase@2.81.3 stop --workdir tests/video/local-stack --no-backup >/dev/null 2>&1 || true; rm -rf "$qa"' EXIT
+trap 'for source in api/video-*.ts server/video-recovery-candidate.ts; do rm -f -- "${source%.ts}.js"; done; npx --yes supabase@2.81.3 stop --workdir tests/video/local-stack --no-backup >/dev/null 2>&1 || true; rm -rf "$qa"' EXIT
 VIDEO_QA_ENV="$qa/local.env" node tests/video/isolated_fenced_real_e2e.mjs
 # Production attestation candidate is applied ONLY to the disposable local DB.
 # Never reuse these fixture credentials or enable the production release gate.
