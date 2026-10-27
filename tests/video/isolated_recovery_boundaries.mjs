@@ -70,7 +70,7 @@ export async function verifyRecoveryBoundaries({browser,origin,jwt,anon,bytes,bo
     if(action==='timeout') {
      await page.clock.fastForward(30001)
      await composer.getByText(/重複を防ぐため動画の再送信を停止/).first().waitFor()
-     await page.getByText('動画の復旧状態を確認できません。ログインと通信を確認して再読み込みしてください。',{exact:true}).waitFor()
+     await composer.getByText('動画の復旧状態を確認できません。ログインと通信を確認して再読み込みしてください。',{exact:true}).waitFor()
     } else if(action==='unmount')await page.evaluate(()=>window.__VIDEO_QA_UNMOUNT())
     else await page.evaluate(()=>window.__VIDEO_QA_TRIGGER_AUTH('SIGNED_IN','ffffffff-ffff-4fff-8fff-ffffffffffff'))
     await page.evaluate(()=>Promise.all(window.__BOUNDARY_AUTH_RELEASES.map(resolve=>resolve())))

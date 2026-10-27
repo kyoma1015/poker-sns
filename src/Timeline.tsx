@@ -268,7 +268,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       setContent(staged.content)
       setComposeOpen(true)
     } catch {
-      // No owner was established, so do not inspect saved pointers or start IO.
+      // If auth did not settle, no owner or saved pointer can authorize IO.
       // An SDK auth Promise may still settle after timeout/unmount; the deadline
       // signal above prevents that late result from entering recovery.
       if (VIDEO_RECOVERY_CANDIDATE_ENABLED && !cancelled && lifetime === composerLifetimeRef.current) {
