@@ -65,7 +65,10 @@ jobs:
         run: test -x api/bin/ffprobe
       - name: Install Chromium for actual React playback QA
         timeout-minutes: 6
-        run: npx playwright-core install --with-deps chromium
+        run: |
+          # Avoid the slow Ubuntu apt mirror: Chromium dependencies are
+          # provided by the runner or must fail explicitly during browser QA.
+          npx playwright-core install chromium
       - name: Isolated Supabase Storage HTTP E2E
         run: bash tests/video/run_storage_http_isolated.sh
       - name: Save local images to cache on success
