@@ -1,3 +1,4 @@
+import { handOffVideoTransfer, hasVideoTransferJournal, VIDEO_TRANSFER_RECOVERY_MESSAGE, VideoTransferRecoveryRequiredError } from './videoTransferJournal'
 import { createPollRequest, pollDisplayResult } from './interactiveRequests'
 import { useEffect, useRef, useState } from 'react'
 
@@ -169,6 +170,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const videoSelectionRef = useRef(0)
   const composerLifetimeRef = useRef(0)
   const composerIdentityRef = useRef<string | null | undefined>(undefined)
+  const [videoRecoveryBlocked, setVideoRecoveryBlocked] = useState(false)
   const [videoFile, setVideoFile] = useState<File | null>(null)
   // Retain the exact immutable object path after an uncertain finalize result.
   type PendingVideo = { path: string; owner: string; content: string }
@@ -184,6 +186,11 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       if (cancelled || error || !user) return
       if (lifetime !== composerLifetimeRef.current) return
       if (composerIdentityRef.current !== undefined && composerIdentityRef.current !== user.id) return
+      if (hasVideoTransferJournal(user.id)) {
+        setVideoRecoveryBlocked(true)
+        setComposeOpen(true)
+        return
+      }
       const raw = sessionStorage.getItem('poker-id-pending-video-v1')
       if (!raw) return
       const value: unknown = JSON.parse(raw)
@@ -782,6 +789,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         ++composerLifetimeRef.current
         ++videoSelectionRef.current
         setVideoFile(null)
+        setVideoRecoveryBlocked(next ? hasVideoTransferJournal(next) : false)
         setImageFiles([])
         setSelectedResult(null)
         setSelectedDiagnosis(null)
@@ -940,6 +948,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
   const chooseVideo = async (file: File | undefined) => {
     if (!file) return
+    if (videoRecoveryBlocked) { setMessage(VIDEO_TRANSFER_RECOVERY_MESSAGE); return }
     const selection = beginAttachmentSelection()
     if (pendingVideoRef.current || videoSubmitInFlightRef.current) { setMessage('保留中の動画を先に再試行してください。'); return }
     if (imageFiles.length || selectedResult || selectedDiagnosis || styleSnapshot || interactiveMode !== 'normal') { setMessage('動画は画像・戦績・診断・アンケートと同時に添付できません。'); return }
@@ -1045,6 +1054,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       if (isPosting || videoSubmitInFlightRef.current) return
       const lifetime = composerLifetimeRef.current
       const isCurrent = () => lifetime === composerLifetimeRef.current
+      if (videoRecoveryBlocked) { setMessage(VIDEO_TRANSFER_RECOVERY_MESSAGE); return }
       if (!VIDEO_SERVER_ENABLED) {
         setMessage('動画投稿はサーバーAPIの安全確認待ちです。')
         return
@@ -1082,8 +1092,11 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           const staged = { path, owner: user.id, content: content.trim() }
           pendingVideoRef.current = staged
           setPendingVideo(staged)
-          try { sessionStorage.setItem('poker-id-pending-video-v1', JSON.stringify(staged)) } catch { /* Recovery unavailable; do not delete staged media. */ }
         }
+        try {
+          sessionStorage.setItem('poker-id-pending-video-v1', JSON.stringify(pendingVideoRef.current))
+          handOffVideoTransfer(user.id, path)
+        } catch { throw new VideoTransferRecoveryRequiredError() }
         await finalizeUploadedVideo(path, content.trim(), requestController.signal)
         if (!isCurrent()) return
         pendingVideoRef.current = null
@@ -1097,6 +1110,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         await loadPosts()
       } catch (error) {
         if (!isCurrent()) return
+        if (error instanceof VideoTransferRecoveryRequiredError) setVideoRecoveryBlocked(true)
         setMessage(`動画を投稿できませんでした：${error instanceof Error ? error.message : '不明なエラー'}。アップロード済みファイルは安全な回収対象として保持されます。`)
       } finally {
         if (videoRequestAbortRef.current === requestController) videoRequestAbortRef.current = null
@@ -2418,6 +2432,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const renderStyleSnapshot = (snapshot: { count: number; aggression: number; looseness: number; captured_at: string }) => <div style={{ padding: 16, border: '1px solid #555', borderRadius: 12, margin: '8px 0', background: '#171717' }}><strong>♙ 他者評価 · プレイスタイル</strong><div style={{ fontSize: 13, color: '#bbb', marginTop: 8 }}>匿名評価 {snapshot.count}人の集計（投稿時点）</div><div style={{ marginTop: 8 }}>攻撃性 {snapshot.aggression.toFixed(1)} / 100　·　ルース度 {snapshot.looseness.toFixed(1)} / 100</div></div>
 
   const renderSelectedResultPreview = () => {
+    if (videoRecoveryBlocked) return <p role="status" style={{ padding: 12, border: '1px solid #675331', borderRadius: 10, color: '#e6c27a', fontSize: 13 }}>{VIDEO_TRANSFER_RECOVERY_MESSAGE}</p>
     if (!selectedResult && !selectedDiagnosis && !styleSnapshot && imageFiles.length === 0 && !videoFile && !pendingVideo) return null
     const previewPost = {
       resultData: selectedResult?.type === 'tournament' ? selectedResult?.data : null,

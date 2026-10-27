@@ -1,3 +1,4 @@
+import { beginVideoTransfer, confirmVideoReservation, isVideoTransferBlocked, setVideoTransferPhase, VideoTransferRecoveryRequiredError, type VideoTransferRecord } from './videoTransferJournal'
 import { withVideoUploadRequest } from './videoUploadTransport'
 import { supabase } from './supabase'
 import { VIDEO_SERVER_ENABLED, reserveVideoObjectPath } from './videoApi'
@@ -54,7 +55,7 @@ export async function validateVideo(file: File): Promise<string | null> {
 
 // File identity pins retries to the same immutable reservation. No token or
 // File bytes are persisted. A reservation failure never authorizes upload.
-const reservedUploads = new WeakMap<File, { owner: string; path: string; attempted: boolean }>()
+const reservedUploads = new WeakMap<File, { owner: string; path: string; attempted: boolean; journal: VideoTransferRecord }>()
 
 /** Staged only: caller must enforce server-side duration and reviewed RLS before enabling. */
 export async function uploadPostVideo(userId: string, file: File, signal?: AbortSignal): Promise<string> {
@@ -62,6 +63,7 @@ export async function uploadPostVideo(userId: string, file: File, signal?: Abort
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   signal?.throwIfAborted()
   if (authError || !user || user.id !== userId) throw new Error('ログイン情報を確認してください。')
+  if (isVideoTransferBlocked(user.id)) throw new VideoTransferRecoveryRequiredError()
   const validationError = await validateVideo(file)
   if (validationError) throw new Error(validationError)
   signal?.throwIfAborted()
@@ -72,8 +74,15 @@ export async function uploadPostVideo(userId: string, file: File, signal?: Abort
     const path = `${user.id}/${crypto.randomUUID()}.${ext}`
     // Only a confirmed reservation may ever send bytes. Never retry an
     // ambiguous reservation; its key remains consumed without an upload.
-    await reserveVideoObjectPath(path, signal)
-    record = { owner: user.id, path, attempted: false }
+    const sha256 = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', await file.arrayBuffer())))
+      .map(byte => byte.toString(16).padStart(2, '0')).join('')
+    signal?.throwIfAborted()
+    const journal: VideoTransferRecord = { owner: user.id, path, sha256, size: file.size, type: file.type, startedAt: Date.now(), phase: 'reserving' }
+    beginVideoTransfer(journal)
+    try { await reserveVideoObjectPath(path, signal) }
+    catch { throw new VideoTransferRecoveryRequiredError() }
+    confirmVideoReservation(journal)
+    record = { owner: user.id, path, attempted: false, journal }
     reservedUploads.set(file, record)
   }
   signal?.throwIfAborted()
@@ -82,6 +91,7 @@ export async function uploadPostVideo(userId: string, file: File, signal?: Abort
   signal?.throwIfAborted()
   if (freshError || fresh.user?.id !== user.id) throw new Error('ログイン情報を確認してください。')
   const retry = record.attempted
+  setVideoTransferPhase(record.journal, 'uploading')
   record.attempted = true
   const { path } = record
   try {
@@ -95,9 +105,11 @@ export async function uploadPostVideo(userId: string, file: File, signal?: Abort
       const conflict = error.statusCode === '409' || (error.statusCode === '400' && error.message === 'The resource already exists')
       if (!retry || !conflict) throw new Error('動画の送信を確認できませんでした。同じ動画のまま再試行してください。')
     }
+    setVideoTransferPhase(record.journal, 'acknowledged')
     reservedUploads.delete(file)
     return path
-  } catch {
+  } catch (error) {
+    if (error instanceof VideoTransferRecoveryRequiredError) throw error
     // Retain this exact File->path for retry. Never upsert, delete, or create a
     // second reservation after an uncertain Storage result.
     throw new Error('動画の送信を確認できませんでした。同じ動画のまま再試行してください。')

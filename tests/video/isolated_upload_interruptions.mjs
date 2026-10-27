@@ -112,6 +112,16 @@ export async function verifyUploadInterruptions({browser,origin,jwt,anon,bytes})
         assert.equal(uploads.length,0,'expired identity sends zero Storage bytes')
         await page.evaluate(()=>{delete window.__VIDEO_QA_GET_USER})
       }
+      if(scenario==='lost-reservation-response') {
+        await composer.getByText(/重複を防ぐため動画の再送信を停止/).first().waitFor()
+        await composer.getByRole('button',{name:'投稿する',exact:true}).click()
+        assert.equal(reservations.length,1,'ambiguous reservation remains blocked instead of creating another key')
+        assert.equal(uploads.length,0)
+        assert.equal(finalizations.length,0)
+        assert.deepEqual(errors,[])
+        console.log('PASS: actual Timeline upload boundary '+scenario)
+        continue
+      }
       assert.equal(await page.getByText(/PRIVATE-.*-ERROR/).count(),0,'provider error stays private')
       await composer.getByRole('button',{name:'投稿する',exact:true}).click()
       await page.locator('article').filter({hasText:content}).waitFor({timeout:30000})

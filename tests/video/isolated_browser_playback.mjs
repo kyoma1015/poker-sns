@@ -4,6 +4,7 @@ import assert from 'node:assert/strict'
 import { createServer as createHttpServer } from 'node:http'
 import { createServer as createViteServer } from 'vite'
 import { chromium } from 'playwright-core'
+import { verifyUploadReload } from './isolated_upload_reload.mjs'
 import { verifyUploadInterruptions } from './isolated_upload_interruptions.mjs'
 import { verifyComposerLifecycle } from './isolated_composer_lifecycle.mjs'
 import { verifyAttachmentRequestRaces } from './isolated_attachment_races.mjs'
@@ -396,6 +397,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     assert.equal(await selectionComposer.locator('video').count(),0,'poll mode cancels older pending video validation')
     console.log('PASS: actual Timeline image and poll selection cancel stale pending video metadata')
     await selectionPage.close()
+    await verifyUploadReload({browser,origin,jwt,anon,bytes})
     await verifyUploadInterruptions({browser,origin,jwt,anon,bytes})
     await verifyComposerLifecycle({browser,origin,jwt,anon,bytes})
     await verifyAttachmentRequestRaces({browser,origin,jwt,anon,bytes})
