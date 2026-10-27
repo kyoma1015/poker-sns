@@ -1,4 +1,5 @@
 import { supabase } from './supabase'
+import { readVideoResponse } from './videoMedia'
 
 /** Candidate client/server contract. Not enabled until a trusted endpoint is reviewed. */
 export const VIDEO_FINALIZE_ROUTE = '/internal/video/finalize'
@@ -17,6 +18,7 @@ export async function finalizeUploadedVideo(objectPath: string, content: string)
   if (!VIDEO_SERVER_ENABLED) throw new Error('動画投稿はサーバーAPIの安全確認待ちです。')
   const response = await fetch(VIDEO_FINALIZE_ROUTE, {
     method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: await authHeader() },
+    redirect: 'error', signal: AbortSignal.timeout(30000),
     cache: 'no-store', body: JSON.stringify({ object_path: objectPath, content }),
   })
   if (!response.ok) throw new Error('動画投稿を確定できませんでした。')
@@ -35,6 +37,7 @@ export async function reserveVideoObjectPath(objectPath: string): Promise<void> 
   const response = await fetch(VIDEO_FINALIZE_ROUTE, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: await authHeader() },
+    redirect: 'error', signal: AbortSignal.timeout(30000),
     cache: 'no-store',
     body: JSON.stringify({ action: 'reserve', object_path: objectPath }),
   })
@@ -51,11 +54,8 @@ export async function loadAuthorizedVideo(postId: string): Promise<string> {
   if (!/^[0-9a-f-]{36}$/i.test(postId)) throw new Error('投稿IDが不正です。')
   const response = await fetch(`${VIDEO_MEDIA_ROUTE}/${encodeURIComponent(postId)}`, {
     headers: { Authorization: await authHeader() }, cache: 'no-store',
+    redirect: 'error', signal: AbortSignal.timeout(30000),
   })
-  if (!response.ok) throw new Error('動画を読み込めませんでした。')
-  const blob = await response.blob()
-  if (!blob.size || blob.size > 20 * 1024 * 1024 || !['video/mp4', 'video/webm'].includes(blob.type)) {
-    throw new Error('動画データが不正です。')
-  }
+  const blob = await readVideoResponse(response)
   return URL.createObjectURL(blob)
 }
