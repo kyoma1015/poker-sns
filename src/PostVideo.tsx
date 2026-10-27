@@ -11,10 +11,14 @@ export default function PostVideo({ postId }: { postId: string }) {
     let active = true
     let objectUrl = ''
     let viewerId: string | undefined
+    let notifiedViewerId: string | undefined
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       // A Blob URL bypasses the server after the initial authorized fetch.
       // Discard the locally cached media as soon as the session ends or
       // changes, so an old authenticated video cannot keep playing.
+      if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session?.user.id) {
+        notifiedViewerId = session.user.id
+      }
       const identityChanged = (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') &&
         (viewerId !== undefined && session?.user.id !== viewerId)
       if (event === 'SIGNED_OUT' || event === 'USER_UPDATED' || identityChanged) {
@@ -31,6 +35,11 @@ export default function PostVideo({ postId }: { postId: string }) {
       const { data: { session }, error: sessionError } = await supabase.auth.getSession()
       if (!active) return undefined
       if (sessionError || !session?.user.id) throw new Error('missing playback session')
+      // An account switch may arrive before getSession resolves. Never fetch
+      // media using a stale session after observing a different identity.
+      if (notifiedViewerId && notifiedViewerId !== session.user.id) {
+        throw new Error('playback identity changed during session initialization')
+      }
       viewerId = session.user.id
       return loadAuthorizedVideo(postId)
     })().then(value => {
