@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 
 export async function verifyUploadReload({browser,origin,jwt,anon,bytes}) {
-  for(const scenario of ['reload-reservation','reload-storage-commit','tampered-ack','journal-write-denied']) {
+  for(const scenario of ['reload-reservation','reload-storage-commit','tampered-ack','journal-write-denied','foreign-journal']) {
     const page=await browser.newPage()
     const errors=[]
     let reservations=0,uploads=0,finalizations=0,release,committed=false
@@ -10,6 +10,10 @@ export async function verifyUploadReload({browser,origin,jwt,anon,bytes}) {
       await page.addInitScript(({jwt,anon,scenario})=>{
         window.__VIDEO_QA_JWT=jwt;window.__VIDEO_QA_ANON=anon
         const id=JSON.parse(atob(jwt.split('.')[1].replaceAll('-','+').replaceAll('_','/'))).sub
+        if(scenario==='foreign-journal') {
+          const owner='ffffffff-ffff-4fff-8fff-ffffffffffff'
+          sessionStorage.setItem('poker-id-video-transfer-v1:'+owner,JSON.stringify({owner,path:owner+'/eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee.webm',phase:'acknowledged',content:'PRIVATE-FOREIGN-DRAFT'}))
+        }
         if(scenario==='tampered-ack') {
           const path=id+'/eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee.webm'
           sessionStorage.setItem('poker-id-video-transfer-v1:'+id,JSON.stringify({owner:id,path,phase:'acknowledged',sha256:'a'.repeat(64),size:1,type:'video/webm',startedAt:Date.now()+999999999}))
@@ -52,6 +56,15 @@ export async function verifyUploadReload({browser,origin,jwt,anon,bytes}) {
         await composer.locator('textarea').fill('isolated reload must not publish')
         await page.locator('input[accept="video/mp4,video/webm"]').setInputFiles({name:'reload.webm',mimeType:'video/webm',buffer:bytes})
         await composer.locator('video').waitFor()
+        if(scenario==='foreign-journal') {
+          assert.equal(await composer.getByText(/重複を防ぐため動画の再送信を停止/).count(),0,'another owner journal cannot block current account')
+          assert.equal(await page.getByText('PRIVATE-FOREIGN-DRAFT',{exact:false}).count(),0,'never show foreign recovery content')
+          assert.equal(await page.evaluate(()=>sessionStorage.getItem('poker-id-video-transfer-v1:ffffffff-ffff-4fff-8fff-ffffffffffff')!==null),true,'never clear another owner journal')
+          assert.deepEqual({reservations,uploads,finalizations},{reservations:0,uploads:0,finalizations:0})
+          assert.deepEqual(errors,[])
+          console.log('PASS: actual Timeline upload reload '+scenario)
+          continue
+        }
         await composer.getByRole('button',{name:'投稿する',exact:true}).click()
         if(scenario!=='journal-write-denied') {
           for(let wait=0;!release&&wait<1000;wait++) await page.waitForTimeout(20)
