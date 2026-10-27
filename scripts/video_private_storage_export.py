@@ -42,7 +42,7 @@ def list_objects(bucket, prefix, key):
             fail("unexpected listing response")
         for item in items:
             name = item.get("name")
-            if not isinstance(name, str) or name in (".", "..") or "/" in name or "\\\\" in name:
+            if not isinstance(name, str) or name in (".", "..") or "/" in name or chr(92) in name:
                 fail("unsafe object name")
             full = prefix + name
             if item.get("id") is None:
