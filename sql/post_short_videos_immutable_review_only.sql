@@ -27,6 +27,20 @@ create policy "post_videos_immutable_read_own" on storage.objects
     bucket_id = 'post-videos'
     and (storage.foldername(name))[1] = (select auth.uid())::text
   );
+-- Published objects may be read by a caller who can SELECT the linked post.
+-- The invoker's existing public.posts RLS decides visibility. Staged uploads
+-- have no post and are NOT exposed to other users. Do not use SECURITY DEFINER.
+-- This is a release candidate; audit all overlapping Storage SELECT policies.
+create policy "post_videos_read_visible_post" on storage.objects
+  for select to authenticated
+  using (
+    bucket_id = 'post-videos'
+    and exists (
+      select 1 from public.posts p
+      where p.video_path = storage.objects.name
+        and p.user_id::text = (storage.foldername(storage.objects.name))[1]
+    )
+  );
 -- Deliberately no UPDATE or DELETE policies.
 -- Upload client MUST use x-upsert:false. Storage rejects collisions.
 -- Do not permit other permissive UPDATE/DELETE policies on this bucket.
