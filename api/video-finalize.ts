@@ -1,3 +1,4 @@
+import { handleVideoRecoveryCandidate } from './video-recovery-candidate.js'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { createClient } from '@supabase/supabase-js'
 import { spawn } from 'node:child_process'
@@ -52,6 +53,9 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
   if (!body || typeof body !== 'object' || Array.isArray(body)) return res.status(400).end()
   // Reject inherited fields and exotic prototypes at the HTTP trust boundary.
   if (Object.getPrototypeOf(body) !== Object.prototype && Object.getPrototypeOf(body) !== null) return res.status(400).end()
+  if (['bind_recovery','recovery_status'].includes(String((body as Record<string,unknown>).action))) {
+    return handleVideoRecoveryCandidate(req,res,options.isolatedLocalOnly===true)
+  }
   // Reservation shares the existing serverless function (Hobby function cap).
   // Never use service_role here: the caller JWT and owner-scoped RPC enforce authorization.
   // Production reservation stays disabled until writer fencing and abuse controls are audited.
