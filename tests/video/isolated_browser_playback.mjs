@@ -145,6 +145,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     await video.evaluate(el=>el.play())
     await page.waitForFunction(() => document.querySelector('video')?.currentTime>0,
       null,{timeout:15000})
+    assert.equal(await page.evaluate(() => document.documentElement.clientWidth),390, 'mobile layout viewport must match device width')
     const videoBox = await video.boundingBox()
     assert.ok(videoBox && videoBox.width <= 390, 'mobile video must fit a 390px viewport')
     const playbackUrl = await video.getAttribute('src')
@@ -152,6 +153,8 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     const otherId = JSON.parse(Buffer.from(deniedJwt.split('.')[1], 'base64url').toString()).sub
     await page.evaluate(ownerId => window.__VIDEO_QA_TRIGGER_AUTH('TOKEN_REFRESHED', ownerId), ownerId)
     assert.equal(await video.getAttribute('src'), playbackUrl, 'same-user refresh preserves playback')
+    await page.evaluate(ownerId => window.__VIDEO_QA_TRIGGER_AUTH('SIGNED_IN', ownerId), ownerId)
+    assert.equal(await video.getAttribute('src'), playbackUrl, 'same-user SIGNED_IN preserves playback')
     await page.evaluate(() => {
       window.__VIDEO_QA_REVOKED_URLS = []
       const revoke = URL.revokeObjectURL.bind(URL)

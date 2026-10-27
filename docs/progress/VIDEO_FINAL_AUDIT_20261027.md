@@ -10,3 +10,5 @@ Reviewed boundaries: server media rechecks JWT and posts RLS after bounded priva
 Production backup/restore and latest Preview remain blocked as previously recorded; no capability reprobe or deployment request performed.
 
 Second finding: nullable SQL claims (especially p_signature=NULL) could bypass PL/pgSQL IF checks via three-valued logic. Added explicit NULL rejection for all mandatory claims and fail-closed NULL signature comparison. Added all-10-arguments NULL attacks in disposable PostgreSQL and authenticated real PostgREST HTTP before valid publication; asserts zero posts/nonce mutation and specific rejection. SQL candidate only; no production SQL executed. CI must execute both regressions.
+
+CI follow-up: first mobile assertion caught missing viewport metadata in both isolated HTML fixtures (production index.html already declares viewport). Fixtures now match production viewport and explicitly assert a 390px layout viewport. Added same-user SIGNED_IN preservation. Suppressed credential-bearing disposable Supabase startup log; it stays in the private temporary directory and is cleaned up, never an artifact.

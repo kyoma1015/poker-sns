@@ -9,7 +9,12 @@ export DOCKER_HOST=unix:///var/run/docker.sock
 unset DOCKER_CONTEXT DOCKER_TLS DOCKER_TLS_VERIFY DOCKER_CERT_PATH
 qa="$(mktemp -d)"
 trap 'npx --yes supabase@2.81.3 stop --workdir tests/video/local-stack --no-backup >/dev/null 2>&1 || true; rm -rf "$qa"' EXIT
-npx --yes supabase@2.81.3 start --workdir tests/video/local-stack --exclude studio,imgproxy,mailpit,edge-runtime,realtime,vector,logflare
+# CLI startup prints ephemeral API/S3 secrets. Keep its output private and
+# never upload it as an artifact or echo it into the public CI log.
+if ! npx --yes supabase@2.81.3 start --workdir tests/video/local-stack --exclude studio,imgproxy,mailpit,edge-runtime,realtime,vector,logflare >"$qa/start.log" 2>&1; then
+  echo 'ERROR: isolated Supabase startup failed; credential-bearing startup log withheld'
+  exit 1
+fi
 npx --yes supabase@2.81.3 status --workdir tests/video/local-stack -o env > "$qa/local.env"
 apiurl="$(sed -n 's/^API_URL=//p' "$qa/local.env" | tr -d '\"')"
 [[ "$apiurl" == 'http://127.0.0.1:56321' ]] || { echo 'BLOCKED: unexpected API endpoint'; exit 2; }
