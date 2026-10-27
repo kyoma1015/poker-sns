@@ -99,3 +99,11 @@ abstraction or forced-prefix subgame. Tests check full support/normalization,
 exact expectation identity over all sampled actions, all-size legality and real
 postflop/native updates. Source transformation has exact hash/anchor guards.
 Convergence remains UNKNOWN; larger counts alone never permit UI release.
+
+Targeted first CI40466649170: original50BB rerun PASS and all6checkpoint SHA256
+match previous successful study. Targeted C++build PASS;3proposal math/boundary
+tests PASS,1native integration ERROR because separate module directory lacked
+pinned pokerid_rules.py. Restore exact hash-verified adapter bytes into NEW
+module directory; preserved original files unchanged. Retain native integration
+assertion (all legal sizes, actual postflop and vs3bet visits). No test bypass.
+Source's algorithm include placed after Python headers to avoid macro warnings.
