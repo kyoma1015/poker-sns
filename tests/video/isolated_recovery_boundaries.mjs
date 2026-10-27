@@ -111,9 +111,10 @@ export async function verifyRecoveryBoundaries({browser,origin,jwt,anon,bytes,bo
      },boundaryPath)
      if(action==='double') {
       await composer.locator('textarea').fill('double operation must not publish this text')
-      assert.equal(await composer.getByRole('button',{name:'投稿する',exact:true}).isDisabled(),true)
-      await composer.getByRole('button',{name:'投稿する',exact:true}).dispatchEvent('click')
-      await composer.getByRole('button',{name:'投稿する',exact:true}).dispatchEvent('click')
+      const activeSubmit=composer.getByRole('button',{name:'投稿中...',exact:true})
+      assert.equal(await activeSubmit.isDisabled(),true)
+      await activeSubmit.dispatchEvent('click')
+      await activeSubmit.dispatchEvent('click')
      }
      release();release=undefined
      if(action==='newer') {
