@@ -87,7 +87,33 @@ def write_private(path, data):
 
 def verify_export(dest):
     dest = Path(dest)
-    manifest = json.loads((dest / "storage-manifest.json").read_text())
+    manifest_path = dest / "storage-manifest.json"
+    if dest.is_symlink() or manifest_path.is_symlink():
+        fail("symlink in export root or manifest")
+    manifest = json.loads(manifest_path.read_text())
+    if manifest.get("version") != 2 or manifest.get("project") != PROJECT:
+        fail("unsupported or wrong-project manifest")
+    metadata = {}
+    for name in ("storage-buckets.json", "storage-inventory.json"):
+        path = dest / name
+        if path.is_symlink():
+            fail("symlink in export metadata")
+        data = path.read_bytes()
+        if hashlib.sha256(data).hexdigest() != manifest.get("metadata_sha256", {}).get(name):
+            fail("export metadata checksum mismatch")
+        metadata[name] = json.loads(data)
+    buckets = metadata["storage-buckets.json"]
+    snapshot = metadata["storage-inventory.json"]
+    bucket_ids = [b["id"] for b in buckets]
+    if len(set(bucket_ids)) != len(bucket_ids) or set(bucket_ids) != set(snapshot) or len(buckets) != manifest.get("bucket_count"):
+        fail("bucket inventory mismatch")
+    inventory_keys = [(bucket, item["name"]) for bucket, items in snapshot.items() for item in items]
+    manifest_keys = [(item["bucket"], item["name"]) for item in manifest["objects"]]
+    if len(set(inventory_keys)) != len(inventory_keys) or sorted(inventory_keys) != sorted(manifest_keys):
+        fail("metadata object inventory mismatch")
+    objects_root = dest / "objects"
+    if objects_root.is_symlink():
+        fail("symlink in objects root")
     expected = set()
     for item in manifest["objects"]:
         parts = [item["bucket"], *item["name"].split("/")]
@@ -104,7 +130,10 @@ def verify_export(dest):
         data = path.read_bytes()
         if len(data) != item["bytes"] or hashlib.sha256(data).hexdigest() != item["sha256"]:
             fail("export checksum mismatch")
-    actual = {p for p in (dest / "objects").rglob("*") if p.is_file()}
+    entries = list(objects_root.rglob("*"))
+    if any(p.is_symlink() or not (p.is_file() or p.is_dir()) for p in entries):
+        fail("unsafe entry in export")
+    actual = {p for p in entries if p.is_file()}
     if actual != expected:
         fail("export inventory mismatch")
     return len(expected)
@@ -163,9 +192,17 @@ def main():
         after_buckets = json.loads(request("GET", "/storage/v1/bucket", key))
         if after_buckets != buckets or inventory(after_buckets, key) != before:
             fail("Storage changed during export; no completed manifest written")
-        write_private(dest / "storage-buckets.json", json.dumps(buckets, ensure_ascii=False).encode())
-        write_private(dest / "storage-inventory.json", json.dumps(before, ensure_ascii=False).encode())
-        write_private(dest / "storage-manifest.json", json.dumps({"project": PROJECT, "objects": manifest, "bucket_count": len(buckets)}, indent=2, ensure_ascii=False).encode())
+        metadata = {
+            "storage-buckets.json": json.dumps(buckets, ensure_ascii=False).encode(),
+            "storage-inventory.json": json.dumps(before, ensure_ascii=False).encode(),
+        }
+        for name, data in metadata.items():
+            write_private(dest / name, data)
+        write_private(dest / "storage-manifest.json", json.dumps({
+            "version": 2, "project": PROJECT, "objects": manifest,
+            "bucket_count": len(buckets),
+            "metadata_sha256": {name: hashlib.sha256(data).hexdigest() for name, data in metadata.items()},
+        }, indent=2, ensure_ascii=False).encode())
         verify_export(dest)
         print(f"Storage byte export completed locally: {len(manifest)} objects, {len(buckets)} buckets.")
         print(f"Private path: {dest}")
