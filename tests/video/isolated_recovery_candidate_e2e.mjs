@@ -4,7 +4,7 @@ import assert from 'node:assert/strict'
 import {createClient} from '@supabase/supabase-js'
 import {createHash,randomUUID} from 'node:crypto'
 import {readFileSync,mkdtempSync,rmSync} from 'node:fs'
-import {execFileSync} from 'node:child_process'
+import {execFileSync,spawn} from 'node:child_process'
 import {tmpdir} from 'node:os'
 import {join} from 'node:path'
 import {createServer} from 'node:http'
@@ -104,5 +104,30 @@ try {
  assert.equal(sql(`select count(*) from video_private.consumed_nonces where nonce=decode('${newNonce}','hex');`),'0','rejected recovery must not consume nonce')
  assert.equal((await owner.from('posts').select('id').eq('video_path',path)).data.length,1)
  assert.equal(sql(`select count(*) from video_private.recovery_manifests where object_path='${path}';`),'1')
+ // Hold Storage's row past the recovery deadline. Parent publication can
+ // only proceed after the lock releases; the wrapper's final clock check
+ // must roll back BOTH its post and newly consumed nonce.
+ const delayed=await reserve();assert.equal((await bind(delayed)).status,200);await upload(delayed)
+ const {data:delayedGeneration}=await owner.rpc('video_production_storage_generation',{p_owner:uid,p_path:delayed})
+ const delayedNonce=randomUUID().replaceAll('-',''),delayedExpiry=Math.floor(Date.now()/1000)+120
+ const delayedClaims={p_owner:uid,p_path:delayed,p_generation:delayedGeneration,p_sha256:hash(bytes),p_duration_ms:2000,p_content:'late lock fixture',p_expires_at:delayedExpiry,p_nonce:delayedNonce,p_key_id:1}
+ delayedClaims.p_signature=signBinaryVideoAttestation(Buffer.from('41'.repeat(32),'hex'),{owner:uid,path:delayed,generation:delayedGeneration,sha256:hash(bytes),durationMs:2000,contentSha256:videoAttestationDigest(delayedClaims.p_content),expiresAt:delayedExpiry,nonce:delayedNonce})
+ sql(`update video_private.recovery_manifests set expires_at=clock_timestamp()+interval '2 seconds' where object_path='${delayed}';`)
+ const locker=spawn('psql',[env.DB_URL,'-v','ON_ERROR_STOP=1','-qAt'],{stdio:['pipe','pipe','pipe']})
+ let lockOutput=''
+ const readyLock=new Promise((resolve,reject)=>{
+  const timer=setTimeout(()=>{locker.kill();reject(Error('isolated row-lock fixture timeout'))},15000)
+  locker.stdout.on('data',data=>{lockOutput+=data.toString();if(lockOutput.includes('LOCKED')){clearTimeout(timer);resolve()}})
+  locker.on('error',()=>{clearTimeout(timer);reject(Error('isolated row-lock fixture unavailable'))})
+  locker.on('close',code=>{clearTimeout(timer);if(code!==0)reject(Error('isolated row-lock fixture failed; raw connection diagnostics withheld'))})
+ })
+ locker.stdin.end(`begin; select 1 from storage.objects where bucket_id='post-videos' and name='${delayed}' for update; select 'LOCKED'; select pg_sleep(3); commit;`)
+ await readyLock
+ const delayedResult=await owner.rpc('video_publish_recovered_attested_v1',delayedClaims)
+ assert.ok(delayedResult.error)
+ assert.match(delayedResult.error.message,/recovery expired during publication/,'deadline must be rechecked after the blocking parent call')
+ assert.equal(sql(`select count(*) from video_private.consumed_nonces where nonce=decode('${delayedNonce}','hex');`),'0')
+ assert.equal((await owner.from('posts').select('id').eq('video_path',delayed)).data.length,0)
+ console.log('PASS: recovery atomic publication rejects nonce replay/foreign owner and rolls back post+nonce after expiry during real Storage row-lock wait')
  console.log('PASS: real recovery candidate JWT/auth.uid owner, private manifest RLS, immutable concurrent bind, server expiry, SHA256/ffprobe, missing/late object, overwrite rejection, published state and concurrent publication race')
 } finally {await new Promise(resolve=>server.close(resolve));rmSync(dir,{recursive:true,force:true})}
