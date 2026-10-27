@@ -328,6 +328,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
         .eq('follower_id', user.id)
 
+    if(feedLifetime!==composerLifetimeRef.current) return
     if (followError) {
 
       console.error(followError)
@@ -356,6 +357,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     const postQuery = supabase.from('posts').select('*').order('created_at', { ascending: false })
     const { data: postData, error: postError } = await postQuery
 
+    if(feedLifetime!==composerLifetimeRef.current) return
     if (postError) {
 
       console.error(postError)
@@ -384,9 +386,11 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
     const postIdsForInteractive = postData.map(row => row.id)
     const { data: interactiveRows, error: interactiveError } = await supabase.from('post_interactive').select('*').in('post_id',postIdsForInteractive)
+    if(feedLifetime!==composerLifetimeRef.current) return
     if (interactiveError) { setMessage(`アンケート情報の取得に失敗しました：${interactiveError.message}`); return }
     const visibleInteractiveIds = postIdsForInteractive.filter(id => !(interactiveRows || []).some(row => row.post_id === id && row.kind === 'question'))
     const { data: responseRows, error: responseError } = await supabase.rpc('get_interactive_results_v4', { p_post_ids: visibleInteractiveIds })
+    if(feedLifetime!==composerLifetimeRef.current) return
     if (responseError) { setMessage(`回答情報の取得に失敗しました：${responseError.message}`); return }
     setInteractiveItems(Object.fromEntries((interactiveRows||[]).map(row=>[row.post_id,row as InteractiveItem])))
     setInteractiveResults(Object.fromEntries(((responseRows||[]) as InteractiveResult[]).map(row=>[row.post_id,pollDisplayResult((interactiveRows || []).find(item => item.post_id === row.post_id)?.is_anonymous !== false,row)])))
