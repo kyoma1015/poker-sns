@@ -101,15 +101,16 @@ test('preview runtime attestation fails closed for missing absolute ffprobe bina
 // to authorize production publication before the independent DB/RLS release gate.
 test('production attested adapter stays fail-closed with release flag and keys present', async () => {
   const { createProductionSupabaseVideoAdapters } = await import('../api/video-production-supabase-adapters.ts')
-  const names = ['VIDEO_PRODUCTION_FENCED_READY', 'VIDEO_ATTESTATION_KEY_HEX', 'VIDEO_ATTESTATION_KEY_ID']
+  const names = ['VIDEO_PRODUCTION_FENCED_READY', 'VIDEO_ATTESTATION_KEY_HEX', 'VIDEO_ATTESTATION_KEY_ID', 'VIDEO_ATTESTED_RPC_RELEASE_APPROVED']
   const previous = Object.fromEntries(names.map(name => [name, process.env[name]]))
   try {
     process.env.VIDEO_PRODUCTION_FENCED_READY = 'true'
     process.env.VIDEO_ATTESTATION_KEY_HEX = 'a'.repeat(64)
     process.env.VIDEO_ATTESTATION_KEY_ID = '2'
+    delete process.env.VIDEO_ATTESTED_RPC_RELEASE_APPROVED
     assert.throws(() => createProductionSupabaseVideoAdapters(
       'https://example.supabase.co', 'fixture-anon', 'fixture-user-jwt',
-    ), /production video publish requires server-attested database authorization/)
+    ), /production video publish requires provisioned server-attested database authorization/)
   } finally {
     for (const name of names) {
       if (previous[name] === undefined) delete process.env[name]
