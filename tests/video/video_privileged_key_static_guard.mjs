@@ -21,6 +21,22 @@ for (const file of runtime) {
  assert.doesNotMatch(code,/(?:process\.env|import\.meta\.env)\s*\[\s*['"`](?:SUPABASE_SERVICE_ROLE_KEY|SUPABASE_SECRET_KEY|VITE_[^'"`]*(?:SERVICE_ROLE|SECRET_KEY)[^'"`]*)['"`]\s*\]/i,
   file+' must not access privileged credentials through bracket notation')
 }
+// Signed Storage URLs remain valid until expiry even after post visibility
+// changes. Video runtime must serve media through per-request JWT/RLS checks,
+// never issue a persistent signed/public Storage URL.
+for (const file of runtime) {
+ const code=readFileSync(file,'utf8')
+ assert.doesNotMatch(code,/\.\s*(?:createSignedUrl|createSignedUrls|getPublicUrl)\s*\(/,
+  file+' must not issue signed/public Storage URLs for revocable video')
+}
+const mediaHandler=readFileSync('api/video-media.ts','utf8')
+assert.match(mediaHandler,/Cache-Control', 'private, no-store/,
+ 'video media must not be cacheable across authorization changes')
+assert.match(mediaHandler,/viewer\.auth\.getUser\(token\)/,
+ 'video media must revalidate viewer JWT per request')
+assert.match(mediaHandler,/await visible\(\) !== path/,
+ 'video media must recheck RLS visibility after reading bytes')
+
 // Verify the detector itself rejects known privileged-key access forms.
 const bracketKeyPattern=/(?:process\.env|import\.meta\.env)\s*\[\s*['"`](?:SUPABASE_SERVICE_ROLE_KEY|SUPABASE_SECRET_KEY|VITE_[^'"`]*(?:SERVICE_ROLE|SECRET_KEY)[^'"`]*)['"`]\s*\]/i
 for (const forbidden of [
