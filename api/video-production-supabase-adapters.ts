@@ -8,10 +8,18 @@ const UUID = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
 const PATH = new RegExp('^(' + UUID + ')/(' + UUID + ')\\.(mp4|webm)$')
 const PRODUCTION_URL = /^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/
 
-// Deliberately has no deployment flag override: a release toggle alone cannot
-// establish the DB-side authenticity of server-verified media metadata.
+// A release flag alone is insufficient: require a separately provisioned
+// signing key and an explicit attested-RPC release approval. The database RPC
+// independently verifies the HMAC and owner JWT before publishing.
 export function assertServerAttestationAvailable(): void {
-  throw new Error('production video publish requires server-attested database authorization')
+  const key = process.env.VIDEO_ATTESTATION_KEY_HEX
+  const id = process.env.VIDEO_ATTESTATION_KEY_ID
+  if (process.env.VIDEO_PRODUCTION_FENCED_READY !== 'true' ||
+      process.env.VIDEO_ATTESTED_RPC_RELEASE_APPROVED !== 'true' ||
+      !key || !/^[0-9a-f]{64}$/.test(key) ||
+      !id || !/^[1-9][0-9]{0,4}$/.test(id) || Number(id) > 32767) {
+    throw new Error('production video publish requires provisioned server-attested database authorization')
+  }
 }
 
 /** Production candidate: disabled until the audited production migration and runtime preflight pass. No Storage deletion. */
