@@ -292,6 +292,12 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     await restoredComposer.waitFor({timeout:20000})
     assert.equal(await restoredComposer.getByPlaceholder('ポーカーについて何を投稿する？').inputValue(),ownedDraft,
       'same-owner pending draft must be restored after reload')
+    await restoredComposer.getByRole('status').filter({hasText:'動画はアップロード済みです。'}).waitFor()
+    assert.equal(await restoredComposer.getByRole('button',{name:'添付を解除'}).isDisabled(),true,
+      'restored pending media must not be silently detached')
+    await restoredComposer.getByPlaceholder('ポーカーについて何を投稿する？').fill('edited recovered draft')
+    await restoredComposer.getByRole('button',{name:'投稿内容を元に戻す'}).click()
+    assert.equal(await restoredComposer.getByPlaceholder('ポーカーについて何を投稿する？').inputValue(),ownedDraft)
     await timelinePage.evaluate(() => sessionStorage.removeItem('poker-id-pending-video-v1'))
     await timelinePage.reload()
     console.log('PASS: REAL Chromium restores same-owner pending draft after reload')
@@ -358,7 +364,36 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     await timelinePage.locator('input[accept="video/mp4,video/webm"]').setInputFiles({
       name:'timeline-e2e.webm',mimeType:'video/webm',buffer:bytes,
     })
+    // Commit the actual finalization but suppress its successful response once.
+    // A retry must reuse the existing object, not reserve/upload a second one.
+    let committedButLost=false
+    const reservedPaths=[]
+    const finalizedPaths=[]
+    await timelinePage.route('**/internal/video/finalize',async route=>{
+      const body=route.request().postDataJSON()
+      if(body.action==='reserve') { reservedPaths.push(body.object_path); return route.continue() }
+      finalizedPaths.push(body.object_path)
+      if(committedButLost) return route.continue()
+      const response=await route.fetch()
+      assert.equal(response.status(),201,'first real finalize must commit before response loss')
+      committedButLost=true
+      await route.fulfill({status:503,contentType:'application/json',body:'{"error":"isolated_lost_commit_response"}'})
+    })
     await composer.getByRole('button',{name:'投稿する'}).click({timeout:20000})
+    await composer.getByRole('status').filter({hasText:'動画はアップロード済みです。'}).waitFor()
+    await composer.getByRole('button',{name:'投稿する'}).waitFor({state:'visible'})
+    await timelinePage.getByText(/動画を投稿できませんでした：/).waitFor()
+    assert.ok(committedButLost,'real publication must have committed before retry')
+    const pendingBeforeRetry=await timelinePage.evaluate(()=>JSON.parse(sessionStorage.getItem('poker-id-pending-video-v1')))
+    assert.equal(pendingBeforeRetry.content,uploadText)
+    const requestsBeforeEdit=videoReservationResponses.length
+    await composer.getByPlaceholder('ポーカーについて何を投稿する？').fill(uploadText+' edited')
+    await composer.getByRole('button',{name:'投稿する'}).click()
+    await timelinePage.getByText(/前回の投稿内容またはアカウントが異なります/).waitFor()
+    assert.equal(videoReservationResponses.length,requestsBeforeEdit,'edited retry must not issue a network mutation')
+    await composer.getByRole('button',{name:'投稿内容を元に戻す'}).click()
+    assert.equal(await composer.getByPlaceholder('ポーカーについて何を投稿する？').inputValue(),uploadText)
+    await composer.getByRole('button',{name:'投稿する'}).click()
     try {
       await timelinePage.locator('article').filter({hasText:uploadText}).waitFor({timeout:45000})
     } catch(error) {
@@ -367,6 +402,13 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
         errors:timelineErrors
       }),{cause:error})
     }
+    assert.equal(await timelinePage.evaluate(()=>sessionStorage.getItem('poker-id-pending-video-v1')),null,
+      'confirmed retry clears pending recovery pointer')
+    assert.equal(await timelinePage.locator('article').filter({hasText:uploadText}).count(),1,
+      'ambiguous finalize retry must show exactly one post')
+    assert.deepEqual(reservedPaths,[pendingBeforeRetry.path],'retry must not reserve/upload another object')
+    assert.deepEqual(finalizedPaths,[pendingBeforeRetry.path,pendingBeforeRetry.path],'both finalizations use the exact immutable object path')
+    console.log('PASS: REAL Timeline committed-but-lost finalize response recovers same draft without duplicate publication')
     assert.ok(videoReservationResponses.filter(x=>x.status===201&&x.method==='POST').length >= 2,
       'real browser must receive distinct trusted reservation AND finalize successes')
     // Reservation ledger is the durable authority, not the HTTP success alone.

@@ -2280,7 +2280,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const renderStyleSnapshot = (snapshot: { count: number; aggression: number; looseness: number; captured_at: string }) => <div style={{ padding: 16, border: '1px solid #555', borderRadius: 12, margin: '8px 0', background: '#171717' }}><strong>♙ 他者評価 · プレイスタイル</strong><div style={{ fontSize: 13, color: '#bbb', marginTop: 8 }}>匿名評価 {snapshot.count}人の集計（投稿時点）</div><div style={{ marginTop: 8 }}>攻撃性 {snapshot.aggression.toFixed(1)} / 100　·　ルース度 {snapshot.looseness.toFixed(1)} / 100</div></div>
 
   const renderSelectedResultPreview = () => {
-    if (!selectedResult && !selectedDiagnosis && !styleSnapshot && imageFiles.length === 0 && !videoFile) return null
+    if (!selectedResult && !selectedDiagnosis && !styleSnapshot && imageFiles.length === 0 && !videoFile && !pendingVideo) return null
     const previewPost = {
       resultData: selectedResult?.type === 'tournament' ? selectedResult?.data : null,
       amusementResultData: selectedResult?.type === 'amusement' ? selectedResult?.data : null,
@@ -2289,7 +2289,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     return <div style={{ marginTop: 12 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 7 }}>
         <span style={{ fontSize: 12, color: '#aaa', fontWeight: 700 }}>添付プレビュー（投稿時の表示）</span>
-        <button type="button" onClick={() => { setSelectedResult(null); setSelectedDiagnosis(null); setStyleSnapshot(null); setImageFiles([]); setVideoFile(null) }} aria-label="添付を解除" style={{ width: 'auto', padding: '4px 9px', background: '#292929', border: '1px solid #444', borderRadius: 8, color: '#ddd', fontSize: 12 }}>× 解除</button>
+        <button type="button" disabled={isPosting || Boolean(pendingVideo)} onClick={() => { if (videoSubmitInFlightRef.current || pendingVideoRef.current) return; setSelectedResult(null); setSelectedDiagnosis(null); setStyleSnapshot(null); setImageFiles([]); setVideoFile(null) }} aria-label="添付を解除" style={{ width: 'auto', padding: '4px 9px', background: '#292929', border: '1px solid #444', borderRadius: 8, color: '#ddd', fontSize: 12 }}>× 解除</button>
       </div>
       {selectedResult?.type === 'tournament' && renderTournamentResultCard(previewPost)}
       {selectedResult?.type === 'amusement' && renderAmusementResultCard(previewPost)}
@@ -2297,7 +2297,10 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       {selectedDiagnosis && <div style={{ border: '1px solid #92733a', borderRadius: 12, padding: 16, color: '#f6e5bf' }}>♧ 自己診断：{playerTypeEmoji[selectedDiagnosis.result_type_key]} {selectedDiagnosis.animal_name_ja}<div style={{ fontSize: 12 }}>{selectedDiagnosis.catchphrase}</div></div>}
       {styleSnapshot && renderStyleSnapshot(styleSnapshot)}
       {videoPreview && <video controls preload="metadata" src={videoPreview} style={{ width: '100%', maxHeight: 360, borderRadius: 10 }} />}
-      {pendingVideo && <p role="status" style={{ fontSize: 12, color: '#e6c27a' }}>動画はアップロード済みです。投稿確定に失敗した場合は、内容を変更せず「投稿」から同じStorageファイルを再試行してください。再読み込み後も同じタブなら再試行できます。新規アップロードや無条件削除は行いません。</p>}
+      {pendingVideo && <div style={{ padding: 12, border: '1px solid #675331', borderRadius: 10, background: '#211c15' }}>
+        <p role="status" style={{ fontSize: 12, color: '#e6c27a', margin: '0 0 8px' }}>動画はアップロード済みです。前回と同じ内容で投稿を再試行できます。動画の再選択は不要です。</p>
+        <button type="button" disabled={isPosting} onClick={() => { if (videoSubmitInFlightRef.current) return; setContent(pendingVideo.content); setMessage('投稿内容を元に戻しました。「投稿する」から再試行してください。') }} style={{ width: 'auto', padding: '7px 10px', borderRadius: 8, border: '1px solid #675331', background: '#30271b', color: '#f0d8ac', fontSize: 12 }}>投稿内容を元に戻す</button>
+      </div>}
       {imagePreviews.length > 0 && <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,minmax(0,1fr))', gap: 8, marginTop: 8 }}>{imagePreviews.map((url, i) => <div key={url} style={{ position: 'relative' }}><img src={url} alt={`添付画像${i+1}`} style={{ width: '100%', maxHeight: 220, objectFit: 'cover', borderRadius: 8 }}/><button type="button" onClick={() => setImageFiles(files => files.filter((_, index) => index !== i))} style={{ position: 'absolute', right: 4, top: 4, width: 'auto', background: '#222', color: '#fff' }}>×</button></div>)}</div>}
     </div>
   }
