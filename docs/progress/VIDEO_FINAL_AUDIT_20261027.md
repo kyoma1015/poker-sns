@@ -27,3 +27,7 @@ Additional finding: concurrent chooseVideo metadata promises could settle in rev
 Recovery CI follow-up: Storage HTTP #40468430659 reached restored-draft checks, then Playwright rejected an ambiguous error-message selector matching both main and modal. Scoped it to the actual composer; assertions retained. SQL #40468430716 and Poll #40468430697 succeeded for that intermediate HEAD.
 
 Selection fence also invalidates unresolved metadata when submission starts, preventing a pre-submit selection from resurrecting the attachment after successful publication. Actual Timeline test holds a second selection until after lost-response recovery succeeds, then releases metadata and asserts no non-feed preview remains.
+
+## Cross-attachment metadata race (from a3b2e3cf)
+Acceptance: a pending video metadata check cannot attach a video after an image or poll selection; selected image and poll mode stay intact. Other completed regressions are not independently repeated except required CI after changes.
+Finding: video-selection fencing covered newer videos/clear/submit, but not accepted images, poll mode, result/diagnosis/style selection. These choices now invalidate pending video checks. Chromium holds video metadata, selects a real image or poll in actual Timeline, releases metadata, and verifies no video is attached. Build/lint and script checks run locally; real DB/Storage/browser executed in CI. No production/backup reprobe/Vercel deployment request.

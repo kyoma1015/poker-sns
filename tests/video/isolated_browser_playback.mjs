@@ -349,6 +349,41 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     await selectionPage.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))))
     assert.equal(await selectedPreview.getAttribute('src'),latestUrl,'older metadata completion cannot replace latest preview')
     console.log('PASS: actual Timeline reverse metadata completion preserves latest video selection')
+    await selectionComposer.getByRole('button',{name:'添付を解除'}).click()
+    const holdCrossAttachmentMetadata=async name=>{
+      await selectionPage.evaluate(()=>{
+        const create=document.createElement.bind(document)
+        document.createElement=(tag,...args)=>{
+          if(tag!=='video') return create(tag,...args)
+          document.createElement=create
+          const fake={duration:2,preload:'',src:'',onloadedmetadata:null,onerror:null,removeAttribute(){},load(){}}
+          window.__VIDEO_CROSS_ATTACHMENT=fake
+          return fake
+        }
+      })
+      await picker.setInputFiles({name,mimeType:'video/webm',buffer:bytes})
+      await selectionPage.waitForFunction(()=>Boolean(window.__VIDEO_CROSS_ATTACHMENT?.onloadedmetadata))
+    }
+    const releaseCrossAttachmentMetadata=async()=>{
+      await selectionPage.evaluate(()=>window.__VIDEO_CROSS_ATTACHMENT.onloadedmetadata())
+      await selectionPage.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))))
+    }
+    await holdCrossAttachmentMetadata('before-image.webm')
+    await selectionPage.locator('input[accept="image/jpeg,image/png,image/webp"]').setInputFiles({
+      name:'selected.png',mimeType:'image/png',
+      buffer:Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a9foAAAAASUVORK5CYII=','base64'),
+    })
+    await selectionComposer.getByAltText('添付画像1').waitFor()
+    await releaseCrossAttachmentMetadata()
+    assert.equal(await selectionComposer.locator('video').count(),0,'image selection cancels older pending video validation')
+    assert.equal(await selectionComposer.getByAltText('添付画像1').count(),1,'selected image stays attached')
+    await selectionComposer.getByRole('button',{name:'添付を解除'}).click()
+    await holdCrossAttachmentMetadata('before-poll.webm')
+    await selectionComposer.getByRole('button',{name:'📊 アンケート',exact:true}).click()
+    await releaseCrossAttachmentMetadata()
+    assert.equal(await selectionComposer.getByRole('button',{name:'📊 アンケート',exact:true}).getAttribute('aria-pressed'),'true')
+    assert.equal(await selectionComposer.locator('video').count(),0,'poll mode cancels older pending video validation')
+    console.log('PASS: actual Timeline image and poll selection cancel stale pending video metadata')
     await selectionPage.close()
     // Verify the real browser duration reader cannot hang on a corrupt video.
     // Advance Chromium's virtual clock by 15 seconds without a real 15s delay.

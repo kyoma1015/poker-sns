@@ -799,7 +799,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       </> : attachmentScreen === 'diagnosis' ? <>
         {backButton('menu')}
         <div style={{ fontSize: 12, color: '#aaa', marginBottom: 10 }}>保存済みの自己診断を選択</div>
-        {attachmentBusy ? <p>読み込み中...</p> : diagnoses.length === 0 ? <p style={{ color: '#aaa', fontSize: 12 }}>診断結果がありません。</p> : diagnoses.map(item => <button type="button" key={item.result_id} style={optionStyle} onClick={() => { setSelectedDiagnosis(item); setSelectedResult(null); setAttachmentsOpen(false); setAttachmentScreen('menu') }}>{playerTypeEmoji[item.result_type_key] || '♠'} {item.animal_name_ja} · {item.completed_at?.slice(0,10) || '日付不明'}</button>)}
+        {attachmentBusy ? <p>読み込み中...</p> : diagnoses.length === 0 ? <p style={{ color: '#aaa', fontSize: 12 }}>診断結果がありません。</p> : diagnoses.map(item => <button type="button" key={item.result_id} style={optionStyle} onClick={() => { videoSelectionRef.current++; setSelectedDiagnosis(item); setSelectedResult(null); setAttachmentsOpen(false); setAttachmentScreen('menu') }}>{playerTypeEmoji[item.result_type_key] || '♠'} {item.animal_name_ja} · {item.completed_at?.slice(0,10) || '日付不明'}</button>)}
       </> : attachmentScreen === 'results' ? <>
         {backButton('menu')}
         <div style={{ fontSize: 12, color: '#aaa', margin: '8px 0 10px' }}>戦績の種類を選択</div>
@@ -809,7 +809,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       </> : <>
         {backButton('results')}
         <div style={{ fontSize: 12, color: '#aaa', margin: '8px 0 10px' }}>保存済みの{attachmentScreen === 'tournament' ? 'トーナメント' : attachmentScreen === 'amusement' ? 'リングゲーム' : 'キャッシュゲーム'}戦績を選択</div>
-        {resultsLoading ? <p style={{ fontSize: 12 }}>読み込み中...</p> : availableResults.filter(result => result.type === attachmentScreen).length === 0 ? <p style={{ fontSize: 12, color: '#888' }}>この種類の戦績はありません。</p> : availableResults.filter(result => result.type === attachmentScreen).map(result => <button key={result.type + result.id} type="button" style={optionStyle} onClick={() => { setSelectedResult(result); setSelectedDiagnosis(null); setAttachmentsOpen(false); setAttachmentScreen('menu') }}><span style={{ display: 'block', fontWeight: 700 }}>{result.label}</span><span style={{ display: 'block', color: '#aaa', fontSize: 12, marginTop: 4 }}>プレイ日：{result.playedAt ? new Date(result.playedAt.slice(0,10) + 'T00:00:00').toLocaleDateString('ja-JP') : '日付不明'}</span></button>)}
+        {resultsLoading ? <p style={{ fontSize: 12 }}>読み込み中...</p> : availableResults.filter(result => result.type === attachmentScreen).length === 0 ? <p style={{ fontSize: 12, color: '#888' }}>この種類の戦績はありません。</p> : availableResults.filter(result => result.type === attachmentScreen).map(result => <button key={result.type + result.id} type="button" style={optionStyle} onClick={() => { videoSelectionRef.current++; setSelectedResult(result); setSelectedDiagnosis(null); setAttachmentsOpen(false); setAttachmentScreen('menu') }}><span style={{ display: 'block', fontWeight: 700 }}>{result.label}</span><span style={{ display: 'block', color: '#aaa', fontSize: 12, marginTop: 4 }}>プレイ日：{result.playedAt ? new Date(result.playedAt.slice(0,10) + 'T00:00:00').toLocaleDateString('ja-JP') : '日付不明'}</span></button>)}
       </>}
     </div>
   }
@@ -831,6 +831,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     if (error) { setMessage(`他者評価取得エラー：${error.message}（SQLの適用を確認してください）`); return }
     const row = Array.isArray(data) ? data[0] : data
     if (!row || Number(row.count) < 3) { setMessage('他者評価は3人以上集まると添付できます。'); return }
+    videoSelectionRef.current++
     setStyleSnapshot({ count: Number(row.count), aggression: Number(row.aggression), looseness: Number(row.looseness), captured_at: new Date().toISOString() })
     setAttachmentsOpen(false)
     setMessage('')
@@ -857,6 +858,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     const selected = Array.from(files)
     if (selected.some(file => !['image/jpeg','image/png','image/webp'].includes(file.type) || file.size > 5 * 1024 * 1024)) { setMessage('画像はJPEG・PNG・WebP、各5MB以内にしてください。'); return }
     if (imageFiles.length + selected.length > 4) { setMessage('画像は1投稿につき4枚までです。'); return }
+    if (!selected.length) return
+    videoSelectionRef.current++
     setImageFiles(previous => [...previous, ...selected])
     setMessage('')
   }
@@ -866,6 +869,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       setMessage('添付を外してからアンケートに切り替えてください。')
       return
     }
+    videoSelectionRef.current++
     setInteractiveMode(current => current === mode ? 'normal' : mode)
     setAttachmentsOpen(false)
     setMessage('')
