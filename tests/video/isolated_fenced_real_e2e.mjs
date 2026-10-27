@@ -27,7 +27,7 @@ try {
  process.env.VIDEO_PRODUCTION_FENCED_READY='true'
  assert.throws(() => createProductionSupabaseVideoAdapters(
   'https://example.supabase.co','anon-test','jwt-test',
- ), /production video publish requires server-attested database authorization/)
+ ), /production video publish requires provisioned server-attested database authorization/)
 } finally {
  if(previousReleaseGate===undefined) delete process.env.VIDEO_PRODUCTION_FENCED_READY
  else process.env.VIDEO_PRODUCTION_FENCED_READY=previousReleaseGate
