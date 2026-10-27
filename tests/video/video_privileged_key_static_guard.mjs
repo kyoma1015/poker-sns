@@ -44,7 +44,7 @@ for (const file of runtime) {
 // Authenticated Storage reads must not follow redirects with caller JWT headers.
 for (const file of ['api/video-media.ts', 'api/video-production-supabase-adapters.ts']) {
  const code=readFileSync(file,'utf8')
- assert.match(code,/redirect:\\s*'error'/,
+ assert.match(code,/redirect:\s*'error'/,
   file+' must reject redirects during authenticated Storage reads')
 }
 const mediaHandler=readFileSync('api/video-media.ts','utf8')
