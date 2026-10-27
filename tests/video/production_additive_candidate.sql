@@ -122,6 +122,22 @@ with check(bucket_id='post-videos' and
  public.video_reserved_key_is_owned(name,(select auth.uid())));
 create policy poker_post_videos_read_own on storage.objects for select to authenticated
 using(bucket_id='post-videos' and split_part(name,'/',1)=(select auth.uid())::text);
+-- Viewer access is limited to objects referenced by a post visible under
+-- the caller's existing public.posts SELECT RLS. Unpublished staging keys
+-- remain owner-only. This is an invoker-RLS subquery, NOT SECURITY DEFINER.
+-- No is_public column is assumed: production posts visibility is the authority.
+create policy poker_post_videos_read_visible_post on storage.objects
+for select to authenticated
+using (
+  bucket_id='post-videos'
+  and exists (
+    select 1 from public.posts p
+    where p.video_path=storage.objects.name
+      and p.user_id::text=split_part(storage.objects.name,'/',1)
+  )
+);
+-- SELECT policies do not grant UPDATE/DELETE; the complete set of existing
+-- permissive policies and privileged writers still requires release audit.
 -- A permissive policy for ALL or UPDATE/DELETE can override bucket-specific
 -- policy assumptions. Reject broad policies unless explicitly bucket-scoped away.
 -- Production inspection on 2026-10-25 found only bucket-scoped mutations.
