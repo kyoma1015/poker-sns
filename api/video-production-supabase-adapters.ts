@@ -10,7 +10,7 @@ const PRODUCTION_URL = /^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/
 
 // Deliberately has no deployment flag override: a release toggle alone cannot
 // establish the DB-side authenticity of server-verified media metadata.
-function assertServerAttestationAvailable(): void {
+export function assertServerAttestationAvailable(): void {
   throw new Error('production video publish requires server-attested database authorization')
 }
 
