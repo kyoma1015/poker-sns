@@ -168,6 +168,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const videoInputRef = useRef<HTMLInputElement>(null)
   const videoSelectionRef = useRef(0)
   const composerLifetimeRef = useRef(0)
+  const composerIdentityRef = useRef<string | null | undefined>(undefined)
   const [videoFile, setVideoFile] = useState<File | null>(null)
   // Retain the exact immutable object path after an uncertain finalize result.
   type PendingVideo = { path: string; owner: string; content: string }
@@ -182,6 +183,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       const { data: { user }, error } = await supabase.auth.getUser()
       if (cancelled || error || !user) return
       if (lifetime !== composerLifetimeRef.current) return
+      if (composerIdentityRef.current !== undefined && composerIdentityRef.current !== user.id) return
       const raw = sessionStorage.getItem('poker-id-pending-video-v1')
       if (!raw) return
       const value: unknown = JSON.parse(raw)
@@ -771,10 +773,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   // An attachment belongs to the editing session that requested it. Auth
   // callbacks stay synchronous; no Supabase calls inside the auth lock.
   useEffect(() => {
-    let viewer: string | null | undefined
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       const next = session?.user.id ?? null
-      const changed = viewer !== undefined && next !== viewer
+      const changed = composerIdentityRef.current !== undefined && next !== composerIdentityRef.current
       if (event === 'SIGNED_OUT' || event === 'USER_UPDATED' || changed) {
         ++composerLifetimeRef.current
         ++videoSelectionRef.current
@@ -797,7 +798,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         setComposeOpen(false)
         setMessage('ログイン情報が変わりました。投稿内容を再確認してください。')
       }
-      viewer = next
+      composerIdentityRef.current = next
     })
     return () => {
       ++composerLifetimeRef.current
@@ -1031,7 +1032,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         setComposeOpen(false)
         await loadPosts()
       } catch (error) {
-        setMessage(`投稿できませんでした：${error instanceof Error?error.message:'不明なエラー'}`)
+        if (publicationLifetime === composerLifetimeRef.current) setMessage('投稿できませんでした。通信とログイン状態を確認して、もう一度お試しください。')
       } finally { setIsPosting(false) }
       return
     }
@@ -1147,7 +1148,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       const { error: uploadError } = await supabase.storage.from('post-images').upload(path, file, { contentType: file.type, upsert: false })
       if (uploadError) {
         await Promise.all(uploadedPaths.map(path => supabase.storage.from('post-images').remove([path])))
-        setMessage(`画像アップロード失敗：${uploadError.message}`); setIsPosting(false); return
+        setMessage('画像をアップロードできませんでした。通信状態を確認して再試行してください。'); setIsPosting(false); return
       }
       if (publicationLifetime !== composerLifetimeRef.current) return
       uploadedPaths.push(path)
@@ -1173,13 +1174,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     if (publicationLifetime !== composerLifetimeRef.current) return
     if (error) {
       if (uploadedPaths.length) await supabase.storage.from('post-images').remove(uploadedPaths)
-      console.error(error)
-
-      setMessage(
-
-        `投稿できませんでした：${error.message}`
-
-      )
+      setMessage('投稿できませんでした。通信とログイン状態を確認して、もう一度お試しください。')
 
       setIsPosting(false)
 
