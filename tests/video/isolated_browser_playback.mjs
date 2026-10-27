@@ -4,6 +4,7 @@ import assert from 'node:assert/strict'
 import { createServer as createHttpServer } from 'node:http'
 import { createServer as createViteServer } from 'vite'
 import { chromium } from 'playwright-core'
+import { verifyRecoveryBoundaries } from './isolated_recovery_boundaries.mjs'
 import { verifyRecoveryTimeline } from './isolated_recovery_timeline.mjs'
 import { verifyUploadReload } from './isolated_upload_reload.mjs'
 import { verifyUploadInterruptions } from './isolated_upload_interruptions.mjs'
@@ -55,7 +56,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
           }
           export const supabase = {
             auth: {
-              getSession: async () => ({ data:{session:{access_token:jwt,user:{id:viewerId}}}, error:null }),
+              getSession: async () => window.__VIDEO_QA_GET_SESSION ? window.__VIDEO_QA_GET_SESSION() : ({ data:{session:{access_token:jwt,user:{id:viewerId}}}, error:null }),
               getUser: async () => {
                 window.__VIDEO_QA_GET_USER_CALLS=(window.__VIDEO_QA_GET_USER_CALLS || 0)+1
                 return window.__VIDEO_QA_GET_USER ? window.__VIDEO_QA_GET_USER() : client.auth.getUser(jwt)
@@ -138,7 +139,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     browser = await chromium.launch({
       headless: true, args: ['--no-sandbox', '--autoplay-policy=no-user-gesture-required'] })
     const origin = 'http://127.0.0.1:' + address.port
-    if (recoveryOnly) {await verifyRecoveryTimeline({browser,origin,jwt,anon,bytes,...recoveryFixtures});return}
+    if (recoveryOnly) {await verifyRecoveryTimeline({browser,origin,jwt,anon,bytes,...recoveryFixtures});await verifyRecoveryBoundaries({browser,origin,jwt,anon,bytes,...recoveryFixtures});return}
     const page = await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true})
     const errors = []
     page.on('pageerror', error => errors.push(String(error)))

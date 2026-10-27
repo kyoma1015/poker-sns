@@ -1,3 +1,4 @@
+import { withVideoRecoveryDeadline } from './videoRecoveryDeadline'
 import { supabase } from './supabase'
 import { VIDEO_FINALIZE_ROUTE } from './videoApi'
 
@@ -6,16 +7,19 @@ export const VIDEO_RECOVERY_CANDIDATE_ENABLED = false as boolean
 
 async function requestRecovery(body: Record<string,unknown>,signal?:AbortSignal):Promise<Record<string,unknown>> {
   if(!VIDEO_RECOVERY_CANDIDATE_ENABLED) throw new Error('動画の自動復旧は安全確認待ちです。')
+  return withVideoRecoveryDeadline(signal,async requestSignal=>{
   const {data:{session},error}=await supabase.auth.getSession()
-  signal?.throwIfAborted()
+  requestSignal.throwIfAborted()
   if(error||!session?.access_token) throw new Error('ログイン情報を確認してください。')
   const response=await fetch(VIDEO_FINALIZE_ROUTE,{method:'POST',cache:'no-store',redirect:'error',
     headers:{Authorization:'Bearer '+session.access_token,'Content-Type':'application/json'},body:JSON.stringify(body),
-    signal:signal?AbortSignal.any([signal,AbortSignal.timeout(30000)]):AbortSignal.timeout(30000)})
+    signal:requestSignal})
   if(!response.ok) throw new Error('動画の復旧状態を確認できません。安全のため停止しています。')
   const data:unknown=await response.json()
   if(!data||typeof data!=='object'||Array.isArray(data)) throw new Error('復旧応答を確認できません。')
+  requestSignal.throwIfAborted()
   return data as Record<string,unknown>
+  })
 }
 
 /** Call between confirmed reservation and upload in a future approved flow.

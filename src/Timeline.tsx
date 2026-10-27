@@ -182,7 +182,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     let cancelled = false
     const lifetime = composerLifetimeRef.current
     const controller = new AbortController()
-    const recover = async (owner:string,path:string,hint?:{sha256:string;size:number;raw:string},expectedContent?:string) => {
+    const recover = async (owner:string,path:string,hint?:{sha256:string;size:number;raw:string},expectedContent?:string,expectedPendingRaw?:string) => {
+      if(postSubmitInFlightRef.current) {setVideoRecoveryBlocked(true);setComposeOpen(true);return}
       setVideoRecoveryBlocked(true)
       setIsPosting(true)
       postSubmitInFlightRef.current=true
@@ -194,12 +195,15 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           typeof status.content!=='string'||status.content.length>10000||
           (hint&&(hint.sha256!==status.sha256||hint.size!==status.size))||
           (expectedContent!==undefined&&expectedContent!==status.content)) throw new VideoTransferRecoveryRequiredError()
+        // A newer local intent may arrive while inspection is in flight.
+        if(hint&&readVideoTransferHint(owner).raw!==hint.raw) throw new VideoTransferRecoveryRequiredError()
+        if(expectedPendingRaw!==undefined&&sessionStorage.getItem('poker-id-pending-video-v1')!==expectedPendingRaw) throw new VideoTransferRecoveryRequiredError()
         await finalizeRecoveredVideoCandidate(path,status.content,controller.signal)
         if(cancelled||lifetime!==composerLifetimeRef.current) return
         finishRecoveredVideoTransfer(owner,path,hint?.raw)
         const pendingRaw=sessionStorage.getItem('poker-id-pending-video-v1')
         if(pendingRaw) {
-          try {const pending=JSON.parse(pendingRaw);if(pending.owner===owner&&pending.path===path)sessionStorage.removeItem('poker-id-pending-video-v1')}
+          try {const pending=JSON.parse(pendingRaw);if(pending.owner===owner&&pending.path===path&&pending.content===status.content&&(expectedPendingRaw===undefined||pendingRaw===expectedPendingRaw))sessionStorage.removeItem('poker-id-pending-video-v1')}
           catch { /* Untrusted unrelated pointer cannot undo a confirmed server recovery. */ }
         }
         pendingVideoRef.current=null
@@ -207,13 +211,15 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         setVideoRecoveryBlocked(false)
         setComposeOpen(false)
         setMessage('動画投稿を安全に復旧しました。')
-        try {await loadPosts()} catch {if(!cancelled)setMessage('動画投稿は復旧済みです。タイムラインを再読み込みしてください。')}
+        try {await loadPosts()} catch {if(!cancelled&&lifetime===composerLifetimeRef.current)setMessage('動画投稿は復旧済みです。タイムラインを再読み込みしてください。')}
       } catch {
         if(!cancelled&&lifetime===composerLifetimeRef.current) {setVideoRecoveryBlocked(true);setComposeOpen(true)}
       } finally {
-        if(videoRequestAbortRef.current===controller)videoRequestAbortRef.current=null
-        postSubmitInFlightRef.current=false
-        if(!cancelled)setIsPosting(false)
+        if(videoRequestAbortRef.current===controller) {
+          videoRequestAbortRef.current=null
+          postSubmitInFlightRef.current=false
+          if(!cancelled&&lifetime===composerLifetimeRef.current)setIsPosting(false)
+        }
       }
     }
     const restore = async () => {
@@ -249,7 +255,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         sessionStorage.removeItem('poker-id-pending-video-v1')
         return
       }
-      if (VIDEO_RECOVERY_CANDIDATE_ENABLED) {await recover(user.id,record.path,undefined,record.content);return}
+      if (VIDEO_RECOVERY_CANDIDATE_ENABLED) {await recover(user.id,record.path,undefined,record.content,raw);return}
       const staged = { owner: record.owner, path: record.path, content: record.content }
       // The restored path is untrusted client state; server JWT, owner and generation checks remain authoritative.
       pendingVideoRef.current = staged
@@ -293,6 +299,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     useState<string[]>([])
 
   const loadPosts = async () => {
+    const feedLifetime=composerLifetimeRef.current
 
     const {
 
@@ -300,6 +307,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
     } = await supabase.auth.getUser()
 
+    if(feedLifetime!==composerLifetimeRef.current) return
     if (!user) {
 
       navigate('/login')
@@ -784,6 +792,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         feedActorId: row.user_id, created_at: row.created_at,
         repostedBy: { display_name: sharer.display_name, poker_id: sharer.poker_id } }]
     })
+    if(feedLifetime!==composerLifetimeRef.current) return
     setPosts([...originalCards, ...repostCards].sort((a,b) => Date.parse(b.created_at) - Date.parse(a.created_at)))
 
     setMessage('')
@@ -829,6 +838,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         videoRequestAbortRef.current?.abort()
         ++composerLifetimeRef.current
         ++videoSelectionRef.current
+        setIsPosting(false)
+        setPosts([])
+        setCurrentUserId('')
         setVideoFile(null)
         setVideoRecoveryBlocked(next ? hasVideoTransferJournal(next) : false)
         setImageFiles([])

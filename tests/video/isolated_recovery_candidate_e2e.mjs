@@ -129,7 +129,8 @@ try {
  assert.match(delayedResult.error.message,/recovery expired during publication/,'deadline must be rechecked after the blocking parent call')
  assert.equal(sql(`select count(*) from video_private.consumed_nonces where nonce=decode('${delayedNonce}','hex');`),'0')
  assert.equal((await owner.from('posts').select('id').eq('video_path',delayed)).data.length,0)
- await verifyRealBrowserPlayback({postId:posts.data[0].id,jwt,deniedJwt:foreignJwt,anon,service:env.SERVICE_ROLE_KEY||env.SECRET_KEY,bytes,recoveryOnly:true,recoveryFixtures:{legacyPath:late,expire:path=>sql(`update video_private.recovery_manifests set expires_at=clock_timestamp()-interval '1 second' where object_path='${path}';`)}})
+ const boundaryPath=await reserve();assert.equal((await bind(boundaryPath,hash(bytes),bytes.length,'boundary recovery fixture')).status,200);await upload(boundaryPath)
+ await verifyRealBrowserPlayback({postId:posts.data[0].id,jwt,deniedJwt:foreignJwt,anon,service:env.SERVICE_ROLE_KEY||env.SECRET_KEY,bytes,recoveryOnly:true,recoveryFixtures:{boundaryPath,assertBoundaryPosts:async count=>{const result=await owner.from('posts').select('id').eq('video_path',boundaryPath);assert.ifError(result.error);assert.equal(result.data.length,count)},legacyPath:late,expire:path=>sql(`update video_private.recovery_manifests set expires_at=clock_timestamp()-interval '1 second' where object_path='${path}';`)}})
  console.log('PASS: recovery atomic publication rejects nonce replay/foreign owner and rolls back post+nonce after expiry during real Storage row-lock wait')
  console.log('PASS: real recovery candidate JWT/auth.uid owner, private manifest RLS, immutable concurrent bind, server expiry, SHA256/ffprobe, missing/late object, overwrite rejection, published state and concurrent publication race')
 } finally {await new Promise(resolve=>server.close(resolve));rmSync(dir,{recursive:true,force:true})}
