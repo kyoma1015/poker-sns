@@ -58,3 +58,19 @@ assertion weakened. Study increases to50000iterations per seed,100000total,
 with2000/20000/50000checkpoints. Final169RFI frequencies and full-continuation
 bounds are printed as provenance-bound JSON to preserve actual computed data.
 These remain research outputs until full-game convergence is justified.
+
+Public31707153f930ff040b85cbcc848b8d9abcb97b85: native40465148140 and
+UI40465148151 SUCCESS. Ordinary50BB study,seeds17/29 up to50000each, finished;
+all subsequent oneBB and historical regressions also passed. Decoded job-log
+retrieval failed twice with `Transport closed`: exact rational class frequencies
+created excessively large evidence lines. Do NOT infer numeric coverage from
+job SUCCESS. Transport repair rounds only final exact-rational aggregates to
+binary64 (explicitly labelled); no learning/bounding/model change. Rerun to recover
+actual ORDINARY_SUMMARY and manageable evidence. Checkpoint hashes must retain
+native identity. Original failure40464868619 remains historical evidence.
+
+Perfect-information response envelopes may be intrinsically loose even for a
+true equilibrium because they reveal hidden/future cards. A positive upper
+bound is NOT proof of exploitable strategy; it only fails to certify convergence.
+Two worlds/class are a readiness smoke evaluation, not an accurate169EV release.
+Ordinary GTO certificate and precise169EV counts remain0until real evidence.

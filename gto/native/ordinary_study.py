@@ -32,7 +32,7 @@ def context_coverage(native,solver,game,history):
         complete=len(values)==expected
         # Only initial RFI has proven uniform own-hand reach. Later decisions
         # need genuine history-dependent private-deal posterior, not visit weights.
-        frequency=([sum(v[i] for v in values)/expected for i in range(len(actions))]
+        frequency=([float(sum(v[i] for v in values)/expected) for i in range(len(actions))]
             if complete and not history else None)
         hands[label]={'updated_orderings':len(values),'expected_orderings':expected,
             'frequencies':frequency,'ev_bb':None,'ev_interval_bb':None,
@@ -40,6 +40,7 @@ def context_coverage(native,solver,game,history):
     return {'stage':desc['stage'],'history':list(history),'seat':desc['seat'],
         'actions':desc['legal_actions'],'created_orderings':created,'updated_orderings':len(ordered),
         'expected_orderings':2652,'complete_frequency_classes':sum(h['frequencies'] is not None for h in hands.values()),
+        'frequency_transport':'exact rational aggregation rounded to binary64; not a convergence claim',
         'hands':hands,'full_game_convergence_verified':False}
 
 
