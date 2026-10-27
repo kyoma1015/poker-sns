@@ -62,7 +62,7 @@ try {
  let result=await status(path);assert.equal(result.status,200)
  const ready=await result.json();assert.equal(ready.state,'verified_ready');assert.equal(ready.ffprobe_verified,true);assert.equal(ready.sha256,hash(bytes));assert.equal(ready.allow_resume,false)
  assert.equal((await status(path)).status,200,'inspection is read-only and repeatable')
- const foreignWrite=await foreign.rpc('video_bind_recovery_manifest_v1',{p_path:path,p_sha256:hash(bytes),p_size:bytes.length,p_type:'video/webm'});assert.ok(foreignWrite.error)
+ const foreignWrite=await foreign.rpc('video_bind_recovery_manifest_v1',{p_path:path,p_sha256:hash(bytes),p_size:bytes.length,p_type:'video/webm',p_content:'recovery race fixture'});assert.ok(foreignWrite.error);assert.match(foreignWrite.error.message,/invalid recovery manifest/,'the current five-argument RPC must reject the foreign owner, not merely fail function lookup')
  const tampered=await reserve();assert.equal((await bind(tampered,'c'.repeat(64))).status,200);await upload(tampered)
  assert.equal((await status(tampered)).status,409,'downloaded bytes must match original commitment')
  const corrupt=await reserve();const bad=Buffer.from([0,1,2,3]);assert.equal((await bind(corrupt,hash(bad),bad.length)).status,200);await upload(corrupt,bad)
