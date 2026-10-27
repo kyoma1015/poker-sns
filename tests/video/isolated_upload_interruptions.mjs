@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 
 export async function verifyUploadInterruptions({browser,origin,jwt,anon,bytes}) {
-  for(const scenario of ['lost-upload-response','upload-deadline','unmount-reservation','unmount-upload','expire-after-reservation']) {
+  for(const scenario of ['lost-upload-response','upload-deadline','unmount-reservation','unmount-upload','expire-after-reservation','lost-reservation-response']) {
     const page=await browser.newPage()
     const errors=[], reservations=[],uploads=[],finalizations=[]
     let release,routeDone,committed=false,failedUploads=0
@@ -28,6 +28,12 @@ export async function verifyUploadInterruptions({browser,origin,jwt,anon,bytes})
         const body=route.request().postDataJSON()
         if(body.action!=='reserve') {finalizations.push(body.object_path);return route.continue()}
         reservations.push(body.object_path)
+        if(scenario==='lost-reservation-response' && reservations.length===1) {
+          const response=await route.fetch()
+          assert.equal(response.status(),201,'reservation commits before its response is lost')
+          committed=true
+          return route.fulfill({status:503,contentType:'application/json',body:'{"error":"PRIVATE-RESERVATION-ERROR"}'})
+        }
         if(scenario==='expire-after-reservation') {
           const response=await route.fetch()
           assert.equal(response.status(),201)
@@ -98,6 +104,10 @@ export async function verifyUploadInterruptions({browser,origin,jwt,anon,bytes})
       }
       assert.equal(finalizations.length,0,'no finalize before upload confirmation/reconciliation')
       if(scenario==='lost-upload-response') assert.ok(committed)
+      if(scenario==='lost-reservation-response') {
+        assert.ok(committed)
+        assert.equal(uploads.length,0,'ambiguous reservation never sends Storage bytes')
+      }
       if(scenario==='expire-after-reservation') {
         assert.equal(uploads.length,0,'expired identity sends zero Storage bytes')
         await page.evaluate(()=>{delete window.__VIDEO_QA_GET_USER})
@@ -105,10 +115,14 @@ export async function verifyUploadInterruptions({browser,origin,jwt,anon,bytes})
       assert.equal(await page.getByText(/PRIVATE-.*-ERROR/).count(),0,'provider error stays private')
       await composer.getByRole('button',{name:'投稿する',exact:true}).click()
       await page.locator('article').filter({hasText:content}).waitFor({timeout:30000})
-      assert.equal(reservations.length,1,'retry must never consume another reservation')
+      if(scenario==='lost-reservation-response') {
+        assert.equal(reservations.length,2,'an ambiguous reservation key must not be reused')
+        assert.notEqual(reservations[0],reservations[1])
+        assert.equal(finalizations[0],reservations[1])
+      } else assert.equal(reservations.length,1,'retry must never consume another confirmed reservation')
       assert.equal(finalizations.length,1,'retry finalizes once')
       assert.equal(new Set(uploads).size,1,'same immutable upload path across retries')
-      assert.equal(uploads.length,scenario==='expire-after-reservation'?1:2)
+      assert.equal(uploads.length,['expire-after-reservation','lost-reservation-response'].includes(scenario)?1:2)
       assert.equal(await page.locator('article').filter({hasText:content}).count(),1)
       assert.equal(await page.evaluate(()=>sessionStorage.getItem('poker-id-pending-video-v1')),null)
       assert.deepEqual(errors,[])
