@@ -83,7 +83,11 @@ export async function verifyComposerLifecycle({browser,origin,jwt,anon,bytes}) {
           await composer.getByText(/通信とログイン状態を確認/).waitFor()
           assert.equal(await page.getByText('PRIVATE-AUTH-NETWORK-ERROR',{exact:false}).count(),0)
           await page.evaluate(()=>{delete window.__VIDEO_QA_GET_USER})
-          await composer.getByRole('button',{name:'投稿する',exact:true}).click()
+          await Promise.all([
+            page.waitForResponse(response=>response.url().includes('/rest/v1/posts') && response.request().method()==='POST'),
+            composer.getByRole('button',{name:'投稿する',exact:true}).click(),
+          ])
+          await page.waitForFunction(()=>[...document.querySelectorAll('[role="dialog"] button')].some(button=>button.textContent==='投稿する' && !button.disabled))
           await composer.getByText(/通信とログイン状態を確認/).waitFor()
           assert.equal(inserts,1,'retry reaches one INSERT after thrown auth request')
         }
