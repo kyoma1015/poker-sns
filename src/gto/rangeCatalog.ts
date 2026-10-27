@@ -4,19 +4,23 @@
 export type RangeQuery = {
   format: 'mtt' | 'ring'; players: number; seat: number; stackBb: string;
   anteBb: '0' | '1'; rakePct: '0' | '5' | '10'; rakeCapBb: null | '5' | '10';
-  openBb: string; threeBetBb: string; fourBetBb: string;
-  stage: 'rfi' | 'vs_open' | 'vs_3bet' | 'vs_4bet';
+  openBb: string | null; threeBetBb: string | null; fourBetBb: string | null;
+  stage: 'rfi' | 'vs_open' | 'vs_3bet' | 'vs_4bet' | 'forced_blind_allin';
 }
 export type ReviewedCertificate = {
   datasetId: string; queryKey: string; policyDigest: string; configDigest: string;
   artifactSha256: string; scope: 'complete_target_game'; continuation: 'full_native_game';
   metric: 'max_unilateral_deviation_gain'; upperBoundBb: number; acceptedToleranceBb: number;
-  reviewReference: string;
+  reviewReference: string; confidence: number;
+  verificationMethod: 'deterministic_full_game' | 'simultaneous_full_game_action_bounds';
+  directHeroRepresentatives?: number; symmetryExpandedCombinations?: number; strategicInformationSets?: number;
+  evSamplesPerClass?: number; samplingAssumptions?: string; policyConstruction?: string;
 }
 export type VerifiedRange = {
   schema: 'pokerid-verified-preflop-v1'; id: string; query: RangeQuery;
+  conditionClass: 'formal' | 'explicit_test'; conditionName: string;
   policyDigest: string; configDigest: string; certificateId: string;
-  actions: string[]; hands: Record<string, { combinations: number; frequencies: number[]; evBb: number }>;
+  actions: string[]; hands: Record<string, { combinations: number; frequencies: number[]; evBb: number; evIntervalBb: [number, number] }>;
   coverage: { combinations: 1326; hands: 169 }; equilibriumVerified: true;
   certificate: ReviewedCertificate;
 }
@@ -24,7 +28,9 @@ const ranks = 'AKQJT98765432'
 export const handGrid: string[][] = Array.from(ranks, (a, row) => Array.from(ranks, (b, column) =>
   row === column ? a + b : row < column ? a + b + 's' : b + a + 'o'))
 export const handLabels = handGrid.flat()
-const stages = new Set(['rfi', 'vs_open', 'vs_3bet', 'vs_4bet'])
+const stages = new Set(['rfi', 'vs_open', 'vs_3bet', 'vs_4bet', 'forced_blind_allin'])
+export const oneBBQuery: RangeQuery = { format: 'mtt', players: 2, seat: 0, stackBb: '1', anteBb: '0',
+  rakePct: '0', rakeCapBb: null, openBb: null, threeBetBb: null, fourBetBb: null, stage: 'forced_blind_allin' }
 const digestPattern = /^[a-f0-9]{64}$/
 function object(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -51,10 +57,17 @@ export function canonicalQuery(value: unknown): RangeQuery {
   if (value.format === 'mtt' && (value.rakePct !== '0' || value.rakeCapBb !== null)) {
     throw new Error('MTT chipEVではレーキなしを指定してください。')
   }
+  const stack = decimal(value.stackBb)
+  const forced = value.stage === 'forced_blind_allin'
+  if (forced && (value.format !== 'mtt' || value.players !== 2 || value.seat !== 0 || stack !== '1' ||
+      value.anteBb !== '0' || value.rakePct !== '0' || value.rakeCapBb !== null ||
+      value.openBb !== null || value.threeBetBb !== null || value.fourBetBb !== null)) {
+    throw new Error('この検証用条件はHU・両者1BB・アンティ／レーキなしに限ります。')
+  }
   return { format: value.format as RangeQuery['format'], players: Number(value.players), seat: Number(value.seat),
-    stackBb: decimal(value.stackBb), anteBb: value.anteBb as RangeQuery['anteBb'],
+    stackBb: stack, anteBb: value.anteBb as RangeQuery['anteBb'],
     rakePct: value.rakePct as RangeQuery['rakePct'], rakeCapBb: value.rakeCapBb as RangeQuery['rakeCapBb'],
-    openBb: decimal(value.openBb), threeBetBb: decimal(value.threeBetBb), fourBetBb: decimal(value.fourBetBb),
+    openBb: forced ? null : decimal(value.openBb), threeBetBb: forced ? null : decimal(value.threeBetBb), fourBetBb: forced ? null : decimal(value.fourBetBb),
     stage: value.stage as RangeQuery['stage'] }
 }
 export function queryKey(value: unknown): string { return JSON.stringify(canonicalQuery(value)) }
@@ -71,6 +84,8 @@ export function positions(players: number): { seat: number; label: string }[] {
 }
 export function validateVerifiedRange(value: unknown, registry: Readonly<Record<string, ReviewedCertificate>>): VerifiedRange | null {
   if (!object(value) || value.schema !== 'pokerid-verified-preflop-v1' || value.equilibriumVerified !== true ||
+      typeof value.conditionClass !== 'string' || !['formal', 'explicit_test'].includes(value.conditionClass) ||
+      typeof value.conditionName !== 'string' || !value.conditionName || value.conditionName.length > 200 ||
       typeof value.id !== 'string' || typeof value.certificateId !== 'string' ||
       typeof value.policyDigest !== 'string' || !digestPattern.test(value.policyDigest) ||
       typeof value.configDigest !== 'string' || !digestPattern.test(value.configDigest) ||
@@ -89,18 +104,33 @@ export function validateVerifiedRange(value: unknown, registry: Readonly<Record<
       !Number.isFinite(certificate.upperBoundBb) || certificate.upperBoundBb < 0 ||
       !Number.isFinite(certificate.acceptedToleranceBb) || certificate.acceptedToleranceBb < 0 ||
       certificate.upperBoundBb > certificate.acceptedToleranceBb || typeof certificate.reviewReference !== 'string' || !certificate.reviewReference) return null
+  if (!Number.isFinite(certificate.confidence) || certificate.confidence <= 0 || certificate.confidence > 1 ||
+      !['deterministic_full_game', 'simultaneous_full_game_action_bounds'].includes(certificate.verificationMethod) ||
+      (certificate.verificationMethod === 'deterministic_full_game' && certificate.confidence !== 1) ||
+      (certificate.verificationMethod === 'simultaneous_full_game_action_bounds' &&
+        (typeof certificate.samplingAssumptions !== 'string' || !certificate.samplingAssumptions))) return null
+  if (query.stage === 'forced_blind_allin' && (value.conditionClass !== 'explicit_test' || value.actions.length !== 2 ||
+      certificate.verificationMethod !== 'simultaneous_full_game_action_bounds' || certificate.confidence < .999999998 ||
+      certificate.upperBoundBb !== 0 || certificate.acceptedToleranceBb !== 0 || certificate.strategicInformationSets !== 2652 ||
+      certificate.directHeroRepresentatives !== 169 || certificate.symmetryExpandedCombinations !== 1326)) return null
   if (Object.keys(value.hands).length !== 169) return null
   const hands: VerifiedRange['hands'] = {}
   for (const label of handLabels) {
     const row = value.hands[label]
     const expected = label.endsWith('s') ? 4 : label.endsWith('o') ? 12 : 6
     if (!object(row) || row.combinations !== expected || typeof row.evBb !== 'number' || !Number.isFinite(row.evBb) ||
+        !Array.isArray(row.evIntervalBb) || row.evIntervalBb.length !== 2 ||
+        row.evIntervalBb.some(v => typeof v !== 'number' || !Number.isFinite(v)) ||
+        row.evIntervalBb[0] > row.evBb || row.evIntervalBb[1] < row.evBb ||
         !Array.isArray(row.frequencies) || row.frequencies.length !== value.actions.length ||
         row.frequencies.some(p => typeof p !== 'number' || !Number.isFinite(p) || p < 0 || p > 1) ||
         Math.abs(row.frequencies.reduce((a: number, b: number) => a + b, 0) - 1) > 1e-9) return null
-    hands[label] = { combinations: expected, frequencies: [...row.frequencies], evBb: row.evBb }
+    if (query.stage === 'forced_blind_allin' && (row.frequencies[0] !== 0 || row.frequencies[1] !== 1 || row.evIntervalBb[0] <= -.5)) return null
+    hands[label] = { combinations: expected, frequencies: [...row.frequencies], evBb: row.evBb,
+      evIntervalBb: [row.evIntervalBb[0], row.evIntervalBb[1]] }
   }
-  return { schema: 'pokerid-verified-preflop-v1', id: value.id, query, policyDigest: value.policyDigest,
+  return { schema: 'pokerid-verified-preflop-v1', id: value.id, query,
+    conditionClass: value.conditionClass as VerifiedRange['conditionClass'], conditionName: value.conditionName, policyDigest: value.policyDigest,
     configDigest: value.configDigest, certificateId: value.certificateId, actions: [...value.actions], hands,
     coverage: { combinations: 1326, hands: 169 }, equilibriumVerified: true, certificate: { ...certificate } }
 }

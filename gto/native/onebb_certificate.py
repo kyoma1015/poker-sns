@@ -134,6 +134,9 @@ def experiment(runtime,output,*,samples=10000):
         'ordinary_rfi_open_certificate':False,'ordinary_threebet_certificate':False,
         'primary_seed':17,'joint_confidence':float(1-2*Fraction(1,10**9))}
     encoded=json.dumps(candidate,sort_keys=True,separators=(',',':'),allow_nan=False)
+    frozen=Path(__file__).resolve().parents[2]/'docs/qa/full-game-calibration-20261027/onebb-evidence.json'
+    if samples==10000 and frozen.exists() and frozen.read_text().rstrip('\n')!=encoded:
+        raise ValueError('full native experiment differs from frozen reproducibility evidence')
     (output/'onebb-evidence.json').write_text(encoded+'\n')
     digest=hashlib.sha256(encoded.encode()).hexdigest()
     solver=native.Solver(game,.6,17,True,True,.1);curves=[]

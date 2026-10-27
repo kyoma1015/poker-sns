@@ -2,6 +2,8 @@
 from fractions import Fraction
 import json
 import unittest
+from pathlib import Path
+import tempfile
 from gto.hand169 import CLASSES,hand_class
 from gto.native.hand169_bridge import card_name
 from gto.native.onebb_certificate import evaluate_counts,native_profile_bound,representative
@@ -12,6 +14,25 @@ def counts():
 
 
 class OneBBMath(unittest.TestCase):
+    def test_frozen_native_certificate_regenerates_exact_ui_data(self):
+        from gto.native.onebb_release import render
+        root=Path(__file__).resolve().parents[2]
+        self.assertEqual(render(root/'docs/qa/full-game-calibration-20261027/onebb-evidence.json'),
+            (root/'src/gto/oneBBRange.ts').read_text())
+
+    def test_actual_evidence_cannot_be_promoted_after_model_source_or_count_tampering(self):
+        from gto.native.onebb_release import release
+        root=Path(__file__).resolve().parents[2]
+        original=json.loads((root/'docs/qa/full-game-calibration-20261027/onebb-evidence.json').read_text())
+        for mutation in ('model','source','count'):
+            data=json.loads(json.dumps(original))
+            if mutation=='model':data['config']['stacks']=[4,4]
+            elif mutation=='source':data['sources']['source_sha256']='0'*64
+            else:data['runs'][0]['counts']['AA']['wins']+=1
+            with tempfile.TemporaryDirectory() as directory:
+                path=Path(directory)/'evidence.json';path.write_text(json.dumps(data))
+                with self.subTest(mutation=mutation),self.assertRaises(ValueError):release(path)
+
     def test_all_canonical_cards_match_their169class(self):
         for label in CLASSES:self.assertEqual(hand_class([card_name(c) for c in representative(label)]),label)
 

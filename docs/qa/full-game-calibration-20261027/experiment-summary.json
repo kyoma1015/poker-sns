@@ -1,0 +1,98 @@
+{
+  "classes": 169,
+  "direct_terminal_evaluations": 3380000,
+  "evidence_sha256": "af9aac9f8eaf3d2d0f103fc156bd3883daf23ec5b508c3d471b01838f0289d62",
+  "joint_confidence": 0.999999998,
+  "minimum_dominance_lower_bb": 0.07433531481927685,
+  "native_learning": [
+    {
+      "full_game_unilateral_gain_interval_bb": [
+        0.10339215938434121,
+        0.7385067061525107
+      ],
+      "iteration": 2000,
+      "updated_ordered_infosets": 1402
+    },
+    {
+      "full_game_unilateral_gain_interval_bb": [
+        0.11479134347301885,
+        0.1591677229251658
+      ],
+      "iteration": 20000,
+      "updated_ordered_infosets": 2650
+    },
+    {
+      "full_game_unilateral_gain_interval_bb": [
+        0.045360830163046637,
+        0.06531492157236089
+      ],
+      "iteration": 100000,
+      "updated_ordered_infosets": 2652
+    }
+  ],
+  "representative_queries": [
+    {
+      "iteration": 200,
+      "queries": [
+        {
+          "actions": {
+            "0": "sampled"
+          },
+          "frequency_observed": false,
+          "full_game_convergence_verified": false,
+          "stage": "rfi"
+        },
+        {
+          "actions": {
+            "0": "sampled"
+          },
+          "frequency_observed": false,
+          "full_game_convergence_verified": false,
+          "stage": "vs_open"
+        },
+        {
+          "actions": {
+            "0": "prefix_policy_unobserved"
+          },
+          "frequency_observed": false,
+          "full_game_convergence_verified": false,
+          "stage": "vs_3bet"
+        }
+      ]
+    },
+    {
+      "iteration": 2000,
+      "queries": [
+        {
+          "actions": {
+            "0": "sampled"
+          },
+          "frequency_observed": true,
+          "full_game_convergence_verified": false,
+          "stage": "rfi"
+        },
+        {
+          "actions": {
+            "0": "sampled"
+          },
+          "frequency_observed": false,
+          "full_game_convergence_verified": false,
+          "stage": "vs_open"
+        },
+        {
+          "actions": {
+            "0": "prefix_policy_unobserved"
+          },
+          "frequency_observed": false,
+          "full_game_convergence_verified": false,
+          "stage": "vs_3bet"
+        }
+      ]
+    }
+  ],
+  "samples_per_class": 10000,
+  "seeds": [
+    17,
+    29
+  ]
+}

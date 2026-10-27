@@ -1,7 +1,10 @@
 import type { ReviewedCertificate } from './rangeCatalog'
+import { oneBBRange, oneBBCertificate } from './oneBBRange'
 
-// Intentionally empty: no full-game equilibrium certificate has been accepted.
-// Sampled/partial research artifacts must never be promoted by adding a boolean.
-// Add data AND an independently reviewed matching certificate in a future PR.
-export const verifiedCatalog: readonly unknown[] = []
-export const reviewedCertificates: Readonly<Record<string, ReviewedCertificate>> = {}
+// Explicit HU1BB calibration only; no ordinary/formal RFI or3bet data accepted.
+// Raw native counts and the whole-game certificate are regenerated/checked in CI.
+// Partial research artifacts cannot be promoted by merely adding a boolean.
+export const verifiedCatalog: readonly unknown[] = [oneBBRange]
+export const reviewedCertificates: Readonly<Record<string, ReviewedCertificate>> = {
+  [oneBBRange.certificateId]: oneBBCertificate,
+}

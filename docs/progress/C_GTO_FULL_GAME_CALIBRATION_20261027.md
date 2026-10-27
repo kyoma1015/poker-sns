@@ -47,3 +47,24 @@ correctly refused it. Fixture corrected to zero ex-ante mean, checks retained.
 Native runtime is unavailable locally; exact-head CI will compile and execute
 the helper and compare with all3preserved native variants. No local native
 execution success is claimed. New experiments are bounded CI tasks, not daemons.
+
+Executed calibration on public53864b708ef0aad5eca651b99aaf242e276607a6:
+CI40458659464(native) and40458659475(UI) SUCCESS,646PASS total(+19vs627).
+3380000 actual terminal samples; both169class runs pass simultaneous dominance,
+minimum call lower bound minus fold=0.07433531481927685BB. Frozen raw evidence
+SHA256 af9aac9f8eaf3d2d0f103fc156bd3883daf23ec5b508c3d471b01838f0289d62.
+Native100000iteration average whole-game improvement interval remains
+[0.045360830163046637,0.06531492157236089]BB: NOT certified converged.
+Ordinary RFI/vsopen/vs3bet certified counts remain0/0/0; formal acceptance0/12.
+
+Release candidate: one separately labelled explicit-test forced-blind1BB range,
+169/169classes,1326/1326combinations via exact symmetry (169direct sampled
+representatives),169EV estimates with simultaneous intervals. Confidence
+99.9999998% conditional on independent uniform sampling, not an exhaustive equity
+proof. Always-call policy follows whole-game action dominance, not native CFR
+average. Frozen evidence is recomputed by release verifier and compared against
+fresh native experiment in CI. Local pure39PASS and Node10PASS; browser/build
+must pass exact-head CI before reporting release candidate as available.
+Resume: preserve this tree; inspect PR120 latest head and both workflows; repair
+failures without relaxing evidence; ordinary convergence and formal source search
+remain next work. No independent auto-restart or production changes.

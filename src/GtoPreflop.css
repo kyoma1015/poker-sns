@@ -8,7 +8,8 @@
 .gto-fields legend { padding: 0 8px; }
 .gto-fields label { font-size: 12px; display: flex; flex-direction: column; gap: 7px; min-width: 0; }
 .gto-fields input, .gto-fields select { box-sizing: border-box; width: 100%; min-height: 44px; margin: 0; padding: 9px; border: 1px solid #555; border-radius: 6px; background: #202020; color: #eee; }
-.gto-fields select:disabled { color: #aaa; background: #181818; }
+.gto-fields select:disabled, .gto-fields input:disabled { color: #aaa; background: #181818; }
+.gto-preflop .gto-preset { min-height: 44px; background: #305d76; color: white; }
 .gto-wide { grid-column: 1 / -1; }
 .gto-search { min-height: 44px; background: #176b91; color: white; }
 .gto-error { color: #ffb5b5; }

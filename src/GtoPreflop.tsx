@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { canonicalQuery, findVerifiedRange, handGrid, positions } from './gto/rangeCatalog'
+import { canonicalQuery, findVerifiedRange, handGrid, oneBBQuery, positions } from './gto/rangeCatalog'
 import type { RangeQuery, ReviewedCertificate, VerifiedRange } from './gto/rangeCatalog'
 import { reviewedCertificates, verifiedCatalog } from './gto/verifiedCatalog'
 import './GtoPreflop.css'
 
 const stages = { rfi: 'RFI（自分まで全員フォールド）', vs_open: 'オープンへの対応',
-  vs_3bet: '3ベットへの対応', vs_4bet: '4ベットへの対応' }
+  vs_3bet: '3ベットへの対応', vs_4bet: '4ベットへの対応', forced_blind_allin: '検証用：HU1BB・BB強制オールインへの対応' }
 const colors = ['#586273', '#167aa4', '#9d3f73', '#82702e', '#4454a8', '#25744f']
 const initialQuery: RangeQuery = { format: 'mtt', players: 6, seat: 2, stackBb: '', anteBb: '0',
   rakePct: '0', rakeCapBb: null, openBb: '', threeBetBb: '', fourBetBb: '', stage: 'rfi' }
@@ -27,6 +27,8 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
   const [message, setMessage] = useState('条件を入力して検索してください。')
   const [error, setError] = useState('')
   const [selected, setSelected] = useState('AA')
+  const isForced = form.stage === 'forced_blind_allin'
+  const hasOneBB = findVerifiedRange(oneBBQuery, catalog, certificates) !== null
   function change(patch: Partial<RangeQuery>) {
     setForm(previous => ({ ...previous, ...patch }))
     setResult(null); setError(''); setMessage('条件を入力して検索してください。')
@@ -50,31 +52,38 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
         <h1>プリフロップレンジ検索</h1>
         <p className="gto-intro">検証済みの条件を完全一致で検索します。未計算・未検証の条件を補間して表示しません。</p>
         {catalog.length === 0 && <p className="gto-notice">検証済みレンジデータは準備中です。条件を指定できますが、現在表示できるGTO戦略はありません。</p>}
+        {hasOneBB && <aside className="gto-notice">
+          <p>明示的な検証用条件として、HU・両者1BBのレンジを利用できます。通常のRFIオープンや3ベットの代用ではなく、正式20スタック条件のデータではありません。</p>
+          <button className="gto-preset" type="button" onClick={() => change(oneBBQuery)}>検証済みテスト条件：HU1BB</button>
+        </aside>}
         <form aria-label="プリフロップ検索条件" onSubmit={search}>
           <fieldset className="gto-fields"><legend>計算条件</legend>
-            <label>ゲーム形式<select aria-label="ゲーム形式" value={form.format} onChange={event => change({ format: event.target.value as RangeQuery['format'], rakePct: '0', rakeCapBb: null })}>
+            <label>ゲーム形式<select aria-label="ゲーム形式" disabled={isForced} value={form.format} onChange={event => change({ format: event.target.value as RangeQuery['format'], rakePct: '0', rakeCapBb: null })}>
               <option value="mtt">MTT（chipEV）</option><option value="ring">リングゲーム</option>
             </select></label>
-            <label>人数<select aria-label="人数" value={form.players} onChange={event => {
+            <label>人数<select aria-label="人数" disabled={isForced} value={form.players} onChange={event => {
               const players = Number(event.target.value); change({ players, seat: positions(players)[0].seat })
             }}>{Array.from({ length: 8 }, (_, i) => i + 2).map(n => <option key={n} value={n}>{n}人</option>)}</select></label>
-            <label>ポジション<select aria-label="ポジション" value={form.seat} onChange={event => change({ seat: Number(event.target.value) })}>
+            <label>ポジション<select aria-label="ポジション" disabled={isForced} value={form.seat} onChange={event => change({ seat: Number(event.target.value) })}>
               {positions(form.players).map(position => <option key={position.seat} value={position.seat}>{position.label}</option>)}
             </select></label>
-            <label>有効スタック（BB）<input aria-label="有効スタック（BB）" required inputMode="decimal" value={form.stackBb} placeholder="例：100" onChange={event => change({ stackBb: event.target.value })} /></label>
-            <label>BBアンティ<select aria-label="BBアンティ" value={form.anteBb} onChange={event => change({ anteBb: event.target.value as RangeQuery['anteBb'] })}>
+            <label>有効スタック（BB）<input aria-label="有効スタック（BB）" disabled={isForced} required inputMode="decimal" value={form.stackBb} placeholder="例：100" onChange={event => change({ stackBb: event.target.value })} /></label>
+            <label>BBアンティ<select aria-label="BBアンティ" disabled={isForced} value={form.anteBb} onChange={event => change({ anteBb: event.target.value as RangeQuery['anteBb'] })}>
               <option value="0">なし</option><option value="1">1 BB</option>
             </select></label>
-            <label>レーキ<select aria-label="レーキ" disabled={form.format === 'mtt'} value={form.rakePct} onChange={event => change({ rakePct: event.target.value as RangeQuery['rakePct'] })}>
+            <label>レーキ<select aria-label="レーキ" disabled={isForced || form.format === 'mtt'} value={form.rakePct} onChange={event => change({ rakePct: event.target.value as RangeQuery['rakePct'] })}>
               <option value="0">0%</option><option value="5">5%</option><option value="10">10%</option>
             </select></label>
-            <label>レーキ上限<select aria-label="レーキ上限" disabled={form.format === 'mtt'} value={form.rakeCapBb ?? 'none'} onChange={event => change({ rakeCapBb: event.target.value === 'none' ? null : event.target.value as '5' | '10' })}>
+            <label>レーキ上限<select aria-label="レーキ上限" disabled={isForced || form.format === 'mtt'} value={form.rakeCapBb ?? 'none'} onChange={event => change({ rakeCapBb: event.target.value === 'none' ? null : event.target.value as '5' | '10' })}>
               <option value="none">上限なし</option><option value="5">5 BB</option><option value="10">10 BB</option>
             </select></label>
-            <label>オープンサイズ（BB）<input aria-label="オープンサイズ（BB）" required inputMode="decimal" value={form.openBb} placeholder="合計額" onChange={event => change({ openBb: event.target.value })} /></label>
-            <label>3ベットサイズ（BB）<input aria-label="3ベットサイズ（BB）" required inputMode="decimal" value={form.threeBetBb} placeholder="合計額" onChange={event => change({ threeBetBb: event.target.value })} /></label>
-            <label>4ベットサイズ（BB）<input aria-label="4ベットサイズ（BB）" required inputMode="decimal" value={form.fourBetBb} placeholder="合計額" onChange={event => change({ fourBetBb: event.target.value })} /></label>
-            <label className="gto-wide">対象局面<select aria-label="対象局面" value={form.stage} onChange={event => change({ stage: event.target.value as RangeQuery['stage'] })}>
+            <label>オープンサイズ（BB）<input aria-label="オープンサイズ（BB）" disabled={isForced} required={!isForced} inputMode="decimal" value={form.openBb ?? ''} placeholder={isForced ? '適用なし' : '合計額'} onChange={event => change({ openBb: event.target.value })} /></label>
+            <label>3ベットサイズ（BB）<input aria-label="3ベットサイズ（BB）" disabled={isForced} required={!isForced} inputMode="decimal" value={form.threeBetBb ?? ''} placeholder={isForced ? '適用なし' : '合計額'} onChange={event => change({ threeBetBb: event.target.value })} /></label>
+            <label>4ベットサイズ（BB）<input aria-label="4ベットサイズ（BB）" disabled={isForced} required={!isForced} inputMode="decimal" value={form.fourBetBb ?? ''} placeholder={isForced ? '適用なし' : '合計額'} onChange={event => change({ fourBetBb: event.target.value })} /></label>
+            <label className="gto-wide">対象局面<select aria-label="対象局面" value={form.stage} onChange={event => {
+              const stage = event.target.value as RangeQuery['stage']
+              change(stage === 'forced_blind_allin' ? oneBBQuery : isForced ? { stage, openBb: '', threeBetBb: '', fourBetBb: '' } : { stage })
+            }}>
               {Object.entries(stages).map(([key, label]) => <option key={key} value={key}>{label}</option>)}
             </select></label>
           </fieldset>
@@ -82,6 +91,7 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
         </form>
         {error && <p role="alert" className="gto-error">{error}</p>}
         <p role="status" className="gto-status">{message}</p>
+        {result?.conditionClass === 'explicit_test' && <p className="gto-notice">{result.conditionName}。正式仕様のデータとは別の明示テスト条件です。</p>}
         <h2 id="gto-matrix-title">169ハンド表</h2>
         <p className="gto-intro">スーテッドは右上、オフスートは左下。空欄は未提供を表し、フォールド頻度0%を意味しません。</p>
         {result && <div className="gto-legend">{result.actions.map((action, i) => <span key={action}><i style={{ background: colors[i % colors.length] }} />{action}</span>)}</div>}
@@ -105,12 +115,17 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
         {result && selectedRow && <section className="gto-detail" aria-live="polite">
           <h2>{selected}の頻度とEV</h2>
           <ul>{result.actions.map((action, i) => <li key={action}>{action}：{(selectedRow.frequencies[i] * 100).toFixed(1)}%</li>)}</ul>
-          <p>EV：{selectedRow.evBb.toFixed(3)} BB</p>
+          <p>EV：{selectedRow.evBb.toFixed(3)} BB{result.certificate.verificationMethod === 'simultaneous_full_game_action_bounds' ? '（推定値）' : ''}</p>
+          <p>EV同時区間：[{selectedRow.evIntervalBb[0].toFixed(3)}, {selectedRow.evIntervalBb[1].toFixed(3)}] BB</p>
+          <p>検証信頼水準：{(result.certificate.confidence * 100).toFixed(result.certificate.confidence === 1 ? 0 : 7)}%</p>
+          {result.certificate.samplingAssumptions && <p>{result.certificate.samplingAssumptions}</p>}
           <p>Coverage：169 / 169ハンド・1326 / 1326コンビネーション</p>
           <details><summary>計算条件と収束の検証根拠</summary>
             <p>対象ゲーム全体の一方的な戦略変更による利得上限：{result.certificate.upperBoundBb} BB</p>
             <p>検証時の許容値：{result.certificate.acceptedToleranceBb} BB</p>
             <p>根拠：{result.certificate.reviewReference}</p>
+            {result.certificate.policyConstruction && <p>{result.certificate.policyConstruction}</p>}
+            {result.certificate.directHeroRepresentatives && <p>直接評価：{result.certificate.directHeroRepresentatives}代表クラス。スート・配布順の対称性による展開：{result.certificate.symmetryExpandedCombinations}コンビネーション／{result.certificate.strategicInformationSets}情報集合。</p>}
             <p>ポリシー：{result.policyDigest}</p><p>計算条件：{result.configDigest}</p>
             <p>研究用の局所指標やEVサンプリング誤差を、ゲーム全体の収束根拠として使用していません。</p>
           </details>

@@ -1,20 +1,23 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { canonicalQuery, queryKey, positions, handLabels, handGrid, validateVerifiedRange, findVerifiedRange } from '../src/gto/rangeCatalog.ts'
+import { canonicalQuery, queryKey, oneBBQuery, positions, handLabels, handGrid, validateVerifiedRange, findVerifiedRange } from '../src/gto/rangeCatalog.ts'
+import { oneBBRange, oneBBCertificate } from '../src/gto/oneBBRange.ts'
 
 // Synthetic parser fixtures only; these are never included in the app catalog.
 const query = { format: 'ring', players: 6, seat: 2, stackBb: '100', anteBb: '0', rakePct: '5',
   rakeCapBb: '5', openBb: '2.5', threeBetBb: '9', fourBetBb: '21', stage: 'vs_3bet' }
 function fixture() {
   const record = { schema: 'pokerid-verified-preflop-v1', id: 'parser-fixture-only', query: { ...query },
+    conditionClass: 'explicit_test', conditionName: 'Synthetic parser fixture only',
     policyDigest: 'a'.repeat(64), configDigest: 'b'.repeat(64), certificateId: 'fixture-only',
     actions: ['Fold', 'Call', 'Raise'], coverage: { combinations: 1326, hands: 169 }, equilibriumVerified: true,
     hands: Object.fromEntries(handLabels.map(label => [label, { combinations: label.endsWith('s') ? 4 : label.endsWith('o') ? 12 : 6,
-      frequencies: [.25, .5, .25], evBb: .1 }])) }
+      frequencies: [.25, .5, .25], evBb: .1, evIntervalBb: [.1, .1] }])) }
   const certificate = { datasetId: record.id, queryKey: queryKey(query), policyDigest: record.policyDigest,
     configDigest: record.configDigest, artifactSha256: 'c'.repeat(64), scope: 'complete_target_game',
     continuation: 'full_native_game', metric: 'max_unilateral_deviation_gain', upperBoundBb: .001,
-    acceptedToleranceBb: .01, reviewReference: 'synthetic test fixture; not real equilibrium evidence' }
+    acceptedToleranceBb: .01, confidence: 1, verificationMethod: 'deterministic_full_game',
+    reviewReference: 'synthetic test fixture; not real equilibrium evidence' }
   return { record, registry: { 'fixture-only': certificate } }
 }
 test('grid has169 unique classes and1326 concrete combinations', () => {
@@ -58,4 +61,23 @@ test('invalid modes, seats and MTT rake are rejected', () => {
   for (const patch of [{ players: 1 }, { seat: 6 }, { stackBb: '0' }, { openBb: 'NaN' }, { format: 'mtt' }]) {
     assert.throws(() => canonicalQuery({ ...query, ...patch }))
   }
+})
+test('actual native full-game evidence yields one separate test range with169EV intervals', () => {
+  const registry = { [oneBBRange.certificateId]: oneBBCertificate }
+  const result = findVerifiedRange(oneBBQuery, [oneBBRange], registry)
+  assert.equal(result?.conditionClass, 'explicit_test')
+  assert.equal(result.query.stage, 'forced_blind_allin')
+  for (const row of Object.values(result.hands)) {
+    assert.deepEqual(row.frequencies, [0, 1])
+    assert.ok(row.evIntervalBb[0] > -.5)
+    assert.ok(row.evIntervalBb[0] <= row.evBb && row.evBb <= row.evIntervalBb[1])
+  }
+  assert.equal(result.certificate.upperBoundBb, 0)
+  assert.equal(result.certificate.confidence, .999999998)
+})
+test('the forced-blind certificate cannot be reused for ordinary RFI or other stack sizes', () => {
+  assert.throws(() => canonicalQuery({ ...oneBBQuery, stackBb: '2' }))
+  assert.throws(() => canonicalQuery({ ...oneBBQuery, players: 6 }))
+  assert.throws(() => canonicalQuery({ ...oneBBQuery, stage: 'rfi' }))
+  assert.throws(() => canonicalQuery({ ...oneBBQuery, openBb: '1' }))
 })
