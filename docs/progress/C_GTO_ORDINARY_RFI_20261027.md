@@ -74,3 +74,28 @@ true equilibrium because they reveal hidden/future cards. A positive upper
 bound is NOT proof of exploitable strategy; it only fails to certify convergence.
 Two worlds/class are a readiness smoke evaluation, not an accurate169EV release.
 Ordinary GTO certificate and precise169EV counts remain0until real evidence.
+
+Witnessed decoded native40465835451/job122060900384 SUCCESS,630unittest+
+25Packed=655native,UI40465835522 SUCCESS17,combined672PASS(+21vs651).
+Ordinary50BB,seeds17/29,50000iterations each: RFI both2652/2652updated and
+169/169complete frequency classes (also complete at20000). Vsopen updated508/462;
+vs3bet3/7; vs4bet0/1. Later-stage class frequencies remain unavailable because
+history-posterior weighting is not integrated. Full-game conservative gain upper
+approximately100BB, providing no useful convergence certificate; ordinary GTO
+range/EV counts0. Summation floating rounding observed99.99999999999976BB at
+known100BB cap; repair aggregates weighted bounds as exact rationals and rounds
+outwards before intersecting known utility cap. No GTO data released.
+
+Next implementation is an explicitly separate targeted proposal module built
+from the pinned original source, preserving original solver bytes and all legal
+actions/postflop decisions/importance-update equations. Only native proposal
+probabilities change: preflop q=0.1uniform(all legal)+0.9specified legal target
+(2.5/9/21BB), then original mixture(1-epsilon)*policy+epsilon*q. Illegal target
+or postflop uses original uniform proposal. Every action retains positive support
+and the actual proposal probability flows through existing importance ratios.
+Distinct source-specific checkpoint contract prevents original/targeted resume
+confusion. This addresses actual sparse vs3bet/4bet visitation, not a game
+abstraction or forced-prefix subgame. Tests check full support/normalization,
+exact expectation identity over all sampled actions, all-size legality and real
+postflop/native updates. Source transformation has exact hash/anchor guards.
+Convergence remains UNKNOWN; larger counts alone never permit UI release.

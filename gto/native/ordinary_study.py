@@ -83,26 +83,34 @@ def evaluate_rfi(native,game,policy,*,samples_per_class=2,max_nodes=64,seed=101)
             br_upper.append(min(hi,math.nextafter(float(br[player]/samples_per_class)+radius,math.inf)))
         results[label]={'profile_ev_interval_chips':intervals,'clairvoyant_response_upper_chips':br_upper,
             'samples':samples_per_class,'unknown_policy_cuts':unknown,'budget_cuts':cutoffs,'terminal_nodes':terminals}
-    global_upper=[0.0]*n
+    global_upper=[F(0)]*n
     for label,row in results.items():
-        weight=(6 if len(label)==2 else 4 if label.endswith('s') else 12)/1326
-        for player in range(n):global_upper[player]+=weight*(row['clairvoyant_response_upper_chips'][player]-row['profile_ev_interval_chips'][player][0])
+        weight=F(6 if len(label)==2 else 4 if label.endswith('s') else 12,1326)
+        for player in range(n):global_upper[player]+=weight*(F(row['clairvoyant_response_upper_chips'][player])-F(row['profile_ev_interval_chips'][player][0]))
     bb=json.loads(game._public_config_json)['rules']['bb']
     return {'schema':'pokerid-full-continuation-bound-v1','hands':results,'confidence':1-failure,
         'policy_digest':policy.digest,'config_digest':_digest(json.loads(game._public_config_json)),
-        'per_player_global_gain_upper_bb':[math.nextafter(max(0,v/bb),math.inf) for v in global_upper],
+        'per_player_global_gain_upper_bb':[min(sum(game.stacks)/bb,math.nextafter(float(max(F(0),v/bb)),math.inf)) for v in global_upper],
         'full_game_convergence_verified':False,'global_gain_lower_bb':0,
         'note':'conservative sampled whole-game upper envelopes, not exact exploitability; unknown policies remain interval-valued',
         'sampling_assumption':'IID uniform deck/within-class ordered hand model; reproducible PRNG',
         'seed':seed,'samples_per_class':samples_per_class,'max_nodes_per_traversal':max_nodes}
 
 
-def experiment(native,output):
+def experiment(native,output,*,proposal=None):
     output=Path(output);output.mkdir(exist_ok=False);game=NativeGame([100,100]);all_runs=[]
     for seed in (17,29):
         solver=native.Solver(game,.6,seed,True,True,.1);run=[]
         for target in (2000,20000,50000):
-            training=train_batch(solver,game,target-solver.iteration,output/f'seed-{seed}-{target}.bin')
+            if proposal is None:
+                training=train_batch(solver,game,target-solver.iteration,output/f'seed-{seed}-{target}.bin')
+            else:
+                from gto.native.training import checkpoint
+                contract=proposal['contract']+':'+_digest(json.loads(game._public_config_json))
+                before=solver.iteration
+                for _ in range(target-before):solver.run_iteration()
+                training={'iterations':target-before,'proposal_contract':contract,
+                    'checkpoint':checkpoint(solver,output/f'seed-{seed}-{target}.bin',contract)}
             contexts=[context_coverage(native,solver,game,h) for h in ([],[7],[7,20],[7,20,44])]
             observation={'seed':seed,'iteration':target,'contexts':contexts,'training':training,
                 'source_checkpoint_sha256':hashlib.sha256((output/f'seed-{seed}-{target}.bin').read_bytes()).hexdigest()}
@@ -110,14 +118,14 @@ def experiment(native,output):
                 policy=PolicySnapshot.from_solver(native,solver,max_rows=1000000)
                 observation['full_continuation']=evaluate_rfi(native,game,policy,seed=seed+1000)
                 payload={'seed':seed,'iteration':target,'config':json.loads(game._public_config_json),
-                    'policy_digest':policy.digest,'checkpoint_sha256':observation['source_checkpoint_sha256'],
+                    'policy_digest':policy.digest,'sampling_profile':proposal,'checkpoint_sha256':observation['source_checkpoint_sha256'],
                     'rfi':contexts[0],'full_continuation':observation['full_continuation']}
                 encoded=report_json(payload)
                 print('ORDINARY_EVIDENCE '+encoded,flush=True)
             (output/f'seed-{seed}-{target}.json').write_text(report_json(observation)+'\n');run.append(observation)
             print('ORDINARY_PROGRESS '+json.dumps({'seed':seed,'iteration':target,'contexts':[{k:c[k] for k in ('stage','updated_orderings','complete_frequency_classes')} for c in contexts]}),flush=True)
         all_runs.append(run);del solver
-    summary={'schema':'pokerid-ordinary-preflop-study-v1','formal_profile':False,
+    summary={'schema':'pokerid-ordinary-preflop-study-v1','formal_profile':False,'sampling_profile':proposal,
         'config':json.loads(game._public_config_json),'runs':[[{'seed':o['seed'],'iteration':o['iteration'],
         'contexts':[{k:c[k] for k in ('stage','updated_orderings','created_orderings','complete_frequency_classes')} for c in o['contexts']],
         'global_gain_upper_bb':o.get('full_continuation',{}).get('per_player_global_gain_upper_bb'),
@@ -131,4 +139,7 @@ def experiment(native,output):
 if __name__=='__main__':
     import argparse,importlib,sys
     parser=argparse.ArgumentParser();parser.add_argument('--module-dir',type=Path,required=True);parser.add_argument('--output',type=Path,required=True)
-    args=parser.parse_args();sys.path.insert(0,str(args.module_dir.resolve()));experiment(importlib.import_module('pokerid_g12'),args.output)
+    parser.add_argument('--targeted',action='store_true')
+    args=parser.parse_args();sys.path.insert(0,str(args.module_dir.resolve()))
+    proposal=json.loads((args.module_dir/'manifest.json').read_text()) if args.targeted else None
+    experiment(importlib.import_module('pokerid_targeted' if args.targeted else 'pokerid_g12'),args.output,proposal=proposal)

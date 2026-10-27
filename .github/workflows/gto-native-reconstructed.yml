@@ -44,6 +44,11 @@ jobs:
           done
       - name: Ordinary HU50BB learning and conservative full-continuation evaluation
         run: python -B -m gto.native.ordinary_study --module-dir "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/g12_next" --output "$RUNNER_TEMP/ordinary-study-$GITHUB_RUN_ID"
+      - name: Full-support targeted proposal without game-tree pruning
+        run: |
+          python -B -m gto.native.build_targeted --runtime "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID"
+          GTO_TARGETED_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/targeted" python -B gto/native/test_targeted.py -v
+          python -B -m gto.native.ordinary_study --targeted --module-dir "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/targeted" --output "$RUNNER_TEMP/targeted-study-$GITHUB_RUN_ID"
       - name: Complete native HU1BB calibration and actual representative learning
         run: |
           python -B -m gto.native.onebb_certificate --runtime "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID" --output "$RUNNER_TEMP/onebb-evidence-$GITHUB_RUN_ID"
