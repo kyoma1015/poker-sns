@@ -54,7 +54,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
               getSession: async () => ({ data:{session:{access_token:jwt,user:{id:viewerId}}}, error:null }),
               getUser: async () => {
                 window.__VIDEO_QA_GET_USER_CALLS=(window.__VIDEO_QA_GET_USER_CALLS || 0)+1
-                return client.auth.getUser(jwt)
+                return window.__VIDEO_QA_GET_USER ? window.__VIDEO_QA_GET_USER() : client.auth.getUser(jwt)
               },
               onAuthStateChange: callback => {
                 authListeners.add(callback)

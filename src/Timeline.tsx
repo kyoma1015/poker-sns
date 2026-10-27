@@ -212,6 +212,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     return () => { cancelled = true }
   }, [])
   const videoSubmitInFlightRef = useRef(false)
+  const postSubmitInFlightRef = useRef(false)
   const [videoPreview, setVideoPreview] = useState<string | null>(null)
   useEffect(() => { if (!videoFile) { setVideoPreview(null); return }; const url = URL.createObjectURL(videoFile); setVideoPreview(url); return () => URL.revokeObjectURL(url) }, [videoFile])
   const [imageFiles, setImageFiles] = useState<File[]>([])
@@ -994,6 +995,23 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     && (interactiveMode!=='poll'||(pollOptions.every(o=>o.trim()) && new Set(pollOptions.map(o=>o.trim().toLowerCase())).size===pollOptions.length))
 
   const handlePost = async () => {
+    if (postSubmitInFlightRef.current) return
+    postSubmitInFlightRef.current = true
+    const lifetime = composerLifetimeRef.current
+    try { await submitPost() }
+    catch {
+      if (lifetime === composerLifetimeRef.current) {
+        setMessage('投稿できませんでした。通信とログイン状態を確認して、もう一度お試しください。')
+      }
+    } finally {
+      postSubmitInFlightRef.current = false
+      setIsPosting(false)
+    }
+  }
+
+  const submitPost = async () => {
+    const publicationLifetime = composerLifetimeRef.current
+
     if (interactiveMode !== 'normal') {
       if (isPosting) return
       if (!canSubmitPost) { setMessage('投稿内容と選択肢を確認してください。'); return }
@@ -1004,6 +1022,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         const request = createPollRequest(interactiveMode, content, pollOptions, pollHours, pollAnonymous)
         const { error } = await supabase.rpc('create_interactive_post_v4', request)
         if (error) throw error
+        if (publicationLifetime !== composerLifetimeRef.current) return
         setContent('')
         setInteractiveMode('normal')
         setPollOptions(['',''])
@@ -1102,6 +1121,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
     } = await supabase.auth.getUser()
 
+    if (publicationLifetime !== composerLifetimeRef.current) return
     if (!user) {
 
       setMessage(
@@ -1129,6 +1149,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         await Promise.all(uploadedPaths.map(path => supabase.storage.from('post-images').remove([path])))
         setMessage(`画像アップロード失敗：${uploadError.message}`); setIsPosting(false); return
       }
+      if (publicationLifetime !== composerLifetimeRef.current) return
       uploadedPaths.push(path)
       uploadedUrls.push(supabase.storage.from('post-images').getPublicUrl(path).data.publicUrl)
     }
@@ -1149,6 +1170,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
       })
 
+    if (publicationLifetime !== composerLifetimeRef.current) return
     if (error) {
       if (uploadedPaths.length) await supabase.storage.from('post-images').remove(uploadedPaths)
       console.error(error)

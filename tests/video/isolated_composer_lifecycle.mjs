@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 // Actual Timeline, real local feed/auth; lifecycle notifications and delayed
 // metadata/social response are controlled explicitly, with no production IO.
 export async function verifyComposerLifecycle({browser,origin,jwt,anon,bytes}) {
-  for (const scenario of ['close-validation','switch-social','signout-preview','unmount-submit']) {
+  for (const scenario of ['close-validation','switch-social','signout-preview','unmount-submit','double-text','auth-network-retry']) {
     const page=await browser.newPage()
     const errors=[]
     page.on('pageerror',e=>errors.push(String(e)))
@@ -28,7 +28,45 @@ export async function verifyComposerLifecycle({browser,origin,jwt,anon,bytes}) {
         }
       })
       const settle=()=>page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))))
-      if(scenario==='switch-social') {
+      if(scenario==='double-text' || scenario==='auth-network-retry') {
+        await composer.locator('textarea').fill('isolated single-flight text')
+        let inserts=0
+        await page.route('**/rest/v1/posts*',route=>{
+          if(route.request().method()!=='POST') return route.continue()
+          inserts++
+          return route.fulfill({status:503,contentType:'application/json',body:'{"message":"isolated unavailable"}'})
+        })
+        await page.evaluate(throws=>{
+          window.__LIFECYCLE_AUTH_STARTED=0
+          window.__VIDEO_QA_GET_USER=()=>{
+            window.__LIFECYCLE_AUTH_STARTED++
+            if(throws) throw new Error('PRIVATE-AUTH-NETWORK-ERROR')
+            return new Promise(resolve=>{
+              window.__LIFECYCLE_AUTH_RELEASE=()=>{
+                const jwt=window.__VIDEO_QA_JWT
+                const id=JSON.parse(atob(jwt.split('.')[1].replaceAll('-','+').replaceAll('_','/'))).sub
+                resolve({data:{user:{id}},error:null})
+              }
+            })
+          }
+        },scenario==='auth-network-retry')
+        await composer.getByRole('button',{name:'投稿する',exact:true}).evaluate(button=>{button.click();button.click()})
+        await page.waitForFunction(()=>window.__LIFECYCLE_AUTH_STARTED>0)
+        assert.equal(await page.evaluate(()=>window.__LIFECYCLE_AUTH_STARTED),1,'one authentication for synchronous double submit')
+        if(scenario==='double-text') {
+          await page.evaluate(()=>window.__LIFECYCLE_AUTH_RELEASE())
+          await composer.getByText(/投稿できませんでした/).waitFor()
+          assert.equal(inserts,1,'one INSERT for double text submission')
+        } else {
+          await composer.getByText(/通信とログイン状態を確認/).waitFor()
+          assert.equal(await page.getByText('PRIVATE-AUTH-NETWORK-ERROR',{exact:false}).count(),0)
+          await page.evaluate(()=>{delete window.__VIDEO_QA_GET_USER})
+          await composer.getByRole('button',{name:'投稿する',exact:true}).click()
+          await composer.getByText(/isolated unavailable/).waitFor()
+          assert.equal(inserts,1,'retry reaches one INSERT after thrown auth request')
+        }
+        assert.equal(await composer.getByRole('button',{name:'投稿する',exact:true}).isEnabled(),true,'failed publication releases lock')
+      } else if(scenario==='switch-social') {
         await composer.locator('textarea').fill('旧アカウントの下書き')
         await page.evaluate(()=>{
           window.__VIDEO_QA_SOCIAL={get_my_post_style_snapshot:()=>new Promise(resolve=>{
@@ -65,6 +103,12 @@ export async function verifyComposerLifecycle({browser,origin,jwt,anon,bytes}) {
           URL.revokeObjectURL=url=>{window.__LIFECYCLE_REVOKED.push(url);revoke(url)}
         })
         if(scenario==='signout-preview') {
+          await page.evaluate(()=>{
+            const id=JSON.parse(atob(window.__VIDEO_QA_JWT.split('.')[1].replaceAll('-','+').replaceAll('_','/'))).sub
+            window.__VIDEO_QA_TRIGGER_AUTH('TOKEN_REFRESHED',id)
+          })
+          await settle()
+          assert.equal(await composer.locator('video').getAttribute('src'),url,'same-user refresh preserves draft')
           await page.evaluate(()=>window.__VIDEO_QA_TRIGGER_SIGN_OUT())
           await settle()
           await page.evaluate(()=>window.dispatchEvent(new Event('poker-id-open-compose')))

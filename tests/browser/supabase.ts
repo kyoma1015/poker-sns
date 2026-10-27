@@ -4,6 +4,11 @@ Object.assign(window, { qaRpcCalls: calls })
 const user = { id: 'qa-user' }
 export const supabase = {
   auth: {
+    onAuthStateChange: (callback: (event: string, session: { user: typeof user }) => void) => {
+      let active = true
+      queueMicrotask(() => { if (active) callback('INITIAL_SESSION', { user }) })
+      return { data: { subscription: { unsubscribe: () => { active = false } } } }
+    },
     getUser: async () => ({ data: { user }, error: null }),
     getSession: async () => ({ data: { session: { user } }, error: null }),
   },
