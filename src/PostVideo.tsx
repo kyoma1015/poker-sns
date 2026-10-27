@@ -10,11 +10,14 @@ export default function PostVideo({ postId }: { postId: string }) {
     if (!VIDEO_SERVER_ENABLED) { setUrl(''); setError('動画再生は安全なサーバー接続の準備中です。'); return }
     let active = true
     let objectUrl = ''
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+    let viewerId: string | undefined
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       // A Blob URL bypasses the server after the initial authorized fetch.
       // Discard the locally cached media as soon as the session ends or
       // changes, so an old authenticated video cannot keep playing.
-      if (event === 'SIGNED_OUT' || event === 'USER_UPDATED') {
+      const identityChanged = (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') &&
+        (!viewerId || session?.user.id !== viewerId)
+      if (event === 'SIGNED_OUT' || event === 'USER_UPDATED' || identityChanged) {
         active = false
         if (objectUrl) URL.revokeObjectURL(objectUrl)
         objectUrl = ''
@@ -24,7 +27,14 @@ export default function PostVideo({ postId }: { postId: string }) {
     })
     setUrl('')
     setError('')
-    void loadAuthorizedVideo(postId).then(value => {
+    void (async () => {
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession()
+      if (!active) return undefined
+      if (sessionError || !session?.user.id) throw new Error('missing playback session')
+      viewerId = session.user.id
+      return loadAuthorizedVideo(postId)
+    })().then(value => {
+      if (!value) return
       objectUrl = value
       if (active) setUrl(value)
       else URL.revokeObjectURL(value)

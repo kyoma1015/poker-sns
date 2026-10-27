@@ -25,6 +25,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
           // loadAuthorizedVideo implementation and PostVideo component run.
           return `import { createClient } from '@supabase/supabase-js'
           const jwt = window.__VIDEO_QA_JWT
+          const viewerId = JSON.parse(atob(jwt.split('.')[1].replaceAll('-', '+').replaceAll('_', '/'))).sub
           const client = createClient('http://127.0.0.1:56321', window.__VIDEO_QA_ANON, {
             global: { headers: { Authorization: 'Bearer ' + jwt } },
             auth: { persistSession:false, autoRefreshToken:false },
@@ -32,6 +33,9 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
           const authListeners = new Set()
           window.__VIDEO_QA_TRIGGER_SIGN_OUT = () => {
             for (const callback of authListeners) callback('SIGNED_OUT', null)
+          }
+          window.__VIDEO_QA_TRIGGER_AUTH = (event, id) => {
+            for (const callback of authListeners) callback(event, {user:{id}})
           }
           // Isolated-only stubs for unrelated social tables absent from local QA schema.
           const empty = { data:[], error:null }
@@ -41,7 +45,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
           } })
           export const supabase = {
             auth: {
-              getSession: async () => ({ data:{session:{access_token:jwt}}, error:null }),
+              getSession: async () => ({ data:{session:{access_token:jwt,user:{id:viewerId}}}, error:null }),
               getUser: async () => client.auth.getUser(jwt),
               onAuthStateChange: callback => {
                 authListeners.add(callback)
@@ -112,7 +116,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     browser = await chromium.launch({
       headless: true, args: ['--no-sandbox', '--autoplay-policy=no-user-gesture-required'] })
     const origin = 'http://127.0.0.1:' + address.port
-    const page = await browser.newPage()
+    const page = await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true})
     const errors = []
     page.on('pageerror', error => errors.push(String(error)))
     page.on('console', message => { if (message.type() === 'error') errors.push(message.text()) })
@@ -141,7 +145,56 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     await video.evaluate(el=>el.play())
     await page.waitForFunction(() => document.querySelector('video')?.currentTime>0,
       null,{timeout:15000})
+    const videoBox = await video.boundingBox()
+    assert.ok(videoBox && videoBox.width <= 390, 'mobile video must fit a 390px viewport')
+    const playbackUrl = await video.getAttribute('src')
+    const ownerId = JSON.parse(Buffer.from(jwt.split('.')[1], 'base64url').toString()).sub
+    const otherId = JSON.parse(Buffer.from(deniedJwt.split('.')[1], 'base64url').toString()).sub
+    await page.evaluate(ownerId => window.__VIDEO_QA_TRIGGER_AUTH('TOKEN_REFRESHED', ownerId), ownerId)
+    assert.equal(await video.getAttribute('src'), playbackUrl, 'same-user refresh preserves playback')
+    await page.evaluate(() => {
+      window.__VIDEO_QA_REVOKED_URLS = []
+      const revoke = URL.revokeObjectURL.bind(URL)
+      URL.revokeObjectURL = value => { window.__VIDEO_QA_REVOKED_URLS.push(value); revoke(value) }
+    })
+    await page.evaluate(otherId => window.__VIDEO_QA_TRIGGER_AUTH('SIGNED_IN', otherId), otherId)
+    await page.waitForFunction(() => !document.querySelector('video'))
+    assert.ok((await page.evaluate(() => window.__VIDEO_QA_REVOKED_URLS)).includes(playbackUrl),
+      'direct account switch revokes the exact Blob URL')
+    console.log('PASS: mobile 390px playback; same-user refresh preserved; direct SIGNED_IN switch revoked prior Blob')
     await page.close()
+
+    // Pause a real authorized media request, switch identities, then release it.
+    // Its late response must be revoked without rendering a video element.
+    const pending = await browser.newPage()
+    let release
+    const gate = new Promise(resolve => { release = resolve })
+    let requestStarted
+    const started = new Promise(resolve => { requestStarted = resolve })
+    await pending.route('**/internal/video/media/*', async route => {
+      requestStarted()
+      await gate
+      await route.continue()
+    })
+    await pending.addInitScript(({postId,jwt,anon}) => {
+      window.__VIDEO_QA_POST_ID=postId
+      window.__VIDEO_QA_JWT=jwt
+      window.__VIDEO_QA_ANON=anon
+      window.__VIDEO_QA_REVOKED_URLS=[]
+      const revoke=URL.revokeObjectURL.bind(URL)
+      URL.revokeObjectURL=value=>{window.__VIDEO_QA_REVOKED_URLS.push(value);revoke(value)}
+    },{postId,jwt,anon})
+    await pending.goto(origin+'/tests/video/browser-post-video.html')
+    let requestTimeout
+    try {
+      await Promise.race([started, new Promise((_, reject) => { requestTimeout = setTimeout(() => reject(new Error('media request did not start')), 20000) })])
+    } finally { clearTimeout(requestTimeout) }
+    await pending.evaluate(otherId => window.__VIDEO_QA_TRIGGER_AUTH('SIGNED_IN', otherId),otherId)
+    release()
+    await pending.waitForFunction(() => window.__VIDEO_QA_REVOKED_URLS.length > 0)
+    assert.equal(await pending.locator('video').count(),0,'late media cannot render for switched account')
+    await pending.close()
+    console.log('PASS: in-flight media response revoked after direct account switch')
     // Mount the ACTUAL Timeline.tsx and read the real local PostgREST posts.
     // Only unrelated social tables and RPCs are stubbed (no local QA schema).
     const timelinePage=await browser.newPage()
