@@ -1,6 +1,6 @@
 -- Dedicated empty cloud test database only. No production application tables.
 begin;
-do $ begin
+do $$ begin
  if current_setting('video.cloud_test_project_ref',true) is distinct from 'hbhyuotzginwysrineyo' then
   raise exception 'dedicated cloud test target attestation required';
  end if;
