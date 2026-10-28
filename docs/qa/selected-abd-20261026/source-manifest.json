@@ -832,7 +832,7 @@
     },
     {
       "path": "docs/progress/ABD_PROGRESS.md",
-      "sha": "fc22bacdf31620d3e0c960f1bc28a118280086bd",
+      "sha": "f32e5da0d37b1de7124384f9f09b5e4765cc025d",
       "reason": "add independent implementation evidence policy while preserving release v1; pinned historical source/test/CI evidence"
     },
     {
