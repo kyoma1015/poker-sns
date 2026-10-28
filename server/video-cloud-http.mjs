@@ -56,11 +56,11 @@ return async function handleCloudVideo(req,res) {
   'invalid stream structure', 'unsupported codec', 'invalid video dimensions',
   'invalid container', 'invalid video duration', 'missing streams',
   'ffprobe unavailable', 'ffprobe rejected video', 'ffprobe timeout',
-  'invalid video size', 'downloaded bytes do not match expected object size',
+  'invalid video size', 'invalid expected object size', 'downloaded bytes do not match expected object size',
   'ffprobe binary path must be absolute', 'invalid ffprobe JSON',
   'invalid ffprobe result', 'ffprobe output too large', 'ffprobe error output too large',
  ].includes(error.message) ? error.message : 'unclassified'
- console.warn('video-cloud-test', 'finalize_failed', stage, reason)
+ console.warn('video-cloud-test', 'finalize_failed', stage, reason === 'unclassified' ? 'unclassified' : reason)
  return res.status(503).json({error:'cloud_finalize_failed',stage,reason})
  }
 }
