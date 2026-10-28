@@ -1,3 +1,4 @@
+import { assertCloudTestRequestConfiguration } from '../server/video-cloud-test-target.mjs'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { createClient } from '@supabase/supabase-js'
 
@@ -15,6 +16,10 @@ return async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('X-Content-Type-Options', 'nosniff')
   res.setHeader('Content-Security-Policy', "default-src 'none'; sandbox")
   res.setHeader('Cross-Origin-Resource-Policy', 'same-origin')
+  // Reject wrong cloud-test target before auth, RPC, Storage or ffprobe I/O.
+  try { assertCloudTestRequestConfiguration(process.env) } catch {
+    return res.status(503).end()
+  }
   if (req.method !== 'GET') return res.status(405).end()
   const rawAuth = req.headers.authorization
   if (!rawAuth || !/^Bearer [A-Za-z0-9_.-]+$/.test(rawAuth)) return res.status(401).end()

@@ -1,3 +1,4 @@
+import { assertCloudTestRequestConfiguration } from '../server/video-cloud-test-target.mjs'
 import { handleVideoRecoveryCandidate } from '../server/video-recovery-candidate.js'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { createClient } from '@supabase/supabase-js'
@@ -20,6 +21,10 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
   res.setHeader('Cache-Control', 'no-store, private')
   res.setHeader('Vary', 'Authorization')
   res.setHeader('X-Content-Type-Options', 'nosniff')
+  // Reject wrong cloud-test target before auth, RPC, Storage or ffprobe I/O.
+  try { assertCloudTestRequestConfiguration(process.env) } catch {
+    return res.status(503).end()
+  }
   // Preview-only runtime attestation, sharing this existing serverless function.
   // No new Vercel function or production endpoint is required.
   if (req.method === 'GET' && req.query?.runtime_attestation === 'ffprobe') {

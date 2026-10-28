@@ -15,3 +15,17 @@ export function assertCloudTestTarget(env) {
   }
   return Object.freeze({ projectRef: CLOUD_TEST_REF, url: CLOUD_TEST_URL })
 }
+
+/** Fail before I/O when cloud testing is requested or a test endpoint is present.
+ * This does not enable publication; existing release gates remain mandatory.
+ */
+export function assertCloudTestRequestConfiguration(env) {
+  const testHost = CLOUD_TEST_REF + '.supabase.co'
+  const requested = env.VIDEO_CLOUD_TEST_ENABLED !== undefined ||
+    env.VIDEO_CLOUD_TEST_PROJECT_REF !== undefined ||
+    env.VIDEO_CLOUD_TEST_VERCEL_PROJECT_ID !== undefined ||
+    [env.VITE_SUPABASE_URL, env.SUPABASE_URL].some(value =>
+      typeof value === 'string' && value.includes(testHost))
+  if (requested) return assertCloudTestTarget(env)
+  return null
+}
