@@ -831,7 +831,7 @@
     },
     {
       "path": "docs/progress/ABD_PROGRESS.md",
-      "sha": "e3caff6c29fe22968eac157e9fa33f7854a09557",
+      "sha": "fb0cababa8a116cc723aca7a145a88c75362f8e2",
       "reason": "add independent implementation evidence policy while preserving release v1; pinned historical source/test/CI evidence"
     },
     {
@@ -869,7 +869,7 @@
     },
     {
       "path": "tests/selected/direct-message-send.test.mjs",
-      "sha": "98f5c8b6c794f08c3bce57373ef1ff6c5251c19a",
+      "sha": "d8fb6ff7a76ac0014beca5862e6172bd5fd930f9",
       "origin_blob": "12ce7b7e54dd1d64ffcc95a64057c8ca1a1c8227",
       "reason": "append fixed conversation-participant response regression; preserved previous acceptance; synthetic-only transport extension"
     },

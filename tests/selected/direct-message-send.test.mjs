@@ -226,3 +226,25 @@ test('conversation preserves both valid directions after defensive query filteri
   await page.getByText('CURRENT_PEER_OUTGOING', { exact: true }).waitFor()
   assert.equal(await page.getByText('THIRD_SYNTHETIC', { exact: true }).count(), 1)
 }))
+
+test('conversation malformed matching query content cannot crash the current conversation', () => withChat(async page => {
+ await page.evaluate(() => window.dmQA.navigate('/dm/third'))
+ await page.getByText('THIRD_SYNTHETIC', { exact: true }).waitFor()
+ const errors=[];page.on('pageerror',e=>errors.push(e.message))
+ await conversationRows(page,[syntheticRow('malformed','me','third',{private:'NOT_RENDERABLE'})])
+ await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))))
+ assert.deepEqual(errors,[])
+ assert.equal(await page.getByText('THIRD_SYNTHETIC',{exact:true}).count(),1)
+}))
+test('conversation malformed matching realtime UPDATE cannot crash or replace saved content', () => withChat(async page => {
+ await page.evaluate(() => window.dmQA.navigate('/dm/third'))
+ await page.getByText('THIRD_SYNTHETIC', { exact: true }).waitFor()
+ const errors=[];page.on('pageerror',e=>errors.push(e.message))
+ await page.evaluate(async()=>{
+  const channel=window.dmQA.channels.findLast(channel=>channel.active)
+  await channel.handler({eventType:'UPDATE',new:{id:'third-message',sender_id:'third',receiver_id:'me',content:{private:'NOT_RENDERABLE'},created_at:'2026-10-24T00:00:00Z',read_at:null}})
+ })
+ await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))))
+ assert.deepEqual(errors,[])
+ assert.equal(await page.getByText('THIRD_SYNTHETIC',{exact:true}).count(),1)
+}))
