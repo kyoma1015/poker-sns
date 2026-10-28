@@ -115,11 +115,15 @@ def experiment(native,output,*,proposal=None):
             observation={'seed':seed,'iteration':target,'contexts':contexts,'training':training,
                 'source_checkpoint_sha256':hashlib.sha256((output/f'seed-{seed}-{target}.bin').read_bytes()).hexdigest()}
             if target==50000:
+                from gto.native.hu_preflop_reach import reached_classes
+                for context in contexts[1:]:
+                    context['history_reach']=reached_classes(native,solver,game,context['history'])
                 policy=PolicySnapshot.from_solver(native,solver,max_rows=1000000)
                 observation['full_continuation']=evaluate_rfi(native,game,policy,seed=seed+1000)
                 payload={'seed':seed,'iteration':target,'config':json.loads(game._public_config_json),
                     'policy_digest':policy.digest,'sampling_profile':proposal,'checkpoint_sha256':observation['source_checkpoint_sha256'],
-                    'rfi':contexts[0],'full_continuation':observation['full_continuation']}
+                    'rfi':contexts[0],'history_reach_ranges':[c['history_reach'] for c in contexts[1:]],
+                    'full_continuation':observation['full_continuation']}
                 encoded=report_json(payload)
                 print('ORDINARY_EVIDENCE '+encoded,flush=True)
             (output/f'seed-{seed}-{target}.json').write_text(report_json(observation)+'\n');run.append(observation)
@@ -127,7 +131,9 @@ def experiment(native,output,*,proposal=None):
         all_runs.append(run);del solver
     summary={'schema':'pokerid-ordinary-preflop-study-v1','formal_profile':False,'sampling_profile':proposal,
         'config':json.loads(game._public_config_json),'runs':[[{'seed':o['seed'],'iteration':o['iteration'],
-        'contexts':[{k:c[k] for k in ('stage','updated_orderings','created_orderings','complete_frequency_classes')} for c in o['contexts']],
+        'contexts':[{**{k:c[k] for k in ('stage','updated_orderings','created_orderings','complete_frequency_classes')},
+            'posterior_frequency_classes':c.get('history_reach',{}).get('complete_frequency_classes'),
+            'posterior_status':c.get('history_reach',{}).get('status')} for c in o['contexts']],
         'global_gain_upper_bb':o.get('full_continuation',{}).get('per_player_global_gain_upper_bb'),
         'checkpoint_sha256':o['source_checkpoint_sha256']} for o in r] for r in all_runs],
         'verified_ordinary_ranges':0,'formal_acceptance_complete':0}

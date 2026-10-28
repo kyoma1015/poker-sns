@@ -107,3 +107,37 @@ pinned pokerid_rules.py. Restore exact hash-verified adapter bytes into NEW
 module directory; preserved original files unchanged. Retain native integration
 assertion (all legal sizes, actual postflop and vs3bet visits). No test bypass.
 Source's algorithm include placed after Python headers to avoid macro warnings.
+
+## Resumed2026-10-28: exact HU history-conditioned169aggregation
+Model capacity interruption is not a source defect. Local50966ab/public4549f5e
+have identical treef3acf641c8c89ea5fc660746bf3de8d50e973f4e. Both prior workflows
+40467060207/40467059999 SUCCESS; decoded native634unittest+25Packed+17UI=676PASS.
+Actual targeted50000iterations,seeds17/29: vsopen2652/2652updated both;
+vs3bet2648/2643;vs4bet2585/2584. Baseline same-run vsopen508/462,
+vs3bet3/7,vs4bet0/1. All6original baseline checkpoint hashes match earlier runs.
+No ordinary equilibrium certificate/EV/UI range was produced. Previous formal
+12acceptance count0remains0; no inferred43% is asserted or incremented.
+
+Recovered uncommitted files hu_preflop_reach.py/test_hu_preflop_reach.py,
+separately backed up under/workspace; actual source status had2untracked files,
+not the UI's historical5-file estimate. These files now connect to final50000
+study observations. Preserve all five already-pushed continuation commits.
+
+Reach acceptance: full HU52card model, all2652ordered own hands and2450ordered
+compatible opponent hands. At public preflop history, per-player likelihood
+products factor by private hand. Exact blocker inclusion-exclusion computes
+compatible opponent mass, retaining own earlier-action likelihood in hero mass.
+No visit/uniform/action-frequency substitution, no tiny sampled opponent subset.
+Integer common-denominator aggregation avoids enormous intermediate rational
+GCDs; only final normalized frequency ratios are rounded tobinary64. Missing
+positive-prefix opponent factors withhold the posterior; missing target policies
+withhold whole affected classes. EV staysnull and convergencefalse. Other2..9
+multiway engine source and verified oneBBUI/data remain untouched.
+
+Tests:3pure full-deck blocker/oracle/negative cases passed locally. Native suite
+adds independent full2450opponent enumeration for ordered22hands using explicit
+nonuniform private-hand policies in actual NativeState contexts, and actual
+native partial-training missing-prefix rejection, for all3original variants.
+End-to-end ordinary study will calculate reached169frequency coverage for
+vsopen/vs3bet/vs4bet, preserve nullEV, and rerun existing full-tree/oneBB checks.
+Do not claim new native/coverage results before exact-head CI finishes.

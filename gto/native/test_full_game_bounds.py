@@ -61,6 +61,46 @@ class FullGame(unittest.TestCase):
             self.assertFalse(result['full_game_convergence_verified'])
             self.assertTrue(all(h['ev_bb'] is None for h in result['hands'].values()))
             self.assertEqual(result['complete_frequency_classes'],0)
+    def test_reached_class_frequencies_match_full_ordered_opponent_enumeration(self):
+        from gto.native.hu_preflop_reach import reached_classes,PAIRS
+        from gto.native.hand169_bridge import context_of
+        game=NativeGame([100,100]);contexts=[];rows={}
+        for prefix in ([],[7]):
+            node=decision(self.native,game,prefix);ctx=context_of(node.information_state_string(node.current_player()))
+            contexts.append(ctx);actions=node.legal_actions()
+            for pair in PAIRS:
+                key=json.dumps(dict(ctx,hand=list(pair)),sort_keys=True,separators=(',',':'))
+                probability=(.75 if 0 in pair else .25) if not prefix else float(pair[0]==0)
+                values=[0.0]*len(actions)
+                if not prefix:values[actions.index(7)]=probability;values[actions.index(0)]=1-probability
+                else:values[actions.index(0)]=probability;values[actions.index(1)]=1-probability
+                rows[key]={'actions':actions,'average':values,'updates':1}
+        class ExplicitRows:
+            def keys(self):return list(rows)
+            def row(self,key):return rows[key]
+        result=reached_classes(self.native,ExplicitRows(),game,[7])
+        self.assertEqual(result['complete_frequency_classes'],169)
+        # Independent2450-opponent enumeration per ordered22hero hand. This
+        # deliberately exercises card removal and order-dependent target policy.
+        numerator=denominator=F(0)
+        for hero in [p for p in PAIRS if p[0]//4==0 and p[1]//4==0]:
+            likelihood=sum((F(3,4) if 0 in opponent else F(1,4)
+                for opponent in PAIRS if not set(hero)&set(opponent)),F(0))
+            denominator+=likelihood;numerator+=likelihood*int(hero[0]==0)
+        actions=decision(self.native,game,[7]).legal_actions()
+        actual=result['hands']['22']['frequencies'][actions.index(0)]
+        self.assertAlmostEqual(actual,float(numerator/denominator),places=14)
+        for hand in result['hands'].values():self.assertAlmostEqual(sum(hand['frequencies']),1)
+        self.assertFalse(result['full_game_convergence_verified'])
+
+    def test_missing_learned_prefix_cannot_create_posterior_range(self):
+        from gto.native.hu_preflop_reach import reached_classes
+        game=NativeGame([100,100]);solver=self.native.Solver(game,.6,17,True,True,.1)
+        for _ in range(20):solver.run_iteration()
+        result=reached_classes(self.native,solver,game,[7])
+        self.assertEqual(result['status'],'opponent_prefix_policy_missing')
+        self.assertIsNone(result['hands']);self.assertEqual(result['complete_frequency_classes'],0)
+
     def test_bad_evaluation_schedule_rejected(self):
         for samples in (True,0,10001):
             with self.assertRaises(ValueError):evaluate_rfi(self.native,NativeGame([100,100]),None,samples_per_class=samples)
