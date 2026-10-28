@@ -832,7 +832,7 @@
     },
     {
       "path": "docs/progress/ABD_PROGRESS.md",
-      "sha": "f32e5da0d37b1de7124384f9f09b5e4765cc025d",
+      "sha": "e04532d642aa3c7430e195ebd5514d99db0c7eb8",
       "reason": "add independent implementation evidence policy while preserving release v1; pinned historical source/test/CI evidence"
     },
     {
@@ -877,7 +877,7 @@
     },
     {
       "path": "tests/authorization/run_dm_model.sh",
-      "sha": "f096fb2e5f60dc4092cbc610358af2176cade0fa",
+      "sha": "c5739bb5533d04b9bf27b85948539e036f7e6071",
       "reason": "reviewed disposable dm_model authorization proposal; never authentic schema or production migration"
     },
     {
@@ -887,7 +887,7 @@
     },
     {
       "path": "docs/qa/selected-abd-20261026/authorization-review.md",
-      "sha": "47ceff5e887f23971d3e98f31bee1e75ffbfea23",
+      "sha": "67bf7ce64796d8663a513e637bbf3368ce7e8d77",
       "reason": "reviewed disposable dm_model authorization proposal; never authentic schema or production migration"
     },
     {

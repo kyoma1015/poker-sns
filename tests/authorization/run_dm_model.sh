@@ -5,7 +5,7 @@ model_container="abd-dm-model-${GITHUB_RUN_ID:-local}-${RANDOM}"
 cleanup() { timeout 20s docker rm -f "$model_container" >/dev/null 2>&1 || true; }
 trap cleanup EXIT
 docker run -d --name "$model_container" --network none --memory 512m --cpus 1 \
- -e POSTGRES_HOST_AUTH_METHOD=trust postgres:17 >/dev/null
+ -e POSTGRES_HOST_AUTH_METHOD=trust postgres:17@sha256:b8faeff7712663c2773a190181e1246e37e364b887611c04658c28b44e2408fe >/dev/null
 ready=0
 for attempt in {1..30}; do
  if docker exec "$model_container" pg_isready -U postgres >/dev/null 2>&1; then ready=1; break; fi
