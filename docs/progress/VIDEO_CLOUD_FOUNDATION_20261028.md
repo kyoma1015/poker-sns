@@ -1,0 +1,6 @@
+# Cloud foundation implementation — NOT APPLIED
+2026-10-28. Current change adds review-only dedicated-cloud allowlist, immutable manifest reservation, owner JWT RPC and private Storage foundation.
+Preconditions: separate empty test database, caller-controlled target attestation video.cloud_test_project_ref equals hbhyuotzginwysrineyo, empty Storage, no existing user posts. Never run against production.
+Each user is denied until an administrator enables their allowlist entry. Authenticated clients receive no access to private tables. Reservation is serialized per owner, manifest exact-match replay only, one-hour deadline, permanent maximum 10 test reservations per owner. Bucket is private with 20MiB MP4/WebM limits; no UPDATE or DELETE policies added.
+NOT COMPLETE: 30-second ffprobe/HMAC publication, nonce transaction, posts schema, authenticated media RPC/API integration, safe key provisioning and real isolated integration tests. Thus this SQL is NOT a deployable completed video backend. No cloud application performed.
+Local environment lacks PostgreSQL client/server and Docker; no SQL execution claimed. Next: dedicated isolated CI database exercise including actual Auth/Storage before any test-cloud application. Existing successful CI is not proof for this new foundation.
