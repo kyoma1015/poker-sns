@@ -7,11 +7,11 @@ import { VIDEO_SERVER_ENABLED, reserveVideoObjectPath } from './videoApi'
 
 export const MAX_VIDEO_BYTES = 20 * 1024 * 1024
 export const MAX_VIDEO_SECONDS = 30
-export const VIDEO_TYPES = ['video/mp4', 'video/webm'] as const
+export const VIDEO_TYPES = ['video/mp4', 'video/webm', 'video/quicktime'] as const
 export const VIDEO_BUCKET = 'post-videos'
 
 export function validateVideoFile(file: Pick<File, 'type' | 'size'>): string | null {
-  if (!VIDEO_TYPES.includes(file.type as (typeof VIDEO_TYPES)[number])) return '動画はMP4またはWebM形式にしてください。'
+  if (!VIDEO_TYPES.includes(file.type as (typeof VIDEO_TYPES)[number]) || (file.type === 'video/quicktime' && import.meta.env.VITE_VIDEO_CLOUD_TEST_ENABLED !== 'true')) return '動画はMP4・WebM形式（動画テストではMOVも可）にしてください。'
   if (file.size <= 0 || file.size > MAX_VIDEO_BYTES) return '動画は20MB以内にしてください。'
   return null
 }
@@ -73,7 +73,7 @@ export async function uploadPostVideo(userId: string, file: File, signal?: Abort
   let record = reservedUploads.get(file)
   if (record && record.owner !== user.id) throw new Error('ログイン情報を確認してください。')
   if (!record) {
-    const ext = file.type === 'video/mp4' ? 'mp4' : 'webm'
+    const ext = file.type === 'video/mp4' ? 'mp4' : file.type === 'video/quicktime' ? 'mov' : 'webm'
     const path = `${user.id}/${crypto.randomUUID()}.${ext}`
     // Only a confirmed reservation may ever send bytes. Never retry an
     // ambiguous reservation; its key remains consumed without an upload.
