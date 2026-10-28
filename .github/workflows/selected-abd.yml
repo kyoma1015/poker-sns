@@ -32,6 +32,8 @@ jobs:
         env:
           CHROMIUM_PATH: /usr/bin/google-chrome
         run: node scripts/run-selected-abd.mjs
+      - name: Disposable DM authorization proposal (synthetic schema, real Postgres)
+        run: timeout 180s bash tests/authorization/run_dm_model.sh
       - name: Emit measured progress snapshot with actual Git HEAD
         run: node scripts/measure-abd-progress.mjs > "$RUNNER_TEMP/abd-progress.json"
       - run: npm run build

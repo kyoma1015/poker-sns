@@ -859,6 +859,36 @@
       "path": "tests/direct-message-data.test.mjs",
       "sha": "8628b18a99186b2ff03fd96d27bf1361344542c8",
       "reason": "validate existing DirectMessage DTO and conversation participants; not server RLS proof"
+    },
+    {
+      "path": "tests/authorization/dm_model_setup.sql",
+      "sha": "7250899a001e1d54e4c3c2b54c031684c5b223c9",
+      "reason": "reviewed disposable dm_model authorization proposal; never authentic schema or production migration"
+    },
+    {
+      "path": "tests/authorization/dm_policy_candidate.sql",
+      "sha": "22ac9b393118ceaa81973ebee155d2ab604d881f",
+      "reason": "reviewed disposable dm_model authorization proposal; never authentic schema or production migration"
+    },
+    {
+      "path": "tests/authorization/dm_model_acceptance.sql",
+      "sha": "532ab8ebac46e9cc016aafd31203cfd0f085fc24",
+      "reason": "reviewed disposable dm_model authorization proposal; never authentic schema or production migration"
+    },
+    {
+      "path": "tests/authorization/run_dm_model.sh",
+      "sha": "f096fb2e5f60dc4092cbc610358af2176cade0fa",
+      "reason": "reviewed disposable dm_model authorization proposal; never authentic schema or production migration"
+    },
+    {
+      "path": "tests/authorization/dm_weak_model_reproduction.sql",
+      "sha": "87b42009370606950b2691590446bc961ddc61ff",
+      "reason": "reviewed disposable dm_model authorization proposal; never authentic schema or production migration"
+    },
+    {
+      "path": "docs/qa/selected-abd-20261026/authorization-review.md",
+      "sha": "47ceff5e887f23971d3e98f31bee1e75ffbfea23",
+      "reason": "reviewed disposable dm_model authorization proposal; never authentic schema or production migration"
     }
   ],
   "overrides": [

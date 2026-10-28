@@ -1,0 +1,35 @@
+# ABD authorization review — 2026-10-28
+Reference source: PR125 at283acb9d7ed3099b0121f1ddb57c3e34d454cf22. This is a review and a disposable proposal, NOT a production migration.
+## Evidence boundary
+The complete recursive tree (truncated=false) and source files were read through GitHub. This ref contains SQL for poll and Poker ID cards, but no authoritative direct_messages/user_blocks/profiles DDL, ACL/policy snapshot, or diagnosis RPC definitions was identified in that SQL set. This does not establish that the live DB has no RLS. Runtime schema, inherited roles, grants, default privileges, policies, views, functions and applied SQL remain UNKNOWN.
+No database connection, production query, Storage write, local shell retry, held-state access/write, deployment, merge or GTO change was performed by the host.
+## DM
+DirectMessageChat.tsx:99-132 acknowledges with UPDATE(read_at), receiver/sender filters and a fresh getUser. :215 onward reads direct_messages; :427 rechecks before INSERT. DirectMessages.tsx filters participants in client. There is no DM RPC call in these two components. These filters cannot constrain a hostile REST/SQL client.
+The following are risk hypotheses pending real catalog, NOT verified live vulnerabilities:
+- participant-only UPDATE RLS plus table UPDATE grants permits recipient content/participant reassignment;
+- sender_id INSERT validation alone does not prevent forged read_at/created_at, self-send or block bypass;
+- another permissive policy, inherited/PUBLIC/table ACL, view or SECURITY DEFINER RPC can bypass an otherwise correct policy;
+- getUser before a write is not atomic with session changes or server block checks.
+## Disposable proposal and fixed acceptance
+tests/authorization/* uses dm_model, model_authenticated/model_anon and an explicit model.subject GUC. It does not reproduce Supabase Auth/JWT/PostgREST/Realtime or claim authentic schema parity.
+The weak comparison fixture grants broad UPDATE with receiver USING+WITH CHECK. The fixed reproduction rewrites sender content as receiver, checks it and ROLLBACKs. The same fixed acceptance must reject this broad grant. The candidate revokes table AND column ACLs, grants only read_at UPDATE and sender/receiver/content INSERT, keeps receiver RLS and checks both block directions on INSERT. No DELETE grant.
+Candidate tests: recipient read/ack; sender read/no ack; third-party read/no ack; content/sender/receiver mutation denial; forged sender/read timestamp denial; valid send; both block directions; absent identity and anonymous denial; rollback plus committed-row integrity. No test runs as table owner except fixture setup/final integrity check; actor roles are NOSUPERUSER/NOBYPASSRLS.
+This is only a proposed minimum contract. Historical-blocked-message visibility, repeated/monotonic read_at semantics, server timestamps, idempotency, retention and notification policy require approved contracts. No production SQL is deployable until a sanitized real catalog receipt and role matrix agree. Existing SQL files are untouched.
+## SNS ownership/Storage review
+- PostDetail.tsx:527-550 constrains comment DELETE by id/user_id and returns deleted rows before removing only current user's comment-images paths; this is client defense, not Storage ACL proof.
+- Timeline.tsx:1143-1146 constrains post DELETE by id/user_id; :896 uploads post-images, :898/:922 attempts cleanup. profiles/upsert at ProfileEdit.tsx:1032 and avatar uploads :928 require real owner RLS and bucket path ACLs.
+- PlayerProfile.tsx:334-356 uses cached currentUserId for block/mute mutation; :365-405 follows and notification insert are multi-await writes. Account switch/late completion risks require dedicated fixed browser evidence before edits, not speculative changes to protected sources.
+- Timeline.tsx:1039 and PlayerProfile.tsx:380 create notifications directly. F03/event authenticity, forged actor, duplicate and old-client INSERT paths require existing notification owner review; this batch does not change grants.
+- Notifications.tsx:106-114 already freshly revalidates identity and receiver-filtered read acknowledgements; still needs column ACL/RLS proof.
+- Existing sql/poker_id_card_og_storage.sql declares private bucket and owner path policies for SELECT/INSERT/UPDATE. It is not an applied catalog receipt; existing permissive policies/public bucket settings may alter enforcement. No DELETE policy declared. Avatars/post-images/comment-images policies were not established from this SQL.
+- Public URLs can remain readable independently of object SELECT policy if a bucket is public. Never promise revocation/privacy from client URL filtering. Need catalog bucket public flags, limits, grants and all policies plus signed/public URL API tests.
+## Diagnosis
+PlayerTypeDiagnosis.tsx calls get_player_type_v2_questions(:209), complete_player_type_v2_diagnosis(:313), get_player_type_v2_result_detail(:369), is_my_player_type_v2_result(:379), and inserts posts(:525). Actual underlying relations and RPC security/execute ACLs UNKNOWN. Required: owner derived from authenticated subject, public-or-owner result access, 50 distinct allowed question options, result-link authorization, RPC/view direct calls as A/B/C/anon. Do not change private-v2 design or p_is_public here.
+## Missing source and WIP protection
+No new official350 question/export/key/translation/row-review receipt or classifier/threshold/tie/expert artifact obtained. TDA_ORIGINALS and DIAG_CLASSIFIER remain BLOCKED.
+PlayerSearch WIP /workspace/work/issue22-published-A-99587abe and payload WIP /workspace/work/issue22-published-D-73baccf2 remain UNRECOVERED, not recreated. HeldSQLite remains inaccessible and unchanged by this work; old45/43/2/0 are historical, not a fresh measurement.
+## Release and resume gates
+Five OPEN categories remain ENV_CAPACITY, REAL_AUTH_RLS, TDA_ORIGINALS, DIAG_CLASSIFIER, SNS_FULL_QA. Model PASS must never close REAL_AUTH_RLS or promote any of32 product gates.
+Obtain sanitized version/hash catalog receipt (no data/keys/backups): tables/columns/constraints/indexes, table+column+inherited ACLs/default grants, all policies, function definitions/security/search_path/execute ACLs, views/dependencies, Storage metadata/policies. Use only a confirmed disposable auth environment for real REST/RPC/Realtime A/B/C/anon matrix. No production access requested.
+Environment recovery needs management-side non-destructive capacity/inode repair preserving worktrees/WIP/SQLite/QA. Next local check only after repair confirmation. AUTO-RESUME OFF; independent startup UNKNOWN; poll NO-GO.
+Official references reviewed: https://supabase.com/docs/guides/database/postgres/row-level-security and https://supabase.com/docs/guides/database/postgres/column-level-security . RLS controls rows, not column privileges; grants are additive. Current docs explicitly describe USING fallback for omitted WITH CHECK; this review does not claim omission alone always permits ownership change.
