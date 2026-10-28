@@ -20,12 +20,12 @@ create table video_cloud.reservations(
  path text primary key, owner_id uuid not null references auth.users(id),
  sha256 text not null check(sha256 ~ '^[0-9a-f]{64}$'),
  size bigint not null check(size between 1 and 20971520),
- mime text not null check(mime in ('video/mp4','video/webm')),
+ mime text not null check(mime in ('video/mp4','video/webm','video/quicktime')),
  content text not null check(length(content)<=10000),
  created_at timestamptz not null default clock_timestamp(),
  expires_at timestamptz not null default clock_timestamp()+interval '1 hour',
- check(path ~ ('^'||owner_id::text||'/[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}[.](mp4|webm)$')),
- check((mime='video/mp4' and path like '%.mp4') or (mime='video/webm' and path like '%.webm'))
+ check(path ~ ('^'||owner_id::text||'/[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}[.](mp4|webm|mov)$')),
+ check((mime='video/mp4' and path like '%.mp4') or (mime='video/webm' and path like '%.webm') or (mime='video/quicktime' and path like '%.mov'))
 );
 alter table video_cloud.allowed_users enable row level security;
 alter table video_cloud.reservations enable row level security;
@@ -68,7 +68,7 @@ $$;
 revoke all on function public.video_cloud_upload_allowed(text) from public,anon,service_role;
 grant execute on function public.video_cloud_upload_allowed(text) to authenticated;
 insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types)
-values('post-videos','post-videos',false,20971520,array['video/mp4','video/webm']);
+values('post-videos','post-videos',false,20971520,array['video/mp4','video/webm','video/quicktime']);
 create policy video_cloud_insert on storage.objects for insert to authenticated
 with check(bucket_id='post-videos' and owner_id=auth.uid()::text and public.video_cloud_upload_allowed(name));
 create policy video_cloud_read on storage.objects for select to authenticated
