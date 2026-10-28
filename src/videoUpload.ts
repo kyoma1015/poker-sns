@@ -1,3 +1,4 @@
+import { assertCurrentVideoCloudTestClient } from './videoCloudTestGuard'
 import { bindVideoRecoveryCandidate, VIDEO_RECOVERY_CANDIDATE_ENABLED } from './videoRecoveryCandidate'
 import { beginVideoTransfer, confirmVideoReservation, isVideoTransferBlocked, setVideoTransferPhase, VideoTransferRecoveryRequiredError, type VideoTransferRecord } from './videoTransferJournal'
 import { withVideoUploadRequest } from './videoUploadTransport'
@@ -60,6 +61,7 @@ const reservedUploads = new WeakMap<File, { owner: string; path: string; attempt
 
 /** Staged only: caller must enforce server-side duration and reviewed RLS before enabling. */
 export async function uploadPostVideo(userId: string, file: File, signal?: AbortSignal, recoveryContent?: string): Promise<string> {
+  assertCurrentVideoCloudTestClient()
   if (!VIDEO_SERVER_ENABLED) throw new Error('動画投稿は安全確認待ちです。')
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   signal?.throwIfAborted()
@@ -101,6 +103,7 @@ export async function uploadPostVideo(userId: string, file: File, signal?: Abort
   record.attempted = true
   const { path } = record
   try {
+    assertCurrentVideoCloudTestClient()
     const { error } = await withVideoUploadRequest(path, signal, () =>
       supabase.storage.from(VIDEO_BUCKET).upload(path, file, { contentType: file.type, upsert: false }))
     signal?.throwIfAborted()

@@ -1,3 +1,4 @@
+import { assertCurrentVideoCloudTestClient } from './videoCloudTestGuard'
 import { supabase } from './supabase'
 import { readVideoResponse } from './videoMedia'
 
@@ -16,6 +17,7 @@ async function authHeader(signal?: AbortSignal): Promise<string> {
 }
 
 export async function finalizeUploadedVideo(objectPath: string, content: string, signal?: AbortSignal): Promise<string> {
+  assertCurrentVideoCloudTestClient()
   if (!VIDEO_SERVER_ENABLED) throw new Error('動画投稿はサーバーAPIの安全確認待ちです。')
   const response = await fetch(VIDEO_FINALIZE_ROUTE, {
     method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: await authHeader(signal) },
@@ -34,6 +36,7 @@ export async function finalizeUploadedVideo(objectPath: string, content: string,
 /** Reserve an object path before ANY Storage write. The server is the sole
  * trusted caller of the permanent-key ledger. Never retry a rejected key. */
 export async function reserveVideoObjectPath(objectPath: string, signal?: AbortSignal): Promise<void> {
+  assertCurrentVideoCloudTestClient()
   if (!VIDEO_SERVER_ENABLED) throw new Error('動画投稿はサーバーAPIの安全確認待ちです。')
   const response = await fetch(VIDEO_FINALIZE_ROUTE, {
     method: 'POST',
@@ -51,6 +54,7 @@ export async function reserveVideoObjectPath(objectPath: string, signal?: AbortS
 
 /** Requires server-side JWT/RLS check per request; never uses a signed URL. */
 export async function loadAuthorizedVideo(postId: string): Promise<string> {
+  assertCurrentVideoCloudTestClient()
   if (!VIDEO_SERVER_ENABLED) throw new Error('動画再生APIは安全確認待ちです。')
   if (!/^[0-9a-f-]{36}$/i.test(postId)) throw new Error('投稿IDが不正です。')
   const response = await fetch(`${VIDEO_MEDIA_ROUTE}/${encodeURIComponent(postId)}`, {
