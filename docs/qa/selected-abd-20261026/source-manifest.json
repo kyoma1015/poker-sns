@@ -804,7 +804,8 @@
     "tests/tda-next-navigation.test.mjs",
     "tests/abd-progress.test.mjs",
     "scripts/repeat-tda-acceptance.mjs",
-    "tests/direct-message-data.test.mjs"
+    "tests/direct-message-data.test.mjs",
+    "tests/poker-id-image-auth.test.mjs"
   ],
   "browser_suites": [
     "tests/selected/direct-message-inbox.test.mjs",
@@ -899,6 +900,16 @@
       "path": "tests/authorization/check_dm_preflight.sh",
       "sha": "cbc8a1c76fa550872f4a8f13df894c87b9844592",
       "reason": "fixed refusal and atomic rollback acceptance for inherited ACL/extra policy/unsafe actor in disposable dm_model only"
+    },
+    {
+      "path": "tests/poker-id-image-auth.test.mjs",
+      "sha": "d89ecee8c73faded931c41907c710b0f763aa163",
+      "reason": "fixed synthetic-handler tests for card-visibility response before private Storage fetch; all fetches blocked/replaced"
+    },
+    {
+      "path": "api/poker-id-image.ts",
+      "sha": "37b8933fa4a720d33113a56273b1b2fb7a9155fe",
+      "reason": "reviewed public image endpoint authorization; fixed response validation only, real DB/Storage not proved"
     }
   ],
   "overrides": [
