@@ -1,12 +1,12 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
-import { resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-// Keep the existing SNS entry and a separate, minimal cloud-video test entry.
+// Separate mobile cloud-test entry; no production feature flag is changed.
 export default defineConfig({
   plugins: [react()],
   build: { rollupOptions: { input: {
-    main: resolve(__dirname, 'index.html'),
-    cloudTest: resolve(__dirname, 'cloud-video-test.html'),
+    main: fileURLToPath(new URL('./index.html', import.meta.url)),
+    cloudTest: fileURLToPath(new URL('./cloud-video-test.html', import.meta.url)),
   } } },
 })
