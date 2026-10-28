@@ -2,6 +2,7 @@ name: Video SQL isolated QA
 on:
   pull_request:
     paths:
+      - 'sql/video_cloud_test_foundation.sql'
       - 'sql/post_short_videos_candidate.sql'
       - 'sql/video_permanent_key_reservation_review_only.sql'
       - 'tests/video/run_isolated.sh'

@@ -2,6 +2,7 @@ name: Video Storage HTTP isolated QA
 on:
   pull_request:
     paths:
+      - 'sql/video_cloud_test_foundation.sql'
       - 'tests/video/**'
       - 'server/video-recovery-candidate.ts'
       - 'api/video-*.ts'
