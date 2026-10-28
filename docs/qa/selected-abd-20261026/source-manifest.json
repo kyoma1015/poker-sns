@@ -880,7 +880,7 @@
     },
     {
       "path": "tests/selected/direct-message-send.test.mjs",
-      "sha": "e260c8c87e2f06308930a3c6b29b1f1f47ee6319",
+      "sha": "3802cbca4f551cd0330ad171932ab3c83e65f7ba",
       "origin_blob": "12ce7b7e54dd1d64ffcc95a64057c8ca1a1c8227",
       "reason": "append fixed conversation-participant response regression; preserved previous acceptance; synthetic-only transport extension; fixed delayed-profile auth acknowledgement acceptance"
     },

@@ -274,3 +274,27 @@ test('DM delayed valid profile still acknowledges the incoming conversation once
  await page.getByText('THIRD_SYNTHETIC',{exact:true}).waitFor()
  assert.equal(await page.evaluate(()=>window.dmQA.readUpdates),before+1)
 }))
+
+for(const mode of ['switched-account','auth-error','auth-rejected']){
+ test('DM send revalidates identity after block wait: '+mode,()=>withChat(async page=>{
+  await page.evaluate(()=>{window.dmQA.holdBlocks=true})
+  await enter(page)
+  await page.waitForFunction(()=>window.dmQA.checks.length===1)
+  await page.evaluate(mode=>{
+   if(mode==='switched-account')window.dmQA.userId='newme'
+   if(mode==='auth-error')window.dmQA.errorUserOnce=true
+   if(mode==='auth-rejected')window.dmQA.rejectUserOnce=true
+   window.dmQA.release()
+  },mode)
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))))
+  assert.equal(await page.evaluate(()=>window.dmQA.inserts.length),0,'unverified sender must issue no INSERT')
+  assert.doesNotMatch(await page.locator('body').innerText(),/SYNTHETIC_PRIVATE_AUTH/)
+ }))
+}
+test('DM delayed valid block check still sends one message',()=>withChat(async page=>{
+ await page.evaluate(()=>{window.dmQA.holdBlocks=true})
+ await enter(page);await page.waitForFunction(()=>window.dmQA.checks.length===1)
+ await page.evaluate(()=>window.dmQA.release())
+ await page.waitForFunction(()=>window.dmQA.inserts.length===1)
+ assert.equal(await page.evaluate(()=>window.dmQA.inserts.length),1)
+}))
