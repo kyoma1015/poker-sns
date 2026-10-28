@@ -22,7 +22,9 @@ apiurl="$(sed -n 's/^API_URL=//p' "$qa/local.env" | tr -d '\"')"
 dburl="$(grep '^DB_URL=' "$qa/local.env" | cut -d= -f2- | tr -d '"')"
 [[ "$dburl" == *"127.0.0.1:56322"* ]] || { echo 'BLOCKED: unexpected DB endpoint'; exit 2; }
 # Cloud foundation runs on a fresh stack BEFORE permissive QA policies.
+for source in api/video-*.ts; do ln -s "$(basename "$source")" "${source%.ts}.js"; done
 VIDEO_QA_ENV="$qa/local.env" node tests/video/cloud_foundation_http_e2e.mjs
+for source in api/video-*.ts; do rm -- "${source%.ts}.js"; done
 # Destroy only the disposable stack, then bootstrap the unrelated legacy suite.
 npx --yes supabase@2.81.3 stop --workdir tests/video/local-stack --no-backup >"$qa/reset.log" 2>&1
 npx --yes supabase@2.81.3 start --workdir tests/video/local-stack --exclude studio,imgproxy,mailpit,edge-runtime,realtime,vector,logflare >"$qa/restart.log" 2>&1

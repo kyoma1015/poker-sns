@@ -1,3 +1,4 @@
+import {verifyCloudHttp} from './cloud_http_browser_e2e.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
 import {execFileSync} from 'node:child_process'
@@ -10,6 +11,7 @@ assert.ok(env.DB_URL.includes('127.0.0.1:56322'))
 function sql(text){try{return execFileSync('psql',[env.DB_URL,'-X','-qAt','-v','ON_ERROR_STOP=1'],{input:text,stdio:['pipe','pipe','pipe']}).toString().trim()}catch{throw Error('cloud foundation SQL failed; raw diagnostic withheld')}}
 sql("set video.cloud_test_project_ref='hbhyuotzginwysrineyo';\n"+readFileSync('sql/video_cloud_test_foundation.sql','utf8'))
 sql("set video.cloud_test_project_ref='hbhyuotzginwysrineyo';\n"+readFileSync('sql/video_cloud_test_publish.sql','utf8'))
+sql("set video.cloud_test_project_ref='hbhyuotzginwysrineyo';\n"+readFileSync('sql/video_cloud_test_state.sql','utf8'))
 const signingKey=randomBytes(32)
 sql("insert into video_cloud.attestation_keys(key_id,secret,active) values(7,decode('"+signingKey.toString('hex')+"','hex'),true)")
 sql("notify pgrst,'reload schema'")
@@ -69,5 +71,6 @@ console.log('PASS: cloud foundation real Auth/RPC/Storage: allowlist, anonymous/
 assert.ok((await owner.rpc('video_cloud_publish_v1',params({...claims,nonce:randomBytes(16).toString('hex')}))).error)
 assert.equal(sql("select count(*) from video_cloud.consumed_nonces"),count)
 assert.equal(sql("select count(*) from public.posts"),'1')
+await verifyCloudHttp({owner,other,bytes,key,url:env.API_URL,signingKey,sql})
 signingKey.fill(0)
 console.log('PASS: cloud publication real ffprobe/SHA256/HMAC/Auth/Storage/RPC: owner-only posts, direct INSERT denied, tamper/nonce rejected, concurrent one-post convergence and expiry nonce rollback')

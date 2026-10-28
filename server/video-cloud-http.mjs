@@ -3,9 +3,11 @@ import {randomBytes} from 'node:crypto'
 import {assertCloudTestTarget} from './video-cloud-test-target.mjs'
 import {inspectStagedVideo} from '../api/video-preflight.js'
 import {signBinaryVideoAttestation,videoAttestationDigest} from './video-attestation.js'
-export async function handleCloudVideo(req,res) {
+export function createCloudVideoHandler(options = {}) {
+return async function handleCloudVideo(req,res) {
  try {
- const {url}=assertCloudTestTarget(process.env)
+ const local = options.isolatedLocalOnly === true && process.env.VITE_SUPABASE_URL === 'http://127.0.0.1:56321'
+ const {url}=local ? {url:'http://127.0.0.1:56321'} : assertCloudTestTarget(process.env)
  if(req.method!=='POST')return res.status(405).end()
  const auth=req.headers.authorization
  if(typeof auth!=='string'||!/^Bearer [A-Za-z0-9_.-]+$/.test(auth))return res.status(401).end()
@@ -41,3 +43,6 @@ export async function handleCloudVideo(req,res) {
  return res.status(201).json({post_id:r.data})
  }catch{return res.status(503).end()}
 }
+
+}
+export const handleCloudVideo = createCloudVideoHandler()
