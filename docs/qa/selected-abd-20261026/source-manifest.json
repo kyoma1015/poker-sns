@@ -867,7 +867,7 @@
     },
     {
       "path": "tests/authorization/dm_policy_candidate.sql",
-      "sha": "22ac9b393118ceaa81973ebee155d2ab604d881f",
+      "sha": "550ec0586e3d6b94279e5506f6f7edc3b0bb4ec8",
       "reason": "reviewed disposable dm_model authorization proposal; never authentic schema or production migration"
     },
     {
@@ -887,7 +887,7 @@
     },
     {
       "path": "docs/qa/selected-abd-20261026/authorization-review.md",
-      "sha": "67bf7ce64796d8663a513e637bbf3368ce7e8d77",
+      "sha": "f850799c8ce6453712c070b1f7dde62821e941e9",
       "reason": "reviewed disposable dm_model authorization proposal; never authentic schema or production migration"
     },
     {
