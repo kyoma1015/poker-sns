@@ -833,7 +833,7 @@
     },
     {
       "path": "docs/progress/ABD_PROGRESS.md",
-      "sha": "e04532d642aa3c7430e195ebd5514d99db0c7eb8",
+      "sha": "59b65b266f9e53ca0ef17405c55a5e93de12a4d0",
       "reason": "add independent implementation evidence policy while preserving release v1; pinned historical source/test/CI evidence"
     },
     {
@@ -888,7 +888,7 @@
     },
     {
       "path": "docs/qa/selected-abd-20261026/authorization-review.md",
-      "sha": "f850799c8ce6453712c070b1f7dde62821e941e9",
+      "sha": "4d6c43277189136b06876ef911c1ab0e2d407bd6",
       "reason": "reviewed disposable dm_model authorization proposal; never authentic schema or production migration"
     },
     {
@@ -908,7 +908,7 @@
     },
     {
       "path": "api/poker-id-image.ts",
-      "sha": "37b8933fa4a720d33113a56273b1b2fb7a9155fe",
+      "sha": "5c68077bb69182dd8af21003293058ef385964fe",
       "reason": "reviewed public image endpoint authorization; fixed response validation only, real DB/Storage not proved"
     }
   ],
