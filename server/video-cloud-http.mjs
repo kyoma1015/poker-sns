@@ -51,7 +51,18 @@ return async function handleCloudVideo(req,res) {
  const r=await client.rpc('video_cloud_publish_v1',{p_owner:uid,p_path:path,p_generation:c.generation,p_sha256:c.sha256,p_duration_ms:c.durationMs,p_content:content,p_expires_at:c.expiresAt,p_nonce:c.nonce,p_signature:signature,p_key_id:Number(process.env.VIDEO_CLOUD_TEST_HMAC_ID)})
  if(r.error) { console.warn('video-cloud-test', 'publish_rpc_rejected'); return res.status(409).json({error:'publish_rpc_rejected'}) }
  return res.status(201).json({post_id:r.data})
- }catch{ console.warn('video-cloud-test', 'finalize_failed', stage); return res.status(503).json({error:'cloud_finalize_failed',stage}) }
+ }catch(error){
+ const reason = error instanceof Error && [
+  'invalid stream structure', 'unsupported codec', 'invalid video dimensions',
+  'invalid container', 'invalid video duration', 'missing streams',
+  'ffprobe unavailable', 'ffprobe rejected video', 'ffprobe timeout',
+  'invalid video size', 'downloaded bytes do not match expected object size',
+  'ffprobe binary path must be absolute', 'invalid ffprobe JSON',
+  'invalid ffprobe result', 'ffprobe output too large', 'ffprobe error output too large',
+ ].includes(error.message) ? error.message : 'unclassified'
+ console.warn('video-cloud-test', 'finalize_failed', stage, reason)
+ return res.status(503).json({error:'cloud_finalize_failed',stage,reason})
+ }
 }
 
 }
