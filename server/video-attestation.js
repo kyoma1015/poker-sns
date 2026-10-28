@@ -6,7 +6,7 @@ const digest=/^[0-9a-f]{64}$/
 const noncePattern=/^[0-9a-f]{32}$/
 export function canonicalVideoAttestation(c) {
   if (!uuid.test(c.owner) || !uuid.test(c.generation) ||
-    !new RegExp('^'+c.owner+'/[0-9a-f-]{36}\\.(mp4|webm|mov)$').test(c.path) ||
+    !new RegExp('^'+c.owner+'/[0-9a-f-]{36}\\.(mp4|webm|mov) ||
     !digest.test(c.sha256) || !digest.test(c.contentSha256) ||
     !Number.isSafeInteger(c.durationMs) || c.durationMs<=0 || c.durationMs>30000 ||
     !Number.isSafeInteger(c.expiresAt) || c.expiresAt<=0 ||
