@@ -10,14 +10,7 @@ import {
 } from 'react-router-dom'
 import { supabase } from './supabase'
 
-type DirectMessage = {
-  id: string
-  sender_id: string
-  receiver_id: string
-  content: string
-  created_at: string
-  read_at: string | null
-}
+import { conversationMessages, isDirectMessageForConversation, type DirectMessage } from './directMessageData'
 
 function DirectMessageChat() {
   const { userId } = useParams()
@@ -238,12 +231,7 @@ function DirectMessageConversation({ userId, accountId, authIdentity }: {
         throw new Error('MESSAGE_READ_FAILED')
       }
 
-      // Defense in depth: never render rows outside the requested participant
-      // pair, even if a stale/misconfigured response contains extra conversations.
-      // This does not replace server-side RLS.
-      setMessages((dmData || []).filter((row: DirectMessage) => row &&
-        ((row.sender_id === accountId && row.receiver_id === userId) ||
-          (row.sender_id === userId && row.receiver_id === accountId))))
+      setMessages(conversationMessages(dmData, accountId, userId))
       setStatusMessage('')
 
       scrollToBottom('auto')
@@ -290,6 +278,7 @@ function DirectMessageConversation({ userId, accountId, authIdentity }: {
           ) {
             const newMessage =
               payload.new as DirectMessage
+            if (!isDirectMessageForConversation(newMessage, currentUserId, userId)) return
 
             const belongsToConversation =
               (newMessage.sender_id ===
@@ -330,6 +319,7 @@ function DirectMessageConversation({ userId, accountId, authIdentity }: {
           ) {
             const updatedMessage =
               payload.new as DirectMessage
+            if (!isDirectMessageForConversation(updatedMessage, currentUserId, userId)) return
 
             const belongsToConversation =
               (updatedMessage.sender_id ===
