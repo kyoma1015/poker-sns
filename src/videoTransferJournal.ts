@@ -69,7 +69,7 @@ export function readVideoTransferHint(owner:string) {
   if(raw===null||raw.length>4096) throw new VideoTransferRecoveryRequiredError()
   const hint=JSON.parse(raw)
   if(!hint||hint.owner!==owner||typeof hint.path!=='string'||
-    !new RegExp('^'+owner+'/[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}\\.(mp4|webm)$').test(hint.path)||
+    !new RegExp('^'+owner+'/[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}\\.(mp4|webm|mov)$').test(hint.path)||
     typeof hint.sha256!=='string'||!/^[0-9a-f]{64}$/.test(hint.sha256)||
     !Number.isSafeInteger(hint.size)||hint.size<1||hint.size>20971520) throw new VideoTransferRecoveryRequiredError()
   return {path:hint.path as string,sha256:hint.sha256 as string,size:hint.size as number,raw}
