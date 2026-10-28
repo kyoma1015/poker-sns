@@ -10,6 +10,7 @@ export type VideoExtension = 'mp4' | 'webm'
 type ProbeStream = {
   codec_type?: string
   codec_name?: string
+  codec_tag_string?: string
   width?: number
   height?: number
   duration?: string
@@ -80,7 +81,13 @@ export async function probeVideoBytes(bytes: Buffer, extension: VideoExtension):
   if (!Array.isArray(streams)) throw new Error('missing streams')
   const videos = streams.filter(s => s.codec_type === 'video')
   const audios = streams.filter(s => s.codec_type === 'audio')
-  if (videos.length !== 1 || audios.length > 1 || streams.length !== videos.length + audios.length) {
+  // Apple QuickTime MOV may carry a dedicated timed-metadata (mebx) data track.
+  // This track is not playable content; do not accept arbitrary extra streams.
+  const dataTracks = streams.filter(s => s.codec_type === 'data')
+  const auxiliaryAllowed = extension === 'mp4' &&
+    dataTracks.every(s => s.codec_tag_string === 'mebx' || s.codec_tag_string === 'mdta')
+  if (videos.length !== 1 || audios.length > 1 || !auxiliaryAllowed ||
+      streams.length !== videos.length + audios.length + dataTracks.length) {
     throw new Error('invalid stream structure')
   }
   const videoCodecs = extension === 'mp4' ? ['h264', 'hevc', 'av1'] : ['vp8', 'vp9', 'av1']
@@ -98,7 +105,8 @@ export async function probeVideoBytes(bytes: Buffer, extension: VideoExtension):
   const formats = (metadata.format?.format_name || '').split(',')
   if (extension === 'mp4' ? !formats.some(f => f === 'mp4' || f === 'mov') :
     !formats.includes('matroska')) throw new Error('invalid container')
-  const durations = [metadata.format?.duration, ...streams.map(s => s.duration)]
+  // Ignore ancillary timed-metadata durations; bound the actual audio/video and format.
+  const durations = [metadata.format?.duration, ...videos.map(s => s.duration), ...audios.map(s => s.duration)]
     .filter((value): value is string => typeof value === 'string').map(Number)
   if (!durations.length || durations.some(n => !Number.isFinite(n) || n <= 0 || n > MAX_VIDEO_SECONDS)) {
     throw new Error('invalid video duration')
