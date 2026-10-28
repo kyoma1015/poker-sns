@@ -1,0 +1,23 @@
+name: ABD disposable authorization proposal
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'tests/authorization/**'
+      - 'docs/qa/selected-abd-20261026/**'
+      - '.github/workflows/abd-authorization.yml'
+permissions:
+  contents: read
+concurrency:
+  group: abd-auth-model-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Synthetic DM contract, real isolated Postgres
+        run: timeout 180s bash tests/authorization/run_dm_model.sh

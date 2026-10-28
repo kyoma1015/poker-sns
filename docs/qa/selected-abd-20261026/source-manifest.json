@@ -889,6 +889,11 @@
       "path": "docs/qa/selected-abd-20261026/authorization-review.md",
       "sha": "47ceff5e887f23971d3e98f31bee1e75ffbfea23",
       "reason": "reviewed disposable dm_model authorization proposal; never authentic schema or production migration"
+    },
+    {
+      "path": ".github/workflows/abd-authorization.yml",
+      "sha": "076d94a966d798b222136721259eb9ffd66f92ff",
+      "reason": "bounded read-only CI executes synthetic schema in disposable no-network Postgres; preserves original workflow bytes"
     }
   ],
   "overrides": [
