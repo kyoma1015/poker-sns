@@ -17,7 +17,7 @@ return async function handleCloudVideo(req,res) {
  const identity=async()=>{const {data,error}=await client.auth.getUser(auth.slice(7));if(error||!data.user)throw Error('identity');const a=await client.rpc('video_cloud_allowed');if(a.error||a.data!==true)throw Error('allowlist');return data.user.id}
  const uid=await identity()
  const path=body.object_path
- if(typeof path!=='string'||!new RegExp('^'+uid+'/[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}[.](mp4|webm)$').test(path))return res.status(403).end()
+ if(typeof path!=='string'||!new RegExp('^'+uid+'/[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}[.](mp4|webm|mov)$').test(path))return res.status(403).end()
  if(body.action==='reserve'){
  const r=await client.rpc('video_cloud_reserve',{p_path:path,p_sha256:body.sha256,p_size:body.size,p_mime:body.type,p_content:body.content})
  if(r.error)return res.status(409).end()
@@ -31,7 +31,7 @@ return async function handleCloudVideo(req,res) {
  if(!media.ok||!media.body||media.headers.get('content-type')?.split(';')[0]!==before.mime)throw Error('media')
  const reader=media.body.getReader(),chunks=[];let size=0
  try{while(true){const r=await reader.read();if(r.done)break;size+=r.value.length;if(size>20971520)throw Error('size');chunks.push(Buffer.from(r.value))}}finally{await reader.cancel().catch(()=>{})}
- const probe=await inspectStagedVideo(Buffer.concat(chunks),path.endsWith('.mp4')?'mp4':'webm',before.size)
+ const probe=await inspectStagedVideo(Buffer.concat(chunks),path.endsWith('.webm')?'webm':'mp4',before.size)
  if(probe.sha256!==before.sha256||await identity()!==uid||JSON.stringify(await state())!==JSON.stringify(before))throw Error('changed')
  const key=process.env.VIDEO_CLOUD_TEST_HMAC_HEX
  if(!/^[0-9a-f]{64}$/.test(key||''))throw Error('key')
