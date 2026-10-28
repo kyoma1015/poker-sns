@@ -832,7 +832,7 @@
     },
     {
       "path": "docs/progress/ABD_PROGRESS.md",
-      "sha": "fb0cababa8a116cc723aca7a145a88c75362f8e2",
+      "sha": "a0928b5913263b633c5d54243d4976a47a9df12f",
       "reason": "add independent implementation evidence policy while preserving release v1; pinned historical source/test/CI evidence"
     },
     {
@@ -842,7 +842,7 @@
     },
     {
       "path": "tests/abd-progress.test.mjs",
-      "sha": "040dbb35408306b184c4f34c67e78c2dd35edd35",
+      "sha": "8513bac3be45b18c230e3a786a2ab3abe0f4105d",
       "reason": "add independent implementation evidence policy while preserving release v1; pinned historical source/test/CI evidence"
     },
     {

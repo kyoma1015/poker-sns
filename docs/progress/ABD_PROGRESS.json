@@ -448,7 +448,7 @@
       "label": "外部必須チェック・公開条件",
       "required": true,
       "source_paths": [],
-      "gap": "Vercel rate limit FAIL、権限回避・課金なし"
+      "gap": "Vercel PR check success observed at f6eff90; wider release conditions remain unmet"
     }
   ],
   "baseline_snapshot": {
@@ -1075,6 +1075,799 @@
     "note": "first retrospective baseline under frozen v1 policy; earlier reports had no comparable completion percentage"
   },
   "current_snapshot": {
+    "id": "current-v1",
+    "at": "2026-10-28T01:09:41Z",
+    "assessed_commit": "f6eff90b2b04347897a65369a34dda229fd9c8f5",
+    "features": {
+      "sns.timeline": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.posts": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.comments": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.images": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.repost": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.follow": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.notifications": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.dm": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth",
+          "fixed participant query response: before 1PASS/2FAIL CI40359352861; after3PASS CI40611378547 at b5a103ee9ba8992c993626313049e967e3c415d0; no RLS proof",
+          "typed query/realtime crash guard: before0PASS/2FAIL CI40612457277; after2PASS CI40612843054; all24 browser and17 helper cases passed"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.profiles": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.records": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.search": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.tags": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.video": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.mobile": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.store_tournament": {
+        "status": "UNKNOWN",
+        "evidence": [],
+        "release_gates": {
+          "scope": null,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.dealer": {
+        "status": "UNKNOWN",
+        "evidence": [],
+        "release_gates": {
+          "scope": null,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.rating": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.quality": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "sns.polls": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "tda.official": {
+        "status": "UNKNOWN",
+        "evidence": [],
+        "release_gates": {
+          "scope": null,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "tda.integrity": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "tda.quiz": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "tda.history": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "tda.search": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "tda.recovery": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "diag.questions": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "diag.scores": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "diag.classifier": {
+        "status": "UNKNOWN",
+        "evidence": [],
+        "release_gates": {
+          "scope": null,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "diag.payload": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "diag.account_share": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "diag.png_mobile": {
+        "status": "隔離テスト合格",
+        "evidence": [
+          "PR125 selected fixture/regression evidence; not real production auth"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "diag.profile": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "audit.inventory": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "audit.dependencies": {
+        "status": "統合確認済み",
+        "evidence": [
+          "https://github.com/kyoma1015/poker-sns/pull/125",
+          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799702",
+          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799298"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": true,
+          "release_review": null
+        }
+      },
+      "audit.authorization": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "audit.state": {
+        "status": "UNKNOWN",
+        "evidence": [],
+        "release_gates": {
+          "scope": null,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "audit.release_record": {
+        "status": "統合確認済み",
+        "evidence": [
+          "https://github.com/kyoma1015/poker-sns/pull/125",
+          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799702",
+          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799298"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": true,
+          "release_review": null
+        }
+      },
+      "integration.scope": {
+        "status": "統合確認済み",
+        "evidence": [
+          "https://github.com/kyoma1015/poker-sns/pull/125",
+          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799702",
+          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799298"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": true,
+          "release_review": null
+        }
+      },
+      "integration.tests": {
+        "status": "統合確認済み",
+        "evidence": [
+          "https://github.com/kyoma1015/poker-sns/pull/125",
+          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799702",
+          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799298"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": true,
+          "release_review": null
+        }
+      },
+      "integration.frontend": {
+        "status": "統合確認済み",
+        "evidence": [
+          "https://github.com/kyoma1015/poker-sns/pull/125",
+          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799702",
+          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799298"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": true,
+          "isolated_qa": true,
+          "db_auth": null,
+          "integration": true,
+          "release_review": null
+        }
+      },
+      "integration.auth": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "integration.wip": {
+        "status": "実装中",
+        "evidence": [],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      },
+      "integration.external": {
+        "status": "実装中",
+        "evidence": [
+          "https://api.github.com/repos/kyoma1015/poker-sns/commits/f6eff90b2b04347897a65369a34dda229fd9c8f5/status Vercel success; not release permission"
+        ],
+        "release_gates": {
+          "scope": true,
+          "implementation": null,
+          "isolated_qa": null,
+          "db_auth": null,
+          "integration": null,
+          "release_review": null
+        }
+      }
+    },
+    "blockers": [
+      {
+        "id": "ENV_CAPACITY",
+        "scope": "environment",
+        "status": "OPEN",
+        "condition": "supported workspace capacity recovery preserving source/WIP/state; current capacity+inode cannot be measured before sandbox launch"
+      },
+      {
+        "id": "VERCEL_RATE",
+        "scope": "external_check",
+        "status": "CLOSED",
+        "condition": "provider supported rate-limit recovery; no retry/upgrade/bypass",
+        "resolution": {
+          "at": "2026-10-28T01:08:21Z",
+          "head": "f6eff90b2b04347897a65369a34dda229fd9c8f5",
+          "provider_context": "Vercel",
+          "state": "success",
+          "description": "Deployment has completed",
+          "evidence": "https://api.github.com/repos/kyoma1015/poker-sns/commits/f6eff90b2b04347897a65369a34dda229fd9c8f5/status",
+          "limitation": "PR check only; deployment environment/public release not established; no manual deploy/upgrade/bypass"
+        }
+      },
+      {
+        "id": "REAL_AUTH_RLS",
+        "scope": "sns_diagnosis",
+        "status": "OPEN",
+        "condition": "reviewed schema and truly isolated auth/RLS/idempotency acceptance"
+      },
+      {
+        "id": "TDA_ORIGINALS",
+        "scope": "tda",
+        "status": "OPEN",
+        "condition": "350-question immutable export/key/original/translation/reviewer receipts"
+      },
+      {
+        "id": "DIAG_CLASSIFIER",
+        "scope": "diagnosis",
+        "status": "OPEN",
+        "condition": "versioned classifier thresholds/tie order/expert labels"
+      },
+      {
+        "id": "SNS_FULL_QA",
+        "scope": "sns",
+        "status": "OPEN",
+        "condition": "complete cross-feature/ownership/Storage/mobile acceptance and named missing scope"
+      }
+    ],
+    "tests": {
+      "retained": {
+        "suite_id": "abd-retained-methods-v1",
+        "total": 381,
+        "pass": 381,
+        "fail": 0,
+        "ci": 40612843054
+      },
+      "browser": {
+        "suite_id": "abd-browser-v1",
+        "total": 93,
+        "pass": 93,
+        "fail": 0,
+        "ci": 40352940000
+      },
+      "next_probe": {
+        "suite_id": "tda-next-three-v1",
+        "total": 3,
+        "pass": 3,
+        "fail": 0,
+        "before": {
+          "pass": 1,
+          "fail": 2,
+          "ci": 40352121918
+        },
+        "ci": 40352940000
+      },
+      "metrics_units": {
+        "suite_id": "progress-policy-v1-expanded",
+        "total": 15,
+        "pass": 15,
+        "fail": 0,
+        "ci": 40612843054,
+        "added": 7,
+        "retained": 8
+      },
+      "dm_participant_probe": {
+        "suite_id": "dm-participant-three-v1",
+        "total": 3,
+        "pass": 3,
+        "fail": 0,
+        "before": {
+          "pass": 1,
+          "fail": 2,
+          "ci": 40359352861,
+          "commit": "aebe88d66346be4d3ea6d59f381aa7408d6fd831"
+        },
+        "ci": 40612843054,
+        "commit": "f6eff90b2b04347897a65369a34dda229fd9c8f5"
+      },
+      "tda_stability": {
+        "version": 1,
+        "head": "59be11cab6a46edb956b4c47b11ded4e76320a9e",
+        "started_at": "2026-10-28T01:05:21.429Z",
+        "completed_at": "2026-10-28T01:05:40.677Z",
+        "planned_iterations": 3,
+        "completed_trials": 6,
+        "distinct_browser_cases": 7,
+        "planned_browser_case_executions": 21,
+        "results": [
+          {
+            "iteration": 1,
+            "suite": "tests/tda-quiz-data.test.mjs",
+            "blob": "ccd3fff32aeae58c0eece3cf888f9cb09c26c210",
+            "elapsed_ms": 3673,
+            "methods": 28,
+            "browser_cases": 4,
+            "pass": true,
+            "error": null,
+            "exit_code": 0,
+            "signal": null
+          },
+          {
+            "iteration": 1,
+            "suite": "tests/tda-next-navigation.test.mjs",
+            "blob": "aba69be7b3674b9a163e415684b9dc2f54debe01",
+            "elapsed_ms": 2450,
+            "methods": 1,
+            "browser_cases": 3,
+            "pass": true,
+            "error": null,
+            "exit_code": 0,
+            "signal": null
+          },
+          {
+            "iteration": 2,
+            "suite": "tests/tda-quiz-data.test.mjs",
+            "blob": "ccd3fff32aeae58c0eece3cf888f9cb09c26c210",
+            "elapsed_ms": 3734,
+            "methods": 28,
+            "browser_cases": 4,
+            "pass": true,
+            "error": null,
+            "exit_code": 0,
+            "signal": null
+          },
+          {
+            "iteration": 2,
+            "suite": "tests/tda-next-navigation.test.mjs",
+            "blob": "aba69be7b3674b9a163e415684b9dc2f54debe01",
+            "elapsed_ms": 2498,
+            "methods": 1,
+            "browser_cases": 3,
+            "pass": true,
+            "error": null,
+            "exit_code": 0,
+            "signal": null
+          },
+          {
+            "iteration": 3,
+            "suite": "tests/tda-quiz-data.test.mjs",
+            "blob": "ccd3fff32aeae58c0eece3cf888f9cb09c26c210",
+            "elapsed_ms": 4035,
+            "methods": 28,
+            "browser_cases": 4,
+            "pass": true,
+            "error": null,
+            "exit_code": 0,
+            "signal": null
+          },
+          {
+            "iteration": 3,
+            "suite": "tests/tda-next-navigation.test.mjs",
+            "blob": "aba69be7b3674b9a163e415684b9dc2f54debe01",
+            "elapsed_ms": 2853,
+            "methods": 1,
+            "browser_cases": 3,
+            "pass": true,
+            "error": null,
+            "exit_code": 0,
+            "signal": null
+          }
+        ],
+        "verdict": "PASS",
+        "limitations": "Synthetic transport only; three consecutive samples cannot prove absence of flakiness or official TDA correctness. Original 25s filter and 40s next deadlines unchanged.",
+        "ci": 40612843054,
+        "head_pr": "f6eff90b2b04347897a65369a34dda229fd9c8f5",
+        "evaluated_head": "59be11cab6a46edb956b4c47b11ded4e76320a9e"
+      },
+      "dm_shape_probe": {
+        "suite_id": "dm-malformed-render-two-v1",
+        "total": 2,
+        "pass": 2,
+        "fail": 0,
+        "before": {
+          "pass": 0,
+          "fail": 2,
+          "ci": 40612457277,
+          "commit": "bdf0f16c7ed03cada2ee590edee3a40690fe9496"
+        },
+        "ci": 40612843054,
+        "commit": "f6eff90b2b04347897a65369a34dda229fd9c8f5"
+      },
+      "dm_data_units": {
+        "suite_id": "dm-dto-v1",
+        "total": 17,
+        "pass": 17,
+        "fail": 0,
+        "ci": 40612843054
+      }
+    },
+    "note": "first retrospective baseline under frozen v1 policy; earlier reports had no comparable completion percentage",
+    "work": {
+      "new_commits_before_snapshot": 6,
+      "snapshot_commit_adds": 1,
+      "new_prs": 0,
+      "updated_prs": 1,
+      "completed_major_work": [
+        "participant-scoped DM query results",
+        "strict DM DTO before query render and Realtime updates",
+        "separate implementation/release evidence metrics",
+        "three finite unchanged TDA stability trials"
+      ],
+      "product_public_ready_added": 0
+    }
+  },
+  "previous_snapshot": {
     "id": "current-v1",
     "at": "2026-10-28T00:56:00Z",
     "assessed_commit": "b5a103ee9ba8992c993626313049e967e3c415d0",
@@ -1751,671 +2544,6 @@
       "product_public_ready_added": 0
     }
   },
-  "previous_snapshot": {
-    "id": "current-v1",
-    "at": "2026-10-26T16:33:00Z",
-    "assessed_commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
-    "features": {
-      "sns.timeline": {
-        "status": "実装中",
-        "evidence": [],
-        "release_gates": {
-          "scope": true,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "sns.posts": {
-        "status": "実装中",
-        "evidence": [],
-        "release_gates": {
-          "scope": true,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "sns.comments": {
-        "status": "実装中",
-        "evidence": [],
-        "release_gates": {
-          "scope": true,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "sns.images": {
-        "status": "実装中",
-        "evidence": [],
-        "release_gates": {
-          "scope": true,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "sns.repost": {
-        "status": "実装中",
-        "evidence": [],
-        "release_gates": {
-          "scope": true,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "sns.follow": {
-        "status": "実装中",
-        "evidence": [],
-        "release_gates": {
-          "scope": true,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "sns.notifications": {
-        "status": "隔離テスト合格",
-        "evidence": [
-          "PR125 selected fixture/regression evidence; not real production auth"
-        ],
-        "release_gates": {
-          "scope": true,
-          "implementation": true,
-          "isolated_qa": true,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "sns.dm": {
-        "status": "隔離テスト合格",
-        "evidence": [
-          "PR125 selected fixture/regression evidence; not real production auth"
-        ],
-        "release_gates": {
-          "scope": true,
-          "implementation": true,
-          "isolated_qa": true,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "sns.profiles": {
-        "status": "実装中",
-        "evidence": [],
-        "release_gates": {
-          "scope": true,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "sns.records": {
-        "status": "実装中",
-        "evidence": [],
-        "release_gates": {
-          "scope": true,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "sns.search": {
-        "status": "実装中",
-        "evidence": [],
-        "release_gates": {
-          "scope": true,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "sns.tags": {
-        "status": "実装中",
-        "evidence": [],
-        "release_gates": {
-          "scope": true,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "sns.video": {
-        "status": "実装中",
-        "evidence": [],
-        "release_gates": {
-          "scope": true,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "sns.mobile": {
-        "status": "実装中",
-        "evidence": [],
-        "release_gates": {
-          "scope": true,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "sns.store_tournament": {
-        "status": "UNKNOWN",
-        "evidence": [],
-        "release_gates": {
-          "scope": null,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "sns.dealer": {
-        "status": "UNKNOWN",
-        "evidence": [],
-        "release_gates": {
-          "scope": null,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "sns.rating": {
-        "status": "実装中",
-        "evidence": [],
-        "release_gates": {
-          "scope": true,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "sns.quality": {
-        "status": "実装中",
-        "evidence": [],
-        "release_gates": {
-          "scope": true,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "sns.polls": {
-        "status": "隔離テスト合格",
-        "evidence": [
-          "PR125 selected fixture/regression evidence; not real production auth"
-        ],
-        "release_gates": {
-          "scope": true,
-          "implementation": true,
-          "isolated_qa": true,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "tda.official": {
-        "status": "UNKNOWN",
-        "evidence": [],
-        "release_gates": {
-          "scope": null,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "tda.integrity": {
-        "status": "隔離テスト合格",
-        "evidence": [
-          "PR125 selected fixture/regression evidence; not real production auth"
-        ],
-        "release_gates": {
-          "scope": true,
-          "implementation": true,
-          "isolated_qa": true,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "tda.quiz": {
-        "status": "隔離テスト合格",
-        "evidence": [
-          "PR125 selected fixture/regression evidence; not real production auth"
-        ],
-        "release_gates": {
-          "scope": true,
-          "implementation": true,
-          "isolated_qa": true,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "tda.history": {
-        "status": "隔離テスト合格",
-        "evidence": [
-          "PR125 selected fixture/regression evidence; not real production auth"
-        ],
-        "release_gates": {
-          "scope": true,
-          "implementation": true,
-          "isolated_qa": true,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "tda.search": {
-        "status": "隔離テスト合格",
-        "evidence": [
-          "PR125 selected fixture/regression evidence; not real production auth"
-        ],
-        "release_gates": {
-          "scope": true,
-          "implementation": true,
-          "isolated_qa": true,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "tda.recovery": {
-        "status": "隔離テスト合格",
-        "evidence": [
-          "PR125 selected fixture/regression evidence; not real production auth"
-        ],
-        "release_gates": {
-          "scope": true,
-          "implementation": true,
-          "isolated_qa": true,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "diag.questions": {
-        "status": "隔離テスト合格",
-        "evidence": [
-          "PR125 selected fixture/regression evidence; not real production auth"
-        ],
-        "release_gates": {
-          "scope": true,
-          "implementation": true,
-          "isolated_qa": true,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "diag.scores": {
-        "status": "隔離テスト合格",
-        "evidence": [
-          "PR125 selected fixture/regression evidence; not real production auth"
-        ],
-        "release_gates": {
-          "scope": true,
-          "implementation": true,
-          "isolated_qa": true,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "diag.classifier": {
-        "status": "UNKNOWN",
-        "evidence": [],
-        "release_gates": {
-          "scope": null,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "diag.payload": {
-        "status": "実装中",
-        "evidence": [],
-        "release_gates": {
-          "scope": true,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "diag.account_share": {
-        "status": "隔離テスト合格",
-        "evidence": [
-          "PR125 selected fixture/regression evidence; not real production auth"
-        ],
-        "release_gates": {
-          "scope": true,
-          "implementation": true,
-          "isolated_qa": true,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "diag.png_mobile": {
-        "status": "隔離テスト合格",
-        "evidence": [
-          "PR125 selected fixture/regression evidence; not real production auth"
-        ],
-        "release_gates": {
-          "scope": true,
-          "implementation": true,
-          "isolated_qa": true,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "diag.profile": {
-        "status": "実装中",
-        "evidence": [],
-        "release_gates": {
-          "scope": true,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "audit.inventory": {
-        "status": "実装中",
-        "evidence": [],
-        "release_gates": {
-          "scope": true,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "audit.dependencies": {
-        "status": "統合確認済み",
-        "evidence": [
-          "https://github.com/kyoma1015/poker-sns/pull/125",
-          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799702",
-          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799298"
-        ],
-        "release_gates": {
-          "scope": true,
-          "implementation": true,
-          "isolated_qa": true,
-          "db_auth": null,
-          "integration": true,
-          "release_review": null
-        }
-      },
-      "audit.authorization": {
-        "status": "実装中",
-        "evidence": [],
-        "release_gates": {
-          "scope": true,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "audit.state": {
-        "status": "UNKNOWN",
-        "evidence": [],
-        "release_gates": {
-          "scope": null,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "audit.release_record": {
-        "status": "統合確認済み",
-        "evidence": [
-          "https://github.com/kyoma1015/poker-sns/pull/125",
-          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799702",
-          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799298"
-        ],
-        "release_gates": {
-          "scope": true,
-          "implementation": true,
-          "isolated_qa": true,
-          "db_auth": null,
-          "integration": true,
-          "release_review": null
-        }
-      },
-      "integration.scope": {
-        "status": "統合確認済み",
-        "evidence": [
-          "https://github.com/kyoma1015/poker-sns/pull/125",
-          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799702",
-          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799298"
-        ],
-        "release_gates": {
-          "scope": true,
-          "implementation": true,
-          "isolated_qa": true,
-          "db_auth": null,
-          "integration": true,
-          "release_review": null
-        }
-      },
-      "integration.tests": {
-        "status": "統合確認済み",
-        "evidence": [
-          "https://github.com/kyoma1015/poker-sns/pull/125",
-          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799702",
-          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799298"
-        ],
-        "release_gates": {
-          "scope": true,
-          "implementation": true,
-          "isolated_qa": true,
-          "db_auth": null,
-          "integration": true,
-          "release_review": null
-        }
-      },
-      "integration.frontend": {
-        "status": "統合確認済み",
-        "evidence": [
-          "https://github.com/kyoma1015/poker-sns/pull/125",
-          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799702",
-          "https://github.com/kyoma1015/poker-sns/actions/runs/40344799298"
-        ],
-        "release_gates": {
-          "scope": true,
-          "implementation": true,
-          "isolated_qa": true,
-          "db_auth": null,
-          "integration": true,
-          "release_review": null
-        }
-      },
-      "integration.auth": {
-        "status": "実装中",
-        "evidence": [],
-        "release_gates": {
-          "scope": true,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "integration.wip": {
-        "status": "実装中",
-        "evidence": [],
-        "release_gates": {
-          "scope": true,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      },
-      "integration.external": {
-        "status": "実装中",
-        "evidence": [],
-        "release_gates": {
-          "scope": true,
-          "implementation": null,
-          "isolated_qa": null,
-          "db_auth": null,
-          "integration": null,
-          "release_review": null
-        }
-      }
-    },
-    "blockers": [
-      {
-        "id": "ENV_CAPACITY",
-        "scope": "environment",
-        "status": "OPEN",
-        "condition": "supported workspace capacity recovery preserving source/WIP/state; current capacity+inode cannot be measured before sandbox launch"
-      },
-      {
-        "id": "VERCEL_RATE",
-        "scope": "external_check",
-        "status": "OPEN",
-        "condition": "provider supported rate-limit recovery; no retry/upgrade/bypass"
-      },
-      {
-        "id": "REAL_AUTH_RLS",
-        "scope": "sns_diagnosis",
-        "status": "OPEN",
-        "condition": "reviewed schema and truly isolated auth/RLS/idempotency acceptance"
-      },
-      {
-        "id": "TDA_ORIGINALS",
-        "scope": "tda",
-        "status": "OPEN",
-        "condition": "350-question immutable export/key/original/translation/reviewer receipts"
-      },
-      {
-        "id": "DIAG_CLASSIFIER",
-        "scope": "diagnosis",
-        "status": "OPEN",
-        "condition": "versioned classifier thresholds/tie order/expert labels"
-      },
-      {
-        "id": "SNS_FULL_QA",
-        "scope": "sns",
-        "status": "OPEN",
-        "condition": "complete cross-feature/ownership/Storage/mobile acceptance and named missing scope"
-      }
-    ],
-    "tests": {
-      "retained": {
-        "suite_id": "abd-retained-methods-v1",
-        "total": 381,
-        "pass": 381,
-        "fail": 0,
-        "ci": 40354321317
-      },
-      "browser": {
-        "suite_id": "abd-browser-v1",
-        "total": 93,
-        "pass": 93,
-        "fail": 0,
-        "ci": 40352940000
-      },
-      "next_probe": {
-        "suite_id": "tda-next-three-v1",
-        "total": 3,
-        "pass": 3,
-        "fail": 0,
-        "before": {
-          "pass": 1,
-          "fail": 2,
-          "ci": 40352121918
-        },
-        "ci": 40352940000
-      },
-      "metrics_units": {
-        "suite_id": "progress-policy-v1",
-        "total": 8,
-        "pass": 8,
-        "fail": 0,
-        "ci": 40354321317
-      },
-      "dm_participant_probe": {
-        "suite_id": "dm-participant-three-v1",
-        "total": 3,
-        "pass": null,
-        "fail": null,
-        "status": "before/after CI pending",
-        "before": {
-          "pass": 1,
-          "fail": 2,
-          "ci": 40359352861,
-          "commit": "aebe88d66346be4d3ea6d59f381aa7408d6fd831"
-        }
-      }
-    },
-    "note": "first retrospective baseline under frozen v1 policy; earlier reports had no comparable completion percentage",
-    "work": {
-      "new_commits_before_snapshot": 2,
-      "snapshot_commit_adds": 1,
-      "new_prs": 0,
-      "updated_prs": 1,
-      "completed_major_work": [
-        "measured same-tick next defect fixed and verified",
-        "fixed-scope progress baseline and comparison engine"
-      ],
-      "product_public_ready_added": 0
-    }
-  },
   "held_state_note": {
     "last_verified_total": 45,
     "implemented": 43,
@@ -2980,7 +3108,7 @@
         }
       },
       "current_snapshot": {
-        "at": "2026-10-28T00:56:00Z",
+        "at": "2026-10-28T01:09:41Z",
         "assessed_commit": "3a4aaf5b9c68a8204b01cafea7ee3367879ff440",
         "features": {
           "sns.timeline": {
@@ -3013,9 +3141,9 @@
           },
           "sns.dm": {
             "state": "PARTIAL",
-            "reason": "client send/read/isolation tested incl participant defense; authoritative schema/RLS/server idempotency implementation not available",
-            "commit": "b5a103ee9ba8992c993626313049e967e3c415d0",
-            "ci": 40611378547
+            "reason": "client send/read/identity/DTO protections passed; authoritative schema/RLS/server idempotency missing",
+            "commit": "f6eff90b2b04347897a65369a34dda229fd9c8f5",
+            "ci": 40612843054
           },
           "sns.profiles": {
             "state": "UNKNOWN",

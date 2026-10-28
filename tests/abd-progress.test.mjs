@@ -11,7 +11,7 @@ test('duplicate catalogue IDs and duplicate blockers fail closed',()=>{const d=c
 test('UNKNOWN remains distinct from not-started and whole-product rate remains unknown',()=>{const r=measure(base);assert.equal(r.groups.diagnosis.unknown,1);assert.equal(r.groups.diagnosis.states['未着手'],0);assert.equal(r.overall_percent,null);assert(!Object.hasOwn(r.groups,'gto'))})
 test('catalogue identity change requires a new baseline and cannot alter denominator silently',()=>{const d=clone();delete d.current_snapshot.features['sns.dm'];assert.throws(()=>validate(d),/frozen catalogue/)})
 test('test additions or different suites cannot masquerade as quality improvement',()=>{assert.throws(()=>compareTests({suite_id:'a',total:1,pass:1,fail:0},{suite_id:'b',total:1,pass:1,fail:0}),/different suites/);assert.throws(()=>compareTests({suite_id:'a',total:1,pass:1,fail:0},{suite_id:'a',total:2,pass:2,fail:0}),/size changed/)})
-test('baseline comparison separates six release blockers from two held blocked jobs',()=>{const r=compare(base);assert.deepEqual(r.retained_tests.pass,[381,381]);assert.deepEqual(r.retained_tests.fail,[0,0]);assert.deepEqual(r.blockers,[6,6]);assert.equal(base.held_state_note.blocked,2);assert.equal(r.overall_percent,null)})
+test('baseline comparison separates six initial and five current release blockers from two held blocked jobs',()=>{const r=compare(base);assert.deepEqual(r.retained_tests.pass,[381,381]);assert.deepEqual(r.retained_tests.fail,[0,0]);assert.deepEqual(r.blockers,[6,5]);assert.equal(base.held_state_note.blocked,2);assert.equal(r.overall_percent,null)})
 
 test('implementation is separate from v1 release evidence and keeps the exact denominator',()=>{
  const d=clone(), r=implementationMeasure(d)
