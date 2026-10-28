@@ -50,8 +50,8 @@ test('unknown implementation rate is never zero and never invents change points'
  assert.equal(implementationMeasure(base).overall_percent,null)
 })
 
-test('implementation source and test blobs exist in pinned historical Git objects',()=>{
- assert.equal(verifyImplementationEvidence(base),true)
+test('implementation evidence checks every blob and labels shallow checkout limitations',()=>{
+ assert.equal(verifyImplementationEvidence(base).verified,true)
  const d=clone(),row=Object.values(d.implementation_metric.snapshots.current_snapshot.features).find(r=>r.state==='IMPLEMENTED')
  row.sources[0].blob='0'.repeat(40)
  assert.throws(()=>verifyImplementationEvidence(d),/historical blob/)

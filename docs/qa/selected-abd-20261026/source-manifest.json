@@ -830,17 +830,17 @@
     },
     {
       "path": "docs/progress/ABD_PROGRESS.md",
-      "sha": "ba4f6acc9261f843830f8a3deb5c8f32bb12e684",
+      "sha": "85b18572372bd28170a0aa1d6ef1b47cad18ac13",
       "reason": "add independent implementation evidence policy while preserving release v1; pinned historical source/test/CI evidence"
     },
     {
       "path": "scripts/measure-abd-progress.mjs",
-      "sha": "1f073d8dd364ba9cb36f65c60ae7a65e6dd540a8",
+      "sha": "911208b7bb1afb5b1fcc3fdb67aba55a76cb9640",
       "reason": "add independent implementation evidence policy while preserving release v1; pinned historical source/test/CI evidence"
     },
     {
       "path": "tests/abd-progress.test.mjs",
-      "sha": "9c6e0b83aa46124ce70e39a8d9735e9f186987f2",
+      "sha": "040dbb35408306b184c4f34c67e78c2dd35edd35",
       "reason": "add independent implementation evidence policy while preserving release v1; pinned historical source/test/CI evidence"
     }
   ],

@@ -56,17 +56,33 @@ export function implementationMeasure(data,snapshot='current_snapshot'){
 }
 export function verifyImplementationEvidence(data){
  implementationMeasure(data)
+ const modes=new Set()
  for(const snapshot of Object.values(data.implementation_metric.snapshots)){
   for(const row of Object.values(snapshot.features)){
    if(row.state!=='IMPLEMENTED')continue
    for(const e of [...row.sources,...row.tests]){
-    const bytes=execFileSync('git',['show',row.commit+':'+e.path])
-    const blob=createHash('sha1').update(Buffer.from('blob '+bytes.length+'\\0')).update(bytes).digest('hex')
+    // Full checkout verifies historical commit/path. Shallow CI cannot assert
+    // that mapping; it must still prove exact current bytes, never skip a row.
+    let bytes
+    try {
+     execFileSync('git',['cat-file','-e',row.commit+'^{commit}'],{stdio:'pipe'})
+     bytes=execFileSync('git',['show',row.commit+':'+e.path])
+     modes.add('historical-commit-and-blob')
+    } catch (error) {
+     // A present commit with a missing path is invalid evidence, not shallow.
+     try { execFileSync('git',['cat-file','-e',row.commit+'^{commit}'],{stdio:'pipe'}) }
+     catch {
+      bytes=readFileSync(e.path)
+      modes.add('current-bytes-only-historical-mapping-unavailable')
+     }
+     if(bytes===undefined)throw error
+    }
+    const blob=createHash('sha1').update(Buffer.concat([Buffer.from('blob '+bytes.length),Buffer.from([0])])).update(bytes).digest('hex')
     assert.equal(blob,e.blob,'implementation historical blob '+e.path)
    }
   }
  }
- return true
+ return {verified:true,modes:[...modes].sort()}
 }
 export function compareImplementation(data){
  const a=implementationMeasure(data,'baseline_snapshot'),b=implementationMeasure(data)
@@ -97,7 +113,7 @@ export function compare(data){
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  const data=JSON.parse(readFileSync(process.argv[2]||'docs/progress/ABD_PROGRESS.json','utf8'))
- verifyImplementationEvidence(data)
+ const evidence_verification=verifyImplementationEvidence(data)
  const head=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim()
- console.log(JSON.stringify({evaluated_head:head,evaluated_at:new Date().toISOString(),snapshot:measure(data),comparison:compare(data),implementation:implementationMeasure(data),implementation_comparison:compareImplementation(data),note:'evidence coverage, no stage weighting; unknown is not not-started; real DB and full GTO excluded from inferred success'},null,2))
+ console.log(JSON.stringify({evaluated_head:head,evaluated_at:new Date().toISOString(),snapshot:measure(data),comparison:compare(data),implementation:implementationMeasure(data),implementation_evidence:evidence_verification,implementation_comparison:compareImplementation(data),note:'evidence coverage, no stage weighting; unknown is not not-started; real DB and full GTO excluded from inferred success'},null,2))
 }

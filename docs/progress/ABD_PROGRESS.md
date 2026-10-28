@@ -25,3 +25,6 @@ PARTIAL means identified unfinished code. UNKNOWN means insufficient evidence, n
 First implementation baseline retrospectively assesses previous PR125 HEAD3a4aaf5b9c68a8204b01cafea7ee3367879ff440; no earlier implementation measurement is invented. Contract/scope changes require a policy version. Existing release and test-suite comparison rules remain intact. Existing JSON slots and abd-progress artifact are reused.
 
 Commands: node scripts/measure-abd-progress.mjs; node tests/abd-progress.test.mjs.
+
+### Historical vs shallow checkout evidence
+Full-history Selected ABD CI verifies every declared commit/path/blob. Shallow existing CI may lack historical commits: in that case it verifies every pinned blob against current file bytes and reports `current-bytes-only-historical-mapping-unavailable`, never historical-commit proof. Present historical commits with absent paths fail; every byte mismatch fails. No workflow, SQL or protected acceptance is changed to accommodate this.
