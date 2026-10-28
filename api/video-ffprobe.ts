@@ -84,7 +84,7 @@ export async function probeVideoBytes(bytes: Buffer, extension: VideoExtension):
   // Apple QuickTime MOV may carry a dedicated timed-metadata (mebx) data track.
   // This track is not playable content; do not accept arbitrary extra streams.
   const dataTracks = streams.filter(s => s.codec_type === 'data')
-  const auxiliaryAllowed = extension === 'mp4' &&
+  const auxiliaryAllowed = (extension === 'mp4' || dataTracks.length === 0) &&
     dataTracks.every(s => s.codec_tag_string === 'mebx' || s.codec_tag_string === 'mdta')
   if (videos.length !== 1 || audios.length > 1 || !auxiliaryAllowed ||
       streams.length !== videos.length + audios.length + dataTracks.length) {
