@@ -877,7 +877,7 @@
     },
     {
       "path": "tests/authorization/run_dm_model.sh",
-      "sha": "c5739bb5533d04b9bf27b85948539e036f7e6071",
+      "sha": "bb975b5a0b218afc08187de8e3c5a57830ec39ab",
       "reason": "reviewed disposable dm_model authorization proposal; never authentic schema or production migration"
     },
     {
@@ -894,6 +894,11 @@
       "path": ".github/workflows/abd-authorization.yml",
       "sha": "076d94a966d798b222136721259eb9ffd66f92ff",
       "reason": "bounded read-only CI executes synthetic schema in disposable no-network Postgres; preserves original workflow bytes"
+    },
+    {
+      "path": "tests/authorization/check_dm_preflight.sh",
+      "sha": "cbc8a1c76fa550872f4a8f13df894c87b9844592",
+      "reason": "fixed refusal and atomic rollback acceptance for inherited ACL/extra policy/unsafe actor in disposable dm_model only"
     }
   ],
   "overrides": [

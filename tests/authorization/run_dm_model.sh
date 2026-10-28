@@ -22,6 +22,7 @@ if sql < tests/authorization/dm_model_acceptance.sql >"$baseline_log" 2>&1; then
 fi
 grep -q 'FAIL:UPDATE_CONTENT_GRANTED' "$baseline_log"
 echo 'EXPECTED_BASELINE_FAIL: broad UPDATE grant survives recipient-only RLS'
+bash tests/authorization/check_dm_preflight.sh "$model_container"
 sql < tests/authorization/dm_policy_candidate.sql
 result_log="$(mktemp)"
 trap 'rm -f "$baseline_log" "$result_log"; cleanup' EXIT
