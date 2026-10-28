@@ -15,6 +15,7 @@ from gto.native.hand169_bridge import card_name
 from gto.native.infoset_export import PolicySnapshot,_digest
 from gto.native.history_reach import _strategy
 from gto.native.training import checkpoint
+from gto.native.checkpoints import load_verified_checkpoint
 
 
 @dataclass(frozen=True)
@@ -153,6 +154,23 @@ def terminal_trajectory(native,game,cards,action_seed,base,response=None,hero=0)
     raise ValueError('real continuation step limit; no partial EV returned')
 
 
+def exact_root_fold_value(native,game,hero):
+    """Full feasible always-fold strategy value, not a per-hand local EV.
+
+    Native preflop fold settlement has no board/card ranking dependence. This
+    exact control is compared with the ex-ante FULL baseline continuation EV.
+    It can reject a completed profile; it cannot certify equilibrium.
+    """
+    node=native.NativeState(game)
+    for card in range(4):node.apply_action(card)
+    if node.is_terminal() or node.is_chance_node() or node.current_player()!=hero or 0 not in node.legal_actions():return None
+    node.apply_action(0)
+    if not node.is_terminal():return None
+    settlement=node.settlement()
+    if sum(settlement['net'])!=-settlement['rake']:raise ValueError('fold control conservation differs')
+    return settlement['net'][hero]/json.loads(game._public_config_json)['rules']['bb']
+
+
 def evaluate(native,game,base,response,*,hero=0,samples=12000,seed=100017,confidence=.99):
     from gto.native.initial_chance_reach import _verified_game
     _verified_game(game)
@@ -186,10 +204,18 @@ def evaluate(native,game,base,response,*,hero=0,samples=12000,seed=100017,confid
             result[name]=data
         return result
     aggregate=stats(global_moments)
+    fold_value=exact_root_fold_value(native,game,hero);control=None
+    if fold_value is not None:
+        control={'strategy':'always fold at initial hero root; native exact terminal value',
+            'value_bb':fold_value,'gain_mean_bb':fold_value-aggregate['base']['mean_bb'],
+            'gain_interval_bb':[math.nextafter(fold_value-aggregate['base']['interval_bb'][1],-math.inf),
+                math.nextafter(fold_value-aggregate['base']['interval_bb'][0],math.inf)],
+            'confidence_event':'same simultaneous baseline EV interval; no extra estimated control value'}
     return {'schema':'pokerid-feasible-response-v1','hero':hero,'config_digest':_digest(json.loads(game._public_config_json)),
         'base_digest':base.digest,'response_digest':response.digest,'samples':samples,'seed':seed,'confidence':confidence,
         'global':aggregate,'hands':{label:stats(rows) for label,rows in groups.items()},'completion_usage':usage,
-        'best_response_gain_lower_bb':max(0.,aggregate['gain']['interval_bb'][0]),
+        'best_response_gain_lower_bb':max(0.,aggregate['gain']['interval_bb'][0],control['gain_interval_bb'][0] if control else 0),
+        'root_fold_control':control,
         'complete_169_sample_coverage':all(rows[0][2] for rows in groups.values()),
         'original_partial_policy_ev':None,'full_game_convergence_verified':False,
         'trajectory_sha256':trajectory_hash.hexdigest(),'config':json.loads(game._public_config_json),
@@ -212,6 +238,15 @@ def experiment(native,game,policy,output,*,base_checkpoint_sha256=None,base_iter
             'checkpoint_sha256':hashlib.sha256(path.read_bytes()).hexdigest()})
     response=CompletedPolicy(frozen,completion='uniform_legal_prior',key_mode='unordered_own_cards')
     report=evaluate(native,game,base,response)
+    restored=native.Solver(locked,.6,701,True,True,.1)
+    load_verified_checkpoint(restored,path,contract)
+    recovered=response_snapshot(restored)
+    if recovered.digest!=frozen.digest or restored.rng_state()!=solver.rng_state():
+        raise ValueError('full response checkpoint restoration differs')
+    replay=evaluate(native,game,base,CompletedPolicy(recovered,'uniform_legal_prior','unordered_own_cards'))
+    if replay!=report:raise ValueError('same held-out trajectories/moments do not reproduce')
+    report['reproducibility']={'full_checkpoint_policy_rng_restored':True,'same12000_samples_replayed':True,
+        'independent_statistical_sample_sets':1,'trajectory_sha256':replay['trajectory_sha256']}
     report['training']={'seed':701,'opponent_digest':base.digest,'observations':observations,'contract':contract,
         'base_native_iteration':base_iteration,'base_checkpoint_sha256':base_checkpoint_sha256,
         'method':'single-updater outcome MCCFR, opponent actions fixed chance, actual native continuation',

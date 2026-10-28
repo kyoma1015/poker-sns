@@ -5,7 +5,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
 from gto.native.training import NativeGame,checkpoint
 from gto.native.checkpoints import load_verified_checkpoint
 from gto.native.infoset_export import PolicySnapshot
-from gto.native.feasible_response import CompletedPolicy,LockedOpponentGame,LockedState,response_snapshot,evaluate,terminal_trajectory
+from gto.native.feasible_response import CompletedPolicy,LockedOpponentGame,LockedState,response_snapshot,evaluate,terminal_trajectory,exact_root_fold_value
 class FeasibleNative(unittest.TestCase):
  @classmethod
  def setUpClass(cls):
@@ -57,4 +57,8 @@ class FeasibleNative(unittest.TestCase):
  def test_wrong_player_or_nonexplicit_completion_is_refused(self):
   with self.assertRaises(ValueError):LockedOpponentGame(self.native,NativeGame([100,100]),2,self.base())
   with self.assertRaises(ValueError):evaluate(self.native,NativeGame([100,100]),self.base(),self.base(),samples=1)
+ def test_exact_initial_fold_is_full_feasible_control_for_sb_only(self):
+  game=NativeGame([100,100])
+  self.assertEqual(exact_root_fold_value(self.native,game,0),-.5)
+  self.assertIsNone(exact_root_fold_value(self.native,game,1))
 if __name__=='__main__':unittest.main()
