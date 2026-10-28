@@ -802,7 +802,8 @@
     "tests/tda-snapshot-integrity.test.mjs",
     "tests/tda-strict-json-boundary.test.mjs",
     "tests/tda-next-navigation.test.mjs",
-    "tests/abd-progress.test.mjs"
+    "tests/abd-progress.test.mjs",
+    "scripts/repeat-tda-acceptance.mjs"
   ],
   "browser_suites": [
     "tests/selected/direct-message-inbox.test.mjs",
@@ -830,7 +831,7 @@
     },
     {
       "path": "docs/progress/ABD_PROGRESS.md",
-      "sha": "85b18572372bd28170a0aa1d6ef1b47cad18ac13",
+      "sha": "e3caff6c29fe22968eac157e9fa33f7854a09557",
       "reason": "add independent implementation evidence policy while preserving release v1; pinned historical source/test/CI evidence"
     },
     {
@@ -842,6 +843,11 @@
       "path": "tests/abd-progress.test.mjs",
       "sha": "040dbb35408306b184c4f34c67e78c2dd35edd35",
       "reason": "add independent implementation evidence policy while preserving release v1; pinned historical source/test/CI evidence"
+    },
+    {
+      "path": "scripts/repeat-tda-acceptance.mjs",
+      "sha": "1b5699f7c42594392ab9274ed31fd79ba12f2f60",
+      "reason": "finite three-trial unchanged TDA acceptance; no retries/timeout weakening; logs retain trial timing"
     }
   ],
   "overrides": [
@@ -895,8 +901,10 @@
     "existing_orchestration": 8,
     "added_next_wrapper": 1,
     "added_next_browser_cases": 3,
-    "added_metrics_units": 8,
+    "added_metrics_units": 15,
     "actual_browser_baseline": 93,
-    "actual_browser_current": 96
+    "actual_browser_current": 99,
+    "added_dm_browser_cases": 3,
+    "repeated_tda_browser_executions": 21
   }
 }
