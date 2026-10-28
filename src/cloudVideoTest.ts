@@ -1,7 +1,8 @@
 import { supabase } from './supabase'
 import { assertCurrentVideoCloudTestClient } from './videoCloudTestGuard'
 import { uploadPostVideo, validateVideo } from './videoUpload'
-import { finalizeUploadedVideo, loadAuthorizedVideo } from './videoApi'
+import { finalizeUploadedVideo, loadAuthorizedVideo, recoverCloudVideo } from './videoApi'
+import { hasVideoTransferJournal,readVideoTransferHint,finishRecoveredVideoTransfer } from './videoTransferJournal'
 assertCurrentVideoCloudTestClient()
 const el = (id: string) => document.getElementById(id)!
 const status = (message: string) => { el('status').textContent = message }
@@ -10,6 +11,7 @@ const state = async () => {
  el('auth').hidden = !!user; el('composer').hidden = !user
  el('identity').textContent = user ? 'ログイン中: '+user.email : ''
  if(user) await refresh()
+ await updateRecovery()
 }
 async function refresh() {
  const target=el('posts');target.replaceChildren()
@@ -30,6 +32,29 @@ async function refresh() {
    finally{button.disabled=false}
   }
  }
+}
+// Recover only the exact prior reservation; never upload bytes or create a replacement key.
+const recoverButton=document.createElement('button')
+recoverButton.textContent='前回の送信を安全に再確認'
+recoverButton.hidden=true
+el('post').parentElement?.append(recoverButton)
+const updateRecovery=async()=>{
+ const {data:{user}}=await supabase.auth.getUser()
+ recoverButton.hidden=!user||!hasVideoTransferJournal(user.id)
+}
+recoverButton.onclick=async()=>{
+ recoverButton.disabled=true
+ try{
+  const {data:{user},error}=await supabase.auth.getUser()
+  if(error||!user)throw Error('ログインしてください')
+  const hint=readVideoTransferHint(user.id)
+  status('前回保存した動画を再検証中…新しいアップロードはしません。')
+  await recoverCloudVideo(hint.path)
+  finishRecoveredVideoTransfer(user.id,hint.path,hint.raw)
+  status('前回の動画を投稿として確定しました')
+  await refresh()
+ }catch(e){status('復旧に失敗: '+String(e))}
+ finally{recoverButton.disabled=false;await updateRecovery()}
 }
 el('login').onclick=async()=>{
  const {error}=await supabase.auth.signInWithPassword({email:(el('email') as HTMLInputElement).value,password:(el('password') as HTMLInputElement).value})
@@ -53,6 +78,6 @@ el('post').onclick=async()=>{
   status('動画を検証・確定中…')
   await finalizeUploadedVideo(path,content)
   status('投稿が完了しました');await refresh()
- }catch(e){status('投稿に失敗: '+String(e))}finally{button.disabled=false}
+ }catch(e){status('投稿に失敗: '+String(e))}finally{button.disabled=false;await updateRecovery()}
 }
 supabase.auth.onAuthStateChange(()=>{void state()});void state()
