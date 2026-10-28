@@ -248,3 +248,29 @@ test('conversation malformed matching realtime UPDATE cannot crash or replace sa
  assert.deepEqual(errors,[])
  assert.equal(await page.getByText('THIRD_SYNTHETIC',{exact:true}).count(),1)
 }))
+
+for (const mode of ['switched-account','auth-error','auth-rejected']) {
+ test('DM read acknowledgement revalidates identity after profile wait: '+mode, () => withChat(async page => {
+  await page.waitForFunction(()=>window.dmQA.readUpdates===1)
+  const before=await page.evaluate(()=>{const n=window.dmQA.readUpdates;window.dmQA.holdProfiles=true;window.dmQA.navigate('/dm/third');return n})
+  await page.waitForFunction(()=>window.dmQA.profileWaiters.length===1)
+  await page.evaluate(mode=>{
+   if(mode==='switched-account')window.dmQA.userId='newme'
+   if(mode==='auth-error')window.dmQA.errorUserOnce=true
+   if(mode==='auth-rejected')window.dmQA.rejectUserOnce=true
+   window.dmQA.releaseProfiles()
+  },mode)
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))))
+  assert.equal(await page.evaluate(()=>window.dmQA.readUpdates),before,'unverified acknowledgement must issue no UPDATE')
+  await page.getByRole('button',{name:'DMを再読み込み',exact:true}).waitFor({timeout:1200})
+  assert.doesNotMatch(await page.locator('body').innerText(),/SYNTHETIC_PRIVATE_AUTH|THIRD_SYNTHETIC|NEW_ACCOUNT_SYNTHETIC/)
+ }))
+}
+test('DM delayed valid profile still acknowledges the incoming conversation once',()=>withChat(async page=>{
+ await page.waitForFunction(()=>window.dmQA.readUpdates===1)
+ const before=await page.evaluate(()=>{const n=window.dmQA.readUpdates;window.dmQA.holdProfiles=true;window.dmQA.navigate('/dm/third');return n})
+ await page.waitForFunction(()=>window.dmQA.profileWaiters.length===1)
+ await page.evaluate(()=>window.dmQA.releaseProfiles())
+ await page.getByText('THIRD_SYNTHETIC',{exact:true}).waitFor()
+ assert.equal(await page.evaluate(()=>window.dmQA.readUpdates),before+1)
+}))

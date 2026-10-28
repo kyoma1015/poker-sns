@@ -16,6 +16,8 @@ const qa = {
   holdBlocks: false, holdInsert: false, rejectInsert: false,
   errorInsert: false, blockError: false, rejectReload: false,
   holdOldMessages: false,
+  holdProfiles: false, profileWaiters: [] as Array<() => void>,
+  releaseProfiles() { this.holdProfiles = false; this.profileWaiters.splice(0).forEach(done => done()) },
   oldMessages: [] as Array<(x: unknown) => void>,
   checks: [] as Array<(x: unknown) => void>, inserts: [] as unknown[],
   insertWaiters: [] as Array<(x: unknown) => void>,
@@ -28,7 +30,7 @@ function query(table: string) {
   let filter = ''
   const chain: any = {
     select() { return chain }, eq(key: string, value: string) { if (key === 'id') peer = value; return chain }, is() { return chain }, or(value: string) { filter = value; return chain }, update() { qa.readUpdates++; return chain },
-    maybeSingle() { return Promise.resolve({ data: { display_name: peer === 'third' ? 'Another synthetic player' : 'Synthetic player', poker_id: 'synthetic', avatar_url: null }, error: null }) },
+    maybeSingle() { const result = { data: { display_name: peer === 'third' ? 'Another synthetic player' : 'Synthetic player', poker_id: 'synthetic', avatar_url: null }, error: null }; return qa.holdProfiles ? new Promise(done => qa.profileWaiters.push(() => done(result))) : Promise.resolve(result) },
     order() {
       if (qa.holdOldMessages && filter.includes('other')) return new Promise(done => qa.oldMessages.push(done))
       return Promise.resolve({ data: [...(filter.includes('third') ? [{ id: 'third-message', sender_id: 'third', receiver_id: qa.userId, content: qa.userId === 'newme' ? 'NEW_ACCOUNT_SYNTHETIC' : 'THIRD_SYNTHETIC', created_at: '2026-10-24T00:00:00Z', read_at: null }] : []), ...qa.extraRows], error: null })

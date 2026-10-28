@@ -880,15 +880,15 @@
     },
     {
       "path": "tests/selected/direct-message-send.test.mjs",
-      "sha": "d8fb6ff7a76ac0014beca5862e6172bd5fd930f9",
+      "sha": "e260c8c87e2f06308930a3c6b29b1f1f47ee6319",
       "origin_blob": "12ce7b7e54dd1d64ffcc95a64057c8ca1a1c8227",
-      "reason": "append fixed conversation-participant response regression; preserved previous acceptance; synthetic-only transport extension"
+      "reason": "append fixed conversation-participant response regression; preserved previous acceptance; synthetic-only transport extension; fixed delayed-profile auth acknowledgement acceptance"
     },
     {
       "path": "tests/browser/dm-supabase.ts",
-      "sha": "77478eefee769e23da2429e46fcad816b116aef8",
+      "sha": "e81bcaf6a22e0fbe913d16e5ea09df1367fdbd62",
       "origin_blob": "d7be63612e9b729c48d90d50f79a6e264929af07",
-      "reason": "append fixed conversation-participant response regression; preserved previous acceptance; synthetic-only transport extension"
+      "reason": "append fixed conversation-participant response regression; preserved previous acceptance; synthetic-only transport extension; fixed delayed-profile auth acknowledgement acceptance"
     },
     {
       "path": "src/DirectMessageChat.tsx",
