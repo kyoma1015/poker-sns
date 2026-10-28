@@ -12,7 +12,7 @@ for(const [name,value]of [
  ['other peer',{...row(),receiver_id:'another'}],['empty ID',{...row(),id:' '}],
  ['object content',{...row(),content:{private:'not renderable'}}],['null content',{...row(),content:null}],
  ['invalid created time',{...row(),created_at:'not a date'}],['nonstring time',{...row(),created_at:2}],
- ['invalid read time',{...row(),read_at:false}],['missing read time',(({read_at,...rest})=>rest)(row())],
+ ['invalid read time',{...row(),read_at:false}],['missing read time',(({read_at:_read_at,...rest})=>rest)(row())],
  ['inherited fields',Object.create(row())],
 ])test('invalid DM row refuses '+name,()=>{
  assert.equal(isDirectMessageForConversation(value,'me','peer'),false)

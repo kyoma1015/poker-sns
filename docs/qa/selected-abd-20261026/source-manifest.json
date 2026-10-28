@@ -857,7 +857,7 @@
     },
     {
       "path": "tests/direct-message-data.test.mjs",
-      "sha": "5792b25dd2ea8cf536df07d471c394afc0fb02ae",
+      "sha": "8628b18a99186b2ff03fd96d27bf1361344542c8",
       "reason": "validate existing DirectMessage DTO and conversation participants; not server RLS proof"
     }
   ],
