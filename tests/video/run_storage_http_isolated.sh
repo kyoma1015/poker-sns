@@ -21,6 +21,12 @@ apiurl="$(sed -n 's/^API_URL=//p' "$qa/local.env" | tr -d '\"')"
 [[ "$apiurl" == 'http://127.0.0.1:56321' ]] || { echo 'BLOCKED: unexpected API endpoint'; exit 2; }
 dburl="$(grep '^DB_URL=' "$qa/local.env" | cut -d= -f2- | tr -d '"')"
 [[ "$dburl" == *"127.0.0.1:56322"* ]] || { echo 'BLOCKED: unexpected DB endpoint'; exit 2; }
+# Cloud foundation runs on a fresh stack BEFORE permissive QA policies.
+VIDEO_QA_ENV="$qa/local.env" node tests/video/cloud_foundation_http_e2e.mjs
+# Destroy only the disposable stack, then bootstrap the unrelated legacy suite.
+npx --yes supabase@2.81.3 stop --workdir tests/video/local-stack --no-backup >"$qa/reset.log" 2>&1
+npx --yes supabase@2.81.3 start --workdir tests/video/local-stack --exclude studio,imgproxy,mailpit,edge-runtime,realtime,vector,logflare >"$qa/restart.log" 2>&1
+npx --yes supabase@2.81.3 status --workdir tests/video/local-stack -o env > "$qa/local.env"
 psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/storage_bootstrap.sql
 psql "$dburl" -v ON_ERROR_STOP=1 -f sql/post_short_videos_candidate.sql
 psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/isolated_finalize_db.sql
