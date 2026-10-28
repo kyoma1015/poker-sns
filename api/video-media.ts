@@ -3,7 +3,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { createClient } from '@supabase/supabase-js'
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
-const VIDEO_PATH = /^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\.(mp4|webm)$/
+const VIDEO_PATH = /^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\.(mp4|webm|mov)$/
 const MAX_BYTES = 20 * 1024 * 1024
 
 /** Candidate Vercel route: no public URLs, no redirect, and no Storage mutation. */
@@ -73,7 +73,7 @@ return async function handler(req: VercelRequest, res: VercelResponse) {
     if (!media.ok || !media.body) return res.status(503).end()
     // Never serve HTML/error pages or a mismatched container as trusted video.
     // Storage metadata is untrusted; fail closed before buffering its body.
-    const expectedMime = path.endsWith('.mp4') ? 'video/mp4' : 'video/webm'
+    const expectedMime = path.endsWith('.mp4') ? 'video/mp4' : path.endsWith('.mov') ? 'video/quicktime' : 'video/webm'
     const receivedMime = media.headers.get('content-type')?.split(';', 1)[0]?.trim().toLowerCase()
     if (receivedMime !== expectedMime) {
       await media.body.cancel()
