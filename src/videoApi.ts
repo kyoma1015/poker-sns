@@ -33,6 +33,28 @@ export async function finalizeUploadedVideo(objectPath: string, content: string,
   return payload.post_id
 }
 
+/** Recovery reuses the existing reserved private object; no Storage upload or new key. */
+export async function recoverCloudVideo(objectPath: string): Promise<string> {
+  assertCurrentVideoCloudTestClient()
+  if (import.meta.env.VITE_VIDEO_CLOUD_TEST_ENABLED !== 'true') throw new Error('テスト環境以外では復旧できません。')
+  const response = await fetch(VIDEO_FINALIZE_ROUTE, {
+    method: 'POST',
+    headers: { 'Content-Type':'application/json', Authorization: await authHeader() },
+    body: JSON.stringify({action:'recover',object_path:objectPath}),
+    redirect:'error',cache:'no-store',signal:AbortSignal.timeout(30000),
+  })
+  if (!response.ok) {
+    const details: unknown = await response.json().catch(()=>null)
+    const stage = details && typeof details==='object' && 'stage' in details && typeof details.stage==='string'
+      && /^(configuration|authentication|reservation_state|storage_fetch|storage_download|ffprobe_validation|attestation_key|publish_rpc)$/.test(details.stage) ? details.stage : 'unknown'
+    throw new Error('既存動画の確定に失敗しました（段階: '+stage+'、HTTP '+response.status+'）。')
+  }
+  const data: unknown = await response.json()
+  if (!data || typeof data !== 'object' || !('post_id' in data) ||
+    typeof data.post_id !== 'string' || !/^[0-9a-f-]{36}$/i.test(data.post_id)) throw new Error('復旧結果が不正です。')
+  return data.post_id
+}
+
 /** Reserve an object path before ANY Storage write. The server is the sole
  * trusted caller of the permanent-key ledger. Never retry a rejected key. */
 export async function reserveVideoObjectPath(objectPath: string, signal?: AbortSignal, manifest?: {sha256:string;size:number;type:string;content:string}): Promise<void> {
