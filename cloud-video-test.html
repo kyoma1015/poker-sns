@@ -3,7 +3,7 @@
 <body style="background:#111827;color:#f9fafb;font-family:system-ui;margin:0;padding:22px;max-width:650px">
 <h1>Poker ID｜動画検証</h1><p>独立テスト環境専用。通常のPoker IDとは連携しません。</p>
 <section id="auth"><label>メール <input id="email" type="email" autocomplete="email"></label><label>パスワード <input id="password" type="password" autocomplete="current-password"></label><button id="login">ログイン</button><button id="signup">新規登録</button></section>
-<section id="composer" hidden><p id="identity"></p><button id="logout">ログアウト</button><h2>動画を投稿</h2><textarea id="content" maxlength="10000" placeholder="投稿本文"></textarea><input id="video" type="file" accept="video/mp4,video/webm"><button id="post">投稿する</button><h2>自分の投稿</h2><div id="posts"></div></section>
+<section id="composer" hidden><p id="identity"></p><button id="logout">ログアウト</button><h2>動画を投稿</h2><textarea id="content" maxlength="10000" placeholder="投稿本文"></textarea><input id="video" type="file" accept="video/mp4,video/webm,video/quicktime,.mov"><button id="post">投稿する</button><h2>自分の投稿</h2><div id="posts"></div></section>
 <p id="status" role="status" aria-live="polite"></p>
 <style>label{display:block;margin:16px 0}input,textarea{display:block;width:100%;box-sizing:border-box;padding:12px;border:1px solid #64748b;border-radius:8px;background:#1f2937;color:white;margin:8px 0}textarea{min-height:90px}button{background:#334155;color:white;border:1px solid #94a3b8;border-radius:8px;padding:12px;margin:6px 6px 6px 0;cursor:pointer}button:disabled{opacity:.5}video{width:100%;max-height:360px}article{border:1px solid #475569;border-radius:8px;padding:12px;margin:12px 0}</style>
 <script type="module" src="/src/cloudVideoTest.ts"></script></body></html>
