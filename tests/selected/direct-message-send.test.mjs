@@ -298,3 +298,33 @@ test('DM delayed valid block check still sends one message',()=>withChat(async p
  await page.waitForFunction(()=>window.dmQA.inserts.length===1)
  assert.equal(await page.evaluate(()=>window.dmQA.inserts.length),1)
 }))
+
+for(const mode of ['switched-account','auth-error','auth-rejected']){
+ test('DM realtime acknowledgement uses the authenticated load path: '+mode,()=>withChat(async page=>{
+  await page.evaluate(()=>window.dmQA.navigate('/dm/third'))
+  await page.getByText('THIRD_SYNTHETIC',{exact:true}).waitFor()
+  const before=await page.evaluate(()=>window.dmQA.readUpdates)
+  await page.evaluate(async mode=>{
+   if(mode==='switched-account')window.dmQA.userId='newme'
+   if(mode==='auth-error')window.dmQA.errorUserOnce=true
+   if(mode==='auth-rejected')window.dmQA.rejectUserOnce=true
+   const channel=window.dmQA.channels.findLast(channel=>channel.active)
+   await channel.handler({eventType:'INSERT',new:{id:'late',sender_id:'third',receiver_id:'me',content:'LATE_ACK_PRIVATE',created_at:'2026-10-28T00:00:00Z',read_at:null}})
+  },mode)
+  assert.equal(await page.evaluate(()=>window.dmQA.readUpdates),before)
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))))
+  assert.doesNotMatch(await page.locator('body').innerText(),/LATE_ACK_PRIVATE|SYNTHETIC_PRIVATE_AUTH/)
+ }))
+}
+
+test('DM current incoming realtime event uses one read acknowledgement path',()=>withChat(async page=>{
+ await page.evaluate(()=>window.dmQA.navigate('/dm/third'))
+ await page.getByText('THIRD_SYNTHETIC',{exact:true}).waitFor()
+ const before=await page.evaluate(()=>window.dmQA.readUpdates)
+ await page.evaluate(async()=>{
+  const channel=window.dmQA.channels.findLast(channel=>channel.active)
+  await channel.handler({eventType:'INSERT',new:{id:'third-message',sender_id:'third',receiver_id:'me',content:'THIRD_SYNTHETIC',created_at:'2026-10-24T00:00:00Z',read_at:null}})
+ })
+ assert.equal(await page.evaluate(()=>window.dmQA.readUpdates),before+1)
+ assert.equal(await page.getByText('THIRD_SYNTHETIC',{exact:true}).count(),1)
+}))

@@ -2553,12 +2553,14 @@
     "mutated": false
   },
   "environment": {
-    "observed_at": "2026-10-28T00:49:00Z",
+    "observed_at": "2026-10-28T01:31:07Z",
     "shell": "bwrap: Can't create file /workspace/.git: No space left on device",
     "capacity_current": "UNKNOWN",
     "inode_current": "UNKNOWN",
-    "cleanup": "no deletions; supported shell still fails before execution; capacity/inode and WIP are unconfirmed",
-    "uncommitted_restore": "BLOCKED, not declared lost"
+    "cleanup": "none: shell launch fails before content inspection; no uninspected cache deletion or sandbox bypass",
+    "uncommitted_restore": "BLOCKED, not declared lost",
+    "management_tools": "Only status and retained network diagnostics exposed; no filesystem repair, snapshot, capacity or new-environment control available",
+    "shell_probes_this_batch": 1
   },
   "next_tasks": [
     "Restore capacity preserving .git/WIP/QA/heldSQLite; no uninspected deletion",
@@ -3618,5 +3620,88 @@
         }
       }
     }
+  },
+  "authorization_inventory": {
+    "reference_commit": "028619734b5425c4cf0d4eb0d4409ee932d49af0",
+    "status": "BLOCKED_AUTHENTIC_SCHEMA_NOT_RECEIVED",
+    "client_only_proof_is_not_rls": true,
+    "dm": {
+      "source": "src/DirectMessageChat.tsx",
+      "tables": [
+        "direct_messages",
+        "user_blocks",
+        "profiles"
+      ],
+      "required_schema_evidence": [
+        "columns/defaults/constraints/indexes",
+        "table and column grants incl PUBLIC/anon/authenticated",
+        "SELECT/INSERT/UPDATE/DELETE policies USING/WITH CHECK",
+        "helper functions and security/search_path/execute ACLs",
+        "approved block and server-idempotency contract"
+      ],
+      "actor_matrix": [
+        "sender A and receiver B",
+        "third party C",
+        "anonymous",
+        "expired or changed identity"
+      ],
+      "required_backend_assertions": [
+        "forged sender/receiver denied",
+        "third-party read denied",
+        "arbitrary content/ownership UPDATE denied",
+        "read_at acknowledgement limited to approved receiver/columns",
+        "direct REST/RPC and old-client paths equivalent",
+        "rollback preserves committed synthetic rows"
+      ]
+    },
+    "diagnosis": {
+      "source": "src/PlayerTypeDiagnosis.tsx",
+      "rpc_calls": [
+        "get_player_type_v2_questions",
+        "complete_player_type_v2_diagnosis",
+        "get_player_type_v2_result_detail",
+        "is_my_player_type_v2_result"
+      ],
+      "tables": [
+        "posts"
+      ],
+      "required_backend_assertions": [
+        "complete RPC derives owner from verified identity and validates one allowed option per each of50 distinct questions",
+        "result detail enforces public-or-owner access on server, not owner button state",
+        "ownership RPC cannot trust caller-selected owner subject",
+        "posts result-link insert checks actor/result authorization",
+        "private v2 design remains separate owner scope; do not change p_is_public here"
+      ],
+      "underlying_tables": "UNKNOWN: require function dependency/catalog export; posts is only the explicit client table"
+    },
+    "missing_originals": {
+      "tda": [
+        "immutable350 question/option/export SHA",
+        "authoritative answer key",
+        "TDA original edition and approved translation",
+        "question-ID-by-rule review receipts"
+      ],
+      "diagnosis": [
+        "versioned classifier source/tables",
+        "thresholds",
+        "tie priority",
+        "expert labels"
+      ]
+    },
+    "execution": "NO_DATABASE_CONNECTION_OR_SQL_EXECUTION",
+    "current_workspace": "BLOCKED_ENOSPC_NO_REPAIR_CAPABILITY_EXPOSED"
+  },
+  "current_work": {
+    "task": "DM authenticated acknowledgement/send boundaries",
+    "status": "IMPLEMENTED_PENDING_CI",
+    "before_commit": "8026cc006147c3f8808e7d74b676dab59be960c7",
+    "before_ci": 40616296156,
+    "before": {
+      "tests": 8,
+      "pass": 2,
+      "fail": 6
+    },
+    "post_fix_extra_cases": 4,
+    "limitations": "Synthetic transport proof; real auth/RLS/atomic session enforcement still BLOCKED"
   }
 }

@@ -100,7 +100,14 @@ function DirectMessageConversation({ userId, accountId, authIdentity }: {
     myUserId: string,
     otherUserId: string
   ) => {
-    if (!lifecycleRef.current.active || authIdentity.current !== myUserId) return
+    const valid = () => lifecycleRef.current.active && authIdentity.current === myUserId &&
+      myUserId === accountId && otherUserId === userId
+    if (!valid()) return false
+    // A missed auth event while block/profile queries were pending must not
+    // acknowledge the prior account's messages under a different session.
+    const verified = await supabase.auth.getUser()
+    if (!valid()) return false
+    if (verified.error || verified.data.user?.id !== myUserId) return false
     const { error } = await supabase
       .from('direct_messages')
       .update({
@@ -118,11 +125,9 @@ function DirectMessageConversation({ userId, accountId, authIdentity }: {
       .is('read_at', null)
 
     if (error) {
-      console.error(
-        '既読更新エラー:',
-        error
-      )
+      console.warn('既読更新を確認できませんでした。')
     }
+    return valid()
   }
 
   const loadMessages = async () => {
@@ -207,10 +212,8 @@ function DirectMessageConversation({ userId, accountId, authIdentity }: {
         profile.avatar_url || null
       )
 
-      await markMessagesAsRead(
-        user.id,
-        userId
-      )
+      const identityStillVerified = await markMessagesAsRead(user.id, userId)
+      if (!identityStillVerified) throw new Error('READ_AUTH_CHANGED')
       if (!isCurrent()) return
 
       const {
@@ -296,18 +299,8 @@ function DirectMessageConversation({ userId, accountId, authIdentity }: {
               return
             }
 
-            if (
-              newMessage.sender_id ===
-                userId &&
-              newMessage.receiver_id ===
-                currentUserId
-            ) {
-              await markMessagesAsRead(
-                currentUserId,
-                userId
-              )
-            }
-
+            // Reuse the authenticated load/ack path instead of issuing an
+            // early UPDATE before that path verifies identity and blocks.
             await loadMessages()
 
             scrollToBottom()
@@ -404,17 +397,20 @@ function DirectMessageConversation({ userId, accountId, authIdentity }: {
     sendingRef.current = true
     setIsSending(true)
     let sent = false
+    const refuseUnverifiedIdentity = () => {
+      setMessages([])
+      setInput('')
+      setCurrentUserId('')
+      setPlayerName('')
+      setPokerId('')
+      setAvatarUrl(null)
+      setStatusMessage('アカウントを確認できませんでした。ページを再読み込みしてください。')
+    }
     try {
       const { data: { user }, error: authError } = await supabase.auth.getUser()
       if (!isCurrent()) return
       if (authError || !user || user.id !== accountId || currentUserId !== accountId) {
-        setMessages([])
-        setInput('')
-        setCurrentUserId('')
-        setPlayerName('')
-        setPokerId('')
-        setAvatarUrl(null)
-        setStatusMessage('アカウントを確認できませんでした。ページを再読み込みしてください。')
+        refuseUnverifiedIdentity()
         return
       }
       const { data: currentBlocks, error: blockCheckError } = await supabase.from('user_blocks')
@@ -424,6 +420,14 @@ function DirectMessageConversation({ userId, accountId, authIdentity }: {
       if (blockCheckError || (currentBlocks || []).length > 0) {
         setIsBlocked(true)
         setStatusMessage('ブロック中のためメッセージを送信できません。')
+        return
+      }
+      // Block lookup is an await boundary too. Recheck the server-verified
+      // identity immediately before creating a message.
+      const freshIdentity = await supabase.auth.getUser()
+      if (!isCurrent()) return
+      if (freshIdentity.error || freshIdentity.data.user?.id !== accountId) {
+        refuseUnverifiedIdentity()
         return
       }
       const { error } = await supabase.from('direct_messages').insert({
