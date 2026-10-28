@@ -101,7 +101,7 @@ def experiment(native,output,*,proposal=None):
     output=Path(output);output.mkdir(exist_ok=False);game=NativeGame([100,100]);all_runs=[]
     for seed in (17,29):
         solver=native.Solver(game,.6,seed,True,True,.1);run=[]
-        for target in (2000,20000,50000):
+        for target in ((2000,20000,50000,100000) if proposal is not None else (2000,20000,50000)):
             if proposal is None:
                 training=train_batch(solver,game,target-solver.iteration,output/f'seed-{seed}-{target}.bin')
             else:
@@ -114,18 +114,26 @@ def experiment(native,output,*,proposal=None):
             contexts=[context_coverage(native,solver,game,h) for h in ([],[7],[7,20],[7,20,44])]
             observation={'seed':seed,'iteration':target,'contexts':contexts,'training':training,
                 'source_checkpoint_sha256':hashlib.sha256((output/f'seed-{seed}-{target}.bin').read_bytes()).hexdigest()}
-            if target==50000:
+            if target in (50000,100000):
                 from gto.native.hu_preflop_reach import reached_classes
                 for context in contexts[1:]:
                     context['history_reach']=reached_classes(native,solver,game,context['history'])
+            if target==50000:
                 policy=PolicySnapshot.from_solver(native,solver,max_rows=1000000)
                 observation['full_continuation']=evaluate_rfi(native,game,policy,seed=seed+1000)
+                if proposal is not None and seed==17:
+                    from gto.native.feasible_response import experiment as response_experiment
+                    response_report=response_experiment(native,game,policy,output/'feasible-response',
+                        base_checkpoint_sha256=observation['source_checkpoint_sha256'],base_iteration=target)
+                    observation['feasible_response_summary']={k:response_report[k] for k in (
+                        'global','completion_usage','best_response_gain_lower_bb','trajectory_sha256','full_game_convergence_verified')}
                 payload={'seed':seed,'iteration':target,'config':json.loads(game._public_config_json),
                     'policy_digest':policy.digest,'sampling_profile':proposal,'checkpoint_sha256':observation['source_checkpoint_sha256'],
                     'rfi':contexts[0],'history_reach_ranges':[c['history_reach'] for c in contexts[1:]],
                     'full_continuation':observation['full_continuation']}
                 encoded=report_json(payload)
                 print('ORDINARY_EVIDENCE '+encoded,flush=True)
+                del policy
             (output/f'seed-{seed}-{target}.json').write_text(report_json(observation)+'\n');run.append(observation)
             print('ORDINARY_PROGRESS '+json.dumps({'seed':seed,'iteration':target,'contexts':[{k:c[k] for k in ('stage','updated_orderings','complete_frequency_classes')} for c in contexts]}),flush=True)
         all_runs.append(run);del solver
@@ -135,6 +143,7 @@ def experiment(native,output,*,proposal=None):
             'posterior_frequency_classes':c.get('history_reach',{}).get('complete_frequency_classes'),
             'posterior_status':c.get('history_reach',{}).get('status')} for c in o['contexts']],
         'global_gain_upper_bb':o.get('full_continuation',{}).get('per_player_global_gain_upper_bb'),
+        'feasible_response':o.get('feasible_response_summary'),
         'checkpoint_sha256':o['source_checkpoint_sha256']} for o in r] for r in all_runs],
         'verified_ordinary_ranges':0,'formal_acceptance_complete':0}
     (output/'summary.json').write_text(json.dumps(summary,sort_keys=True,indent=2)+'\n')

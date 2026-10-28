@@ -5,6 +5,9 @@ perfect-information relaxation, so its value is an UPPER bound on a legal poker
 best response, never a feasible deviation or exact exploitability. Unknown policy
 rows and exhausted node budgets retain utility bounds, not invented strategies.
 A single-world result is not an equilibrium certificate or an expectation.
+Increasing the budget cannot remove this information relaxation. See
+feasible_response.py for complementary held-out LOWER bounds from deployable
+information-set policies against an explicitly declared fixed total profile.
 """
 from fractions import Fraction as F
 from gto.native.history_reach import _strategy
@@ -77,5 +80,6 @@ def world_bounds(state, policy, future_deck, stacks, *, max_nodes=512):
         counts.append({'nodes':nodes,'terminals':terminals,'unknown':unknown,'cutoffs':cutoffs})
     return {'profile_intervals_chips':profile,'clairvoyant_response_upper_chips':responses,
         'traversals':counts,'full_game_convergence_verified':False,
+        'response_is_feasible':False,'positive_upper_proves_exploitability':False,
         'scope':'one fixed-card world, full continuation; expectation/confidence still required',
         'response_method':'perfect-information relaxation, including future cards; upper bound only'}
