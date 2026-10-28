@@ -43,16 +43,17 @@ return async function handleCloudVideo(req,res) {
  if(probe.sha256!==before.sha256||await identity()!==uid||JSON.stringify(await state())!==JSON.stringify(before))throw Error('changed')
  stage = 'attestation_key'
  const key=process.env.VIDEO_CLOUD_TEST_HMAC_HEX
- if(!/^[0-9a-f]{64}$/.test(key||''))throw Error('key')
+ if(!/^[0-9a-f]{64}$/.test(key||''))throw Error('attestation_key_invalid_format')
  const c={owner:uid,path,generation:before.generation,sha256:probe.sha256,durationMs:Math.round(probe.duration*1000),contentSha256:videoAttestationDigest(content),expiresAt:Math.floor(Date.now()/1000)+120,nonce:randomBytes(16).toString('hex')}
  const bytes=Buffer.from(key,'hex');let signature;try{signature=signBinaryVideoAttestation(bytes,c)}finally{bytes.fill(0)}
- if(await identity()!==uid)throw Error('identity')
+ if(await identity()!==uid)throw Error('attestation_identity_changed')
  stage = 'publish_rpc'
  const r=await client.rpc('video_cloud_publish_v1',{p_owner:uid,p_path:path,p_generation:c.generation,p_sha256:c.sha256,p_duration_ms:c.durationMs,p_content:content,p_expires_at:c.expiresAt,p_nonce:c.nonce,p_signature:signature,p_key_id:Number(process.env.VIDEO_CLOUD_TEST_HMAC_ID)})
  if(r.error) { console.warn('video-cloud-test', 'publish_rpc_rejected'); return res.status(409).json({error:'publish_rpc_rejected'}) }
  return res.status(201).json({post_id:r.data})
  }catch(error){
  const reason = error instanceof Error && [
+  'attestation_key_invalid_format', 'attestation_identity_changed',
   'invalid stream structure', 'unsupported codec', 'invalid video dimensions',
   'invalid container', 'invalid video duration', 'missing streams',
   'ffprobe unavailable', 'ffprobe rejected video', 'ffprobe timeout',
