@@ -82,7 +82,7 @@ export async function uploadPostVideo(userId: string, file: File, signal?: Abort
     signal?.throwIfAborted()
     const journal: VideoTransferRecord = { owner: user.id, path, sha256, size: file.size, type: file.type, startedAt: Date.now(), phase: 'reserving' }
     beginVideoTransfer(journal)
-    try { await reserveVideoObjectPath(path, signal) }
+    try { await reserveVideoObjectPath(path, signal, {sha256,size:file.size,type:file.type,content:recoveryContent ?? ''}) }
     catch { throw new VideoTransferRecoveryRequiredError() }
     if (VIDEO_RECOVERY_CANDIDATE_ENABLED) {
       if (typeof recoveryContent !== 'string') throw new VideoTransferRecoveryRequiredError()

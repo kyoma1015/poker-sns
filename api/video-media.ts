@@ -31,7 +31,7 @@ return async function handler(req: VercelRequest, res: VercelResponse) {
     (options.isolatedLocalOnly === true && url === 'http://127.0.0.1:56321'))) return res.status(503).end()
   // Keep media disabled until the same audited production fence as finalize.
   // Isolated tests may opt into their explicit local-only transport.
-  if (options.isolatedLocalOnly !== true &&
+  if (process.env.VIDEO_CLOUD_TEST_ENABLED !== 'true' && options.isolatedLocalOnly !== true &&
       (!/^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/.test(url) ||
        process.env.VIDEO_PRODUCTION_FENCED_READY !== 'true')) {
     return res.status(503).end()
@@ -44,6 +44,10 @@ return async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const { data: identity, error: authError } = await viewer.auth.getUser(token)
     if (authError || !identity.user || !UUID.test(identity.user.id)) return res.status(401).end()
+    if (process.env.VIDEO_CLOUD_TEST_ENABLED === 'true') {
+      const allowed = await viewer.rpc('video_cloud_allowed')
+      if (allowed.error || allowed.data !== true) return res.status(403).end()
+    }
     const visible = async () => {
       const { data, error } = await viewer.from('posts')
         .select('user_id,video_path').eq('id', rawId).maybeSingle()

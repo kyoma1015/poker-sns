@@ -7,7 +7,7 @@ export const VIDEO_FINALIZE_ROUTE = '/internal/video/finalize'
 export const VIDEO_MEDIA_ROUTE = '/internal/video/media'
 // Build-time feature gate: keep disabled until production DB, runtime and API smoke QA pass.
 // Never infer readiness from the presence of Supabase credentials.
-export const VIDEO_SERVER_ENABLED = import.meta.env.VITE_VIDEO_SERVER_ENABLED === 'true'
+export const VIDEO_SERVER_ENABLED = import.meta.env.VITE_VIDEO_SERVER_ENABLED === 'true' || import.meta.env.VITE_VIDEO_CLOUD_TEST_ENABLED === 'true'
 
 async function authHeader(signal?: AbortSignal): Promise<string> {
   const { data: { session }, error } = await supabase.auth.getSession()
@@ -35,7 +35,7 @@ export async function finalizeUploadedVideo(objectPath: string, content: string,
 
 /** Reserve an object path before ANY Storage write. The server is the sole
  * trusted caller of the permanent-key ledger. Never retry a rejected key. */
-export async function reserveVideoObjectPath(objectPath: string, signal?: AbortSignal): Promise<void> {
+export async function reserveVideoObjectPath(objectPath: string, signal?: AbortSignal, manifest?: {sha256:string;size:number;type:string;content:string}): Promise<void> {
   assertCurrentVideoCloudTestClient()
   if (!VIDEO_SERVER_ENABLED) throw new Error('動画投稿はサーバーAPIの安全確認待ちです。')
   const response = await fetch(VIDEO_FINALIZE_ROUTE, {
@@ -43,7 +43,7 @@ export async function reserveVideoObjectPath(objectPath: string, signal?: AbortS
     headers: { 'Content-Type': 'application/json', Authorization: await authHeader(signal) },
     redirect: 'error', signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(30000)]) : AbortSignal.timeout(30000),
     cache: 'no-store',
-    body: JSON.stringify({ action: 'reserve', object_path: objectPath }),
+    body: JSON.stringify({ action: 'reserve', object_path: objectPath, ...(import.meta.env.VITE_VIDEO_CLOUD_TEST_ENABLED === 'true' ? manifest : {}) }),
   })
   if (!response.ok) throw new Error('動画の保存先を安全に確保できませんでした。')
   const payload: unknown = await response.json()

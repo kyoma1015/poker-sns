@@ -1,3 +1,4 @@
+import { handleCloudVideo } from '../server/video-cloud-http.mjs'
 import { assertCloudTestRequestConfiguration } from '../server/video-cloud-test-target.mjs'
 import { handleVideoRecoveryCandidate } from '../server/video-recovery-candidate.js'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
@@ -25,6 +26,7 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
   try { assertCloudTestRequestConfiguration(process.env) } catch {
     return res.status(503).end()
   }
+  if (process.env.VIDEO_CLOUD_TEST_ENABLED === 'true') return handleCloudVideo(req,res)
   // Preview-only runtime attestation, sharing this existing serverless function.
   // No new Vercel function or production endpoint is required.
   if (req.method === 'GET' && req.query?.runtime_attestation === 'ffprobe') {
