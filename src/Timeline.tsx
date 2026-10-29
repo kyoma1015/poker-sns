@@ -952,7 +952,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       {attachmentScreen === 'menu' ? <>
         <div style={{ fontSize: 12, color: '#aaa', marginBottom: 10 }}>添付するものを選択</div>
         <button type="button" style={optionStyle} onClick={() => { imageInputRef.current?.click(); setAttachmentsOpen(false) }}>▧　画像を添付（最大4枚・各5MB）</button>
-        <button type="button" style={optionStyle} onClick={() => { videoInputRef.current?.click(); setAttachmentsOpen(false) }}>▶　動画を選択（最大30秒・20MB）</button>
+        <button type="button" style={optionStyle} onClick={() => { videoInputRef.current?.click(); setAttachmentsOpen(false) }}>▶　動画を添付（最大30秒・20MB）</button>
         <button type="button" style={optionStyle} onClick={() => { void loadDiagnoses() }}>♧　自己診断を添付　›</button>
         <button type="button" style={optionStyle} onClick={() => { void loadStyleSnapshot() }}>♙　自分への他者評価を添付（3人以上）</button>
         <button type="button" style={optionStyle} onClick={() => setAttachmentScreen('results')}>♠　戦績を添付　›</button>
@@ -2752,7 +2752,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
           {renderInteractiveFields()}
           <input ref={imageInputRef} type="file" accept="image/jpeg,image/png,image/webp" multiple hidden onChange={e => { chooseImages(e.target.files); e.target.value = '' }} />
-          <input ref={videoInputRef} type="file" accept="video/mp4,video/webm" hidden onChange={e => { void chooseVideo(e.target.files?.[0]); e.target.value = '' }} />
+          <input ref={videoInputRef} type="file" accept={import.meta.env.VITE_VIDEO_CLOUD_TEST_ENABLED === 'true' ? "video/mp4,video/webm,video/quicktime,.mov" : "video/mp4,video/webm"} hidden onChange={e => { void chooseVideo(e.target.files?.[0]); e.target.value = '' }} />
           {attachmentsOpen && renderAttachmentPicker()}
           {renderSelectedResultPreview()}
         </section>
