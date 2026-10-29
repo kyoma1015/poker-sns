@@ -57,3 +57,9 @@ Patch accepts exactly one object row with matching UUID (case-insensitive), keep
 Complete file listings for77 other open PRs were read; no api/poker-id-image.ts or tests/poker-id-image-auth.test.mjs overlap at recorded heads. GTO and other-owner branches unchanged.
 API share/OG source also names player_type_diagnosis_results and player_type_definitions and applies public filters. This supplies server source relation names, NOT the full RPC dependency/schema/grant receipt. OG cache/revocation behavior remains a separate unresolved privacy contract; no classifier or private-v2 design change made.
 Frozen32 product statuses/gates and five release blockers unchanged; model6 and handler12 assertions are not18 completed public features. Workspace/WIP/heldSQLite remain unrecovered/unmeasured. No local shell retry or production operation.
+
+### 2026-10-29T06:30:18Z recovered final evidence
+Source345e99cb0a40b777bfd8acd624f6cdc265a3f22f was confirmed current/Draft/unmerged on resume. Actual executions were2026-10-28, receipts recovered2026-10-29; no fictitious new run times.
+Selected40627094245 SUCCESS:538 Node executions/0FAIL (repeats/wrappers included), original381 preserved, card handler12PASS with same fixed input that previously measured9PASS/3FAIL. npmci/build/lintPASS,57warnings/0errors.
+Authorization40627094184 SUCCESS: original20 plus new6 refusal/atomic catalog rollback assertionsPASS. Poll40627094185 SUCCESS:70PASS/0FAIL/0BLOCKED in existing disposable database. These are not authentic DM/diagnosis/Storage grants or live-data exposure evidence.
+No product status/gate promotion across32 rows; publicly-ready0/32, confirmed implementation9/PARTIAL5/UNKNOWN18, five release blockers unchanged. PlayerSearch/payload WIP unrecovered; no shell retry, heldSQLite read/write, reset, production/main/GTO/schedule/billing operation.

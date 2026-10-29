@@ -61,3 +61,9 @@ Frozen32 product gates/statuses unchanged, public-ready0/32, incomplete32; relea
 DM proposal effective grants now refuse inherited UPDATE, unreviewed permissive policies and BYPASSRLS actors atomically. Fixed6: before0PASS/1FAIL/5NOTRUN at e7de7a3/40625711891; after6PASS atdd19974/40626155417, original20PASS. This is not authentic schema/JWT proof.
 Public-card image handler fixed12 measured9PASS/3FAIL at7f730d6/40626694807 for malformed/unrelated visibility rowsets. Strict single-owner response guard added; after result must be read from latest PR125 exact-head CI checkpoint. All calls are synthetic; no real service credential/DB/Storage used in these tests.77 other open PR file lists had no matching API/test path.
 All32 product state/gate rows unchanged, public-ready0/32; confirmed9/PARTIAL5/UNKNOWN18, five release blocker categories unchanged. WIP/state unmeasured; no production/main/GTO change. AUTO-RESUME OFF, pollNO-GO.
+
+### 2026-10-29T06:30:18Z recovered final evidence
+Source345e99cb0a40b777bfd8acd624f6cdc265a3f22f was confirmed current/Draft/unmerged on resume. Actual executions were2026-10-28, receipts recovered2026-10-29; no fictitious new run times.
+Selected40627094245 SUCCESS:538 Node executions/0FAIL (repeats/wrappers included), original381 preserved, card handler12PASS with same fixed input that previously measured9PASS/3FAIL. npmci/build/lintPASS,57warnings/0errors.
+Authorization40627094184 SUCCESS: original20 plus new6 refusal/atomic catalog rollback assertionsPASS. Poll40627094185 SUCCESS:70PASS/0FAIL/0BLOCKED in existing disposable database. These are not authentic DM/diagnosis/Storage grants or live-data exposure evidence.
+No product status/gate promotion across32 rows; publicly-ready0/32, confirmed implementation9/PARTIAL5/UNKNOWN18, five release blockers unchanged. PlayerSearch/payload WIP unrecovered; no shell retry, heldSQLite read/write, reset, production/main/GTO/schedule/billing operation.
