@@ -19,6 +19,12 @@ test('playback accepts bounded MP4/WebM/MOV and normalizes MIME parameters', asy
     assert.equal(blob.type,mime.split(';')[0])
   }
 })
+test('partial HTTP content is rejected rather than played as a complete video', async()=>{
+  const stream = new ReadableStream({start(controller){controller.enqueue(new Uint8Array([1,2]));controller.close()}})
+  const response = new Response(stream,{status:206,headers:{'content-type':'video/mp4','content-range':'bytes 0-1/4','content-length':'2'}})
+  await assert.rejects(readVideoResponse(response),/動画を読み込めませんでした/)
+})
+
 test('bad headers cancel before reading authenticated bytes', async()=>{
   for(const headers of [
     {'content-type':'text/html'},
