@@ -66,14 +66,29 @@ export default function PostVideo({ postId }: { postId: string }) {
         if (poster) return
         const video = event.currentTarget
         if (!video.videoWidth || !video.videoHeight) return
+        // Safari can expose a decoded first frame before it is actually paintable.
+        // Seek slightly forward once; only capture after seeked, never freeze a black
+        // initial canvas as the poster. Playback remains independent of this step.
+        if (video.currentTime === 0 && Number.isFinite(video.duration) && video.duration > 0.2) {
+          try { video.currentTime = Math.min(0.15, video.duration / 2) } catch { /* keep native preview */ }
+        }
+      }}
+      onSeeked={event => {
+        if (poster || playing) return
+        const video = event.currentTarget
+        if (!video.videoWidth || !video.videoHeight || video.readyState < 2) return
         try {
           const canvas = document.createElement('canvas')
           const scale = Math.min(1, 640 / Math.max(video.videoWidth, video.videoHeight))
           canvas.width = Math.max(1, Math.round(video.videoWidth * scale))
           canvas.height = Math.max(1, Math.round(video.videoHeight * scale))
-          canvas.getContext('2d')?.drawImage(video, 0, 0, canvas.width, canvas.height)
+          const context = canvas.getContext('2d')
+          if (!context) return
+          context.drawImage(video, 0, 0, canvas.width, canvas.height)
+          const pixels = context.getImageData(0, 0, Math.min(canvas.width, 8), Math.min(canvas.height, 8)).data
+          if (!pixels.some((value, index) => index % 4 !== 3 && value > 12)) return
           setPoster(canvas.toDataURL('image/jpeg', 0.72))
-        } catch { /* The video element remains usable if poster extraction fails. */ }
+        } catch { /* Native video preview and playback remain available. */ }
       }}
       onPlay={() => { setPlaying(true); setPlaybackError('') }} onPause={() => setPlaying(false)}
       onError={() => setPlaybackError('動画を再生できません。形式または通信状態をご確認ください。')}
