@@ -52,6 +52,8 @@ jobs:
           # Never upload the plaintext bundle or any plaintext Actions artifact.
           tar -C "$tmp" -cf - database.dump database.sha256 storage | age -r "$BACKUP_AGE_RECIPIENT" -o "$tmp/encrypted-backup.tar.age"
           test -s "$tmp/encrypted-backup.tar.age"
+          # Conservative cap; GitHub Free storage allowance is shared and actual available quota must still be checked.
+          test "$(stat -c%s "$tmp/encrypted-backup.tar.age")" -le 209715200 || { echo "::error::Encrypted archive exceeds conservative 200 MiB artifact cap"; exit 2; }
           # Ciphertext only: GitHub artifact is a temporary transfer, NOT durable backup.
           mkdir -m 700 -p "$RUNNER_TEMP/poker-encrypted-artifact"
           cp "$tmp/encrypted-backup.tar.age" "$RUNNER_TEMP/poker-encrypted-artifact/backup.tar.age"
