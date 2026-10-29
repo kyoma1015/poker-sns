@@ -1,0 +1,31 @@
+name: Protected Preview video read-only auth audit
+on:
+  workflow_dispatch:
+    inputs:
+      preview_url:
+        description: Exact protected Preview origin (https://...vercel.app)
+        required: true
+        type: string
+      post_id:
+        description: Existing test-owned video post UUID (no writes)
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  preview-auth:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Verify protected Preview authorization (read only; fail closed)
+        env:
+          PREVIEW_URL: ${{ inputs.preview_url }}
+          PREVIEW_POST_ID: ${{ inputs.post_id }}
+          VERCEL_OIDC_TOKEN: ${{ secrets.VERCEL_PREVIEW_TRUSTED_OIDC_TOKEN }}
+          TEST_OWNER_JWT: ${{ secrets.VIDEO_TEST_OWNER_JWT }}
+          TEST_OTHER_JWT: ${{ secrets.VIDEO_TEST_OTHER_JWT }}
+        run: node tests/video/preview-readonly-auth-audit.mjs
