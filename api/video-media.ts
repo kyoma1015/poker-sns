@@ -1,4 +1,4 @@
-import { assertProductionVideoPublisher } from '../server/video-production-rollout.js'
+import { assertProductionVideoPublisher } from '../server/video-production-rollout.mjs'
 import { assertCloudTestRequestConfiguration } from '../server/video-cloud-test-target.mjs'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { createClient } from '@supabase/supabase-js'

@@ -1,4 +1,4 @@
-import { assertProductionVideoPublisher } from '../server/video-production-rollout.js'
+import { assertProductionVideoPublisher } from '../server/video-production-rollout.mjs'
 import { DefinitivePublishRejection } from './video-finalize-core.js'
 import { createClient } from '@supabase/supabase-js'
 import type { FinalizeCandidateAdapters, ImmutableStagedSnapshot } from './video-finalize-core.js'

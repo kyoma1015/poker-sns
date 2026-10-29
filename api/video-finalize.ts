@@ -1,4 +1,4 @@
-import { assertProductionVideoPublisher } from '../server/video-production-rollout.js'
+import { assertProductionVideoPublisher } from '../server/video-production-rollout.mjs'
 import { handleCloudVideo } from '../server/video-cloud-http.mjs'
 import { assertCloudTestRequestConfiguration } from '../server/video-cloud-test-target.mjs'
 import { handleVideoRecoveryCandidate } from '../server/video-recovery-candidate.js'

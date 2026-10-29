@@ -3,7 +3,7 @@ on:
   pull_request:
     paths:
       - 'sql/video_production_limited_rollout.sql'
-      - 'server/video-production-rollout.ts'
+      - 'server/video-production-rollout.mjs'
       - 'tests/video/isolated_production_rollout.sh'
       - '.github/workflows/video-production-rollout.yml'
 permissions:
