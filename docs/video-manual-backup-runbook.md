@@ -9,7 +9,7 @@ Scope: stand-alone change, no PR #123 HEAD mutation, no production SQL, merge or
 - Read-only PostgreSQL 17 logical custom-format DB dump and Supabase Storage downloads for all four buckets / seven objects.
 - Per-object SHA-256 manifest, DB SHA-256, inventory double-listing to detect path changes (does NOT guarantee an atomic data snapshot).
 - Encrypt with an **age public recipient** before offsite transfer. No raw dump or object content is uploaded as Actions artifacts.
-- Upload ciphertext to an **existing privately configured** S3 destination. Exit with error if a required setting is missing.
+- Upload ciphertext only to a 1-day GitHub Actions artifact for manual download. This is transient transport, never a permanent backup.
 
 ## Required configuration (not set by this PR)
 
@@ -18,15 +18,12 @@ GitHub environment: `production-backup`, protect with required reviewers and res
 Secrets (configure only in GitHub settings; never in issue/chat):
 - `PROD_DB_URL`: PostgreSQL session pooler/direct TLS URL; read-only DB user with the necessary schema access, **NOT service role**.
 - `PROD_STORAGE_READ_KEY`: privileged backup-only Storage read credential; review key privilege scope. Existing Supabase service_role is broad and must be treated as highly sensitive; do not grant to untrusted PRs.
-- `BACKUP_AWS_ACCESS_KEY_ID` and `BACKUP_AWS_SECRET_ACCESS_KEY`: tightly scoped write-only access to an EXISTING private bucket.
 
 Environment variables:
 - `PROD_SUPABASE_URL`: the correct production HTTPS project origin (not test).
 - `BACKUP_AGE_RECIPIENT`: trusted age public recipient. **Keep the corresponding private identity offline** for recovery.
-- `BACKUP_S3_URI`: existing private `s3://bucket/prefix` location.
-- `BACKUP_AWS_REGION`: correct configured storage region.
 
-**Cost:** S3 storage, transfer and API requests may incur charges. Do not configure or run until the existing destination is confirmed to have zero incremental cost. The workflow does not provision resources.
+**Cost:** This workflow uses existing GitHub Actions and temporary Actions artifact storage; usage limits and possible additional billing must be checked for the repository before dispatch. No extra billing is authorized. Artifacts expire after 1 day, and must be downloaded and moved to independent private durable storage. A 1-day artifact is NOT a backup recovery point.
 
 **Important:** `workflow_dispatch` only runs a workflow file present on the repository default branch. Review and merge this separate backup PR on its own first, only after confirming workflow permissions, trusted dependencies and the protected environment configuration. Do not merge PR #123 or enable production video flags as part of this step.
 
@@ -44,9 +41,10 @@ Environment variables:
 
 1. Configure the protected environment, least-privilege secrets, age public recipient, existing zero-incremental-cost private storage and offline key custody.
 2. Review the backup PR, merge only the backup changes to main. Leave PR #123 untouched.
-3. Trigger `Manual encrypted production backup` through GitHub Actions. Verify successful remote encrypted object delivery.
-4. Independently obtain and decrypt the object in a trusted environment, run full isolated DB restore and Storage byte restore, compare manifest/hash and exercise auth/RLS.
-5. Record proof and then continue with video production schema/RPC/Storage/HMAC staging and authorization QA. Do not equate the backup workflow's success with deployment approval.
+3. Trigger `Manual encrypted production backup` through GitHub Actions only after confirming remaining Actions budget; obtain the encrypted artifact within the 1-day retention period. Treat it only as a transfer.
+4. Move the encrypted `.age` archive and separately safeguarded private age identity into independent durable PRIVATE storage (for example existing iCloud Drive on iPhone, after confirming available space and access restrictions), verify download integrity and keep a second independent copy. Do not upload the age private identity to Actions or GitHub.
+5. Independently decrypt the object in a trusted environment, run full isolated DB restore and Storage byte restore, compare manifest/hash and exercise auth/RLS.
+6. Record proof and then continue with video production schema/RPC/Storage/HMAC staging and authorization QA. Do not equate the backup workflow's success with deployment approval.
 
 
 ## Isolated restoration smoke test
@@ -63,7 +61,8 @@ The second step starts a throwaway PostgreSQL 17 Docker container with `--networ
 ## Safety limitations discovered during review
 
 - A repository-scoped GitHub Actions secret is not equivalent to a protected environment secret. Place production credentials **only in an explicitly protected `production-backup` environment**, and restrict the eligible branch/reviewers. Public repositories and code from unreviewed PRs must never receive production credentials.
-- Current workflow depends on an **existing private S3 bucket**. We have not confirmed one exists or that its incremental storage/requests/egress cost is zero. Without this, job must remain unrun.
+- GitHub Actions runtime/storage quotas and private long-term destination space are unverified; without evidence of zero additional billing and a durable private destination, job must remain unrun.
+- The job DOES NOT create a persistent backup destination. The temporary encrypted GitHub artifact is deleted automatically after 1 day; permanent private storage and retrieval proof must be arranged separately.
 - The job uses a pinned Supabase origin and stops on a Storage redirect to another host. Some providers legitimately redirect downloads; this must be tested against an authorized non-production bucket before production backup.
 - `EXPECTED_STORAGE_OBJECTS=7` and `EXPECTED_STORAGE_BUCKETS=4` are current inventory preconditions, not permanent constants. Any change means a deliberate inventory reconciliation, not a blind reset.
 - The current restore smoke test is neither fully exercised nor independently reviewed. Do not merge or trigger the backup workflow merely because the source files have been added.
@@ -71,3 +70,11 @@ The second step starts a throwaway PostgreSQL 17 Docker container with `--networ
 ## Synthetic regression tests
 
 Run `python3 -m unittest discover -s tests/video -p test_manual_backup_integrity.py -v` before approving PR #127. These tests exercise valid, tampered, missing, extra and traversal-path synthetic inputs. They do not touch production or prove live Storage download compatibility.
+
+## Mandatory manual configuration on GitHub and iPhone
+
+1. In repository Settings > Environments, create `production-backup`, require a trusted reviewer and restrict allowed deployment branches to `main` before storing production credentials. **Save the environment**.
+2. In that environment only, set secrets `PROD_DB_URL` and `PROD_STORAGE_READ_KEY`; set variables `PROD_SUPABASE_URL` (production HTTPS URL) and `BACKUP_AGE_RECIPIENT` (offline-generated public recipient). **Save each secret/variable**. Never paste secret values into chat or source code.
+3. Verify existing GitHub Actions included minutes/artifact quota before manually running from main. The artifact is encrypted but can be accessible to repository viewers; confidentiality depends on keeping the corresponding age private identity strictly offline.
+4. From the GitHub Actions run, download the `.age` ciphertext within one day; on iPhone save to an existing private durable location such as iCloud Drive after checking capacity. Keep the age identity separately and test decryption in a trusted environment.
+5. A successful Actions run alone is **not proof of recovery**. Full compatible DB and Storage bytes restoration, user/session authorization and RLS must pass independently before production promotion.
