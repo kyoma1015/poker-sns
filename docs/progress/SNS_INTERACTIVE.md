@@ -14,3 +14,11 @@ PR #4 is superseded by corrected PR #12 and the integrated Draft PR. Question-bo
 
 ## Issue22 poll independent candidate: isolated acceptance complete 2026-10-21
 PR31, tested b90bd5f34c3791e4ad5da762c51f972a8d73710d, CI39572765844 SUCCESS: real official Supabase Postgres/PostgREST56PASS plus client30/build/lint/audit/mobile mock5. Three-actor anonymity/RLS, legacy RPC, notification privilege preservation/forgery, actual cron, concurrent retries, rollback and retained historical data passed. Exact JSON: docs/qa/issue22-polls-20261020/database-results-ci39572765844.json. Production BLOCKED: schema parity/SQL approval/migration history+advisors/full real-DB UI QA/deployment access. GoTrue absent; this is not production login testing. Question creation remains disabled; old data kept.
+
+
+
+## Backup-only JIT/read-only connection correction (2026-10-30 JST)
+Dedicated branch: codex/backup-jit-readonly-options-20261030; based on main 73f2a4398ae20ca14d6ad89000bba13a7b4ad18b.
+Acceptance: reproduce libpq URI options overriding PGOPTIONS, then show JIT + default/current read-only + TLS together, actual INSERT/DELETE rejection despite synthetic grants, successful pg_dump/pg_dumpall, retained source row, and no credential output.
+Implementation: validate the stored URL, require the approved backup role and postgres database, decode into an exclusive 0600 libpq env file under a private directory, combine JIT/read-only startup options once, and pass only that file into the PG17 client container. No secret URL in process arguments, no extra connection-string expansion, no production credential changes. Raw database client diagnostics stay in private temporary scratch and are never published. All plaintext connection settings are removed on success or EXIT.
+Local acceptance: 20 preflight tests and shell syntax PASS. CI includes the new disposable TLS PostgreSQL regression; its actual result is recorded in the PR/checks, not presumed here. This is not a live Supabase JIT or production backup/restore result. No JIT grant, manual backup dispatch, main merge, production DB change, Vercel change or PR #123 change is authorized by this code. Owner approval is required for main merge; renew the explicit JIT expiry only after integration.

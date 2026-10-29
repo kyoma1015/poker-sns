@@ -47,21 +47,26 @@ jobs:
           chmod 700 "$tmp"
           trap 'rm -rf -- "$tmp"' EXIT
           # PostgreSQL 17 client; this extracts database contents but DOES NOT certify restorable Supabase platform config.
-          # libpq PGOPTIONS is applied to every pg_dump/pg_dumpall connection.
+          # Split the validated URL into private libpq settings: URI options must
+          # not override default_transaction_read_only. No credential in argv/logs.
+          python3 scripts/video_backup_preflight.py --write-libpq-env "$tmp/libpq.env"
           # Reject mismatched effective role/read-only state before issuing any dump.
-          export PGOPTIONS='-c default_transaction_read_only=on'
-          docker run --rm -e PROD_DB_URL -e PGOPTIONS -v "$tmp:/backup" postgres:17 \
+          if ! docker run --rm --env-file "$tmp/libpq.env" -v "$tmp:/backup" postgres:17 \
             sh -ec '
-              psql "$PROD_DB_URL" -X -At -v ON_ERROR_STOP=1 -c "SELECT current_user || chr(124) || current_setting('\''default_transaction_read_only'\'') || chr(124) || current_setting('\''transaction_read_only'\'')" > /backup/preflight-result
+              psql -X -At -v ON_ERROR_STOP=1 -c "SELECT current_user || chr(124) || current_setting('\''default_transaction_read_only'\'') || chr(124) || current_setting('\''transaction_read_only'\'')" > /backup/preflight-result
               test "$(cat /backup/preflight-result)" = "supabase_read_only_user|on|on" || { echo "Incorrect role or read-only state" >&2; exit 2; }
               rm -f /backup/preflight-result
-              pg_dump --dbname "$PROD_DB_URL" --format=custom -f /backup/database.dump
+              pg_dump --format=custom -f /backup/database.dump
               test -s /backup/database.dump
               pg_restore --list /backup/database.dump > /backup/database.toc
               test -s /backup/database.toc
-              pg_dumpall --dbname "$PROD_DB_URL" --globals-only --no-role-passwords -f /backup/globals.sql
+              pg_dumpall --globals-only --no-role-passwords -f /backup/globals.sql
               test -s /backup/globals.sql
-            '
+            ' >"$tmp/db-client.log" 2>&1; then
+            echo "::error::Database preflight or complete dump failed; private diagnostics were not published"
+            exit 2
+          fi
+          rm -f -- "$tmp/libpq.env" "$tmp/db-client.log"
           export BACKUP_STORAGE_DIR="$tmp/storage"
           export EXPECTED_STORAGE_OBJECTS=7 EXPECTED_STORAGE_BUCKETS=4
           python3 scripts/video_backup_storage.py
@@ -88,3 +93,4 @@ jobs:
         if: always()
         shell: bash
         run: rm -rf -- "$RUNNER_TEMP/poker-encrypted-artifact"
+
