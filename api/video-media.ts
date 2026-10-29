@@ -1,4 +1,4 @@
-import { assertProductionVideoPublisher } from '../server/video-production-rollout.mjs'
+import { assertProductionVideoConfiguration, assertProductionVideoPublisher } from '../server/video-production-rollout.mjs'
 import { assertCloudTestRequestConfiguration } from '../server/video-cloud-test-target.mjs'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { createClient } from '@supabase/supabase-js'
@@ -20,6 +20,9 @@ return async function handler(req: VercelRequest, res: VercelResponse) {
   // Reject wrong cloud-test target before auth, RPC, Storage or ffprobe I/O.
   try { assertCloudTestRequestConfiguration(process.env) } catch {
     return res.status(503).end()
+  }
+  if (process.env.VIDEO_PRODUCTION_FENCED_READY === 'true' && options.isolatedLocalOnly !== true) {
+    try { assertProductionVideoConfiguration() } catch { return res.status(503).end() }
   }
   if (req.method !== 'GET') return res.status(405).end()
   const rawAuth = req.headers.authorization
