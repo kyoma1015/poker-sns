@@ -44,8 +44,12 @@ def validate(settings):
     # Do not accept additional duplicate values or options that disable TLS or reroute DB.
     if any(len(values) != 1 for values in query.values()):
         raise ValueError("Ambiguous repeated PostgreSQL URL parameters")
-    if any(param in query for param in ("host", "hostaddr", "service", "sslrootcert", "passfile")):
-        raise ValueError("Unsupported connection routing or credential overrides")
+    if any(param not in ("sslmode", "options", "connect_timeout") for param in query):
+        raise ValueError("Unapproved PostgreSQL connection option")
+    if "options" in query and (not pooler or query["options"] != ["-c jit=true"]):
+        raise ValueError("Unapproved JIT libpq options")
+    if "connect_timeout" in query and query["connect_timeout"] not in (["5"], ["10"], ["15"], ["30"]):
+        raise ValueError("Unapproved database connection timeout")
     return True
 
 if __name__ == "__main__":
