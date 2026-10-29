@@ -20,6 +20,12 @@ def restore(bundle, destination):
     objects = manifest["objects"]
     if not isinstance(objects, list) or not isinstance(manifest.get("buckets"), int):
         raise ValueError("Invalid Storage manifest")
+    records = manifest.get("bucket_records")
+    if not isinstance(records, list) or len(records) != manifest["buckets"]:
+        raise ValueError("Missing Storage bucket metadata")
+    bucket_ids = {b.get("id") for b in records if isinstance(b, dict)}
+    if len(bucket_ids) != len(records) or None in bucket_ids:
+        raise ValueError("Invalid Storage bucket metadata")
     destination = Path(destination)
     # Reject pre-existing destinations. Never overwrite potentially important data.
     if destination.exists() or destination.is_symlink():
