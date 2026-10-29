@@ -33,7 +33,7 @@ class BackupIntegrityTests(unittest.TestCase):
         self.write_manifest("bucket/video.mp4")
 
     def write_manifest(self, path):
-        self.manifest.write_text(json.dumps({"buckets":1,"objects":[{"path":path, "bytes":len(b"synthetic-video"), "sha256":hashlib.sha256(b"synthetic-video").hexdigest()}]}))
+        self.manifest.write_text(json.dumps({"buckets":1,"bucket_records":[{"id":"bucket","public":False,"file_size_limit":2048}],"objects":[{"path":path, "bytes":len(b"synthetic-video"), "sha256":hashlib.sha256(b"synthetic-video").hexdigest()}]}))
 
     def run_check(self):
         return subprocess.run([sys.executable,str(SCRIPT),str(self.root)],capture_output=True,text=True,timeout=8)
