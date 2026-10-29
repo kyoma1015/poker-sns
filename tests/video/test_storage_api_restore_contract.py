@@ -136,7 +136,12 @@ class MockStorageRestoreContract(unittest.TestCase):
 
     def test_size_limit_and_wrong_bucket(self):
         path = "/storage/v1/object/" + "/".join(OBJECT)
-        self.assertEqual(self.request("PUT", path, b"x" * (BUCKET["file_size_limit"] + 1))[0], 413)
+        original_limit = BUCKET["file_size_limit"]
+        try:
+            BUCKET["file_size_limit"] = 128  # Small synthetic limit avoids early-close TCP races on 20 MB payloads.
+            self.assertEqual(self.request("PUT", path, b"x" * 129)[0], 413)
+        finally:
+            BUCKET["file_size_limit"] = original_limit
         self.assertEqual(self.request("PUT", "/storage/v1/object/other/user-1/sample.mp4", PAYLOAD)[0], 404)
 
 if __name__ == "__main__":
