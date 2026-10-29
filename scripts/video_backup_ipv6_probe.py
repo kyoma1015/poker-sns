@@ -2,6 +2,7 @@
 """Credential-free Actions runner diagnosis; never authenticates to Postgres."""
 import errno
 import json
+import shutil
 import socket
 import ssl
 import struct
@@ -28,9 +29,12 @@ def diagnose():
         "database_query_sent": False,
     }
     try:
-        route = subprocess.run(["ip", "-6", "route", "show", "default"],
+        route_command = (["ip", "-6", "route", "show", "default"]
+                         if shutil.which("ip") else ["netstat", "-rn", "-f", "inet6"])
+        route = subprocess.run(route_command,
                                capture_output=True, text=True, timeout=5, check=False)
-        result["ipv6_default_route"] = route.returncode == 0 and bool(route.stdout.strip())
+        result["ipv6_default_route"] = route.returncode == 0 and any(
+            line.split() and line.split()[0] == "default" for line in route.stdout.splitlines())
         addresses = socket.getaddrinfo(HOST, PORT, socket.AF_INET6, socket.SOCK_STREAM)
         addresses = list(dict.fromkeys(row[4] for row in addresses))
         result["ipv6_dns_records"] = len(addresses)
