@@ -34,6 +34,8 @@ def restore(bundle, destination):
                     or len(path.parts) < 2 or any(part in ("", ".", "..") for part in path.parts)
                     or name in seen or "\\" in name):
                 raise ValueError("Unsafe or duplicate object path")
+            if path.parts[0] not in bucket_ids:
+                raise ValueError("Unknown restored Storage bucket")
             seen.add(name)
             source = storage / path
             if not source.is_file() or source.is_symlink():
