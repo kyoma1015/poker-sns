@@ -256,7 +256,7 @@ language sql stable security definer set search_path='' as $$
  where user_id=auth.uid() and enabled)
 $$;
 create function public.video_rollout_allowed() returns boolean
-language sql stable security definer set search_path='' as $$
+language sql volatile security definer set search_path='' as $$
  select public.video_rollout_member() and exists(select 1 from video_private.rollout_settings where singleton and enabled)
 $$;
 create function public.video_rollout_visible(p_path text) returns boolean

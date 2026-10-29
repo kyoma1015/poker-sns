@@ -8,6 +8,14 @@ def classify_startup(text: str) -> str:
     # Return only fixed allowlisted labels. Never echo unknown lines, URLs,
     # token fragments, exception details or matched substrings.
     patterns = [
+        ('CLI_PACKAGE_UNAVAILABLE', ('no matching version found', 'etarget', 'e404', '404 not found')),
+        ('CLI_CONFIG_ERROR', ('failed to parse config', 'invalid config', 'unknown flag', 'unsupported config', 'failed to load config')),
+        ('DOCKER_DAEMON_UNAVAILABLE', ('cannot connect to the docker daemon', 'docker daemon is not running', 'permission denied')),
+        ('IMAGE_MANIFEST_UNAVAILABLE', ('manifest unknown', 'no matching manifest', 'manifest not found')),
+        ('CLI_NPM_FAILURE', ('npm error', 'npm err!', 'ebadengine')),
+        ('IMAGE_DOWNLOAD_FAILURE', ('error pulling image', 'failed to download', 'unexpected eof')),
+        ('CLI_STACK_WORKDIR_MISSING', ('no such file or directory', 'cannot find', 'could not find')),
+
         ('REGISTRY_RATE_LIMIT', ('toomanyrequests', 'pull rate limit', '429 too many')),
         ('REGISTRY_AUTH_FAILURE', ('failed to fetch oauth token', 'failed to authorize')),
         ('REGISTRY_FETCH_FAILURE', ('failed to resolve reference', 'failed to pull image')),
