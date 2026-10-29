@@ -938,12 +938,12 @@
     },
     {
       "path": "vite.first-release.config.ts",
-      "sha": "c4d35ab6e0546c73cc974d7245f63109d471c84a",
+      "sha": "d67b8b24088383a3a969db0220703c9788e6b4f9",
       "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
     },
     {
       "path": "docs/progress/FIRST_RELEASE_V1.json",
-      "sha": "8354d2a9c53830dc2192b3f704557142d4f0856e",
+      "sha": "28028fd29f9a42c3b8420f4066fba80b30d481a5",
       "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
     },
     {

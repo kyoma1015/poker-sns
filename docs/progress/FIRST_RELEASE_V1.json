@@ -145,5 +145,15 @@
       "browser_fail": 0
     }
   },
-  "artifact_acceptance": "PENDING: root index.html and emitted asset paths must be measured; a successful Vite compile alone is insufficient"
+  "artifact_acceptance": {
+    "before": {
+      "commit": "3ec670a2086f2f943d4fd89ab4e05e935bf7359e",
+      "ci": 40835986298,
+      "tests": 3,
+      "pass": 1,
+      "fail": 2,
+      "reason": "canonical index.html missing"
+    },
+    "after": "PENDING same3 fixed assertions"
+  }
 }
