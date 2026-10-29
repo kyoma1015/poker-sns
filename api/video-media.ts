@@ -1,3 +1,4 @@
+import { assertProductionVideoPublisher } from '../server/video-production-rollout.js'
 import { assertCloudTestRequestConfiguration } from '../server/video-cloud-test-target.mjs'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { createClient } from '@supabase/supabase-js'
@@ -44,6 +45,7 @@ return async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const { data: identity, error: authError } = await viewer.auth.getUser(token)
     if (authError || !identity.user || !UUID.test(identity.user.id)) return res.status(401).end()
+    if (options.isolatedLocalOnly !== true && process.env.VIDEO_CLOUD_TEST_ENABLED !== 'true') await assertProductionVideoPublisher(viewer, identity.user.id)
     if (process.env.VIDEO_CLOUD_TEST_ENABLED === 'true') {
       const allowed = await viewer.rpc('video_cloud_allowed')
       if (allowed.error || allowed.data !== true) return res.status(403).end()
@@ -122,3 +124,4 @@ return async function handler(req: VercelRequest, res: VercelResponse) {
 }
 
 export default createVideoMediaHandler()
+

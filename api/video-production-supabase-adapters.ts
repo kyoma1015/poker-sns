@@ -1,3 +1,4 @@
+import { assertProductionVideoPublisher } from '../server/video-production-rollout.js'
 import { DefinitivePublishRejection } from './video-finalize-core.js'
 import { createClient } from '@supabase/supabase-js'
 import type { FinalizeCandidateAdapters, ImmutableStagedSnapshot } from './video-finalize-core.js'
@@ -47,6 +48,7 @@ export function createProductionSupabaseVideoAdapters(
     if (token !== accessToken) throw new Error('JWT differs from request-scoped token')
     const { data, error } = await viewer.auth.getUser(token)
     if (error || !data.user || !new RegExp('^' + UUID + '$').test(data.user.id)) throw new Error('unauthorized')
+    await assertProductionVideoPublisher(viewer, data.user.id)
     return data.user.id
   }
   // Privileged metadata is never authorization: authenticate and read as viewer first.
@@ -187,4 +189,5 @@ export function createProductionSupabaseVideoAdapters(
     },
   }
 }
+
 

@@ -1,3 +1,4 @@
+import { assertProductionVideoPublisher } from '../server/video-production-rollout.js'
 import { handleCloudVideo } from '../server/video-cloud-http.mjs'
 import { assertCloudTestRequestConfiguration } from '../server/video-cloud-test-target.mjs'
 import { handleVideoRecoveryCandidate } from '../server/video-recovery-candidate.js'
@@ -60,6 +61,22 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
   if (!body || typeof body !== 'object' || Array.isArray(body)) return res.status(400).end()
   // Reject inherited fields and exotic prototypes at the HTTP trust boundary.
   if (Object.getPrototypeOf(body) !== Object.prototype && Object.getPrototypeOf(body) !== null) return res.status(400).end()
+  if ((body as Record<string, unknown>).action === 'hide') {
+    const postId = (body as Record<string, unknown>).post_id
+    if (Object.keys(body).length !== 2 || typeof postId !== 'string' || !UUID.test(postId)) return res.status(400).end()
+    const url = process.env.VITE_SUPABASE_URL
+    const key = process.env.VITE_SUPABASE_ANON_KEY
+    if (!url || !key) return res.status(503).end()
+    const viewer = createClient(url, key, { global: { headers: { Authorization: authorization } }, auth: { persistSession: false, autoRefreshToken: false } })
+    try {
+      const identity = await viewer.auth.getUser(authorization.slice(7))
+      if (identity.error || !identity.data.user) return res.status(401).end()
+      await assertProductionVideoPublisher(viewer, identity.data.user.id)
+      const hidden = await viewer.rpc('video_hide_own', { p_post_id: postId })
+      if (hidden.error || hidden.data !== true) return res.status(403).end()
+      return res.status(200).json({ hidden: true })
+    } catch { return res.status(403).end() }
+  }
   if (['bind_recovery','recovery_status','recovery_finalize'].includes(String((body as Record<string,unknown>).action))) {
     return handleVideoRecoveryCandidate(req,res,options.isolatedLocalOnly===true)
   }
@@ -101,6 +118,7 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
       const token = authorization.slice(7)
       const { data, error } = await viewer.auth.getUser(token)
       if (error || !data.user || !UUID.test(data.user.id)) return res.status(401).end()
+      if (productionReservation) await assertProductionVideoPublisher(viewer, data.user.id)
       if (data.user.id !== match[1]) return res.status(403).end()
       // Use the verified caller JWT for the owner-scoped reservation RPC.
       // The candidate SQL checks auth.uid() = p_owner before ledger insertion.
@@ -174,3 +192,4 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
 }
 
 export default createVideoFinalizeHandler()
+

@@ -1,0 +1,19 @@
+name: Video production rollout changed SQL isolation
+on:
+  pull_request:
+    paths:
+      - 'sql/video_production_limited_rollout.sql'
+      - 'server/video-production-rollout.ts'
+      - 'tests/video/isolated_production_rollout.sh'
+      - '.github/workflows/video-production-rollout.yml'
+permissions:
+  contents: read
+jobs:
+  rollout-sql:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - run: bash tests/video/isolated_production_rollout.sh
