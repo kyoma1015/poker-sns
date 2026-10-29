@@ -84,3 +84,15 @@ export function finishRecoveredVideoTransfer(owner:string,path:string,expectedRa
   }
   live.delete(owner)
 }
+
+/** Explicit user action only, after a fresh authenticated server proof.
+ * Never clears an in-flight transfer or a changed journal. */
+export function discardProvenExpiredVideoTransfer(owner:string,path:string,expectedRaw:string): void {
+  if (!isVideoTransferBlocked(owner)) throw new VideoTransferRecoveryRequiredError()
+  try {
+    const raw=sessionStorage.getItem(key(owner))
+    if (raw===null || raw!==expectedRaw || JSON.parse(raw).path!==path) throw new VideoTransferRecoveryRequiredError()
+    sessionStorage.removeItem(key(owner))
+    live.delete(owner)
+  } catch { throw new VideoTransferRecoveryRequiredError() }
+}
