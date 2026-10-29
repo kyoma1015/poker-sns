@@ -39,6 +39,7 @@ jobs:
           import os, re
           assert re.fullmatch(r"age1[023456789acdefghjklmnpqrstuvwxyz]{58}", os.environ["BACKUP_AGE_RECIPIENT"]), "Invalid age recipient"
           PY
+          [[ "$PROD_SUPABASE_URL" == "https://ephptepeuespnxtzdqby.supabase.co" ]] || { echo "::error::Wrong Supabase project URL"; exit 2; }
           sudo apt-get update -qq >/dev/null
           sudo apt-get install -y -qq age >/dev/null
           command -v aws >/dev/null || { echo "::error::AWS CLI missing"; exit 2; }
@@ -55,6 +56,11 @@ jobs:
           # Never upload the plaintext bundle or any plaintext Actions artifact.
           tar -C "$tmp" -cf - database.dump database.sha256 storage | age -r "$BACKUP_AGE_RECIPIENT" -o "$tmp/encrypted-backup.tar.age"
           test -s "$tmp/encrypted-backup.tar.age"
+          bucket="${BACKUP_S3_URI#s3://}"
+          bucket="${bucket%%/*}"
+          [[ -n "$bucket" ]] || { echo "::error::Missing bucket"; exit 2; }
+          # Fail closed if public access block cannot be verified; do not create resources.
+          aws s3api get-public-access-block --bucket "$bucket" --query "PublicAccessBlockConfiguration.[BlockPublicAcls,IgnorePublicAcls,BlockPublicPolicy,RestrictPublicBuckets]" --output text | grep -qx "True[[:space:]]*True[[:space:]]*True[[:space:]]*True" || { echo "::error::Private destination not proven"; exit 2; }
           target="${BACKUP_S3_URI%/}/poker-id-${GITHUB_RUN_ID}-${GITHUB_SHA}.tar.age"
           aws s3 cp --only-show-errors "$tmp/encrypted-backup.tar.age" "$target"
           echo "Encrypted DB and Storage archive uploaded to configured private destination."
