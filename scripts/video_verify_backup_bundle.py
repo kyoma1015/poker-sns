@@ -35,6 +35,15 @@ def main(root):
     storage=root/"storage"
     manifest=json.loads((storage/"storage-manifest.json").read_text())
     rows=manifest["objects"]
+    bucket_records = manifest.get("bucket_records")
+    if not isinstance(bucket_records, list) or len(bucket_records) != manifest.get("buckets"):
+        raise RuntimeError("Missing or invalid Storage bucket settings inventory")
+    ids = [b.get("id") for b in bucket_records if isinstance(b, dict)]
+    if len(ids) != len(bucket_records) or any(not isinstance(bid, str) or not bid for bid in ids) or len(set(ids)) != len(ids):
+        raise RuntimeError("Invalid or duplicate Storage bucket ID")
+    for obj in rows:
+        if not isinstance(obj.get("path"), str) or obj["path"].split("/", 1)[0] not in ids:
+            raise RuntimeError("Storage object references an unknown bucket")
     seen=set()
     for row in rows:
         name=row["path"]
