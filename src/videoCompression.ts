@@ -3,6 +3,12 @@ import { MAX_VIDEO_BYTES, MAX_VIDEO_SECONDS, readVideoDuration, validateVideo } 
 /** Best-effort, fail-closed browser transcoding. Never uploads the original oversized file. */
 export async function compressOversizedVideo(file: File): Promise<File> {
   if (file.size <= MAX_VIDEO_BYTES) return file
+  // A captured audio track does not prove that the output preserves the source audio.
+  // Keep this experimental transcoder unreachable until output audio and browser support
+  // are verified end-to-end. Never silently publish a potentially muted video.
+  if (!import.meta.env.VITE_VIDEO_AUDIO_PRESERVATION_VERIFIED) {
+    throw new Error('高画質動画の自動圧縮は音声保持の検証中です。現時点では20MB以内の動画を選択してください。')
+  }
   if (typeof document === 'undefined' || typeof MediaRecorder === 'undefined') {
     throw new Error('この端末は動画の自動圧縮に対応していません。20MB以内の動画を選択してください。')
   }
