@@ -60,7 +60,7 @@ entries=Path(sys.argv[1]).read_text().splitlines()
 records=[line.split('|') for line in entries if line.startswith('post-videos|')]
 assert len(records)==1
 bucket,public,name,owner,size,expected=records[0]
-assert bucket=='post-videos' and public=='f' and owner=='user-1'
+assert bucket=='post-videos' and public in ('f', 'false') and owner=='user-1'
 file=Path(sys.argv[2])/bucket/name
 assert file.is_file() and not file.is_symlink()
 assert file.stat().st_size==int(size)
