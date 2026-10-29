@@ -19,6 +19,13 @@ def main(root):
     digest=lines[0].split("  ",1)[0]
     if checksum(root/"database.dump")!=digest:
         raise RuntimeError("Database checksum mismatch")
+    global_lines=(root/"globals.sha256").read_text().splitlines()
+    if len(global_lines)!=1 or not global_lines[0].endswith("  globals.sql"):
+        raise RuntimeError("Invalid role globals checksum file")
+    global_digest=global_lines[0].split("  ",1)[0]
+    globals_sql=root/"globals.sql"
+    if not globals_sql.is_file() or globals_sql.is_symlink() or checksum(globals_sql)!=global_digest:
+        raise RuntimeError("Role globals checksum mismatch")
     storage=root/"storage"
     manifest=json.loads((storage/"storage-manifest.json").read_text())
     rows=manifest["objects"]
@@ -37,7 +44,7 @@ def main(root):
     actual={str(p.relative_to(storage)) for p in storage.rglob("*") if p.is_file()}
     if actual != seen | {"storage-manifest.json"}:
         raise RuntimeError("Unexpected or missing Storage file")
-    print("PASS: encrypted archive contents, DB SHA256, Storage byte SHA256 verified.")
+    print("PASS: decrypted archive contents, DB/global SHA256, Storage byte SHA256 verified.")
     print("NOT VERIFIED: full PostgreSQL restore, Supabase auth/RLS and Storage API restore.")
 
 if __name__=="__main__":
