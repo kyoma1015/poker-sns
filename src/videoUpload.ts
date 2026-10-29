@@ -9,6 +9,18 @@ export const MAX_VIDEO_BYTES = 20 * 1024 * 1024
 export const MAX_VIDEO_SECONDS = 30
 export const VIDEO_TYPES = ['video/mp4', 'video/webm', 'video/quicktime'] as const
 export const VIDEO_BUCKET = 'post-videos'
+const VIDEO_UUID = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
+const OWNED_VIDEO_PATH = new RegExp(`^(${VIDEO_UUID})/(${VIDEO_UUID})\\.(mp4|webm|mov)import { assertCurrentVideoCloudTestClient } from './videoCloudTestGuard'
+import { bindVideoRecoveryCandidate, VIDEO_RECOVERY_CANDIDATE_ENABLED } from './videoRecoveryCandidate'
+import { beginVideoTransfer, confirmVideoReservation, isVideoTransferBlocked, setVideoTransferPhase, VideoTransferRecoveryRequiredError, type VideoTransferRecord } from './videoTransferJournal'
+import { withVideoUploadRequest } from './videoUploadTransport'
+import { supabase } from './supabase'
+import { VIDEO_SERVER_ENABLED, reserveVideoObjectPath } from './videoApi'
+
+export const MAX_VIDEO_BYTES = 20 * 1024 * 1024
+export const MAX_VIDEO_SECONDS = 30
+export const VIDEO_TYPES = ['video/mp4', 'video/webm', 'video/quicktime'] as const
+, 'i')
 
 export function validateVideoFile(file: Pick<File, 'type' | 'size'>): string | null {
   if (!VIDEO_TYPES.includes(file.type as (typeof VIDEO_TYPES)[number]) || (file.type === 'video/quicktime' && import.meta.env.VITE_VIDEO_CLOUD_TEST_ENABLED !== 'true')) return '動画はMP4・WebM形式（動画テストではMOVも可）にしてください。'
