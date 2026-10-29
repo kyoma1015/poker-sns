@@ -26,7 +26,7 @@ class CompletedPolicy:
     def __post_init__(self):
         if (type(self.snapshot) is not PolicySnapshot or self.completion not in ('uniform_legal_prior','check_call_prior')
                 or self.key_mode not in ('native','unordered_own_cards')):
-            raise ValueError('explicit immutable uniform-prior completion declaration required')
+            raise ValueError('explicit immutable research completion declaration required')
     @property
     def digest(self):return _digest({'snapshot':self.snapshot.digest,'completion':self.completion,'key_mode':self.key_mode})
     def decide(self,node):
@@ -146,7 +146,8 @@ def _ticket(row,rng):
 def terminal_trajectory(native,game,cards,action_seed,base,response=None,hero=0,*,independent_audit=False):
     node=native.NativeState(game)
     for card in cards[:4]:node.apply_action(card)
-    offset=4;rng=random.Random(action_seed);counts={'observed':0,'completed':0,'postflop_decisions':0}
+    offset=4;rng=random.Random(action_seed);counts={'observed':0,'completed':0,'postflop_decisions':0,
+        **{f'{kind}_seat{seat}_{street}':0 for kind in ('observed','completed') for seat in (0,1) for street in ('preflop','postflop')}}
     for _ in range(1000):
         if node.is_terminal():
             result=node.settlement();net=result['net'];rake=result['rake']
@@ -161,7 +162,9 @@ def terminal_trajectory(native,game,cards,action_seed,base,response=None,hero=0,
         if node.is_chance_node():node.apply_action(cards[offset]);offset+=1;continue
         actor=node.current_player();policy=response if response is not None and actor==hero else base
         row,completed=policy.decide(node)
-        counts['completed' if completed else 'observed']+=1
+        kind='completed' if completed else 'observed';counts[kind]+=1
+        street='postflop' if node.audit()['round']>0 else 'preflop'
+        counts[f'{kind}_seat{actor}_{street}']+=1
         # The audit is for diagnostics only, never an input to policy decisions.
         if node.audit()['round']>0:counts['postflop_decisions']+=1
         node.apply_action(_ticket(row,rng))
@@ -194,7 +197,8 @@ def evaluate(native,game,base,response,*,hero=0,samples=12000,seed=100017,confid
             or type(base) is not CompletedPolicy or type(response) is not CompletedPolicy):
         raise ValueError('fixed declared HU held-out evaluation required')
     groups={label:[[0,0,0] for _ in range(3)] for label in CLASSES};global_moments=[[0,0,0] for _ in range(3)]
-    usage=[{'observed':0,'completed':0,'postflop_decisions':0} for _ in range(2)]
+    usage=[{'observed':0,'completed':0,'postflop_decisions':0,
+        **{f'{kind}_seat{seat}_{street}':0 for kind in ('observed','completed') for seat in (0,1) for street in ('preflop','postflop')}} for _ in range(2)]
     rng=random.Random(seed);bb=json.loads(game._public_config_json)['rules']['bb'];trajectory_hash=hashlib.sha256()
     for _ in range(samples):
         cards=list(range(52));rng.shuffle(cards);action_seed=rng.getrandbits(128)

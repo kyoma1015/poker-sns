@@ -26,10 +26,30 @@ def rank_five(cards):
     return (0,*sorted(ranks,reverse=True))
 
 
+def replay_debits(history,initial,bb):
+    """Independent forced-blind and per-street target/call debits from history."""
+    remaining=list(initial);street=[min(initial[0],bb//2),min(initial[1],bb)]
+    remaining=[v-paid for v,paid in zip(remaining,street)];folded=[False,False];current=0
+    for entry in history:
+        if len(entry)!=5:raise ValueError('native public history shape differs')
+        round_,seat,action,_,_=entry
+        if seat not in (0,1) or not current<=round_<=3 or folded[seat]:raise ValueError('invalid debit history')
+        if round_!=current:street=[0,0];current=round_
+        if action==0:folded[seat]=True;continue
+        debit=min(max(street)-street[seat],remaining[seat]) if action==1 else (1 if action==-3 else action)-street[seat]
+        if not 0<=debit<=remaining[seat]:raise ValueError('invalid replayed debit')
+        remaining[seat]-=debit;street[seat]+=debit
+    return remaining,folded
+
+
 def independent_net(audit,config):
     rules=config['rules'];initial=config['stacks']
     if (len(initial)!=2 or rules['bba'] or str(rules['rake_rate']) not in ('0','0/1')):
         raise ValueError('independent ledger limited to HU no ante/rake')
+    if 'history' in audit:
+        remaining_check,folded_check=replay_debits(audit['history'],initial,rules['bb'])
+        if remaining_check!=list(audit['remaining']) or folded_check!=list(audit['folded']):
+            raise ValueError('independent forced-blind/action debit replay differs')
     remaining=audit['remaining'];spent=[s-r for s,r in zip(initial,remaining)]
     if any(type(v) is not int or v<0 for v in remaining+spent):raise ValueError('invalid chip ledger')
     if list(audit['initial'])!=initial or any(audit['dead']):raise ValueError('unexpected initial/dead chips')

@@ -43,6 +43,9 @@ class FeasibleNative(unittest.TestCase):
   self.assertEqual(a['global']['gain']['sum_squared_chips'],0)
   self.assertIsNone(a['original_partial_policy_ev']);self.assertFalse(a['full_game_convergence_verified'])
   self.assertGreater(a['completion_usage'][0]['completed'],0)
+  for usage in a['completion_usage']:
+   for kind in ('observed','completed'):
+    self.assertEqual(usage[kind],sum(usage[f'{kind}_seat{seat}_{street}'] for seat in (0,1) for street in ('preflop','postflop')))
  def test_real_postflop_decisions_and_settlement_are_preserved(self):
   game=NativeGame([100,100]);cards=[48,49,0,1,8,17,26,32,35]
   cards+= [c for c in range(52) if c not in cards];node=self.native.NativeState(game);rows={};offset=0

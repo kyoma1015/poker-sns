@@ -39,3 +39,15 @@ Tests and CI evidence appended after actual execution. Native runtime absent
 locally; pinned existing Actions reconstruction is the native execution path.
 Local pure suite: python -B -m unittest discover -s gto/tests -v:51PASS.
 No production DB/Storage/deploy/main/billing or independent restart changes.
+
+2026-10-29 resumed: initial local0122576/public1cb11b659e14211c98410b716b6415f797a30b94
+(tree14df20eb51b32b31adb891868632dd9aa967883a) preserved and published with
+expected-head lease, no force. UI40832237550 SUCCESS; native40832237529
+reconstruction/3-variant new tests PASS, full study in progress at this note.
+Strengthened independence: replay raw public betting history from initial forced
+blinds, calculate check/call and raise-to debits across streets, compare actual
+remaining/folds before deriving terminal net. Native audit balances alone cannot
+prove correct charging. New negative fixture catches matching live/remaining
+ledgers that both charge a wrong SB blind. Added SB/BB pre/postflop completion
+usage counts; this is trajectory diagnosis, not learned infoset coverage. Pure
+suite now52PASS, local10Node checks PASS. Further native evidence pending.
