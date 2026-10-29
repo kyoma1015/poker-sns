@@ -53,15 +53,17 @@
     },
     {
       "id": "legacy_ledger_preserved",
-      "status": "BLOCKED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "First release CI40834336947 job123315485376: raw legacy ledger blob/count unit passed"
+      ],
       "condition": "32項目台帳を元blobと照合"
     },
     {
       "id": "deferred_ui",
       "status": "BLOCKED",
       "evidence": [],
-      "condition": "直接URL/クエリ/モバイル/遷移で延期画面をmountしない"
+      "condition": "初回専用入口の直接URL/クエリ/モバイル/遷移で延期画面をmountしない（通常AppやAPI遮断は別条件）"
     },
     {
       "id": "regression_build",
@@ -115,7 +117,7 @@
       "id": "recovery_release_review",
       "status": "BLOCKED",
       "evidence": [],
-      "condition": "非破壊手順・rollback・適用コード/成果物・独立レビュー証拠を確定"
+      "condition": "公開する入口/成果物/サーバAPI露出設定・非破壊rollback・適用コード・独立レビュー証拠を確定"
     }
   ],
   "verdict": "NO-GO",
@@ -124,5 +126,15 @@
     "通常App/buildは変更しない。初回用入口/成果物以外は公開しない運用確認が必要",
     "クライアント遮断はDB/API認可の代替ではない",
     "TDA/診断の根拠不足自体は、完全に隔離されたSNS初回公開を永続的に妨げるゲートにはしない"
-  ]
+  ],
+  "fixed_acceptance": {
+    "before": {
+      "commit": "c89cbc142ed293aa79aa0516d036bc0529dd7214",
+      "ci": 40834336947,
+      "unit_pass": 5,
+      "browser_pass": 0,
+      "browser_fail": 30
+    },
+    "after": "PENDING; final candidate entry must pass same unchanged30 cases"
+  }
 }

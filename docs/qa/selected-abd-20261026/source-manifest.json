@@ -918,12 +918,12 @@
     },
     {
       "path": "src/first-release-entry.tsx",
-      "sha": "fa9c0a50e78fb3af407854fe6bd66abd36204b58",
+      "sha": "494701c19f39b6191bcadceca0b9b3358766cd1b",
       "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
     },
     {
       "path": "src/FirstReleaseApp.tsx",
-      "sha": "e9aa3c621ce9d82f6723d476f4a72d6adf4a0800",
+      "sha": "83cb9714f7772ed5f3b3fc090b7e2470eeeb28a9",
       "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
     },
     {
@@ -943,7 +943,7 @@
     },
     {
       "path": "docs/progress/FIRST_RELEASE_V1.json",
-      "sha": "8b9168b3213719264e6df4797812cf2e556b67ce",
+      "sha": "4d687cb71221f96e27f70a12f62b132b291fc2db",
       "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
     },
     {

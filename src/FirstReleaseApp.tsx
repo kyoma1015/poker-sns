@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { BrowserRouter, Link, useLocation } from 'react-router-dom'
+import { BrowserRouter, Link, Route, Routes, useLocation } from 'react-router-dom'
 import { FIRST_RELEASE_ENABLED, firstReleaseRoute } from './firstReleasePolicy'
 const pages = {
  entry:lazy(()=>import('./Login')),login:lazy(()=>import('./Login')),signup:lazy(()=>import('./Signup')),
@@ -24,5 +24,6 @@ function CandidateRoute() {
  </>
 }
 export default function FirstReleaseApp() {
- return <BrowserRouter><CandidateRoute /></BrowserRouter>
+ const paths=['/','/login','/signup','/home','/timeline','/post/:id','/dm','/dm/:userId','/notifications','/profile','/profile/edit','/search','/player/:id','/player/:id/following','/player/:id/followers','/settings']
+ return <BrowserRouter><Routes>{paths.map(path=><Route key={path} path={path} element={<CandidateRoute />} />)}<Route path="*" element={<CandidateRoute />} /></Routes></BrowserRouter>
 }
