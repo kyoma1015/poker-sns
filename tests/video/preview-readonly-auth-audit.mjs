@@ -24,16 +24,16 @@ async function check(label, jwt, expected) {
   if (vercelChallenge || response.status >= 300 && response.status < 400 || type.includes('text/html')) {
     throw new Error(label + ': BLOCKED (deployment redirect or HTML, not app response)')
   }
-  if (response.status === 401 && response.headers.get('content-type')?.includes('text/html')) throw new Error(label + ': BLOCKED (Vercel protection)')
   if (!expected.includes(response.status)) throw new Error(label + ': unexpected HTTP ' + response.status)
   if (label === 'owner' && !type.startsWith('video/')) throw new Error('owner: response is not video')
   await response.body?.cancel()
   console.log(label + ': PASS (HTTP ' + response.status + ')')
 }
 try {
+  // Prove the protection layer was passed before interpreting any 401/403 as app auth.
+  await check('owner', TEST_OWNER_JWT, [200])
   await check('anonymous', null, [401])
   await check('other-user', TEST_OTHER_JWT, [403, 404])
-  await check('owner', TEST_OWNER_JWT, [200])
   console.log('PASS: read-only protected Preview media authorization')
 } catch (error) {
   console.error('BLOCKED/FAIL: ' + error.message)
