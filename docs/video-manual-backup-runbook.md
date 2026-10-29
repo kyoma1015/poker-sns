@@ -78,3 +78,11 @@ Run `python3 -m unittest discover -s tests/video -p test_manual_backup_integrity
 3. Verify existing GitHub Actions included minutes/artifact quota before manually running from main. The artifact is encrypted but can be accessible to repository viewers; confidentiality depends on keeping the corresponding age private identity strictly offline.
 4. From the GitHub Actions run, download the `.age` ciphertext within one day; on iPhone save to an existing private durable location such as iCloud Drive after checking capacity. Keep the age identity separately and test decryption in a trusted environment.
 5. A successful Actions run alone is **not proof of recovery**. Full compatible DB and Storage bytes restoration, user/session authorization and RLS must pass independently before production promotion.
+
+## GitHub public-repository billing review (2026-10-29)
+
+GitHub's official documentation states that **standard GitHub-hosted runners on public repositories are free**. This repo is public and the workflow uses `ubuntu-latest`, so these compute minutes do not require paid hosted runners. Artifact storage has separate quotas: GitHub Free includes **500 MB shared artifact storage**, subject to account-level existing usage. The workflow now refuses to upload archives larger than 200 MiB, but that **does not establish available headroom** or prevent account-level billing settings from permitting paid overages. Before dispatch, check account **Settings > Billing & licensing > Usage / Budgets** and configure stop-usage budgets as appropriate. No current billing usage can be read by the installed GitHub connector.
+
+Official docs: https://docs.github.com/en/billing/concepts/product-billing/github-actions ; https://docs.github.com/en/billing/reference/product-usage-included
+
+**GitHub secret configuration cannot be completed with the current connected GitHub actions** (no environment/secret management action). A user with repository administrator permission must do the one-time environment setup in GitHub's UI. The workflow must be merged to default branch before its first manual dispatch. Do not merge until the workflow is reviewed and the protected environment has been configured.
