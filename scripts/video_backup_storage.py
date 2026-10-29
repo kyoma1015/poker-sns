@@ -52,12 +52,12 @@ def main():
     output = Path(required("BACKUP_STORAGE_DIR")).resolve()
     output.mkdir(mode=0o700, parents=True, exist_ok=True)
     os.chmod(output, 0o700)
-    class NoExternalRedirect(urllib.request.HTTPRedirectHandler):
+    class NoRedirect(urllib.request.HTTPRedirectHandler):
         def redirect_request(self, req, fp, code, msg, headers, newurl):
-            if urllib.parse.urlsplit(newurl).netloc != urllib.parse.urlsplit(base).netloc:
-                raise RuntimeError("Storage redirect left trusted project origin")
-            return super().redirect_request(req, fp, code, msg, headers, newurl)
-    opener = urllib.request.build_opener(NoExternalRedirect())
+            # A privileged Storage credential must never follow any redirect.
+            # This blocks HTTPS downgrades and credential forwarding entirely.
+            raise RuntimeError("Storage API redirect rejected")
+    opener = urllib.request.build_opener(NoRedirect())
     def request(path, data=None):
         headers = storage_headers.copy()
         if data is not None: headers["Content-Type"] = "application/json"
