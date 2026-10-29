@@ -8,7 +8,7 @@ export async function readVideoResponse(response: Response): Promise<Blob> {
   }
   const mime = response.headers.get('content-type')?.split(';', 1)[0]?.trim().toLowerCase()
   const length = response.headers.get('content-length')
-  if (!mime || !['video/mp4', 'video/webm'].includes(mime) ||
+  if (!mime || !['video/mp4', 'video/webm', 'video/quicktime'].includes(mime) ||
       (length !== null && (!/^[1-9][0-9]*$/.test(length) ||
         !Number.isSafeInteger(Number(length)) || Number(length) > MAX_PLAYBACK_BYTES))) {
     await response.body.cancel().catch(() => undefined)
