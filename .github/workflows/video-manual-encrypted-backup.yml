@@ -1,0 +1,61 @@
+name: Manual encrypted production backup (NO RESTORE / NO RELEASE)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: video-manual-backup
+  cancel-in-progress: false
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    environment: production-backup
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Export DB + Storage, encrypt before upload
+        shell: bash
+        env:
+          PROD_DB_URL: ${{ secrets.PROD_DB_URL }}
+          PROD_SUPABASE_URL: ${{ vars.PROD_SUPABASE_URL }}
+          PROD_STORAGE_READ_KEY: ${{ secrets.PROD_STORAGE_READ_KEY }}
+          BACKUP_AGE_RECIPIENT: ${{ vars.BACKUP_AGE_RECIPIENT }}
+          BACKUP_S3_URI: ${{ vars.BACKUP_S3_URI }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.BACKUP_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.BACKUP_AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ vars.BACKUP_AWS_REGION }}
+        run: |
+          set -euo pipefail
+          umask 077
+          for key in PROD_DB_URL PROD_SUPABASE_URL PROD_STORAGE_READ_KEY BACKUP_AGE_RECIPIENT BACKUP_S3_URI AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_DEFAULT_REGION; do
+            if [[ -z "${!key:-}" ]]; then echo "::error::Missing required configuration: $key"; exit 2; fi
+          done
+          [[ "$PROD_DB_URL" == *sslmode=require* || "$PROD_DB_URL" == *sslmode=verify-full* ]] || { echo "::error::DB URL must explicitly enable TLS"; exit 2; }
+          [[ "$BACKUP_S3_URI" == s3://* ]] || { echo "::error::BACKUP_S3_URI must be an existing private S3 destination"; exit 2; }
+          # Prevent accidental use of an unapproved public destination or customer-controlled URL.
+          python3 - <<'PY'
+          import os, re
+          assert re.fullmatch(r"age1[023456789acdefghjklmnpqrstuvwxyz]{58}", os.environ["BACKUP_AGE_RECIPIENT"]), "Invalid age recipient"
+          PY
+          sudo apt-get update -qq >/dev/null
+          sudo apt-get install -y -qq age >/dev/null
+          command -v aws >/dev/null || { echo "::error::AWS CLI missing"; exit 2; }
+          tmp="$(mktemp -d)"
+          chmod 700 "$tmp"
+          trap 'rm -rf -- "$tmp"' EXIT
+          chmod 700 "$tmp"
+          # PostgreSQL 17 client; this extracts database contents but DOES NOT certify restorable Supabase platform config.
+          docker run --rm -e PROD_DB_URL -v "$tmp:/backup" postgres:17             sh -ec 'pg_dump --dbname "$PROD_DB_URL" --format=custom --no-owner --no-acl -f /backup/database.dump && test -s /backup/database.dump'
+          export BACKUP_STORAGE_DIR="$tmp/storage"
+          export EXPECTED_STORAGE_OBJECTS=7 EXPECTED_STORAGE_BUCKETS=4
+          python3 scripts/video_backup_storage.py
+          (cd "$tmp" && sha256sum database.dump > database.sha256)
+          # Never upload the plaintext bundle or any plaintext Actions artifact.
+          tar -C "$tmp" -cf - database.dump database.sha256 storage | age -r "$BACKUP_AGE_RECIPIENT" -o "$tmp/encrypted-backup.tar.age"
+          test -s "$tmp/encrypted-backup.tar.age"
+          target="${BACKUP_S3_URI%/}/poker-id-${GITHUB_RUN_ID}-${GITHUB_SHA}.tar.age"
+          aws s3 cp --only-show-errors "$tmp/encrypted-backup.tar.age" "$target"
+          echo "Encrypted DB and Storage archive uploaded to configured private destination."
+          echo "NOT RELEASE READY: isolated decryption, full DB restore and Storage byte-restore/hash verification remain mandatory."
