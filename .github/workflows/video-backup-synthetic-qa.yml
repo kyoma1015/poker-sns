@@ -11,6 +11,7 @@ on:
       - 'tests/video/test_manual_backup_integrity.py'
       - 'tests/video/test_storage_api_restore_contract.py'
       - 'tests/video/isolated_postgres_acl_restore.sh'
+      - 'tests/video/isolated_storage_metadata_restore.sh'
 permissions:
   contents: read
 jobs:
@@ -31,3 +32,5 @@ jobs:
         run: bash tests/video/isolated_postgres_acl_restore.sh
       - name: Mock Storage API restore, private bucket and DB metadata checks
         run: python3 -m unittest discover -s tests/video -p test_storage_api_restore_contract.py -v
+      - name: PostgreSQL-backed Storage metadata, bucket and bytes restore E2E
+        run: bash tests/video/isolated_storage_metadata_restore.sh
