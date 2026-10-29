@@ -15,6 +15,16 @@ def required(name):
         raise RuntimeError(f"Missing required setting: {name}")
     return value
 
+def inventory_snapshot(rows):
+    """Canonicalize listing identity/revision for safe two-pass comparison."""
+    return sorted((bucket, key, json.dumps(revision, sort_keys=True, separators=(",", ":")))
+                  for bucket, key, revision in rows)
+
+
+def inventory_unchanged(before, after):
+    return inventory_snapshot(before) == inventory_snapshot(after)
+
+
 def main():
     base = required("PROD_SUPABASE_URL").rstrip("/")
     if base != "https://ephptepeuespnxtzdqby.supabase.co":
@@ -96,11 +106,9 @@ def main():
     if len(manifest) != expected or len(buckets) != int(required("EXPECTED_STORAGE_BUCKETS")):
         raise RuntimeError("Inventory changed. Refusing to certify incomplete snapshot.")
     # Re-list and require the object paths to remain unchanged during export.
-    second = sorted((b["id"], k, json.dumps(revision, sort_keys=True))
-                    for b in buckets for k, revision in enumerate_prefix(b["id"],""))
-    first = sorted((bucket, key, json.dumps(revision, sort_keys=True))
-                   for bucket, key, revision in first_inventory)
-    if first != second:
+    second_inventory = [(b["id"], k, revision)
+                        for b in buckets for k, revision in enumerate_prefix(b["id"],"")]
+    if not inventory_unchanged(first_inventory, second_inventory):
         raise RuntimeError("Storage object identity or revision changed during download")
     manifest_path = output / "storage-manifest.json"
     manifest_path.write_text(json.dumps({"objects":manifest,"buckets":len(buckets)},indent=2))
