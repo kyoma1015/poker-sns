@@ -6,7 +6,7 @@ Scope: stand-alone change, no PR #123 HEAD mutation, no production SQL, merge or
 
 - Manual `workflow_dispatch` only. It cannot start on PR push.
 - Protected GitHub environment `production-backup` intended to require a human reviewer.
-- Read-only PostgreSQL 17 logical custom-format DB dump and Supabase Storage downloads for all four buckets / seven objects.
+- Read-only PostgreSQL 17 logical custom-format DB dump, password-free PostgreSQL global role metadata export (`pg_dumpall --globals-only --no-role-passwords`), and Supabase Storage downloads for all four buckets / seven objects.
 - Per-object SHA-256 manifest, DB SHA-256, and inventory double-listing to compare paths, object IDs, modification timestamps and returned metadata (does NOT guarantee an atomic data snapshot).
 - Encrypt with an **age public recipient** before offsite transfer. No raw dump or object content is uploaded as Actions artifacts.
 - Upload ciphertext only to a 1-day GitHub Actions artifact for manual download. This is transient transport, never a permanent backup.
@@ -49,7 +49,7 @@ Environment variables:
 
 ## Isolated restoration smoke test
 
-After downloading the encrypted Supabase backup into a trusted private machine, decrypt it locally with the offline age identity. Keep the resulting directory private, outside any repo. The decrypted directory must contain `database.dump`, `database.sha256`, and `storage/storage-manifest.json`. Run:
+After downloading the encrypted Supabase backup into a trusted private machine, decrypt it locally with the offline age identity. Keep the resulting directory private, outside any repo. The decrypted directory must contain `database.dump`, `database.sha256`, `globals.sql`, `globals.sha256`, and `storage/storage-manifest.json`. Run:
 
 ```bash
 python3 scripts/video_verify_backup_bundle.py "/private/path/to/decrypted"
@@ -104,3 +104,11 @@ Never run the workflow before all export/restore safety conditions are verified,
 ## 2026-10-29 source-only follow-up
 
 Storage object inventory now compares object ID, update timestamp and returned metadata in addition to path, before and after object byte export. This narrows the same-name overwrite blind spot but **does not** provide a transactional or point-in-time-consistent cross-service backup. No production data was read or altered for this code-only change; the revision has not yet passed an independent run of synthetic/CI testing. Full role/grant restoration, Auth and Storage API end-to-end recovery remain blockers. A short-lived JIT token cannot be claimed ready until JIT entitlement, security policy and expiry are confirmed in the authenticated dashboard.
+
+## Role/global metadata scope and restore limitation
+
+The backup now requires PostgreSQL 17 `pg_dumpall --globals-only --no-role-passwords`, plus a SHA256 of `globals.sql`, before encryption. It fails closed if the connected role lacks permission to inspect global role metadata. **Do not substitute `--role-passwords` or export `pg_authid`**: credential hashes are not needed in the encrypted backup, and must not be exposed. The generated global SQL may nevertheless include sensitive role and grant names; treat it as private backup data. A time-limited JIT role may be unable to enumerate roles; this is a **NO-GO** for this workflow until a least-privilege, authorized alternative is reviewed.
+
+The restore smoke test intentionally does not apply `globals.sql` automatically. Supabase-managed platform roles can conflict with fresh PostgreSQL roles, and applying globally privileged statements without review is dangerous. Before authorizing production release, perform a controlled role/grant/owner comparison in a Supabase-compatible isolated clone, restore only reviewed required roles and grants, and prove Auth and Storage API recovery. The presence of role metadata is **not** proof that all owners/ACL/RLS function after restore. The `--no-owner --no-acl` DB dump remains explicitly lossy until this controlled restore is proven.
+
+The revised Storage inventory comparator has synthetic tests for same-path object ID, timestamp, metadata changes, path additions/removals, and stable reordering. This is not an atomic snapshot guarantee; any live data race still blocks certification.
