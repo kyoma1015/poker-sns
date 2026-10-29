@@ -38,6 +38,8 @@ jobs:
           assert re.fullmatch(r"age1[023456789acdefghjklmnpqrstuvwxyz]{58}", os.environ["BACKUP_AGE_RECIPIENT"]), "Invalid age recipient"
           PY
           [[ "$PROD_SUPABASE_URL" == "https://ephptepeuespnxtzdqby.supabase.co" ]] || { echo "::error::Wrong Supabase project URL"; exit 2; }
+          # Reject unapproved database origin/role, TLS bypasses, and Storage PAT misuse before any network call.
+          python3 scripts/video_backup_preflight.py
           sudo apt-get update -qq >/dev/null
           sudo apt-get install -y -qq age >/dev/null
           tmp="$RUNNER_TEMP/poker-backup-$GITHUB_RUN_ID"
