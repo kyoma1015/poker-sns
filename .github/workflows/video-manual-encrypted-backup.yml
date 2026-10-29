@@ -45,13 +45,14 @@ jobs:
           chmod 700 "$tmp"
           trap 'rm -rf -- "$tmp"' EXIT
           # PostgreSQL 17 client; this extracts database contents but DOES NOT certify restorable Supabase platform config.
-          docker run --rm -e PROD_DB_URL -v "$tmp:/backup" postgres:17             sh -ec 'pg_dump --dbname "$PROD_DB_URL" --format=custom --no-owner --no-acl -f /backup/database.dump && test -s /backup/database.dump'
+          docker run --rm -e PROD_DB_URL -v "$tmp:/backup" postgres:17 \
+            sh -ec 'pg_dump --dbname "$PROD_DB_URL" --format=custom --no-owner --no-acl -f /backup/database.dump && test -s /backup/database.dump && pg_dumpall --dbname "$PROD_DB_URL" --globals-only --no-role-passwords -f /backup/globals.sql && test -s /backup/globals.sql'
           export BACKUP_STORAGE_DIR="$tmp/storage"
           export EXPECTED_STORAGE_OBJECTS=7 EXPECTED_STORAGE_BUCKETS=4
           python3 scripts/video_backup_storage.py
-          (cd "$tmp" && sha256sum database.dump > database.sha256)
+          (cd "$tmp" && sha256sum database.dump > database.sha256 && sha256sum globals.sql > globals.sha256)
           # Never upload the plaintext bundle or any plaintext Actions artifact.
-          tar -C "$tmp" -cf - database.dump database.sha256 storage | age -r "$BACKUP_AGE_RECIPIENT" -o "$tmp/encrypted-backup.tar.age"
+          tar -C "$tmp" -cf - database.dump database.sha256 globals.sql globals.sha256 storage | age -r "$BACKUP_AGE_RECIPIENT" -o "$tmp/encrypted-backup.tar.age"
           test -s "$tmp/encrypted-backup.tar.age"
           # Conservative cap; GitHub Free storage allowance is shared and actual available quota must still be checked.
           test "$(stat -c%s "$tmp/encrypted-backup.tar.age")" -le 209715200 || { echo "::error::Encrypted archive exceeds conservative 200 MiB artifact cap"; exit 2; }
