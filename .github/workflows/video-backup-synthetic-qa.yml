@@ -8,6 +8,7 @@ on:
       - 'scripts/video_verify_backup_bundle.py'
       - 'scripts/video_verify_isolated_db_restore.sh'
       - 'tests/video/test_manual_backup_integrity.py'
+      - 'tests/video/isolated_postgres_acl_restore.sh'
 permissions:
   contents: read
 jobs:
@@ -24,3 +25,5 @@ jobs:
         run: bash -n scripts/video_verify_isolated_db_restore.sh
       - name: Offline integrity and Storage overwrite tests
         run: python3 -m unittest discover -s tests/video -p test_manual_backup_integrity.py -v
+      - name: Isolated PostgreSQL 17 owner ACL RLS restore E2E
+        run: bash tests/video/isolated_postgres_acl_restore.sh
