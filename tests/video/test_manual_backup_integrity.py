@@ -21,6 +21,8 @@ class BackupIntegrityTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         (self.root/"database.dump").write_bytes(b"synthetic-db")
         (self.root/"database.sha256").write_text(hashlib.sha256(b"synthetic-db").hexdigest()+"  database.dump\n")
+        (self.root/"database.toc").write_bytes(b"; synthetic TOC with owner and ACL\n")
+        (self.root/"database.toc.sha256").write_text(hashlib.sha256(b"; synthetic TOC with owner and ACL\n").hexdigest()+"  database.toc\n")
         (self.root/"globals.sql").write_bytes(b"-- synthetic globals with no secrets\n")
         (self.root/"globals.sha256").write_text(hashlib.sha256(b"-- synthetic globals with no secrets\n").hexdigest()+"  globals.sql\n")
         (self.root/"storage"/"bucket").mkdir(parents=True)
@@ -44,6 +46,14 @@ class BackupIntegrityTests(unittest.TestCase):
 
     def test_modified_db_bytes_fail(self):
         (self.root/"database.dump").write_bytes(b"tampered-db")
+        self.assertNotEqual(self.run_check().returncode,0)
+
+    def test_modified_toc_fail(self):
+        (self.root/"database.toc").write_bytes(b"tampered toc")
+        self.assertNotEqual(self.run_check().returncode,0)
+
+    def test_missing_toc_fail(self):
+        (self.root/"database.toc").unlink()
         self.assertNotEqual(self.run_check().returncode,0)
 
     def test_modified_globals_fail(self):
