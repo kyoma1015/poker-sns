@@ -47,3 +47,23 @@ Environment variables:
 3. Trigger `Manual encrypted production backup` through GitHub Actions. Verify successful remote encrypted object delivery.
 4. Independently obtain and decrypt the object in a trusted environment, run full isolated DB restore and Storage byte restore, compare manifest/hash and exercise auth/RLS.
 5. Record proof and then continue with video production schema/RPC/Storage/HMAC staging and authorization QA. Do not equate the backup workflow's success with deployment approval.
+
+
+## Isolated restoration smoke test
+
+After downloading the encrypted S3 backup into a trusted private machine, decrypt it locally with the offline age identity. Keep the resulting directory private, outside any repo. The decrypted directory must contain `database.dump`, `database.sha256`, and `storage/storage-manifest.json`. Run:
+
+```bash
+python3 scripts/video_verify_backup_bundle.py "/private/path/to/decrypted"
+bash scripts/video_verify_isolated_db_restore.sh "/private/path/to/decrypted"
+```
+
+The second step starts a throwaway PostgreSQL 17 Docker container with `--network none`, restores with `pg_restore --exit-on-error --single-transaction`, checks local SQL access, and removes it. **This is only a PostgreSQL logical restore smoke test.** It is NOT a full Supabase backup/restore of Auth, Storage, managed settings, extension behaviour, privileges, or live service interactions. Passing either command does not authorize production deployment. A complete staging-equivalent Supabase data and Storage API restoration with auth/RLS tests is still required.
+
+## Safety limitations discovered during review
+
+- A repository-scoped GitHub Actions secret is not equivalent to a protected environment secret. Place production credentials **only in an explicitly protected `production-backup` environment**, and restrict the eligible branch/reviewers. Public repositories and code from unreviewed PRs must never receive production credentials.
+- Current workflow depends on an **existing private S3 bucket**. We have not confirmed one exists or that its incremental storage/requests/egress cost is zero. Without this, job must remain unrun.
+- The job uses a pinned Supabase origin and stops on a Storage redirect to another host. Some providers legitimately redirect downloads; this must be tested against an authorized non-production bucket before production backup.
+- `EXPECTED_STORAGE_OBJECTS=7` and `EXPECTED_STORAGE_BUCKETS=4` are current inventory preconditions, not permanent constants. Any change means a deliberate inventory reconciliation, not a blind reset.
+- The current restore smoke test is neither fully exercised nor independently reviewed. Do not merge or trigger the backup workflow merely because the source files have been added.
