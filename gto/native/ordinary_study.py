@@ -98,7 +98,7 @@ def evaluate_rfi(native,game,policy,*,samples_per_class=2,max_nodes=64,seed=101)
         'seed':seed,'samples_per_class':samples_per_class,'max_nodes_per_traversal':max_nodes}
 
 
-def experiment(native,output,*,proposal=None):
+def experiment(native,output,*,proposal=None,response_controls=None):
     output=Path(output);output.mkdir(exist_ok=False);game=NativeGame([100,100]);all_runs=[]
     for seed in (17,29):
         solver=native.Solver(game,.6,seed,True,True,.1);run=[]
@@ -132,6 +132,11 @@ def experiment(native,output,*,proposal=None):
                         base_checkpoint_sha256=observation['source_checkpoint_sha256'],base_iteration=target,
                         center_on_initial_fold=True)
                     observation['centered_response_summary']=centered['global']
+                    if response_controls is not None:
+                        anchored=response_experiment(response_controls,game,policy,output/'anchored-response',
+                            base_checkpoint_sha256=observation['source_checkpoint_sha256'],base_iteration=target,
+                            exact_fold_baseline=True)
+                        observation['anchored_response_summary']=anchored['global']
                     observation['feasible_response_summary']={k:response_report[k] for k in (
                         'global','completion_usage','best_response_gain_lower_bb','trajectory_sha256','full_game_convergence_verified')}
                 payload={'seed':seed,'iteration':target,'config':json.loads(game._public_config_json),
@@ -163,6 +168,10 @@ if __name__=='__main__':
     import argparse,importlib,sys
     parser=argparse.ArgumentParser();parser.add_argument('--module-dir',type=Path,required=True);parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--targeted',action='store_true')
+    parser.add_argument('--response-controls-dir',type=Path)
     args=parser.parse_args();sys.path.insert(0,str(args.module_dir.resolve()))
     proposal=json.loads((args.module_dir/'manifest.json').read_text()) if args.targeted else None
-    experiment(importlib.import_module('pokerid_targeted' if args.targeted else 'pokerid_g12'),args.output,proposal=proposal)
+    controls=None
+    if args.response_controls_dir:
+        sys.path.insert(0,str(args.response_controls_dir.resolve()));controls=importlib.import_module('pokerid_response')
+    experiment(importlib.import_module('pokerid_targeted' if args.targeted else 'pokerid_g12'),args.output,proposal=proposal,response_controls=controls)

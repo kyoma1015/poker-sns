@@ -56,8 +56,8 @@ def unordered_hero_key(key):
 
 class LockedState:
     """Only hero decisions are learner decisions; opponent is fixed chance."""
-    def __init__(self,node,hero,opponent,utility_origin=0):
-        self.node=node;self.hero=hero;self.opponent=opponent;self.utility_origin=utility_origin
+    def __init__(self,node,hero,opponent,utility_origin=0,exact_fold_baseline=False):
+        self.node=node;self.hero=hero;self.opponent=opponent;self.utility_origin=utility_origin;self.exact_fold_baseline=exact_fold_baseline
     def is_terminal(self):return self.node.is_terminal()
     def is_chance_node(self):
         return not self.is_terminal() and (self.node.is_chance_node() or self.node.current_player()!=self.hero)
@@ -79,28 +79,43 @@ class LockedState:
         result[-1]=(result[-1][0],max(0.,last))
         return result
     def apply_action(self,action):self.node.apply_action(action)
+    def exact_action_values(self):
+        if not self.exact_fold_baseline:return {}
+        if self.is_terminal() or self.is_chance_node():raise ValueError('hero decision required for exact baseline')
+        if 0 not in self.node.legal_actions():return {}
+        # Only PUBLIC history/config determines the known fold payoff. No audit,
+        # opponent cards or future cards enter the control or policy decision.
+        from gto.native.ev_audit import replay_debits
+        info=json.loads(self.node.information_state_string(self.hero));config=info['public_config']
+        remaining,_=replay_debits(info['betting_history'],config['stacks'],config['rules']['bb'])
+        return {0:remaining[self.hero]-config['stacks'][self.hero]-self.utility_origin}
     def player_return(self,player):
         if player!=0 or not self.is_terminal():raise ValueError('hero terminal utility required')
         return self.node.returns()[self.hero]-self.utility_origin
 
 
 class LockedOpponentGame:
-    def __init__(self,native,game,hero,opponent,*,center_on_initial_fold=False):
+    def __init__(self,native,game,hero,opponent,*,center_on_initial_fold=False,exact_fold_baseline=False):
         from gto.native.initial_chance_reach import _verified_game
         _verified_game(game)
         if game.num_players()!=2 or type(hero) is not int or hero not in (0,1) or type(opponent) is not CompletedPolicy:
             raise ValueError('HU frozen-opponent game required')
         self.native=native;self.original=game;self.hero=hero;self.opponent=opponent
+        self.exact_fold_baseline=exact_fold_baseline
+        if exact_fold_baseline:
+            config=json.loads(game._public_config_json)
+            if config['stacks']!=[100,100] or config['rules']['bb']!=2 or config['rules']['bba'] or config['rules']['rake_rate']!='0':
+                raise ValueError('exact fold control requires explicit HU50BB no ante/rake')
         self.utility_origin=0
         if center_on_initial_fold:
             value=exact_root_fold_value(native,game,hero)
             if value is None:raise ValueError("initial fold origin unavailable")
             self.utility_origin=value*json.loads(game._public_config_json)["rules"]["bb"]
         self._public_config_json=json.dumps({'model':'single-updater-frozen-opponent-v1','hero':hero,
-            'hero_key_mode':'unordered_own_cards','utility_origin_chips':self.utility_origin,
+            'hero_key_mode':'unordered_own_cards','utility_origin_chips':self.utility_origin,'exact_fold_baseline':self.exact_fold_baseline,
             'native_config':json.loads(game._public_config_json),'opponent_digest':opponent.digest},sort_keys=True,separators=(',',':'))
     def num_players(self):return 1
-    def new_initial_state(self):return LockedState(self.native.NativeState(self.original),self.hero,self.opponent,self.utility_origin)
+    def new_initial_state(self):return LockedState(self.native.NativeState(self.original),self.hero,self.opponent,self.utility_origin,self.exact_fold_baseline)
 
 
 def response_snapshot(solver):
@@ -243,10 +258,15 @@ def evaluate(native,game,base,response,*,hero=0,samples=12000,seed=100017,confid
         'assumptions':'fixed held-out sample size, independent uniform card/action PRNG model; selected response fixed before evaluation'}
 
 
-def experiment(native,game,policy,output,*,base_checkpoint_sha256=None,base_iteration=None,center_on_initial_fold=False):
+def experiment(native,game,policy,output,*,base_checkpoint_sha256=None,base_iteration=None,center_on_initial_fold=False,exact_fold_baseline=False):
+    control_source=None
+    if exact_fold_baseline:
+        if native.__name__!='pokerid_response':raise ValueError('separate exact-action native module required')
+        from gto.native.build_response_controls import patched_source
+        control_source=hashlib.sha256(patched_source().encode()).hexdigest()
     root=Path(output);root.mkdir(exist_ok=False);base=CompletedPolicy(policy,completion='uniform_legal_prior')
-    locked=LockedOpponentGame(native,game,0,base,center_on_initial_fold=center_on_initial_fold);solver=native.Solver(locked,.6,701,True,True,.1)
-    contract='pokerid-frozen-opponent-response-v1:'+_digest({'game':json.loads(locked._public_config_json),
+    locked=LockedOpponentGame(native,game,0,base,center_on_initial_fold=center_on_initial_fold,exact_fold_baseline=exact_fold_baseline);solver=native.Solver(locked,.6,701,True,True,.1)
+    contract='pokerid-frozen-opponent-response-v1:'+_digest({'control_source_sha256':control_source,'game':json.loads(locked._public_config_json),
         'source_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest()})
     observations=[]
     for iteration in (1000,10000):
@@ -268,9 +288,9 @@ def experiment(native,game,policy,output,*,base_checkpoint_sha256=None,base_iter
         'independent_statistical_sample_sets':1,'trajectory_sha256':replay['trajectory_sha256']}
     report['training']={'seed':701,'opponent_digest':base.digest,'observations':observations,'contract':contract,
         'base_native_iteration':base_iteration,'base_checkpoint_sha256':base_checkpoint_sha256,
-        'utility_origin_chips':locked.utility_origin,
+        'utility_origin_chips':locked.utility_origin,'exact_fold_baseline':exact_fold_baseline,'control_source_sha256':control_source,
         'method':'single-updater outcome MCCFR, opponent actions fixed chance, actual native continuation',
         'training_opponent_chance_precision':'binary64; held-out categorical draws use exact rational policy'}
     (root/'heldout.json').write_text(json.dumps(report,sort_keys=True)+'\n')
-    print(('CENTERED_RESPONSE ' if center_on_initial_fold else 'FEASIBLE_RESPONSE ')+json.dumps(report,sort_keys=True),flush=True)
+    print(('ANCHORED_RESPONSE ' if exact_fold_baseline else 'CENTERED_RESPONSE ' if center_on_initial_fold else 'FEASIBLE_RESPONSE ')+json.dumps(report,sort_keys=True),flush=True)
     return report
