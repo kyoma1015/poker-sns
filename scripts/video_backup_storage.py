@@ -1,0 +1,102 @@
+#!/usr/bin/env python3
+"""Read-only Supabase Storage byte exporter. Never logs credentials or object data."""
+import hashlib
+import json
+import os
+from pathlib import Path
+import sys
+import urllib.error
+import urllib.parse
+import urllib.request
+
+def required(name):
+    value = os.environ.get(name, "")
+    if not value:
+        raise RuntimeError(f"Missing required setting: {name}")
+    return value
+
+def main():
+    base = required("PROD_SUPABASE_URL").rstrip("/")
+    if not base.startswith("https://") or urllib.parse.urlsplit(base).path:
+        raise RuntimeError("Require an HTTPS project API origin")
+    token = required("PROD_STORAGE_READ_KEY")
+    output = Path(required("BACKUP_STORAGE_DIR")).resolve()
+    output.mkdir(mode=0o700, parents=True, exist_ok=True)
+    os.chmod(output, 0o700)
+    def request(path, data=None):
+        headers = {"apikey":token, "Authorization":"Bearer " + token}
+        if data is not None: headers["Content-Type"] = "application/json"
+        req = urllib.request.Request(base + "/storage/v1/" + path, data=data, headers=headers)
+        return urllib.request.urlopen(req, timeout=40)
+    with request("bucket") as response:
+        buckets = json.load(response)
+    if not isinstance(buckets, list):
+        raise RuntimeError("Storage bucket inventory failed")
+    manifest = []
+    def enumerate_prefix(bucket, prefix, depth=0):
+        if depth > 32:
+            raise RuntimeError("Unexpected folder depth")
+        offset = 0
+        while True:
+            payload = json.dumps({"prefix":prefix, "limit":100, "offset":offset,
+                                  "sortBy":{"column":"name","order":"asc"}}).encode()
+            with request("object/list/" + urllib.parse.quote(bucket,safe=""), payload) as response:
+                rows = json.load(response)
+            if not isinstance(rows, list):
+                raise RuntimeError("Invalid object listing")
+            for item in rows:
+                name = item.get("name")
+                if not isinstance(name,str) or not name or "/" in name or name in (".",".."):
+                    raise RuntimeError("Invalid object name")
+                full = prefix + name
+                if item.get("id") is None:
+                    yield from enumerate_prefix(bucket, full + "/", depth+1)
+                else:
+                    yield full
+            if len(rows) < 100: break
+            offset += len(rows)
+    for bucket_record in buckets:
+        bucket = bucket_record["id"]
+        if not isinstance(bucket,str) or bucket in ("", ".", "..") or "/" in bucket:
+            raise RuntimeError("Invalid bucket ID")
+        for key in enumerate_prefix(bucket, ""):
+            parts = key.split("/")
+            if any(p in ("", ".", "..") for p in parts):
+                raise RuntimeError("Invalid object path")
+            target = output / bucket / Path(*parts)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            if target.is_symlink() or target.exists():
+                raise RuntimeError("Duplicate or unsafe destination")
+            relative = str(target.relative_to(output))
+            encoded_key = "/".join(urllib.parse.quote(p,safe="") for p in parts)
+            urlpath = "object/authenticated/" + urllib.parse.quote(bucket,safe="") + "/" + encoded_key
+            digest = hashlib.sha256()
+            size = 0
+            with request(urlpath) as response, target.open("xb") as stream:
+                os.chmod(target,0o600)
+                while True:
+                    chunk = response.read(1024*1024)
+                    if not chunk: break
+                    stream.write(chunk)
+                    digest.update(chunk)
+                    size += len(chunk)
+            manifest.append({"path":relative,"bytes":size,"sha256":digest.hexdigest()})
+    expected = int(required("EXPECTED_STORAGE_OBJECTS"))
+    if len(manifest) != expected or len(buckets) != int(required("EXPECTED_STORAGE_BUCKETS")):
+        raise RuntimeError("Inventory changed. Refusing to certify incomplete snapshot.")
+    # Re-list and require the object paths to remain unchanged during export.
+    second = sorted((b["id"], k) for b in buckets for k in enumerate_prefix(b["id"],""))
+    first = sorted((p["path"].split("/",1)[0],p["path"].split("/",1)[1]) for p in manifest)
+    if first != second:
+        raise RuntimeError("Storage inventory changed during download")
+    manifest_path = output / "storage-manifest.json"
+    manifest_path.write_text(json.dumps({"objects":manifest,"buckets":len(buckets)},indent=2))
+    os.chmod(manifest_path,0o600)
+    print("Storage bytes downloaded and SHA256 recorded:", len(manifest),
+          "objects; restore validation still required")
+
+if __name__ == "__main__":
+    try: main()
+    except Exception as error:
+        print("Storage export failed:", type(error).__name__, str(error) if "Missing required" in str(error) else "see privileged operator logs",file=sys.stderr)
+        raise SystemExit(2)
