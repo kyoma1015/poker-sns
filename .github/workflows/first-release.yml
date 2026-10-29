@@ -42,6 +42,10 @@ jobs:
         run: node node_modules/vite/bin/vite.js build --config vite.first-release.config.ts
       - name: Verify canonical candidate artifact
         run: node tests/first-release/artifact.test.mjs
+      - name: Compiled artifact route and no-data-access smoke (no component mocks)
+        env:
+          CHROMIUM_PATH: /usr/bin/google-chrome
+        run: node tests/first-release/preview.test.mjs
       - name: Report all unresolved release gates
         if: always()
         run: node scripts/first-release-gate.mjs

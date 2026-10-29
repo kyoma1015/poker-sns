@@ -928,7 +928,7 @@
     },
     {
       "path": "src/first-release-main.tsx",
-      "sha": "781cc258fec3a2c822afab2cd1cd27550cf69aad",
+      "sha": "52892d01475b2770f63472231ea8f83642342056",
       "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
     },
     {
@@ -943,7 +943,7 @@
     },
     {
       "path": "docs/progress/FIRST_RELEASE_V1.json",
-      "sha": "28028fd29f9a42c3b8420f4066fba80b30d481a5",
+      "sha": "f1ad355fd2c26cf1d2f1f1943a836cd66845112b",
       "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
     },
     {
@@ -973,18 +973,23 @@
     },
     {
       "path": "docs/progress/FIRST_RELEASE_V1.md",
-      "sha": "cc6bc92ab16e5a091ccb3bf5c627d97c0eaf9f82",
+      "sha": "58f589dd178a034263798b3b42af29a8ab9f3395",
       "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
     },
     {
       "path": ".github/workflows/first-release.yml",
-      "sha": "d3298836c91838fa608314d3f363baaf150190c4",
+      "sha": "9ea25799ada63caaea288086208413e05a77f9ef",
       "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
     },
     {
       "path": "tests/first-release/artifact.test.mjs",
       "sha": "c7898cd917220aee8620b0a569321aaf944da5b5",
       "reason": "fixed canonical first-release artifact acceptance; no legacy ledger or app changes"
+    },
+    {
+      "path": "tests/first-release/preview.test.mjs",
+      "sha": "81542d355e99d87cc8518434f68d3b3056f865d1",
+      "reason": "compiled OFF-state artifact browser smoke; no real auth or original32 ledger changes"
     }
   ],
   "overrides": [

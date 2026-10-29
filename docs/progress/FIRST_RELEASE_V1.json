@@ -69,8 +69,12 @@
     },
     {
       "id": "regression_build",
-      "status": "BLOCKED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "Selected40836608461 at6b860b5: preserved381 plus current538 Node executions, normal build/lintPASS",
+        "First release40836608463 at6b860b5: unit5/mobile-desktop30/artifact3PASS; canonical build still refuses NO-GO",
+        "This gate is not whole-PR CI approval: separate legacy Poll40836608432 has deferred-TDA fixture timingFAIL"
+      ],
       "condition": "元381回帰・通常build/lint・候補buildがHEAD一致PASS"
     },
     {
@@ -138,8 +142,8 @@
       "browser_fail": 30
     },
     "after": {
-      "commit": "dda3ac841253cc1e5b9561e10c9e0d48c9a30e46",
-      "ci": 40834977048,
+      "commit": "6b860b5844dfc656799c8ac9a4d363ed17cd0c33",
+      "ci": 40836608463,
       "unit_pass": 5,
       "browser_pass": 30,
       "browser_fail": 0
@@ -154,6 +158,28 @@
       "fail": 2,
       "reason": "canonical index.html missing"
     },
-    "after": "PENDING same3 fixed assertions"
-  }
+    "after": {
+      "commit": "6b860b5844dfc656799c8ac9a4d363ed17cd0c33",
+      "ci": 40836608463,
+      "tests": 3,
+      "pass": 3,
+      "fail": 0,
+      "canonical_html": "dist-first-release/index.html"
+    }
+  },
+  "assessed_source_head": "6b860b5844dfc656799c8ac9a4d363ed17cd0c33",
+  "legacy_ci_observation": {
+    "source_head": "6b860b5844dfc656799c8ac9a4d363ed17cd0c33",
+    "run": 40836608432,
+    "status": "FAIL",
+    "area": "unchanged deferred TDA next-navigation synthetic fixture",
+    "details": "click/goto2500ms timeout,3caseFAIL; Selected same-source repeated acceptancePASS; browser build differs",
+    "selected_browser": "156.0.8078.47",
+    "poll_browser": "156.0.8078.0",
+    "root_cause": "UNKNOWN",
+    "protected_tests_or_deadlines_changed": false,
+    "publishing_ci": "Read latest PR125 exact-head checkpoint; no retry-success=root-fix claim"
+  },
+  "runtime_activation": "OFF until all mandatory safety evidence and reviewed activation; no source flag flip in this batch",
+  "publishing_receipt": "Latest PR125 checkpoint carries final publishing HEAD CI; do not infer it from source receipts"
 }
