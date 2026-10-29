@@ -1,0 +1,20 @@
+name: Backup direct IPv6 connectivity diagnosis (NO CREDENTIALS)
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/video-backup-ipv6-probe.yml'
+      - 'scripts/video_backup_ipv6_probe.py'
+permissions:
+  contents: read
+jobs:
+  ipv6-direct-db:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Syntax check
+        run: python3 -m py_compile scripts/video_backup_ipv6_probe.py
+      - name: Diagnose IPv6 TCP and verified TLS without Postgres authentication
+        run: python3 scripts/video_backup_ipv6_probe.py
