@@ -21,6 +21,8 @@ class BackupIntegrityTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         (self.root/"database.dump").write_bytes(b"synthetic-db")
         (self.root/"database.sha256").write_text(hashlib.sha256(b"synthetic-db").hexdigest()+"  database.dump\n")
+        (self.root/"globals.sql").write_bytes(b"-- synthetic globals with no secrets\n")
+        (self.root/"globals.sha256").write_text(hashlib.sha256(b"-- synthetic globals with no secrets\n").hexdigest()+"  globals.sql\n")
         (self.root/"storage"/"bucket").mkdir(parents=True)
         self.file = self.root/"storage"/"bucket"/"video.mp4"
         self.file.write_bytes(b"synthetic-video")
@@ -43,6 +45,14 @@ class BackupIntegrityTests(unittest.TestCase):
     def test_modified_db_bytes_fail(self):
         (self.root/"database.dump").write_bytes(b"tampered-db")
         self.assertNotEqual(self.run_check().returncode,0)
+
+    def test_modified_globals_fail(self):
+        (self.root/"globals.sql").write_bytes(b"tampered-role-metadata")
+        self.assertNotEqual(self.run_check().returncode, 0)
+
+    def test_missing_globals_fail(self):
+        (self.root/"globals.sql").unlink()
+        self.assertNotEqual(self.run_check().returncode, 0)
 
     def test_manifest_path_traversal_fails(self):
         self.write_manifest("../outside")
