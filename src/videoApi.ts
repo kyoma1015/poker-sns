@@ -5,6 +5,7 @@ import { readVideoResponse } from './videoMedia'
 /** Candidate client/server contract. Not enabled until a trusted endpoint is reviewed. */
 export const VIDEO_FINALIZE_ROUTE = '/internal/video/finalize'
 export const VIDEO_MEDIA_ROUTE = '/internal/video/media'
+const POST_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 // Build-time feature gate: keep disabled until production DB, runtime and API smoke QA pass.
 // Never infer readiness from the presence of Supabase credentials.
 export const VIDEO_SERVER_ENABLED = import.meta.env.VITE_VIDEO_SERVER_ENABLED === 'true' || import.meta.env.VITE_VIDEO_CLOUD_TEST_ENABLED === 'true'
@@ -27,7 +28,7 @@ export async function finalizeUploadedVideo(objectPath: string, content: string,
   if (!response.ok) throw new Error('動画投稿を確定できませんでした。')
   const payload: unknown = await response.json()
   if (!payload || typeof payload !== 'object' || !('post_id' in payload) ||
-      typeof payload.post_id !== 'string' || !/^[0-9a-f-]{36}$/i.test(payload.post_id)) {
+      typeof payload.post_id !== 'string' || !POST_UUID.test(payload.post_id)) {
     throw new Error('動画投稿の応答が不正です。')
   }
   return payload.post_id
@@ -51,7 +52,7 @@ export async function recoverCloudVideo(objectPath: string): Promise<string> {
   }
   const data: unknown = await response.json()
   if (!data || typeof data !== 'object' || !('post_id' in data) ||
-    typeof data.post_id !== 'string' || !/^[0-9a-f-]{36}$/i.test(data.post_id)) throw new Error('復旧結果が不正です。')
+    typeof data.post_id !== 'string' || !POST_UUID.test(data.post_id)) throw new Error('復旧結果が不正です。')
   return data.post_id
 }
 
@@ -78,7 +79,7 @@ export async function reserveVideoObjectPath(objectPath: string, signal?: AbortS
 export async function loadAuthorizedVideo(postId: string): Promise<string> {
   assertCurrentVideoCloudTestClient()
   if (!VIDEO_SERVER_ENABLED) throw new Error('動画再生APIは安全確認待ちです。')
-  if (!/^[0-9a-f-]{36}$/i.test(postId)) throw new Error('投稿IDが不正です。')
+  if (!POST_UUID.test(postId)) throw new Error('投稿IDが不正です。')
   const response = await fetch(`${VIDEO_MEDIA_ROUTE}/${encodeURIComponent(postId)}`, {
     headers: { Authorization: await authHeader() }, cache: 'no-store',
     redirect: 'error', signal: AbortSignal.timeout(30000),
