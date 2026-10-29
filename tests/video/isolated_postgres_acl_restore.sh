@@ -4,6 +4,7 @@ set -euo pipefail
 umask 077
 command -v docker >/dev/null || { echo 'Docker is required for synthetic restore'; exit 2; }
 tmp="$(mktemp -d)"
+chmod 0777 "$tmp" # synthetic, credential-free scratch; container postgres must write dumps
 name="video-synthetic-restore-$RANDOM-$$"
 cleanup() {
   docker rm -f "$name" >/dev/null 2>&1 || true
@@ -16,14 +17,14 @@ for i in $(seq 1 60); do
   sleep 1
 done
 docker exec "$name" pg_isready -U postgres >/dev/null
-docker exec "$name" psql -v ON_ERROR_STOP=1 -U postgres -d postgres <<'SQL'
+docker exec -i "$name" psql -v ON_ERROR_STOP=1 -U postgres -d postgres <<'SQL'
 CREATE ROLE fixture_owner NOLOGIN;
 CREATE ROLE fixture_reader NOLOGIN;
 CREATE ROLE fixture_blocked NOLOGIN;
 CREATE DATABASE fixture_source;
 CREATE DATABASE fixture_restored;
 SQL
-docker exec "$name" psql -v ON_ERROR_STOP=1 -U postgres -d fixture_source <<'SQL'
+docker exec -i "$name" psql -v ON_ERROR_STOP=1 -U postgres -d fixture_source <<'SQL'
 CREATE SCHEMA private_data AUTHORIZATION fixture_owner;
 GRANT USAGE ON SCHEMA private_data TO fixture_reader, fixture_blocked;
 SET ROLE fixture_owner;
@@ -38,7 +39,7 @@ SQL
 docker exec "$name" sh -ec 'pg_dump -U postgres -d fixture_source -Fc -f /backup/synthetic.dump && pg_restore -l /backup/synthetic.dump > /backup/synthetic.toc && test -s /backup/synthetic.toc && pg_restore -U postgres -d fixture_restored --exit-on-error --single-transaction /backup/synthetic.dump'
 # Compare source and restored privileges plus verify restrictive behaviour as effective roles.
 for db in fixture_source fixture_restored; do
-  docker exec "$name" psql -v ON_ERROR_STOP=1 -At -U postgres -d "$db" <<'SQL' > "$tmp/$db.results"
+  docker exec -i "$name" psql -v ON_ERROR_STOP=1 -At -U postgres -d "$db" <<'SQL' > "$tmp/$db.results"
 SELECT 'owner=' || pg_get_userbyid(relowner)
 FROM pg_class WHERE oid = 'private_data.entries'::regclass;
 SELECT 'rls=' || relrowsecurity || ',force=' || relforcerowsecurity
@@ -63,7 +64,7 @@ grep -Fx 'blocked_grant=true' "$tmp/fixture_restored.results"
 grep -Fx 'reader_rows=1' "$tmp/fixture_restored.results"
 grep -Fx 'blocked_rows=0' "$tmp/fixture_restored.results"
 # Negative control: restore explicitly discarding ownership and ACL must not be certified.
-docker exec "$name" psql -v ON_ERROR_STOP=1 -U postgres -d postgres -c 'CREATE DATABASE fixture_lossy' >/dev/null
+docker exec -i "$name" psql -v ON_ERROR_STOP=1 -U postgres -d postgres -c 'CREATE DATABASE fixture_lossy' >/dev/null
 docker exec "$name" pg_restore -U postgres -d fixture_lossy --no-owner --no-acl --exit-on-error --single-transaction /backup/synthetic.dump
 lossy_owner="$(docker exec "$name" psql -At -U postgres -d fixture_lossy -c "SELECT pg_get_userbyid(relowner) FROM pg_class WHERE oid='private_data.entries'::regclass")"
 [[ "$lossy_owner" != fixture_owner ]] || { echo 'Negative control unexpectedly preserved owner' >&2; exit 1; }
