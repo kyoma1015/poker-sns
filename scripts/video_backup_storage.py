@@ -39,6 +39,7 @@ def main():
     if not isinstance(buckets, list):
         raise RuntimeError("Storage bucket inventory failed")
     manifest = []
+    first_inventory = []
     def enumerate_prefix(bucket, prefix, depth=0):
         if depth > 32:
             raise RuntimeError("Unexpected folder depth")
@@ -58,14 +59,18 @@ def main():
                 if item.get("id") is None:
                     yield from enumerate_prefix(bucket, full + "/", depth+1)
                 else:
-                    yield full
+                    # Capture object identity and available revision metadata on each listing.
+                    # A stable path alone does not detect in-place overwrites.
+                    revision = {k: item.get(k) for k in ("id", "updated_at", "metadata")}
+                    yield full, revision
             if len(rows) < 100: break
             offset += len(rows)
     for bucket_record in buckets:
         bucket = bucket_record["id"]
         if not isinstance(bucket,str) or bucket in ("", ".", "..") or "/" in bucket:
             raise RuntimeError("Invalid bucket ID")
-        for key in enumerate_prefix(bucket, ""):
+        for key, revision in enumerate_prefix(bucket, ""):
+            first_inventory.append((bucket, key, revision))
             parts = key.split("/")
             if any(p in ("", ".", "..") for p in parts):
                 raise RuntimeError("Invalid object path")
@@ -91,10 +96,12 @@ def main():
     if len(manifest) != expected or len(buckets) != int(required("EXPECTED_STORAGE_BUCKETS")):
         raise RuntimeError("Inventory changed. Refusing to certify incomplete snapshot.")
     # Re-list and require the object paths to remain unchanged during export.
-    second = sorted((b["id"], k) for b in buckets for k in enumerate_prefix(b["id"],""))
-    first = sorted((p["path"].split("/",1)[0],p["path"].split("/",1)[1]) for p in manifest)
+    second = sorted((b["id"], k, json.dumps(revision, sort_keys=True))
+                    for b in buckets for k, revision in enumerate_prefix(b["id"],""))
+    first = sorted((bucket, key, json.dumps(revision, sort_keys=True))
+                   for bucket, key, revision in first_inventory)
     if first != second:
-        raise RuntimeError("Storage inventory changed during download")
+        raise RuntimeError("Storage object identity or revision changed during download")
     manifest_path = output / "storage-manifest.json"
     manifest_path.write_text(json.dumps({"objects":manifest,"buckets":len(buckets)},indent=2))
     os.chmod(manifest_path,0o600)
