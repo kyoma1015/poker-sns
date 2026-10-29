@@ -49,7 +49,7 @@ Environment variables:
 
 ## Isolated restoration smoke test
 
-After downloading the encrypted Supabase backup into a trusted private machine, decrypt it locally with the offline age identity. Keep the resulting directory private, outside any repo. The decrypted directory must contain `database.dump`, `database.sha256`, `globals.sql`, `globals.sha256`, and `storage/storage-manifest.json`. Run:
+After downloading the encrypted Supabase backup into a trusted private machine, decrypt it locally with the offline age identity. Keep the resulting directory private, outside any repo. The decrypted directory must contain `database.dump`, `database.sha256`, `database.toc`, `database.toc.sha256`, `globals.sql`, `globals.sha256`, and `storage/storage-manifest.json`. Run:
 
 ```bash
 python3 scripts/video_verify_backup_bundle.py "/private/path/to/decrypted"
