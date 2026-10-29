@@ -24,7 +24,7 @@ class CompletedPolicy:
     completion: str
     key_mode: str = 'native'
     def __post_init__(self):
-        if (type(self.snapshot) is not PolicySnapshot or self.completion!='uniform_legal_prior'
+        if (type(self.snapshot) is not PolicySnapshot or self.completion not in ('uniform_legal_prior','check_call_prior')
                 or self.key_mode not in ('native','unordered_own_cards')):
             raise ValueError('explicit immutable uniform-prior completion declaration required')
     @property
@@ -40,6 +40,9 @@ class CompletedPolicy:
         if row is not None:return row,False
         actions=node.legal_actions()
         if not actions:raise ValueError('legal decision required')
+        if self.completion=='check_call_prior':
+            if 1 not in actions:raise ValueError('check/call not legal')
+            return {a:F(int(a==1)) for a in actions},True
         return {a:F(1,len(actions)) for a in actions},True
     def __call__(self,node):return self.decide(node)[0]
 
@@ -53,7 +56,8 @@ def unordered_hero_key(key):
 
 class LockedState:
     """Only hero decisions are learner decisions; opponent is fixed chance."""
-    def __init__(self,node,hero,opponent):self.node=node;self.hero=hero;self.opponent=opponent
+    def __init__(self,node,hero,opponent,utility_origin=0):
+        self.node=node;self.hero=hero;self.opponent=opponent;self.utility_origin=utility_origin
     def is_terminal(self):return self.node.is_terminal()
     def is_chance_node(self):
         return not self.is_terminal() and (self.node.is_chance_node() or self.node.current_player()!=self.hero)
@@ -77,21 +81,26 @@ class LockedState:
     def apply_action(self,action):self.node.apply_action(action)
     def player_return(self,player):
         if player!=0 or not self.is_terminal():raise ValueError('hero terminal utility required')
-        return self.node.returns()[self.hero]
+        return self.node.returns()[self.hero]-self.utility_origin
 
 
 class LockedOpponentGame:
-    def __init__(self,native,game,hero,opponent):
+    def __init__(self,native,game,hero,opponent,*,center_on_initial_fold=False):
         from gto.native.initial_chance_reach import _verified_game
         _verified_game(game)
         if game.num_players()!=2 or type(hero) is not int or hero not in (0,1) or type(opponent) is not CompletedPolicy:
             raise ValueError('HU frozen-opponent game required')
         self.native=native;self.original=game;self.hero=hero;self.opponent=opponent
+        self.utility_origin=0
+        if center_on_initial_fold:
+            value=exact_root_fold_value(native,game,hero)
+            if value is None:raise ValueError("initial fold origin unavailable")
+            self.utility_origin=value*json.loads(game._public_config_json)["rules"]["bb"]
         self._public_config_json=json.dumps({'model':'single-updater-frozen-opponent-v1','hero':hero,
-            'hero_key_mode':'unordered_own_cards',
+            'hero_key_mode':'unordered_own_cards','utility_origin_chips':self.utility_origin,
             'native_config':json.loads(game._public_config_json),'opponent_digest':opponent.digest},sort_keys=True,separators=(',',':'))
     def num_players(self):return 1
-    def new_initial_state(self):return LockedState(self.native.NativeState(self.original),self.hero,self.opponent)
+    def new_initial_state(self):return LockedState(self.native.NativeState(self.original),self.hero,self.opponent,self.utility_origin)
 
 
 def response_snapshot(solver):
@@ -134,7 +143,7 @@ def _ticket(row,rng):
     raise ValueError('policy not normalized')
 
 
-def terminal_trajectory(native,game,cards,action_seed,base,response=None,hero=0):
+def terminal_trajectory(native,game,cards,action_seed,base,response=None,hero=0,*,independent_audit=False):
     node=native.NativeState(game)
     for card in cards[:4]:node.apply_action(card)
     offset=4;rng=random.Random(action_seed);counts={'observed':0,'completed':0,'postflop_decisions':0}
@@ -143,6 +152,11 @@ def terminal_trajectory(native,game,cards,action_seed,base,response=None,hero=0)
             result=node.settlement();net=result['net'];rake=result['rake']
             if len(net)!=2 or sum(net)!=-rake or any(type(v) is not int or not -game.stacks[i]<=v<=sum(game.stacks)-game.stacks[i] for i,v in enumerate(net)):
                 raise ValueError('native settlement/chip conservation differs')
+            if independent_audit:
+                from gto.native.ev_audit import independent_net
+                expected=independent_net(node.audit(),json.loads(game._public_config_json))
+                if net!=expected or list(node.returns())!=expected:
+                    raise ValueError('independent terminal ledger/rank differs')
             return net,counts
         if node.is_chance_node():node.apply_action(cards[offset]);offset+=1;continue
         actor=node.current_player();policy=response if response is not None and actor==hero else base
@@ -171,7 +185,7 @@ def exact_root_fold_value(native,game,hero):
     return settlement['net'][hero]/json.loads(game._public_config_json)['rules']['bb']
 
 
-def evaluate(native,game,base,response,*,hero=0,samples=12000,seed=100017,confidence=.99):
+def evaluate(native,game,base,response,*,hero=0,samples=12000,seed=100017,confidence=.99,independent_audit=False):
     from gto.native.initial_chance_reach import _verified_game
     _verified_game(game)
     if (game.num_players()!=2 or type(hero) is not int or hero not in (0,1)
@@ -184,8 +198,8 @@ def evaluate(native,game,base,response,*,hero=0,samples=12000,seed=100017,confid
     rng=random.Random(seed);bb=json.loads(game._public_config_json)['rules']['bb'];trajectory_hash=hashlib.sha256()
     for _ in range(samples):
         cards=list(range(52));rng.shuffle(cards);action_seed=rng.getrandbits(128)
-        a,ac=terminal_trajectory(native,game,cards,action_seed,base,hero=hero)
-        b,bc=terminal_trajectory(native,game,cards,action_seed,base,response,hero)
+        a,ac=terminal_trajectory(native,game,cards,action_seed,base,hero=hero,independent_audit=independent_audit)
+        b,bc=terminal_trajectory(native,game,cards,action_seed,base,response,hero,independent_audit=independent_audit)
         trajectory_hash.update(json.dumps([cards,action_seed,a,b],separators=(',',':')).encode())
         label=hand_class([card_name(c) for c in cards[2*hero:2*hero+2]])
         for moments in (global_moments,groups[label]):
@@ -219,14 +233,15 @@ def evaluate(native,game,base,response,*,hero=0,samples=12000,seed=100017,confid
         'complete_169_sample_coverage':all(rows[0][2] for rows in groups.values()),
         'original_partial_policy_ev':None,'full_game_convergence_verified':False,
         'trajectory_sha256':trajectory_hash.hexdigest(),'config':json.loads(game._public_config_json),
+        'independent_terminal_audit':independent_audit,
         'source_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         'scope':'complete explicitly declared profile only; feasible response gain is a lower bound, not exact best response/exploitability',
         'assumptions':'fixed held-out sample size, independent uniform card/action PRNG model; selected response fixed before evaluation'}
 
 
-def experiment(native,game,policy,output,*,base_checkpoint_sha256=None,base_iteration=None):
+def experiment(native,game,policy,output,*,base_checkpoint_sha256=None,base_iteration=None,center_on_initial_fold=False):
     root=Path(output);root.mkdir(exist_ok=False);base=CompletedPolicy(policy,completion='uniform_legal_prior')
-    locked=LockedOpponentGame(native,game,0,base);solver=native.Solver(locked,.6,701,True,True,.1)
+    locked=LockedOpponentGame(native,game,0,base,center_on_initial_fold=center_on_initial_fold);solver=native.Solver(locked,.6,701,True,True,.1)
     contract='pokerid-frozen-opponent-response-v1:'+_digest({'game':json.loads(locked._public_config_json),
         'source_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest()})
     observations=[]
@@ -237,20 +252,21 @@ def experiment(native,game,policy,output,*,base_checkpoint_sha256=None,base_iter
         observations.append({'iteration':iteration,'policy_digest':frozen.digest,'updated_infosets':len(frozen._rows),
             'checkpoint_sha256':hashlib.sha256(path.read_bytes()).hexdigest()})
     response=CompletedPolicy(frozen,completion='uniform_legal_prior',key_mode='unordered_own_cards')
-    report=evaluate(native,game,base,response)
+    report=evaluate(native,game,base,response,independent_audit=True)
     restored=native.Solver(locked,.6,701,True,True,.1)
     load_verified_checkpoint(restored,path,contract)
     recovered=response_snapshot(restored)
     if recovered.digest!=frozen.digest or restored.rng_state()!=solver.rng_state():
         raise ValueError('full response checkpoint restoration differs')
-    replay=evaluate(native,game,base,CompletedPolicy(recovered,'uniform_legal_prior','unordered_own_cards'))
+    replay=evaluate(native,game,base,CompletedPolicy(recovered,'uniform_legal_prior','unordered_own_cards'),independent_audit=True)
     if replay!=report:raise ValueError('same held-out trajectories/moments do not reproduce')
     report['reproducibility']={'full_checkpoint_policy_rng_restored':True,'same12000_samples_replayed':True,
         'independent_statistical_sample_sets':1,'trajectory_sha256':replay['trajectory_sha256']}
     report['training']={'seed':701,'opponent_digest':base.digest,'observations':observations,'contract':contract,
         'base_native_iteration':base_iteration,'base_checkpoint_sha256':base_checkpoint_sha256,
+        'utility_origin_chips':locked.utility_origin,
         'method':'single-updater outcome MCCFR, opponent actions fixed chance, actual native continuation',
         'training_opponent_chance_precision':'binary64; held-out categorical draws use exact rational policy'}
     (root/'heldout.json').write_text(json.dumps(report,sort_keys=True)+'\n')
-    print('FEASIBLE_RESPONSE '+json.dumps(report,sort_keys=True),flush=True)
+    print(('CENTERED_RESPONSE ' if center_on_initial_fold else 'FEASIBLE_RESPONSE ')+json.dumps(report,sort_keys=True),flush=True)
     return report

@@ -6,6 +6,7 @@ from gto.native.training import NativeGame,checkpoint
 from gto.native.checkpoints import load_verified_checkpoint
 from gto.native.infoset_export import PolicySnapshot
 from gto.native.feasible_response import CompletedPolicy,LockedOpponentGame,LockedState,response_snapshot,evaluate,terminal_trajectory,exact_root_fold_value
+from gto.native.ev_audit import completion_sensitivity
 class FeasibleNative(unittest.TestCase):
  @classmethod
  def setUpClass(cls):
@@ -61,4 +62,32 @@ class FeasibleNative(unittest.TestCase):
   game=NativeGame([100,100])
   self.assertEqual(exact_root_fold_value(self.native,game,0),-.5)
   self.assertIsNone(exact_root_fold_value(self.native,game,1))
+ def test_centered_utility_preserves_real_chip_payoff_and_resume(self):
+  game=NativeGame([100,100]);base=self.base()
+  ordinary=LockedOpponentGame(self.native,game,0,base)
+  centered=LockedOpponentGame(self.native,game,0,base,center_on_initial_fold=True)
+  self.assertEqual(centered.utility_origin,-1)
+  self.assertNotEqual(centered._public_config_json,ordinary._public_config_json)
+  a=ordinary.new_initial_state();b=centered.new_initial_state()
+  for card in [48,49,0,1]:a.apply_action(card);b.apply_action(card)
+  self.assertEqual(a.information_state_string(0),b.information_state_string(0))
+  a.apply_action(0);b.apply_action(0)
+  self.assertEqual(a.player_return(0),-1);self.assertEqual(b.player_return(0),0)
+  self.assertEqual(b.node.returns(),[-1,1])
+  solver=self.native.Solver(centered,.6,701,True,True,.1)
+  for _ in range(50):solver.run_iteration()
+  with tempfile.TemporaryDirectory() as directory:
+   path=Path(directory)/'center.bin';checkpoint(solver,path,'centered-test')
+   other=self.native.Solver(centered,.6,701,True,True,.1);load_verified_checkpoint(other,path,'centered-test')
+   for _ in range(50):solver.run_iteration();other.run_iteration()
+   self.assertEqual(response_snapshot(solver).digest,response_snapshot(other).digest)
+   self.assertEqual(solver.rng_state(),other.rng_state())
+ def test_completion_sensitivity_is_reproducible_and_ledger_audited(self):
+  import contextlib,io
+  with contextlib.redirect_stdout(io.StringIO()):
+   a=completion_sensitivity(self.native,NativeGame([100,100]),self.base().snapshot,samples=16)
+   b=completion_sensitivity(self.native,NativeGame([100,100]),self.base().snapshot,samples=16)
+  self.assertEqual(a,b);self.assertEqual(a['independent_terminal_audits'],64)
+  self.assertEqual(a['profiles']['uniform']['sb_difference_from_uniform']['sum_squared_chips'],0)
+  self.assertEqual(a['deviation_comparison_only'],['sb_check_call'])
 if __name__=='__main__':unittest.main()

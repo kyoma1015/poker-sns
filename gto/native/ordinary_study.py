@@ -39,6 +39,7 @@ def context_coverage(native,solver,game,history):
             'reach_status':'exact_initial_1/2652' if not history else 'history_posterior_not_integrated'}
     return {'stage':desc['stage'],'history':list(history),'seat':desc['seat'],
         'actions':desc['legal_actions'],'created_orderings':created,'updated_orderings':len(ordered),
+        'missing_orderings':[list(h) for h in permutations(range(52),2) if h not in ordered],
         'expected_orderings':2652,'complete_frequency_classes':sum(h['frequencies'] is not None for h in hands.values()),
         'frequency_transport':'exact rational aggregation rounded to binary64; not a convergence claim',
         'hands':hands,'full_game_convergence_verified':False}
@@ -125,6 +126,12 @@ def experiment(native,output,*,proposal=None):
                     from gto.native.feasible_response import experiment as response_experiment
                     response_report=response_experiment(native,game,policy,output/'feasible-response',
                         base_checkpoint_sha256=observation['source_checkpoint_sha256'],base_iteration=target)
+                    from gto.native.ev_audit import completion_sensitivity
+                    observation['completion_sensitivity']=completion_sensitivity(native,game,policy)
+                    centered=response_experiment(native,game,policy,output/'centered-response',
+                        base_checkpoint_sha256=observation['source_checkpoint_sha256'],base_iteration=target,
+                        center_on_initial_fold=True)
+                    observation['centered_response_summary']=centered['global']
                     observation['feasible_response_summary']={k:response_report[k] for k in (
                         'global','completion_usage','best_response_gain_lower_bb','trajectory_sha256','full_game_convergence_verified')}
                 payload={'seed':seed,'iteration':target,'config':json.loads(game._public_config_json),
@@ -135,6 +142,7 @@ def experiment(native,output,*,proposal=None):
                 print('ORDINARY_EVIDENCE '+encoded,flush=True)
                 del policy
             (output/f'seed-{seed}-{target}.json').write_text(report_json(observation)+'\n');run.append(observation)
+            if target==100000:print('ORDINARY_MISSING '+json.dumps({'seed':seed,'contexts':[{k:c[k] for k in ('stage','missing_orderings')} for c in contexts]}),flush=True)
             print('ORDINARY_PROGRESS '+json.dumps({'seed':seed,'iteration':target,'contexts':[{k:c[k] for k in ('stage','updated_orderings','complete_frequency_classes')} for c in contexts]}),flush=True)
         all_runs.append(run);del solver
     summary={'schema':'pokerid-ordinary-preflop-study-v1','formal_profile':False,'sampling_profile':proposal,

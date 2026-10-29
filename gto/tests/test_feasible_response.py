@@ -17,6 +17,14 @@ class Feasible(unittest.TestCase):
   self.assertEqual(completed.decide(node),({0:F(1,2),1:F(1,2)},True))
   with self.assertRaises(ValueError):CompletedPolicy(strict,'automatic')
   with self.assertRaises(UnknownPolicyRow):strict(node)
+ def test_passive_completion_changes_only_missing_rows(self):
+  node=ObservationOnly();strict=PolicySnapshot({'other':{1:F(1)}})
+  passive=CompletedPolicy(strict,'check_call_prior')
+  self.assertEqual(passive.decide(node),({0:F(0),1:F(1)},True))
+  learned=PolicySnapshot({'hero_public_information':{0:F(1,4),1:F(3,4)}})
+  self.assertEqual(CompletedPolicy(learned,'check_call_prior').decide(node),
+                   CompletedPolicy(learned,'uniform_legal_prior').decide(node))
+  self.assertNotEqual(passive.digest,CompletedPolicy(strict,'uniform_legal_prior').digest)
  def test_observed_policy_uses_no_world_audit(self):
   strict=PolicySnapshot({'hero_public_information':{0:F(1,4),1:F(3,4)}})
   completed=CompletedPolicy(strict,'uniform_legal_prior')
