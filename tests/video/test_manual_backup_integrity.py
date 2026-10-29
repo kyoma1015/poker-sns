@@ -1,5 +1,6 @@
 """Synthetic-only tests for offline video backup checks. Never contact production."""
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 import subprocess
@@ -8,6 +9,10 @@ import tempfile
 import unittest
 
 SCRIPT = Path(__file__).resolve().parents[2] / "scripts" / "video_verify_backup_bundle.py"
+STORAGE_SCRIPT = SCRIPT.with_name("video_backup_storage.py")
+spec = importlib.util.spec_from_file_location("video_backup_storage", STORAGE_SCRIPT)
+storage_backup = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(storage_backup)
 
 class BackupIntegrityTests(unittest.TestCase):
     def setUp(self):
@@ -50,6 +55,33 @@ class BackupIntegrityTests(unittest.TestCase):
     def test_extra_file_fails(self):
         (self.root/"storage"/"bucket"/"other").write_bytes(b"extra")
         self.assertNotEqual(self.run_check().returncode,0)
+
+class StorageRevisionTests(unittest.TestCase):
+    def setUp(self):
+        self.original = [("photos", "same/path.jpg", {"id": "obj-1", "updated_at": "t1", "metadata": {"size": 12}})]
+
+    def test_identical_listing_passes(self):
+        self.assertTrue(storage_backup.inventory_unchanged(self.original, list(self.original)))
+
+    def test_same_name_changed_revision_fails(self):
+        changed = [("photos", "same/path.jpg", {"id": "obj-1", "updated_at": "t2", "metadata": {"size": 12}})]
+        self.assertFalse(storage_backup.inventory_unchanged(self.original, changed))
+
+    def test_same_name_changed_object_id_fails(self):
+        changed = [("photos", "same/path.jpg", {"id": "obj-2", "updated_at": "t1", "metadata": {"size": 12}})]
+        self.assertFalse(storage_backup.inventory_unchanged(self.original, changed))
+
+    def test_same_name_changed_metadata_fails(self):
+        changed = [("photos", "same/path.jpg", {"id": "obj-1", "updated_at": "t1", "metadata": {"size": 13}})]
+        self.assertFalse(storage_backup.inventory_unchanged(self.original, changed))
+
+    def test_list_order_does_not_matter(self):
+        other = ("photos", "other.jpg", {"id": "obj-3", "updated_at": "t1"})
+        self.assertTrue(storage_backup.inventory_unchanged(self.original + [other], [other] + self.original))
+
+    def test_added_or_deleted_path_fails(self):
+        self.assertFalse(storage_backup.inventory_unchanged(self.original, []))
+
 
 if __name__ == "__main__":
     unittest.main()
