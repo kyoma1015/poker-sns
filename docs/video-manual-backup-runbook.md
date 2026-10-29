@@ -116,3 +116,15 @@ The revised Storage inventory comparator has synthetic tests for same-path objec
 ## Archive TOC audit gate
 
 The encrypted bundle includes `database.toc` and its SHA256 to show PostgreSQL archive entry kinds and owner fields without needing to decrypt and parse all source object data for an initial audit. The TOC is **not** independently sufficient to demonstrate applied grants or ownership. The fully reviewed clone restore must compare critical table/function/sequence owners, object grants, role membership, RLS enablement and effective privilege checks against the source inventory. Never directly replay Supabase system roles or privileges from `globals.sql` without an environment-specific review. Any difference is a NO-GO until remediated and re-tested.
+
+## Storage bucket configuration recovery (source audit)
+
+The encrypted Storage manifest now includes the full bucket records returned by the Supabase Storage `/storage/v1/bucket` API, alongside the raw object bytes. The exporter re-fetches the bucket list after transferring bytes and compares each bucket's returned fields. A change in `public`, `file_size_limit`, allowed MIME types or other returned setting fails the export. The offline verifier rejects missing/duplicate bucket settings and objects referring to unknown buckets. Full metadata is inside the encrypted bundle; no bucket settings or tokens are printed.
+
+**Still NOT restored**: bucket rows and policies to a real Supabase Storage API, object ownership/access rules, or an atomic DB/Storage snapshot. Synthetic mock API and PostgreSQL fixtures are not an actual Supabase service restoration. A valid encrypted backup must still be proven recoverable with Supabase-compatible Auth/Storage services and checked against source data.
+
+## JIT and Storage compatibility gate
+
+Temporary Access (JIT) grants a scoped and time-limited **PostgreSQL** login, not an HTTP Storage JWT. Even if a JIT connection works for `pg_dump`, `pg_dumpall --globals-only --no-role-passwords` can fail with restricted Postgres permissions. Treat the command's failure as a legitimate access gap: never elevate JIT to a privileged role silently or strip global/role requirements to force a green result. Verify JIT expiry and Postgres read permissions using a separately authorized **read-only** dry run before triggering encrypted export.
+
+The current Storage exporter sends its provided key as both `apikey` and `Authorization: Bearer`. Actual compatibility must be tested against the exact credential type (legacy JWT service role vs new `sb_secret_` key) through an authorized nonproduction Storage origin. A JIT PAT is not acceptable as Storage auth. No test of authenticated real Supabase Storage API has been completed in this PR. A privileged service role key is a security-sensitive broad credential and must never appear in the GitHub repository, PR diffs or logs.
