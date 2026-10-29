@@ -11,8 +11,8 @@ function media(chunks, headers = {'content-type':'video/mp4'}) {
   }, {highWaterMark:0})
   return {response:new Response(body,{headers}),get cancelled(){return cancelled},get reads(){return reads}}
 }
-test('playback accepts bounded MP4/WebM and normalizes MIME parameters', async()=>{
-  for(const mime of ['video/mp4','video/webm; charset=binary']) {
+test('playback accepts bounded MP4/WebM/MOV and normalizes MIME parameters', async()=>{
+  for(const mime of ['video/mp4','video/webm; charset=binary','video/quicktime']) {
     const m=media([new Uint8Array([1,2,3])],{'content-type':mime,'content-length':'3'})
     const blob=await readVideoResponse(m.response)
     assert.equal(blob.size,3)
