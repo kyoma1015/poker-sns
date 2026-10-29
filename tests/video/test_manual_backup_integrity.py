@@ -10,6 +10,7 @@ import unittest
 
 SCRIPT = Path(__file__).resolve().parents[2] / "scripts" / "video_verify_backup_bundle.py"
 STORAGE_SCRIPT = SCRIPT.with_name("video_backup_storage.py")
+RESTORE_SCRIPT = SCRIPT.with_name("video_verify_isolated_storage_restore.py")
 spec = importlib.util.spec_from_file_location("video_backup_storage", STORAGE_SCRIPT)
 storage_backup = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(storage_backup)
@@ -36,6 +37,33 @@ class BackupIntegrityTests(unittest.TestCase):
 
     def run_check(self):
         return subprocess.run([sys.executable,str(SCRIPT),str(self.root)],capture_output=True,text=True,timeout=8)
+
+    def run_storage_restore(self):
+        return subprocess.run([sys.executable, str(RESTORE_SCRIPT), str(self.root), str(self.root/"restored")],capture_output=True,text=True,timeout=8)
+
+    def test_isolated_storage_restore_passes(self):
+        result=self.run_storage_restore()
+        self.assertEqual(result.returncode,0,result.stderr)
+        self.assertEqual((self.root/"restored"/"bucket"/"video.mp4").read_bytes(),b"synthetic-video")
+
+    def test_isolated_storage_restore_rejects_existing_destination(self):
+        (self.root/"restored").mkdir()
+        self.assertNotEqual(self.run_storage_restore().returncode,0)
+
+    def test_isolated_storage_restore_rejects_tampered_bytes(self):
+        self.file.write_bytes(b"corrupted")
+        self.assertNotEqual(self.run_storage_restore().returncode,0)
+        self.assertFalse((self.root/"restored").exists())
+
+    def test_isolated_storage_restore_rejects_manifest_traversal(self):
+        self.write_manifest("../outside")
+        self.assertNotEqual(self.run_storage_restore().returncode,0)
+        self.assertFalse((self.root/"restored").exists())
+
+    def test_isolated_storage_restore_rejects_extra_objects(self):
+        (self.root/"storage"/"bucket"/"extra").write_bytes(b"extra")
+        self.assertNotEqual(self.run_storage_restore().returncode,0)
+        self.assertFalse((self.root/"restored").exists())
 
     def test_valid_bundle_passes(self):
         self.assertEqual(self.run_check().returncode, 0)
