@@ -2,7 +2,9 @@
 """Offline fail-closed validation before privileged backup connections. Logs no secrets."""
 import os
 import re
-from urllib.parse import parse_qs, urlsplit
+import sys
+from pathlib import Path
+from urllib.parse import parse_qs, unquote, urlsplit
 
 PROJECT = "ephptepeuespnxtzdqby"
 AGE_RECIPIENT = re.compile(r"age1[023456789acdefghjklmnpqrstuvwxyz]{58}\Z")
@@ -52,10 +54,66 @@ def validate(settings):
         raise ValueError("Unapproved database connection timeout")
     return True
 
+
+def libpq_environment(settings):
+    """Keep URI options from overriding read-only settings on any dump connection.
+
+    Return an explicit Docker/libpq environment, never a rewritten secret URL.
+    PGDATABASE is fixed so libpq cannot expand it as a second connection string.
+    """
+    validate(settings)
+    url = urlsplit(settings["PROD_DB_URL"])
+    query = parse_qs(url.query, keep_blank_values=True, strict_parsing=True)
+    user = unquote(url.username)
+    expected_user = "supabase_read_only_user"
+    if url.hostname != f"db.{PROJECT}.supabase.co":
+        expected_user += "." + PROJECT
+    if user != expected_user or unquote(url.path) != "/postgres":
+        raise ValueError("Backup requires the approved read-only role and database")
+    options = "-c default_transaction_read_only=on"
+    if "options" in query:
+        options = "-c jit=true " + options
+    result = {
+        "PGHOST": url.hostname,
+        "PGPORT": str(url.port),
+        "PGUSER": user,
+        "PGPASSWORD": unquote(url.password),
+        "PGDATABASE": "postgres",
+        "PGSSLMODE": query["sslmode"][0],
+        "PGCONNECT_TIMEOUT": query.get("connect_timeout", ["15"])[0],
+        "PGOPTIONS": options,
+    }
+    # Docker env files have no quoting/escaping: reject control characters before
+    # creating the file, rather than allowing a password to inject another key.
+    if any(not value or any(ord(c) < 32 or ord(c) == 127 for c in value)
+           for value in result.values()):
+        raise ValueError("Unsafe libpq environment value")
+    return result
+
+
+def write_libpq_environment(settings, destination):
+    values = libpq_environment(settings)
+    path = Path(destination)
+    if path.parent.stat().st_mode & 0o077:
+        raise ValueError("Connection file requires a private parent directory")
+    # Never overwrite an existing credential file or follow a destination symlink.
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW
+    fd = os.open(path, flags, 0o600)
+    with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as handle:
+        for key, value in values.items():
+            handle.write(f"{key}={value}\n")
+
+
 if __name__ == "__main__":
     try:
-        validate(os.environ)
+        if len(sys.argv) == 3 and sys.argv[1] == "--write-libpq-env":
+            write_libpq_environment(os.environ, sys.argv[2])
+        elif len(sys.argv) == 1:
+            validate(os.environ)
+        else:
+            raise ValueError("Unsupported preflight invocation")
         print("PASS: backup preflight configuration and origin validation (offline)")
     except Exception as exc:
         print("FAIL: backup preflight:", type(exc).__name__)
         raise SystemExit(2)
+
