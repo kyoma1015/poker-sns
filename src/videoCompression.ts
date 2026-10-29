@@ -21,15 +21,16 @@ export async function compressOversizedVideo(file: File): Promise<File> {
   let recorder: MediaRecorder | undefined
   try {
     await new Promise<void>((resolve, reject) => {
-      video.onloadeddata = () => resolve()
-      video.onerror = () => reject(new Error('動画を読み込めませんでした。'))
+      const timeout = window.setTimeout(() => reject(new Error('動画の読み込みが時間内に完了しませんでした。')), 15000)
+      video.onloadeddata = () => { clearTimeout(timeout); resolve() }
+      video.onerror = () => { clearTimeout(timeout); reject(new Error('動画を読み込めませんでした。')) }
       video.load()
     })
     if (!capture.captureStream) throw new Error('この端末は動画の自動圧縮に対応していません。20MB以内の動画を選択してください。')
     stream = capture.captureStream()
     if (!stream.getVideoTracks().length) throw new Error('動画の映像トラックを取得できませんでした。')
     // Capturing muted video can discard audio. Never silently strip audio.
-    if (file.type !== 'video/webm' && !stream.getAudioTracks().length) {
+    if (!stream.getAudioTracks().length) {
       throw new Error('音声を保持した自動圧縮を確認できません。20MB以内に変換してから選択してください。')
     }
     const chunks: BlobPart[] = []
