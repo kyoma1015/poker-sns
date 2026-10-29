@@ -1,0 +1,128 @@
+{
+  "version": "first-release-v1",
+  "source_head": "3af030b458b95d8d806c02184d7bd88c6e77f46f",
+  "initial_release_enabled": false,
+  "legacy_ledger": {
+    "path": "docs/progress/ABD_PROGRESS.json",
+    "git_blob": "db2b30565c4fba8a67ca573819da7b772bf15efc",
+    "product_rows": 32,
+    "immutable": true
+  },
+  "candidate_scope": [
+    "認証",
+    "タイムライン・通常投稿",
+    "画像投稿",
+    "コメント・返信",
+    "いいね",
+    "フォロー",
+    "検索",
+    "プロフィール",
+    "通知",
+    "DM"
+  ],
+  "deferred": [
+    {
+      "id": "tda",
+      "reason": "350問・正答根拠未証明。クイズと条文検索は受領資料レビューまで延期"
+    },
+    {
+      "id": "diagnosis",
+      "reason": "classifier・意味妥当性未証明。診断・共有・プロフィール内表示も確認が必要"
+    },
+    {
+      "id": "video",
+      "reason": "別担当PR123・未統合"
+    },
+    {
+      "id": "advanced",
+      "reason": "高度分析・ツール・実績・カード等は初回必須から分離。PR2を統合しない"
+    },
+    {
+      "id": "poll",
+      "reason": "既存NO-GO維持。投稿内導線/APIを遮断できるまでnested gate未合格"
+    }
+  ],
+  "gates": [
+    {
+      "id": "scope",
+      "status": "PASS",
+      "evidence": [
+        "docs/progress/FIRST_RELEASE_V1.md; initial-release scope requested by owner"
+      ],
+      "condition": "候補・延期と非公開理由を明文化"
+    },
+    {
+      "id": "legacy_ledger_preserved",
+      "status": "BLOCKED",
+      "evidence": [],
+      "condition": "32項目台帳を元blobと照合"
+    },
+    {
+      "id": "deferred_ui",
+      "status": "BLOCKED",
+      "evidence": [],
+      "condition": "直接URL/クエリ/モバイル/遷移で延期画面をmountしない"
+    },
+    {
+      "id": "regression_build",
+      "status": "BLOCKED",
+      "evidence": [],
+      "condition": "元381回帰・通常build/lint・候補buildがHEAD一致PASS"
+    },
+    {
+      "id": "auth_sessions",
+      "status": "BLOCKED",
+      "evidence": [],
+      "condition": "実認証・失効・logout・アカウント切替を隔離環境で検証"
+    },
+    {
+      "id": "owner_rls",
+      "status": "BLOCKED",
+      "evidence": [],
+      "condition": "SNS公開対象の正式schema/grants/全policy/RPC/所有者認可を実証"
+    },
+    {
+      "id": "storage",
+      "status": "BLOCKED",
+      "evidence": [],
+      "condition": "対象bucketの公開設定・所有者パス・upload/delete/URL境界を実証"
+    },
+    {
+      "id": "account_isolation",
+      "status": "BLOCKED",
+      "evidence": [],
+      "condition": "PlayerSearch未回収WIPを回収し遅延応答と情報混入を検証"
+    },
+    {
+      "id": "nested_and_api_deferral",
+      "status": "BLOCKED",
+      "evidence": [],
+      "condition": "投稿/プロフィール埋込・通知・RPC・share/OG経由でも延期機能に到達不可。PR2の関係を解決"
+    },
+    {
+      "id": "privacy",
+      "status": "BLOCKED",
+      "evidence": [],
+      "condition": "私有データ・ブロック・キャッシュ失効・匿名性等の公開対象契約を実証"
+    },
+    {
+      "id": "mobile_e2e",
+      "status": "BLOCKED",
+      "evidence": [],
+      "condition": "実認証を含む初回SNS利用経路をスマホ相当で確認"
+    },
+    {
+      "id": "recovery_release_review",
+      "status": "BLOCKED",
+      "evidence": [],
+      "condition": "非破壊手順・rollback・適用コード/成果物・独立レビュー証拠を確定"
+    }
+  ],
+  "verdict": "NO-GO",
+  "notes": [
+    "候補スコープは公開承認ではない",
+    "通常App/buildは変更しない。初回用入口/成果物以外は公開しない運用確認が必要",
+    "クライアント遮断はDB/API認可の代替ではない",
+    "TDA/診断の根拠不足自体は、完全に隔離されたSNS初回公開を永続的に妨げるゲートにはしない"
+  ]
+}

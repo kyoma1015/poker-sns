@@ -910,6 +910,76 @@
       "path": "api/poker-id-image.ts",
       "sha": "5c68077bb69182dd8af21003293058ef385964fe",
       "reason": "reviewed public image endpoint authorization; fixed response validation only, real DB/Storage not proved"
+    },
+    {
+      "path": "src/firstReleasePolicy.ts",
+      "sha": "0d3240ff9268e2168a67e58e0ca6c352990859c7",
+      "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
+    },
+    {
+      "path": "src/first-release-entry.tsx",
+      "sha": "fa9c0a50e78fb3af407854fe6bd66abd36204b58",
+      "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
+    },
+    {
+      "path": "src/FirstReleaseApp.tsx",
+      "sha": "e9aa3c621ce9d82f6723d476f4a72d6adf4a0800",
+      "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
+    },
+    {
+      "path": "src/first-release-main.tsx",
+      "sha": "781cc258fec3a2c822afab2cd1cd27550cf69aad",
+      "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
+    },
+    {
+      "path": "first-release.html",
+      "sha": "1aba369ba27dda77267561c92aea639ad08645db",
+      "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
+    },
+    {
+      "path": "vite.first-release.config.ts",
+      "sha": "c4d35ab6e0546c73cc974d7245f63109d471c84a",
+      "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
+    },
+    {
+      "path": "docs/progress/FIRST_RELEASE_V1.json",
+      "sha": "8b9168b3213719264e6df4797812cf2e556b67ce",
+      "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
+    },
+    {
+      "path": "scripts/first-release-gate.mjs",
+      "sha": "8e144c1da157318a5d92b7ab11efe483a35f3ef8",
+      "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
+    },
+    {
+      "path": "scripts/build-first-release.mjs",
+      "sha": "aa298f2b112307d8846ec6f820dc81fb62e9eccb",
+      "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
+    },
+    {
+      "path": "tests/first-release/policy.test.mjs",
+      "sha": "c4ce5ad68bdd32273a792f6ebe67e1f17efc86b8",
+      "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
+    },
+    {
+      "path": "tests/browser/first-release-entry.tsx",
+      "sha": "8d978a428ef28c48ebb2e64ffe70cdf5014103ee",
+      "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
+    },
+    {
+      "path": "tests/first-release/browser.test.mjs",
+      "sha": "fad200b779ee9d8b8387189a388e4acefb528f8e",
+      "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
+    },
+    {
+      "path": "docs/progress/FIRST_RELEASE_V1.md",
+      "sha": "cc6bc92ab16e5a091ccb3bf5c627d97c0eaf9f82",
+      "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
+    },
+    {
+      "path": ".github/workflows/first-release.yml",
+      "sha": "d1a91698dd757240c662ccab51f78178dfc39c1b",
+      "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
     }
   ],
   "overrides": [

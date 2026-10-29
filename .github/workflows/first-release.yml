@@ -1,0 +1,45 @@
+name: First release candidate gates
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/firstReleasePolicy.ts'
+      - 'src/FirstReleaseApp.tsx'
+      - 'src/first-release-*'
+      - 'first-release.html'
+      - 'vite.first-release.config.ts'
+      - 'scripts/*first-release*'
+      - 'tests/first-release/**'
+      - 'tests/browser/first-release-entry.tsx'
+      - 'docs/progress/FIRST_RELEASE_V1.*'
+      - 'docs/qa/selected-abd-20261026/source-manifest.json'
+      - '.github/workflows/first-release.yml'
+permissions:
+  contents: read
+concurrency:
+  group: first-release-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci --cache "$RUNNER_TEMP/npm-first-release"
+      - name: Scope, frozen legacy ledger and fail-closed build gate
+        run: node tests/first-release/policy.test.mjs
+      - name: Mobile and desktop deferred route boundaries (isolated fixtures)
+        env:
+          CHROMIUM_PATH: /usr/bin/google-chrome
+        run: node tests/first-release/browser.test.mjs
+      - name: Candidate compile only, never publication
+        run: node node_modules/vite/bin/vite.js build --config vite.first-release.config.ts
+      - name: Report all unresolved release gates
+        if: always()
+        run: node scripts/first-release-gate.mjs
