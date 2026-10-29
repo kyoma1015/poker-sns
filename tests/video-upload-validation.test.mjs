@@ -26,7 +26,10 @@ test('staged storage is private, limited, and not readable by every authenticate
 })
 test('path validation is strict before deleting storage objects', () => {
   assert.match(source, /isOwnedVideoPath\(path, user\.id\)/)
-  assert.match(source, /path\.split\('\/'\)\[0\] === userId/)
+  assert.match(source, /const match = OWNED_VIDEO_PATH\.exec\(path\)/)
+  assert.match(source, /return match !== null && match\[1\] === userId/)
+  assert.match(source, /const VIDEO_UUID =/)
+  assert.match(source, /mp4\|webm\|mov/)
 })
 
 test('reload recovery retains immutable owner/path/content and reopens composer', () => {
