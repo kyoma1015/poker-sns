@@ -943,7 +943,7 @@
     },
     {
       "path": "docs/progress/FIRST_RELEASE_V1.json",
-      "sha": "4d687cb71221f96e27f70a12f62b132b291fc2db",
+      "sha": "8354d2a9c53830dc2192b3f704557142d4f0856e",
       "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
     },
     {
@@ -978,8 +978,13 @@
     },
     {
       "path": ".github/workflows/first-release.yml",
-      "sha": "d1a91698dd757240c662ccab51f78178dfc39c1b",
+      "sha": "d3298836c91838fa608314d3f363baaf150190c4",
       "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
+    },
+    {
+      "path": "tests/first-release/artifact.test.mjs",
+      "sha": "c7898cd917220aee8620b0a569321aaf944da5b5",
+      "reason": "fixed canonical first-release artifact acceptance; no legacy ledger or app changes"
     }
   ],
   "overrides": [

@@ -61,8 +61,10 @@
     },
     {
       "id": "deferred_ui",
-      "status": "BLOCKED",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "First release CI40834977048 atdda3ac8: same30 mobile/desktop route+navigation casesPASS, synthetic component fixtures only"
+      ],
       "condition": "初回専用入口の直接URL/クエリ/モバイル/遷移で延期画面をmountしない（通常AppやAPI遮断は別条件）"
     },
     {
@@ -135,6 +137,13 @@
       "browser_pass": 0,
       "browser_fail": 30
     },
-    "after": "PENDING; final candidate entry must pass same unchanged30 cases"
-  }
+    "after": {
+      "commit": "dda3ac841253cc1e5b9561e10c9e0d48c9a30e46",
+      "ci": 40834977048,
+      "unit_pass": 5,
+      "browser_pass": 30,
+      "browser_fail": 0
+    }
+  },
+  "artifact_acceptance": "PENDING: root index.html and emitted asset paths must be measured; a successful Vite compile alone is insufficient"
 }

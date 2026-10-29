@@ -40,6 +40,8 @@ jobs:
         run: node tests/first-release/browser.test.mjs
       - name: Candidate compile only, never publication
         run: node node_modules/vite/bin/vite.js build --config vite.first-release.config.ts
+      - name: Verify canonical candidate artifact
+        run: node tests/first-release/artifact.test.mjs
       - name: Report all unresolved release gates
         if: always()
         run: node scripts/first-release-gate.mjs
