@@ -2,7 +2,7 @@ import { supabase } from './supabase'
 import { assertCurrentVideoCloudTestClient } from './videoCloudTestGuard'
 import { uploadPostVideo, validateVideo } from './videoUpload'
 import { finalizeUploadedVideo, loadAuthorizedVideo, recoverCloudVideo } from './videoApi'
-import { hasVideoTransferJournal,readVideoTransferHint,finishRecoveredVideoTransfer } from './videoTransferJournal'
+import { hasVideoTransferJournal,readVideoTransferHint,finishRecoveredVideoTransfer,discardProvenExpiredVideoTransfer } from './videoTransferJournal'
 assertCurrentVideoCloudTestClient()
 const el = (id: string) => document.getElementById(id)!
 const status = (message: string) => { el('status').textContent = message }
@@ -41,6 +41,29 @@ el('post').parentElement?.append(recoverButton)
 const updateRecovery=async()=>{
  const {data:{user}}=await supabase.auth.getUser()
  recoverButton.hidden=!user||!hasVideoTransferJournal(user.id)
+ expiredButton.hidden=recoverButton.hidden
+}
+// No automatic reset: only an authenticated, server-verified expired/unpublished
+// reservation may release the stale local journal, and only on a user click.
+const expiredButton=document.createElement('button')
+expiredButton.textContent='期限切れの送信記録を安全に解除'
+expiredButton.hidden=true
+recoverButton.parentElement?.append(expiredButton)
+expiredButton.onclick=async()=>{
+ expiredButton.disabled=true
+ try {
+  const {data:{user},error}=await supabase.auth.getUser()
+  if(error||!user)throw Error('ログインしてください')
+  const hint=readVideoTransferHint(user.id)
+  status('期限切れ・未投稿をサーバーで確認中…')
+  const {data, error:proofError}=await supabase.rpc('video_cloud_expired_unpublished',{p_path:hint.path})
+  if(proofError||data!==true)throw Error('未投稿かつ期限切れであることを証明できません。記録を保持します。')
+  const {data:{user:again}}=await supabase.auth.getUser()
+  if(again?.id!==user.id)throw Error('ログイン状態が変わりました。記録を保持します。')
+  discardProvenExpiredVideoTransfer(user.id,hint.path,hint.raw)
+  status('期限切れ・未投稿を確認し、古い送信記録を解除しました。新しい動画を選んで投稿できます。')
+ }catch(e){status('安全な解除に失敗: '+String(e))}
+ finally{expiredButton.disabled=false;await updateRecovery()}
 }
 recoverButton.onclick=async()=>{
  recoverButton.disabled=true
