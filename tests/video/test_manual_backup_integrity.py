@@ -100,6 +100,18 @@ class BackupIntegrityTests(unittest.TestCase):
         self.file.unlink()
         self.assertNotEqual(self.run_check().returncode,0)
 
+    def test_missing_bucket_settings_fails(self):
+        data=json.loads(self.manifest.read_text())
+        data.pop("bucket_records")
+        self.manifest.write_text(json.dumps(data))
+        self.assertNotEqual(self.run_check().returncode,0)
+
+    def test_unknown_bucket_reference_fails(self):
+        data=json.loads(self.manifest.read_text())
+        data["bucket_records"][0]["id"]="wrong-bucket"
+        self.manifest.write_text(json.dumps(data))
+        self.assertNotEqual(self.run_check().returncode,0)
+
     def test_extra_file_fails(self):
         (self.root/"storage"/"bucket"/"other").write_bytes(b"extra")
         self.assertNotEqual(self.run_check().returncode,0)
@@ -126,6 +138,16 @@ class StorageRevisionTests(unittest.TestCase):
     def test_list_order_does_not_matter(self):
         other = ("photos", "other.jpg", {"id": "obj-3", "updated_at": "t1"})
         self.assertTrue(storage_backup.inventory_unchanged(self.original + [other], [other] + self.original))
+
+    def test_bucket_policy_change_fails(self):
+        before=[{"id":"post-videos","public":False,"file_size_limit":20971520}]
+        after=[{"id":"post-videos","public":True,"file_size_limit":20971520}]
+        self.assertFalse(storage_backup.buckets_unchanged(before,after))
+
+    def test_bucket_file_limit_change_fails(self):
+        before=[{"id":"post-videos","public":False,"file_size_limit":20971520}]
+        after=[{"id":"post-videos","public":False,"file_size_limit":100}]
+        self.assertFalse(storage_backup.buckets_unchanged(before,after))
 
     def test_added_or_deleted_path_fails(self):
         self.assertFalse(storage_backup.inventory_unchanged(self.original, []))
