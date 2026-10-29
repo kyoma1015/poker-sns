@@ -2,7 +2,7 @@
 export const MAX_PLAYBACK_BYTES = 20 * 1024 * 1024
 
 export async function readVideoResponse(response: Response): Promise<Blob> {
-  if (!response.ok || !response.body) {
+  if (response.status !== 200 || !response.body) {
     await response.body?.cancel().catch(() => undefined)
     throw new Error('動画を読み込めませんでした。')
   }
