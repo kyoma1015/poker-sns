@@ -34,11 +34,21 @@ def buckets_unchanged(before, after):
     return bucket_snapshot(before) == bucket_snapshot(after)
 
 
+def auth_headers(token):
+    """Modern sb_secret keys belong only in apikey; legacy JWT keys may be Bearer."""
+    if token.startswith("sb_secret_"):
+        return {"apikey": token}
+    if token.count(".") == 2 and not token.startswith("sb_"):
+        return {"apikey": token, "Authorization": "Bearer " + token}
+    raise RuntimeError("Unsupported Storage credential type")
+
+
 def main():
     base = required("PROD_SUPABASE_URL").rstrip("/")
     if base != "https://ephptepeuespnxtzdqby.supabase.co":
         raise RuntimeError("Incorrect production project API origin")
     token = required("PROD_STORAGE_READ_KEY")
+    storage_headers = auth_headers(token)
     output = Path(required("BACKUP_STORAGE_DIR")).resolve()
     output.mkdir(mode=0o700, parents=True, exist_ok=True)
     os.chmod(output, 0o700)
@@ -49,7 +59,7 @@ def main():
             return super().redirect_request(req, fp, code, msg, headers, newurl)
     opener = urllib.request.build_opener(NoExternalRedirect())
     def request(path, data=None):
-        headers = {"apikey":token, "Authorization":"Bearer " + token}
+        headers = storage_headers.copy()
         if data is not None: headers["Content-Type"] = "application/json"
         req = urllib.request.Request(base + "/storage/v1/" + path, data=data, headers=headers)
         return opener.open(req, timeout=40)
