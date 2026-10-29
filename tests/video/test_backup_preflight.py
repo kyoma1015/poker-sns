@@ -38,6 +38,24 @@ class BackupPreflightTests(unittest.TestCase):
         base = self.settings["PROD_DB_URL"]
         self.check_rejected("PROD_DB_URL", base.replace(":5432/", ":6543/"))
         self.check_rejected("PROD_DB_URL", base + "&hostaddr=127.0.0.1")
+    def test_jit_pooler_option_is_accepted(self):
+        self.settings["PROD_DB_URL"] += "&options=-c%20jit%3Dtrue"
+        self.assertTrue(module.validate(self.settings))
+
+    def test_arbitrary_libpq_options_are_rejected(self):
+        base=self.settings["PROD_DB_URL"]
+        for suffix in ("&options=-c%20search_path%3Dpublic",
+                       "&target_session_attrs=read-write",
+                       "&sslmode=disable",
+                       "&host=evil.example",
+                       "&options=-c%20jit%3Dtrue%20-c%20role%3Dpostgres"):
+            self.check_rejected("PROD_DB_URL",base+suffix)
+
+    def test_jit_flag_on_direct_connection_is_rejected(self):
+        self.settings["PROD_DB_URL"]=f"postgresql://postgres:synthetic@db.{REF}.supabase.co:5432/postgres?sslmode=require&options=-c%20jit%3Dtrue"
+        with self.assertRaises(ValueError):
+            module.validate(self.settings)
+
     def test_required_settings_fail_closed(self):
         for key in tuple(self.settings):
             settings = dict(self.settings)
