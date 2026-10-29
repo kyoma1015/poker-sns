@@ -35,14 +35,15 @@ class ExactControls(unittest.TestCase):
    solver=self.native.Solver(Toy(),.6,seed,True,True,.1);solver.run_iteration()
    row=solver.row('one-decision-exact-fold');chosen=next(iter(row['samples']));samples.add(chosen)
    expected=[-.5,.5] if chosen==0 else [-1.5,1.5]
-   self.assertEqual(row['regret'],expected)
+   # Preserved G12 initializes every cumulative regret to1e-6.
+   self.assertEqual(row['regret'],[1e-6+delta for delta in expected])
   self.assertEqual(samples,{0,1})
   # Enumeration of both equiprobable draws: same expected regret as ordinary
   # outcome sampling, while its fold estimator would have values(-2,0).
   self.assertEqual([(-.5-1.5)/2,(.5+1.5)/2],[-1,1])
  def test_exact_control_disabled_restores_original_sampling_update(self):
   solver=self.native.Solver(Toy(),.6,701,False,True,.1);solver.run_iteration()
-  self.assertEqual(solver.row('one-decision-exact-fold')['regret'],[-1,1])
+  self.assertEqual(solver.row('one-decision-exact-fold')['regret'],[1e-6-1,1e-6+1])
  def test_public_history_fold_baseline_matches_actual_full_native_terminal(self):
   game=NativeGame([100,100]);locked=LockedOpponentGame(self.native,game,0,self.base(),exact_fold_baseline=True)
   for actions,value in (([],-1),([7,20],-5),

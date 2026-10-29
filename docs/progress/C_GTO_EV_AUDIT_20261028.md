@@ -89,3 +89,12 @@ Exact-fold oracle cases also cover real postflop decisions: after limp/check,
 flop BB bets10chips and SB folds, exact SB net=-2chips; after flop BBcheck,
 SBbet6/BBraise14, SBfold exact net=-8chips. Previous-street investment must
 remain charged once; no postflop showdown substitution or future-card peeking.
+
+Actual final-head attempt5a6aa07: native40834229498 FAILURE in2numeric-oracle
+assertions, after exact-control module compiled and native HU/pre-postflop
+fold cases + checkpoint/RNG resume PASS. Cause: test expected cumulative regrets
+from zero, while pinned original source initializes them (and averages) to1e-6.
+Observed[-0.499999,0.500001]/[-0.999999,1.000001] match expected increments
+plus this preserved prior. Fix oracle to include exact1e-6 prior, retaining
+bit-for-bit equality assertions; do not widen tolerances or alter engine.
+Rerun all final-HEAD CI including anchored actual HU evaluation after correction.
