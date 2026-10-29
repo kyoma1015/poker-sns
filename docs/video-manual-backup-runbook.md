@@ -7,7 +7,7 @@ Scope: stand-alone change, no PR #123 HEAD mutation, no production SQL, merge or
 - Manual `workflow_dispatch` only. It cannot start on PR push.
 - Protected GitHub environment `production-backup` intended to require a human reviewer.
 - Read-only PostgreSQL 17 logical custom-format DB dump and Supabase Storage downloads for all four buckets / seven objects.
-- Per-object SHA-256 manifest, DB SHA-256, inventory double-listing to detect path changes (does NOT guarantee an atomic data snapshot).
+- Per-object SHA-256 manifest, DB SHA-256, and inventory double-listing to compare paths, object IDs, modification timestamps and returned metadata (does NOT guarantee an atomic data snapshot).
 - Encrypt with an **age public recipient** before offsite transfer. No raw dump or object content is uploaded as Actions artifacts.
 - Upload ciphertext only to a 1-day GitHub Actions artifact for manual download. This is transient transport, never a permanent backup.
 
@@ -31,7 +31,7 @@ Environment variables:
 
 - No backup has run just because this workflow exists.
 - DB logical dump is not a complete Supabase platform recovery point: secrets, project configuration and compatible restore conditions need separate checks.
-- Storage files are backed up, but restored Storage API behavior and authorization are not proven by SHA alone.
+- Storage files are backed up, but restored Storage API behavior and authorization are not proven by SHA alone. Double-listing now detects an in-place update when Supabase exposes changed revision metadata; same-revision overwrite races and the lack of a common DB/Storage snapshot remain unproven.
 - Concurrent writes could cause inconsistency between DB and Storage. Before certifying, compare both against a verified quiescent snapshot or repeat with controlled maintenance window.
 - This workflow does **not** perform an isolated restore. The encrypted archive must be retrieved, decrypted in a safe isolated environment, the DB restored to a compatible clone, all object bytes restored and compared by hash, and auth/RLS validated. Store the restore PASS log outside the repository; do not include credentials or customer data.
 - Failed/missing configuration, mismatched inventory, incomplete export, failed upload or failed restore = NO-GO.
@@ -49,7 +49,7 @@ Environment variables:
 
 ## Isolated restoration smoke test
 
-After downloading the encrypted S3 backup into a trusted private machine, decrypt it locally with the offline age identity. Keep the resulting directory private, outside any repo. The decrypted directory must contain `database.dump`, `database.sha256`, and `storage/storage-manifest.json`. Run:
+After downloading the encrypted Supabase backup into a trusted private machine, decrypt it locally with the offline age identity. Keep the resulting directory private, outside any repo. The decrypted directory must contain `database.dump`, `database.sha256`, and `storage/storage-manifest.json`. Run:
 
 ```bash
 python3 scripts/video_verify_backup_bundle.py "/private/path/to/decrypted"
@@ -100,3 +100,7 @@ For the shared session pooler on IPv4 runners, the JIT connection URL additional
 **Important**: `PROD_DB_URL` on this GitHub workflow is a protected environment secret, but a short-lived JIT token is still sensitive and may expire before the backup runs. Confirm its exact expiry and role permissions; do not create a long-lived personal token solely to avoid a reset. JIT is only for PostgreSQL; it does **not** supply `PROD_STORAGE_READ_KEY`. The age private identity and durable destination remain distinct unresolved blockers.
 
 Never run the workflow before all export/restore safety conditions are verified, and never rotate/reset the existing database password without a separate explicit approval.
+
+## 2026-10-29 source-only follow-up
+
+Storage object inventory now compares object ID, update timestamp and returned metadata in addition to path, before and after object byte export. This narrows the same-name overwrite blind spot but **does not** provide a transactional or point-in-time-consistent cross-service backup. No production data was read or altered for this code-only change; the revision has not yet passed an independent run of synthetic/CI testing. Full role/grant restoration, Auth and Storage API end-to-end recovery remain blockers. A short-lived JIT token cannot be claimed ready until JIT entitlement, security policy and expiry are confirmed in the authenticated dashboard.
