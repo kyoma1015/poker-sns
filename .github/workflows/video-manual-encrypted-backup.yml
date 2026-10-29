@@ -22,18 +22,13 @@ jobs:
           PROD_SUPABASE_URL: ${{ vars.PROD_SUPABASE_URL }}
           PROD_STORAGE_READ_KEY: ${{ secrets.PROD_STORAGE_READ_KEY }}
           BACKUP_AGE_RECIPIENT: ${{ vars.BACKUP_AGE_RECIPIENT }}
-          BACKUP_S3_URI: ${{ vars.BACKUP_S3_URI }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.BACKUP_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.BACKUP_AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ vars.BACKUP_AWS_REGION }}
         run: |
           set -euo pipefail
           umask 077
-          for key in PROD_DB_URL PROD_SUPABASE_URL PROD_STORAGE_READ_KEY BACKUP_AGE_RECIPIENT BACKUP_S3_URI AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_DEFAULT_REGION; do
+          for key in PROD_DB_URL PROD_SUPABASE_URL PROD_STORAGE_READ_KEY BACKUP_AGE_RECIPIENT; do
             if [[ -z "${!key:-}" ]]; then echo "::error::Missing required configuration: $key"; exit 2; fi
           done
           [[ "$PROD_DB_URL" == *sslmode=require* || "$PROD_DB_URL" == *sslmode=verify-full* ]] || { echo "::error::DB URL must explicitly enable TLS"; exit 2; }
-          [[ "$BACKUP_S3_URI" == s3://* ]] || { echo "::error::BACKUP_S3_URI must be an existing private S3 destination"; exit 2; }
           # Prevent accidental use of an unapproved public destination or customer-controlled URL.
           python3 - <<'PY'
           import os, re
@@ -42,8 +37,8 @@ jobs:
           [[ "$PROD_SUPABASE_URL" == "https://ephptepeuespnxtzdqby.supabase.co" ]] || { echo "::error::Wrong Supabase project URL"; exit 2; }
           sudo apt-get update -qq >/dev/null
           sudo apt-get install -y -qq age >/dev/null
-          command -v aws >/dev/null || { echo "::error::AWS CLI missing"; exit 2; }
-          tmp="$(mktemp -d)"
+          tmp="$RUNNER_TEMP/poker-backup-$GITHUB_RUN_ID"
+          mkdir -m 700 "$tmp"
           chmod 700 "$tmp"
           trap 'rm -rf -- "$tmp"' EXIT
           chmod 700 "$tmp"
@@ -56,12 +51,20 @@ jobs:
           # Never upload the plaintext bundle or any plaintext Actions artifact.
           tar -C "$tmp" -cf - database.dump database.sha256 storage | age -r "$BACKUP_AGE_RECIPIENT" -o "$tmp/encrypted-backup.tar.age"
           test -s "$tmp/encrypted-backup.tar.age"
-          bucket="${BACKUP_S3_URI#s3://}"
-          bucket="${bucket%%/*}"
-          [[ -n "$bucket" ]] || { echo "::error::Missing bucket"; exit 2; }
-          # Fail closed if public access block cannot be verified; do not create resources.
-          aws s3api get-public-access-block --bucket "$bucket" --query "PublicAccessBlockConfiguration.[BlockPublicAcls,IgnorePublicAcls,BlockPublicPolicy,RestrictPublicBuckets]" --output text | grep -qx "True[[:space:]]*True[[:space:]]*True[[:space:]]*True" || { echo "::error::Private destination not proven"; exit 2; }
-          target="${BACKUP_S3_URI%/}/poker-id-${GITHUB_RUN_ID}-${GITHUB_SHA}.tar.age"
-          aws s3 cp --only-show-errors "$tmp/encrypted-backup.tar.age" "$target"
-          echo "Encrypted DB and Storage archive uploaded to configured private destination."
-          echo "NOT RELEASE READY: isolated decryption, full DB restore and Storage byte-restore/hash verification remain mandatory."
+          # Ciphertext only: GitHub artifact is a temporary transfer, NOT durable backup.
+          mkdir -m 700 -p "$RUNNER_TEMP/poker-encrypted-artifact"
+          cp "$tmp/encrypted-backup.tar.age" "$RUNNER_TEMP/poker-encrypted-artifact/backup.tar.age"
+          echo "Encrypted archive ready for temporary Actions artifact transport."
+          echo "NOT RELEASE READY: archive must be downloaded to independent private storage and fully restored."
+      - name: Temporarily transfer encrypted archive (never plaintext)
+        uses: actions/upload-artifact@v4
+        with:
+          name: encrypted-video-backup-${{ github.run_id }}
+          path: ${{ runner.temp }}/poker-encrypted-artifact/backup.tar.age
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 1
+      - name: Delete encrypted local transfer copy
+        if: always()
+        shell: bash
+        run: rm -rf -- "$RUNNER_TEMP/poker-encrypted-artifact"
