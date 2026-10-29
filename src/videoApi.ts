@@ -87,3 +87,16 @@ export async function loadAuthorizedVideo(postId: string): Promise<string> {
   const blob = await readVideoResponse(response)
   return URL.createObjectURL(blob)
 }
+
+
+/** Hide the post through owner-scoped RPC; never delete Storage bytes. */
+export async function hideVideoPost(postId: string): Promise<void> {
+  if (!VIDEO_SERVER_ENABLED || !POST_UUID.test(postId)) throw new Error('動画の非表示を実行できません。')
+  const response = await fetch(VIDEO_FINALIZE_ROUTE, {
+    method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: await authHeader() },
+    redirect: 'error', cache: 'no-store', signal: AbortSignal.timeout(30000),
+    body: JSON.stringify({ action: 'hide', post_id: postId }),
+  })
+  const result: unknown = await response.json().catch(() => null)
+  if (!response.ok || !result || typeof result !== 'object' || !('hidden' in result) || result.hidden !== true) throw new Error('動画を非表示にできませんでした。')
+}

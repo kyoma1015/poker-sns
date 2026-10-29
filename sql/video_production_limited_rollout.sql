@@ -342,6 +342,8 @@ begin
  perform 1 from storage.objects where bucket_id='post-videos' and name=p_path
   and id=p_generation and owner_id=p_owner::text for update;
  if not found then raise exception 'Storage generation mismatch'; end if;
+ if p_expires_at <= extract(epoch from clock_timestamp())::bigint or not public.video_rollout_allowed() then raise exception 'expired or stopped video publication'; end if;
+ if not exists(select 1 from public.video_reserved_object_keys where object_path=p_path and owner_id=p_owner and created_at>clock_timestamp()-interval '1 hour') then raise exception 'expired video reservation'; end if;
  -- Single-use nonce is consumed in the SAME transaction as post publication.
  insert into video_private.consumed_nonces(nonce,owner_id,object_path)
  values(decode(p_nonce,'hex'),p_owner,p_path);

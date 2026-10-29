@@ -54,5 +54,43 @@ set request.jwt.claim.sub='11111111-1111-4111-8111-111111111111';
 do $$begin if public.video_rollout_allowed() then raise exception 'stop failed'; end if; end$$;
 select count(*)=1 as normal_post_retained from public.posts;
 SQL
+docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 <<'SQL'
+do $test$
+declare
+ owner uuid := '11111111-1111-4111-8111-111111111111';
+ path text := '11111111-1111-4111-8111-111111111111/44444444-4444-4444-8444-444444444444.mp4';
+ generation uuid := gen_random_uuid(); secret bytea := extensions.gen_random_bytes(32);
+ nonce bytea := extensions.gen_random_bytes(16); hash text := repeat('a',64);
+ expiry bigint := extract(epoch from clock_timestamp())::bigint+120;
+ payload bytea; signature text; post uuid; key_id smallint := 1;
+begin
+ update video_private.rollout_settings set enabled=true;
+ insert into video_private.attestation_keys values(key_id,secret,true);
+ insert into public.video_reserved_object_keys(bucket_id,object_path,owner_id) values('post-videos',path,owner);
+ insert into storage.objects(id,bucket_id,name,owner_id) values(generation,'post-videos',path,owner::text);
+ payload := decode('01','hex')||decode(replace(owner::text,'-',''),'hex')||
+ set_byte(decode('00','hex'),0,octet_length(convert_to(path,'UTF8')))||convert_to(path,'UTF8')||
+ decode(replace(generation::text,'-',''),'hex')||decode(hash,'hex')||pg_catalog.int4send(1000)||
+ extensions.digest(convert_to('signed fixture','UTF8'),'sha256')||pg_catalog.int8send(expiry)||nonce;
+ signature := encode(extensions.hmac(payload,secret,'sha256'),'hex');
+ perform set_config('request.jwt.claim.sub',owner::text,true);
+ execute 'set local role authenticated';
+ post := public.video_publish_attested_v1(owner,path,generation,hash,1000,'signed fixture',expiry,encode(nonce,'hex'),signature,key_id);
+ begin
+  perform public.video_publish_attested_v1(owner,path,generation,hash,1000,'signed fixture',expiry,encode(nonce,'hex'),signature,key_id);
+  raise exception 'nonce reused';
+ exception when unique_violation then null; end;
+ perform set_config('request.jwt.claim.sub','33333333-3333-4333-8333-333333333333',true);
+ begin perform public.video_hide_own(post); raise exception 'other owner hid post';
+ exception when raise_exception then if sqlerrm<>'video user denied' then raise; end if; end;
+ perform set_config('request.jwt.claim.sub',owner::text,true);
+ if not public.video_hide_own(post) or not public.video_hide_own(post) then raise exception 'hide failed'; end if;
+ if exists(select 1 from public.posts where id=post) then raise exception 'hidden post visible'; end if;
+ if exists(select 1 from storage.objects where name=path) then raise exception 'hidden bytes visible'; end if;
+ execute 'reset role';
+ if (select count(*) from public.posts where video_path=path)<>1 then raise exception 'post not retained exactly once'; end if;
+ if (select count(*) from storage.objects where name=path)<>1 then raise exception 'Storage object deleted'; end if;
+end $test$;
+SQL
 echo 'PASS: additive migration; default off; DB allowlist; direct INSERT rejected; reservation; other owner denied; emergency stop; normal post retained'
 echo 'LIMITATION: synthetic JWT claims in PG17, not real Auth/HTTP/Chromium publication E2E'

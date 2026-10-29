@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { validateVideo, uploadPostVideo, MAX_VIDEO_BYTES } from './videoUpload'
 import { compressOversizedVideo } from './videoCompression'
-import { finalizeUploadedVideo, VIDEO_SERVER_ENABLED } from './videoApi'
+import { hideVideoPost, finalizeUploadedVideo, VIDEO_SERVER_ENABLED } from './videoApi'
 import PostVideo from './PostVideo'
 
 import { supabase } from './supabase'
@@ -1497,7 +1497,13 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       // A published video must not be deleted until a generation-fenced
       // cleanup transaction is proven. The legacy remove() has no ABA fence.
       if (target.video_path) {
-        setMessage('動画付き投稿の削除は安全な回収処理の検証待ちです。')
+        try {
+          await hideVideoPost(postId)
+          setDeleteTargetId(null)
+          setPostMenuId(null)
+          setMessage('動画投稿を非表示にしました。動画ファイルは削除していません。')
+          await loadPosts()
+        } catch { setMessage('動画投稿を非表示にできませんでした。') }
         return
       }
       const { error } = await supabase
