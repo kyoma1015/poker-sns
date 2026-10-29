@@ -45,7 +45,9 @@ class ExactControls(unittest.TestCase):
   self.assertEqual(solver.row('one-decision-exact-fold')['regret'],[-1,1])
  def test_public_history_fold_baseline_matches_actual_full_native_terminal(self):
   game=NativeGame([100,100]);locked=LockedOpponentGame(self.native,game,0,self.base(),exact_fold_baseline=True)
-  for actions,value in (([],-1),([7,20],-5)):
+  for actions,value in (([],-1),([7,20],-5),
+       ([1,1,8,17,26,12],-2),
+       ([1,1,8,17,26,1,8,16],-8)):
    node=locked.new_initial_state()
    for action in [48,49,0,1]+actions:node.apply_action(action)
    self.assertEqual(node.exact_action_values(),{0:value})

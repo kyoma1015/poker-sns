@@ -84,3 +84,8 @@ original updates, native HU fold versus declared public-history value, checkpoin
 continuation/RNG; then run actual full HU comparison and full replay. Pure53PASS.
 Formal0/12/ordinaryUI0 unchanged; future accuracy needs a valid full-game upper
 bound, not a feasible gain lower bound or these partial frequency counts.
+
+Exact-fold oracle cases also cover real postflop decisions: after limp/check,
+flop BB bets10chips and SB folds, exact SB net=-2chips; after flop BBcheck,
+SBbet6/BBraise14, SBfold exact net=-8chips. Previous-street investment must
+remain charged once; no postflop showdown substitution or future-card peeking.
