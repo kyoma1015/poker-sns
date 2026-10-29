@@ -17,17 +17,23 @@ def required(name):
 
 def main():
     base = required("PROD_SUPABASE_URL").rstrip("/")
-    if not base.startswith("https://") or urllib.parse.urlsplit(base).path:
-        raise RuntimeError("Require an HTTPS project API origin")
+    if base != "https://ephptepeuespnxtzdqby.supabase.co":
+        raise RuntimeError("Incorrect production project API origin")
     token = required("PROD_STORAGE_READ_KEY")
     output = Path(required("BACKUP_STORAGE_DIR")).resolve()
     output.mkdir(mode=0o700, parents=True, exist_ok=True)
     os.chmod(output, 0o700)
+    class NoExternalRedirect(urllib.request.HTTPRedirectHandler):
+        def redirect_request(self, req, fp, code, msg, headers, newurl):
+            if urllib.parse.urlsplit(newurl).netloc != urllib.parse.urlsplit(base).netloc:
+                raise RuntimeError("Storage redirect left trusted project origin")
+            return super().redirect_request(req, fp, code, msg, headers, newurl)
+    opener = urllib.request.build_opener(NoExternalRedirect())
     def request(path, data=None):
         headers = {"apikey":token, "Authorization":"Bearer " + token}
         if data is not None: headers["Content-Type"] = "application/json"
         req = urllib.request.Request(base + "/storage/v1/" + path, data=data, headers=headers)
-        return urllib.request.urlopen(req, timeout=40)
+        return opener.open(req, timeout=40)
     with request("bucket") as response:
         buckets = json.load(response)
     if not isinstance(buckets, list):
