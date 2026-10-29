@@ -19,6 +19,12 @@ def main(root):
     digest=lines[0].split("  ",1)[0]
     if checksum(root/"database.dump")!=digest:
         raise RuntimeError("Database checksum mismatch")
+    toc_lines=(root/"database.toc.sha256").read_text().splitlines()
+    if len(toc_lines)!=1 or not toc_lines[0].endswith("  database.toc"):
+        raise RuntimeError("Invalid database TOC checksum file")
+    toc=root/"database.toc"
+    if not toc.is_file() or toc.is_symlink() or checksum(toc)!=toc_lines[0].split("  ",1)[0]:
+        raise RuntimeError("Database TOC checksum mismatch")
     global_lines=(root/"globals.sha256").read_text().splitlines()
     if len(global_lines)!=1 or not global_lines[0].endswith("  globals.sql"):
         raise RuntimeError("Invalid role globals checksum file")
