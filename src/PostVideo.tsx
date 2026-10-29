@@ -6,6 +6,8 @@ import { supabase } from './supabase'
 export default function PostVideo({ postId }: { postId: string }) {
   const [url, setUrl] = useState('')
   const [error, setError] = useState('')
+  const [poster, setPoster] = useState('')
+  const [playing, setPlaying] = useState(false)
   useEffect(() => {
     if (!VIDEO_SERVER_ENABLED) { setUrl(''); setError('動画再生は安全なサーバー接続の準備中です。'); return }
     let active = true
@@ -30,6 +32,8 @@ export default function PostVideo({ postId }: { postId: string }) {
       }
     })
     setUrl('')
+    setPoster('')
+    setPlaying(false)
     setError('')
     void (async () => {
       const { data: { session }, error: sessionError } = await supabase.auth.getSession()
@@ -54,6 +58,28 @@ export default function PostVideo({ postId }: { postId: string }) {
   }, [postId])
   if (error) return <p role="status">{error}</p>
   if (!url) return <p role="status">動画を読み込み中...</p>
-  return <video key={postId} controls playsInline preload="metadata" src={url}
-    style={{ width: '100%', maxHeight: 480, borderRadius: 12, margin: '10px 0 14px' }} />
+  return <div style={{ position: 'relative', margin: '10px 0 14px', borderRadius: 12, overflow: 'hidden', background: '#101010' }}>
+    <video key={postId} controls={playing} playsInline preload="auto" src={url} poster={poster || undefined}
+      onLoadedData={event => {
+        if (poster) return
+        const video = event.currentTarget
+        if (!video.videoWidth || !video.videoHeight) return
+        try {
+          const canvas = document.createElement('canvas')
+          const scale = Math.min(1, 640 / Math.max(video.videoWidth, video.videoHeight))
+          canvas.width = Math.max(1, Math.round(video.videoWidth * scale))
+          canvas.height = Math.max(1, Math.round(video.videoHeight * scale))
+          canvas.getContext('2d')?.drawImage(video, 0, 0, canvas.width, canvas.height)
+          setPoster(canvas.toDataURL('image/jpeg', 0.72))
+        } catch { /* The video element remains usable if poster extraction fails. */ }
+      }}
+      onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)}
+      style={{ display: 'block', width: '100%', maxHeight: 480, minHeight: 120, objectFit: 'contain' }} />
+    {!playing && <button type="button" aria-label="動画を再生" onClick={event => {
+      const video = event.currentTarget.parentElement?.querySelector('video')
+      if (video) void video.play().catch(() => setError('再生できませんでした。もう一度お試しください。'))
+    }} style={{ position: 'absolute', inset: 0, border: 0, width: '100%', background: 'transparent', color: 'white', cursor: 'pointer', display: 'grid', placeItems: 'center' }}>
+      <span aria-hidden="true" style={{ display: 'grid', placeItems: 'center', width: 60, height: 60, borderRadius: '50%', background: '#000a', fontSize: 28 }}>▶</span>
+    </button>}
+  </div>
 }
