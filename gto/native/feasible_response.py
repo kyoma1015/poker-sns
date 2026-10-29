@@ -286,6 +286,20 @@ def experiment(native,game,policy,output,*,base_checkpoint_sha256=None,base_iter
     if replay!=report:raise ValueError('same held-out trajectories/moments do not reproduce')
     report['reproducibility']={'full_checkpoint_policy_rng_restored':True,'same12000_samples_replayed':True,
         'independent_statistical_sample_sets':1,'trajectory_sha256':replay['trajectory_sha256']}
+    if exact_fold_baseline:
+        # Method/response frozen before this NEW sample set. The legacy seed is
+        # a reproducibility/diagnostic benchmark, not an independent confirmation.
+        fresh=evaluate(native,game,base,response,seed=200017,independent_audit=True)
+        fresh_replay=evaluate(native,game,base,CompletedPolicy(recovered,'uniform_legal_prior','unordered_own_cards'),
+            seed=200017,independent_audit=True)
+        if fresh!=fresh_replay:raise ValueError('fresh validation replay differs')
+        fresh['reproducibility']={'full_checkpoint_policy_rng_restored':True,'same12000_samples_replayed':True,
+            'independent_statistical_sample_sets':1,'trajectory_sha256':fresh_replay['trajectory_sha256']}
+        report['fresh_validation']=fresh
+        report['validation_design']={'legacy_seed':100017,'fresh_seed':200017,
+            'policy_fixed_before_fresh_validation':True,'iterations_increased':False,
+            'independent_sample_sets_under_PRNG_model':2,
+            'note':'do not pool legacy and fresh intervals or count replay as new samples'}
     report['training']={'seed':701,'opponent_digest':base.digest,'observations':observations,'contract':contract,
         'base_native_iteration':base_iteration,'base_checkpoint_sha256':base_checkpoint_sha256,
         'utility_origin_chips':locked.utility_origin,'exact_fold_baseline':exact_fold_baseline,'control_source_sha256':control_source,

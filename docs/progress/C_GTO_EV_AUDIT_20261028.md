@@ -98,3 +98,19 @@ Observed[-0.499999,0.500001]/[-0.999999,1.000001] match expected increments
 plus this preserved prior. Fix oracle to include exact1e-6 prior, retaining
 bit-for-bit equality assertions; do not widen tolerances or alter engine.
 Rerun all final-HEAD CI including anchored actual HU evaluation after correction.
+
+Validation design before next implementation: legacy seed100017 was already
+observed during method development. Continue using it only for reproducibility
+and diagnostics, not as an independent confirmation of a new method. Freeze
+anchored policy before NEW seed200017/12000world evaluation; repeat from restored
+checkpoint and require exact full replay. Four fixed completion sensitivity
+profiles also evaluated on this fresh seed. No training iteration increase,
+selection on fresh data, or pooling/replay sample inflation. Confidence intervals
+reported separately for each predeclared family/sample set. Still no GTO
+convergence/EV certificate: all samples in each named total-profile model only.
+Second full CI2ddd5d native40832558489 SUCCESS677unittest+25Packed+17UI=719;
+144000terminal/debit/rank checks. All14149baseline heldout postflop decisions used
+missing-row completion (0observed), plus7211SB/12975BB preflop completions. These
+are sampled decision counts, not full infoset coverage; parent does have learned
+postflop rows, but none were encountered in this sample. This exposed model gap
+cannot be removed by narrowing Monte Carlo confidence intervals.

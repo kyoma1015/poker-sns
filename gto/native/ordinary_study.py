@@ -137,6 +137,7 @@ def experiment(native,output,*,proposal=None,response_controls=None):
                             base_checkpoint_sha256=observation['source_checkpoint_sha256'],base_iteration=target,
                             exact_fold_baseline=True)
                         observation['anchored_response_summary']=anchored['global']
+                    observation['fresh_completion_sensitivity']=completion_sensitivity(native,game,policy,seed=200017)
                     observation['feasible_response_summary']={k:response_report[k] for k in (
                         'global','completion_usage','best_response_gain_lower_bb','trajectory_sha256','full_game_convergence_verified')}
                 payload={'seed':seed,'iteration':target,'config':json.loads(game._public_config_json),
