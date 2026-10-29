@@ -5,7 +5,8 @@ import { createPollRequest, pollDisplayResult } from './interactiveRequests'
 import { useEffect, useRef, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
-import { validateVideo, uploadPostVideo } from './videoUpload'
+import { validateVideo, uploadPostVideo, MAX_VIDEO_BYTES } from './videoUpload'
+import { compressOversizedVideo } from './videoCompression'
 import { finalizeUploadedVideo, VIDEO_SERVER_ENABLED } from './videoApi'
 import PostVideo from './PostVideo'
 
@@ -1027,12 +1028,22 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     const selection = beginAttachmentSelection()
     if (pendingVideoRef.current || videoSubmitInFlightRef.current) { setMessage('保留中の動画を先に再試行してください。'); return }
     if (imageFiles.length || selectedResult || selectedDiagnosis || styleSnapshot || interactiveMode !== 'normal') { setMessage('動画は画像・戦績・診断・アンケートと同時に添付できません。'); return }
-    const error = await validateVideo(file)
+    let selectedFile = file
+    try {
+      if (file.size > MAX_VIDEO_BYTES) {
+        setMessage('動画を圧縮しています。完了までお待ちください。')
+        selectedFile = await compressOversizedVideo(file)
+      }
+    } catch (error) {
+      if (selection === videoSelectionRef.current) setMessage(error instanceof Error ? error.message : '動画の圧縮に失敗しました。')
+      return
+    }
+    const error = await validateVideo(selectedFile)
     if (selection !== videoSelectionRef.current) return
     if (error) { setMessage(error); return }
     // Re-check after async metadata validation: finalize may have started meanwhile.
     if (pendingVideoRef.current || videoSubmitInFlightRef.current) { setMessage('保留中の動画を先に再試行してください。'); return }
-    setVideoFile(file)
+    setVideoFile(selectedFile)
     setMessage(VIDEO_SERVER_ENABLED ? '' : '動画のプレビューを確認できます。サーバーAPIの安全確認が終わるまで投稿は無効です。')
   }
 
