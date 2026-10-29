@@ -86,3 +86,17 @@ GitHub's official documentation states that **standard GitHub-hosted runners on 
 Official docs: https://docs.github.com/en/billing/concepts/product-billing/github-actions ; https://docs.github.com/en/billing/reference/product-usage-included
 
 **GitHub secret configuration cannot be completed with the current connected GitHub actions** (no environment/secret management action). A user with repository administrator permission must do the one-time environment setup in GitHub's UI. The workflow must be merged to default branch before its first manual dispatch. Do not merge until the workflow is reviewed and the protected environment has been configured.
+
+## Temporary Access (JIT) fallback when existing Postgres password is unknown
+
+Official docs: https://supabase.com/docs/guides/platform/temporary-access
+
+Production `ephptepeuespnxtzdqby` reports PostgreSQL 17.11 and SSL enabled in the database; this satisfies the documented minimum PostgreSQL version. **The separate Supabase Dashboard setting “Enforce SSL on incoming connections” must still be verified ON** (PostgreSQL SSL availability alone is not sufficient proof). JIT is disabled by default, so the environment's JIT enabled state and billing eligibility remain **unverified**.
+
+A Supabase project owner/admin can enable Temporary Access in Database Settings, then grant a time-limited, role-scoped access rule to a project member (with IP allow-list when possible). A time-limited Personal Access Token is used as the database password. Existing role passwords are not changed. Never place a dashboard session JWT, PAT, or full DB URL containing a token in PRs, logs, chat, or shell arguments that are printed.
+
+For the shared session pooler on IPv4 runners, the JIT connection URL additionally requires the URL-encoded PostgreSQL option `options=-c%20jit%3Dtrue` and `sslmode=require`. The direct connection uses the project database host but needs an IPv6-capable runner. Consult the dashboard-provided connection string; do not guess pooler hostnames or enable paid IPv4 add-ons.
+
+**Important**: `PROD_DB_URL` on this GitHub workflow is a protected environment secret, but a short-lived JIT token is still sensitive and may expire before the backup runs. Confirm its exact expiry and role permissions; do not create a long-lived personal token solely to avoid a reset. JIT is only for PostgreSQL; it does **not** supply `PROD_STORAGE_READ_KEY`. The age private identity and durable destination remain distinct unresolved blockers.
+
+Never run the workflow before all export/restore safety conditions are verified, and never rotate/reset the existing database password without a separate explicit approval.
