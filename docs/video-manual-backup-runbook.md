@@ -67,3 +67,7 @@ The second step starts a throwaway PostgreSQL 17 Docker container with `--networ
 - The job uses a pinned Supabase origin and stops on a Storage redirect to another host. Some providers legitimately redirect downloads; this must be tested against an authorized non-production bucket before production backup.
 - `EXPECTED_STORAGE_OBJECTS=7` and `EXPECTED_STORAGE_BUCKETS=4` are current inventory preconditions, not permanent constants. Any change means a deliberate inventory reconciliation, not a blind reset.
 - The current restore smoke test is neither fully exercised nor independently reviewed. Do not merge or trigger the backup workflow merely because the source files have been added.
+
+## Synthetic regression tests
+
+Run `python3 -m unittest discover -s tests/video -p test_manual_backup_integrity.py -v` before approving PR #127. These tests exercise valid, tampered, missing, extra and traversal-path synthetic inputs. They do not touch production or prove live Storage download compatibility.
