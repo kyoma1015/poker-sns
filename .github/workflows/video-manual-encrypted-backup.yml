@@ -8,6 +8,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   backup:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: production-backup
     timeout-minutes: 25
