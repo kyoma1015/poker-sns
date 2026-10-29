@@ -25,6 +25,15 @@ def inventory_unchanged(before, after):
     return inventory_snapshot(before) == inventory_snapshot(after)
 
 
+def bucket_snapshot(buckets):
+    """Compare every exposed bucket setting, not just bucket names."""
+    return sorted(json.dumps(b, sort_keys=True, separators=(",", ":")) for b in buckets)
+
+
+def buckets_unchanged(before, after):
+    return bucket_snapshot(before) == bucket_snapshot(after)
+
+
 def main():
     base = required("PROD_SUPABASE_URL").rstrip("/")
     if base != "https://ephptepeuespnxtzdqby.supabase.co":
@@ -110,8 +119,13 @@ def main():
                         for b in buckets for k, revision in enumerate_prefix(b["id"],"")]
     if not inventory_unchanged(first_inventory, second_inventory):
         raise RuntimeError("Storage object identity or revision changed during download")
+    with request("bucket") as response:
+        final_buckets = json.load(response)
+    if not isinstance(final_buckets, list) or not buckets_unchanged(buckets, final_buckets):
+        raise RuntimeError("Storage bucket configuration changed during download")
     manifest_path = output / "storage-manifest.json"
-    manifest_path.write_text(json.dumps({"objects":manifest,"buckets":len(buckets)},indent=2))
+    manifest_path.write_text(json.dumps({"objects":manifest,"buckets":len(buckets),
+                                          "bucket_records":buckets},indent=2))
     os.chmod(manifest_path,0o600)
     print("Storage bytes downloaded and SHA256 recorded:", len(manifest),
           "objects; restore validation still required")
