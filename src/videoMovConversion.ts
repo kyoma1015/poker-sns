@@ -14,9 +14,10 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal): Promise
   if (!isMovVideo(file)) return file
   if (file.size <= 0 || file.size > MAX_BYTES) throw new Error('変換前のMOVも20MiB以内にしてください。' + MOV_CONVERSION_HELP)
   if (typeof MediaRecorder === 'undefined' || typeof AudioContext === 'undefined') throw new Error(MOV_CONVERSION_HELP)
-  const mime = ['video/mp4;codecs=avc1.42E01E,mp4a.40.2', 'video/mp4;codecs=avc1,mp4a.40.2', 'video/mp4;codecs=avc1,opus'].find(type => MediaRecorder.isTypeSupported(type))
+  const mime = ['video/mp4;codecs=avc1.42E01E,mp4a.40.2', 'video/mp4;codecs=avc1,mp4a.40.2', 'video/mp4;codecs=avc1,opus', 'video/mp4'].find(type => MediaRecorder.isTypeSupported(type))
   const canvas = document.createElement('canvas')
-  if (!mime || typeof canvas.captureStream !== 'function') throw new Error(MOV_CONVERSION_HELP)
+  if (!mime) throw new Error('SafariがMP4動画の録画形式に対応していません。' + MOV_CONVERSION_HELP)
+  if (typeof canvas.captureStream !== 'function') throw new Error('Safariが画面映像の変換に対応していません。' + MOV_CONVERSION_HELP)
   const audio = new AudioContext()
   // Do this before any await; no microphone permission or speaker output is needed.
   const resumed = audio.resume().then(() => true, () => false)
@@ -56,11 +57,11 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal): Promise
       void resumed.then(finish)
       if (signal?.aborted) abort()
     })
-    if (!audioReady) throw new Error(MOV_CONVERSION_HELP)
+    if (!audioReady) throw new Error('Safariで音声変換を開始できませんでした。' + MOV_CONVERSION_HELP)
     signal?.throwIfAborted()
     const duration = video.duration
     if (!Number.isFinite(duration) || duration <= 0 || duration > MAX_SECONDS) throw new Error('動画は30秒以内にしてください。元の動画は送信していません。')
-    if (!video.videoWidth || !video.videoHeight || audio.state !== 'running') throw new Error(MOV_CONVERSION_HELP)
+    if (!video.videoWidth || !video.videoHeight || audio.state !== 'running') throw new Error('MOVの映像・音声を読み込めませんでした。' + MOV_CONVERSION_HELP)
     // Bound decoder/encoder work for 4K/portrait phone captures; preserve aspect ratio.
     const scale = Math.min(1, 1280 / Math.max(video.videoWidth, video.videoHeight))
     canvas.width = Math.max(2, Math.floor(video.videoWidth * scale / 2) * 2)
@@ -101,9 +102,9 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal): Promise
         video.onerror = () => finish(new Error(MOV_CONVERSION_HELP))
         video.onended = () => { if (recorder?.state === 'recording') recorder.stop() }
         recorder.start(250)
-        void video.play().catch(() => finish(new Error(MOV_CONVERSION_HELP)))
+        void video.play().catch(() => finish(new Error('SafariでMOVの再生を開始できませんでした。' + MOV_CONVERSION_HELP)))
         if (signal?.aborted) abort()
-      } catch { finish(new Error(MOV_CONVERSION_HELP)) }
+      } catch { finish(new Error('SafariのMP4録画処理を開始できませんでした。' + MOV_CONVERSION_HELP)) }
     })
     signal?.throwIfAborted()
     if (!result.size || result.size > MAX_BYTES) throw new Error(MOV_CONVERSION_HELP)
