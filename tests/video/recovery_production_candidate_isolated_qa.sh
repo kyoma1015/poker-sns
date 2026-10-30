@@ -16,6 +16,17 @@ expect_reject() {
  if ! grep -Fq "$expected" "$out"; then cat "$out"; rm -f "$out"; echo "FAIL: wrong SQL rejection" >&2; exit 1; fi
  rm -f "$out"
 }
+# Deliberately mutate a single function only AFTER real HTTP E2E completes.
+# Verify migration refuses the drift and preserves all previously published rows.
+if [[ "${2:-install}" == drift ]]; then
+ before="$(psql "$dburl" -AtX -v ON_ERROR_STOP=1 -c "select (select count(*) from public.posts)::text || ':' || (select count(*) from video_private.recovery_manifests)::text || ':' || (select count(*) from video_private.consumed_nonces)::text")"
+ sql "alter function public.video_recovery_state_v1(text) set search_path to public;"
+ expect_reject 'function definition drift or missing migration seal'
+ after="$(psql "$dburl" -AtX -v ON_ERROR_STOP=1 -c "select (select count(*) from public.posts)::text || ':' || (select count(*) from video_private.recovery_manifests)::text || ':' || (select count(*) from video_private.consumed_nonces)::text")"
+ [[ "$before" == "$after" ]] || { echo "FAIL: drift rejection changed production-like rows" >&2; exit 1; }
+ echo 'PASS: mutated function rejected and posts/manifests/nonces preserved'
+ exit 0
+fi
 # The real database has this table; the disposable fixture's legacy bootstrap may not.
 sql "create schema if not exists video_private;
 create table if not exists video_private.general_public_rollout
