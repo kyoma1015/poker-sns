@@ -1037,9 +1037,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     if (pendingVideoRef.current || videoSubmitInFlightRef.current) { setMessage('保留中の動画を先に再試行してください。'); return }
     if (imageFiles.length || selectedResult || selectedDiagnosis || styleSnapshot || interactiveMode !== 'normal') { setMessage('動画は画像・戦績・診断・アンケートと同時に添付できません。'); return }
     if (isMovVideo(file) && !fromExplicitGesture) {
-      setPendingMovConversion(file)
-      setMessage('MOVを選択しました。「MOV変換を開始」を押すと、この端末内でMP4へ変換します。変換までは送信されません。')
-      return
+      // Begin conversion directly from the file-selection gesture. If Safari
+      // cannot start its audio pipeline without a separate tap, offer retry.
+      setPendingMovConversion(null)
     }
     let selectedFile = file
     const conversion = new AbortController()
@@ -1054,7 +1054,12 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         selectedFile = await compressOversizedVideo(selectedFile)
       }
     } catch (error) {
-      if (selection === videoSelectionRef.current) setMessage(error instanceof Error ? error.message : '動画の圧縮に失敗しました。')
+      if (selection === videoSelectionRef.current) {
+        if (isMovVideo(file) && !fromExplicitGesture && !conversion.signal.aborted) {
+          setPendingMovConversion(file)
+          setMessage('自動変換を開始できませんでした。Safariの制限により、下の「MOV変換を開始」を押して再試行してください。')
+        } else setMessage(error instanceof Error ? error.message : '動画の圧縮に失敗しました。')
+      }
       return
     }
     if (selection !== videoSelectionRef.current || conversion.signal.aborted) return
