@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { validateVideo, uploadPostVideo, MAX_VIDEO_BYTES } from './videoUpload'
 import { compressOversizedVideo } from './videoCompression'
+import { convertMovToMp4, isMovVideo } from './videoMovConversion'
 import { hideVideoPost, finalizeUploadedVideo, VIDEO_SERVER_ENABLED } from './videoApi'
 import PostVideo from './PostVideo'
 
@@ -171,6 +172,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const imageInputRef = useRef<HTMLInputElement>(null)
   const videoInputRef = useRef<HTMLInputElement>(null)
   const videoSelectionRef = useRef(0)
+  const videoConversionAbortRef = useRef<AbortController | null>(null)
   const composerLifetimeRef = useRef(0)
   const composerIdentityRef = useRef<string | null | undefined>(undefined)
   const [videoRecoveryBlocked, setVideoRecoveryBlocked] = useState(false)
@@ -844,6 +846,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   }, [profileUserId, navigate])
 
   const beginAttachmentSelection = () => {
+    videoConversionAbortRef.current?.abort()
     setMessage('')
     setAttachmentBusy(false)
     setResultsLoading(false)
@@ -858,6 +861,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       const changed = composerIdentityRef.current !== undefined && next !== composerIdentityRef.current
       if (event === 'SIGNED_OUT' || event === 'USER_UPDATED' || changed) {
         videoRequestAbortRef.current?.abort()
+        videoConversionAbortRef.current?.abort()
         ++composerLifetimeRef.current
         ++videoSelectionRef.current
         setIsPosting(false)
@@ -888,6 +892,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     })
     return () => {
       videoRequestAbortRef.current?.abort()
+        videoConversionAbortRef.current?.abort()
       ++composerLifetimeRef.current
       ++videoSelectionRef.current
       subscription.unsubscribe()
@@ -1029,15 +1034,22 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     if (pendingVideoRef.current || videoSubmitInFlightRef.current) { setMessage('保留中の動画を先に再試行してください。'); return }
     if (imageFiles.length || selectedResult || selectedDiagnosis || styleSnapshot || interactiveMode !== 'normal') { setMessage('動画は画像・戦績・診断・アンケートと同時に添付できません。'); return }
     let selectedFile = file
+    const conversion = new AbortController()
+    videoConversionAbortRef.current = conversion
     try {
-      if (file.size > MAX_VIDEO_BYTES) {
+      if (isMovVideo(file)) {
+        setMessage('MOVを端末内でMP4へ変換しています。画面を開いたままお待ちください。変換後は音声と映像を確認してください。')
+        selectedFile = await convertMovToMp4(file, conversion.signal)
+      }
+      if (selectedFile.size > MAX_VIDEO_BYTES) {
         setMessage('動画を圧縮しています。完了までお待ちください。')
-        selectedFile = await compressOversizedVideo(file)
+        selectedFile = await compressOversizedVideo(selectedFile)
       }
     } catch (error) {
       if (selection === videoSelectionRef.current) setMessage(error instanceof Error ? error.message : '動画の圧縮に失敗しました。')
       return
     }
+    if (selection !== videoSelectionRef.current || conversion.signal.aborted) return
     const error = await validateVideo(selectedFile)
     if (selection !== videoSelectionRef.current) return
     if (error) { setMessage(error); return }
@@ -2769,7 +2781,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
           {renderInteractiveFields()}
           <input ref={imageInputRef} type="file" accept="image/jpeg,image/png,image/webp" multiple hidden onChange={e => { chooseImages(e.target.files); e.target.value = '' }} />
-          <input ref={videoInputRef} type="file" accept={import.meta.env.VITE_VIDEO_CLOUD_TEST_ENABLED === 'true' ? "video/mp4,video/webm,video/quicktime,.mov" : "video/mp4,video/webm"} hidden onChange={e => { void chooseVideo(e.target.files?.[0]); e.target.value = '' }} />
+          <input ref={videoInputRef} type="file" accept="video/mp4,video/webm,video/quicktime,.mov" hidden onChange={e => { void chooseVideo(e.target.files?.[0]); e.target.value = '' }} />
           {attachmentsOpen && renderAttachmentPicker()}
           {renderSelectedResultPreview()}
         </section>
@@ -3980,3 +3992,4 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 }
 
 export default Timeline
+
