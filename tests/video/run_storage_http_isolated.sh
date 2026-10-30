@@ -78,6 +78,7 @@ VIDEO_QA_ENV="$qa/local.env" node tests/video/isolated_attested_real_http_e2e.mj
 bash tests/video/recovery_production_candidate_isolated_qa.sh "$dburl" install
 psql "$dburl" -v ON_ERROR_STOP=1 -c "notify pgrst, 'reload schema';"
 VIDEO_QA_ENV="$qa/local.env" node tests/video/isolated_recovery_candidate_e2e.mjs
+bash tests/video/recovery_production_candidate_isolated_qa.sh "$dburl" recheck
 # After the HTTP E2E has created post/nonce/manifest rows, introduce isolated
 # definition drift and prove rerunning the candidate fails without row changes.
 bash tests/video/recovery_production_candidate_isolated_qa.sh "$dburl" drift
