@@ -45,7 +45,7 @@ test('video cleanup validates owner path but fails closed without atomic delete'
   const deleteEnd = timeline.indexOf("\n  const ", deleteStart + 10)
   const deleteHandler = timeline.slice(deleteStart, deleteStart + 2400)
   assert.match(deleteHandler, /\.from\('posts'\)/)
-  assert.match(deleteHandler, /動画付き投稿の削除は安全な回収処理の検証待ちです。/)
+  assert.match(deleteHandler, /await hideVideoPost\(postId\)/)
   assert.doesNotMatch(deleteHandler, /removePostVideo\(/)
 })
 test('client upload and finalize remain behind disabled server gate', () => {
