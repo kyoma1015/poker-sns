@@ -87,7 +87,11 @@ create table if not exists video_private.recovery_manifests (
 -- Private seal only: never grants app users access or stores sensitive data.
 create table if not exists video_private.recovery_migration_seal (
  version text primary key,
- definition_digest text not null check (definition_digest ~ '^[0-9a-f]{32}revoke all on video_private.recovery_manifests from public,anon,authenticated,service_role;
+ definition_digest text not null check (definition_digest ~ '^[0-9a-f]{32}$')
+);
+revoke all on video_private.recovery_migration_seal from public,anon,authenticated,service_role;
+alter table video_private.recovery_manifests enable row level security;
+revoke all on video_private.recovery_manifests from public,anon,authenticated,service_role;
 
 create or replace function public.video_bind_recovery_manifest_v1(p_path text,p_sha256 text,p_size integer,p_type text,p_content text)
 returns bigint language plpgsql security definer set search_path='' as $$
