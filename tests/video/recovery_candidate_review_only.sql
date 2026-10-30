@@ -26,7 +26,9 @@ begin
  if v_owner is null or p_path is null or split_part(p_path,'/',1) is distinct from v_owner::text or
  p_sha256 is null or p_sha256 !~ '^[0-9a-f]{64}$' or p_size is null or p_size not between 1 and 20971520 or
  p_content is null or length(p_content)>10000 or p_type is null or p_type not in ('video/mp4','video/webm') or
- not ( (p_type='video/mp4' and p_path ~ '^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}[.]mp4
+ not ( (p_type='video/mp4' and p_path ~ '^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}[.]mp4$') or
+       (p_type='video/webm' and p_path ~ '^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}[.]webm$') )
+ then raise exception 'invalid recovery manifest'; end if;
  select * into r from public.video_reserved_object_keys where bucket_id='post-videos' and object_path=p_path and owner_id=v_owner for update;
  if not found or r.created_at+interval '1 hour' <= clock_timestamp() then raise exception 'reservation unavailable'; end if;
  select * into m from video_private.recovery_manifests where object_path=p_path;
