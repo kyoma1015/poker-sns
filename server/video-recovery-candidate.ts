@@ -20,8 +20,12 @@ export async function handleVideoRecoveryCandidate(req: VercelRequest,res: Verce
   const productionWrites=productionBase && process.env.VIDEO_RECOVERY_PRODUCTION_WRITES_ENABLED==='true' &&
     process.env.VIDEO_ATTESTED_RPC_RELEASE_APPROVED==='true'
   if ((!isolatedReady && !productionStatusOnly && !productionWrites) || !anon) return res.status(503).json({error:'recovery_not_enabled'})
+  // Only explicitly named recovery operations are routable. Unknown actions
+  // must never inherit the read-only status branch by default.
   const body=req.body as Record<string,unknown>
   if (!body || typeof body!=='object' || Array.isArray(body)) return res.status(400).end()
+  if (!['bind_recovery','recovery_status','recovery_finalize'].includes(String(body.action))) return res.status(400).end()
+  if (typeof req.headers.authorization!=='string' || !/^Bearer [^\s]+$/.test(req.headers.authorization)) return res.status(401).end()
   if (!isolatedReady && body.action!=='recovery_status' && !productionWrites)
     return res.status(503).json({error:'recovery_mutation_not_enabled'})
   const bind=body.action==='bind_recovery'
