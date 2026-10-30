@@ -1,15 +1,17 @@
 """Finite reproducible abstraction comparison; no formal/full-game certificate."""
-import argparse,hashlib,json,math,time
+import argparse,gzip,hashlib,json,math,time
 from pathlib import Path
 from gto.abstract.model import build,load,kernel,classes,chance,tree,payoffs,solve,ranges,heldout,CONDITION
 
 def digest(x):return hashlib.sha256(json.dumps(x,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
 
-def experiment(output,*,samples=256,iterations=4000,seeds=(1701,2901)):
+def experiment(output,*,samples=256,iterations=4000,seeds=(1701,2901),validation_seed=700017):
  if len(seeds)!=2 or len(set(seeds))!=2 or any(type(s) is not int or not 0<=s<2**31 for s in seeds):raise ValueError('two distinct independent payoff seeds required')
+ if type(validation_seed) is not int or validation_seed in seeds or not 0<=validation_seed<2**31:raise ValueError('fresh independent validation seed required')
  output=Path(output);output.mkdir(parents=True,exist_ok=False);lib=load(build(output/'build'));nodes=tree();counts,p=chance(classes());runs=[];kernels=[];policies={}
  for seed in seeds:
   k=kernel(lib,samples=samples,seed=seed);kernels.append(k);print('ABSTRACT_KERNEL '+json.dumps({'seed':seed,'seconds':k['seconds'],'samples':samples}),flush=True)
+  with gzip.open(output/f'kernel-{seed}.json.gz','wt') as cache:json.dump(k,cache,sort_keys=True)
   for mode in ('checkdown','flop_controller'):
    leaf=payoffs(k,mode,nodes);observations=[]
    for t in sorted(set((min(100,iterations),iterations))):
@@ -18,6 +20,7 @@ def experiment(output,*,samples=256,iterations=4000,seeds=(1701,2901)):
    for field in ('strategy','action_ev_chips','reach','profile_sb_ev_bb','abstract_nashconv_bb'):
     if replay[field]!=r[field]:raise ValueError('same-input deterministic CFR replay differs')
    policies[(seed,mode)]=r['strategy']
+   (output/f'policy-{seed}-{mode}.json').write_text(json.dumps({'condition':CONDITION,'tree':nodes,'strategy':r['strategy'],'kernel_digest':digest(k['mean'])},sort_keys=True)+'\n')
    rs=ranges(r,nodes)
    radius=k['simultaneous_kernel_radius_chips']/2
    for context in rs.values():
@@ -32,7 +35,9 @@ def experiment(output,*,samples=256,iterations=4000,seeds=(1701,2901)):
     'real_game_approximation_error_bb':None,'full_game_gto_verified':False,'reference_solution_comparison':'UNPERFORMED: no trusted matching HU50BB reference supplied',
     'model_scope':'finite preflop action/class abstraction with fixed continuation controllers; not postflop equilibrium'}
    runs.append(run);print('ABSTRACT_LEARNING '+json.dumps({key:run[key] for key in ('seed','mode','learning','abstract_nashconv_bb')}),flush=True)
- validation=[{'mode':mode,**heldout(lib,policies[(seeds[0],mode)],kernels[1],mode,nodes,p)} for mode in ('checkdown','flop_controller')]
+ validation_kernel=kernel(lib,samples=samples,seed=validation_seed)
+ with gzip.open(output/f'kernel-{validation_seed}.json.gz','wt') as cache:json.dump(validation_kernel,cache,sort_keys=True)
+ validation=[{'mode':mode,**heldout(lib,policies[(seeds[0],mode)],validation_kernel,mode,nodes,p)} for mode in ('checkdown','flop_controller')]
  comparisons=[]
  for mode in ('checkdown','flop_controller'):
   a,b=[r for r in runs if r['mode']==mode][:2]
@@ -48,7 +53,7 @@ def experiment(output,*,samples=256,iterations=4000,seeds=(1701,2901)):
    'interpretation':'controller-model sensitivity; policies differ; not a unilateral improvement'})
  manifest=json.loads((output/'build/manifest.json').read_text())
  result={'schema':'pokerid-preflop-abstract-study-v1','condition':CONDITION,'source':manifest,
-  'exact_joint_deals':sum(counts),'joint_mass_digest':digest(counts),'seeds':list(seeds),'runs':runs,
+  'validation_seed':validation_seed,'exact_joint_deals':sum(counts),'joint_mass_digest':digest(counts),'seeds':list(seeds),'runs':runs,
   'fixed_policy_independent_validation':validation,'independent_seed_comparison':comparisons,'continuation_model_sensitivity':sensitivity,
   'formal_acceptance_complete':0,'full_game_gto_verified':False,'ui_admission':'RESEARCH_ONLY_NOT_FORMAL_GTO',
   'unmodeled':'omitted bet sizes; class aggregation beyond exact blockers; optimized postflop strategies; later-street betting; formal stack/sizing specifications'}

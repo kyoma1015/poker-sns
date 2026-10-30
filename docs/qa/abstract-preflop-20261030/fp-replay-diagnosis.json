@@ -1,0 +1,13 @@
+{
+  "canonical_flags": [
+    "-O2",
+    "-ffp-contract=off",
+    "-fno-tree-vectorize"
+  ],
+  "comparison": "FMA-enabled local policy digest and metrics equal failed CI exactly",
+  "comparison_tolerance_unchanged": 1e-12,
+  "failed_ci": 41085432081,
+  "fma_enabled_policy_digest": "7efb7bdc96df857347480c1ace3feacfb334725b30960f04330c5a864477724c",
+  "nashconv_bb": 0.002546750564182486,
+  "profile_sb_ev_bb": -0.04698984138094505
+}

@@ -23,7 +23,7 @@ test('research lookup requires exact stack sizes position and history', () => {
 test('both continuation models contain normalized169 hands and model EV intervals', () => {
   for (const model of Object.values(abstractResearch.models)) {
     assert.ok(model.abstract_nashconv_bb < .01)
-    assert.equal(model.heldout.seed, 2901)
+    assert.equal(model.heldout.seed, 700017)
     assert.ok(model.heldout.interval_bb[0] <= model.heldout.profile_sb_ev_bb && model.heldout.profile_sb_ev_bb <= model.heldout.interval_bb[1])
     for (const context of Object.values(model.contexts)) {
       assert.equal(Object.keys(context.hands).length, 169)

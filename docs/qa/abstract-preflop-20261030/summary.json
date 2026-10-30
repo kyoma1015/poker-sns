@@ -39,30 +39,30 @@
       "fixed_policy_digest": "6fbe5f3463e42788a58b7474ee3a4ffb71d61afd6246004e47d1c6441999d343",
       "full_game_gto_verified": false,
       "interval_bb": [
-        -0.14849817824260814,
-        0.053808130884812275
+        -0.14846375322092353,
+        0.053842555906496906
       ],
       "method": "weighted Hoeffding over independent unordered class-pair/world groups; all shared planes/seat swaps bounded jointly",
       "mode": "checkdown",
-      "profile_sb_ev_bb": -0.04734502367889794,
+      "profile_sb_ev_bb": -0.04731059865721331,
       "radius_bb": 0.10115315456371021,
       "real_game_approximation_error_bb": null,
-      "seed": 2901
+      "seed": 700017
     },
     {
       "confidence": 0.995,
       "fixed_policy_digest": "837ec7e0ef2c66714f65a174f9e83a398e713e65f82de4fb7b7e1699dee12778",
       "full_game_gto_verified": false,
       "interval_bb": [
-        -0.0542026945264423,
-        0.09599588094149641
+        -0.05528038842974989,
+        0.09491818703818883
       ],
       "method": "weighted Hoeffding over independent unordered class-pair/world groups; all shared planes/seat swaps bounded jointly",
       "mode": "flop_controller",
-      "profile_sb_ev_bb": 0.020896593207527056,
+      "profile_sb_ev_bb": 0.01981889930421947,
       "radius_bb": 0.07509928773396936,
       "real_game_approximation_error_bb": null,
-      "seed": 2901
+      "seed": 700017
     }
   ],
   "formal_acceptance_complete": 0,
@@ -140,13 +140,13 @@
           "abstract_nashconv_bb": 0.09833686353540905,
           "iterations": 100,
           "profile_sb_ev_bb": -0.05570788610001529,
-          "seconds": 0.25132071100006215
+          "seconds": 0.2235645089999707
         },
         {
           "abstract_nashconv_bb": 0.0025467505641824373,
           "iterations": 4000,
           "profile_sb_ev_bb": -0.046989841380944954,
-          "seconds": 6.824964722999994
+          "seconds": 6.381502610000098
         }
       ],
       "mode": "checkdown",
@@ -174,13 +174,13 @@
           "abstract_nashconv_bb": 0.09799617233961869,
           "iterations": 100,
           "profile_sb_ev_bb": 0.018266187463816183,
-          "seconds": 0.24689580400035993
+          "seconds": 0.2228549189999285
         },
         {
           "abstract_nashconv_bb": 0.002623416146588793,
           "iterations": 4000,
           "profile_sb_ev_bb": 0.018948768699952923,
-          "seconds": 7.031516668999757
+          "seconds": 6.672002120000343
         }
       ],
       "mode": "flop_controller",
@@ -208,13 +208,13 @@
           "abstract_nashconv_bb": 0.09874894104531969,
           "iterations": 100,
           "profile_sb_ev_bb": -0.05507617409917114,
-          "seconds": 0.23184214100001554
+          "seconds": 0.21704821300045296
         },
         {
           "abstract_nashconv_bb": 0.0025685547733393585,
           "iterations": 4000,
           "profile_sb_ev_bb": -0.04700046213413184,
-          "seconds": 6.69961900699991
+          "seconds": 6.303034088999993
         }
       ],
       "mode": "checkdown",
@@ -242,13 +242,13 @@
           "abstract_nashconv_bb": 0.09807639629526715,
           "iterations": 100,
           "profile_sb_ev_bb": 0.01902062525850087,
-          "seconds": 0.23442502200032322
+          "seconds": 0.22421806900001684
         },
         {
           "abstract_nashconv_bb": 0.002627244944800329,
           "iterations": 4000,
           "profile_sb_ev_bb": 0.020318623724598722,
-          "seconds": 6.622700733999864
+          "seconds": 6.403791442000511
         }
       ],
       "mode": "flop_controller",
@@ -270,22 +270,25 @@
     2901
   ],
   "source": {
-    "binary_sha256": "e26228a705baf93f6ae7c4cab68590f6176a69fa14fc355914d06b3d3d4804be",
+    "binary_sha256": "26f10a0a6a4293574108403227cc5dcbab28c9f491db5085fb2fcea5b87bb788",
     "command": [
       "c++",
       "-std=c++17",
-      "-O3",
+      "-O2",
+      "-ffp-contract=off",
+      "-fno-tree-vectorize",
       "-shared",
       "-fPIC",
       "/workspace/poker-sns/gto/abstract/core.cc",
-      "-I/workspace/gto-abstract-hu50-256/build",
+      "-I/workspace/gto-abstract-canonical-fp/build",
       "-o",
-      "/workspace/gto-abstract-hu50-256/build/abstract.so"
+      "/workspace/gto-abstract-canonical-fp/build/abstract.so"
     ],
     "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
     "rank_source_sha256": "870b64c0253be86ef139d0c2437d202d9d4f10097e871dd8bde526402dd49353",
     "source_sha256": "acbe730794f5a763fc2ea30279bba74f3ca5341c43a5bb02b4ce77a3d2322d82"
   },
   "ui_admission": "RESEARCH_ONLY_NOT_FORMAL_GTO",
-  "unmodeled": "omitted bet sizes; class aggregation beyond exact blockers; optimized postflop strategies; later-street betting; formal stack/sizing specifications"
+  "unmodeled": "omitted bet sizes; class aggregation beyond exact blockers; optimized postflop strategies; later-street betting; formal stack/sizing specifications",
+  "validation_seed": 700017
 }

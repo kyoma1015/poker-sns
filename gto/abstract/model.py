@@ -22,7 +22,7 @@ def build(directory):
  ranks=source.decode().split('static V five(',1)[1].rsplit('}',1)[0]
  (directory/'rank_reused.h').write_text('static V five('+ranks)
  output=directory/'abstract.so';code=Path(__file__).with_name('core.cc')
- command=['c++','-std=c++17','-O3','-shared','-fPIC',str(code),'-I'+str(directory),'-o',str(output)]
+ command=['c++','-std=c++17','-O2','-ffp-contract=off','-fno-tree-vectorize','-shared','-fPIC',str(code),'-I'+str(directory),'-o',str(output)]
  subprocess.run(command,check=True)
  metadata={'compiler':subprocess.check_output(['c++','--version'],text=True).splitlines()[0],'binary_sha256':hashlib.sha256(output.read_bytes()).hexdigest(),'source_sha256':hashlib.sha256(code.read_bytes()).hexdigest(),'rank_source_sha256':hashlib.sha256(source).hexdigest(),'command':command}
  (directory/'manifest.json').write_text(json.dumps(metadata,sort_keys=True)+'\n');return output

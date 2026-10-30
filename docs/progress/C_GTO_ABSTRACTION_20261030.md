@@ -59,3 +59,31 @@ correctactor,2.5/9/21sizes,noante/rake; other conditions return no research rang
 Next: use independent validation to improve payoff estimator/continuation models,
 compare a trusted same-condition reference, then certify approximation accuracy
 before any ordinary GTO admission. Do not merely increase formal acceptance.
+
+CI41085432081 failed research replay at a1e-12 EV comparison despite identical
+payoff table hashes; whole-game metrics differ at~1e-16 and raw policy digests
+differ. Investigate cross-compiler FP optimizations; do NOT increase tolerance or
+ignore policy digests. Fix plan before edits: explicit-O2,-ffp-contract=off,
+-fno-tree-vectorize; preserve arithmetic tests. Recompute the artifact under
+these pinned flags and rerun the failed CI. Add fresh validation seed700017,
+preselected before new evaluation, distinct from exploratory seed2901 and the
+additional local seed500017. Archive raw kernel and full frozen public-tree
+policies in experiment output for subsequent independent audits; these are
+local/ephemeral CI outputs, not production Storage writes. Original engines
+remain unchanged. Separate legal/debit audit using preserved Python Betting
+passed27preflop edges and2000controller/all-in terminal settlements with zero
+conservation or cost-basis mismatches; all1352UI fold EVs match past contributions.
+FMA root cause confirmed, not just inferred: local-mavx2/-mfma reproduces failed
+CI checkdown policy SHA7efb7bdc96df857347480c1ace3feacfb334725b30960f04330c5a864477724c,
+NashConv0.002546750564182486 andSB EV-0.04698984138094505 exactly. Explicit
+nonfused O2 build keeps the original local reference values. See
+fp-replay-diagnosis.json. No tolerance/digest gate weakened.
+Canonical local fresh seed700017: checkdown fixed SB EV-0.04731059865721331,
+99.5%interval[-0.14846375322092353,0.053842555906496906]; flop controller
+0.01981889930421947 interval[-0.05528038842974989,0.09491818703818883].
+These replace the exploratory2901 heldout display; training/comparison seeds
+remain1701/2901.4CFR runs,3kernel seeds; same-input replay is not additional
+independent data.8native tests,13Node tests and2000ledger checks PASS locally.
+CI rerun required for the FP fix; old successful checks are not manually rerun.
+Full model policies and raw kernels archived under experiment output (local
+/workspace/gto-abstract-canonical-fp); not permanently uploaded/production data.

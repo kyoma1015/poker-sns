@@ -19,8 +19,11 @@ jobs:
       - name: Build separate C++ abstraction with verified reused hand ranks
         run: |
           python -B -c 'from gto.abstract.model import build; import os; build(os.environ["RUNNER_TEMP"]+"/abstract-tests")'
+          cat "$RUNNER_TEMP/abstract-tests/manifest.json"
       - name: Exact card-removal, lawful BR, controller information and solver oracles
         run: GTO_ABSTRACT_LIBRARY="$RUNNER_TEMP/abstract-tests/abstract.so" python -B -m unittest gto.abstract.test_model -v
+      - name: Independent original-ledger legal actions and2000 terminal net checks
+        run: python -B -m gto.abstract.audit_ledger --build-directory "$RUNNER_TEMP/abstract-tests"
       - name: Independent seeds, continuation models and fixed-policy heldout EV
         run: python -B -m gto.abstract.study --output "$RUNNER_TEMP/abstract-study" --samples 256 --iterations 4000
       - name: Research artifact reproducibility and non-GTO admission gate
