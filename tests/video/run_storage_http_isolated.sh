@@ -82,3 +82,6 @@ bash tests/video/recovery_production_candidate_isolated_qa.sh "$dburl" recheck
 # After the HTTP E2E has created post/nonce/manifest rows, introduce isolated
 # definition drift and prove rerunning the candidate fails without row changes.
 bash tests/video/recovery_production_candidate_isolated_qa.sh "$dburl" drift
+# Final disposable-only RLS test: exercise permissive OR vs restrictive AND
+# with actual authenticated-role Storage INSERTs and candidate reapplication.
+psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/isolated_storage_insert_stop_qa.sql
