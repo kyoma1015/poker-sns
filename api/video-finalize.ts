@@ -67,6 +67,7 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
   if ((body as Record<string, unknown>).action === 'hide') {
     const postId = (body as Record<string, unknown>).post_id
     if (Object.keys(body).length !== 2 || typeof postId !== 'string' || !UUID.test(postId)) return res.status(400).end()
+    try { assertProductionVideoConfiguration() } catch { return res.status(503).end() }
     const url = process.env.VITE_SUPABASE_URL
     const key = process.env.VITE_SUPABASE_ANON_KEY
     if (!url || !key) return res.status(503).end()

@@ -9,7 +9,7 @@ Preserve existing policies and grants; restrictive policies affect only video po
 Do not DROP or DELETE anything as rollback. No physical video deletion is enabled.
 
 ## Release prerequisites
-Verify testplayer's immutable auth.users.id using the existing application's identity mapping and authenticated session. Do not authorize by display name, mutable user metadata, or guessed UUID.
+The production profiles.poker_id=testplayer mapping was read-only checked against auth.users.id and returned exactly one matching Auth user on 2026-10-30 JST. Reconfirm that immutable ID through the authenticated session before enabling it. Do not authorize by display name, mutable user metadata, or guessed UUID.
 Use that single UUID in both VIDEO_ALLOWED_USER_IDS and video_private.allowed_publishers. The SQL ships with an empty allowlist and disabled settings.
 Check existing Storage policies are accepted by the migration's conflict preflight. If it aborts, review the conflict; do not remove existing image policies to force application.
 Run changed SQL and server gate tests, real JWT/Storage/HTTP end-to-end, full client build, and protected Preview matching the release SHA before production approval.
