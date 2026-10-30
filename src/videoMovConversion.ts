@@ -14,7 +14,7 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal): Promise
   if (!isMovVideo(file)) return file
   if (file.size <= 0 || file.size > MAX_BYTES) throw new Error('変換前のMOVも20MiB以内にしてください。' + MOV_CONVERSION_HELP)
   if (typeof MediaRecorder === 'undefined' || typeof AudioContext === 'undefined') throw new Error(MOV_CONVERSION_HELP)
-  const mime = ['video/mp4;codecs=avc1.42E01E,mp4a.40.2', 'video/mp4'].find(type => MediaRecorder.isTypeSupported(type))
+  const mime = ['video/mp4;codecs=avc1.42E01E,mp4a.40.2', 'video/mp4;codecs=avc1,mp4a.40.2'].find(type => MediaRecorder.isTypeSupported(type))
   const canvas = document.createElement('canvas')
   if (!mime || typeof canvas.captureStream !== 'function') throw new Error(MOV_CONVERSION_HELP)
   const audio = new AudioContext()

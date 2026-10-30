@@ -23,5 +23,5 @@ jobs:
       - run: npx tsc -b --pretty false && npx vite build
       - run: npm run lint
       - run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
-      - run: node node_modules/playwright-core/cli.js install --with-deps chromium
+      - run: node node_modules/playwright-core/cli.js install --with-deps chrome
       - run: node tests/video/mov_conversion_browser.mjs

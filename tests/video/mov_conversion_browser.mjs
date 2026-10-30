@@ -30,7 +30,7 @@ try {
   </script>`
   server = createServer((req,res) => {res.setHeader('Content-Type',req.url==='/convert.js'?'text/javascript':'text/html');res.end(req.url==='/convert.js'?js:html)})
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve))
-  browser=await chromium.launch({headless:true,args:['--no-sandbox']})
+  browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-sandbox']})
   const page=await browser.newPage()
   let external=0
   await page.route('**/*',route=>{if(new URL(route.request().url()).hostname!=='127.0.0.1'){external++;return route.abort()}return route.continue()})
@@ -42,6 +42,7 @@ try {
     await page.waitForFunction(()=>window.result!==null,{},{timeout:60000})
     return page.evaluate(()=>window.result)
   }
+  console.log('MP4 encoder support', await page.evaluate(()=>['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4;codecs=avc1,mp4a.40.2'].map(type=>({type,supported:MediaRecorder.isTypeSupported(type)}))))
   const converted=await convert(fixture)
   assert.equal(converted.ok,true,converted.error)
   assert.equal(converted.type,'video/mp4')
@@ -49,6 +50,7 @@ try {
   const output=join(qa,'converted.mp4')
   await writeFile(output,Buffer.from(converted.bytes))
   const probe=JSON.parse(execFileSync('ffprobe',['-v','error','-show_streams','-show_format','-of','json',output],{encoding:'utf8'}))
+  console.log('Output codecs',probe.streams.map(s=>({type:s.codec_type,codec:s.codec_name})))
   assert.ok(probe.streams.some(s=>s.codec_type==='video'&&s.codec_name==='h264'))
   assert.ok(probe.streams.some(s=>s.codec_type==='audio'&&s.codec_name==='aac'))
   assert.ok(Math.abs(Number(probe.format.duration)-2)<0.4)
