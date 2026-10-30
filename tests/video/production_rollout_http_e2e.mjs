@@ -17,6 +17,7 @@ create policy normal_delete on public.posts for delete to authenticated using(us
 grant select,insert,update,delete on public.posts to authenticated;
 insert into public.posts(user_id,content,post_type,image_urls) values('99999999-9999-4999-8999-999999999999','preserved existing image fixture','normal',array['https://example.invalid/preserved.png']);`)
 sql(readFileSync('sql/video_production_limited_rollout.sql','utf8'))
+sql(readFileSync('sql/video_general_public_rollout_candidate.sql','utf8'))
 const signingKey=randomBytes(32)
 sql("insert into video_private.attestation_keys(key_id,secret,active) values(7,decode('"+signingKey.toString('hex')+"','hex'),true); notify pgrst,'reload schema'")
 await new Promise(r=>setTimeout(r,1500))
@@ -69,7 +70,20 @@ const expiredToken=unsigned+'.'+createHmac('sha256',env.JWT_SECRET).update(unsig
 const expired=createClient(env.API_URL,key,{global:{headers:{Authorization:'Bearer '+expiredToken}},auth:{persistSession:false,autoRefreshToken:false}})
 assert.ok((await expired.rpc('video_rollout_allowed')).error)
 assert.ok((await expired.storage.from('post-videos').download(path)).error)
+// Public candidate is default OFF. Membership still requires actual Auth JWT.
+const otherUid=(await other.auth.getUser()).data.user.id
+assert.equal((await other.rpc('video_rollout_member')).data,false)
+assert.equal(sql('select enabled from video_private.general_public_rollout where singleton'),'f')
+sql('update video_private.general_public_rollout set enabled=true where singleton=true')
+assert.equal((await other.rpc('video_rollout_member')).data,true)
+const otherPath=otherUid+'/'+randomUUID()+'.mp4'
+assert.ifError((await other.rpc('video_reserve_object_key',{p_owner:otherUid,p_path:otherPath})).error)
+assert.ok((await anon.rpc('video_reserve_object_key',{p_owner:otherUid,p_path:otherPath})).error)
 sql('update video_private.rollout_settings set enabled=false')
+assert.equal((await other.rpc('video_rollout_allowed')).data,false)
+sql('update video_private.general_public_rollout set enabled=false where singleton=true')
+assert.equal((await other.rpc('video_rollout_member')).data,false)
+
 assert.equal((await owner.rpc('video_rollout_allowed')).data,false)
 assert.ifError((await owner.rpc('video_hide_own',{p_post_id:results[0].data})).error)
 assert.equal((await owner.from('posts').select('id').not('video_path','is',null)).data.length,0)

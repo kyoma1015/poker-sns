@@ -21,7 +21,7 @@ export async function verifyAttachmentRequestRaces({browser,origin,jwt,anon,byte
         await page.evaluate(()=>window.dispatchEvent(new Event('poker-id-open-compose')))
         const composer=page.getByRole('dialog',{name:'新しい投稿'})
         await composer.waitFor()
-        const picker=page.locator('input[accept="video/mp4,video/webm"]')
+        const picker=page.locator('input[type="file"][accept*="video/mp4"]')
         const beginRequest=async()=>{
           await composer.getByRole('button',{name:'＋ 添付',exact:true}).click()
           await composer.getByRole('button',{name:c.label}).click()
@@ -96,3 +96,4 @@ export async function verifyAttachmentRequestRaces({browser,origin,jwt,anon,byte
     }
   }
 }
+

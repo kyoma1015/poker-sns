@@ -323,6 +323,40 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     await timelinePage.evaluate(() => sessionStorage.removeItem('poker-id-pending-video-v1'))
     await timelinePage.reload()
     console.log('PASS: REAL Chromium restores same-owner pending draft after reload')
+    // Changed route: actual Timeline converts MOV before any reservation/upload.
+    const movPage=await browser.newPage()
+    await movPage.addInitScript(({jwt,anon})=>{window.__VIDEO_QA_JWT=jwt;window.__VIDEO_QA_ANON=anon},{jwt,anon})
+    let prematureMovWrites=0
+    movPage.on('request',request=>{if(request.method()==='POST'&&/video_reserve|storage\/v1\/object\/post-videos/.test(request.url()))prematureMovWrites++})
+    await movPage.goto(origin+'/tests/video/browser-real-timeline.html')
+    await movPage.evaluate(()=>window.dispatchEvent(new Event('poker-id-open-compose')))
+    const movComposer=movPage.getByRole('dialog',{name:'新しい投稿'})
+    await movComposer.waitFor()
+    const movPicker=movPage.locator('input[type="file"][accept*="video/mp4"]')
+    await movPicker.setInputFiles({name:'phone.mov',mimeType:'video/quicktime',buffer:bytes})
+    await movComposer.getByRole('button',{name:/MOV変換を開始/}).click()
+    await movComposer.locator('video').waitFor({timeout:25000})
+    const localMp4=await movComposer.locator('video').evaluate(async video=>{
+      const blob=await (await fetch(video.src)).blob();return {type:blob.type,size:blob.size}
+    })
+    assert.equal(localMp4.type,'video/mp4');assert.ok(localMp4.size>0&&localMp4.size<=20*1024*1024)
+    assert.equal(prematureMovWrites,0,'conversion selection must not reserve or upload')
+    await movComposer.getByRole('button',{name:'添付を解除'}).click()
+    await movPage.evaluate(()=>{
+      window.__MOV_CLOSED=0;const close=AudioContext.prototype.close
+      AudioContext.prototype.close=function(...args){window.__MOV_CLOSED++;return close.apply(this,args)}
+    })
+    await movPicker.setInputFiles({name:'cancel.mov',mimeType:'video/quicktime',buffer:bytes})
+    await movComposer.getByRole('button',{name:/MOV変換を開始/}).click()
+    await movComposer.getByText(/MOVを端末内でMP4へ変換しています/).waitFor()
+    await movComposer.getByRole('button',{name:'×',exact:true}).click()
+    await movPage.waitForFunction(()=>window.__MOV_CLOSED>0)
+    await movPage.evaluate(()=>window.dispatchEvent(new Event('poker-id-open-compose')))
+    await movComposer.waitFor()
+    assert.equal(await movComposer.locator('video').count(),0,'closed conversion must not resurrect attachment')
+    assert.equal(prematureMovWrites,0)
+    await movPage.close()
+    console.log('PASS: actual Timeline MOV -> bounded MP4 preview; close cancels audio/attachment without reservation or upload')
     // Resolve two metadata checks in reverse order. The first selection must
     // never overwrite the latest accepted file in the actual Timeline UI.
     const selectionPage=await browser.newPage()
@@ -354,7 +388,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
       }
       window.__VIDEO_SELECTION_RESTORE=()=>{document.createElement=create}
     })
-    const picker=selectionPage.locator('input[accept="video/mp4,video/webm"]')
+    const picker=selectionPage.locator('input[type="file"][accept*="video/mp4"]')
     await picker.setInputFiles({name:'older.webm',mimeType:'video/webm',buffer:bytes})
     await picker.setInputFiles({name:'latest.webm',mimeType:'video/webm',buffer:bytes})
     await selectionPage.waitForFunction(()=>window.__VIDEO_SELECTION_CHECKS.length===2)
@@ -471,7 +505,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
         videoReservationResponses.push({status:response.status(),method:response.request().method()})
       }
     })
-    await timelinePage.locator('input[accept="video/mp4,video/webm"]').setInputFiles({
+    await timelinePage.locator('input[type="file"][accept*="video/mp4"]').setInputFiles({
       name:'timeline-e2e.webm',mimeType:'video/webm',buffer:bytes,
     })
     await composer.locator('video').waitFor()
@@ -487,7 +521,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
         return fake
       }
     })
-    await timelinePage.locator('input[accept="video/mp4,video/webm"]').setInputFiles({
+    await timelinePage.locator('input[type="file"][accept*="video/mp4"]').setInputFiles({
       name:'deferred-unposted.webm',mimeType:'video/webm',buffer:bytes,
     })
     await timelinePage.waitForFunction(()=>Boolean(window.__VIDEO_LATE_SELECTION?.onloadedmetadata))
@@ -605,3 +639,4 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     await vite.close()
   }
 }
+

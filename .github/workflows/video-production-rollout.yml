@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'sql/video_production_limited_rollout.sql'
+      - 'sql/video_general_public_rollout_candidate.sql'
       - 'server/video-production-rollout.mjs'
       - 'tests/video/production_rollout_gate.test.mjs'
       - 'tests/video/production_rollout_http_e2e.mjs'

@@ -54,7 +54,7 @@ export async function verifyUploadReload({browser,origin,jwt,anon,bytes}) {
         const composer=page.getByRole('dialog',{name:'新しい投稿'})
         await composer.waitFor()
         await composer.locator('textarea').fill('isolated reload must not publish')
-        await page.locator('input[accept="video/mp4,video/webm"]').setInputFiles({name:'reload.webm',mimeType:'video/webm',buffer:bytes})
+        await page.locator('input[type="file"][accept*="video/mp4"]').setInputFiles({name:'reload.webm',mimeType:'video/webm',buffer:bytes})
         await composer.locator('video').waitFor()
         if(scenario==='foreign-journal') {
           assert.equal(await composer.getByText(/重複を防ぐため動画の再送信を停止/).count(),0,'another owner journal cannot block current account')
@@ -85,7 +85,7 @@ export async function verifyUploadReload({browser,origin,jwt,anon,bytes}) {
         catch {return true}
       },[...bytes])
       assert.equal(refused,true)
-      await page.locator('input[accept="video/mp4,video/webm"]').setInputFiles({name:'retry.webm',mimeType:'video/webm',buffer:bytes})
+      await page.locator('input[type="file"][accept*="video/mp4"]').setInputFiles({name:'retry.webm',mimeType:'video/webm',buffer:bytes})
       await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))))
       assert.deepEqual({reservations,uploads,finalizations},before,'reloaded/untrusted state causes zero additional writes')
       assert.equal(finalizations,0,'never finalize an unconfirmed object')
@@ -98,3 +98,4 @@ export async function verifyUploadReload({browser,origin,jwt,anon,bytes}) {
     } finally {release?.();await page.close()}
   }
 }
+

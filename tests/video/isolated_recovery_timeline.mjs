@@ -43,7 +43,7 @@ export async function verifyRecoveryTimeline({browser,origin,jwt,anon,bytes,lega
         await page.evaluate(()=>window.dispatchEvent(new Event('poker-id-open-compose')))
         await composer.waitFor()
         await composer.locator('textarea').fill(text)
-        await page.locator('input[accept="video/mp4,video/webm"]').setInputFiles({name:'recovery-ui.webm',mimeType:'video/webm',buffer:bytes})
+        await page.locator('input[type="file"][accept*="video/mp4"]').setInputFiles({name:'recovery-ui.webm',mimeType:'video/webm',buffer:bytes})
         await composer.locator('video').waitFor()
         await composer.getByRole('button',{name:'投稿する',exact:true}).click()
         for(let wait=0;!release&&wait<1000;wait++)await page.waitForTimeout(20)
@@ -92,3 +92,4 @@ export async function verifyRecoveryTimeline({browser,origin,jwt,anon,bytes,lega
     } finally {release?.();await page.close()}
   }
 }
+
