@@ -46,3 +46,11 @@ F. Only after a distinct public-release approval, review independent server flag
 
 ## Verification record
 Draft PR #132, previous HEAD `d677b46ee945b3ecff9b4b4a289a880ad4f09953`. Isolated CI: Video SQL `41025169742`, MOV `41025169769`, Poll-only `41025169932`, Storage HTTP `41025169747`: SUCCESS. Preview `dpl_BaJy1QPFUPy7x5NzA1N9KTgbn6if`: READY, SHA matched previous HEAD. Do not reuse old SHA proof after this documentation commit.
+
+
+## 2026-10-31 production-read audit: high-priority findings
+- The **authenticated INSERT** policies on `storage.objects` are permissive and OR-combined. `poker_post_videos_insert_once` allows an owner with a valid reservation without invoking `video_rollout_allowed()`; `video_rollout_storage_insert` separately checks the rollout flag. Therefore **turning the rollout DB flag off is not by itself a guaranteed Storage INSERT kill switch** under the currently deployed policy set. Do not rely on that flag as the only upload stop. A production policy change needs an independent security audit and separately authorized migration.
+- The parent attested publisher checks `video_rollout_allowed()` both before and after locking, and checks the permanent reservation ledger and Storage generation. The candidate recovery wrapper relies on these protections.
+- The current production `video_reserve_object_key` has 12/hour and 80/day per-owner reservation caps. Avoid destructive "retry by new key" behaviour.
+- The candidate file `tests/video/recovery_production_candidate_NOT_APPROVED.sql` is **NOT** production-approved; its preflight rejects existing target migration objects rather than silently replacing them. This intentionally makes it fail-closed on rerun; it is not an idempotent installer yet. Before anyone applies SQL, complete a compatibility-safe idempotency design and production-like dry run.
+- Server signing must use the existing production attestation key settings `VIDEO_ATTESTATION_KEY_HEX` and `VIDEO_ATTESTATION_KEY_ID` with an independently verified matching database key. Do **not** reuse `VIDEO_RECOVERY_ISOLATED_KEY_HEX` outside the disposable test environment. No production bind/finalize is enabled by this documentation change.
