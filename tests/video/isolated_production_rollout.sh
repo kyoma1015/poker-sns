@@ -84,7 +84,15 @@ begin
  begin perform public.video_hide_own(post); raise exception 'other owner hid post';
  exception when raise_exception then if sqlerrm<>'video user denied' then raise; end if; end;
  perform set_config('request.jwt.claim.sub',owner::text,true);
+ execute 'reset role';
+ update video_private.rollout_settings set enabled=false;
+ execute 'set local role authenticated';
+ if public.video_rollout_allowed() then raise exception 'emergency stop failed'; end if;
  if not public.video_hide_own(post) or not public.video_hide_own(post) then raise exception 'hide failed'; end if;
+ update storage.objects set name=name where name=path;
+ if found then raise exception 'Storage update allowed'; end if;
+ delete from storage.objects where name=path;
+ if found then raise exception 'Storage delete allowed'; end if;
  if exists(select 1 from public.posts where id=post) then raise exception 'hidden post visible'; end if;
  if exists(select 1 from storage.objects where name=path) then raise exception 'hidden bytes visible'; end if;
  execute 'reset role';

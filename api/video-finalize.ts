@@ -1,4 +1,4 @@
-import { assertProductionVideoConfiguration, assertProductionVideoPublisher } from '../server/video-production-rollout.mjs'
+import { assertProductionVideoConfiguration, assertProductionVideoPublisher, assertProductionVideoMember } from '../server/video-production-rollout.mjs'
 import { handleCloudVideo } from '../server/video-cloud-http.mjs'
 import { assertCloudTestRequestConfiguration } from '../server/video-cloud-test-target.mjs'
 import { handleVideoRecoveryCandidate } from '../server/video-recovery-candidate.js'
@@ -28,7 +28,7 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
     return res.status(503).end()
   }
   if (process.env.VIDEO_PRODUCTION_FENCED_READY === 'true' && options.isolatedLocalOnly !== true) {
-    try { assertProductionVideoConfiguration() } catch { return res.status(503).end() }
+    try { assertProductionVideoConfiguration() } catch { return res.status(503).json({ error: 'video_reservation_not_enabled' }) }
   }
   if (process.env.VIDEO_CLOUD_TEST_ENABLED === 'true') return handleCloudVideo(req,res)
   // Preview-only runtime attestation, sharing this existing serverless function.
@@ -74,7 +74,7 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
     try {
       const identity = await viewer.auth.getUser(authorization.slice(7))
       if (identity.error || !identity.data.user) return res.status(401).end()
-      await assertProductionVideoPublisher(viewer, identity.data.user.id)
+      await assertProductionVideoMember(viewer, identity.data.user.id)
       const hidden = await viewer.rpc('video_hide_own', { p_post_id: postId })
       if (hidden.error || hidden.data !== true) return res.status(403).end()
       return res.status(200).json({ hidden: true })

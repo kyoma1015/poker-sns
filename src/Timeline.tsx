@@ -2556,11 +2556,11 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       {deleteTargetId && (
         <div role="presentation" style={{ position: 'fixed', inset: 0, zIndex: 1000, background: '#000b', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
           <div role="alertdialog" aria-modal="true" aria-labelledby="post-delete-title" aria-describedby="post-delete-description" style={{ width: '100%', maxWidth: 360, padding: 22, borderRadius: 16, background: '#1a1a1a', border: '1px solid #444', boxShadow: '0 12px 40px #000b' }}>
-            <h3 id="post-delete-title" style={{ margin: '0 0 12px', fontSize: 18 }}>投稿を削除しますか？</h3>
-            <p id="post-delete-description" style={{ color: '#bbb', fontSize: 14, lineHeight: 1.6, margin: '0 0 22px' }}>この操作は取り消せません。</p>
+            <h3 id="post-delete-title" style={{ margin: '0 0 12px', fontSize: 18 }}>{posts.find(p => p.id === deleteTargetId)?.video_path ? '動画を非表示にしますか？' : '投稿を削除しますか？'}</h3>
+            <p id="post-delete-description" style={{ color: '#bbb', fontSize: 14, lineHeight: 1.6, margin: '0 0 22px' }}>{posts.find(p => p.id === deleteTargetId)?.video_path ? '動画と投稿は保存されたまま、表示と再生を停止します。' : 'この操作は取り消せません。'}</p>
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10 }}>
               <button type="button" disabled={isDeleting} onClick={() => setDeleteTargetId(null)} style={{ width: 'auto', padding: '10px 16px', borderRadius: 10, background: '#333', color: '#fff' }}>キャンセル</button>
-              <button type="button" disabled={isDeleting} onClick={() => void handleDelete()} style={{ width: 'auto', padding: '10px 16px', borderRadius: 10, background: '#b73535', color: '#fff', opacity: isDeleting ? 0.6 : 1 }}>{isDeleting ? '削除中...' : '削除する'}</button>
+              <button type="button" disabled={isDeleting} onClick={() => void handleDelete()} style={{ width: 'auto', padding: '10px 16px', borderRadius: 10, background: '#b73535', color: '#fff', opacity: isDeleting ? 0.6 : 1 }}>{posts.find(p => p.id === deleteTargetId)?.video_path ? (isDeleting ? '非表示中...' : '非表示にする') : (isDeleting ? '削除中...' : '削除する')}</button>
             </div>
           </div>
         </div>
