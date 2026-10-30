@@ -2,16 +2,23 @@ import { createVideoAttestationNonce, signBinaryVideoAttestation, videoAttestati
 import { createClient } from '@supabase/supabase-js'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { inspectStagedVideo } from '../api/video-preflight.js'
+import { assertProductionVideoMember } from './video-production-rollout.mjs'
 
 const pathPattern=/^([0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12})\/[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}\.(mp4|webm)$/
 const MAX_BYTES=20*1024*1024
 
-/** Review-only advisory endpoint, sharing finalize's function. No production
- * activation path, no publication/cleanup, no privileged credentials. */
+/** Production recovery is status-only and requires an independent opt-in.
+ * No production binding, publication, cleanup or privileged credentials. */
 export async function handleVideoRecoveryCandidate(req: VercelRequest,res: VercelResponse,isolated: boolean) {
   const url=process.env.VITE_SUPABASE_URL,anon=process.env.VITE_SUPABASE_ANON_KEY
-  if (!isolated || url!=='http://127.0.0.1:56321' || !anon) return res.status(503).json({error:'recovery_not_enabled'})
+  const isolatedReady=isolated && url==='http://127.0.0.1:56321'
+  const productionStatusOnly=!isolated && process.env.VERCEL_ENV==='production' &&
+    process.env.VIDEO_PRODUCTION_FENCED_READY==='true' &&
+    process.env.VIDEO_RECOVERY_STATUS_ONLY_ENABLED==='true' &&
+    typeof url==='string' && /^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/.test(url)
+  if ((!isolatedReady && !productionStatusOnly) || !anon) return res.status(503).json({error:'recovery_not_enabled'})
   const body=req.body as Record<string,unknown>
+  if (productionStatusOnly && body.action!=='recovery_status') return res.status(503).json({error:'recovery_mutation_not_enabled'})
   const bind=body.action==='bind_recovery'
   const finalize=body.action==='recovery_finalize'
   const expected=bind?['action','object_path','sha256','size','type','content']:finalize?['action','object_path','content']:['action','object_path']
@@ -30,6 +37,7 @@ export async function handleVideoRecoveryCandidate(req: VercelRequest,res: Verce
   }
   try {
     const owner=await authenticate(),path=body.object_path
+    if (productionStatusOnly) await assertProductionVideoMember(client,owner)
     if(pathPattern.exec(path)?.[1]!==owner) return res.status(403).end()
     if(bind) {
       const {data,error}=await client.rpc('video_bind_recovery_manifest_v1',{p_path:path,p_sha256:body.sha256,p_size:body.size,p_type:body.type,p_content:body.content})
