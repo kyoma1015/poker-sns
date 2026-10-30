@@ -336,7 +336,6 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     await movPicker.setInputFiles({name:'phone.mov',mimeType:'video/quicktime',buffer:bytes})
     // MOV selection now starts conversion automatically; no mandatory button.
     await movComposer.locator('video').waitFor({timeout:25000})
-    await movComposer.locator('video').waitFor({timeout:25000})
     const localMp4=await movComposer.locator('video').evaluate(async video=>{
       const blob=await (await fetch(video.src)).blob();return {type:blob.type,size:blob.size}
     })
