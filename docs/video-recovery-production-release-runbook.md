@@ -42,7 +42,7 @@ F. Only after a distinct public-release approval, review independent server flag
 - Production bind/finalize branches are implemented behind independent disabled flags; production JWT/attestation-key parity and deployment remain unapproved.
 - Client recovery feature is disabled; original journal protection must remain fail-closed.
 - No authenticated Preview HTTP/UI smoke result due to deployment protection; READY/SHA and isolated E2E PASS are **not** equivalent to live user acceptance.
-- Production-like recovery migration CI is PASS; restrictive Storage INSERT policy has NOT been executed in isolated SQL CI and remains a release blocker.
+- Production-like recovery migration CI is PASS. Restrictive Storage INSERT policy has now passed disposable PostgreSQL RLS CI, but remains NOT APPROVED and NOT APPLIED in production; live Storage API verification remains a release blocker.
 
 ## Verification record
 Draft PR #132, previous HEAD `d677b46ee945b3ecff9b4b4a289a880ad4f09953`. Isolated CI: Video SQL `41025169742`, MOV `41025169769`, Poll-only `41025169932`, Storage HTTP `41025169747`: SUCCESS. Preview `dpl_BaJy1QPFUPy7x5NzA1N9KTgbn6if`: READY, SHA matched previous HEAD. Do not reuse old SHA proof after this documentation commit.
@@ -67,7 +67,7 @@ Draft PR #132, previous HEAD `d677b46ee945b3ecff9b4b4a289a880ad4f09953`. Isolate
 - HEAD `8aa451094a93d0983d509b5df60eef40202bdcab`: Video SQL `41084900677`, MOV `41084900653`, Poll-only `41084900576`, Storage HTTP `41084900918` all SUCCESS; Preview `dpl_HYCsyPShehStHzy7MdpA8dww4cHo` READY and matching SHA.
 - Storage HTTP job `124163372712`: `PASS: production-like candidate SQL first and second application`; `PASS: populated production-like schema reapply preserved posts/manifests/nonces`; `PASS: mutated function rejected and posts/manifests/nonces preserved`; `PASS: incomplete migration rejected without overwriting`; `PASS: existing parent RPCs, Storage policies and post/ledger columns unchanged`.
 - Production recovery signer uses `VIDEO_ATTESTATION_KEY_HEX` with the configured `VIDEO_ATTESTATION_KEY_ID`; the isolated signing key is only used on the localhost isolated branch. The DB must independently validate the matching key ID and signature before production rollout.
-- The Storage restrictive INSERT candidate is **review only**; no execution evidence exists yet. Do not claim emergency Storage stop is proven by the candidate until effective RLS tests pass with production-equivalent permissive policies and authenticated JWTs.
+- Historical note (superseded by the later 2026-10-31 acceptance below): the Storage restrictive INSERT candidate had no execution evidence at this earlier HEAD. Later isolated PostgreSQL RLS acceptance is recorded below; it does not prove a production Storage HTTP kill switch.
 - Following the acceptance HEAD, a server input-validation change rejects unknown recovery actions and malformed bearer headers; new HEAD requires fresh CI. The previous acceptance evidence must not be attributed to that new HEAD.
 
 
@@ -77,3 +77,12 @@ Draft PR #132, previous HEAD `d677b46ee945b3ecff9b4b4a289a880ad4f09953`. Isolate
 - GitHub commit status context `Vercel` reports `failure`: `Deployment rate limited — retry in 24 hours.` Therefore no matching Preview for this HEAD exists yet. Do NOT change SSO, disable Deployment Protection, upgrade the plan, trigger repeated deploys, or claim a READY Preview.
 - Resume only after Vercel's rate limit clears. Check the exact HEAD and Preview SHA/READY; if Git auto-deployment does not resume, inspect deployment integration status before taking a manual Preview-only action.
 - Release remains blocked until Preview verification, production-specific key-ID/signature and RLS review, authorization, and approved rollout. No production migration or Storage policy application has been performed.
+
+
+## 2026-10-31 current verification and outstanding approval gates
+- HEAD `8ab452620b6751a827a03f139ed89afb8213e9eb`: Video SQL `41088297787`, MOV `41088297555`, Poll-only `41088297513`, Storage HTTP `41088297810` all SUCCESS. Storage HTTP job `124175169539` confirms restrictive policy first/second application, rollout-off denial, rollout-on/nonvideo success, drift rejection. The earlier transient localhost port conflict did not recur.
+- GitHub Vercel status on this exact HEAD is `failure` with `Deployment rate limited — retry in 24 hours.`; no matching Preview deployment. Do not force a new deployment or change plan/protection settings.
+- **Signer verification gate**: check the production runtime has a valid 64-character hex `VIDEO_ATTESTATION_KEY_HEX` and explicit positive `VIDEO_ATTESTATION_KEY_ID` without exposing either secret; independently verify the corresponding DB key ID is active and the attested RPC rejects wrong key IDs/signatures. Code-level checks alone cannot establish runtime parity.
+- **Authorization gate**: verify actual production JWT owner/foreign/expired/revoked cases, server flags, DB rollout membership, and authenticated RPC grants. Read-only inspection cannot substitute for approved isolated real-HTTP negative tests.
+- **RLS gate**: compare deployed Storage policy catalog and RPC definitions to reviewed candidates, including permissive OR vs restrictive AND, service-role bypass, and other Storage operations. Restrictive policy remains review-only and must never be silently applied.
+- **Release gate**: migration, Preview smoke, canary, and general public rollout each require distinct authorization; keep client and server feature toggles disabled until all gates pass.
