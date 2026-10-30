@@ -72,7 +72,12 @@ psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/isolated_attested_generation.sql
 psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/production_attested_candidate_review_only.sql
 psql "$dburl" -v ON_ERROR_STOP=1 -c "insert into video_private.attestation_keys(key_id,secret,active) values(1,decode(repeat('41',32),'hex'),true),(2,decode(repeat('42',32),'hex'),true); grant execute on function public.video_publish_attested_v1(uuid,text,uuid,text,integer,text,bigint,text,text,smallint) to authenticated; notify pgrst, 'reload schema';"
 VIDEO_QA_ENV="$qa/local.env" node tests/video/isolated_attested_real_http_e2e.mjs
-# Review-only recovery RPCs and owner-JWT API: disposable local stack ONLY.
-psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/recovery_candidate_review_only.sql
+# Production-like candidate migration is executed ONLY against the already
+# pinned disposable localhost DB, never a connected Supabase project.
+# Test partial-install refusal, first application, identical reapply, and grants.
+bash tests/video/recovery_production_candidate_isolated_qa.sh "$dburl" install
 psql "$dburl" -v ON_ERROR_STOP=1 -c "notify pgrst, 'reload schema';"
 VIDEO_QA_ENV="$qa/local.env" node tests/video/isolated_recovery_candidate_e2e.mjs
+# After the HTTP E2E has created post/nonce/manifest rows, introduce isolated
+# definition drift and prove rerunning the candidate fails without row changes.
+bash tests/video/recovery_production_candidate_isolated_qa.sh "$dburl" drift
