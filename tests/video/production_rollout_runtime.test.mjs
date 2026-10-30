@@ -14,7 +14,8 @@ test('production adapter composes real ffprobe with attested RPC; stop preserves
   const saved=names.map(n=>process.env[n]), originalFetch=globalThis.fetch
   const key=randomBytes(32)
   try {
-    Object.assign(process.env,{VITE_SUPABASE_URL:url,VITE_SUPABASE_ANON_KEY:'synthetic-public-key',VIDEO_PRODUCTION_FENCED_READY:'true',VIDEO_PRODUCTION_LIMITED_ROLLOUT:'true',VIDEO_ATTESTED_RPC_RELEASE_APPROVED:'true',VIDEO_ALLOWED_USER_IDS:owner,VIDEO_ATTESTATION_KEY_HEX:key.toString('hex'),VIDEO_ATTESTATION_KEY_ID:'7',VIDEO_SERVER_ENABLED:'true',VIDEO_CLOUD_TEST_ENABLED:'false'})
+    delete process.env.VIDEO_CLOUD_TEST_ENABLED
+    Object.assign(process.env,{VITE_SUPABASE_URL:url,VITE_SUPABASE_ANON_KEY:'synthetic-public-key',VIDEO_PRODUCTION_FENCED_READY:'true',VIDEO_PRODUCTION_LIMITED_ROLLOUT:'true',VIDEO_ATTESTED_RPC_RELEASE_APPROVED:'true',VIDEO_ALLOWED_USER_IDS:owner,VIDEO_ATTESTATION_KEY_HEX:key.toString('hex'),VIDEO_ATTESTATION_KEY_ID:'7',VIDEO_SERVER_ENABLED:'true'})
     const bytes=execFileSync(process.env.FFMPEG_BINARY_PATH||'ffmpeg',['-v','error','-f','lavfi','-i','color=c=black:s=32x32:d=1','-c:v','libx264','-movflags','frag_keyframe+empty_moov','-f','mp4','pipe:1'],{stdio:['ignore','pipe','pipe']})
     let writes=0,calls=0,identity=owner,allowed=true
     globalThis.fetch=async(input,options={})=>{

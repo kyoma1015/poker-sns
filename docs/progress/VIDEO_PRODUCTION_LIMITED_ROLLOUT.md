@@ -9,7 +9,7 @@ Preserve existing policies and grants; restrictive policies affect only video po
 Do not DROP or DELETE anything as rollback. No physical video deletion is enabled.
 
 ## Release prerequisites
-The production profiles.poker_id=testplayer mapping was read-only checked against auth.users.id and returned exactly one matching Auth user on 2026-10-30 JST. Reconfirm that immutable ID through the authenticated session before enabling it. Do not authorize by display name, mutable user metadata, or guessed UUID.
+The production profiles.poker_id=testplayer mapping was read-only checked against auth.users.id on 2026-10-30 JST and returned exactly one matching Auth user. Reconfirm the authenticated session ID before activation. Do not authorize by display name, mutable user metadata, or guessed UUID.
 Use that single UUID in both VIDEO_ALLOWED_USER_IDS and video_private.allowed_publishers. The SQL ships with an empty allowlist and disabled settings.
 Check existing Storage policies are accepted by the migration's conflict preflight. If it aborts, review the conflict; do not remove existing image policies to force application.
 Run changed SQL and server gate tests, real JWT/Storage/HTTP end-to-end, full client build, and protected Preview matching the release SHA before production approval.
@@ -29,7 +29,7 @@ Server-only:
 - FFPROBE_BINARY_PATH: deployed absolute ffprobe executable, verified by Preview runtime attestation.
 Existing nonprivileged connection: VITE_SUPABASE_URL must exactly equal https://ephptepeuespnxtzdqby.supabase.co and VITE_SUPABASE_ANON_KEY is the production public client key.
 Client build: VITE_VIDEO_SERVER_ENABLED=true only for the reviewed release. It is UI availability, not authorization; server/DB deny all non-allowlisted users.
-Cloud/recovery flags VIDEO_CLOUD_TEST_ENABLED and VITE_VIDEO_CLOUD_TEST_ENABLED must remain false/unset. Do not use service_role or QA fixed HMAC secrets.
+Server cloud-test configuration VIDEO_CLOUD_TEST_ENABLED, VIDEO_CLOUD_TEST_PROJECT_REF and VIDEO_CLOUD_TEST_VERCEL_PROJECT_ID must be unset (even the string false requests the cloud-test guard). Client VITE_VIDEO_CLOUD_TEST_ENABLED must remain false/unset. Do not use service_role or QA fixed HMAC secrets.
 Provision the key into the existing private key table through a separately approved secret-safe path; do not put it in SQL files, shell arguments, CI logs, PRs or chat.
 
 ## Approved execution order (approval still required)
@@ -52,3 +52,6 @@ INSERT INTO video_private.hidden_videos(post_id) VALUES (the_verified_video_post
 Never paste an unverified identifier or modify normal posts. The RPC checks owner and video type. Hidden video metadata is filtered by posts RLS, Storage SELECT is denied and media API stops serving it. Already downloaded bytes cannot be revoked.
 Retain posts, reservations, nonce records, hidden records and Storage objects. Do not drop columns/functions/policies while clients may use them.
 If an application regression occurs, restore the recorded prior Vercel deployment with video off. Do not revert existing data or remove migration objects.
+
+## Implemented boundary regression
+The production adapter runtime regression uses real ffprobe and a strict mock HTTP transport (never production network), independently verifies the emitted HMAC/RPC claims, rejects server/DB non-members, rejects new publication while stopped, permits owner hide during stop, and rejects target mismatch before I/O. The separate disposable real Auth/PostgREST/Storage test validates actual SQL/RLS and signatures. Neither is a claim of completed production or Safari E2E.
