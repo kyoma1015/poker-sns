@@ -22,8 +22,20 @@ jobs:
       - run: npm audit --omit=dev --audit-level=high
       - name: Client regression
         run: |
+          # Node 24 strips TypeScript syntax but does not map compiled .js specifiers
+          # to .ts sources. CI-only symlinks preserve the production ESM contract.
+          for source in api/video-*.ts server/video-recovery-candidate.ts; do
+            ln -s "$(basename "$source")" "${source%.ts}.js"
+          done
           for test_file in tests/*.test.mjs; do node "$test_file"; done
-      - run: npm run build
+          # Remove test-only .js aliases before oxlint parses them as JavaScript.
+          for source in api/video-*.ts server/video-recovery-candidate.ts; do
+            rm -- "${source%.ts}.js"
+          done
+      - name: Frontend build (server-only ffprobe bundle not required)
+        env:
+          VIDEO_SKIP_FFPROBE_BUNDLE: '1'
+        run: npm run build
       - run: npm run lint
       - name: Mobile browser QA (mock transport)
         env:

@@ -2,6 +2,7 @@ import { pollDisplayResult } from './interactiveRequests'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { supabase } from './supabase'
+import PostVideo from './PostVideo'
 import { usePullToRefresh } from './usePullToRefresh'
 import QuoteSourcePreview, { type QuoteSource } from './QuoteSourcePreview'
 import { InteractiveCard, type InteractiveItem, type InteractiveResult } from './TimelineInteractive'
@@ -47,6 +48,7 @@ type Post = {
   likeCount: number
   likedByMe: boolean
   comments: Comment[]
+  video_path?: string | null
   image_urls?: string[] | null
 }
 
@@ -678,6 +680,7 @@ function PostDetail() {
                 <QuoteSourcePreview source={post.quotePreview} onOpen={post.quotePreview ? () => navigate(`/post/${post.quotePreview!.id}`) : undefined} />
               )}
 
+              {post.video_path && <PostVideo postId={post.id} />}
               {Array.isArray(post.image_urls) && post.image_urls.length > 0 && (
                 <div
                   style={{

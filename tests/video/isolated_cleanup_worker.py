@@ -1,0 +1,103 @@
+"""Isolated-only durable cleanup worker against local Supabase PostgREST.
+
+Fails closed when Storage has no conditional delete by object version.
+Never deletes a posted video or an unpinned object. No production use.
+"""
+from uuid import UUID, uuid4
+from .isolated_db_adapter import _rpc
+
+def quarantine_orphan(*, owner: str, path: str, expected_version: str | None,
+                      observed_version: str | None, referenced_by_post: bool) -> dict:
+    """Produce an immutable, non-destructive review record; never a delete command.
+
+    The record deliberately contains no bearer tokens, URLs, or service credentials.
+    Quarantine means hold for manual review, not moving or deleting Storage bytes.
+    """
+    from datetime import datetime, timezone
+    if str(UUID(owner)) != owner:
+        raise ValueError("invalid owner")
+    folder, separator, filename = path.partition("/")
+    if not separator or folder != owner or "/" in filename:
+        raise ValueError("invalid Storage path")
+    stem, dot, extension = filename.rpartition(".")
+    if not dot or extension not in ("mp4", "webm") or str(UUID(stem)) != stem:
+        raise ValueError("invalid Storage object identifier")
+    reason = ("referenced_by_post" if referenced_by_post else
+              "missing_pinned_version" if not expected_version else
+              "version_changed" if observed_version != expected_version else
+              "atomic_delete_unproven")
+    return {
+        "owner_id": owner,
+        "object_path": path,
+        "expected_object_version": expected_version,
+        "observed_object_version": observed_version,
+        "reason": reason,
+        "status": "retain" if referenced_by_post else "quarantine",
+        "delete_permitted": False,
+        "recorded_at": datetime.now(timezone.utc).isoformat(),
+    }
+
+
+def run_one(base_url: str, service_key: str, inspect_object, delete_if_version):
+    worker = str(uuid4())
+    if base_url != "http://127.0.0.1:56321" or not service_key:
+        raise PermissionError("isolated cleanup requires fixed loopback API and service key")
+    if not callable(inspect_object) or not callable(delete_if_version):
+        raise PermissionError("isolated cleanup requires explicit safe Storage adapters")
+    jobs = _rpc(base_url, service_key, "video_qa_claim_cleanup",
+                {"p_worker": worker, "p_lease_seconds": 120})
+    if not jobs:
+        return "idle"
+    job = jobs[0]
+    job_id, owner, path = job["id"], job["owner_id"], job["object_path"]
+    success = False
+    reason = "unverified"
+    quarantine_record = None
+    try:
+        if str(UUID(owner)) != owner:
+            raise ValueError("noncanonical owner")
+        path_owner, filename = path.split("/")
+        stem, dot, extension = filename.rpartition(".")
+        if path_owner != owner or not dot or extension not in ("mp4", "webm") or str(UUID(stem)) != stem:
+            raise ValueError("invalid queued object path")
+        posted = _rpc(base_url, service_key, "video_qa_reconcile",
+                      {"p_owner": owner, "p_path": path})
+        if posted:
+            success, reason = True, "referenced by post: retain"
+        else:
+            # A version token must be bound to the queued object at enqueue
+            # time, not obtained here: inspecting only now permits ABA races.
+            expected = job.get("expected_object_version")
+            if not isinstance(expected, str) or not expected.strip():
+                reason = "no pinned object version: cannot safely delete"
+            else:
+                current = inspect_object(owner, path)
+                if current is None:
+                    # A missing object is not durable proof of cleanup:
+                    # a stale job can race with a re-upload at the same path.
+                    # Retain the retryable job unless a tombstone/fence
+                    # proves the key can never be reused.
+                    reason = "object absent but immutable tombstone unproven: retry"
+                elif current != expected:
+                    reason = "object version changed: retain"
+                else:
+                    # The public Storage API has no verified compare-and-delete
+                    # primitive. Merely injecting a callable named
+                    # delete_if_version does not prove atomicity; it could
+                    # perform an unsafe check-then-remove(path) operation.
+                    # Quarantine rather than invoking any deletion callback.
+                    reason = "atomic Storage deletion not proven: quarantined"
+                    quarantine_record = quarantine_orphan(
+                        owner=owner, path=path, expected_version=expected,
+                        observed_version=current, referenced_by_post=False)
+    except Exception:
+        reason = "worker operation failed; retry"
+    if quarantine_record is not None:
+        # The queue remains retryable; no Storage mutation or false success.
+        assert quarantine_record["delete_permitted"] is False
+    finished = _rpc(base_url, service_key, "video_qa_finish_cleanup",
+                    {"p_id": job_id, "p_worker": worker,
+                     "p_success": success, "p_reason": reason})
+    if not finished:
+        raise RuntimeError("cleanup lease lost; cannot acknowledge")
+    return "complete" if success else "retry"

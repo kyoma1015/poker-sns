@@ -1,0 +1,65 @@
+name: Video production rollout changed SQL isolation
+on:
+  pull_request:
+    paths:
+      - 'sql/video_production_limited_rollout.sql'
+      - 'server/video-production-rollout.mjs'
+      - 'tests/video/production_rollout_gate.test.mjs'
+      - 'tests/video/production_rollout_http_e2e.mjs'
+      - 'scripts/video_ci_startup_diagnostic.py'
+      - 'tests/video/isolated_production_rollout.sh'
+      - '.github/workflows/video-production-rollout.yml'
+permissions:
+  contents: read
+jobs:
+  rollout-sql:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Compile changed client and default-disabled application
+        run: npx tsc -b --pretty false && npx vite build
+      - name: Type-check production API entrypoints
+        run: npx tsc --ignoreConfig --noEmit --module nodenext --moduleResolution nodenext --target es2022 --skipLibCheck --allowImportingTsExtensions api/video-media.ts api/video-finalize.ts
+      - run: node --test tests/video/production_rollout_gate.test.mjs
+      - run: bash tests/video/isolated_production_rollout.sh
+
+  rollout-auth-storage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: sudo apt-get update -qq && sudo apt-get install -y postgresql-client ffmpeg
+      - name: Restore pinned isolated Supabase images
+        id: images
+        uses: actions/cache/restore@v4
+        with:
+          path: /tmp/pokerid-supabase-images.tar
+          key: pokerid-supabase-cli-2.81.3-images-v1
+      - name: Load pinned isolated images
+        if: steps.images.outputs.cache-hit == 'true'
+        run: docker load -i /tmp/pokerid-supabase-images.tar
+      - name: New production SQL against fresh real Auth and Storage
+        shell: bash
+        run: |
+          set -euo pipefail
+          qa="$(mktemp -d)"
+          trap 'npx --yes supabase@2.81.3 stop --workdir tests/video/local-stack --no-backup >/dev/null 2>&1 || true; rm -rf "$qa"' EXIT
+          if ! npx --yes supabase@2.81.3 start --workdir tests/video/local-stack --exclude studio,imgproxy,mailpit,edge-runtime,realtime,vector,logflare >"$qa/start.log" 2>&1; then
+            python3 scripts/video_ci_startup_diagnostic.py "$qa/start.log"
+            exit 1
+          fi
+          npx --yes supabase@2.81.3 status --workdir tests/video/local-stack -o env >"$qa/local.env"
+          VIDEO_QA_ENV="$qa/local.env" node tests/video/production_rollout_http_e2e.mjs

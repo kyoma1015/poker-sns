@@ -1,0 +1,88 @@
+name: Video Storage HTTP isolated QA
+on:
+  pull_request:
+    paths:
+      - 'sql/video_cloud_test_publish.sql'
+      - 'sql/video_cloud_test_foundation.sql'
+      - 'tests/video/**'
+      - 'server/video-recovery-candidate.ts'
+      - 'api/video-*.ts'
+      - 'src/PostVideo.tsx'
+      - 'src/Timeline.tsx'
+      - 'tests/video-published-delete-guard.test.mjs'
+      - 'tests/video-ffprobe-runtime.test.mjs'
+      - 'src/videoApi.ts'
+      - 'sql/post_short_videos_candidate.sql'
+      - 'sql/post_short_videos_immutable_review_only.sql'
+      - 'sql/video_permanent_key_reservation_review_only.sql'
+      - 'scripts/bundle-ffprobe.mjs'
+      - 'scripts/video_api_function_budget.mjs'
+      - 'tests/video-vercel-release-gates.test.mjs'
+      - '.github/workflows/video-storage-http-isolated.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  video-storage-http:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - name: Verify cryptographic video attestation invariants
+        run: node --experimental-strip-types tests/video/attestation.test.mjs
+      - name: Install local PostgreSQL client
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client
+      - name: Verify privileged-key isolation before Docker bootstrap
+        run: node tests/video/video_privileged_key_static_guard.mjs
+      - name: Restore pinned Supabase Docker image cache
+        id: image-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: /tmp/pokerid-supabase-images.tar
+          key: pokerid-supabase-cli-2.81.3-images-v1
+      - name: Load cached images
+        if: steps.image-cache.outputs.cache-hit == 'true'
+        run: docker load -i /tmp/pokerid-supabase-images.tar
+      - name: Install ffmpeg for real media probe
+        timeout-minutes: 4
+        run: |
+          set -euo pipefail
+          # Avoid apt: the runner's package manager can hang without output.
+          # Use the same pinned, SHA256-verified executable as the Vercel build.
+          VIDEO_CI_FFMPEG_FIXTURES=true node scripts/bundle-ffprobe.mjs
+          test -x api/bin/ffmpeg
+          test -x api/bin/ffprobe
+          api/bin/ffprobe -version
+          file api/bin/ffprobe
+          echo "$PWD/api/bin" >> "$GITHUB_PATH"
+      - name: Enforce real ffprobe runtime tests without skip
+        env:
+          REQUIRE_FFPROBE_RUNTIME: 'true'
+          FFPROBE_BINARY_PATH: '${{ github.workspace }}/api/bin/ffprobe'
+          FFMPEG_BINARY_PATH: './api/bin/ffmpeg'
+        run: node --test tests/video-ffprobe-runtime.test.mjs
+      - name: Verify pinned ffprobe build bundle without deploying
+        run: test -x api/bin/ffprobe
+      - name: Install Chromium for actual React playback QA
+        timeout-minutes: 6
+        run: |
+          # Avoid the slow Ubuntu apt mirror: Chromium dependencies are
+          # provided by the runner or must fail explicitly during browser QA.
+          npx playwright-core install chromium
+      - name: Isolated Supabase Storage HTTP E2E
+        run: bash tests/video/run_storage_http_isolated.sh
+      - name: Save local images to cache on success
+        if: success() && steps.image-cache.outputs.cache-hit != 'true'
+        run: |
+          docker images --format '{{.Repository}}:{{.Tag}}' | grep -E '(supabase|postgrest|kong)' | xargs -r docker save -o /tmp/pokerid-supabase-images.tar
+      - name: Cache pinned Supabase images
+        if: success() && steps.image-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: /tmp/pokerid-supabase-images.tar
+          key: pokerid-supabase-cli-2.81.3-images-v1

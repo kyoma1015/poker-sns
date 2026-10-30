@@ -1,0 +1,85 @@
+import assert from 'node:assert/strict'
+import test from 'node:test'
+import { readFileSync } from 'node:fs'
+const source = readFileSync(new URL('../src/videoUpload.ts', import.meta.url), 'utf8')
+const sql = readFileSync(new URL('../sql/post_short_videos_candidate.sql', import.meta.url), 'utf8')
+const timeline = readFileSync(new URL('../src/Timeline.tsx', import.meta.url), 'utf8')
+test('video candidate declares required limits and MIME types', () => {
+  assert.match(source, /20 \* 1024 \* 1024/)
+  assert.match(source, /MAX_VIDEO_SECONDS = 30/)
+  assert.match(source, /video\/mp4/)
+  assert.match(source, /video\/webm/)
+  assert.match(source, /URL\.revokeObjectURL\(url\)/)
+})
+test('posting is gated by explicit default-off production readiness', () => {
+  assert.match(timeline, /if \(!VIDEO_SERVER_ENABLED\)/)
+  assert.match(timeline, /videoFile \? await uploadPostVideo\(user\.id, videoFile, requestController\.signal, content\.trim\(\)\) : ''/)
+  const api = readFileSync(new URL('../src/videoApi.ts', import.meta.url), 'utf8')
+  assert.match(api, /VIDEO_SERVER_ENABLED = import\.meta\.env\.VITE_VIDEO_SERVER_ENABLED === 'true'/)
+  assert.match(api, /if \(!VIDEO_SERVER_ENABLED\) throw new Error/)
+})
+test('staged storage is private, limited, and not readable by every authenticated user', () => {
+  assert.match(sql, /'post-videos', 'post-videos', false, 20971520/)
+  assert.match(sql, /post_videos_read_own/)
+  assert.doesNotMatch(sql, /^create policy "post_videos_read_post_viewers"/m)
+  assert.match(sql, /BLOCKED/)
+})
+test('path validation is strict before deleting storage objects', () => {
+  assert.match(source, /isOwnedVideoPath\(path, user\.id\)/)
+  assert.match(source, /const match = OWNED_VIDEO_PATH\.exec\(path\)/)
+  assert.match(source, /return match !== null && match\[1\] === userId/)
+  assert.match(source, /const VIDEO_UUID =/)
+  assert.match(source, /mp4\|webm\|mov/)
+})
+
+test('owned path matcher rejects malformed UUIDs and foreign owners', () => {
+  const uuid = source.match(/const VIDEO_UUID = '([^']+)'/)?.[1]
+  assert.ok(uuid)
+  assert.match(source, /const OWNED_VIDEO_PATH = new RegExp/)
+  const matcher = new RegExp('^(' + uuid + ')/(' + uuid + ')\\.(mp4|webm|mov)' + String.fromCharCode(36), 'i')
+  const owner = '11111111-2222-4333-8444-555555555555'
+  const object = 'aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee'
+  for (const ext of ['mp4', 'webm', 'mov']) assert.equal(matcher.exec(owner + '/' + object + '.' + ext)?.[1], owner)
+  for (const path of [
+    owner + '/' + object + '.exe',
+    owner + '/' + object + '.mp4/extra',
+    owner + '/../' + object + '.mp4',
+    owner + '/' + object.replace(/-/g, '') + '.mp4',
+    owner.replace(/-/g, '') + '/' + object + '.mp4',
+    '99999999-2222-4333-8444-555555555555/' + object + '.mp4',
+  ]) {
+    const match = matcher.exec(path)
+    assert.ok(!match || match[1] !== owner)
+  }
+})
+
+test('reload recovery retains immutable owner/path/content and reopens composer', () => {
+  assert.match(timeline, /sessionStorage\.getItem\('poker-id-pending-video-v1'\)/)
+  assert.match(timeline, /pendingVideoRef\.current = staged[\s\S]*?setPendingVideo\(staged\)[\s\S]*?setContent\(staged\.content\)[\s\S]*?setComposeOpen\(true\)/)
+  assert.match(timeline, /pendingVideoRef\.current\?\.path \?\? \(videoFile \? await uploadPostVideo/)
+  assert.match(timeline, /sessionStorage\.removeItem\('poker-id-pending-video-v1'\)/)
+})
+test('pending finalize rejects owner/content changes and async video selection races', () => {
+  assert.match(timeline, /pendingVideoRef\.current\.owner !== user\.id \|\| pendingVideoRef\.current\.content !== content\.trim\(\)/)
+  assert.match(timeline, /videoSubmitInFlightRef\.current = true/)
+  assert.match(timeline, /if \(pendingVideoRef\.current \|\| videoSubmitInFlightRef\.current\)/)
+  assert.match(timeline, /if \(videoFile \|\| pendingVideoRef\.current\)/)
+})
+test('direct signed Storage playback URLs are blocked', () => {
+  assert.doesNotMatch(source, /\.createSignedUrl\(/)
+  assert.match(source, /createPostVideoPlaybackUrl\(_path: string\): Promise<string>[\s\S]*?throw new Error/)
+})
+
+test('pending draft restore verifies current authenticated account before showing content', () => {
+  const restoreRoutine = timeline.indexOf('const restore = async () =>')
+  assert.ok(restoreRoutine >= 0)
+  const restoreStart = timeline.indexOf("sessionStorage.getItem('poker-id-pending-video-v1')", restoreRoutine)
+  const authStart = timeline.lastIndexOf('await supabase.auth.getUser()', restoreStart)
+  const ownerCheck = timeline.indexOf('record.owner !== user.id', restoreStart)
+  const renderDraft = timeline.indexOf('setContent(staged.content)', restoreStart)
+  assert.ok(authStart >= 0 && authStart < restoreStart, 'authenticate before reading cached draft')
+  assert.ok(ownerCheck > restoreStart && ownerCheck < renderDraft,
+    'reject foreign owner before rendering private draft content')
+  assert.match(timeline.slice(authStart, renderDraft), /cancelled \|\| error \|\| !user/)
+  assert.match(timeline.slice(authStart, renderDraft), /if \(cancelled\) return[\s\S]*?if \(record\.owner !== user\.id\) \{[\s\S]*?sessionStorage\.removeItem\('poker-id-pending-video-v1'\)/)
+})

@@ -1,0 +1,154 @@
+import tempfile
+import unittest
+from pathlib import Path
+from unittest.mock import patch
+from tests.video.finalize_core import FinalizeRequest, finalize_video, finalize_http_request, PostCommitUnknown
+
+USER = '10000000-0000-0000-0000-000000000001'
+OTHER = '10000000-0000-0000-0000-000000000002'
+PATH = USER + '/30000000-0000-0000-0000-000000000001.mp4'
+
+class FinalizeCoreTests(unittest.TestCase):
+    def setUp(self):
+        self.calls = []
+        self.request = FinalizeRequest(USER, PATH, '/tmp/unused.mp4', 'hello')
+        self.owner = lambda u, p: u == USER and p == PATH
+        self.create = lambda u, p, c: self.calls.append(('post', u, p)) or 'post-id'
+        self.cleanup = lambda p: self.calls.append(('delete', p))
+
+    @patch('tests.video.finalize_core.verify', return_value={'duration':2})
+    def test_publish_validated(self, verify):
+        self.assertEqual(finalize_video(self.request, verify_owner=self.owner,
+            create_post=self.create, delete_staged_object=self.cleanup), 'post-id')
+        self.assertEqual([x[0] for x in self.calls], ['post'])
+
+    @patch('tests.video.finalize_core.verify', side_effect=ValueError('31s'))
+    def test_reject_duration_and_reclaim(self, verify):
+        with self.assertRaisesRegex(ValueError,'31s'):
+            finalize_video(self.request, verify_owner=self.owner,
+                create_post=self.create, delete_staged_object=self.cleanup)
+        self.assertEqual(self.calls, [('delete', PATH)])
+
+    @patch('tests.video.finalize_core.verify', return_value={'duration':2})
+    def test_failed_db_publish_retains_until_reconciled(self, verify):
+        def fail(*args): raise RuntimeError('DB down')
+        with self.assertRaises(PostCommitUnknown):
+            finalize_video(self.request, verify_owner=self.owner,
+                create_post=fail, delete_staged_object=self.cleanup)
+        self.assertEqual(self.calls, [])
+
+    @patch('tests.video.finalize_core.verify', return_value={'duration': 2})
+    def test_ambiguous_db_commit_never_deletes_video(self, verify):
+        def uncertain(*args):
+            raise PostCommitUnknown('commit may have succeeded')
+        with self.assertRaises(PostCommitUnknown):
+            finalize_video(self.request, verify_owner=self.owner,
+                create_post=uncertain, delete_staged_object=self.cleanup)
+        self.assertEqual(self.calls, [])
+
+    def test_reject_other_user_path_without_side_effect(self):
+        with self.assertRaises(ValueError):
+            finalize_video(FinalizeRequest(OTHER, PATH, '/tmp/unused.mp4',''),
+                verify_owner=self.owner, create_post=self.create,
+                delete_staged_object=self.cleanup)
+        self.assertEqual(self.calls, [])
+
+    def test_reject_unowned_object_without_side_effect(self):
+        with self.assertRaises(PermissionError):
+            finalize_video(self.request, verify_owner=lambda u,p:False,
+                create_post=self.create, delete_staged_object=self.cleanup)
+        self.assertEqual(self.calls, [])
+
+    def test_ownership_check_failure_does_not_delete(self):
+        with self.assertRaises(PermissionError):
+            finalize_video(self.request, verify_owner=lambda u,p:False,
+                create_post=self.create, delete_staged_object=self.cleanup)
+        self.assertEqual(self.calls, [])
+
+
+    def test_reject_truthy_nonboolean_ownership_proof(self):
+        for unsafe_proof in ('yes', 1, ['owned'], {'owned': True}):
+            with self.subTest(unsafe_proof=unsafe_proof):
+                self.calls.clear()
+                with self.assertRaises(PermissionError):
+                    finalize_video(self.request,
+                        verify_owner=lambda u, p, value=unsafe_proof: value,
+                        create_post=self.create,
+                        delete_staged_object=self.cleanup)
+                self.assertEqual(self.calls, [])
+
+
+    def test_http_missing_bearer_rejects_without_io(self):
+        status, data = finalize_http_request({}, b'{}',
+            authenticate_jwt=lambda token: self.fail('auth called'),
+            download_staged=lambda *args: self.fail('download called'),
+            verify_owner=self.owner, create_post=self.create,
+            delete_staged_object=self.cleanup)
+        self.assertEqual(status, 401)
+        self.assertEqual(self.calls, [])
+
+    def test_http_cross_user_path_rejects_without_io(self):
+        import json
+        status, data = finalize_http_request(
+            {'authorization': 'Bearer isolated-token'},
+            json.dumps({'object_path': OTHER + '/30000000-0000-0000-0000-000000000001.mp4',
+                        'content': 'hello'}).encode(),
+            authenticate_jwt=lambda token: USER,
+            download_staged=lambda *args: self.fail('download called'),
+            verify_owner=self.owner, create_post=self.create,
+            delete_staged_object=self.cleanup)
+        self.assertEqual(status, 400)
+        self.assertEqual(self.calls, [])
+
+    @patch('tests.video.finalize_core.verify', return_value={'duration': 2})
+    def test_http_authenticated_owner_finalizes(self, verify):
+        import json
+        from contextlib import nullcontext
+        status, data = finalize_http_request(
+            {'authorization': 'Bearer isolated-token'},
+            json.dumps({'object_path': PATH, 'content': 'hello'}).encode(),
+            authenticate_jwt=lambda token: USER,
+            download_staged=lambda user, path: nullcontext('/tmp/unused.mp4'),
+            verify_owner=self.owner, create_post=self.create,
+            delete_staged_object=self.cleanup)
+        self.assertEqual(status, 201)
+        self.assertEqual(data['post_id'], 'post-id')
+        self.assertEqual([x[0] for x in self.calls], ['post'])
+
+    def test_http_rejects_truthy_nonboolean_owner_without_download(self):
+        import json
+        status, data = finalize_http_request(
+            {'authorization': 'Bearer isolated-token'},
+            json.dumps({'object_path': PATH, 'content': 'hello'}).encode(),
+            authenticate_jwt=lambda token: USER,
+            download_staged=lambda *args: self.fail('download called'),
+            verify_owner=lambda u, p: 'yes',
+            create_post=self.create, delete_staged_object=self.cleanup)
+        self.assertEqual(status, 403)
+        self.assertEqual(self.calls, [])
+
+
+    def test_http_jwt_verifier_outage_fails_closed(self):
+        def broken_jwks(token):
+            raise RuntimeError('JWKS unavailable')
+        status, _ = finalize_http_request(
+            {'authorization': 'Bearer isolated-token'}, b'{}',
+            authenticate_jwt=broken_jwks,
+            download_staged=lambda *args: self.fail('download called'),
+            verify_owner=self.owner, create_post=self.create,
+            delete_staged_object=self.cleanup)
+        self.assertEqual(status, 401)
+        self.assertEqual(self.calls, [])
+
+    def test_http_nonstring_auth_header_fails_closed(self):
+        status, _ = finalize_http_request(
+            {'authorization': ['Bearer', 'unsafe']}, b'{}',
+            authenticate_jwt=lambda token: self.fail('auth called'),
+            download_staged=lambda *args: self.fail('download called'),
+            verify_owner=self.owner, create_post=self.create,
+            delete_staged_object=self.cleanup)
+        self.assertEqual(status, 401)
+        self.assertEqual(self.calls, [])
+
+if __name__ == '__main__':
+    unittest.main()

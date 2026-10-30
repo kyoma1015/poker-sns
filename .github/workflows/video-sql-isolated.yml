@@ -1,0 +1,98 @@
+name: Video SQL isolated QA
+on:
+  pull_request:
+    paths:
+      - 'sql/video_cloud_test_publish.sql'
+      - 'sql/video_cloud_test_foundation.sql'
+      - 'sql/post_short_videos_candidate.sql'
+      - 'sql/video_permanent_key_reservation_review_only.sql'
+      - 'tests/video/run_isolated.sh'
+      - 'tests/video/**'
+      - 'server/video-recovery-candidate.ts'
+      - 'scripts/bundle-ffprobe.mjs'
+      - '.github/workflows/video-sql-isolated.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  video-sql-isolated:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Private export safety regression (synthetic data only)
+        run: |
+          python3 -m unittest discover -s tests/video -p test_private_storage_export.py -v
+          python3 -m unittest tests.video.test_startup_diagnostic -v
+      - name: Isolated PostgreSQL video schema and RLS
+        run: bash tests/video/run_isolated.sh
+      - name: Install pinned ffmpeg and ffprobe for isolated media validation
+        timeout-minutes: 4
+        run: |
+          set -euo pipefail
+          VIDEO_CI_FFMPEG_FIXTURES=true node scripts/bundle-ffprobe.mjs
+          test -x api/bin/ffmpeg
+          test -x api/bin/ffprobe
+          api/bin/ffprobe -version
+          echo "$PWD/api/bin" >> "$GITHUB_PATH"
+      - name: Trusted finalization core unit tests
+        run: python3 -m unittest tests.video.test_finalize_core -v
+      - name: Authenticated finalize boundary unit tests
+        run: python3 -m unittest tests.video.test_finalize_boundary -v
+      - name: Local HTTP finalize contract tests
+        run: python3 -m unittest tests.video.test_local_http -v
+      - name: Combined video HTTP header ambiguity regression tests
+        run: python3 -m unittest tests.video.test_isolated_video_http_headers -v
+      - name: Supabase Auth JWT adapter unit tests
+        run: python3 -m unittest tests.video.test_supabase_auth_adapter -v
+      - name: Private Storage download adapter unit tests
+        run: python3 -m unittest tests.video.test_storage_download_adapter -v
+      - name: Cleanup worker safety unit tests
+        run: python3 -m unittest tests.video.test_cleanup_worker_core -v
+      - name: Isolated DB RPC adapter tests
+        run: python3 -m unittest tests.video.test_isolated_db_adapter -v
+      - name: Live isolated HTTP Auth Storage ffprobe RPC integration
+        run: python3 -m unittest tests.video.test_isolated_live_http_integration -v
+      - name: Insert-once immutable Storage and finalize composition E2E
+        run: python3 -m unittest tests.video.test_isolated_insert_once_e2e -v
+      - name: Isolated adapter composition tests
+        run: python3 -m unittest tests.video.test_isolated_composition -v
+      - name: Isolated durable cleanup worker tests
+        run: python3 -m unittest tests.video.test_isolated_cleanup_worker -v
+      - name: Conditional Storage delete fail-closed tests
+        run: python3 -m unittest tests.video.test_isolated_storage_conditional_delete -v
+      - name: Storage ABA guard tests
+        run: python3 -m unittest tests.video.test_isolated_aba_guard -v
+      - name: Orphan recovery quarantine policy tests
+        run: python3 -m unittest tests.video.test_isolated_orphan_recovery_policy -v
+      - name: Storage replacement and orphan recovery guard tests
+        run: python3 -m unittest tests.video.test_isolated_storage_replacement_guard -v
+      - name: Privileged video API mutation boundary regression
+        run: python3 -m unittest tests.video.test_privileged_video_api_boundary -v
+      - name: Storage production policy release blocker test
+        run: python3 -m unittest tests.video.test_storage_policy_release_blocker -v
+      - name: Video media visibility race tests
+        run: python3 -m unittest tests.video.test_isolated_media_visibility_race -v
+      - name: Immutable Storage guard static tests
+        run: python3 -m unittest tests.video.test_isolated_immutable_storage_guard -v
+      - name: Media HTTP response body regression test
+        run: python3 -m unittest tests.video.test_isolated_media_http_body -v
+      - name: Trusted-server ffprobe duration validation prototype
+        run: bash -x tests/video/test_server_validate.sh
+      - name: Cross-language binary attestation HMAC test vector
+        run: node --experimental-strip-types tests/video/attested_hmac_vector.mjs
+      - name: Install isolated Node test dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Real Node.js ffprobe adapter regression tests
+        env:
+          REQUIRE_FFPROBE_RUNTIME: 'true'
+          FFPROBE_BINARY_PATH: '${{ github.workspace }}/api/bin/ffprobe'
+          FFMPEG_BINARY_PATH: './api/bin/ffmpeg'
+        run: |
+          for source in api/video-*.ts server/video-recovery-candidate.ts; do
+            ln -s "$(basename "$source")" "${source%.ts}.js"
+          done
+          node --experimental-strip-types --test tests/video-ffprobe-runtime.test.mjs tests/video-preflight-runtime.test.mjs tests/video-finalize-core-runtime.test.mjs tests/video-finalize-http-runtime.test.mjs tests/video-isolated-adapter-runtime.test.mjs tests/video/production_rollout_runtime.test.mjs

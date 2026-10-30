@@ -1,0 +1,60 @@
+"""Fail-closed source boundary: privileged key may call narrowly scoped RPCs only.
+
+This is a defense-in-depth check, NOT proof that Supabase's global
+service_role credential cannot call the Storage admin API externally.
+"""
+from pathlib import Path
+import re
+import unittest
+
+ROOT = Path(__file__).resolve().parents[2]
+SOURCES = [ROOT / 'api/video-finalize.ts', ROOT / 'api/video-production-supabase-adapters.ts', ROOT / 'api/video-media.ts']
+
+class PrivilegedVideoApiBoundary(unittest.TestCase):
+    def test_no_privileged_storage_mutations(self):
+        for path in SOURCES:
+            text = path.read_text()
+            self.assertNotRegex(text, r'(?s)admin\.storage\.from\([^)]*\)\s*\.\s*(?:upload|update|remove|move|copy|createSignedUploadUrl)\s*\(', str(path))
+            self.assertNotRegex(text, r'(?s)admin\.storage\.\w+\s*\(', str(path))
+            self.assertNotRegex(text, r'/storage/v1/(?:object|bucket)/(?:upload|move|copy|remove|delete)', str(path))
+    def test_production_writer_uses_only_owner_jwt(self):
+        text = (ROOT / 'api/video-production-supabase-adapters.ts').read_text()
+        handler = (ROOT / 'api/video-finalize.ts').read_text()
+        self.assertNotIn('serviceRoleKey', text)
+        self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY', handler)
+        self.assertNotIn('admin.rpc(', text)
+        self.assertIn("Authorization: 'Bearer ' + accessToken", text)
+        for rpc in ('video_production_storage_generation', 'video_publish_attested_v1', 'video_production_reconcile_fenced'):
+            self.assertIn("viewer.rpc('" + rpc + "'", text)
+        self.assertIn("viewer.from('posts')", text)
+
+    def test_production_attestation_remains_hard_disabled_until_release(self):
+        adapter = (ROOT / 'api/video-production-supabase-adapters.ts').read_text()
+        handler = (ROOT / 'api/video-finalize.ts').read_text()
+        sql = (ROOT / 'tests/video/production_attested_candidate_review_only.sql').read_text()
+        self.assertIn("process.env.VIDEO_ATTESTED_RPC_RELEASE_APPROVED !== 'true'", adapter)
+        self.assertIn('production video publish requires provisioned server-attested database authorization', adapter)
+        self.assertIn('assertServerAttestationAvailable()', adapter)
+        self.assertIn("process.env.VIDEO_PRODUCTION_FENCED_READY === 'true'", handler)
+        self.assertIn('revoke all on function public.video_publish_attested_v1', sql.lower())
+        self.assertIn('from public,anon,authenticated,service_role;', sql.lower())
+        self.assertNotRegex(sql, r'(?im)^\s*grant execute on function public\.video_publish_attested_v1')
+        self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY', adapter)
+        self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY', handler)
+
+    def test_media_transport_never_uses_service_role(self):
+        text = (ROOT / 'api/video-media.ts').read_text()
+        self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY', text)
+        self.assertNotIn("apikey: service", text)
+        self.assertIn("apikey: anon, Authorization: rawAuth", text)
+
+    def test_privileged_rpc_allowlist(self):
+        allowed = {'video_reserve_object_key', 'video_production_storage_generation',
+                   'video_production_publish_fenced', 'video_production_reconcile_fenced'}
+        for path in SOURCES:
+            text = path.read_text()
+            used = set(re.findall(r'admin\.rpc\(\s*[\x27\x22]([^\x27\x22]+)', text))
+            self.assertLessEqual(used, allowed, f'{path}: privileged RPC outside allowlist: {used-allowed}')
+
+if __name__ == '__main__':
+    unittest.main()
