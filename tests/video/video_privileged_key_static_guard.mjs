@@ -113,4 +113,25 @@ assert.match(recovery,/inspected.sha256!==before.sha256/,
  'recovery must reject media digest mismatch')
 assert.match(recovery,/await authenticate\(\)!==owner/,
  'recovery must recheck authenticated identity before responding or publishing')
+// Review-only migration must never be silently deployed, overwrite an
+// unsealed partial installation, or make the recovery manifest public.
+const candidate=readFileSync('tests/video/recovery_production_candidate_NOT_APPROVED.sql','utf8')
+assert.match(candidate,/begin;[\s\S]*commit;\s*$/, 'recovery migration must be transactional')
+assert.match(candidate,/recovery_migration_seal/, 'repeated migration must require a private definition seal')
+assert.match(candidate,/definition_digest=md5\(/, 'rerun must reject changed SQL function definitions')
+assert.match(candidate,/preexisting unsealed migration objects/, 'partial legacy migration must fail closed')
+assert.match(candidate,/preflight: RLS or grants drift/, 'rerun must enforce table privileges')
+assert.match(candidate,/revoke all on video_private\.recovery_manifests from public,anon,authenticated,service_role/,
+ 'private recovery manifest must not be user-accessible')
+assert.match(candidate,/revoke all on video_private\.recovery_migration_seal from public,anon,authenticated,service_role/,
+ 'migration seal must be inaccessible to client JWTs')
+assert.match(candidate,/on conflict \(version\) do nothing/, 'migration seal must be write-once')
+assert.doesNotMatch(candidate,/drop\s+(?:table|function|schema)\s+/i,
+ 'candidate must not drop existing production schema objects')
+const policy=readFileSync('tests/video/production_storage_insert_stop_NOT_APPROVED.sql','utf8')
+assert.match(policy,/as restrictive for insert to authenticated/,
+ 'stop policy must restrict rather than broaden video uploads')
+assert.match(policy,/public\.video_rollout_allowed\(\)/,
+ 'video INSERT must be gated by existing DB rollout authority')
+console.log('PASS: review-only SQL drift seal and restrictive Storage kill-switch static checks')
 console.log('PASS: video runtime privileged-key isolation and production fail-closed gates')
