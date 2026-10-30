@@ -27,3 +27,43 @@ billing. No independent restart or AUTO-RESUME enabled. Test actual proposal
 probabilities/importance/card exclusion and real native checkpoint continuation;
 then full existing CI plus focused study. Local native runtime unavailable;
 source-pinned CI builds provide native evidence. Resume state saved separately.
+
+2026-10-30 observed result (publiccb46dab7eb979872ede8bf750fa9e5b16826a5fb,
+local87375978d6ef0344ff107b3bc71e67757cf8e765, identicaltreee4f7015cc8785a1d5f4e289f735c360a5beddaf5):
+Native41015822731 and UI41015822633 SUCCESS.696unittest+25Packed+10Node+
+7Chromium=738PASS,0FAIL, delta+14 from724. npm build/lint PASS; existing48warnings.
+Original14checkpoint SHAs match; independent audit checker verifies2040moment
+records and prior288000terminal/debit/rank executions (replays included).
+Focused sampler recovered all4owner rows after64iterations from immutable
+seed29/100000 checkpointc899f988c7f271e98516165f25ca6ad36e7dbe829b8b74d4b98f98513db7cf32.
+Updates respectively6,4,5,1; freshcheckpointd50eb1728a4d805a07768a5177454181ca0ba4aa2f6540a695d7ace32ea533d9.
+RFI/vsopen/vs3bet/vs4bet all169/169classes and2652/2652ordered hands.
+vs4bet improves165->169classes and2648->2652orderings, not convergence.
+New strictseed300017/12000worlds/169classes: no fallback actions, no pointEV.
+99%simultaneous completion envelope[-47.93402816519181,47.562474182252686]BB;
+endpoint means[-47.10216666666667,46.65495833333333]BB. Independent1020moment
+values and170confidence envelopes checked.564known terminal paths;11077first
+unknown preflop stops;359first unknown flop stops. No learned flop decisions
+on these paths. Do not compare this partial-policy envelope as an EV improvement
+over the different50000iteration/seed17 explicitly completed baseline.
+Census created keys: preflop268282,flop297211,turn85861,river23275. Bounded
+lexical samples reconstruct32owner-updated keys perstreet byte-exactly with
+native actions/averages. Learning does create/update postflop rows; exact
+own-card/board/history identities are sparse. This rejects a simple disabled
+postflop update or universal key-format mismatch explanation; it does NOT
+prove absence of all other learning/variance problems or global coverage.
+
+Next acceptance before replay edits: persist compact research evidence, compare
+independent CI reconstruction/training against parent/newcheckpoint SHA, actual
+owner updates, frequencies, source/policy/trajectory identities and all strict
+integer moments/intervals. Reject changed data and any GTO/formal acceptance
+promotion. A repeated seed is zero NEW independent statistical datasets.
+Reference docs/qa/strict-continuation-20261030/evidence-cb46da.json; pure56PASS.
+Final replay CI pending. Ordinary convergedRFI/vsopen/vs3bet/vs4bet0 each,
+ordinary verifiedGTOEV0/UIranges0, formal0/12. HU1BB range1 preserved.
+Full learned continuation coverage and useful information-constrained response
+upper bounds remain BLOCKER. Next algorithm work: reduce redundant information
+identities with proven game symmetries in a separate pinned engine, validate
+chance/action/payoff equivalence before using any pooled row, and quantify
+heldout learned continuation coverage; no pooling prior may be labeled GTO.
+Formal20stack/sizing source search on GitHub code/issues still empty.

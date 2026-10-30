@@ -28,7 +28,7 @@ def owner_rows(solver,keys):
         result.append({'hand':list(pair),'updates':row['updates'],'visits':row['visits']})
     return result
 
-def experiment(native,runtime,parent_directory,output):
+def experiment(native,runtime,parent_directory,output,*,reference=None):
     runtime=Path(runtime);parent_directory=Path(parent_directory);output=Path(output);output.mkdir(exist_ok=False)
     parent=parent_directory/'seed-29-100000.bin';parent_meta=json.loads((parent_directory/'seed-29-100000.json').read_text())
     parent_sha=hashlib.sha256(parent.read_bytes()).hexdigest()
@@ -73,6 +73,9 @@ def experiment(native,runtime,parent_directory,output):
       'contexts':contexts,'infoset_diagnosis':audit,'strict_evaluation':strict,'strict_same_samples_replayed':True,
       'independent_statistical_sample_sets':1,'ordinary_verified_gto_ranges':0,'formal_acceptance_complete':0,
       'full_game_convergence_verified':False}
+    if reference is not None:
+        from gto.native.replay_reference import verify
+        report['cross_build_replay']=verify(report,json.loads(Path(reference).read_text()))
     (output/'evidence.json').write_text(json.dumps(report,sort_keys=True)+'\n')
     summary={k:v for k,v in report.items() if k not in ('contexts','strict_evaluation')}
     summary['contexts']=[{'stage':c['stage'],'updated_orderings':c['updated_orderings'],
@@ -82,6 +85,6 @@ def experiment(native,runtime,parent_directory,output):
     return report
 if __name__=='__main__':
  import argparse,importlib,sys
- p=argparse.ArgumentParser();p.add_argument('--runtime',type=Path,required=True);p.add_argument('--parent-directory',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
+ p=argparse.ArgumentParser();p.add_argument('--runtime',type=Path,required=True);p.add_argument('--parent-directory',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--reference',type=Path)
  a=p.parse_args();sys.path.insert(0,str(a.runtime/'focused'))
- experiment(importlib.import_module('pokerid_focused'),a.runtime,a.parent_directory,a.output)
+ experiment(importlib.import_module('pokerid_focused'),a.runtime,a.parent_directory,a.output,reference=a.reference)

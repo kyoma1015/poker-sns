@@ -57,7 +57,7 @@ jobs:
         run: |
           python -B -m gto.native.build_focused --runtime "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID"
           GTO_FOCUSED_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/focused" python -B gto/native/test_focused.py -v
-          python -B -m gto.native.focused_study --runtime "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID" --parent-directory "$RUNNER_TEMP/targeted-study-$GITHUB_RUN_ID" --output "$RUNNER_TEMP/focused-study-$GITHUB_RUN_ID"
+          python -B -m gto.native.focused_study --runtime "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID" --parent-directory "$RUNNER_TEMP/targeted-study-$GITHUB_RUN_ID" --output "$RUNNER_TEMP/focused-study-$GITHUB_RUN_ID" --reference docs/qa/strict-continuation-20261030/evidence-cb46da.json
       - name: Complete native HU1BB calibration and actual representative learning
         run: |
           python -B -m gto.native.onebb_certificate --runtime "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID" --output "$RUNNER_TEMP/onebb-evidence-$GITHUB_RUN_ID"
