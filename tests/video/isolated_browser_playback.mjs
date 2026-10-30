@@ -334,6 +334,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     await movComposer.waitFor()
     const movPicker=movPage.locator('input[type="file"][accept*="video/mp4"]')
     await movPicker.setInputFiles({name:'phone.mov',mimeType:'video/quicktime',buffer:bytes})
+    await movComposer.getByRole('button',{name:/MOV変換を開始/}).click()
     await movComposer.locator('video').waitFor({timeout:25000})
     const localMp4=await movComposer.locator('video').evaluate(async video=>{
       const blob=await (await fetch(video.src)).blob();return {type:blob.type,size:blob.size}
@@ -346,6 +347,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
       AudioContext.prototype.close=function(...args){window.__MOV_CLOSED++;return close.apply(this,args)}
     })
     await movPicker.setInputFiles({name:'cancel.mov',mimeType:'video/quicktime',buffer:bytes})
+    await movComposer.getByRole('button',{name:/MOV変換を開始/}).click()
     await movComposer.getByText(/MOVを端末内でMP4へ変換しています/).waitFor()
     await movComposer.getByRole('button',{name:'×',exact:true}).click()
     await movPage.waitForFunction(()=>window.__MOV_CLOSED>0)
