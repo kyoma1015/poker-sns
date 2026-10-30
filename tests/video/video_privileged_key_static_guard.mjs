@@ -90,4 +90,19 @@ assert.match(adapter,/production video publish requires provisioned server-attes
  'production release must fail closed without approval and key')
 const finalize=readFileSync('api/video-finalize.ts','utf8')
 assert.match(finalize,/!isolatedReservation/,'production reservation must remain disabled')
+// Production recovery is intentionally observation-only until its DB contract
+// and attested publication have independent isolated HTTP evidence.
+const recovery=readFileSync('server/video-recovery-candidate.ts','utf8')
+assert.match(recovery,/VIDEO_RECOVERY_STATUS_ONLY_ENABLED==='true'/,
+ 'production recovery inspection must require an independent opt-in')
+assert.match(recovery,/productionStatusOnly && body.action!=='recovery_status'/,
+ 'production recovery must reject binding and publication before I/O')
+assert.match(recovery,/await assertProductionVideoMember\(client,owner\)/,
+ 'production recovery inspection must enforce the JWT-scoped rollout allowlist')
+assert.match(recovery,/JSON.stringify\(before\)!==JSON.stringify\(after\)/,
+ 'recovery must reject manifest or Storage generation races')
+assert.match(recovery,/inspected.sha256!==before.sha256/,
+ 'recovery must reject media digest mismatch')
+assert.match(recovery,/await authenticate\(\)!==owner/,
+ 'recovery must recheck authenticated identity before responding or publishing')
 console.log('PASS: video runtime privileged-key isolation and production fail-closed gates')
