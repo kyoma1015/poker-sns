@@ -9,7 +9,7 @@ Status: **NOT APPROVED / NOT DEPLOYED**. Draft PR #132. No production change is 
 - `storage.objects` contains multiple preexisting video policies; their effective OR-combined semantics **must be reviewed before any rollout**.
 - `video_private.general_public_rollout` and `video_private.consumed_nonces` exist.
 - `video_private.recovery_manifests` and `public.video_bind_recovery_manifest_v1`, `public.video_recovery_state_v1`, `public.video_publish_recovered_attested_v1` are **absent**.
-- Current source: `src/videoRecoveryCandidate.ts` sets `VIDEO_RECOVERY_CANDIDATE_ENABLED=false`; `server/video-recovery-candidate.ts` allows production **status only** by independent opt-in; other mutations disabled. Do not turn this boolean on in isolation.
+- Current source: `src/videoRecoveryCandidate.ts` sets `VIDEO_RECOVERY_CANDIDATE_ENABLED=false`; `server/video-recovery-candidate.ts` contains independently gated production status and bind/finalize branches, all disabled unless separately authorized. Do not turn this boolean on in isolation.
 - `src/videoApi.ts` gates ordinary video APIs with `VITE_VIDEO_SERVER_ENABLED`; `server/video-production-rollout.mjs` checks server flags, user authorization and DB decisions. Cloud-test origin guards cannot be relaxed.
 
 ## Candidate migration (not executable against production without separate authorization)
@@ -39,10 +39,10 @@ F. Only after a distinct public-release approval, review independent server flag
 
 ## Known release blockers (2026-10-31)
 - Production recovery table and RPCs absent.
-- Production bind/finalize not implemented; current server is status-only.
+- Production bind/finalize branches are implemented behind independent disabled flags; production JWT/attestation-key parity and deployment remain unapproved.
 - Client recovery feature is disabled; original journal protection must remain fail-closed.
 - No authenticated Preview HTTP/UI smoke result due to deployment protection; READY/SHA and isolated E2E PASS are **not** equivalent to live user acceptance.
-- Required storage-policy effective-permission audit and production-like migration dry run still pending.
+- Production-like recovery migration CI is PASS; restrictive Storage INSERT policy has NOT been executed in isolated SQL CI and remains a release blocker.
 
 ## Verification record
 Draft PR #132, previous HEAD `d677b46ee945b3ecff9b4b4a289a880ad4f09953`. Isolated CI: Video SQL `41025169742`, MOV `41025169769`, Poll-only `41025169932`, Storage HTTP `41025169747`: SUCCESS. Preview `dpl_BaJy1QPFUPy7x5NzA1N9KTgbn6if`: READY, SHA matched previous HEAD. Do not reuse old SHA proof after this documentation commit.
@@ -59,5 +59,13 @@ Draft PR #132, previous HEAD `d677b46ee945b3ecff9b4b4a289a880ad4f09953`. Isolate
 ## 2026-10-31 Draft implementation update (NOT DEPLOYED)
 - `server/video-recovery-candidate.ts` now contains **production-capable but disabled** bind/finalize branches, gated by the exact production Supabase URL, `VERCEL_ENV=production`, `VIDEO_PRODUCTION_FENCED_READY=true`, `VIDEO_RECOVERY_PRODUCTION_WRITES_ENABLED=true`, `VIDEO_ATTESTED_RPC_RELEASE_APPROVED=true`, existing production publisher authorization (`VIDEO_SERVER_ENABLED` and DB `video_rollout_allowed()` via JWT), and `assertServerAttestationAvailable()` for finalize. All flags must be independently approved; there is **no authorized production rollout**. The production signature comes from `VIDEO_ATTESTATION_KEY_HEX` and `VIDEO_ATTESTATION_KEY_ID`, **never** the isolated fixture key.
 - `tests/video/production_storage_insert_stop_NOT_APPROVED.sql` proposes a **restrictive** `storage.objects` INSERT policy for authenticated users; on a production-like isolated project prove it blocks existing-reservation uploads after rollout stop, while retaining non-video uploads and authorized video operations. Audit all other roles, direct Storage paths and privileges. **Do not apply it to production or assume policy alone covers service_role or privileged writes.**
-- Migration `tests/video/recovery_production_candidate_NOT_APPROVED.sql` still **fails closed on existing migration objects**. This is intentionally not claimed as idempotent. It must be revised and validated on a production-like schema before approval.
+- Migration `tests/video/recovery_production_candidate_NOT_APPROVED.sql` now uses a sealed-definition preflight. Isolated CI verified first application, identical second application, populated-schema reapplication, incomplete installation rejection, and modified-function rejection. This is **not** production approval; the existing baseline and key provisioning still require independent verification.
 - Before client enablement, bind immutable manifest **before** Storage upload, recover via authenticated state/attestation and reject foreign/stale journals. Do not turn on `VIDEO_RECOVERY_CANDIDATE_ENABLED` without those conditions.
+
+
+## 2026-10-31 isolated acceptance evidence (not production authorization)
+- HEAD `8aa451094a93d0983d509b5df60eef40202bdcab`: Video SQL `41084900677`, MOV `41084900653`, Poll-only `41084900576`, Storage HTTP `41084900918` all SUCCESS; Preview `dpl_HYCsyPShehStHzy7MdpA8dww4cHo` READY and matching SHA.
+- Storage HTTP job `124163372712`: `PASS: production-like candidate SQL first and second application`; `PASS: populated production-like schema reapply preserved posts/manifests/nonces`; `PASS: mutated function rejected and posts/manifests/nonces preserved`; `PASS: incomplete migration rejected without overwriting`; `PASS: existing parent RPCs, Storage policies and post/ledger columns unchanged`.
+- Production recovery signer uses `VIDEO_ATTESTATION_KEY_HEX` with the configured `VIDEO_ATTESTATION_KEY_ID`; the isolated signing key is only used on the localhost isolated branch. The DB must independently validate the matching key ID and signature before production rollout.
+- The Storage restrictive INSERT candidate is **review only**; no execution evidence exists yet. Do not claim emergency Storage stop is proven by the candidate until effective RLS tests pass with production-equivalent permissive policies and authenticated JWTs.
+- Following the acceptance HEAD, a server input-validation change rejects unknown recovery actions and malformed bearer headers; new HEAD requires fresh CI. The previous acceptance evidence must not be attributed to that new HEAD.
