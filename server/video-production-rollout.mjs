@@ -8,8 +8,17 @@ async function assertIdentity(viewer, userId, rpc) {
   const env = process.env
   if (env.VIDEO_PRODUCTION_LIMITED_ROLLOUT !== 'true' || env.VITE_SUPABASE_URL !== PRODUCTION_URL ||
       !UUID.test(userId)) throw new Error('video rollout disabled')
-  const allowed = (env.VIDEO_ALLOWED_USER_IDS || '').split(',')
-  if (!allowed.length || allowed.some(id => !UUID.test(id)) || !allowed.includes(userId)) throw new Error('video user denied')
+  // Public rollout requires TWO independent server-side flags and a positive
+  // user-JWT-scoped database decision. Never infer public access from an
+  // empty allowlist or from the client-side VITE feature flag.
+  const generalPublic = env.VIDEO_GENERAL_PUBLIC_RELEASE_APPROVED === 'true' &&
+    env.VIDEO_PUBLIC_ROLLOUT_ENABLED === 'true'
+  if (!generalPublic) {
+    const allowed = (env.VIDEO_ALLOWED_USER_IDS || '').split(',')
+    if (!allowed.length || allowed.some(id => !UUID.test(id)) || !allowed.includes(userId)) {
+      throw new Error('video user denied')
+    }
+  }
   const state = await viewer.rpc(rpc)
   if (state.error || state.data !== true) throw new Error('video database rollout disabled')
 }
