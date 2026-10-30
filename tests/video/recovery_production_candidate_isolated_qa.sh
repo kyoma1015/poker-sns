@@ -56,6 +56,12 @@ baseline_catalog() {
  );"
 }
 baseline_before="$(baseline_catalog)"
+# The disposable stack does not install the production rollout gate.
+# Supply a LOCAL-ONLY gate shim for schema-contract validation. It is not
+# evidence of the actual production gate implementation.
+sql "create or replace function public.video_rollout_allowed()
+ returns boolean language sql stable security invoker set search_path=''
+ as \$\$ select true \$\$;"
 # Deliberate incomplete prior migration MUST fail before writing any new RPC.
 sql "create table video_private.recovery_manifests (object_path text);"
 expect_reject 'preexisting unsealed migration objects'
