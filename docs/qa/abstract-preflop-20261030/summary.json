@@ -1,0 +1,291 @@
+{
+  "condition": {
+    "ante": 0,
+    "bb_chips": 2,
+    "formal_profile": false,
+    "full_game_gto_verified": false,
+    "players": 2,
+    "postflop_abstraction": "one half-pot flop bet, own-hand/public-flop fixed controllers; turn/river check-through",
+    "private_abstraction": "169 starting classes; exact compatible-combo chance mass",
+    "raise_to_chips": [
+      5,
+      18,
+      42,
+      100
+    ],
+    "rake": 0,
+    "sb_chips": 1,
+    "stacks_chips": [
+      100,
+      100
+    ]
+  },
+  "continuation_model_sensitivity": [
+    {
+      "interpretation": "controller-model sensitivity; policies differ; not a unilateral improvement",
+      "profile_ev_difference_bb": 0.06593861008089788,
+      "seed": 1701
+    },
+    {
+      "interpretation": "controller-model sensitivity; policies differ; not a unilateral improvement",
+      "profile_ev_difference_bb": 0.06731908585873056,
+      "seed": 2901
+    }
+  ],
+  "exact_joint_deals": 1624350,
+  "fixed_policy_independent_validation": [
+    {
+      "confidence": 0.995,
+      "fixed_policy_digest": "6fbe5f3463e42788a58b7474ee3a4ffb71d61afd6246004e47d1c6441999d343",
+      "full_game_gto_verified": false,
+      "interval_bb": [
+        -0.14849817824260814,
+        0.053808130884812275
+      ],
+      "method": "weighted Hoeffding over independent unordered class-pair/world groups; all shared planes/seat swaps bounded jointly",
+      "mode": "checkdown",
+      "profile_sb_ev_bb": -0.04734502367889794,
+      "radius_bb": 0.10115315456371021,
+      "real_game_approximation_error_bb": null,
+      "seed": 2901
+    },
+    {
+      "confidence": 0.995,
+      "fixed_policy_digest": "837ec7e0ef2c66714f65a174f9e83a398e713e65f82de4fb7b7e1699dee12778",
+      "full_game_gto_verified": false,
+      "interval_bb": [
+        -0.0542026945264423,
+        0.09599588094149641
+      ],
+      "method": "weighted Hoeffding over independent unordered class-pair/world groups; all shared planes/seat swaps bounded jointly",
+      "mode": "flop_controller",
+      "profile_sb_ev_bb": 0.020896593207527056,
+      "radius_bb": 0.07509928773396936,
+      "real_game_approximation_error_bb": null,
+      "seed": 2901
+    }
+  ],
+  "formal_acceptance_complete": 0,
+  "full_game_gto_verified": false,
+  "independent_seed_comparison": [
+    {
+      "interpretation": "independent payoff-seed sensitivity, not an error bound against real poker",
+      "max_frequency_difference": 0.9761859587530047,
+      "max_model_ev_difference_bb": 0.0974835692457614,
+      "mode": "checkdown",
+      "stage": "rfi"
+    },
+    {
+      "interpretation": "independent payoff-seed sensitivity, not an error bound against real poker",
+      "max_frequency_difference": 0.9224192031393801,
+      "max_model_ev_difference_bb": 0.3816271231105235,
+      "mode": "checkdown",
+      "stage": "vs_open"
+    },
+    {
+      "interpretation": "independent payoff-seed sensitivity, not an error bound against real poker",
+      "max_frequency_difference": 0.991478333595276,
+      "max_model_ev_difference_bb": 1.3900796531136281,
+      "mode": "checkdown",
+      "stage": "vs_3bet"
+    },
+    {
+      "interpretation": "independent payoff-seed sensitivity, not an error bound against real poker",
+      "max_frequency_difference": 0.9475503078132392,
+      "max_model_ev_difference_bb": 6.993718688781854,
+      "mode": "checkdown",
+      "stage": "vs_4bet"
+    },
+    {
+      "interpretation": "independent payoff-seed sensitivity, not an error bound against real poker",
+      "max_frequency_difference": 0.9596809774938287,
+      "max_model_ev_difference_bb": 0.15214693553830827,
+      "mode": "flop_controller",
+      "stage": "rfi"
+    },
+    {
+      "interpretation": "independent payoff-seed sensitivity, not an error bound against real poker",
+      "max_frequency_difference": 0.980253565143689,
+      "max_model_ev_difference_bb": 0.2721681847709414,
+      "mode": "flop_controller",
+      "stage": "vs_open"
+    },
+    {
+      "interpretation": "independent payoff-seed sensitivity, not an error bound against real poker",
+      "max_frequency_difference": 0.9275468833889574,
+      "max_model_ev_difference_bb": 1.4147158923249648,
+      "mode": "flop_controller",
+      "stage": "vs_3bet"
+    },
+    {
+      "interpretation": "independent payoff-seed sensitivity, not an error bound against real poker",
+      "max_frequency_difference": 0.9404749167123561,
+      "max_model_ev_difference_bb": 9.983199886439401,
+      "mode": "flop_controller",
+      "stage": "vs_4bet"
+    }
+  ],
+  "joint_mass_digest": "3c2600b365f22e519f51320266cb13862ee4ed749caf8f5061814ec0be129ea4",
+  "runs": [
+    {
+      "abstract_exploitability_bb": 0.0012733752820912186,
+      "abstract_nashconv_bb": 0.0025467505641824373,
+      "br_bb_min_sb_ev_bb": -0.04814450628836448,
+      "br_sb_ev_bb": -0.045597755724182044,
+      "expected_abstract_game_nashconv_upper_bb": 36.62514981721156,
+      "full_game_gto_verified": false,
+      "iterations": 4000,
+      "learning": [
+        {
+          "abstract_nashconv_bb": 0.09833686353540905,
+          "iterations": 100,
+          "profile_sb_ev_bb": -0.05570788610001529,
+          "seconds": 0.25132071100006215
+        },
+        {
+          "abstract_nashconv_bb": 0.0025467505641824373,
+          "iterations": 4000,
+          "profile_sb_ev_bb": -0.046989841380944954,
+          "seconds": 6.824964722999994
+        }
+      ],
+      "mode": "checkdown",
+      "model_scope": "finite preflop action/class abstraction with fixed continuation controllers; not postflop equilibrium",
+      "payoff_digest": "bc3d96a18d4e325bd9a6faf1706b7ec5d9c0b7332d68040a1e5d284868ecde68",
+      "policy_digest": "cc653c5dcb882ddd95dc6d20d77fd82277d877dd0f612c1f45888fb1d6604c1c",
+      "profile_sb_ev_bb": -0.046989841380944954,
+      "real_game_approximation_error_bb": null,
+      "reference_solution_comparison": "UNPERFORMED: no trusted matching HU50BB reference supplied",
+      "same_input_replay": true,
+      "samples_per_class_pair": 256,
+      "seed": 1701,
+      "simultaneous_payoff_error_bound_bb": 18.311301533323686
+    },
+    {
+      "abstract_exploitability_bb": 0.0013117080732943966,
+      "abstract_nashconv_bb": 0.002623416146588793,
+      "br_bb_min_sb_ev_bb": 0.01774196119612907,
+      "br_sb_ev_bb": 0.02036537734271786,
+      "expected_abstract_game_nashconv_upper_bb": 36.62522648279396,
+      "full_game_gto_verified": false,
+      "iterations": 4000,
+      "learning": [
+        {
+          "abstract_nashconv_bb": 0.09799617233961869,
+          "iterations": 100,
+          "profile_sb_ev_bb": 0.018266187463816183,
+          "seconds": 0.24689580400035993
+        },
+        {
+          "abstract_nashconv_bb": 0.002623416146588793,
+          "iterations": 4000,
+          "profile_sb_ev_bb": 0.018948768699952923,
+          "seconds": 7.031516668999757
+        }
+      ],
+      "mode": "flop_controller",
+      "model_scope": "finite preflop action/class abstraction with fixed continuation controllers; not postflop equilibrium",
+      "payoff_digest": "bc3d96a18d4e325bd9a6faf1706b7ec5d9c0b7332d68040a1e5d284868ecde68",
+      "policy_digest": "0146870c1b2f2168940f4b51a31563417c63c236f808b5eb0e27981833616fec",
+      "profile_sb_ev_bb": 0.018948768699952923,
+      "real_game_approximation_error_bb": null,
+      "reference_solution_comparison": "UNPERFORMED: no trusted matching HU50BB reference supplied",
+      "same_input_replay": true,
+      "samples_per_class_pair": 256,
+      "seed": 1701,
+      "simultaneous_payoff_error_bound_bb": 18.311301533323686
+    },
+    {
+      "abstract_exploitability_bb": 0.0012842773866696792,
+      "abstract_nashconv_bb": 0.0025685547733393585,
+      "br_bb_min_sb_ev_bb": -0.04816799625676558,
+      "br_sb_ev_bb": -0.04559944148342622,
+      "expected_abstract_game_nashconv_upper_bb": 36.62517162142071,
+      "full_game_gto_verified": false,
+      "iterations": 4000,
+      "learning": [
+        {
+          "abstract_nashconv_bb": 0.09874894104531969,
+          "iterations": 100,
+          "profile_sb_ev_bb": -0.05507617409917114,
+          "seconds": 0.23184214100001554
+        },
+        {
+          "abstract_nashconv_bb": 0.0025685547733393585,
+          "iterations": 4000,
+          "profile_sb_ev_bb": -0.04700046213413184,
+          "seconds": 6.69961900699991
+        }
+      ],
+      "mode": "checkdown",
+      "model_scope": "finite preflop action/class abstraction with fixed continuation controllers; not postflop equilibrium",
+      "payoff_digest": "ba86ca5e00e1abf943db12654f7cb383bc265fab5a2cce2523b1a55887893c55",
+      "policy_digest": "aa7cdc15aa2ffe3804dc38765c709c1bd4a657024ee546b3f82e20a1154af0d2",
+      "profile_sb_ev_bb": -0.04700046213413184,
+      "real_game_approximation_error_bb": null,
+      "reference_solution_comparison": "UNPERFORMED: no trusted matching HU50BB reference supplied",
+      "same_input_replay": true,
+      "samples_per_class_pair": 256,
+      "seed": 2901,
+      "simultaneous_payoff_error_bound_bb": 18.311301533323686
+    },
+    {
+      "abstract_exploitability_bb": 0.0013136224724001645,
+      "abstract_nashconv_bb": 0.002627244944800329,
+      "br_bb_min_sb_ev_bb": 0.019085129417552946,
+      "br_sb_ev_bb": 0.021712374362353275,
+      "expected_abstract_game_nashconv_upper_bb": 36.62523031159217,
+      "full_game_gto_verified": false,
+      "iterations": 4000,
+      "learning": [
+        {
+          "abstract_nashconv_bb": 0.09807639629526715,
+          "iterations": 100,
+          "profile_sb_ev_bb": 0.01902062525850087,
+          "seconds": 0.23442502200032322
+        },
+        {
+          "abstract_nashconv_bb": 0.002627244944800329,
+          "iterations": 4000,
+          "profile_sb_ev_bb": 0.020318623724598722,
+          "seconds": 6.622700733999864
+        }
+      ],
+      "mode": "flop_controller",
+      "model_scope": "finite preflop action/class abstraction with fixed continuation controllers; not postflop equilibrium",
+      "payoff_digest": "ba86ca5e00e1abf943db12654f7cb383bc265fab5a2cce2523b1a55887893c55",
+      "policy_digest": "1809dac2bf492f3472b5dec495d0e5f913605e66ad9a72706efb544b6ba6d688",
+      "profile_sb_ev_bb": 0.020318623724598722,
+      "real_game_approximation_error_bb": null,
+      "reference_solution_comparison": "UNPERFORMED: no trusted matching HU50BB reference supplied",
+      "same_input_replay": true,
+      "samples_per_class_pair": 256,
+      "seed": 2901,
+      "simultaneous_payoff_error_bound_bb": 18.311301533323686
+    }
+  ],
+  "schema": "pokerid-preflop-abstract-study-v1",
+  "seeds": [
+    1701,
+    2901
+  ],
+  "source": {
+    "binary_sha256": "e26228a705baf93f6ae7c4cab68590f6176a69fa14fc355914d06b3d3d4804be",
+    "command": [
+      "c++",
+      "-std=c++17",
+      "-O3",
+      "-shared",
+      "-fPIC",
+      "/workspace/poker-sns/gto/abstract/core.cc",
+      "-I/workspace/gto-abstract-hu50-256/build",
+      "-o",
+      "/workspace/gto-abstract-hu50-256/build/abstract.so"
+    ],
+    "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+    "rank_source_sha256": "870b64c0253be86ef139d0c2437d202d9d4f10097e871dd8bde526402dd49353",
+    "source_sha256": "acbe730794f5a763fc2ea30279bba74f3ca5341c43a5bb02b4ce77a3d2322d82"
+  },
+  "ui_admission": "RESEARCH_ONLY_NOT_FORMAL_GTO",
+  "unmodeled": "omitted bet sizes; class aggregation beyond exact blockers; optimized postflop strategies; later-street betting; formal stack/sizing specifications"
+}

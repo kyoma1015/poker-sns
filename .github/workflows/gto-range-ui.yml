@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: '24'
       - run: npm ci --ignore-scripts --no-audit --no-fund
-      - run: node --test --test-isolation=none tests/gto-range.test.mjs
+      - run: node --test --test-isolation=none tests/gto-range.test.mjs tests/gto-abstract.test.mjs
       - run: npm run build
       - run: npm run lint
       - run: npx --no-install playwright-core install chromium

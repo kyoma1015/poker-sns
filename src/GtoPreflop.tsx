@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { canonicalQuery, findVerifiedRange, handGrid, oneBBQuery, positions } from './gto/rangeCatalog'
 import type { RangeQuery, ReviewedCertificate, VerifiedRange } from './gto/rangeCatalog'
 import { reviewedCertificates, verifiedCatalog } from './gto/verifiedCatalog'
+import { abstractResearch, abstractResearchQuery, findAbstractResearch } from './gto/abstractResearch'
+import type { AbstractStage } from './gto/abstractResearch'
 import './GtoPreflop.css'
 
 const stages = { rfi: 'RFI（自分まで全員フォールド）', vs_open: 'オープンへの対応',
@@ -27,21 +29,24 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
   const [message, setMessage] = useState('条件を入力して検索してください。')
   const [error, setError] = useState('')
   const [selected, setSelected] = useState('AA')
+  const [researchOptIn, setResearchOptIn] = useState(false)
+  const [researchStage, setResearchStage] = useState<AbstractStage | null>(null)
   const isForced = form.stage === 'forced_blind_allin'
   const hasOneBB = findVerifiedRange(oneBBQuery, catalog, certificates) !== null
   function change(patch: Partial<RangeQuery>) {
     setForm(previous => ({ ...previous, ...patch }))
-    setResult(null); setError(''); setMessage('条件を入力して検索してください。')
+    setResearchStage(null); setResult(null); setError(''); setMessage('条件を入力して検索してください。')
   }
   function search(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     try {
       const query = canonicalQuery(form)
       const match = findVerifiedRange(query, catalog, certificates)
+      setResearchStage(researchOptIn ? findAbstractResearch(query) : null)
       setResult(match); setSelected('AA'); setError('')
       setMessage(match ? '計算条件と検証根拠が一致するデータを表示しています。' : 'この条件の検証済みデータはまだありません。')
     } catch (caught) {
-      setResult(null); setError(caught instanceof Error ? caught.message : '検索条件を確認してください。')
+      setResearchStage(null); setResult(null); setError(caught instanceof Error ? caught.message : '検索条件を確認してください。')
     }
   }
   const selectedRow = result?.hands[selected]
@@ -56,7 +61,12 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
           <p>明示的な検証用条件として、HU・両者1BBのレンジを利用できます。通常のRFIオープンや3ベットの代用ではなく、正式20スタック条件のデータではありません。</p>
           <button className="gto-preset" type="button" onClick={() => change(oneBBQuery)}>検証済みテスト条件：HU1BB</button>
         </aside>}
+        <aside className="gto-notice">
+          <p>HU50BBの抽象化モデルを研究用に比較できます。実ゲームのGTO精度は未検証で、正式GTOレンジには含めていません。</p>
+          <button type="button" onClick={() => { change(abstractResearchQuery); setResearchOptIn(true) }}>研究用：HU50BB抽象化モデル</button>
+        </aside>
         <form aria-label="プリフロップ検索条件" onSubmit={search}>
+          <label><input type="checkbox" checked={researchOptIn} onChange={event => { setResearchOptIn(event.target.checked); setResearchStage(null) }} />抽象化モデルの研究結果も確認する（実ゲームGTO未検証）</label>
           <fieldset className="gto-fields"><legend>計算条件</legend>
             <label>ゲーム形式<select aria-label="ゲーム形式" disabled={isForced} value={form.format} onChange={event => change({ format: event.target.value as RangeQuery['format'], rakePct: '0', rakeCapBb: null })}>
               <option value="mtt">MTT（chipEV）</option><option value="ring">リングゲーム</option>
@@ -131,6 +141,47 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
           </details>
         </section>}
       </section>
+      {researchStage && <AbstractResearchPanel key={researchStage} stage={researchStage} />}
     </main>
   )
+}
+
+function AbstractResearchPanel({ stage }: { stage: AbstractStage }) {
+  const [mode, setMode] = useState<'checkdown' | 'flop_controller'>('flop_controller')
+  const [hand, setHand] = useState('AA')
+  const model = abstractResearch.models[mode]
+  const context = model.contexts[stage]
+  const hands = context.hands as Record<string, { frequencies: number[]; ev_bb: number; action_ev_bb: number[]; model_ev_interval_bb: number[] }>
+  const selected = hands[hand]
+  const sensitivity = abstractResearch.independent_seed_comparison.find(row => row.mode === mode && row.stage === stage)
+  const names: Record<string, string> = { fold: 'フォールド', call: 'コール', check: 'チェック', raise_to_5: '2.5BBへレイズ', raise_to_18: '9BBへレイズ', raise_to_42: '21BBへレイズ', raise_to_100: '50BBオールイン' }
+  return <section className="card gto-research" aria-label="抽象化モデルの研究結果">
+    <h2>研究用：HU50BB抽象化モデル</h2>
+    <p role="note">実ゲームGTO精度は未検証です。以下のEV・収束は抽象化モデル内の値であり、正式GTOの保証ではありません。</p>
+    <p>HU・両者50BB・アンティ／レーキなし。サイズ：2.5／9／21／50BB。対象：{stages[stage]}。</p>
+    <label>継続価値モデル<select aria-label="継続価値モデル" value={mode} onChange={event => setMode(event.target.value as typeof mode)}>
+      <option value="flop_controller">フロップのベット／コール方策</option><option value="checkdown">チェックダウン比較モデル</option>
+    </select></label>
+    <p>フロップ方策は自分の手札と公開フロップから判断し、半ポットのベット1回まで。ターン・リバーはチェックで進めます。オールインはカード除去を反映したショーダウンで評価します。</p>
+    <p>固定した標本利得表のNashConv：{model.abstract_nashconv_bb.toFixed(6)} BB（継続価値の期待値や実ゲームに対する利得上限ではありません）。169 / 169クラス。</p>
+    {sensitivity && <p>独立seed間の行動頻度差：最大{(sensitivity.max_frequency_difference * 100).toFixed(1)}ポイント。到達確率で重み付けしたTV距離：{(sensitivity.reach_weighted_total_variation * 100).toFixed(1)}%。標本による戦略の不安定さが残っています。</p>}
+    <div className="gto-legend">{context.actions.map((action, i) => <span key={action}><i style={{ background: colors[i % colors.length] }} />{names[action] ?? action}</span>)}</div>
+    <div className="gto-matrix-scroll" tabIndex={0} role="region" aria-label="研究用169ハンド表">
+      <table className="gto-matrix"><caption>抽象化モデルの試算・正式GTOではありません</caption>
+        <tbody>{handGrid.map((row, i) => <tr key={i}>{row.map(label => <td key={label}>
+          <button type="button" data-research-hand={label} aria-pressed={hand === label} aria-label={`研究用 ${label}`} style={{ background: bar(hands[label].frequencies) }} onClick={() => setHand(label)}><strong>{label}</strong><small>{hands[label].ev_bb.toFixed(3)} BB</small></button>
+        </td>)}</tr>)}</tbody>
+      </table>
+    </div>
+    <section aria-live="polite"><h3>{hand}：抽象化モデル内の頻度・EV</h3>
+      <ul>{context.actions.map((action, i) => <li key={action}>{names[action] ?? action}：{(selected.frequencies[i] * 100).toFixed(1)}%／モデルEV {selected.action_ev_bb[i].toFixed(3)} BB</li>)}</ul>
+      <p>モデルEV：{selected.ev_bb.toFixed(3)} BB。モデルの標本誤差を含む同時区間：[{selected.model_ev_interval_bb.map(x => x.toFixed(3)).join(', ')}] BB（99%）。実ゲームの近似誤差は含みません。</p>
+    </section>
+    <details><summary>検証条件と未検証範囲</summary>
+      <p>各クラス対{abstractResearch.samples_per_class_pair}標本・{abstractResearch.iterations}反復・学習seed {abstractResearch.training_seed}。EVはブラインド支出を含む純損益です。</p>
+      <p>固定方策の独立seed {model.heldout.seed}でのSB全体EV：{model.heldout.profile_sb_ev_bb.toFixed(4)} BB、区間[{model.heldout.interval_bb.map(x => x.toFixed(4)).join(', ')}] BB（{(model.heldout.confidence * 100).toFixed(1)}%）。各ハンドの区間とは集計範囲が異なります。</p>
+      <p>信頼できる同条件の参照解との比較：未実施。実ゲームの近似誤差：未確定。省略サイズ・最適なポストフロップ戦略・正式20スタック条件は未検証です。</p>
+      <p>方策：{model.policy_digest}／計算ソース：{abstractResearch.source_sha256}</p>
+    </details>
+  </section>
 }
