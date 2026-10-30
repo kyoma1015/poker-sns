@@ -26,7 +26,7 @@ jobs:
       - name: Compile changed client and default-disabled application
         run: npx tsc -b --pretty false && npx vite build
       - name: Type-check production API entrypoints
-        run: npx tsc --noEmit --module nodenext --moduleResolution nodenext --target es2022 --skipLibCheck --allowImportingTsExtensions api/video-media.ts api/video-finalize.ts
+        run: npx tsc --ignoreConfig --noEmit --module nodenext --moduleResolution nodenext --target es2022 --skipLibCheck --allowImportingTsExtensions api/video-media.ts api/video-finalize.ts
       - run: node --test tests/video/production_rollout_gate.test.mjs
       - run: bash tests/video/isolated_production_rollout.sh
 
