@@ -2,23 +2,28 @@ import { createVideoAttestationNonce, signBinaryVideoAttestation, videoAttestati
 import { createClient } from '@supabase/supabase-js'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { inspectStagedVideo } from '../api/video-preflight.js'
-import { assertProductionVideoMember } from './video-production-rollout.mjs'
+import { assertProductionVideoMember, assertProductionVideoPublisher } from './video-production-rollout.mjs'
+import { assertServerAttestationAvailable } from '../api/video-production-supabase-adapters.js'
 
 const pathPattern=/^([0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12})\/[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}\.(mp4|webm)$/
 const MAX_BYTES=20*1024*1024
 
-/** Production recovery is status-only and requires an independent opt-in.
- * No production binding, publication, cleanup or privileged credentials. */
+/** Production recovery is opt-in with independent per-action gates.
+ * Never grants service_role, deletes Storage, or bypasses JWT/DB authorization. */
 export async function handleVideoRecoveryCandidate(req: VercelRequest,res: VercelResponse,isolated: boolean) {
   const url=process.env.VITE_SUPABASE_URL,anon=process.env.VITE_SUPABASE_ANON_KEY
   const isolatedReady=isolated && url==='http://127.0.0.1:56321'
-  const productionStatusOnly=!isolated && process.env.VERCEL_ENV==='production' &&
+  const productionBase=!isolated && process.env.VERCEL_ENV==='production' &&
     process.env.VIDEO_PRODUCTION_FENCED_READY==='true' &&
-    process.env.VIDEO_RECOVERY_STATUS_ONLY_ENABLED==='true' &&
-    typeof url==='string' && /^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/.test(url)
-  if ((!isolatedReady && !productionStatusOnly) || !anon) return res.status(503).json({error:'recovery_not_enabled'})
+    url==='https://ephptepeuespnxtzdqby.supabase.co'
+  const productionStatusOnly=productionBase && process.env.VIDEO_RECOVERY_STATUS_ONLY_ENABLED==='true'
+  const productionWrites=productionBase && process.env.VIDEO_RECOVERY_PRODUCTION_WRITES_ENABLED==='true' &&
+    process.env.VIDEO_ATTESTED_RPC_RELEASE_APPROVED==='true'
+  if ((!isolatedReady && !productionStatusOnly && !productionWrites) || !anon) return res.status(503).json({error:'recovery_not_enabled'})
   const body=req.body as Record<string,unknown>
-  if (productionStatusOnly && body.action!=='recovery_status') return res.status(503).json({error:'recovery_mutation_not_enabled'})
+  if (!body || typeof body!=='object' || Array.isArray(body)) return res.status(400).end()
+  if (!isolatedReady && body.action!=='recovery_status' && !productionWrites)
+    return res.status(503).json({error:'recovery_mutation_not_enabled'})
   const bind=body.action==='bind_recovery'
   const finalize=body.action==='recovery_finalize'
   const expected=bind?['action','object_path','sha256','size','type','content']:finalize?['action','object_path','content']:['action','object_path']
@@ -37,7 +42,12 @@ export async function handleVideoRecoveryCandidate(req: VercelRequest,res: Verce
   }
   try {
     const owner=await authenticate(),path=body.object_path
-    if (productionStatusOnly) await assertProductionVideoMember(client,owner)
+    if (productionBase) {
+      if (bind || finalize) {
+        await assertProductionVideoPublisher(client,owner)
+        if (finalize) assertServerAttestationAvailable()
+      } else await assertProductionVideoMember(client,owner)
+    }
     if(pathPattern.exec(path)?.[1]!==owner) return res.status(403).end()
     if(bind) {
       const {data,error}=await client.rpc('video_bind_recovery_manifest_v1',{p_path:path,p_sha256:body.sha256,p_size:body.size,p_type:body.type,p_content:body.content})
@@ -84,10 +94,12 @@ export async function handleVideoRecoveryCandidate(req: VercelRequest,res: Verce
       return res.status(409).json({error:'recovery_post_mismatch'})
     }
     if(finalize) {
-      // This synthetic-key configuration is accepted ONLY beyond the exact
-      // localhost + explicit isolated-mode fence above. Production stays off.
-      const keyHex=process.env.VIDEO_RECOVERY_ISOLATED_KEY_HEX
-      if(!keyHex||!/^[0-9a-f]{64}$/.test(keyHex)) return res.status(503).json({error:'recovery_signer_unavailable'})
+      // Isolated key is only used for localhost. Production uses the existing
+      // independently approved attestation key and its actual rotation ID.
+      const keyHex=isolatedReady ? process.env.VIDEO_RECOVERY_ISOLATED_KEY_HEX : process.env.VIDEO_ATTESTATION_KEY_HEX
+      const keyId=isolatedReady ? 1 : Number(process.env.VIDEO_ATTESTATION_KEY_ID)
+      if(!keyHex||!/^[0-9a-f]{64}$/.test(keyHex) ||
+        !Number.isInteger(keyId) || keyId<1 || keyId>32767) return res.status(503).json({error:'recovery_signer_unavailable'})
       const nonce=createVideoAttestationNonce(),expires=Math.floor(Date.now()/1000)+120
       const key=Buffer.from(keyHex,'hex')
       let signature:string
@@ -97,7 +109,7 @@ export async function handleVideoRecoveryCandidate(req: VercelRequest,res: Verce
       if(await authenticate()!==owner) return res.status(401).end()
       const {data,error}=await client.rpc('video_publish_recovered_attested_v1',{p_owner:owner,p_path:path,
         p_generation:after.generation,p_sha256:inspected.sha256,p_duration_ms:Math.round(inspected.duration*1000),
-        p_content:body.content,p_expires_at:expires,p_nonce:nonce,p_signature:signature,p_key_id:1})
+        p_content:body.content,p_expires_at:expires,p_nonce:nonce,p_signature:signature,p_key_id:keyId})
       if(error||typeof data!=='string'||!/^[0-9a-f-]{36}$/.test(data)) return res.status(409).json({error:'recovery_publication_unconfirmed'})
       return res.status(200).json({state:'published',post_id:data})
     }
