@@ -69,3 +69,11 @@ Draft PR #132, previous HEAD `d677b46ee945b3ecff9b4b4a289a880ad4f09953`. Isolate
 - Production recovery signer uses `VIDEO_ATTESTATION_KEY_HEX` with the configured `VIDEO_ATTESTATION_KEY_ID`; the isolated signing key is only used on the localhost isolated branch. The DB must independently validate the matching key ID and signature before production rollout.
 - The Storage restrictive INSERT candidate is **review only**; no execution evidence exists yet. Do not claim emergency Storage stop is proven by the candidate until effective RLS tests pass with production-equivalent permissive policies and authenticated JWTs.
 - Following the acceptance HEAD, a server input-validation change rejects unknown recovery actions and malformed bearer headers; new HEAD requires fresh CI. The previous acceptance evidence must not be attributed to that new HEAD.
+
+
+## 2026-10-31 Preview availability and Storage kill-switch acceptance
+- HEAD `2ff70ab46bca361bae5d180f12c6be84cf178008`: Video SQL `41086500138`, MOV `41086500200`, Poll-only `41086499972`, and Storage HTTP `41086499939` all SUCCESS.
+- Storage HTTP job `124168934889` confirms first and second application of `tests/video/production_storage_insert_stop_NOT_APPROVED.sql`, simulated legacy permissive INSERT blocked with rollout OFF, nonvideo and rollout-ON INSERT allowed, and modified restrictive policy rejected without overwrite. This is local PostgreSQL RLS QA, not production Storage HTTP evidence.
+- GitHub commit status context `Vercel` reports `failure`: `Deployment rate limited — retry in 24 hours.` Therefore no matching Preview for this HEAD exists yet. Do NOT change SSO, disable Deployment Protection, upgrade the plan, trigger repeated deploys, or claim a READY Preview.
+- Resume only after Vercel's rate limit clears. Check the exact HEAD and Preview SHA/READY; if Git auto-deployment does not resume, inspect deployment integration status before taking a manual Preview-only action.
+- Release remains blocked until Preview verification, production-specific key-ID/signature and RLS review, authorization, and approved rollout. No production migration or Storage policy application has been performed.
