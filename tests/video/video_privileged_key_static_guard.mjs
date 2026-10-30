@@ -95,8 +95,16 @@ assert.match(finalize,/!isolatedReservation/,'production reservation must remain
 const recovery=readFileSync('server/video-recovery-candidate.ts','utf8')
 assert.match(recovery,/VIDEO_RECOVERY_STATUS_ONLY_ENABLED==='true'/,
  'production recovery inspection must require an independent opt-in')
-assert.match(recovery,/productionStatusOnly && body.action!=='recovery_status'/,
- 'production recovery must reject binding and publication before I/O')
+assert.match(recovery,/body.action!=='recovery_status' && !productionWrites/,
+ 'production recovery must reject mutation before I/O unless independently enabled')
+assert.match(recovery,/VIDEO_RECOVERY_PRODUCTION_WRITES_ENABLED==='true'/,
+ 'production recovery writes require an independent explicit opt-in')
+assert.match(recovery,/await assertProductionVideoPublisher/,
+ 'production recovery writes must enforce caller JWT-scoped DB publisher authorization')
+assert.match(recovery,/assertServerAttestationAvailable/,
+ 'production recovery finalize must require attestation gate')
+assert.match(recovery,/VIDEO_ATTESTATION_KEY_ID/,
+ 'production recovery must use the provisioned production rotation key')
 assert.match(recovery,/await assertProductionVideoMember\(client,owner\)/,
  'production recovery inspection must enforce the JWT-scoped rollout allowlist')
 assert.match(recovery,/JSON.stringify\(before\)!==JSON.stringify\(after\)/,
