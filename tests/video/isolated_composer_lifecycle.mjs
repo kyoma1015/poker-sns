@@ -38,7 +38,7 @@ export async function verifyComposerLifecycle({browser,origin,jwt,anon,bytes}) {
       await page.evaluate(()=>window.dispatchEvent(new Event('poker-id-open-compose')))
       const composer=page.getByRole('dialog',{name:'新しい投稿'})
       await composer.waitFor()
-      const picker=page.locator('input[accept="video/mp4,video/webm"]')
+      const picker=page.locator('input[type="file"][accept*="video/mp4"]')
       const holdMetadata=()=>page.evaluate(()=>{
         const create=document.createElement.bind(document)
         document.createElement=(tag,...args)=>{
@@ -160,3 +160,4 @@ export async function verifyComposerLifecycle({browser,origin,jwt,anon,bytes}) {
     } finally { await page.close() }
   }
 }
+

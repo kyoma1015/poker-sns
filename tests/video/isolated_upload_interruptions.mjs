@@ -17,7 +17,7 @@ export async function verifyUploadInterruptions({browser,origin,jwt,anon,bytes})
       await composer.waitFor()
       const content='isolated '+scenario+' '+Date.now()
       await composer.locator('textarea').fill(content)
-      await page.locator('input[accept="video/mp4,video/webm"]').setInputFiles({name:'interrupt.webm',mimeType:'video/webm',buffer:bytes})
+      await page.locator('input[type="file"][accept*="video/mp4"]').setInputFiles({name:'interrupt.webm',mimeType:'video/webm',buffer:bytes})
       await composer.locator('video').waitFor()
       if(scenario==='expire-after-reservation') await page.evaluate(()=>{
         const id=JSON.parse(atob(window.__VIDEO_QA_JWT.split('.')[1].replaceAll('-','+').replaceAll('_','/'))).sub
@@ -143,3 +143,4 @@ export async function verifyUploadInterruptions({browser,origin,jwt,anon,bytes})
     }
   }
 }
+
