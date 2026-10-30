@@ -1,6 +1,11 @@
 -- REVIEW ONLY. Applied exclusively to disposable isolated CI, never production.
+-- Atomic DDL avoids a window where newly created SECURITY DEFINER functions
+-- have PostgreSQL's default PUBLIC EXECUTE before their REVOKE statements.
+begin;
 create schema if not exists video_private;
-revoke all on schema video_private from public,anon,authenticated,service_role;
+-- Do not revoke existing schema USAGE: video_private is shared with production
+-- video attestation, nonce and rollout machinery. This migration only revokes
+-- access to its own new table and functions.
 create table if not exists video_private.recovery_manifests (
  object_path text primary key,
  bucket_id text not null default 'post-videos' check(bucket_id='post-videos'),
@@ -108,3 +113,5 @@ begin
 end $$;
 revoke all on function public.video_publish_recovered_attested_v1(uuid,text,uuid,text,integer,text,bigint,text,text,smallint) from public,anon,service_role;
 grant execute on function public.video_publish_recovered_attested_v1(uuid,text,uuid,text,integer,text,bigint,text,text,smallint) to authenticated;
+
+commit;
