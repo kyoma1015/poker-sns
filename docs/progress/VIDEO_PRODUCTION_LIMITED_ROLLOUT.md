@@ -29,7 +29,7 @@ Server-only:
 - FFPROBE_BINARY_PATH: deployed absolute ffprobe executable, verified by Preview runtime attestation.
 Existing nonprivileged connection: VITE_SUPABASE_URL must exactly equal https://ephptepeuespnxtzdqby.supabase.co and VITE_SUPABASE_ANON_KEY is the production public client key.
 Client build: VITE_VIDEO_SERVER_ENABLED=true only for the reviewed release. It is UI availability, not authorization; server/DB deny all non-allowlisted users.
-Server cloud-test configuration VIDEO_CLOUD_TEST_ENABLED, VIDEO_CLOUD_TEST_PROJECT_REF and VIDEO_CLOUD_TEST_VERCEL_PROJECT_ID must be unset (even the string false requests the cloud-test guard). Client VITE_VIDEO_CLOUD_TEST_ENABLED must remain false/unset. Do not use service_role or QA fixed HMAC secrets.
+Server cloud-test configuration VIDEO_CLOUD_TEST_ENABLED, VIDEO_CLOUD_TEST_PROJECT_REF and VIDEO_CLOUD_TEST_VERCEL_PROJECT_ID must be unset (even the string false requests the cloud-test guard). Client VITE_VIDEO_CLOUD_TEST_ENABLED and VITE_VIDEO_CLOUD_TEST_ORIGIN must also be unset; a false string still requests the client test-target guard. Do not use service_role or QA fixed HMAC secrets.
 Provision the key into the existing private key table through a separately approved secret-safe path; do not put it in SQL files, shell arguments, CI logs, PRs or chat.
 
 ## Approved execution order (approval still required)
@@ -55,3 +55,6 @@ If an application regression occurs, restore the recorded prior Vercel deploymen
 
 ## Implemented boundary regression
 The production adapter runtime regression uses real ffprobe and a strict mock HTTP transport (never production network), independently verifies the emitted HMAC/RPC claims, rejects server/DB non-members, rejects new publication while stopped, permits owner hide during stop, and rejects target mismatch before I/O. The separate disposable real Auth/PostgREST/Storage test validates actual SQL/RLS and signatures. Neither is a claim of completed production or Safari E2E.
+
+## Large media transport
+After all JWT/RLS and bounded full-object checks, video-media streams responses above 4 MiB in 64 KiB chunks with backpressure, without Content-Length. Smaller responses preserve the existing buffered contract. A real Node Writable regression verifies a 5 MiB response's complete byte hash and chunk bounds. Protected Vercel Preview must still prove large-response streaming on the deployed runtime before production enablement. Official references: https://vercel.com/docs/functions/limitations and https://vercel.com/kb/guide/how-to-bypass-vercel-body-size-limit-serverless-functions .

@@ -1,4 +1,6 @@
 import test from 'node:test'
+import {Writable} from 'node:stream'
+import mediaHandler from '../../api/video-media.ts'
 import assert from 'node:assert/strict'
 import {randomBytes,createHash} from 'node:crypto'
 import {execFileSync} from 'node:child_process'
@@ -17,7 +19,7 @@ test('production adapter composes real ffprobe with attested RPC; stop preserves
     delete process.env.VIDEO_CLOUD_TEST_ENABLED
     Object.assign(process.env,{VITE_SUPABASE_URL:url,VITE_SUPABASE_ANON_KEY:'synthetic-public-key',VIDEO_PRODUCTION_FENCED_READY:'true',VIDEO_PRODUCTION_LIMITED_ROLLOUT:'true',VIDEO_ATTESTED_RPC_RELEASE_APPROVED:'true',VIDEO_ALLOWED_USER_IDS:owner,VIDEO_ATTESTATION_KEY_HEX:key.toString('hex'),VIDEO_ATTESTATION_KEY_ID:'7',VIDEO_SERVER_ENABLED:'true'})
     const bytes=execFileSync(process.env.FFMPEG_BINARY_PATH||'ffmpeg',['-v','error','-f','lavfi','-i','color=c=black:s=32x32:d=1','-c:v','libx264','-movflags','frag_keyframe+empty_moov','-f','mp4','pipe:1'],{stdio:['ignore','pipe','pipe']})
-    let writes=0,calls=0,identity=owner,allowed=true
+    let writes=0,calls=0,identity=owner,allowed=true,mediaBytes=bytes
     globalThis.fetch=async(input,options={})=>{
       calls++
       const requestUrl=String(input instanceof Request?input.url:input)
@@ -26,7 +28,8 @@ test('production adapter composes real ffprobe with attested RPC; stop preserves
       if(requestUrl===url+'/auth/v1/user')return json({id:identity,app_metadata:{},user_metadata:{},aud:'authenticated'})
       if(requestUrl.endsWith('/rpc/video_rollout_allowed')||requestUrl.endsWith('/rpc/video_rollout_member'))return json(allowed)
       if(requestUrl.endsWith('/rpc/video_production_storage_generation'))return json(generation)
-      if(requestUrl.endsWith('/object/authenticated/post-videos/'+path))return new Response(bytes,{headers:{'content-type':'video/mp4','content-length':String(bytes.length)}})
+      if(requestUrl.includes('/rest/v1/posts?'))return json({user_id:owner,video_path:path})
+      if(requestUrl.endsWith('/object/authenticated/post-videos/'+path))return new Response(mediaBytes,{headers:{'content-type':'video/mp4','content-length':String(mediaBytes.length)}})
       if(requestUrl.endsWith('/rpc/video_publish_attested_v1')){
         const p=JSON.parse(options.body)
         assert.equal(p.p_owner,owner);assert.equal(p.p_path,path);assert.equal(p.p_generation,generation)
@@ -39,6 +42,15 @@ test('production adapter composes real ffprobe with attested RPC; stop preserves
     }
     const adapter=()=>createProductionSupabaseVideoAdapters(url,'synthetic-public-key','synthetic.token')
     assert.equal(await finalizeImmutableCandidate('synthetic.token',path,'fixture',adapter()),post);assert.equal(writes,1)
+    // Exercise an actual Node Writable/backpressure boundary above buffered-response size.
+    mediaBytes=Buffer.alloc(5*1024*1024,7)
+    let streamed=0,largest=0;const streamHash=createHash('sha256')
+    const output=new Writable({highWaterMark:1024,write(chunk,encoding,done){streamed+=chunk.length;largest=Math.max(largest,chunk.length);streamHash.update(chunk);setImmediate(done)}})
+    output.headers={};output.setHeader=(k,v)=>{output.headers[k]=v;return output};output.status=n=>{output.statusCode=n;return output};output.flushHeaders=()=>{output.headersSent=true};output.send=()=>{throw Error('large response must not buffer')}
+    await mediaHandler({method:'GET',headers:{authorization:'Bearer synthetic.token'},query:{post_id:post}},output)
+    assert.equal(output.statusCode,200);assert.equal(streamed,mediaBytes.length);assert.ok(largest<=65536)
+    assert.equal(output.headers['Content-Length'],undefined);assert.equal(streamHash.digest('hex'),createHash('sha256').update(mediaBytes).digest('hex'))
+    mediaBytes=bytes
     identity='44444444-4444-4444-8444-444444444444'
     await assert.rejects(finalizeImmutableCandidate('synthetic.token',path,'fixture',adapter()));assert.equal(writes,1)
     identity=owner;allowed=false

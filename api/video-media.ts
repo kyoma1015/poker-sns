@@ -1,3 +1,5 @@
+import { Readable } from 'node:stream'
+import { pipeline } from 'node:stream/promises'
 import { assertProductionVideoConfiguration, assertProductionVideoPublisher } from '../server/video-production-rollout.mjs'
 import { assertCloudTestRequestConfiguration } from '../server/video-cloud-test-target.mjs'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
@@ -118,9 +120,21 @@ return async function handler(req: VercelRequest, res: VercelResponse) {
     }
     if (bytes.byteLength === 0 || bytes.byteLength > MAX_BYTES) return res.status(503).end()
     res.setHeader('Content-Type', expectedMime)
+    // Keep all authorization and bounded validation BEFORE the first byte.
+    // Large private videos must stream instead of using Vercel's buffered body.
+    if (bytes.byteLength > 4 * 1024 * 1024) {
+      res.status(200)
+      res.flushHeaders()
+      async function* chunks() {
+        for (let offset = 0; offset < bytes.length; offset += 64 * 1024) yield bytes.subarray(offset, offset + 64 * 1024)
+      }
+      await pipeline(Readable.from(chunks()), res)
+      return
+    }
     res.setHeader('Content-Length', String(bytes.byteLength))
     return res.status(200).send(bytes)
   } catch {
+    if (res.headersSent) { res.destroy(); return }
     return res.status(503).end()
   }
 }
