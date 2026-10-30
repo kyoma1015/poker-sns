@@ -90,8 +90,8 @@ assert.match(adapter,/production video publish requires provisioned server-attes
  'production release must fail closed without approval and key')
 const finalize=readFileSync('api/video-finalize.ts','utf8')
 assert.match(finalize,/!isolatedReservation/,'production reservation must remain disabled')
-// Production recovery is intentionally observation-only until its DB contract
-// and attested publication have independent isolated HTTP evidence.
+// Production recovery writes require independent explicit gates and caller JWT+DB
+// authorization; no request is allowed to use the isolated signer in production.
 const recovery=readFileSync('server/video-recovery-candidate.ts','utf8')
 assert.match(recovery,/VIDEO_RECOVERY_STATUS_ONLY_ENABLED==='true'/,
  'production recovery inspection must require an independent opt-in')
