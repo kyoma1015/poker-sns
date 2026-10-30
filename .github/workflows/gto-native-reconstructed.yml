@@ -42,6 +42,7 @@ jobs:
             GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_learned_preflop.py -v
             GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_full_game_bounds.py -v
             GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_feasible_response.py -v
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_strict_continuation.py -v
           done
       - name: Ordinary HU50BB learning and conservative full-continuation evaluation
         run: python -B -m gto.native.ordinary_study --module-dir "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/g12_next" --output "$RUNNER_TEMP/ordinary-study-$GITHUB_RUN_ID"
@@ -52,6 +53,11 @@ jobs:
           GTO_RESPONSE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/response-controls" python -B gto/native/test_response_controls.py -v
           GTO_TARGETED_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/targeted" python -B gto/native/test_targeted.py -v
           python -B -m gto.native.ordinary_study --targeted --response-controls-dir "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/response-controls" --module-dir "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/targeted" --output "$RUNNER_TEMP/targeted-study-$GITHUB_RUN_ID"
+      - name: Full-support missing-owner recovery and completion-free evaluation
+        run: |
+          python -B -m gto.native.build_focused --runtime "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID"
+          GTO_FOCUSED_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/focused" python -B gto/native/test_focused.py -v
+          python -B -m gto.native.focused_study --runtime "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID" --parent-directory "$RUNNER_TEMP/targeted-study-$GITHUB_RUN_ID" --output "$RUNNER_TEMP/focused-study-$GITHUB_RUN_ID"
       - name: Complete native HU1BB calibration and actual representative learning
         run: |
           python -B -m gto.native.onebb_certificate --runtime "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID" --output "$RUNNER_TEMP/onebb-evidence-$GITHUB_RUN_ID"
