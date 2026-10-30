@@ -5,6 +5,7 @@ trap 'docker rm -f "$name" >/dev/null 2>&1 || true' EXIT
 docker run -d --rm --network none --name "$name" -e POSTGRES_PASSWORD=synthetic postgres:17 >/dev/null
 for i in $(seq 1 60); do docker exec "$name" pg_isready -U postgres >/dev/null 2>&1 && break; sleep 1; done
 docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 <<'SQL'
+set request.jwt.claims='{"exp":9999999999}';
 create role anon; create role authenticated; create role service_role bypassrls;
 create schema auth; create schema storage; create schema extensions;
 create extension pgcrypto schema extensions;
@@ -30,6 +31,7 @@ create policy existing_other_delete on storage.objects for delete to authenticat
 SQL
 docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 < sql/video_production_limited_rollout.sql
 docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 <<'SQL'
+set request.jwt.claims='{"exp":9999999999}';
 insert into auth.users values('11111111-1111-4111-8111-111111111111');
 insert into video_private.allowed_publishers values('11111111-1111-4111-8111-111111111111',true);
 set role authenticated;
@@ -55,6 +57,7 @@ do $$begin if public.video_rollout_allowed() then raise exception 'stop failed';
 select count(*)=1 as normal_post_retained from public.posts;
 SQL
 docker exec -i "$name" psql -U postgres -v ON_ERROR_STOP=1 <<'SQL'
+set request.jwt.claims='{"exp":9999999999}';
 do $test$
 declare
  owner uuid := '11111111-1111-4111-8111-111111111111';
@@ -88,6 +91,9 @@ begin
  update video_private.rollout_settings set enabled=false;
  execute 'set local role authenticated';
  if public.video_rollout_allowed() then raise exception 'emergency stop failed'; end if;
+ perform set_config('request.jwt.claims','{"exp":1}',true);
+ if public.video_rollout_member() then raise exception 'expired JWT membership allowed'; end if;
+ perform set_config('request.jwt.claims','{"exp":9999999999}',true);
  if not public.video_hide_own(post) or not public.video_hide_own(post) then raise exception 'hide failed'; end if;
  update storage.objects set name=name where name=path;
  if found then raise exception 'Storage update allowed'; end if;

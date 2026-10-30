@@ -6,6 +6,7 @@ on:
       - 'server/video-production-rollout.mjs'
       - 'tests/video/production_rollout_gate.test.mjs'
       - 'tests/video/production_rollout_http_e2e.mjs'
+      - 'scripts/video_ci_startup_diagnostic.py'
       - 'tests/video/isolated_production_rollout.sh'
       - '.github/workflows/video-production-rollout.yml'
 permissions:
@@ -39,6 +40,15 @@ jobs:
           node-version: '24'
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: sudo apt-get update -qq && sudo apt-get install -y postgresql-client ffmpeg
+      - name: Restore pinned isolated Supabase images
+        id: images
+        uses: actions/cache/restore@v4
+        with:
+          path: /tmp/pokerid-supabase-images.tar
+          key: pokerid-supabase-cli-2.81.3-images-v1
+      - name: Load pinned isolated images
+        if: steps.images.outputs.cache-hit == 'true'
+        run: docker load -i /tmp/pokerid-supabase-images.tar
       - name: New production SQL against fresh real Auth and Storage
         shell: bash
         run: |

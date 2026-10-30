@@ -251,8 +251,129 @@ create table video_private.hidden_videos(
 );
 revoke all on all tables in schema video_private from public,anon,authenticated,service_role;
 create function public.video_rollout_member() returns boolean
+language sql volatile security definer set search_path='' as $
+ select case when coalesce(nullif(current_setting('request.jwt.claims',true),'')::jsonb->>'exp','') ~ '^[0-9]{1,12}
+$$;
+create function public.video_rollout_allowed() returns boolean
+language sql volatile security definer set search_path='' as $$
+ select public.video_rollout_member() and exists(select 1 from video_private.rollout_settings where singleton and enabled)
+$$;
+create function public.video_rollout_visible(p_path text) returns boolean
 language sql stable security definer set search_path='' as $$
- select auth.uid() is not null and exists(select 1 from video_private.allowed_publishers
+ select not exists(select 1 from video_private.hidden_videos h join public.posts p on p.id=h.post_id where p.video_path=p_path)
+$$;
+-- posts SELECT policy must not call a helper that reads posts: that would recurse.
+create function public.video_rollout_post_visible(p_id uuid) returns boolean
+language sql stable security definer set search_path='' as $$
+ select not exists(select 1 from video_private.hidden_videos where post_id=p_id)
+$$;
+create function public.video_hide_own(p_post_id uuid) returns boolean
+language plpgsql security definer set search_path='' as $$
+begin
+ if not public.video_rollout_member() then raise exception 'video user denied'; end if;
+ perform 1 from public.posts where id=p_post_id and user_id=auth.uid() and video_path is not null for update;
+ if not found then raise exception 'video owner denied'; end if;
+ insert into video_private.hidden_videos(post_id) values(p_post_id) on conflict do nothing;
+ return true;
+end $$;
+revoke all on function public.video_rollout_member(),public.video_rollout_allowed(),public.video_rollout_visible(text),public.video_rollout_post_visible(uuid),public.video_hide_own(uuid) from public,anon,service_role;
+grant execute on function public.video_rollout_member(),public.video_rollout_allowed(),public.video_rollout_visible(text),public.video_rollout_post_visible(uuid),public.video_hide_own(uuid) to authenticated;
+-- Restrictive AND policies cannot widen existing permissive policies. Normal
+-- posts and all other buckets retain their existing RLS/grants unchanged.
+create policy video_rollout_posts_read on public.posts as restrictive for select to authenticated
+ using(video_path is null or (public.video_rollout_member() and public.video_rollout_post_visible(id)));
+create policy video_rollout_posts_insert on public.posts as restrictive for insert to authenticated with check(video_path is null);
+create policy video_rollout_posts_update on public.posts as restrictive for update to authenticated
+ using(video_path is null) with check(video_path is null);
+create policy video_rollout_posts_delete on public.posts as restrictive for delete to authenticated using(video_path is null);
+create policy video_rollout_storage_insert on storage.objects as restrictive for insert to authenticated
+ with check(bucket_id<>'post-videos' or (public.video_rollout_allowed() and owner_id=auth.uid()::text and public.video_reserved_key_is_owned(name,auth.uid())));
+create policy video_rollout_storage_read on storage.objects as restrictive for select to authenticated
+ using(bucket_id<>'post-videos' or (public.video_rollout_member() and public.video_rollout_visible(name)));
+create policy video_rollout_storage_update on storage.objects as restrictive for update to authenticated
+ using(bucket_id<>'post-videos') with check(bucket_id<>'post-videos');
+create policy video_rollout_storage_delete on storage.objects as restrictive for delete to authenticated using(bucket_id<>'post-videos');
+-- Emergency stop: administrator sets rollout_settings.enabled=false. No row or
+-- object deletion. Administrators can hide abusive video by inserting its post_id
+-- into hidden_videos; no client DELETE or Storage mutation permission is added.
+create function public.video_publish_attested_v1(
+ p_owner uuid,p_path text,p_generation uuid,p_sha256 text,p_duration_ms integer,
+ p_content text,p_expires_at bigint,p_nonce text,p_signature text,p_key_id smallint
+) returns uuid language plpgsql security definer set search_path='' as $fn$
+declare
+ v_secret bytea;v_payload bytea;v_expected bytea;v_signature bytea;
+ v_path bytea;v_id uuid;v_existing public.posts%rowtype;
+begin
+ if not public.video_rollout_allowed() then raise exception 'video rollout disabled'; end if;
+ if (select auth.uid()) is distinct from p_owner then raise exception 'video owner mismatch'; end if;
+ -- SQL three-valued logic must never turn a NULL proof into authorization.
+ if p_owner is null or p_generation is null or p_path is null or
+  p_sha256 is null or p_nonce is null or p_signature is null or
+  p_duration_ms is null or p_expires_at is null or p_key_id is null or
+  p_path !~ ('^'||p_owner::text||'/[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}[.](mp4|webm)$') or
+  p_sha256 !~ '^[0-9a-f]{64}$' or p_nonce !~ '^[0-9a-f]{32}$' or
+  p_signature !~ '^[0-9a-f]{64}$' or p_duration_ms not between 1 and 30000 or
+  p_content is null or length(p_content)>10000 or
+  p_expires_at <= extract(epoch from clock_timestamp())::bigint or
+  p_expires_at > extract(epoch from clock_timestamp())::bigint+300 or
+  p_expires_at<0 then raise exception 'invalid attestation claims'; end if;
+ v_path:=convert_to(p_path,'UTF8');
+ if octet_length(v_path)>255 then raise exception 'path too long'; end if;
+ select secret into v_secret from video_private.attestation_keys where key_id=p_key_id and active=true;
+ if v_secret is null then raise exception 'attestation key unavailable'; end if;
+ v_payload:=decode('01','hex')||decode(replace(p_owner::text,'-',''),'hex')||
+  set_byte(decode('00','hex'),0,octet_length(v_path))||v_path||
+  decode(replace(p_generation::text,'-',''),'hex')||decode(p_sha256,'hex')||
+  pg_catalog.int4send(p_duration_ms)||
+  extensions.digest(convert_to(p_content,'UTF8'),'sha256')||
+  pg_catalog.int8send(p_expires_at)||decode(p_nonce,'hex');
+ v_expected:=extensions.hmac(v_payload,v_secret,'sha256');
+ v_signature:=decode(p_signature,'hex');
+ -- Compare all bytes, with no early exit on mismatched prefix.
+ if v_expected is null or v_signature is null or
+   octet_length(v_expected)<>octet_length(v_signature) or
+   (select bit_or(get_byte(v_expected,n) # get_byte(v_signature,n))
+    from generate_series(0,31) as n)<>0 then
+  raise exception 'invalid video attestation'; end if;
+ perform 1 from public.video_reserved_object_keys
+  where bucket_id='post-videos' and object_path=p_path and owner_id=p_owner for update;
+ if not found then raise exception 'missing owner reservation'; end if;
+ perform 1 from storage.objects where bucket_id='post-videos' and name=p_path
+  and id=p_generation and owner_id=p_owner::text for update;
+ if not found then raise exception 'Storage generation mismatch'; end if;
+ if p_expires_at <= extract(epoch from clock_timestamp())::bigint or not public.video_rollout_allowed() then raise exception 'expired or stopped video publication'; end if;
+ if not exists(select 1 from public.video_reserved_object_keys where object_path=p_path and owner_id=p_owner and created_at>clock_timestamp()-interval '1 hour') then raise exception 'expired video reservation'; end if;
+ -- Single-use nonce is consumed in the SAME transaction as post publication.
+ insert into video_private.consumed_nonces(nonce,owner_id,object_path)
+ values(decode(p_nonce,'hex'),p_owner,p_path);
+ insert into public.posts(user_id,content,post_type,image_urls,video_path,
+  video_generation,video_sha256,video_duration_seconds)
+ values(p_owner,p_content,'normal','{}'::text[],p_path,p_generation,p_sha256,p_duration_ms::double precision/1000)
+ on conflict(video_path) where video_path is not null do nothing returning id into v_id;
+ if v_id is null then
+  select * into v_existing from public.posts where video_path=p_path;
+  if v_existing.user_id<>p_owner or v_existing.video_generation<>p_generation or
+   v_existing.video_sha256<>p_sha256 or
+   v_existing.video_duration_seconds<>p_duration_ms::double precision/1000 or
+   v_existing.content<>p_content then raise exception 'conflicting prior video publication'; end if;
+  v_id:=v_existing.id;
+ end if;
+ if v_id is null then raise exception 'publication failed'; end if;
+ return v_id;
+end $fn$;
+revoke all on function public.video_publish_attested_v1(uuid,text,uuid,text,integer,text,bigint,text,text,smallint) from public,anon,authenticated,service_role;
+-- Grant to authenticated only after production-equivalent isolated tests and secret provisioning.
+-- grant execute on function public.video_publish_attested_v1(uuid,text,uuid,text,integer,text,bigint,text,text,smallint) to authenticated;
+
+
+grant execute on function public.video_publish_attested_v1(uuid,text,uuid,text,integer,text,bigint,text,text,smallint) to authenticated;
+create policy video_rollout_anon_posts on public.posts as restrictive for select to anon using(video_path is null);
+create policy video_rollout_anon_storage on storage.objects as restrictive for select to anon using(bucket_id<>'post-videos');
+commit;
+
+ then (nullif(current_setting('request.jwt.claims',true),'')::jsonb->>'exp')::bigint > extract(epoch from clock_timestamp())
+ else false end
+ and auth.uid() is not null and exists(select 1 from video_private.allowed_publishers
  where user_id=auth.uid() and enabled)
 $$;
 create function public.video_rollout_allowed() returns boolean
