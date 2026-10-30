@@ -73,6 +73,11 @@ try {
   await page.getByRole('heading', { name: 'AKs：抽象化モデル内の頻度・EV', exact: true }).waitFor()
   await page.getByLabel('継続価値モデル', { exact: true }).selectOption('checkdown')
   console.log('PASS B08 abstract HU50BB research is opt-in, displays169 model hands and never enables formal GTO cells')
+  await page.locator('[data-research-hand="AA"]').click()
+  await page.locator('[data-precision-ev]').filter({ hasText: '標本誤差なし' }).waitFor()
+  assert.equal(await page.locator('button[data-hand]:enabled').count(), 0)
+  console.log('PASS B11 conditional EV refinement displays exact checkdown AA without ordinary GTO admission')
+
   for (const [stage, seat] of [['vs_open', '1'], ['vs_3bet', '0'], ['vs_4bet', '1']]) {
     await page.getByLabel('対象局面', { exact: true }).selectOption(stage)
     await page.getByLabel('ポジション', { exact: true }).selectOption(seat)

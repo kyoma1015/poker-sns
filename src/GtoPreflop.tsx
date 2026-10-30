@@ -6,6 +6,7 @@ import type { RangeQuery, ReviewedCertificate, VerifiedRange } from './gto/range
 import { reviewedCertificates, verifiedCatalog } from './gto/verifiedCatalog'
 import { abstractResearch, abstractResearchQuery, findAbstractResearch } from './gto/abstractResearch'
 import type { AbstractStage } from './gto/abstractResearch'
+import { conditionalPrecision } from './gto/precisionResearch'
 import './GtoPreflop.css'
 
 const stages = { rfi: 'RFI（自分まで全員フォールド）', vs_open: 'オープンへの対応',
@@ -153,6 +154,8 @@ function AbstractResearchPanel({ stage }: { stage: AbstractStage }) {
   const context = model.contexts[stage]
   const hands = context.hands as Record<string, { frequencies: number[]; ev_bb: number; action_ev_bb: number[]; model_ev_interval_bb: number[] }>
   const selected = hands[hand]
+  const precision = conditionalPrecision(mode, stage, model.policy_digest, context.actor, context.actions)
+  const refined = precision?.hands[hand]
   const sensitivity = abstractResearch.independent_seed_comparison.find(row => row.mode === mode && row.stage === stage)
   const names: Record<string, string> = { fold: 'フォールド', call: 'コール', check: 'チェック', raise_to_5: '2.5BBへレイズ', raise_to_18: '9BBへレイズ', raise_to_42: '21BBへレイズ', raise_to_100: '50BBオールイン' }
   return <section className="card gto-research" aria-label="抽象化モデルの研究結果">
@@ -169,17 +172,21 @@ function AbstractResearchPanel({ stage }: { stage: AbstractStage }) {
     <div className="gto-matrix-scroll" tabIndex={0} role="region" aria-label="研究用169ハンド表">
       <table className="gto-matrix"><caption>抽象化モデルの試算・正式GTOではありません</caption>
         <tbody>{handGrid.map((row, i) => <tr key={i}>{row.map(label => <td key={label}>
-          <button type="button" data-research-hand={label} aria-pressed={hand === label} aria-label={`研究用 ${label}`} style={{ background: bar(hands[label].frequencies) }} onClick={() => setHand(label)}><strong>{label}</strong><small>{hands[label].ev_bb.toFixed(3)} BB</small></button>
+          <button type="button" data-research-hand={label} aria-pressed={hand === label} aria-label={`研究用 ${label}`} style={{ background: bar(hands[label].frequencies) }} onClick={() => setHand(label)}><strong>{label}</strong><small>{(precision?.hands[label].ev_bb ?? hands[label].ev_bb).toFixed(3)} BB</small></button>
         </td>)}</tr>)}</tbody>
       </table>
     </div>
     <section aria-live="polite"><h3>{hand}：抽象化モデル内の頻度・EV</h3>
-      <ul>{context.actions.map((action, i) => <li key={action}>{names[action] ?? action}：{(selected.frequencies[i] * 100).toFixed(1)}%／モデルEV {selected.action_ev_bb[i].toFixed(3)} BB</li>)}</ul>
-      <p>モデルEV：{selected.ev_bb.toFixed(3)} BB。モデルの標本誤差を含む同時区間：[{selected.model_ev_interval_bb.map(x => x.toFixed(3)).join(', ')}] BB（99%）。実ゲームの近似誤差は含みません。</p>
+      <ul>{context.actions.map((action, i) => <li key={action}>{names[action] ?? action}：{(selected.frequencies[i] * 100).toFixed(1)}%／モデルEV {(refined?.action_ev_bb[i] ?? selected.action_ev_bb[i]).toFixed(3)} BB{refined && `／同時99%区間 [${refined.action_intervals_bb[i].map(x => x.toFixed(3)).join(', ')}]${refined.action_exact[i] ? '（確定／全列挙・解析、標本誤差なし）' : ''}`}</li>)}</ul>
+      {refined ? <p data-precision-ev>独立条件付き集計EV：{refined.ev_bb.toFixed(3)} BB。同時99%区間：[{refined.interval_bb.map(x => x.toFixed(3)).join(', ')}] BB。半径：{refined.radius_bb.toFixed(3)} BB。{refined.method === 'exact_no_sampled_leaf' ? 'この固定方策・継続モデルでは標本誤差なし（全列挙／解析集計）。' : ''}実ゲームの近似誤差は含みません。</p>
+        : <p>モデルEV：{selected.ev_bb.toFixed(3)} BB。同時99%区間：[{selected.model_ev_interval_bb.map(x => x.toFixed(3)).join(', ')}] BB。実ゲームの近似誤差は含みません。</p>}
+      {precision && <p>固定継続モデルの期待利得に対する全体ベストレスポンス評価：NashConv区間 [{precision.gameBounds.nashconv_interval_bb.map(x => x.toFixed(4)).join(', ')}] BB（上記EV区間と合わせて同時99%）。相手の非公開ハンドは観測せず、履歴に条件付けて評価しています。継続方策の最適性・実ゲームの精度保証は含まず、収束合格は未判定です。</p>}
+      {precision && <p>相手169クラスと後続分岐を列挙し、フロップ以降はターン・リバー990通りを条件付き集計。オールイン{precision.exactCells.exact_showdown_cells}セルは全列挙／対称性で確定。頻度は元の固定方策のままで、新しいEV評価後の再収束や実ゲームGTOは未検証です。</p>}
+
     </section>
     <details><summary>検証条件と未検証範囲</summary>
       <p>各クラス対{abstractResearch.samples_per_class_pair}標本・{abstractResearch.iterations}反復・学習seed {abstractResearch.training_seed}。EVはブラインド支出を含む純損益です。</p>
-      <p>固定方策の独立seed {model.heldout.seed}でのSB全体EV：{model.heldout.profile_sb_ev_bb.toFixed(4)} BB、区間[{model.heldout.interval_bb.map(x => x.toFixed(4)).join(', ')}] BB（{(model.heldout.confidence * 100).toFixed(1)}%）。各ハンドの区間とは集計範囲が異なります。</p>
+      <p>従来の単一ランアウト評価・独立seed {model.heldout.seed}でのSB全体EV：{model.heldout.profile_sb_ev_bb.toFixed(4)} BB、区間[{model.heldout.interval_bb.map(x => x.toFixed(4)).join(', ')}] BB（{(model.heldout.confidence * 100).toFixed(1)}%）。各ハンドの区間とは集計範囲が異なります。</p>
       <p>信頼できる同条件の参照解との比較：未実施。実ゲームの近似誤差：未確定。省略サイズ・最適なポストフロップ戦略・正式20スタック条件は未検証です。</p>
       <p>方策：{model.policy_digest}／計算ソース：{abstractResearch.source_sha256}</p>
     </details>
