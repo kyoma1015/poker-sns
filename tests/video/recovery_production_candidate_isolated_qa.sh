@@ -40,6 +40,22 @@ fi
 sql "create schema if not exists video_private;
 create table if not exists video_private.general_public_rollout
  (singleton boolean primary key,enabled boolean not null);"
+# Snapshot existing production-like API/Storage catalog before any migration DDL.
+# This is a catalog fingerprint, not a substitute for a production approval.
+baseline_catalog() {
+ psql "$dburl" -AtX -v ON_ERROR_STOP=1 -c "
+ select md5(
+ pg_get_functiondef('public.video_publish_attested_v1(uuid,text,uuid,text,integer,text,bigint,text,text,smallint)'::regprocedure)
+ || pg_get_functiondef('public.video_reserve_object_key(uuid,text)'::regprocedure)
+ || coalesce((select string_agg(policyname || cmd || roles::text || coalesce(qual,'') || coalesce(with_check,''),'|' order by policyname)
+              from pg_policies where schemaname='storage' and tablename='objects'),'')
+ || coalesce((select string_agg(attname || format_type(atttypid,atttypmod),'|' order by attnum)
+              from pg_attribute where attrelid='public.posts'::regclass and attnum>0 and not attisdropped),'')
+ || coalesce((select string_agg(attname || format_type(atttypid,atttypmod),'|' order by attnum)
+              from pg_attribute where attrelid='public.video_reserved_object_keys'::regclass and attnum>0 and not attisdropped),'')
+ );"
+}
+baseline_before="$(baseline_catalog)"
 # Deliberate incomplete prior migration MUST fail before writing any new RPC.
 sql "create table video_private.recovery_manifests (object_path text);"
 expect_reject 'preexisting unsealed migration objects'
@@ -52,6 +68,8 @@ sql "do \$seal\$ begin
  then raise exception 'missing recovery migration seal'; end if;
  end \$seal\$;"
 apply
+[[ "$baseline_before" == "$(baseline_catalog)" ]] || { echo "FAIL: preexisting parent RPC/Storage/post schema drifted" >&2; exit 1; }
+echo 'PASS: existing parent RPCs, Storage policies and post/ledger columns unchanged'
 echo 'PASS: production-like candidate SQL first and second application'
 # Schema and grants must remain sealed, no expansion of permissions.
 sql "do \$check\$ begin
