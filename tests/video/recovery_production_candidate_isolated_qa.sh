@@ -16,6 +16,15 @@ expect_reject() {
  if ! grep -Fq "$expected" "$out"; then cat "$out"; rm -f "$out"; echo "FAIL: wrong SQL rejection" >&2; exit 1; fi
  rm -f "$out"
 }
+# Reapply against populated recovery state and prove no writes or data loss.
+if [[ "${2:-install}" == recheck ]]; then
+ before="$(psql "$dburl" -AtX -v ON_ERROR_STOP=1 -c "select (select count(*) from public.posts)::text || ':' || (select count(*) from video_private.recovery_manifests)::text || ':' || (select count(*) from video_private.consumed_nonces)::text")"
+ apply
+ after="$(psql "$dburl" -AtX -v ON_ERROR_STOP=1 -c "select (select count(*) from public.posts)::text || ':' || (select count(*) from video_private.recovery_manifests)::text || ':' || (select count(*) from video_private.consumed_nonces)::text")"
+ [[ "$before" == "$after" ]] || { echo "FAIL: idempotent rerun modified posts/manifests/nonces" >&2; exit 1; }
+ echo 'PASS: populated production-like schema reapply preserved posts/manifests/nonces'
+ exit 0
+fi
 # Deliberately mutate a single function only AFTER real HTTP E2E completes.
 # Verify migration refuses the drift and preserves all previously published rows.
 if [[ "${2:-install}" == drift ]]; then
