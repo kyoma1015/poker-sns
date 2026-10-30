@@ -38,8 +38,10 @@ sql "drop table video_private.recovery_manifests;"
 echo 'PASS: incomplete migration rejected without overwriting'
 # First application + identical reapplication.
 apply
-sql "select case when count(*)=1 then true else (1/0)::boolean end
- from video_private.recovery_migration_seal where version='recovery-v1';"
+sql "do \$seal\$ begin
+ if (select count(*) from video_private.recovery_migration_seal where version='recovery-v1') <> 1
+ then raise exception 'missing recovery migration seal'; end if;
+ end \$seal\$;"
 apply
 echo 'PASS: production-like candidate SQL first and second application'
 # Schema and grants must remain sealed, no expansion of permissions.
