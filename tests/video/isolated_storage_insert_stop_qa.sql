@@ -48,21 +48,6 @@ values('post-videos','11111111-1111-4111-8111-111111111111/bbbbbbbb-bbbb-4bbb-8b
        '11111111-1111-4111-8111-111111111111');
 rollback;
 \echo 'PASS: rollout off denies video; nonvideo and rollout-on video allowed'
--- A different policy definition with the same name must not be silently replaced.
+-- Drift is tested by the enclosing shell, which must observe a nonzero psql exit.
 alter policy video_recovery_restrict_video_bucket_insert on storage.objects
  with check (true);
-\set ON_ERROR_STOP off
-\set QUIET on
-\o /dev/null
-\ir production_storage_insert_stop_NOT_APPROVED.sql
-\o
-\set QUIET off
-\set ON_ERROR_STOP on
-do $$
-begin
- if not exists(select 1 from pg_policies where schemaname='storage'
-   and tablename='objects' and policyname='video_recovery_restrict_video_bucket_insert'
-   and with_check='true')
- then raise exception 'FAIL: modified policy was overwritten'; end if;
-end $$;
-\echo 'PASS: drifted restrictive policy not overwritten (review failure output above)'
