@@ -3048,6 +3048,11 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
             <textarea autoFocus placeholder="ポーカーについて何を投稿する？" maxLength={500} value={content} onChange={e => setContent(e.target.value)} style={{ width: '100%', minHeight: 180, padding: 8, background: 'transparent', color: '#fff', border: 'none', fontSize: 17, resize: 'vertical' }}/>
             {renderPostModeButtons()}
             {renderInteractiveFields()}
+            {pendingMovConversion && <div role="group" aria-label="MOV変換の確認" style={{ padding: 12, marginTop: 10, border: '1px solid #555', borderRadius: 10, background: '#202020' }}>
+              <p style={{ color: '#eee', fontSize: 13, margin: '0 0 10px' }}>MOVを選択しました。変換は端末内で行います。画面を開いたまま操作してください。</p>
+              <button type="button" onClick={() => { if (pendingMovConversion) void chooseVideo(pendingMovConversion, true) }} style={{ background: '#444', color: '#fff', border: '1px solid #777', borderRadius: 9, padding: '10px 14px', fontWeight: 700 }}>▶ MOV変換を開始</button>
+              <button type="button" onClick={() => { beginAttachmentSelection(); setPendingMovConversion(null) }} style={{ background: 'transparent', color: '#ddd', border: '1px solid #555', borderRadius: 9, padding: '10px 14px', marginLeft: 8 }}>キャンセル</button>
+            </div>}
             {attachmentsOpen && renderAttachmentPicker()}
             {renderSelectedResultPreview()}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 18 }}><span style={{ color: '#888', fontSize: 12 }}>{content.length}/500</span><button type="button" disabled={isPosting || !canSubmitPost} onClick={handlePost} style={{ width: 'auto', borderRadius: 99, background: '#fff', color: '#000', padding: '10px 24px', fontWeight: 800 }}>{isPosting ? '投稿中...' : '投稿する'}</button></div>
