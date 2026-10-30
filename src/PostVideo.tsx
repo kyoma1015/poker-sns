@@ -62,6 +62,12 @@ export default function PostVideo({ postId }: { postId: string }) {
   if (!url) return <p role="status">動画を読み込み中...</p>
   return <div style={{ position: 'relative', margin: '10px 0 14px', borderRadius: 12, overflow: 'hidden', background: '#101010' }}>
     <video key={postId} controls={playing || Boolean(playbackError)} playsInline preload="auto" src={url} poster={poster || undefined}
+      onLoadedMetadata={event => {
+        const video = event.currentTarget
+        if (!poster && !playing && Number.isFinite(video.duration) && video.duration > 0.2) {
+          try { video.currentTime = Math.min(0.35, video.duration / 2) } catch { /* native fallback */ }
+        }
+      }}
       onLoadedData={event => {
         if (poster) return
         const video = event.currentTarget
