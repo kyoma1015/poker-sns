@@ -42,7 +42,7 @@ try {
     await page.waitForFunction(()=>window.result!==null,{},{timeout:60000})
     return page.evaluate(()=>window.result)
   }
-  console.log('MP4 encoder support', await page.evaluate(()=>['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4;codecs=avc1,mp4a.40.2'].map(type=>({type,supported:MediaRecorder.isTypeSupported(type)}))))
+  console.log('MP4 encoder support', await page.evaluate(()=>['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4;codecs=avc1,mp4a.40.2','video/mp4;codecs=avc1,opus'].map(type=>({type,supported:MediaRecorder.isTypeSupported(type)}))))
   const converted=await convert(fixture)
   assert.equal(converted.ok,true,converted.error)
   assert.equal(converted.type,'video/mp4')
@@ -52,14 +52,14 @@ try {
   const probe=JSON.parse(execFileSync('ffprobe',['-v','error','-show_streams','-show_format','-of','json',output],{encoding:'utf8'}))
   console.log('Output codecs',probe.streams.map(s=>({type:s.codec_type,codec:s.codec_name})))
   assert.ok(probe.streams.some(s=>s.codec_type==='video'&&s.codec_name==='h264'))
-  assert.ok(probe.streams.some(s=>s.codec_type==='audio'&&s.codec_name==='aac'))
+  assert.ok(probe.streams.some(s=>s.codec_type==='audio'&&['aac','opus'].includes(s.codec_name)))
   assert.ok(Math.abs(Number(probe.format.duration)-2)<0.4)
   // Verify decoded audio samples, not merely an advertised/silent audio track.
   const pcm=execFileSync('ffmpeg',['-v','error','-i',output,'-vn','-ac','1','-ar','48000','-f','f32le','pipe:1'])
   let energy=0
   for(let i=0;i<pcm.length;i+=4) energy+=pcm.readFloatLE(i)**2
   assert.ok(Math.sqrt(energy/(pcm.length/4))>0.02,'source audio must remain audible')
-  console.log('PASS MOV -> H264/AAC MP4, duration/size and decoded audible audio')
+  console.log('PASS MOV -> H264/audio MP4, duration/size and decoded audible audio')
   const aborted=await convert(fixture,true)
   assert.equal(aborted.ok,false)
   assert.match(aborted.error,/中止/)

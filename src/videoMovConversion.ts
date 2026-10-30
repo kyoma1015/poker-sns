@@ -14,7 +14,7 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal): Promise
   if (!isMovVideo(file)) return file
   if (file.size <= 0 || file.size > MAX_BYTES) throw new Error('変換前のMOVも20MiB以内にしてください。' + MOV_CONVERSION_HELP)
   if (typeof MediaRecorder === 'undefined' || typeof AudioContext === 'undefined') throw new Error(MOV_CONVERSION_HELP)
-  const mime = ['video/mp4;codecs=avc1.42E01E,mp4a.40.2', 'video/mp4;codecs=avc1,mp4a.40.2'].find(type => MediaRecorder.isTypeSupported(type))
+  const mime = ['video/mp4;codecs=avc1.42E01E,mp4a.40.2', 'video/mp4;codecs=avc1,mp4a.40.2', 'video/mp4;codecs=avc1,opus'].find(type => MediaRecorder.isTypeSupported(type))
   const canvas = document.createElement('canvas')
   if (!mime || typeof canvas.captureStream !== 'function') throw new Error(MOV_CONVERSION_HELP)
   const audio = new AudioContext()
@@ -49,7 +49,14 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal): Promise
       video.load()
       if (signal?.aborted) abort()
     })
-    if (!await resumed) throw new Error(MOV_CONVERSION_HELP)
+    const audioReady = await new Promise<boolean>((resolve, reject) => {
+      const timer = window.setTimeout(() => finish(false), 5000)
+      const finish = (ready: boolean) => { clearTimeout(timer); cancel = undefined; resolve(ready) }
+      cancel = error => { clearTimeout(timer); cancel = undefined; reject(error) }
+      void resumed.then(finish)
+      if (signal?.aborted) abort()
+    })
+    if (!audioReady) throw new Error(MOV_CONVERSION_HELP)
     signal?.throwIfAborted()
     const duration = video.duration
     if (!Number.isFinite(duration) || duration <= 0 || duration > MAX_SECONDS) throw new Error('動画は30秒以内にしてください。元の動画は送信していません。')
@@ -107,10 +114,10 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal): Promise
     document.removeEventListener('visibilitychange', hidden)
     video.onended = video.onerror = video.onloadeddata = null
     video.pause()
-    if (recorder && recorder.state !== 'inactive') { recorder.onstop = null; recorder.ondataavailable = null; recorder.onerror = null; recorder.stop() }
+    if (recorder && recorder.state !== 'inactive') { recorder.onstop = null; recorder.ondataavailable = null; recorder.onerror = null; try { recorder.stop() } catch { /* already stopped */ } }
     stream?.getTracks().forEach(track => track.stop())
     video.removeAttribute('src')
-    video.load()
+    try { video.load() } catch { /* cleanup still releases local resources */ }
     URL.revokeObjectURL(url)
     await audio.close().catch(() => {})
   }

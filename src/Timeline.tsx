@@ -892,7 +892,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     })
     return () => {
       videoRequestAbortRef.current?.abort()
-        videoConversionAbortRef.current?.abort()
+      videoConversionAbortRef.current?.abort()
       ++composerLifetimeRef.current
       ++videoSelectionRef.current
       subscription.unsubscribe()
