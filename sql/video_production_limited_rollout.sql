@@ -251,7 +251,7 @@ create table video_private.hidden_videos(
 );
 revoke all on all tables in schema video_private from public,anon,authenticated,service_role;
 create function public.video_rollout_member() returns boolean
-language sql volatile security definer set search_path='' as $
+language sql volatile security definer set search_path='' as $$
  select case when coalesce(nullif(current_setting('request.jwt.claims',true),'')::jsonb->>'exp','') ~ '^[0-9]{1,12}
 $$;
 create function public.video_rollout_allowed() returns boolean

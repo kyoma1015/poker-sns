@@ -95,4 +95,4 @@ jobs:
           for source in api/video-*.ts server/video-recovery-candidate.ts; do
             ln -s "$(basename "$source")" "${source%.ts}.js"
           done
-          node --experimental-strip-types --test tests/video-ffprobe-runtime.test.mjs tests/video-preflight-runtime.test.mjs tests/video-finalize-core-runtime.test.mjs tests/video-finalize-http-runtime.test.mjs tests/video-isolated-adapter-runtime.test.mjs
+          node --experimental-strip-types --test tests/video-ffprobe-runtime.test.mjs tests/video-preflight-runtime.test.mjs tests/video-finalize-core-runtime.test.mjs tests/video-finalize-http-runtime.test.mjs tests/video-isolated-adapter-runtime.test.mjs tests/video/production_rollout_runtime.test.mjs
