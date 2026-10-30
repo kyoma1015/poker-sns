@@ -243,6 +243,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       if (hasVideoTransferJournal(user.id)) {
         setVideoRecoveryBlocked(true)
         setComposeOpen(true)
+        if (!VIDEO_RECOVERY_CANDIDATE_ENABLED) {
+          setVideoRecoveryNotice('前回の動画送信状態が未確認です。重複投稿を防ぐため新しい送信を停止しています。再送信・再選択・ブラウザの保存データ削除はせず、サポートへ発生時刻と表示内容を伝えてください。動画データは自動削除されません。')
+        }
         if (VIDEO_RECOVERY_CANDIDATE_ENABLED) {
           const hint=readVideoTransferHint(user.id)
           await recover(user.id,hint.path,hint)
