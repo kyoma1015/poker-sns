@@ -85,3 +85,10 @@ bash tests/video/recovery_production_candidate_isolated_qa.sh "$dburl" drift
 # Final disposable-only RLS test: exercise permissive OR vs restrictive AND
 # with actual authenticated-role Storage INSERTs and candidate reapplication.
 psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/isolated_storage_insert_stop_qa.sql
+# A changed existing policy must fail closed, without restoring its body.
+if psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/production_storage_insert_stop_NOT_APPROVED.sql >"$qa/storage-drift.log" 2>&1; then
+  echo 'FAIL: drifted restrictive Storage policy was silently accepted'
+  exit 1
+fi
+psql "$dburl" -v ON_ERROR_STOP=1 -Atqc "select 1 from pg_policies where schemaname='storage' and tablename='objects' and policyname='video_recovery_restrict_video_bucket_insert' and with_check='true'" | grep -qx 1
+echo 'PASS: drifted restrictive Storage policy rejected without overwrite'
