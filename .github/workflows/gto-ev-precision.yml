@@ -4,6 +4,10 @@ on:
     paths:
       - 'gto/abstract/precision*'
       - 'gto/abstract/test_precision.py'
+      - 'gto/abstract/reference_compare.py'
+      - 'gto/abstract/test_reference_compare.py'
+      - 'gto/abstract/continuation_exact*'
+      - 'gto/abstract/test_continuation_exact.py'
       - 'src/gto/precisionResearch*'
       - 'docs/qa/ev-precision-20261030/**'
       - '.github/workflows/gto-ev-precision.yml'
@@ -12,7 +16,7 @@ permissions:
 jobs:
   precision:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -23,7 +27,12 @@ jobs:
           python -B -c 'from gto.abstract.model import build; import os; build(os.environ["RUNNER_TEMP"]+"/precision-reference")'
           python -B -c 'from gto.abstract.precision_runouts import build; import os; build(os.environ["RUNNER_TEMP"]+"/precision-native")'
       - name: Conditional expectation, private reach, exact990 boards and covariance tests
-        run: GTO_ABSTRACT_LIBRARY="$RUNNER_TEMP/precision-reference/abstract.so" GTO_PRECISION_LIBRARY="$RUNNER_TEMP/precision-native/precision.so" python -B -m unittest gto.abstract.test_precision -v
+        run: GTO_ABSTRACT_LIBRARY="$RUNNER_TEMP/precision-reference/abstract.so" GTO_PRECISION_LIBRARY="$RUNNER_TEMP/precision-native/precision.so" python -B -m unittest gto.abstract.test_precision gto.abstract.test_continuation_exact -v
+      - name: External-reference condition, partial coverage and holdout comparison
+        run: |
+          python -B -m unittest gto.abstract.test_reference_compare -v
+          python -B -m gto.abstract.reference_compare --output "$RUNNER_TEMP/reference-result.json"
+          cmp "$RUNNER_TEMP/reference-result.json" docs/qa/reference-calibration-20261031/reference-result.json
       - name: Reuse frozen archive; exact targeted showdowns and Rao-Blackwell runouts
         run: python -B -m gto.abstract.precision_study --inputs docs/qa/ev-precision-20261030/frozen-inputs.json --output "$RUNNER_TEMP/precision-study" --reference-lib "$RUNNER_TEMP/precision-reference/abstract.so"
       - name: Regenerate independent research EVs without changing frozen strategies

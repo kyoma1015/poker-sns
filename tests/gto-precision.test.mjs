@@ -9,8 +9,8 @@ test('precision data remains research-only with unknown reference and game error
   assert.equal(precisionResearch.reference_difference, null)
   assert.equal(precisionResearch.real_game_approximation_error, null)
   assert.equal(validateVerifiedRange(precisionResearch, {}), null)
-  assert.equal(precisionResearch.exact_cells.exact_showdown_cells, 1611)
-  assert.deepEqual(precisionResearch.exact_cells.targets, ['AA', 'KK', 'AKo', 'AKs'])
+  assert.equal(precisionResearch.exact_cells.exact_showdown_cells, 2227)
+  assert.deepEqual(precisionResearch.exact_cells.targets, ['AA', 'KK', 'AKo', 'AKs', 'QQ', 'TT'])
 })
 test('all169 conditional profiles and actions bind to their original frozen policy', () => {
   for (const [mode, model] of Object.entries(abstractResearch.models)) {
@@ -34,7 +34,7 @@ test('AA/KK/AKo/AKs checkdown values have no sampling uncertainty without claimi
   const m = abstractResearch.models.checkdown
   for (const stage of ['rfi', 'vs_open', 'vs_3bet', 'vs_4bet']) {
     const c = m.contexts[stage];const p = conditionalPrecision('checkdown', stage, m.policy_digest, c.actor, c.actions)
-    for (const h of ['AA', 'KK', 'AKo', 'AKs']) {
+    for (const h of ['AA', 'KK', 'AKo', 'AKs', 'QQ', 'TT']) {
       assert.equal(p.hands[h].radius_bb, 0)
       assert.ok(p.hands[h].action_exact.every(Boolean))
     }

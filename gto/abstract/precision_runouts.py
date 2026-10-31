@@ -91,3 +91,29 @@ def allocation_targets(policies):
   visit(0,[1.]*n,[1.]*n)
  selected=sorted((i for i,label in enumerate(CLASSES) if len(label)!=2),key=lambda i:(-totals[i],CLASSES[i]))[:2]
  return ('AA','KK',*(CLASSES[i] for i in selected))
+
+
+def refinement_targets(policies):
+ """Two additional exact classes selected ONLY from frozen opponent reaches.
+
+ Equal weight per model and vs3bet/vs4bet history, before reading heldout values.
+ Keep the original allocation stable; adding exact cells does not retrain policy.
+ """
+ from gto.abstract.model import tree,chance
+ nodes=tree();_,p=chance(classes());n=169;totals=[0.]*n;base=allocation_targets(policies)
+ for policy in policies.values():
+  def visit(v,r0,r1):
+   node=nodes[v]
+   if node['actor']<0:return
+   if node['raises'] in (2,3) and 'call' not in node['history']:
+    opponent=1-node['actor']
+    scores=[math.fsum(p[h*n+j]*r1[j] for j in range(n))*r0[h] if opponent==0 else math.fsum(p[j*n+h]*r0[j] for j in range(n))*r1[h] for h in range(n)]
+    z=math.fsum(scores)
+    if z:
+     for h,x in enumerate(scores):totals[h]+=x/z
+   for a,child in enumerate(node['children']):
+    r=[x*policy[(v*3+a)*n+h] for h,x in enumerate(r0 if node['actor']==0 else r1)]
+    visit(child,r if node['actor']==0 else r0,r1 if node['actor']==0 else r)
+  visit(0,[1.]*n,[1.]*n)
+ extra=sorted((i for i,label in enumerate(CLASSES) if label not in base),key=lambda i:(-totals[i],CLASSES[i]))[:2]
+ return (*base,*(CLASSES[i] for i in extra))

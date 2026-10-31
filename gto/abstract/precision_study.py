@@ -2,7 +2,7 @@
 import argparse,ctypes as C,gzip,hashlib,json,math,time
 from pathlib import Path
 from gto.abstract.precision_archive import unpack
-from gto.abstract.precision_runouts import build,exact_cells,rao_blackwell,allocation_targets
+from gto.abstract.precision_runouts import build,exact_cells,rao_blackwell,refinement_targets
 from gto.abstract.precision import evaluate,STAGES
 from gto.abstract.model import tree
 
@@ -17,7 +17,8 @@ def summarize(models):
 def run(inputs,output,reference_lib=None):
  packet=json.loads(Path(inputs).read_text());old,policies=unpack(packet);output=Path(output);output.mkdir(parents=True,exist_ok=False)
  baseline={mode:evaluate(p,old,mode,failure=.0025) for mode,p in policies.items()};lib=build(output/'build')
- exact=exact_cells(lib,opponent_classes=allocation_targets(policies));(output/'exact-cells.json').write_text(json.dumps(exact,sort_keys=True)+'\n')
+ from gto.abstract.continuation_exact import build as controller_build,refine
+ exact=refine(exact_cells(lib,opponent_classes=refinement_targets(policies)),policies,controller_build(output/'controller-build'));(output/'exact-cells.json').write_text(json.dumps(exact,sort_keys=True)+'\n')
  print('PRECISION_EXACT '+json.dumps({k:exact[k] for k in ('concrete_matchups_enumerated','boards_per_matchup','seconds','targets')}),flush=True)
  rb=rao_blackwell(lib,exact,samples=old['samples_per_class_pair'],seed=old['seed'])
  with gzip.open(output/'rb-kernel.json.gz','wt') as f:json.dump(rb,f,sort_keys=True)
@@ -45,6 +46,7 @@ def assemble(inputs,output,packet,old,policies,exact,rb,manifest,baseline=None,r
   'baseline_summary':summarize(baseline),'improved_summary':summarize(improved),'models':improved,
   'exact_cells':{'concrete_matchups_enumerated':exact['concrete_matchups_enumerated'],'boards_per_matchup':exact['boards_per_matchup'],
     'exact_plane_entries':sum(exact['mask']),'exact_showdown_cells':sum(exact['mask'][:169*169]),'targets':exact['targets'],'class_records':len(exact['records']),'seconds':exact['seconds']},
+  'controller_enumeration':{'class_pairs':len(exact.get('controller_records',[])),'concrete_matchups':exact.get('controller_concrete_matchups',0),'method':exact.get('controller_method'),'ablation':exact.get('controller_records',[])},
   'rb_seconds':rb['seconds'],'reference_solution_comparison':'UNPERFORMED','reference_difference':None,
   'real_game_approximation_error':None,'full_game_gto_verified':False,'formal_acceptance_complete':0,
   'scope':'99% simultaneous conditional fixed-policy model EV intervals; opponent/action integration exact in finite model, floating arithmetic; board/holes sampling remains outside exact cells'}
@@ -67,7 +69,7 @@ def export(result):
   'expected_controller_game_bounds':result['expected_controller_game_bounds'],'fixed_policy_digests':result['fixed_policy_digests'],'inputs_sha256':result['inputs_sha256'],
   'validation_seed':result['validation_seed'],'samples_per_class_pair':result['samples_per_class_pair'],
   'exact_cells':{k:v for k,v in result['exact_cells'].items() if k!='seconds'},'improved_summary':result['improved_summary'],
-  'method_source_sha256':{name:hashlib.sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ('precision_game_bounds.py','precision.py','precision_archive.py','precision_runouts.py','precision_native.cc','precision_study.py')},
+  'method_source_sha256':{name:hashlib.sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ('continuation_exact.cc','continuation_exact.py','precision_game_bounds.py','precision.py','precision_archive.py','precision_runouts.py','precision_native.cc','precision_study.py')},
   'real_game_approximation_error':None,'reference_solution_comparison':'UNPERFORMED','reference_difference':None,'full_game_gto_verified':False}
 
 def verify_points(reference_lib,policies,kernel,report,output):
