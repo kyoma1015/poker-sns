@@ -11,3 +11,13 @@ not the actually dealt opponent. Exact same rich-signal/4arm game evaluates
 baseline and candidates. Expanded information can increase BR strength; do not
 compare directly with previous coarse-signal NashConv as identical conditions.
 No existing CFR integration/normalGTO publication/main/prod/otherPR/fees changes.
+
+## Selection lock BEFORE final evaluation
+New9tests PASS. Implementation was committed before validation execution.
+Only train18/validation6 used. Seven candidates,24validation contexts each.
+Predeclared winner:knn9_private8_board0.5. Validation mean restrictedNashConv
+1.203344937BB vs retrainedcoarse2.420913209BB; worst4.532968948 vs4.187177033BB.
+Selection minimizes mean per initial protocol,NOT a posthoc worst-case override.
+This worst-case risk is preserved,not hidden. Final6boards not yet evaluated.
+selection-lock.json binds selection/protocol/source SHA. Commit this lock before
+calling --phase final. Final phase has no fit/solve/choose-candidate calls.

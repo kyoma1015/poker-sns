@@ -1,0 +1,19 @@
+{
+  "final_test_evaluated": false,
+  "protocol_sha256": "65c315a49198f216b497052826c4aadf235c00fa00dc58582b72e63d79a3775b",
+  "schema": "pokerid-pre-final-selection-lock-v1",
+  "selected_config": {
+    "board_weight": 0.5,
+    "kind": "knn",
+    "name": "knn9_private8_board0.5",
+    "neighbors": 9,
+    "private_weight": 8
+  },
+  "selection_rule": "predeclared minimum validation mean",
+  "selection_sha256": "6863d4f400945042b6906efaf59da356267edabf40b53261f3db06aa031e33ad",
+  "source_sha256": {
+    "generalization_features.py": "85eaa2f62cdb8f47418089738141b2f9f53f77383ae5cad52b5588c82c9566be",
+    "generalization_game.py": "928dcd163dccd568035b39c7100f25ee292431725bc90a162aa646298d6ab0f8",
+    "generalization_study.py": "3aabb9bb6f2df584762f722d7057285bd7ec6531aeeb4a8691367eded195342b"
+  }
+}
