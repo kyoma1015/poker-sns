@@ -1,0 +1,227 @@
+[
+  {
+    "variant": "g12_next",
+    "test": "gto/native/test_action_report.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_next",
+    "test": "gto/native/test_belief_observation.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_next",
+    "test": "gto/native/test_belief_reach.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_next",
+    "test": "gto/native/test_hand169_bridge.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_next",
+    "test": "gto/native/test_hand169_bridge_boundaries.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_next",
+    "test": "gto/native/test_history_ev_integration.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_next",
+    "test": "gto/native/test_history_reach.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_next",
+    "test": "gto/native/test_infoset_action_values.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_next",
+    "test": "gto/native/test_infoset_export.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_next",
+    "test": "gto/native/test_initial_chance_reach.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_next",
+    "test": "gto/native/test_poker_oracle_probability_guard.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_next",
+    "test": "gto/native/test_poker_oracle_profiles.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_next",
+    "test": "gto/native/test_preflop.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_next",
+    "test": "gto/native/test_training_batch.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_cache",
+    "test": "gto/native/test_action_report.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_cache",
+    "test": "gto/native/test_belief_observation.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_cache",
+    "test": "gto/native/test_belief_reach.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_cache",
+    "test": "gto/native/test_hand169_bridge.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_cache",
+    "test": "gto/native/test_hand169_bridge_boundaries.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_cache",
+    "test": "gto/native/test_history_ev_integration.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_cache",
+    "test": "gto/native/test_history_reach.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_cache",
+    "test": "gto/native/test_infoset_action_values.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_cache",
+    "test": "gto/native/test_infoset_export.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_cache",
+    "test": "gto/native/test_initial_chance_reach.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_cache",
+    "test": "gto/native/test_poker_oracle_probability_guard.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_cache",
+    "test": "gto/native/test_poker_oracle_profiles.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_cache",
+    "test": "gto/native/test_preflop.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_cache",
+    "test": "gto/native/test_training_batch.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_packed",
+    "test": "gto/native/test_action_report.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_packed",
+    "test": "gto/native/test_belief_observation.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_packed",
+    "test": "gto/native/test_belief_reach.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_packed",
+    "test": "gto/native/test_hand169_bridge.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_packed",
+    "test": "gto/native/test_hand169_bridge_boundaries.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_packed",
+    "test": "gto/native/test_history_ev_integration.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_packed",
+    "test": "gto/native/test_history_reach.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_packed",
+    "test": "gto/native/test_infoset_action_values.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_packed",
+    "test": "gto/native/test_infoset_export.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_packed",
+    "test": "gto/native/test_initial_chance_reach.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_packed",
+    "test": "gto/native/test_poker_oracle_probability_guard.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_packed",
+    "test": "gto/native/test_poker_oracle_profiles.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_packed",
+    "test": "gto/native/test_preflop.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_packed",
+    "test": "gto/native/test_training_batch.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_next",
+    "test": "gto/native/test_policy_rollout.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_cache",
+    "test": "gto/native/test_policy_rollout.py",
+    "returncode": 0
+  },
+  {
+    "variant": "g12_p1_packed",
+    "test": "gto/native/test_policy_rollout.py",
+    "returncode": 0
+  }
+]

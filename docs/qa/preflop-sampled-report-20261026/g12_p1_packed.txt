@@ -1,0 +1,25 @@
+test_action_values_reject_illegal_intervention (__main__.Rollout.test_action_values_reject_illegal_intervention) ... ok
+test_actual_native_snapshot_missing_rows_fail_closed (__main__.Rollout.test_actual_native_snapshot_missing_rows_fail_closed) ... ok
+test_bad_policy_and_budget_fail_closed (__main__.Rollout.test_bad_policy_and_budget_fail_closed) ... ok
+test_belief_posterior_uses_action_likelihood (__main__.Rollout.test_belief_posterior_uses_action_likelihood) ... ok
+test_belief_rejects_omniscient_hero_policy (__main__.Rollout.test_belief_rejects_omniscient_hero_policy) ... ok
+test_belief_zero_reach_and_budget (__main__.Rollout.test_belief_zero_reach_and_budget) ... ok
+test_confidence_width_scales_with_inverse_square_root_samples (__main__.Rollout.test_confidence_width_scales_with_inverse_square_root_samples) ... ok
+test_explicit_support_budget_can_exceed_default_without_pruning (__main__.Rollout.test_explicit_support_budget_can_exceed_default_without_pruning) ... ok
+test_fixed_state_ev_for_two_to_nine_players_and_unequal_stacks (__main__.Rollout.test_fixed_state_ev_for_two_to_nine_players_and_unequal_stacks) ... ok
+test_fourbet_response_actions_share_prefix_belief (__main__.Rollout.test_fourbet_response_actions_share_prefix_belief) ... ok
+test_frozen_preflop_report_has_distinct_sampled_schema_and_identity (__main__.Rollout.test_frozen_preflop_report_has_distinct_sampled_schema_and_identity) ... ok
+test_infoset_budget_is_explicit_and_still_fail_closed (__main__.Rollout.test_infoset_budget_is_explicit_and_still_fail_closed) ... ok
+test_mixed_policy_matches_hand_derived_river_ev (__main__.Rollout.test_mixed_policy_matches_hand_derived_river_ev) ... ok
+test_mutating_policy_and_invalid_numeric_controls_rejected (__main__.Rollout.test_mutating_policy_and_invalid_numeric_controls_rejected) ... ok
+test_preflop_belief_continues_through_real_postflop (__main__.Rollout.test_preflop_belief_continues_through_real_postflop) ... ok
+test_preflop_belief_exact_fold_value (__main__.Rollout.test_preflop_belief_exact_fold_value) ... ok
+test_preflop_fold_exact_and_nonmutation (__main__.Rollout.test_preflop_fold_exact_and_nonmutation) ... ok
+test_report_rejects_stale_native_configuration_manifest (__main__.Rollout.test_report_rejects_stale_native_configuration_manifest) ... ok
+test_reproducibility (__main__.Rollout.test_reproducibility) ... ok
+test_turn_river_against_exact_oracle_with_rake_and_ante (__main__.Rollout.test_turn_river_against_exact_oracle_with_rake_and_ante) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.685s
+
+OK

@@ -1,0 +1,22 @@
+{
+  "base_public_head": "2b2f88f945d0a09abb7e5bde0d70d7c60f0b80a4",
+  "preserved_dependency_sha256": {
+    "docs/qa/ev-precision-20261030/frozen-inputs.json": "3cfde9d919a540b4a084764d76b6f65a4ecbf55a67dc712eeae4d122ce1001ab",
+    "gto/abstract/continuation_game.cc": "b0ee2c0c67f9c2a1783f621480c01902bf2af56d8f9a0a13a7986476929c87a2",
+    "gto/abstract/continuation_game.py": "e9b0c6acf473c4b821d0f1b74eb266fcb21108e43aaebb2b7b41d6d5282b7428",
+    "gto/abstract/continuation_learning.py": "586ae8153f447af36876cb85d9559828baff59c4bccea3bbcccdd808e40da914",
+    "gto/abstract/flop_conditional.py": "2f0177b57b2f9a9ffa77a94b25185e115cb7b5a2647cb621224b88819dcb047a",
+    "gto/abstract/flop_exact.py": "b3ffeaf96779c58076e9d1fa927518979c13f3c3b2435ed4defab37bdf7c9f25",
+    "gto/abstract/flop_exact_matrix.cc": "55d6ef38d16d8e868b241bb1ed7485e953c30b051abd807d3c5e10df61dd04f1",
+    "gto/abstract/flop_tree_ablation.py": "3051be0e33ded29ee689c810c6ae25dd91e0a620cbff972363c751076d6fc3c8",
+    "gto/abstract/frozen_flop_reach.py": "0c14630aa50d03c790be7c1ea5860e260d4f37fef1a2469da96f7bdf8644d3fe",
+    "gto/abstract/model.py": "bb879efc21c82af9c650ef4ef67337fcae772c9eebef44dd8eeeec106a3b2fd4",
+    "gto/abstract/precision.py": "64a5f4f86c4d7de34e5a7f8571c8f8496c82d00627d954f52a09e79172e93ff4",
+    "gto/abstract/precision_archive.py": "4c4e85a34bb677b078ee90e8aa94e6f2c7fe96da6dce90cc5ac3498b97e6b4a4",
+    "gto/abstract/precision_native.cc": "7b1ac459ea0794c76b64321fe3242eae710c4b1995bcbd1b4030257df328e79a",
+    "gto/abstract/precision_runouts.py": "c5e643c2736900d64d141ee205b5d250ca6ba9d83afab28d48cb8156c6a3992e",
+    "gto/hand169.py": "11f19f9d6486f1368474b3a512128a07035ad4731ac8df116c74ad5569463ae0",
+    "gto/native/ev_audit.py": "7299212029a262923de133052fd367e9b36c913e6ca2cb056c94096c25ac7755",
+    "gto/native/hand169_bridge.py": "69e666bafc8fb56ee6c5bedea3b4fc471bacd9e18ed37a9b70f6a1adaa0fb5b6"
+  }
+}

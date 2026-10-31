@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_infoset_action_values.py", line 6, in <module>
+    from gto.native.belief_observation import compare_hero_actions
+ImportError: cannot import name 'compare_hero_actions' from 'gto.native.belief_observation' (/workspace/work/issue22-c-initial-chance-reach/gto/native/belief_observation.py)

@@ -1,8 +1,10 @@
 name: GTO reconstructed native verification
 on:
   pull_request:
-    branches: [main, codex/integration-poll-only-20261020, codex/c-gto-active-milestones-20261020]
+    branches: [main, codex/integration-poll-only-20261020, codex/c-gto-active-milestones-20261020, codex/c-native-training-batch-20261023, codex/c-native-hand169-bridge-20261023]
     paths:
+      - 'src/gto/**'
+      - 'src/GtoPreflop*'
       - 'gto/**'
       - 'handoff/gto/**'
       - '.github/workflows/gto-native-reconstructed.yml'
@@ -11,11 +13,11 @@ permissions:
   contents: read
 concurrency:
   group: gto-native-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   reconstructed:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -34,9 +36,76 @@ jobs:
         run: |
           for variant in g12_next g12_p1_cache g12_p1_packed; do
             GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_training_batch.py -v
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_preflop.py -v
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_policy_rollout.py -v
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_joint_reach.py -v
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_learned_preflop.py -v
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_full_game_bounds.py -v
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_feasible_response.py -v
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_strict_continuation.py -v
+          done
+      - name: Ordinary HU50BB learning and conservative full-continuation evaluation
+        run: python -B -m gto.native.ordinary_study --module-dir "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/g12_next" --output "$RUNNER_TEMP/ordinary-study-$GITHUB_RUN_ID"
+      - name: Full-support targeted proposal without game-tree pruning
+        run: |
+          python -B -m gto.native.build_targeted --runtime "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID"
+          python -B -m gto.native.build_response_controls --runtime "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID"
+          GTO_RESPONSE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/response-controls" python -B gto/native/test_response_controls.py -v
+          GTO_TARGETED_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/targeted" python -B gto/native/test_targeted.py -v
+          python -B -m gto.native.ordinary_study --targeted --response-controls-dir "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/response-controls" --module-dir "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/targeted" --output "$RUNNER_TEMP/targeted-study-$GITHUB_RUN_ID"
+      - name: Full-support missing-owner recovery and completion-free evaluation
+        run: |
+          python -B -m gto.native.build_focused --runtime "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID"
+          GTO_FOCUSED_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/focused" python -B gto/native/test_focused.py -v
+          python -B -m gto.native.focused_study --runtime "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID" --parent-directory "$RUNNER_TEMP/targeted-study-$GITHUB_RUN_ID" --output "$RUNNER_TEMP/focused-study-$GITHUB_RUN_ID" --reference docs/qa/strict-continuation-20261030/evidence-cb46da.json
+      - name: Complete native HU1BB calibration and actual representative learning
+        run: |
+          python -B -m gto.native.onebb_certificate --runtime "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID" --output "$RUNNER_TEMP/onebb-evidence-$GITHUB_RUN_ID"
+          python -B -m gto.native.onebb_release --evidence docs/qa/full-game-calibration-20261027/onebb-evidence.json --check src/gto/oneBBRange.ts
+          for variant in g12_next g12_p1_cache g12_p1_packed; do
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" GTO_ONEBB_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/onebb" python -B gto/native/test_onebb_sampler.py -v
           done
       - name: Native poker throughput and toy-only NashConv observations
         run: |
           for variant in g12_next g12_p1_cache g12_p1_packed; do
             python -B gto/native/benchmark_training.py --module-dir "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant"
+          done
+      - name: Deterministic multiway learned-policy and action-output comparison
+        run: |
+          for variant in g12_next g12_p1_cache g12_p1_packed; do
+            python -B gto/native/compare_joint.py --module-dir "$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" > "$RUNNER_TEMP/joint-$variant.json"
+          done
+          cmp "$RUNNER_TEMP/joint-g12_next.json" "$RUNNER_TEMP/joint-g12_p1_cache.json"
+          cmp "$RUNNER_TEMP/joint-g12_next.json" "$RUNNER_TEMP/joint-g12_p1_packed.json"
+          sha256sum "$RUNNER_TEMP"/joint-g12*.json
+      - name: Native hand169 bridge and exact small-poker policy oracles
+        run: |
+          for variant in g12_next g12_p1_cache g12_p1_packed; do
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_hand169_bridge.py -v
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_hand169_bridge_boundaries.py -v
+          done
+      - name: Exact reused PR103 hand169 dependency acceptance
+        run: python -B -m unittest discover -s tests/worker_acceptance -v
+      - name: Exact native ante rake and unequal-stack side-pot policy oracles
+        run: |
+          for variant in g12_next g12_p1_cache g12_p1_packed; do
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_poker_oracle_profiles.py -v
+          done
+      - name: Negative chance-distribution finite probability boundary (stub only)
+        run: python -B gto/native/test_poker_oracle_probability_guard.py -v
+      - name: Exact initial-chance reach and resumed native policies
+        run: |
+          for variant in g12_next g12_p1_cache g12_p1_packed; do
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_initial_chance_reach.py -v
+          done
+      - name: Separated finite history reach and explicit policy EV (not infoset EV)
+        run: |
+          for variant in g12_next g12_p1_cache g12_p1_packed; do
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_history_reach.py -v
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_history_ev_integration.py -v
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_belief_reach.py -v
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_belief_observation.py -v
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_infoset_action_values.py -v
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_infoset_export.py -v
+            GTO_NATIVE_MODULE_DIR="$RUNNER_TEMP/gto-reconstructed-$GITHUB_RUN_ID/$variant" python -B gto/native/test_action_report.py -v
           done

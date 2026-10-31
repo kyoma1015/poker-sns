@@ -1,0 +1,14 @@
+test_actual_trained_frequency_query_preserves_partial_status (__main__.Preflop.test_actual_trained_frequency_query_preserves_partial_status) ... ok
+test_fivebet_response_remains_available (__main__.Preflop.test_fivebet_response_remains_available) ... ok
+test_fourbet_and_response_every_table_size (__main__.Preflop.test_fourbet_and_response_every_table_size) ... ok
+test_invalid_and_postflop_history_rejected (__main__.Preflop.test_invalid_and_postflop_history_rejected) ... ok
+test_limped_pot_is_not_rfi (__main__.Preflop.test_limped_pot_is_not_rfi) ... ok
+test_seven_rake_profiles_and_ante (__main__.Preflop.test_seven_rake_profiles_and_ante) ... ok
+test_short_allin_does_not_reopen_raise (__main__.Preflop.test_short_allin_does_not_reopen_raise) ... ok
+test_unsupported_native_rules_fail_before_solver (__main__.Preflop.test_unsupported_native_rules_fail_before_solver) ... ok
+test_unvisited_policy_cannot_be_fabricated (__main__.Preflop.test_unvisited_policy_cannot_be_fabricated) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.043s
+
+OK

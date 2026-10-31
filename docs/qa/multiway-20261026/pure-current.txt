@@ -1,0 +1,29 @@
+test_contract_mismatch (test_checkpoints.Checkpoints.test_contract_mismatch) ... ok
+test_digest_tamper_never_reaches_native (test_checkpoints.Checkpoints.test_digest_tamper_never_reaches_native) ... ok
+test_empty_truncated_or_extra_bytes_rejected (test_checkpoints.Checkpoints.test_empty_truncated_or_extra_bytes_rejected) ... ok
+test_invalid_header_after_valid_digest (test_checkpoints.Checkpoints.test_invalid_header_after_valid_digest) ... ok
+test_native_structural_validation_propagates (test_checkpoints.Checkpoints.test_native_structural_validation_propagates) ... ok
+test_size_limit (test_checkpoints.Checkpoints.test_size_limit) ... ok
+test_snapshot_is_separate_and_removed (test_checkpoints.Checkpoints.test_snapshot_is_separate_and_removed) ... ok
+test_verified_copy_survives_original_change (test_checkpoints.Checkpoints.test_verified_copy_survives_original_change) ... ok
+test_complete_deck_counts (test_hand169.Hand169.test_complete_deck_counts) ... ok
+test_complete_export_conserves_mass_policy_and_ev (test_hand169.Hand169.test_complete_export_conserves_mass_policy_and_ev) ... ok
+test_duplicate_combination_rejected_even_reversed (test_hand169.Hand169.test_duplicate_combination_rejected_even_reversed) ... ok
+test_invalid_cards (test_hand169.Hand169.test_invalid_cards) ... ok
+test_invalid_numeric_inputs (test_hand169.Hand169.test_invalid_numeric_inputs) ... ok
+test_large_finite_ev_avoids_multiplication_overflow (test_hand169.Hand169.test_large_finite_ev_avoids_multiplication_overflow) ... ok
+test_order_and_suit_invariance (test_hand169.Hand169.test_order_and_suit_invariance) ... ok
+test_partial_coverage_is_explicit_and_rejected_by_default (test_hand169.Hand169.test_partial_coverage_is_explicit_and_rejected_by_default) ... ok
+test_weighted_mean_not_unweighted_mean (test_hand169.Hand169.test_weighted_mean_not_unweighted_mean) ... ok
+test_zero_mass_and_unknown_ev_stay_unknown (test_hand169.Hand169.test_zero_mass_and_unknown_ev_stay_unknown) ... ok
+test_entire_product_can_be_removed_without_inventing_posterior (test_joint_support.JointSupportBoundaries.test_entire_product_can_be_removed_without_inventing_posterior) ... ok
+test_invalid_card_domains_and_control_types_fail (test_joint_support.JointSupportBoundaries.test_invalid_card_domains_and_control_types_fail) ... ok
+test_product_ranges_require_exact_normalization_and_all_seats (test_joint_support.JointSupportBoundaries.test_product_ranges_require_exact_normalization_and_all_seats) ... ok
+test_public_board_changes_available_ordered_support_count (test_joint_support.JointSupportBoundaries.test_public_board_changes_available_ordered_support_count) ... ok
+test_seat_swaps_remain_distinct_but_exact_duplicates_fail (test_joint_support.JointSupportBoundaries.test_seat_swaps_remain_distinct_but_exact_duplicates_fail) ... ok
+test_zero_mass_rows_do_not_inflate_positive_coverage (test_joint_support.JointSupportBoundaries.test_zero_mass_rows_do_not_inflate_positive_coverage) ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 0.012s
+
+OK

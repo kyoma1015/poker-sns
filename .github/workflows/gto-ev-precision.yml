@@ -1,0 +1,51 @@
+name: GTO fixed-policy EV precision verification
+on:
+  pull_request:
+    paths:
+      - 'gto/abstract/precision*'
+      - 'gto/abstract/*flop*'
+      - 'gto/abstract/frozen_ablation_study.py'
+      - 'tests/test_*flop*'
+      - 'tests/test_frozen_ablation_study.py'
+      - 'gto/abstract/test_precision.py'
+      - 'gto/abstract/reference_compare.py'
+      - 'gto/abstract/test_reference_compare.py'
+      - 'gto/abstract/continuation_exact*'
+      - 'gto/abstract/test_continuation_exact.py'
+      - 'src/gto/precisionResearch*'
+      - 'docs/qa/ev-precision-20261030/**'
+      - '.github/workflows/gto-ev-precision.yml'
+permissions:
+  contents: read
+jobs:
+  precision:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Independent preserved evaluator and exact runout evaluator
+        run: |
+          python -B -c 'from gto.abstract.model import build; import os; build(os.environ["RUNNER_TEMP"]+"/precision-reference")'
+          python -B -c 'from gto.abstract.precision_runouts import build; import os; build(os.environ["RUNNER_TEMP"]+"/precision-native")'
+      - name: Conditional expectation, private reach, exact990 boards and covariance tests
+        run: GTO_ABSTRACT_LIBRARY="$RUNNER_TEMP/precision-reference/abstract.so" GTO_PRECISION_LIBRARY="$RUNNER_TEMP/precision-native/precision.so" python -B -m unittest gto.abstract.test_precision gto.abstract.test_continuation_exact -v
+      - name: External-reference condition, partial coverage and holdout comparison
+        run: |
+          python -B -m unittest gto.abstract.test_reference_compare -v
+          python -B -m gto.abstract.reference_compare --output "$RUNNER_TEMP/reference-result.json"
+          cmp "$RUNNER_TEMP/reference-result.json" docs/qa/reference-calibration-20261031/reference-result.json
+      - name: Frozen flop ablation seat, reach, bankroll and real-input regressions
+        run: python -B -m unittest tests.test_flop_tree_ablation tests.test_flop_reach_adapter tests.test_frozen_flop_reach tests.test_frozen_flop_ablation tests.test_frozen_ablation_study -v
+      - name: Reuse frozen archive; exact targeted showdowns and Rao-Blackwell runouts
+        run: python -B -m gto.abstract.precision_study --inputs docs/qa/ev-precision-20261030/frozen-inputs.json --output "$RUNNER_TEMP/precision-study" --reference-lib "$RUNNER_TEMP/precision-reference/abstract.so"
+      - name: Regenerate independent research EVs without changing frozen strategies
+        run: |
+          python -B -m gto.abstract.precision_study --export-evidence "$RUNNER_TEMP/precision-study/evidence.json" --export-output "$RUNNER_TEMP/precision.json"
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/precision.json" --expected src/gto/precisionResearchData.json
+      - name: Measure actual frozen policies and rebuilt kernel in BB
+        run: |
+          python -B -m gto.abstract.frozen_ablation_study --kernel "$RUNNER_TEMP/precision-study/rb-kernel.json.gz" --output "$RUNNER_TEMP/frozen-ablation.json"
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/frozen-ablation.json" --expected docs/qa/frozen-ablation-20261031/refined-results.json

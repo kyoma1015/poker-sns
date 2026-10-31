@@ -1,0 +1,1069 @@
+{
+  "chance_sha256": "6cce755adb7bad3ded2b67a592895d970dbb2c65d5e88b73b69c5d51dfa8140d",
+  "compatible_combo_deals": 1624350,
+  "condition": {
+    "ante": 0,
+    "bb_chips": 2,
+    "formal_profile": false,
+    "full_game_gto_verified": false,
+    "players": 2,
+    "postflop_abstraction": "one half-pot flop bet, own-hand/public-flop fixed controllers; turn/river check-through",
+    "private_abstraction": "169 starting classes; exact compatible-combo chance mass",
+    "raise_to_chips": [
+      5,
+      18,
+      42,
+      100
+    ],
+    "rake": 0,
+    "sb_chips": 1,
+    "stacks_chips": [
+      100,
+      100
+    ]
+  },
+  "equity_is_conditioned_on_specific_flop": false,
+  "equity_source": "existing showdown kernel averaged over public boards for compatible preflop classes",
+  "ev_basis": "net BB before blinds; new minus old; preflop sunk contributions cancel in deltas",
+  "external_gto_deviation_bb": null,
+  "flop_policy_is_trained": false,
+  "formal_acceptance_complete": 0,
+  "full_game_gto_verified": false,
+  "input_packet_sha256": "a3e4cf9d4d1047e3a3a9dc9e7735c459c28916513cecfc1f1f5da1148788b00a",
+  "kernel_identity_sha256": "41da543de6968fe51724114c6bcdf0008fb69a63f26e3bd2251949a85b0d4669",
+  "kernel_seed": 700017,
+  "method_source_sha256": {
+    "flop_reach_adapter.py": "b6201f3f88de806f2b4d13a49cac51954c1505e22414dff3203c1131543733c3",
+    "flop_tree_ablation.py": "3051be0e33ded29ee689c810c6ae25dd91e0a620cbff972363c751076d6fc3c8",
+    "frozen_ablation_study.py": "37e48c36bf3acc31cf439c24bf8ff41768452296f5d91f4b925322d9584bb4ad",
+    "frozen_flop_ablation.py": "129634e32391bb02d65eba46525cfc529d06835136a80392bedf4c3f965114e3",
+    "frozen_flop_reach.py": "0c14630aa50d03c790be7c1ea5860e260d4f37fef1a2469da96f7bdf8644d3fe"
+  },
+  "model_approximation_error_bb": null,
+  "rows": [
+    {
+      "before_call_reach_mass": 0.03539137944002987,
+      "conditional_probability_sum": 0.9999999999999999,
+      "conditioning": "complete preflop action prefix AND hero call; turn/river not a fixed board",
+      "existing_card_flop_delta": {
+        "ev_bb": 0.15859019474276437,
+        "external_gto_deviation_bb": null,
+        "method": "paired_unordered_world_Hoeffding",
+        "model_approximation_error_bb": null,
+        "sampling_interval_bb": [
+          -0.12119779870228077,
+          0.43837818818780955
+        ],
+        "sampling_radius_bb": 0.2797879934450451
+      },
+      "existing_card_flop_net_before_blinds": {
+        "ev_bb": -1.4778984069598233,
+        "external_gto_deviation_bb": null,
+        "method": "paired_unordered_world_Hoeffding",
+        "model_approximation_error_bb": null,
+        "sampling_interval_bb": [
+          -1.701740571484561,
+          -1.2540562424350856
+        ],
+        "sampling_radius_bb": 0.2238421645247375
+      },
+      "experimental_flop_tree": {
+        "bet_call": {
+          "bet_bb": 9.0,
+          "delta_vs_checkdown": {
+            "ev_bb": -1.6364886017025877,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -1.7070318120938188,
+              -1.5659453913113566
+            ],
+            "sampling_radius_bb": 0.0705432103912308
+          },
+          "delta_vs_saved_card_controller": {
+            "ev_bb": -1.795078796445352,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -2.136267918444232,
+              -1.4538896744464724
+            ],
+            "sampling_radius_bb": 0.3411891219988794
+          },
+          "hero_policy": {
+            "bet": 1,
+            "call_bet": 1,
+            "call_raise": 1,
+            "raise_after_bet": 0
+          },
+          "new_net_before_blinds": {
+            "ev_bb": -3.2729772034051754,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -3.4140636240876376,
+              -3.131890782722713
+            ],
+            "sampling_radius_bb": 0.14108642068246163
+          },
+          "policy_source": "deterministic experimental protocol; NOT a learned/played flop policy",
+          "raise_to_bb": 27.0,
+          "villain_policy": {
+            "bet": 1,
+            "call_bet": 1,
+            "call_raise": 1,
+            "raise_after_bet": 0
+          }
+        },
+        "raise_call": {
+          "bet_bb": 9.0,
+          "delta_vs_checkdown": {
+            "ev_bb": -4.9094658051077635,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -5.121095436081457,
+              -4.69783617413407
+            ],
+            "sampling_radius_bb": 0.21162963097369242
+          },
+          "delta_vs_saved_card_controller": {
+            "ev_bb": -5.068055999850528,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -5.539782059624412,
+              -4.596329940076644
+            ],
+            "sampling_radius_bb": 0.4717260597738832
+          },
+          "hero_policy": {
+            "bet": 1,
+            "call_bet": 1,
+            "call_raise": 1,
+            "raise_after_bet": 1
+          },
+          "new_net_before_blinds": {
+            "ev_bb": -6.545954406810351,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -6.828127248075275,
+              -6.263781565545426
+            ],
+            "sampling_radius_bb": 0.28217284126492326
+          },
+          "policy_source": "deterministic experimental protocol; NOT a learned/played flop policy",
+          "raise_to_bb": 27.0,
+          "villain_policy": {
+            "bet": 1,
+            "call_bet": 1,
+            "call_raise": 1,
+            "raise_after_bet": 1
+          }
+        }
+      },
+      "facing_decision": {
+        "conditioning": "facing decision node BEFORE current action; all frozen fold/call/raise continuations included",
+        "experimental": {
+          "bet_call": {
+            "delta_vs_checkdown": {
+              "ev_bb": -0.1318308838847593,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -0.16401244921035774,
+                -0.09964931855916088
+              ],
+              "sampling_radius_bb": 0.03218156532559841
+            },
+            "delta_vs_saved_card_controller": {
+              "ev_bb": -0.6611204447855911,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -0.833939012572762,
+                -0.48830187699842015
+              ],
+              "sampling_radius_bb": 0.17281856778717083
+            },
+            "new": {
+              "ev_bb": -1.4379977316357562,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -1.50236801003399,
+                -1.3736274532375223
+              ],
+              "sampling_radius_bb": 0.06437027839823364
+            }
+          },
+          "raise_call": {
+            "delta_vs_checkdown": {
+              "ev_bb": -1.3529686546772886,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -1.4467979921876306,
+                -1.2591393171669465
+              ],
+              "sampling_radius_bb": 0.0938293375103419
+            },
+            "delta_vs_saved_card_controller": {
+              "ev_bb": -1.8822582155781202,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -2.10741211150366,
+                -1.6571043196525805
+              ],
+              "sampling_radius_bb": 0.22515389592553953
+            },
+            "new": {
+              "ev_bb": -2.6591355024282852,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -2.7848347752603115,
+                -2.533436229596259
+              ],
+              "sampling_radius_bb": 0.12569927283202598
+            }
+          }
+        },
+        "old_checkdown": {
+          "ev_bb": -1.3061668477509967,
+          "external_gto_deviation_bb": null,
+          "method": "paired_unordered_world_Hoeffding",
+          "model_approximation_error_bb": null,
+          "sampling_interval_bb": [
+            -1.3383556345533978,
+            -1.2739780609485956
+          ],
+          "sampling_radius_bb": 0.032188786802400844
+        },
+        "saved_card_delta_vs_checkdown": {
+          "ev_bb": 0.5292895609008317,
+          "external_gto_deviation_bb": null,
+          "method": "paired_unordered_world_Hoeffding",
+          "model_approximation_error_bb": null,
+          "sampling_interval_bb": [
+            0.3817087081322645,
+            0.6768704136693989
+          ],
+          "sampling_radius_bb": 0.1475808527685671
+        },
+        "saved_card_flop": {
+          "ev_bb": -0.776877286850165,
+          "external_gto_deviation_bb": null,
+          "method": "paired_unordered_world_Hoeffding",
+          "model_approximation_error_bb": null,
+          "sampling_interval_bb": [
+            -0.9024523459935255,
+            -0.6513022277068045
+          ],
+          "sampling_radius_bb": 0.12557505914336042
+        }
+      },
+      "frozen_preflop_model": "checkdown",
+      "hero_actor": 0,
+      "old_checkdown_net_before_blinds": {
+        "ev_bb": -1.6364886017025877,
+        "external_gto_deviation_bb": null,
+        "method": "paired_unordered_world_Hoeffding",
+        "model_approximation_error_bb": null,
+        "sampling_interval_bb": [
+          -1.7070318120938188,
+          -1.5659453913113566
+        ],
+        "sampling_radius_bb": 0.0705432103912308
+      },
+      "policy_digest": "cc653c5dcb882ddd95dc6d20d77fd82277d877dd0f612c1f45888fb1d6604c1c",
+      "post_call_reach_mass": 0.01564050611554458,
+      "pot_bb": 18.0,
+      "remaining_stack_bb": 41.0,
+      "stage": "vs_3bet"
+    },
+    {
+      "before_call_reach_mass": 0.003802721241509771,
+      "conditional_probability_sum": 0.9999999999999999,
+      "conditioning": "complete preflop action prefix AND hero call; turn/river not a fixed board",
+      "existing_card_flop_delta": {
+        "ev_bb": -5.527630555534277,
+        "external_gto_deviation_bb": null,
+        "method": "paired_unordered_world_Hoeffding",
+        "model_approximation_error_bb": null,
+        "sampling_interval_bb": [
+          -6.3391724377209595,
+          -4.716088673347594
+        ],
+        "sampling_radius_bb": 0.8115418821866821
+      },
+      "existing_card_flop_net_before_blinds": {
+        "ev_bb": -12.646348549236428,
+        "external_gto_deviation_bb": null,
+        "method": "paired_unordered_world_Hoeffding",
+        "model_approximation_error_bb": null,
+        "sampling_interval_bb": [
+          -13.414742416625668,
+          -11.87795468184719
+        ],
+        "sampling_radius_bb": 0.7683938673892381
+      },
+      "experimental_flop_tree": {
+        "bet_call": {
+          "bet_bb": 21.0,
+          "delta_vs_checkdown": {
+            "ev_bb": -7.118717993702153,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -7.234605595217808,
+              -7.002830392186498
+            ],
+            "sampling_radius_bb": 0.11588760151565436
+          },
+          "delta_vs_saved_card_controller": {
+            "ev_bb": -1.5910874381678763,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -2.4592067790256005,
+              -0.7229680973101527
+            ],
+            "sampling_radius_bb": 0.8681193408577236
+          },
+          "hero_policy": {
+            "bet": 1,
+            "call_bet": 1,
+            "call_raise": 1,
+            "raise_after_bet": 0
+          },
+          "new_net_before_blinds": {
+            "ev_bb": -14.237435987404305,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -14.469211190335615,
+              -14.005660784472996
+            ],
+            "sampling_radius_bb": 0.23177520293130874
+          },
+          "policy_source": "deterministic experimental protocol; NOT a learned/played flop policy",
+          "raise_to_bb": 29.0,
+          "villain_policy": {
+            "bet": 1,
+            "call_bet": 1,
+            "call_raise": 1,
+            "raise_after_bet": 0
+          }
+        },
+        "raise_call": {
+          "bet_bb": 21.0,
+          "delta_vs_checkdown": {
+            "ev_bb": -9.830610562731545,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -9.990645821929355,
+              -9.670575303533735
+            ],
+            "sampling_radius_bb": 0.16003525919780845
+          },
+          "delta_vs_saved_card_controller": {
+            "ev_bb": -4.3029800071972675,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -5.195671803726019,
+              -3.4102882106685164
+            ],
+            "sampling_radius_bb": 0.8926917965287504
+          },
+          "hero_policy": {
+            "bet": 1,
+            "call_bet": 1,
+            "call_raise": 1,
+            "raise_after_bet": 1
+          },
+          "new_net_before_blinds": {
+            "ev_bb": -16.9493285564337,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -17.225251417047165,
+              -16.673405695820232
+            ],
+            "sampling_radius_bb": 0.27592286061346283
+          },
+          "policy_source": "deterministic experimental protocol; NOT a learned/played flop policy",
+          "raise_to_bb": 29.0,
+          "villain_policy": {
+            "bet": 1,
+            "call_bet": 1,
+            "call_raise": 1,
+            "raise_after_bet": 1
+          }
+        }
+      },
+      "facing_decision": {
+        "conditioning": "facing decision node BEFORE current action; all frozen fold/call/raise continuations included",
+        "experimental": {
+          "bet_call": {
+            "delta_vs_checkdown": {
+              "ev_bb": -5.503909390202537,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -5.593509070779269,
+                -5.4143097096258055
+              ],
+              "sampling_radius_bb": 0.0895996805767311
+            },
+            "delta_vs_saved_card_controller": {
+              "ev_bb": -1.2301654735182468,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -1.9013607921629567,
+                -0.5589701548735371
+              ],
+              "sampling_radius_bb": 0.6711953186447096
+            },
+            "new": {
+              "ev_bb": -10.563139990551667,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -10.742861521934305,
+                -10.383418459169029
+              ],
+              "sampling_radius_bb": 0.17972153138263666
+            }
+          },
+          "raise_call": {
+            "delta_vs_checkdown": {
+              "ev_bb": -7.600636776946362,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -7.724369669133277,
+                -7.476903884759447
+              ],
+              "sampling_radius_bb": 0.12373289218691436
+            },
+            "delta_vs_saved_card_controller": {
+              "ev_bb": -3.326892860262071,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -4.017086623518262,
+                -2.6366990970058803
+              ],
+              "sampling_radius_bb": 0.6901937632561901
+            },
+            "new": {
+              "ev_bb": -12.659867377295491,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -12.87372187405271,
+                -12.446012880538271
+              ],
+              "sampling_radius_bb": 0.2138544967572185
+            }
+          }
+        },
+        "old_checkdown": {
+          "ev_bb": -5.059230600349129,
+          "external_gto_deviation_bb": null,
+          "method": "paired_unordered_world_Hoeffding",
+          "model_approximation_error_bb": null,
+          "sampling_interval_bb": [
+            -5.149353985041819,
+            -4.969107215656439
+          ],
+          "sampling_radius_bb": 0.09012338469268913
+        },
+        "saved_card_delta_vs_checkdown": {
+          "ev_bb": -4.273743916684291,
+          "external_gto_deviation_bb": null,
+          "method": "paired_unordered_world_Hoeffding",
+          "model_approximation_error_bb": null,
+          "sampling_interval_bb": [
+            -4.901195796365858,
+            -3.6462920370027243
+          ],
+          "sampling_radius_bb": 0.6274518796815661
+        },
+        "saved_card_flop": {
+          "ev_bb": -9.33297451703342,
+          "external_gto_deviation_bb": null,
+          "method": "paired_unordered_world_Hoeffding",
+          "model_approximation_error_bb": null,
+          "sampling_interval_bb": [
+            -9.927236709909533,
+            -8.738712324157309
+          ],
+          "sampling_radius_bb": 0.5942621928761104
+        }
+      },
+      "frozen_preflop_model": "checkdown",
+      "hero_actor": 1,
+      "old_checkdown_net_before_blinds": {
+        "ev_bb": -7.118717993702153,
+        "external_gto_deviation_bb": null,
+        "method": "paired_unordered_world_Hoeffding",
+        "model_approximation_error_bb": null,
+        "sampling_interval_bb": [
+          -7.234605595217808,
+          -7.002830392186498
+        ],
+        "sampling_radius_bb": 0.11588760151565436
+      },
+      "policy_digest": "cc653c5dcb882ddd95dc6d20d77fd82277d877dd0f612c1f45888fb1d6604c1c",
+      "post_call_reach_mass": 0.002940112695570279,
+      "pot_bb": 42.0,
+      "remaining_stack_bb": 29.0,
+      "stage": "vs_4bet"
+    },
+    {
+      "before_call_reach_mass": 0.0688205669868773,
+      "conditional_probability_sum": 0.9999999999999999,
+      "conditioning": "complete preflop action prefix AND hero call; turn/river not a fixed board",
+      "existing_card_flop_delta": {
+        "ev_bb": 0.07124125268031892,
+        "external_gto_deviation_bb": null,
+        "method": "paired_unordered_world_Hoeffding",
+        "model_approximation_error_bb": null,
+        "sampling_interval_bb": [
+          -0.15936618950473208,
+          0.30184869486536997
+        ],
+        "sampling_radius_bb": 0.23060744218505097
+      },
+      "existing_card_flop_net_before_blinds": {
+        "ev_bb": -1.3545595370588348,
+        "external_gto_deviation_bb": null,
+        "method": "paired_unordered_world_Hoeffding",
+        "model_approximation_error_bb": null,
+        "sampling_interval_bb": [
+          -1.529915503715985,
+          -1.1792035704016846
+        ],
+        "sampling_radius_bb": 0.17535596665715014
+      },
+      "experimental_flop_tree": {
+        "bet_call": {
+          "bet_bb": 9.0,
+          "delta_vs_checkdown": {
+            "ev_bb": -1.4258007897391538,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -1.490038416011287,
+              -1.3615631634670207
+            ],
+            "sampling_radius_bb": 0.06423762627213302
+          },
+          "delta_vs_saved_card_controller": {
+            "ev_bb": -1.4970420424194726,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -1.7866328139803211,
+              -1.207451270858624
+            ],
+            "sampling_radius_bb": 0.28959077156084845
+          },
+          "hero_policy": {
+            "bet": 1,
+            "call_bet": 1,
+            "call_raise": 1,
+            "raise_after_bet": 0
+          },
+          "new_net_before_blinds": {
+            "ev_bb": -2.8516015794783076,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -2.9800768319225743,
+              -2.723126327034041
+            ],
+            "sampling_radius_bb": 0.12847525244426605
+          },
+          "policy_source": "deterministic experimental protocol; NOT a learned/played flop policy",
+          "raise_to_bb": 27.0,
+          "villain_policy": {
+            "bet": 1,
+            "call_bet": 1,
+            "call_raise": 1,
+            "raise_after_bet": 0
+          }
+        },
+        "raise_call": {
+          "bet_bb": 9.0,
+          "delta_vs_checkdown": {
+            "ev_bb": -4.277402369217461,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -4.470115247833862,
+              -4.084689490601061
+            ],
+            "sampling_radius_bb": 0.19271287861639905
+          },
+          "delta_vs_saved_card_controller": {
+            "ev_bb": -4.34864362189778,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -4.760939263198646,
+              -3.9363479805969153
+            ],
+            "sampling_radius_bb": 0.41229564130086455
+          },
+          "hero_policy": {
+            "bet": 1,
+            "call_bet": 1,
+            "call_raise": 1,
+            "raise_after_bet": 1
+          },
+          "new_net_before_blinds": {
+            "ev_bb": -5.703203158956615,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -5.960153663745149,
+              -5.446252654168082
+            ],
+            "sampling_radius_bb": 0.2569505047885321
+          },
+          "policy_source": "deterministic experimental protocol; NOT a learned/played flop policy",
+          "raise_to_bb": 27.0,
+          "villain_policy": {
+            "bet": 1,
+            "call_bet": 1,
+            "call_raise": 1,
+            "raise_after_bet": 1
+          }
+        }
+      },
+      "facing_decision": {
+        "conditioning": "facing decision node BEFORE current action; all frozen fold/call/raise continuations included",
+        "experimental": {
+          "bet_call": {
+            "delta_vs_checkdown": {
+              "ev_bb": -0.4062480667044134,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -0.4297976031746287,
+                -0.3826985302341981
+              ],
+              "sampling_radius_bb": 0.02354953647021523
+            },
+            "delta_vs_saved_card_controller": {
+              "ev_bb": -0.5287644660959576,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -0.6371071180941855,
+                -0.42042181409772983
+              ],
+              "sampling_radius_bb": 0.10834265199822775
+            },
+            "new": {
+              "ev_bb": -1.8223794378254272,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -1.8700769520910305,
+                -1.774681923559824
+              ],
+              "sampling_radius_bb": 0.04769751426560317
+            }
+          },
+          "raise_call": {
+            "delta_vs_checkdown": {
+              "ev_bb": -1.3826041359252326,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -1.45176623136181,
+                -1.313442040488655
+              ],
+              "sampling_radius_bb": 0.06916209543657734
+            },
+            "delta_vs_saved_card_controller": {
+              "ev_bb": -1.505120535316777,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -1.656210722709755,
+                -1.354030347923799
+              ],
+              "sampling_radius_bb": 0.15109018739297772
+            },
+            "new": {
+              "ev_bb": -2.7987355070462465,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -2.891596021500274,
+                -2.705874992592219
+              ],
+              "sampling_radius_bb": 0.09286051445402704
+            }
+          }
+        },
+        "old_checkdown": {
+          "ev_bb": -1.416131371121014,
+          "external_gto_deviation_bb": null,
+          "method": "paired_unordered_world_Hoeffding",
+          "model_approximation_error_bb": null,
+          "sampling_interval_bb": [
+            -1.4407684022016363,
+            -1.3914943400403916
+          ],
+          "sampling_radius_bb": 0.024637031080622044
+        },
+        "saved_card_delta_vs_checkdown": {
+          "ev_bb": 0.12251639939154431,
+          "external_gto_deviation_bb": null,
+          "method": "paired_unordered_world_Hoeffding",
+          "model_approximation_error_bb": null,
+          "sampling_interval_bb": [
+            0.03542707037145681,
+            0.20960572841163183
+          ],
+          "sampling_radius_bb": 0.0870893290200875
+        },
+        "saved_card_flop": {
+          "ev_bb": -1.2936149717294696,
+          "external_gto_deviation_bb": null,
+          "method": "paired_unordered_world_Hoeffding",
+          "model_approximation_error_bb": null,
+          "sampling_interval_bb": [
+            -1.362403885252937,
+            -1.2248260582060022
+          ],
+          "sampling_radius_bb": 0.06878891352346725
+        }
+      },
+      "frozen_preflop_model": "flop_controller",
+      "hero_actor": 0,
+      "old_checkdown_net_before_blinds": {
+        "ev_bb": -1.4258007897391538,
+        "external_gto_deviation_bb": null,
+        "method": "paired_unordered_world_Hoeffding",
+        "model_approximation_error_bb": null,
+        "sampling_interval_bb": [
+          -1.490038416011287,
+          -1.3615631634670207
+        ],
+        "sampling_radius_bb": 0.06423762627213302
+      },
+      "policy_digest": "0146870c1b2f2168940f4b51a31563417c63c236f808b5eb0e27981833616fec",
+      "post_call_reach_mass": 0.024493875627518404,
+      "pot_bb": 18.0,
+      "remaining_stack_bb": 41.0,
+      "stage": "vs_3bet"
+    },
+    {
+      "before_call_reach_mass": 0.007287817207929017,
+      "conditional_probability_sum": 1.0,
+      "conditioning": "complete preflop action prefix AND hero call; turn/river not a fixed board",
+      "existing_card_flop_delta": {
+        "ev_bb": -3.727455688977941,
+        "external_gto_deviation_bb": null,
+        "method": "paired_unordered_world_Hoeffding",
+        "model_approximation_error_bb": null,
+        "sampling_interval_bb": [
+          -4.554245069749579,
+          -2.9006663082063024
+        ],
+        "sampling_radius_bb": 0.826789380771638
+      },
+      "existing_card_flop_net_before_blinds": {
+        "ev_bb": -7.610155045262741,
+        "external_gto_deviation_bb": null,
+        "method": "paired_unordered_world_Hoeffding",
+        "model_approximation_error_bb": null,
+        "sampling_interval_bb": [
+          -8.310691041774527,
+          -6.909619048750955
+        ],
+        "sampling_radius_bb": 0.7005359965117853
+      },
+      "experimental_flop_tree": {
+        "bet_call": {
+          "bet_bb": 21.0,
+          "delta_vs_checkdown": {
+            "ev_bb": -3.8826993562847996,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -4.069502226366215,
+              -3.695896486203385
+            ],
+            "sampling_radius_bb": 0.18680287008141408
+          },
+          "delta_vs_saved_card_controller": {
+            "ev_bb": -0.15524366730685857,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -1.1279724590958449,
+              0.8174851244821275
+            ],
+            "sampling_radius_bb": 0.972728791788986
+          },
+          "hero_policy": {
+            "bet": 1,
+            "call_bet": 1,
+            "call_raise": 1,
+            "raise_after_bet": 0
+          },
+          "new_net_before_blinds": {
+            "ev_bb": -7.765398712569599,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -8.13900445263243,
+              -7.39179297250677
+            ],
+            "sampling_radius_bb": 0.37360574006282815
+          },
+          "policy_source": "deterministic experimental protocol; NOT a learned/played flop policy",
+          "raise_to_bb": 29.0,
+          "villain_policy": {
+            "bet": 1,
+            "call_bet": 1,
+            "call_raise": 1,
+            "raise_after_bet": 0
+          }
+        },
+        "raise_call": {
+          "bet_bb": 21.0,
+          "delta_vs_checkdown": {
+            "ev_bb": -5.361822920583771,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -5.619788788753344,
+              -5.103857052414198
+            ],
+            "sampling_radius_bb": 0.25796586816957184
+          },
+          "delta_vs_saved_card_controller": {
+            "ev_bb": -1.63436723160583,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -2.6661641487719643,
+              -0.602570314439696
+            ],
+            "sampling_radius_bb": 1.0317969171661339
+          },
+          "hero_policy": {
+            "bet": 1,
+            "call_bet": 1,
+            "call_raise": 1,
+            "raise_after_bet": 1
+          },
+          "new_net_before_blinds": {
+            "ev_bb": -9.24452227686857,
+            "external_gto_deviation_bb": null,
+            "method": "paired_unordered_world_Hoeffding",
+            "model_approximation_error_bb": null,
+            "sampling_interval_bb": [
+              -9.689291015019558,
+              -8.799753538717583
+            ],
+            "sampling_radius_bb": 0.44476873815098583
+          },
+          "policy_source": "deterministic experimental protocol; NOT a learned/played flop policy",
+          "raise_to_bb": 29.0,
+          "villain_policy": {
+            "bet": 1,
+            "call_bet": 1,
+            "call_raise": 1,
+            "raise_after_bet": 1
+          }
+        }
+      },
+      "facing_decision": {
+        "conditioning": "facing decision node BEFORE current action; all frozen fold/call/raise continuations included",
+        "experimental": {
+          "bet_call": {
+            "delta_vs_checkdown": {
+              "ev_bb": -0.9557271713661936,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -1.001708732784208,
+                -0.9097456099481792
+              ],
+              "sampling_radius_bb": 0.04598156141801418
+            },
+            "delta_vs_saved_card_controller": {
+              "ev_bb": -0.038213257688246086,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -0.2776506314500915,
+                0.20122411607359927
+              ],
+              "sampling_radius_bb": 0.23943737376184535
+            },
+            "new": {
+              "ev_bb": -5.080639726925961,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -5.2018936317858975,
+                -4.959385822066024
+              ],
+              "sampling_radius_bb": 0.12125390485993535
+            }
+          },
+          "raise_call": {
+            "delta_vs_checkdown": {
+              "ev_bb": -1.3198137128390293,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -1.383312059521049,
+                -1.2563153661570094
+              ],
+              "sampling_radius_bb": 0.06349834668201959
+            },
+            "delta_vs_saved_card_controller": {
+              "ev_bb": -0.4022997991610819,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -0.6562768030112643,
+                -0.14832279531089945
+              ],
+              "sampling_radius_bb": 0.2539770038501824
+            },
+            "new": {
+              "ev_bb": -5.444726268398796,
+              "external_gto_deviation_bb": null,
+              "method": "paired_unordered_world_Hoeffding",
+              "model_approximation_error_bb": null,
+              "sampling_interval_bb": [
+                -5.581123252174942,
+                -5.3083292846226495
+              ],
+              "sampling_radius_bb": 0.1363969837761456
+            }
+          }
+        },
+        "old_checkdown": {
+          "ev_bb": -4.124912555559767,
+          "external_gto_deviation_bb": null,
+          "method": "paired_unordered_world_Hoeffding",
+          "model_approximation_error_bb": null,
+          "sampling_interval_bb": [
+            -4.210822332334979,
+            -4.039002778784555
+          ],
+          "sampling_radius_bb": 0.08590977677521094
+        },
+        "saved_card_delta_vs_checkdown": {
+          "ev_bb": -0.9175139136779474,
+          "external_gto_deviation_bb": null,
+          "method": "paired_unordered_world_Hoeffding",
+          "model_approximation_error_bb": null,
+          "sampling_interval_bb": [
+            -1.121028274174115,
+            -0.71399955318178
+          ],
+          "sampling_radius_bb": 0.20351436049616733
+        },
+        "saved_card_flop": {
+          "ev_bb": -5.042426469237714,
+          "external_gto_deviation_bb": null,
+          "method": "paired_unordered_world_Hoeffding",
+          "model_approximation_error_bb": null,
+          "sampling_interval_bb": [
+            -5.249074929290841,
+            -4.835778009184588
+          ],
+          "sampling_radius_bb": 0.20664846005312548
+        }
+      },
+      "frozen_preflop_model": "flop_controller",
+      "hero_actor": 1,
+      "old_checkdown_net_before_blinds": {
+        "ev_bb": -3.8826993562847996,
+        "external_gto_deviation_bb": null,
+        "method": "paired_unordered_world_Hoeffding",
+        "model_approximation_error_bb": null,
+        "sampling_interval_bb": [
+          -4.069502226366215,
+          -3.695896486203385
+        ],
+        "sampling_radius_bb": 0.18680287008141408
+      },
+      "policy_digest": "0146870c1b2f2168940f4b51a31563417c63c236f808b5eb0e27981833616fec",
+      "post_call_reach_mass": 0.0017938975662108846,
+      "pot_bb": 42.0,
+      "remaining_stack_bb": 29.0,
+      "stage": "vs_4bet"
+    }
+  ],
+  "samples_per_class_pair": 256,
+  "schema": "pokerid-real-frozen-ablation-v1",
+  "simultaneous_interval_count": 72,
+  "simultaneous_sampling_confidence": 0.99
+}

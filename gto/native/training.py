@@ -23,7 +23,7 @@ class NativeGame:
     """
     _g11_native_spec = True
 
-    def __init__(self, stacks, *, bb=2, bba=0, rake_num=0, rake_den=1):
+    def __init__(self, stacks, *, bb=2, bba=0, rake_num=0, rake_den=1, rake_cap=None):
         from pokerid_rules import Rules
         if (not isinstance(stacks, (list, tuple)) or not 2 <= len(stacks) <= 9
                 or any(type(s) is not int or not 0 < s <= 2**31-1 for s in stacks)
@@ -36,8 +36,12 @@ class NativeGame:
             raise ValueError('invalid explicit blind/ante/rake configuration')
         self.stacks = list(stacks)
         rate = Fraction(rake_num, rake_den)
+        if bba not in (0, bb) or rate not in (Fraction(0), Fraction(1,20), Fraction(1,10)):
+            raise ValueError('native rules require 0/1BB ante and 0/5/10 percent rake')
+        if rake_cap is not None and (type(rake_cap) is not int or rake_cap not in (5*bb,10*bb)):
+            raise ValueError('native rake cap must be absent, 5BB or 10BB')
         rules = Rules(bb=bb, bba=bba, ante_order='ante_first', stack_basis='before_ante',
-                      dead_eligibility='all_live', rake_rate=rate, rake_cap=None,
+                      dead_eligibility='all_live', rake_rate=rate, rake_cap=rake_cap,
                       no_flop_no_drop=True, cap_scope='whole_hand', rounding='floor', rake_ante=True)
         manifest = rules.manifest()
         self._native_rules = {k:v for k,v in manifest.items() if k != 'version'}
@@ -141,6 +145,7 @@ def main():
     parser.add_argument('--bba', type=int, default=0)
     parser.add_argument('--rake-num', type=int, default=0)
     parser.add_argument('--rake-den', type=int, default=1)
+    parser.add_argument('--rake-cap', type=int)
     parser.add_argument('--seed', type=int, required=True)
     parser.add_argument('--iterations', type=int, required=True)
     parser.add_argument('--checkpoint', required=True, type=Path)
@@ -150,7 +155,7 @@ def main():
     sys.path.insert(0,str(args.module_dir.resolve()))
     native = importlib.import_module('pokerid_g12')
     game = NativeGame(args.stacks,bb=args.bb,bba=args.bba,
-                      rake_num=args.rake_num,rake_den=args.rake_den)
+                      rake_num=args.rake_num,rake_den=args.rake_den,rake_cap=args.rake_cap)
     solver = native.Solver(game,.6,args.seed,True,True,.1)
     print(json.dumps(train_batch(solver,game,args.iterations,args.checkpoint,
         resume=args.resume,export=args.export),sort_keys=True,indent=2))
