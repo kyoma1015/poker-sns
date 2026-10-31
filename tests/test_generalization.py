@@ -54,4 +54,13 @@ class GeneralizationTests(unittest.TestCase):
    r=s.final_test(Path(self.tmp.name),protocol,selection,lock)
   self.assertFalse(r['final_test_used_for_selection']);self.assertEqual(r['selection_file_sha256'],s.sha(lock))
 
+ def test_post_lock_training_audit_cannot_fit_choose_or_access_final(self):
+  from gto.abstract import generalization_audit as audit
+  h=(0,18.,41.,0,0,0,*([0]*14));v=(1,18.,41.,0,0,0,*([0]*14));fake={'hkeys':[h],'vkeys':[v],'tensor':[[[[0.]*4 for _ in range(4)]]]};rows=[{'key':list(k[:6]),'probabilities':[.25]*4} for k in (h,v)];model={'coarse':rows,'records':[]}
+  protocol={'split':{x:[{'cards':[48,21,3]}] for x in ('train','validation')},'learning_initialization_seeds':[17]};path=Path(self.tmp.name)/'audit-protocol.json';path.write_text(json.dumps(protocol));lock=Path(self.tmp.name)/'audit-lock.json';lock.write_text('{}')
+  selection={'protocol_sha256':s.sha(path),'source_sha256':s.identities(),'selected_config':{'kind':'coarse'},'models':{s.model_key(t,17):model for t in ('vs_3bet','vs_4bet')}}
+  with patch.object(audit.study,'PROTOCOL',path),patch.object(audit.study,'initialize',return_value=(None,None,None,'d')),patch.object(audit.exact,'matrix',return_value={}),patch.object(audit,'uniform_strength',return_value={}),patch.object(audit,'game',return_value=fake),patch.object(audit.base,'solve',side_effect=AssertionError('audit must not train')),patch.object(audit.study,'choose_candidate',side_effect=AssertionError('audit must not select')):
+   r=audit.audit(Path(self.tmp.name),selection,lock)
+  self.assertFalse(r['policy_updated']);self.assertFalse(r['selection_performed']);self.assertFalse(r['final_boards_accessed'])
+
 if __name__=='__main__':unittest.main()
