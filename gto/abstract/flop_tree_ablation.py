@@ -28,7 +28,7 @@ def _showdown(equity, pot, hero_invested, villain_invested):
     return equity * (pot + villain_invested) - (1 - equity) * hero_invested
 
 
-def evaluate_flop(equity, hero: Policy, villain: Policy, *, pot=1.0, bet_fraction=0.5, raise_multiplier=3.0):
+def evaluate_flop(equity, hero: Policy, villain: Policy, *, pot=1.0, bet_fraction=0.5, raise_multiplier=3.0, effective_stack=None):
     """Evaluate a fixed-policy, IP hero vs OOP villain flop tree.
 
     OOP villain checks or bets. Following a check, IP hero checks or bets.
@@ -42,8 +42,14 @@ def evaluate_flop(equity, hero: Policy, villain: Policy, *, pot=1.0, bet_fractio
         raise ValueError("pot and bet fraction must be positive finite")
     if not math.isfinite(raise_multiplier) or raise_multiplier < 2:
         raise ValueError("raise multiplier must be at least 2")
-    b = pot * bet_fraction
-    r = b * raise_multiplier
+    if not isinstance(hero,Policy) or not isinstance(villain,Policy):
+        raise TypeError("explicit fixed Policy objects required")
+    if effective_stack is not None and (type(effective_stack) not in (int,float) or not math.isfinite(effective_stack) or effective_stack<=0):
+        raise ValueError("positive equal effective stack required")
+    b = min(pot*bet_fraction,effective_stack) if effective_stack is not None else pot*bet_fraction
+    r = min(b*raise_multiplier,effective_stack) if effective_stack is not None else b*raise_multiplier
+    if r<=b and (hero.raise_after_bet or villain.raise_after_bet):
+        raise ValueError("cannot raise an all-in bet")
 
     # Villain bets first: hero folds, calls, or raises to r total.
     hero_raise = (1 - villain.call_raise) * (pot + b) + villain.call_raise * _showdown(equity, pot, r, r)

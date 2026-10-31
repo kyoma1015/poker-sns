@@ -5,9 +5,10 @@ It never updates the strategy and never invents showdown equities.
 """
 import math
 from gto.abstract.model import tree, chance, classes
+from gto.abstract.precision import frozen_rows
 
 
-def frozen_reach(stage, strategy):
+def frozen_reach(stage, strategy, *, after_call=False):
     if stage not in ("vs_3bet", "vs_4bet"):
         raise ValueError("unsupported stage")
     nodes = tree()
@@ -16,6 +17,7 @@ def frozen_reach(stage, strategy):
         raise ValueError("strategy dimensions do not match HU50BB tree")
     if any(not isinstance(v, (float, int)) or not math.isfinite(v) or v < 0 or v > 1 for v in strategy):
         raise ValueError("invalid strategy probabilities")
+    frozen_rows(strategy,nodes,n)
     target_raises = 2 if stage == "vs_3bet" else 3
     found = []
     def visit(index, seat0, seat1):
@@ -35,7 +37,15 @@ def frozen_reach(stage, strategy):
     if len(found) != 1:
         raise ValueError("expected exactly one decision node")
     index, actor, seat0, seat1 = found[0]
+    node=nodes[index]
     _, p = chance(classes())
+    before_mass=math.fsum(p[i*n+j]*seat0[i]*seat1[j] for i in range(n) for j in range(n))
+    matched=max(node["contributions"])
+    if after_call:
+        action=node["actions"].index("call")
+        call=[strategy[(index*3+action)*n+h] for h in range(n)]
+        if actor==0:seat0=[x*y for x,y in zip(seat0,call)]
+        else:seat1=[x*y for x,y in zip(seat1,call)]
     # The downstream evaluator always indexes hero (decision actor) first.
     if actor == 0:
         hero, villain = seat0, seat1
@@ -49,6 +59,12 @@ def frozen_reach(stage, strategy):
     return {"stage": stage, "node_index": index, "hero_actor": actor,
             "class_probability": ordered_p, "hero_reach": hero,
             "villain_reach": villain, "conditional_mass": mass,
+            "conditioned_on_call": after_call,
+            "before_call_mass": before_mass,
+            "post_call_pot_bb": float(matched),
+            "matched_contribution_bb": matched/2.,
+            "remaining_stack_bb": (100-matched)/2.,
+            "history": list(node["history"]),
             "frozen_strategy": True, "equity_by_pair": None,
             "equity_status": "REQUIRED_NOT_DERIVED",
             "full_game_gto_verified": False}

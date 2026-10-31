@@ -9,7 +9,7 @@ from gto.abstract.flop_tree_ablation import Policy, evaluate_flop
 
 def conditional_flop_ev(*, stage, class_probability, hero_reach, villain_reach,
                         equity_by_pair, hero_policy, villain_policy,
-                        pot_bb, bet_fraction=0.5, raise_multiplier=3.0):
+                        pot_bb, bet_fraction=0.5, raise_multiplier=3.0, remaining_stack_bb=None):
     """Return BB model delta on a fixed, explicitly supplied class-pair distribution.
 
     class_probability is the ordered compatible-combination probability matrix
@@ -30,6 +30,14 @@ def conditional_flop_ev(*, stage, class_probability, hero_reach, villain_reach,
     for seq in (class_probability, hero_reach, villain_reach, equity_by_pair):
         if any(not isinstance(v, (float, int)) or not math.isfinite(v) or v < 0 or v > 1 for v in seq):
             raise ValueError("finite probabilities in [0,1] required")
+    if not math.isclose(math.fsum(class_probability),1.,rel_tol=0,abs_tol=1e-12):
+        raise ValueError("normalized private chance required")
+    def utility(e):
+        kwargs=dict(bet_fraction=bet_fraction,raise_multiplier=raise_multiplier,
+                    effective_stack=None if remaining_stack_bb is None else remaining_stack_bb/pot_bb)
+        if stage=="vs_3bet":return evaluate_flop(e,hero_policy,villain_policy,**kwargs)
+        # BB is OOP. IP villain's street cashflow plus OOP cashflow equals pot.
+        return 1.-evaluate_flop(1.-e,villain_policy,hero_policy,**kwargs)
     mass = 0.0
     baseline = 0.0
     candidate = 0.0
@@ -41,9 +49,7 @@ def conditional_flop_ev(*, stage, class_probability, hero_reach, villain_reach,
             e = equity_by_pair[i*n+j]
             mass += w
             baseline += w * e
-            candidate += w * evaluate_flop(e, hero_policy, villain_policy,
-                                            bet_fraction=bet_fraction,
-                                            raise_multiplier=raise_multiplier)
+            candidate += w * utility(e)
     if mass <= 0:
         raise ValueError("zero reach-weighted probability")
     old_bb = baseline / mass * pot_bb
@@ -57,5 +63,7 @@ def conditional_flop_ev(*, stage, class_probability, hero_reach, villain_reach,
         "model_approximation_error_bb": None,
         "external_reference_deviation_bb": None,
         "full_game_gto_verified": False,
+        "ev_basis": "cashflow from street start, excluding sunk preflop contributions",
+        "hero_position": "IP/SB" if stage=="vs_3bet" else "OOP/BB",
         "scope": "fixed class-pair reach-weighted toy tree; no flop-conditioned policy optimization"
     }
