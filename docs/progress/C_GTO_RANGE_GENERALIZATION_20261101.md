@@ -10,3 +10,15 @@ Keep protocol->implementation->selection lock->final evidence commits ordered,
 publish inONEref update. Final phase never trains/selects. Old CFR/8ranges/demo,
 main/prod/Storage/Vercel/otherPR/fees changes forbidden. ExternalGTO not compared,
 real approximationUNKNOWN,formal0/12. Never re-use old final as new unseen.
+
+## Validation lock BEFORE final
+11testsPASS. Public posterior native sums match independent Python removal;
+uniform-prior limit/scale cancellation/zero-mass/actual-prefix seat mapping,
+common-game payoffs,uniform ablation,seed geometry cache,no-final-fit verified.
+Training24/validation6 ONLY executed. Uniform control=uniform_knn9,validation
+mean1.972510290,worst5.826363076BB. Range=range_knn15_r32,validation
+mean1.217292641,worst4.346028896BB,predeclared worst constraint satisfied.
+Teacher maxtrainingNC.017216801BB. Candidates/cutoffs NOT changed after scores.
+Final6boards NOT evaluated yet. Freeze this SHA-bound selection in a separate
+commit before --phase final. Uniform models ignore every range-only query field.
+Range geometry shares indices across seeds but NEVER shares probabilities.
