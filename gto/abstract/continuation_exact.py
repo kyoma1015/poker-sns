@@ -18,7 +18,7 @@ def load(path):
  return lib
 
 def select_cells(policies):
- """Top10 suited calling types, equal model/history weight, frozen policy only."""
+ """Top20 suited calling types, equal model/history weight, frozen policy only."""
  nodes=tree();_,p=chance(classes());n=169;scores=[0.]*n
  for policy in policies.values():
   def walk(v,r0,r1):
@@ -34,8 +34,8 @@ def select_cells(policies):
     r=[x*policy[(v*3+a)*n+h] for h,x in enumerate(r0 if node['actor']==0 else r1)]
     walk(c,r if node['actor']==0 else r0,r1 if node['actor']==0 else r)
   walk(0,[1.]*n,[1.]*n)
- heroes=sorted((i for i,h in enumerate(CLASSES) if h.endswith('s')),key=lambda i:(-scores[i],CLASSES[i]))[:10]
- opponents=[CLASSES.index(h) for h in refinement_targets(policies) if len(h)==2]
+ heroes=sorted((i for i,h in enumerate(CLASSES) if h.endswith('s')),key=lambda i:(-scores[i],CLASSES[i]))[:20]
+ opponents=[CLASSES.index(h) for h in refinement_targets(policies)]
  return sorted(set(tuple(sorted((i,j))) for i in heroes for j in opponents))
 
 def refine(exact,policies,lib):

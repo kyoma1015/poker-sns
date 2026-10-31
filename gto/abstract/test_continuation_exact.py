@@ -38,4 +38,21 @@ class ExactController(unittest.TestCase):
    if h[2]//4==h[3]//4:
     self.assertEqual(actual[1],20*actual[0]);self.assertEqual(actual[2],-20*actual[0]);self.assertEqual(actual[3],actual[1]);self.assertEqual(actual[4],actual[2])
 
+ def test_policy_only_allocation_covers20_suited_types_against_all6_targets(self):
+  import json
+  from gto.abstract.precision_archive import unpack
+  from gto.abstract.continuation_exact import select_cells
+  from gto.hand169 import CLASSES
+  _,policy=unpack(json.loads(Path('docs/qa/ev-precision-20261030/frozen-inputs.json').read_text()))
+  cells=select_cells(policy)
+  self.assertEqual(len(cells),120);self.assertEqual(len(set(cells)),120)
+  self.assertTrue(all(i<=j for i,j in cells))
+  targets={'AA','KK','AKo','AKs','QQ','TT'}
+  self.assertTrue(all(CLASSES[i] in targets or CLASSES[j] in targets for i,j in cells))
+ def test_same_suited_class_has_exact_paired_world_symmetry(self):
+  h=[48,44,49,45];actual=(C.c_int64*5)()
+  self.assertEqual(self.lib.precision_controller_exact(ints(h),actual),0)
+  self.assertEqual(actual[0],0)
+  self.assertEqual(actual[1],actual[2]);self.assertEqual(actual[3],actual[4])
+
 if __name__=='__main__':unittest.main()
