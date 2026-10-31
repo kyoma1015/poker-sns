@@ -7,9 +7,11 @@ on:
       - 'gto/abstract/flop_tree_ablation.py'
       - 'gto/abstract/flop_reach_adapter.py'
       - 'gto/abstract/frozen_flop_reach.py'
+      - 'gto/abstract/frozen_flop_ablation.py'
       - 'tests/test_flop_tree_ablation.py'
       - 'tests/test_flop_reach_adapter.py'
       - 'tests/test_frozen_flop_reach.py'
+      - 'tests/test_frozen_flop_ablation.py'
       - '.github/workflows/gto-flop-ablation.yml'
   workflow_dispatch:
 permissions:
@@ -26,4 +28,4 @@ jobs:
         with:
           python-version: '3.11'
       - name: Validate independent flop model
-        run: python -m unittest tests/test_flop_tree_ablation.py tests/test_flop_reach_adapter.py tests/test_frozen_flop_reach.py -v
+        run: python -m unittest tests/test_flop_tree_ablation.py tests/test_flop_reach_adapter.py tests/test_frozen_flop_reach.py tests/test_frozen_flop_ablation.py -v
