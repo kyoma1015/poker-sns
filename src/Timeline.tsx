@@ -1047,6 +1047,10 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       // cannot start its audio pipeline without a separate tap, offer retry.
       setPendingMovConversion(null)
     }
+    if (!isMovVideo(file) && preparedMovAudioRef.current) {
+      void preparedMovAudioRef.current.close().catch(() => {})
+      preparedMovAudioRef.current = null
+    }
     let selectedFile = file
     const conversion = new AbortController()
     videoConversionAbortRef.current = conversion
@@ -1061,6 +1065,10 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         selectedFile = await compressOversizedVideo(selectedFile)
       }
     } catch (error) {
+      if (preparedMovAudioRef.current) {
+        void preparedMovAudioRef.current.close().catch(() => {})
+        preparedMovAudioRef.current = null
+      }
       if (selection === videoSelectionRef.current) {
         if (isMovVideo(file) && !fromExplicitGesture && !conversion.signal.aborted) {
           setPendingMovConversion(file)
