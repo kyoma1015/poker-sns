@@ -58,7 +58,7 @@ export async function inspectCloudVideoRecovery(objectPath: string, signal?: Abo
       (r.post_id!==null && (typeof r.post_id!=='string'||!POST_UUID.test(r.post_id))) ||
       (r.state==='published' && !r.post_id))
     throw new Error('復旧照合の安全性を確認できません。')
-  return r as Awaited<ReturnType<typeof inspectCloudVideoRecovery>>
+  return r as {state:'published'|'stored_unpublished'|'expired_empty'|'reserved_empty'|'conflict';allow_resume:false;expired:boolean;storage_present:boolean;post_id:string|null}
 }
 
 /** Recovery reuses the existing reserved private object; no Storage upload or new key. */
