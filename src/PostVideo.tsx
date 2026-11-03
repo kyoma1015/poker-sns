@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { loadAuthorizedVideo, VIDEO_SERVER_ENABLED } from './videoApi'
 import { supabase } from './supabase'
 
@@ -9,6 +9,7 @@ export default function PostVideo({ postId }: { postId: string }) {
   const [poster, setPoster] = useState('')
   const [playing, setPlaying] = useState(false)
   const [playbackError, setPlaybackError] = useState('')
+  const posterSeekAttempts = useRef(0)
   useEffect(() => {
     if (!VIDEO_SERVER_ENABLED) { setUrl(''); setError('動画再生は安全なサーバー接続の準備中です。'); return }
     let active = true
@@ -34,6 +35,7 @@ export default function PostVideo({ postId }: { postId: string }) {
     })
     setUrl('')
     setPoster('')
+    posterSeekAttempts.current = 0
     setPlaying(false)
     setPlaybackError('')
     setError('')
@@ -92,7 +94,18 @@ export default function PostVideo({ postId }: { postId: string }) {
           if (!context) return
           context.drawImage(video, 0, 0, canvas.width, canvas.height)
           const pixels = context.getImageData(0, 0, Math.min(canvas.width, 8), Math.min(canvas.height, 8)).data
-          if (!pixels.some((value, index) => index % 4 !== 3 && value > 12)) return
+          if (!pixels.some((value, index) => index % 4 !== 3 && value > 12)) {
+            // On iPhone Safari a seeked event may precede a paintable frame.
+            // Try later frames rather than leaving the posted video black forever.
+            const next = [0.8, 1.6, 2.8][posterSeekAttempts.current++]
+            if (next !== undefined && Number.isFinite(video.duration) && video.duration > 0.1) {
+              const time = Math.min(next, video.duration * 0.8)
+              if (time > video.currentTime + 0.05) {
+                try { video.currentTime = time } catch { /* native playback remains available */ }
+              }
+            }
+            return
+          }
           setPoster(canvas.toDataURL('image/jpeg', 0.72))
         } catch { /* Native video preview and playback remain available. */ }
       }}
