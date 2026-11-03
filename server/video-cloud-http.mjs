@@ -20,6 +20,19 @@ return async function handleCloudVideo(req,res) {
  const uid=await identity()
  const path=body.object_path
  if(typeof path!=='string'||!new RegExp('^'+uid+'/[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}[.](mp4|webm|mov)$').test(path))return res.status(403).end()
+ if(body.action==='recovery_inspect'){
+  if(Object.keys(body).length!==2)return res.status(400).end()
+  stage='recovery_inspect'
+  const result=await client.rpc('video_cloud_recovery_inspect_v1',{p_path:path})
+  if(result.error||!result.data||result.data.path!==path||
+    result.data.allow_resume!==false||
+    !['published','stored_unpublished','expired_empty','reserved_empty','conflict'].includes(result.data.state))
+    return res.status(409).json({error:'recovery_inspection_unavailable'})
+  if(await identity()!==uid)return res.status(401).end()
+  return res.status(200).json({state:result.data.state,allow_resume:false,
+    expired:result.data.expired===true,storage_present:result.data.storage_present===true,
+    post_id:typeof result.data.post_id==='string'?result.data.post_id:null})
+ }
  if(body.action==='reserve'){
  const r=await client.rpc('video_cloud_reserve',{p_path:path,p_sha256:body.sha256,p_size:body.size,p_mime:body.type,p_content:body.content})
  if(r.error)return res.status(409).end()
