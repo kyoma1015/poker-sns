@@ -295,7 +295,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const videoRequestAbortRef = useRef<AbortController | null>(null)
   const postSubmitInFlightRef = useRef(false)
   const [videoPreview, setVideoPreview] = useState<string | null>(null)
-  useEffect(() => { if (!videoFile) { setVideoPreview(null); return }; const url = URL.createObjectURL(videoFile); setVideoPreview(url); return () => URL.revokeObjectURL(url) }, [videoFile])
+  const [videoPreviewPoster, setVideoPreviewPoster] = useState<string | null>(null)
+  useEffect(() => { setVideoPreviewPoster(null); if (!videoFile) { setVideoPreview(null); return }; const url = URL.createObjectURL(videoFile); setVideoPreview(url); return () => URL.revokeObjectURL(url) }, [videoFile])
   const [imageFiles, setImageFiles] = useState<File[]>([])
   const [imagePreviews, setImagePreviews] = useState<string[]>([])
   const [selectedDiagnosis, setSelectedDiagnosis] = useState<{ result_id: string; animal_name_ja: string; catchphrase: string; result_type_key: string; completed_at: string } | null>(null)
@@ -2570,7 +2571,34 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       {selectedResult?.type === 'cash' && renderCashResultCard(previewPost)}
       {selectedDiagnosis && <div style={{ border: '1px solid #92733a', borderRadius: 12, padding: 16, color: '#f6e5bf' }}>♧ 自己診断：{playerTypeEmoji[selectedDiagnosis.result_type_key]} {selectedDiagnosis.animal_name_ja}<div style={{ fontSize: 12 }}>{selectedDiagnosis.catchphrase}</div></div>}
       {styleSnapshot && renderStyleSnapshot(styleSnapshot)}
-      {videoPreview && <video controls preload="metadata" src={videoPreview} style={{ width: '100%', maxHeight: 360, borderRadius: 10 }} />}
+      {videoPreview && <div style={{ position: 'relative' }}>
+        <video key={videoPreview} controls playsInline preload="auto" src={videoPreview} poster={videoPreviewPoster || undefined}
+          onLoadedMetadata={event => {
+            const video = event.currentTarget
+            if (Number.isFinite(video.duration) && video.duration > 0.3) {
+              try { video.currentTime = Math.min(0.4, video.duration / 2) } catch { /* native video fallback */ }
+            }
+          }}
+          onSeeked={event => {
+            if (videoPreviewPoster) return
+            const video = event.currentTarget
+            if (!video.videoWidth || !video.videoHeight || video.readyState < 2) return
+            try {
+              const canvas = document.createElement('canvas')
+              const scale = Math.min(1, 640 / Math.max(video.videoWidth, video.videoHeight))
+              canvas.width = Math.max(1, Math.round(video.videoWidth * scale))
+              canvas.height = Math.max(1, Math.round(video.videoHeight * scale))
+              const context = canvas.getContext('2d')
+              if (!context) return
+              context.drawImage(video, 0, 0, canvas.width, canvas.height)
+              const pixels = context.getImageData(0, 0, Math.min(8, canvas.width), Math.min(8, canvas.height)).data
+              if (!pixels.some((value, index) => index % 4 !== 3 && value > 16)) return
+              setVideoPreviewPoster(canvas.toDataURL('image/jpeg', 0.76))
+            } catch { /* preserve native preview and playback */ }
+          }}
+          style={{ width: '100%', maxHeight: 360, borderRadius: 10 }} />
+        {!videoPreviewPoster && <span style={{ position: 'absolute', right: 8, top: 8, background: '#222', color: '#ddd', padding: '4px 7px', borderRadius: 6, fontSize: 11, pointerEvents: 'none' }}>プレビューを準備中</span>}
+      </div>}
       {pendingVideo && <div style={{ padding: 12, border: '1px solid #675331', borderRadius: 10, background: '#211c15' }}>
         <p role="status" style={{ fontSize: 12, color: '#e6c27a', margin: '0 0 8px' }}>動画はアップロード済みです。前回と同じ内容で投稿を再試行できます。動画の再選択は不要です。</p>
         <button type="button" disabled={isPosting} onClick={() => { if (videoSubmitInFlightRef.current) return; setContent(pendingVideo.content); setMessage('投稿内容を元に戻しました。「投稿する」から再試行してください。') }} style={{ width: 'auto', padding: '7px 10px', borderRadius: 8, border: '1px solid #675331', background: '#30271b', color: '#f0d8ac', fontSize: 12 }}>投稿内容を元に戻す</button>
