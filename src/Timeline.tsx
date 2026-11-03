@@ -181,7 +181,6 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   // Feed refreshes own the general message; they must not erase recovery's stop reason.
   const [videoRecoveryNotice, setVideoRecoveryNotice] = useState('')
   const [videoFile, setVideoFile] = useState<File | null>(null)
-  const [pendingMovConversion, setPendingMovConversion] = useState<File | null>(null)
   // Retain the exact immutable object path after an uncertain finalize result.
   type PendingVideo = { path: string; owner: string; content: string }
   const [pendingVideo, setPendingVideo] = useState<PendingVideo | null>(null)
@@ -854,7 +853,6 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
   const beginAttachmentSelection = () => {
     videoConversionAbortRef.current?.abort()
-    setPendingMovConversion(null)
     setMessage('')
     setAttachmentBusy(false)
     setResultsLoading(false)
@@ -876,8 +874,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         setPosts([])
         setCurrentUserId('')
         setVideoFile(null)
-        setPendingMovConversion(null)
-        setVideoRecoveryBlocked(next ? hasVideoTransferJournal(next) : false)
+            setVideoRecoveryBlocked(next ? hasVideoTransferJournal(next) : false)
         setVideoRecoveryNotice('')
         setImageFiles([])
         setSelectedResult(null)
@@ -1036,17 +1033,12 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     }
   }
 
-  const chooseVideo = async (file: File | undefined, fromExplicitGesture = false) => {
+  const chooseVideo = async (file: File | undefined) => {
     if (!file) return
     if (videoRecoveryBlocked) { setMessage(VIDEO_TRANSFER_RECOVERY_MESSAGE); return }
     const selection = beginAttachmentSelection()
     if (pendingVideoRef.current || videoSubmitInFlightRef.current) { setMessage('保留中の動画を先に再試行してください。'); return }
     if (imageFiles.length || selectedResult || selectedDiagnosis || styleSnapshot || interactiveMode !== 'normal') { setMessage('動画は画像・戦績・診断・アンケートと同時に添付できません。'); return }
-    if (isMovVideo(file) && !fromExplicitGesture) {
-      // Begin conversion directly from the file-selection gesture. If Safari
-      // cannot start its audio pipeline without a separate tap, offer retry.
-      setPendingMovConversion(null)
-    }
     if (!isMovVideo(file) && preparedMovAudioRef.current) {
       void preparedMovAudioRef.current.close().catch(() => {})
       preparedMovAudioRef.current = null
@@ -1070,10 +1062,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         preparedMovAudioRef.current = null
       }
       if (selection === videoSelectionRef.current) {
-        if (isMovVideo(file) && !fromExplicitGesture && !conversion.signal.aborted) {
-          setPendingMovConversion(file)
-          setMessage(`自動変換を完了できませんでした：${error instanceof Error ? error.message : '原因不明'} 下の「MOV変換を開始」で再試行してください。`)
-        } else setMessage(error instanceof Error ? error.message : '動画の圧縮に失敗しました。')
+        setMessage(error instanceof Error ? `自動変換に失敗しました：${error.message} 動画をMP4形式に変換して選び直してください。` : '動画の圧縮に失敗しました。')
       }
       return
     }
@@ -2840,11 +2829,6 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           {renderInteractiveFields()}
           <input ref={imageInputRef} type="file" accept="image/jpeg,image/png,image/webp" multiple hidden onChange={e => { chooseImages(e.target.files); e.target.value = '' }} />
           <input ref={videoInputRef} type="file" accept="video/mp4,video/webm,video/quicktime,.mov" hidden onChange={e => { if (!e.target.files?.[0]) { void preparedMovAudioRef.current?.close().catch(() => {}); preparedMovAudioRef.current = null } void chooseVideo(e.target.files?.[0]); e.target.value = '' }} />
-          {pendingMovConversion && <div role="group" aria-label="MOV変換の確認" style={{ padding: 12, marginTop: 10, border: '1px solid #555', borderRadius: 10, background: '#202020' }}>
-            <p style={{ color: '#eee', fontSize: 13, margin: '0 0 10px' }}>MOVを選択しました。変換は端末内で行います。画面を開いたまま操作してください。</p>
-            <button type="button" onClick={() => { if (pendingMovConversion) void chooseVideo(pendingMovConversion, true) }} style={{ background: '#444', color: '#fff', border: '1px solid #777', borderRadius: 9, padding: '10px 14px', fontWeight: 700 }}>▶ MOV変換を開始</button>
-            <button type="button" onClick={() => { beginAttachmentSelection(); setPendingMovConversion(null) }} style={{ background: 'transparent', color: '#ddd', border: '1px solid #555', borderRadius: 9, padding: '10px 14px', marginLeft: 8 }}>キャンセル</button>
-          </div>}
           {attachmentsOpen && renderAttachmentPicker()}
           {renderSelectedResultPreview()}
         </section>
@@ -3098,11 +3082,6 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
             <textarea autoFocus placeholder="ポーカーについて何を投稿する？" maxLength={500} value={content} onChange={e => setContent(e.target.value)} style={{ width: '100%', minHeight: 180, padding: 8, background: 'transparent', color: '#fff', border: 'none', fontSize: 17, resize: 'vertical' }}/>
             {renderPostModeButtons()}
             {renderInteractiveFields()}
-            {pendingMovConversion && <div role="group" aria-label="MOV変換の確認" style={{ padding: 12, marginTop: 10, border: '1px solid #555', borderRadius: 10, background: '#202020' }}>
-              <p style={{ color: '#eee', fontSize: 13, margin: '0 0 10px' }}>MOVを選択しました。変換は端末内で行います。画面を開いたまま操作してください。</p>
-              <button type="button" onClick={() => { if (pendingMovConversion) void chooseVideo(pendingMovConversion, true) }} style={{ background: '#444', color: '#fff', border: '1px solid #777', borderRadius: 9, padding: '10px 14px', fontWeight: 700 }}>▶ MOV変換を開始</button>
-              <button type="button" onClick={() => { beginAttachmentSelection(); setPendingMovConversion(null) }} style={{ background: 'transparent', color: '#ddd', border: '1px solid #555', borderRadius: 9, padding: '10px 14px', marginLeft: 8 }}>キャンセル</button>
-            </div>}
             {attachmentsOpen && renderAttachmentPicker()}
             {renderSelectedResultPreview()}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 18 }}><span style={{ color: '#888', fontSize: 12 }}>{content.length}/500</span><button type="button" disabled={isPosting || !canSubmitPost} onClick={handlePost} style={{ width: 'auto', borderRadius: 99, background: '#fff', color: '#000', padding: '10px 24px', fontWeight: 800 }}>{isPosting ? '投稿中...' : '投稿する'}</button></div>
