@@ -10,6 +10,7 @@ import { compressOversizedVideo } from './videoCompression'
 import { convertMovToMp4, isMovVideo } from './videoMovConversion'
 import { hideVideoPost, finalizeUploadedVideo, VIDEO_SERVER_ENABLED } from './videoApi'
 import PostVideo from './PostVideo'
+import { rememberLocalVideoPoster } from './videoPosterCache'
 
 import { supabase } from './supabase'
 import { usePullToRefresh } from './usePullToRefresh'
@@ -1215,6 +1216,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         if (VIDEO_RECOVERY_CANDIDATE_ENABLED) await finalizeRecoveredVideoCandidate(path, content.trim(), requestController.signal)
         else await finalizeUploadedVideo(path, content.trim(), requestController.signal)
         if (!isCurrent()) return
+        // Persist the already verified pre-post thumbnail for this viewer/device.
+        // No new Storage writes or public URLs; the cache is scoped by JWT user and object path.
+        if (videoPreviewPoster) rememberLocalVideoPoster(user.id, path, videoPreviewPoster)
         pendingVideoRef.current = null
         setPendingVideo(null)
         try { sessionStorage.removeItem('poker-id-pending-video-v1') } catch { /* best effort */ }
@@ -3671,7 +3675,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
                     )}
 
                     {post.style_snapshot && renderStyleSnapshot(post.style_snapshot)}
-                    {post.video_path && <PostVideo postId={post.id} />}
+                    {post.video_path && <PostVideo postId={post.id} videoPath={post.video_path} />}
                     {Array.isArray(post.image_urls) && post.image_urls.length > 0 && <div style={{ display: 'grid', gridTemplateColumns: post.image_urls.length > 1 ? 'repeat(2,minmax(0,1fr))' : '1fr', gap: 5, margin: '10px 0 14px' }}>{post.image_urls.map((url, i) => <a key={`${post.id}-${i}`} href={url} target="_blank" rel="noopener noreferrer"><img src={url} alt={`投稿画像${i+1}`} loading="lazy" style={{ width: '100%', maxHeight: 460, objectFit: 'cover', borderRadius: 10 }}/></a>)}</div>}
                     {/* アクション */}
                       <style>{`
