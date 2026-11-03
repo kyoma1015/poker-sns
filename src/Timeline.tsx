@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { validateVideo, uploadPostVideo, MAX_VIDEO_BYTES } from './videoUpload'
 import { compressOversizedVideo } from './videoCompression'
-import { convertMovToMp4, isMovVideo } from './videoMovConversion'
+import { convertMovToMp4, isMovVideo, prepareMovAudioContext } from './videoMovConversion'
 import { hideVideoPost, finalizeUploadedVideo, VIDEO_SERVER_ENABLED } from './videoApi'
 import PostVideo from './PostVideo'
 import { rememberLocalVideoPoster } from './videoPosterCache'
@@ -172,6 +172,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const [resultsLoading, setResultsLoading] = useState(false)
   const imageInputRef = useRef<HTMLInputElement>(null)
   const videoInputRef = useRef<HTMLInputElement>(null)
+  const preparedMovAudioRef = useRef<AudioContext | null>(null)
   const videoSelectionRef = useRef(0)
   const videoConversionAbortRef = useRef<AbortController | null>(null)
   const composerLifetimeRef = useRef(0)
@@ -966,7 +967,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       {attachmentScreen === 'menu' ? <>
         <div style={{ fontSize: 12, color: '#aaa', marginBottom: 10 }}>添付するものを選択</div>
         <button type="button" style={optionStyle} onClick={() => { imageInputRef.current?.click(); setAttachmentsOpen(false) }}>▧　画像を添付（最大4枚・各5MB）</button>
-        <button type="button" style={optionStyle} onClick={() => { videoInputRef.current?.click(); setAttachmentsOpen(false) }}>▶　動画を添付（最大30秒・20MB）</button>
+        <button type="button" style={optionStyle} onClick={() => { void preparedMovAudioRef.current?.close().catch(() => {}); preparedMovAudioRef.current = prepareMovAudioContext(); videoInputRef.current?.click(); setAttachmentsOpen(false) }}>▶　動画を添付（最大30秒・20MB）</button>
         <button type="button" style={optionStyle} onClick={() => { void loadDiagnoses() }}>♧　自己診断を添付　›</button>
         <button type="button" style={optionStyle} onClick={() => { void loadStyleSnapshot() }}>♙　自分への他者評価を添付（3人以上）</button>
         <button type="button" style={optionStyle} onClick={() => setAttachmentScreen('results')}>♠　戦績を添付　›</button>
@@ -1052,7 +1053,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     try {
       if (isMovVideo(file)) {
         setMessage('MOVを端末内でMP4へ変換しています。画面を開いたままお待ちください。変換後は音声と映像を確認してください。')
-        selectedFile = await convertMovToMp4(file, conversion.signal)
+        selectedFile = await convertMovToMp4(file, conversion.signal, preparedMovAudioRef.current)
+        preparedMovAudioRef.current = null
       }
       if (selectedFile.size > MAX_VIDEO_BYTES) {
         setMessage('動画を圧縮しています。完了までお待ちください。')
@@ -2829,7 +2831,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
           {renderInteractiveFields()}
           <input ref={imageInputRef} type="file" accept="image/jpeg,image/png,image/webp" multiple hidden onChange={e => { chooseImages(e.target.files); e.target.value = '' }} />
-          <input ref={videoInputRef} type="file" accept="video/mp4,video/webm,video/quicktime,.mov" hidden onChange={e => { void chooseVideo(e.target.files?.[0]); e.target.value = '' }} />
+          <input ref={videoInputRef} type="file" accept="video/mp4,video/webm,video/quicktime,.mov" hidden onChange={e => { if (!e.target.files?.[0]) { void preparedMovAudioRef.current?.close().catch(() => {}); preparedMovAudioRef.current = null } void chooseVideo(e.target.files?.[0]); e.target.value = '' }} />
           {pendingMovConversion && <div role="group" aria-label="MOV変換の確認" style={{ padding: 12, marginTop: 10, border: '1px solid #555', borderRadius: 10, background: '#202020' }}>
             <p style={{ color: '#eee', fontSize: 13, margin: '0 0 10px' }}>MOVを選択しました。変換は端末内で行います。画面を開いたまま操作してください。</p>
             <button type="button" onClick={() => { if (pendingMovConversion) void chooseVideo(pendingMovConversion, true) }} style={{ background: '#444', color: '#fff', border: '1px solid #777', borderRadius: 9, padding: '10px 14px', fontWeight: 700 }}>▶ MOV変換を開始</button>
