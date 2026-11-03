@@ -8,8 +8,17 @@ export function isMovVideo(file: Pick<File, 'name' | 'type'>): boolean {
   return file.type === 'video/quicktime' || /\.mov$/i.test(file.name)
 }
 
-/** Must start from the file-picker gesture so Safari can resume its audio context. */
-export async function convertMovToMp4(file: File, signal?: AbortSignal): Promise<File> {
+/** Prefer an audio context resumed by the attachment-button gesture before Safari opens the picker. */
+export function prepareMovAudioContext(): AudioContext | null {
+  if (typeof AudioContext === 'undefined') return null
+  try {
+    const audio = new AudioContext()
+    void audio.resume().catch(() => {})
+    return audio
+  } catch { return null }
+}
+
+export async function convertMovToMp4(file: File, signal?: AbortSignal, preparedAudio?: AudioContext | null): Promise<File> {
   signal?.throwIfAborted()
   if (!isMovVideo(file)) return file
   if (file.size <= 0 || file.size > MAX_BYTES) throw new Error('変換前のMOVも20MiB以内にしてください。' + MOV_CONVERSION_HELP)
@@ -18,9 +27,9 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal): Promise
   const canvas = document.createElement('canvas')
   if (!mime) throw new Error('SafariがMP4動画の録画形式に対応していません。' + MOV_CONVERSION_HELP)
   if (typeof canvas.captureStream !== 'function') throw new Error('Safariが画面映像の変換に対応していません。' + MOV_CONVERSION_HELP)
-  const audio = new AudioContext()
-  // Do this before any await; no microphone permission or speaker output is needed.
-  const resumed = audio.resume().then(() => true, () => false)
+  const audio = preparedAudio && preparedAudio.state !== 'closed' ? preparedAudio : new AudioContext()
+  // A prepared context may already be running from the initial attachment tap.
+  const resumed = audio.state === 'running' ? Promise.resolve(true) : audio.resume().then(() => true, () => false)
   const video = document.createElement('video')
   video.playsInline = true
   video.preload = 'auto'
