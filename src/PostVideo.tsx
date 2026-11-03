@@ -4,7 +4,7 @@ import { supabase } from './supabase'
 import { readLocalVideoPoster } from './videoPosterCache'
 
 /** Playback is gated until the server verifies JWT and post visibility per request. */
-export default function PostVideo({ postId, videoPath }: { postId: string; videoPath: string }) {
+export default function PostVideo({ postId, videoPath }: { postId: string; videoPath: string | null }) {
   const [url, setUrl] = useState('')
   const [error, setError] = useState('')
   const [poster, setPoster] = useState('')
@@ -58,7 +58,7 @@ export default function PostVideo({ postId, videoPath }: { postId: string; video
       objectUrl = value
       if (active) {
         // Read only after JWT-backed authorization succeeds; never grant media access via cache.
-        setPoster(readLocalVideoPoster(viewerId || '', videoPath))
+        setPoster(readLocalVideoPoster(viewerId || '', videoPath || ''))
         setUrl(value)
       }
       else URL.revokeObjectURL(value)
