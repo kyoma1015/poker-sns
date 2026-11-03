@@ -37,6 +37,8 @@ begin
     'expired',v_res.expires_at<=clock_timestamp(),
     'path',p_path,
     'post_id',v_post.id,
+    'sha256',v_res.sha256,
+    'size',v_res.size,
     'storage_present',v_object.id is not null
   );
 end $$;
