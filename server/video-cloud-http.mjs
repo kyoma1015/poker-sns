@@ -31,7 +31,9 @@ return async function handleCloudVideo(req,res) {
   if(await identity()!==uid)return res.status(401).end()
   return res.status(200).json({state:result.data.state,allow_resume:false,
     expired:result.data.expired===true,storage_present:result.data.storage_present===true,
-    post_id:typeof result.data.post_id==='string'?result.data.post_id:null})
+    post_id:typeof result.data.post_id==='string'?result.data.post_id:null,
+    sha256:typeof result.data.sha256==='string'?result.data.sha256:null,
+    size:Number.isSafeInteger(result.data.size)?result.data.size:null})
  }
  if(body.action==='reserve'){
  const r=await client.rpc('video_cloud_reserve',{p_path:path,p_sha256:body.sha256,p_size:body.size,p_mime:body.type,p_content:body.content})
