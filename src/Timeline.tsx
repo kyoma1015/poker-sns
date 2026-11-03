@@ -1,6 +1,6 @@
 import { withVideoRecoveryDeadline } from './videoRecoveryDeadline'
 import { VIDEO_RECOVERY_CANDIDATE_ENABLED, inspectVideoRecoveryCandidate, finalizeRecoveredVideoCandidate } from './videoRecoveryCandidate'
-import { handOffVideoTransfer, hasVideoTransferJournal, readVideoTransferHint, finishRecoveredVideoTransfer, VIDEO_TRANSFER_RECOVERY_MESSAGE, VideoTransferRecoveryRequiredError } from './videoTransferJournal'
+import { handOffVideoTransfer, hasVideoTransferJournal, readVideoTransferHint, finishRecoveredVideoTransfer, discardProvenExpiredVideoTransfer, VIDEO_TRANSFER_RECOVERY_MESSAGE, VideoTransferRecoveryRequiredError } from './videoTransferJournal'
 import { createPollRequest, pollDisplayResult } from './interactiveRequests'
 import { useEffect, useRef, useState } from 'react'
 
@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { validateVideo, uploadPostVideo, MAX_VIDEO_BYTES } from './videoUpload'
 import { compressOversizedVideo } from './videoCompression'
 import { convertMovToMp4, isMovVideo, prepareMovAudioContext } from './videoMovConversion'
-import { hideVideoPost, finalizeUploadedVideo, VIDEO_SERVER_ENABLED } from './videoApi'
+import { hideVideoPost, finalizeUploadedVideo, inspectCloudVideoRecovery, VIDEO_SERVER_ENABLED } from './videoApi'
 import PostVideo from './PostVideo'
 import { rememberLocalVideoPoster } from './videoPosterCache'
 
@@ -180,6 +180,31 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const [videoRecoveryBlocked, setVideoRecoveryBlocked] = useState(false)
   // Feed refreshes own the general message; they must not erase recovery's stop reason.
   const [videoRecoveryNotice, setVideoRecoveryNotice] = useState('')
+  const [recoveryChecking, setRecoveryChecking] = useState(false)
+  const confirmPublishedVideoRecovery = async () => {
+    if (recoveryChecking || videoSubmitInFlightRef.current) return
+    setRecoveryChecking(true)
+    try {
+      const {data:{user},error}=await supabase.auth.getUser()
+      if(error||!user) throw new Error('本人認証を確認できません。')
+      const hint=readVideoTransferHint(user.id)
+      const proof=await inspectCloudVideoRecovery(hint.path)
+      if(proof.state!=='published'||proof.allow_resume!==false||!proof.storage_present||
+        proof.sha256!==hint.sha256||proof.size!==hint.size||!proof.post_id)
+        throw new Error('投稿完了と元ファイルの一致を証明できません。')
+      // The journal must remain byte-for-byte unchanged since the authenticated proof.
+      discardProvenExpiredVideoTransfer(user.id,hint.path,hint.raw)
+      setVideoRecoveryBlocked(false)
+      setVideoRecoveryNotice('')
+      setMessage('前回の動画は投稿済みと確認できました。新しい投稿を開始できます。')
+      setComposeOpen(false)
+      await loadPosts()
+    } catch(error) {
+      setVideoRecoveryBlocked(true)
+      setVideoRecoveryNotice(error instanceof Error?error.message:'復旧状態を確認できません。送信停止を維持します。')
+    } finally {setRecoveryChecking(false)}
+  }
+
   const [videoFile, setVideoFile] = useState<File | null>(null)
   // Retain the exact immutable object path after an uncertain finalize result.
   type PendingVideo = { path: string; owner: string; content: string }
@@ -3087,6 +3112,11 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 18 }}><span style={{ color: '#888', fontSize: 12 }}>{content.length}/500</span><button type="button" disabled={isPosting || !canSubmitPost} onClick={handlePost} style={{ width: 'auto', borderRadius: 99, background: '#fff', color: '#000', padding: '10px 24px', fontWeight: 800 }}>{isPosting ? '投稿中...' : '投稿する'}</button></div>
             {message && <div style={{ color: '#ccc', marginTop: 10, fontSize: 12 }}>{message}</div>}
             {videoRecoveryNotice && <div role="status" style={{ color: '#ccc', marginTop: 10, fontSize: 12 }}>{videoRecoveryNotice}</div>}
+            {videoRecoveryBlocked && <button type="button" disabled={recoveryChecking || isPosting} onClick={() => { void confirmPublishedVideoRecovery() }}
+              style={{ marginTop: 10, padding: '9px 14px', borderRadius: 9, border: '1px solid #666', background: '#292929', color: '#fff', fontWeight: 700 }}>
+              {recoveryChecking?'前回の投稿を照合中...':'前回の投稿済み状態を確認'}
+            </button>}
+
           </div>
         </div>}
         {/* 投稿一覧 */}
