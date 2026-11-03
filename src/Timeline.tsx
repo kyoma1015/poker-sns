@@ -192,8 +192,23 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       if(proof.state!=='published'||proof.allow_resume!==false||!proof.storage_present||
         proof.sha256!==hint.sha256||proof.size!==hint.size||!proof.post_id)
         throw new Error('投稿完了と元ファイルの一致を証明できません。')
+      // Recheck the current account before acting on a response from an earlier session.
+      const {data:{user:currentUser},error:currentError}=await supabase.auth.getUser()
+      if(currentError||currentUser?.id!==user.id) throw new Error('照合中にログイン状態が変わりました。')
       // The journal must remain byte-for-byte unchanged since the authenticated proof.
       discardProvenExpiredVideoTransfer(user.id,hint.path,hint.raw)
+      // Clear only the matching local pending pointer after proven publication.
+      const pendingRaw=sessionStorage.getItem('poker-id-pending-video-v1')
+      if(pendingRaw) {
+        try {
+          const pending=JSON.parse(pendingRaw)
+          if(pending.owner===user.id&&pending.path===hint.path&&
+            sessionStorage.getItem('poker-id-pending-video-v1')===pendingRaw)
+            sessionStorage.removeItem('poker-id-pending-video-v1')
+        } catch { /* An unrelated or malformed pointer is never deleted. */ }
+      }
+      pendingVideoRef.current=null
+      setPendingVideo(null)
       setVideoRecoveryBlocked(false)
       setVideoRecoveryNotice('')
       setMessage('前回の動画は投稿済みと確認できました。新しい投稿を開始できます。')
