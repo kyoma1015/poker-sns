@@ -1061,7 +1061,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       if (selection === videoSelectionRef.current) {
         if (isMovVideo(file) && !fromExplicitGesture && !conversion.signal.aborted) {
           setPendingMovConversion(file)
-          setMessage('自動変換を開始できませんでした。Safariの制限により、下の「MOV変換を開始」を押して再試行してください。')
+          setMessage(`自動変換を完了できませんでした：${error instanceof Error ? error.message : '原因不明'} 下の「MOV変換を開始」で再試行してください。`)
         } else setMessage(error instanceof Error ? error.message : '動画の圧縮に失敗しました。')
       }
       return
