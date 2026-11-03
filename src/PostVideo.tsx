@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { loadAuthorizedVideo, VIDEO_SERVER_ENABLED } from './videoApi'
 import { supabase } from './supabase'
+import { readLocalVideoPoster } from './videoPosterCache'
 
 /** Playback is gated until the server verifies JWT and post visibility per request. */
-export default function PostVideo({ postId }: { postId: string }) {
+export default function PostVideo({ postId, videoPath }: { postId: string; videoPath: string }) {
   const [url, setUrl] = useState('')
   const [error, setError] = useState('')
   const [poster, setPoster] = useState('')
@@ -55,13 +56,17 @@ export default function PostVideo({ postId }: { postId: string }) {
     })().then(value => {
       if (!value) return
       objectUrl = value
-      if (active) setUrl(value)
+      if (active) {
+        // Read only after JWT-backed authorization succeeds; never grant media access via cache.
+        setPoster(readLocalVideoPoster(viewerId || '', videoPath))
+        setUrl(value)
+      }
       else URL.revokeObjectURL(value)
     }).catch(() => {
       if (active) setError('動画を読み込めません。権限を確認してください。')
     })
     return () => { active = false; subscription.unsubscribe(); if (objectUrl) URL.revokeObjectURL(objectUrl) }
-  }, [postId])
+  }, [postId, videoPath])
   const capturePoster = (video: HTMLVideoElement) => {
     if (poster || playing || !video.videoWidth || !video.videoHeight || video.readyState < 2) return
     try {
