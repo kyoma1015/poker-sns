@@ -750,6 +750,7 @@
   "schema": "pokerid-model-gap-preregister-v1",
   "selection": "validation only; candidates require stagewise arm MAE and one-sided greedy regret loss nonincrease and global max error nonincrease vs raw+1e-9; choose minimum weighted mean MAE among eligible including raw; fixed order ties; freeze before final",
   "sensitivity": "base own/public23partition retained to isolate assumptions; public stack/SPR coordinates renamed on stack changes; frozen base policy evaluated then reoptimized eachvariant at4096steps; extra arm prior0; all-in bet disables raises and follows call/fold bit; counterfactual stacks/sizes/ranges NOT formal specs",
+  "sensitivity_initialization": "Each variant starts from SAME frozen probability-transfer prior (extra arm0),4096steps. Baseline response is evaluated frozen in each changed model. Base generic4arm is checked against preserved4096kernel. Clarified before first study fit/evaluation.",
   "sensitivity_target_nashconv_bb": 0.1,
   "sensitivity_variants": [
     {

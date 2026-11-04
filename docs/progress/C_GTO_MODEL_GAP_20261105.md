@@ -11,3 +11,5 @@ Reference shares existing exact equity matrix except independent rank subset; do
 Only new GTO research sources/tests/docs and active workflow. No frozen CFR strategy/source,8ranges,1352rows,staticdemo,main,prodDB/Storage/Vercel,otherPR,SSO,fees changes. Formal0/12, externalNOT PERFORMED, real-game errorUNKNOWN.
 
 Resume: implement independent reference, chance moments, sensitivity game and readonly adapter; test; fit calibrations train and choose validation; commit lock; final; preserve negative results; commit/push FF and inspect new-head CI. TotalPASS UNKNOWN if logs timeout. AUTO-RESUME absent.
+
+Implementation gate before first fit:18tests PASS. Initial small test fixture incorrectly called a full1081opponent-prior helper with4toycombos; fixed the fixture and retained the production guard. Independent990rank subset, ledger/sign checks, physical chance, generic4vsoldresponse, new action gap toy and readonly actual root attribution pass. No scientific final evaluated yet.

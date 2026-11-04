@@ -1,4 +1,4 @@
-name: GTO conditional-value learning and bounded response verification
+name: GTO independent model-gap and true board-chance verification
 on:
   push:
     branches: ['codex/c-native-hand169-bridge-20261023']
@@ -6,6 +6,9 @@ on:
       - 'gto/abstract/range_*'
       - 'gto/abstract/factorial_*'
       - 'gto/abstract/value_*'
+      - 'gto/abstract/gap_*'
+      - 'tests/test_gap_decomposition.py'
+      - 'docs/qa/model-gap-20261105/**'
       - 'tests/test_value_response.py'
       - 'docs/qa/value-response-20261104/**'
       - 'tests/test_factorial_generalization.py'
@@ -59,13 +62,14 @@ jobs:
         run: python -B -m unittest tests.test_factorial_generalization -v
       - name: Conditional posterior EV and independent response update tests
         run: python -B -m unittest tests.test_value_response -v
-      - name: Reproduce train and validation selection without final boards
+      - name: Independent cash ledger, chance moments and readonly adapter tests
+        run: python -B -m unittest tests.test_gap_decomposition -v
+      - name: Reproduce independent training calibration and validation-only selection
         run: |
-          python -B -m gto.abstract.value_study --phase select --build-dir "$RUNNER_TEMP/value-select" --output "$RUNNER_TEMP/value-selection.json"
-          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/value-selection.json" --expected docs/qa/value-response-20261104/selection.json
-      - name: Locked final inference with fixed declared local response budget
+          python -B -m gto.abstract.gap_study --phase select --build-dir "$RUNNER_TEMP/gap-select" --chance-output "$RUNNER_TEMP/board-chance.json" --output "$RUNNER_TEMP/gap-selection.json"
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/board-chance.json" --expected docs/qa/model-gap-20261105/board-chance.json
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/gap-selection.json" --expected docs/qa/model-gap-20261105/selection.json
+      - name: Locked final model sensitivities and readonly preflop attribution
         run: |
-          python -B -m gto.abstract.value_study --phase final --build-dir "$RUNNER_TEMP/value-final" --output "$RUNNER_TEMP/value-final.json"
-          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/value-final.json" --expected docs/qa/value-response-20261104/final-results.json
-      - name: Readonly selected-budget timing smoke on validation only
-        run: python -B -m gto.abstract.value_benchmark --build-dir "$RUNNER_TEMP/value-benchmark" --limit 1 --output "$RUNNER_TEMP/value-benchmark.json"
+          python -B -m gto.abstract.gap_study --phase final --build-dir "$RUNNER_TEMP/gap-final" --output "$RUNNER_TEMP/gap-final.json"
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/gap-final.json" --expected docs/qa/model-gap-20261105/final-results.json
