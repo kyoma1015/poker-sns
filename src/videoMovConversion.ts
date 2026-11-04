@@ -115,7 +115,11 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal, prepared
         video.onerror = () => finish(new Error(MOV_CONVERSION_HELP))
         video.onended = () => { if (recorder?.state === 'recording') recorder.stop() }
         recorder.start(250)
-        void video.play().catch(() => finish(new Error('SafariでMOVの再生を開始できませんでした。' + MOV_CONVERSION_HELP)))
+        void video.play().then(() => {
+          // Start muted to satisfy Safari autoplay; restore audio for WebAudio capture.
+          video.muted = false
+          video.defaultMuted = false
+        }).catch(() => finish(new Error('SafariでMOVの再生を開始できませんでした。' + MOV_CONVERSION_HELP)))
         if (signal?.aborted) abort()
       } catch { finish(new Error('SafariのMP4録画処理を開始できませんでした。' + MOV_CONVERSION_HELP)) }
     })
