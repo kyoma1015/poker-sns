@@ -22,7 +22,9 @@ try {
   const source = await readFile('src/videoMovConversion.ts', 'utf8')
   // Safari can omit ended for short MOVs: source time must independently stop recording.
   assert.match(source, /video\.currentTime >= duration - 0\.05/)
-  assert.match(source, /performance\.now\(\) - playbackStartedAt > \(duration \+ 2\) \* 1000/)
+  assert.match(source, /performance\.now\(\) - playbackStartedAt > \(duration \+ 4\) \* 1000/)
+  assert.match(source, /video\.paused && !resumeAttempted/)
+  assert.match(source, /再生位置 /)
   assert.match(source, /video\.onended = stopAtSourceEnd/)
   assert.match(source, /window\.clearInterval\(playbackWatchdog\)/)
   const js = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText
