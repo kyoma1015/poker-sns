@@ -13,3 +13,12 @@ Only new GTO research sources/tests/docs and active workflow. No frozen CFR stra
 Resume: implement independent reference, chance moments, sensitivity game and readonly adapter; test; fit calibrations train and choose validation; commit lock; final; preserve negative results; commit/push FF and inspect new-head CI. TotalPASS UNKNOWN if logs timeout. AUTO-RESUME absent.
 
 Implementation gate before first fit:18tests PASS. Initial small test fixture incorrectly called a full1081opponent-prior helper with4toycombos; fixed the fixture and retained the production guard. Independent990rank subset, ledger/sign checks, physical chance, generic4vsoldresponse, new action gap toy and readonly actual root attribution pass. No scientific final evaluated yet.
+
+## Completed fixed experiment
+Calibration candidates rejected on validation;raw retained. Final raw actionMAE1.505415106/max19.744115711BB;20%MAE improvement FAIL. Independent concrete cash/aggregation max difference~1.3e-13BB;70matchup×990runout rank subset0mismatch, not exhaustive second matrix.
+
+Newfinal4planNC mean0.007572115/max0.042737437,28/28<0.1. SAMEpolicy in5plan referenceNC mean1.808416958/max6.803468143.5plan reopt0.006630426/max0.034152075.7variants×28model-specific solves196/196<0.1; NOT real-game precision. Uniform-range reoptactual5refmean2.842025/max5.748268.
+
+Exact all22100boardchance TV vs category-balanced0.396539/0.394919;actual selectedEV coverage0.029819%/0.030841%,missingcontributionbound~49.985BB;fullEV integration FAIL. Readonlyclassleaf/root contribution adapter passes, original policy hashes unchanged;zero otherleaf attribution graphNOTfullEV.
+
+18localtests PASS;new-headCI pending when result commit written. Allrawfailure/sensitivity/coveragedata in model-gap-20261105;READMEcommands replay. Formal0/12,externalNOT PERFORMED,real-game errorUNKNOWN. Next study177orbits excluded. Next implement complete-plan action reference and actual board chance EV coverage, not just more4plan iterations. Preserve frozenCFR,8ranges,demo and original objectsource. No autonomous restart.

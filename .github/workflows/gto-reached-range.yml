@@ -54,6 +54,8 @@ jobs:
           assert all(digest(p)==h for p,h in new['preserved_and_research_source_sha256'].items())
           current=json.loads(Path('docs/qa/value-response-20261104/dependency-manifest.json').read_text())
           assert all(digest(p)==h for p,h in current['preserved_and_research_source_sha256'].items())
+          gap=json.loads(Path('docs/qa/model-gap-20261105/dependency-manifest.json').read_text())
+          assert all(digest(p)==h for p,h in gap['preserved_and_research_source_sha256'].items())
           print('PASS preregistered source/selection/base')
           PYCODE
       - name: Public history posterior, own-information and phase-isolation tests
