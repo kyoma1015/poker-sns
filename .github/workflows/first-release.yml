@@ -8,6 +8,7 @@ on:
       - 'src/first-release-*'
       - 'first-release.html'
       - 'vite.first-release.config.ts'
+      - 'vercel.first-release.json'
       - 'scripts/*first-release*'
       - 'tests/first-release/**'
       - 'tests/browser/first-release-entry.tsx'
@@ -34,6 +35,8 @@ jobs:
       - run: npm ci --cache "$RUNNER_TEMP/npm-first-release"
       - name: Scope, frozen legacy ledger and fail-closed build gate
         run: node tests/first-release/policy.test.mjs
+      - name: Candidate-only server route contract (not deployed)
+        run: node tests/first-release/server-config.test.mjs
       - name: Mobile and desktop deferred route boundaries (isolated fixtures)
         env:
           CHROMIUM_PATH: /usr/bin/google-chrome
