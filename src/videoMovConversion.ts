@@ -32,6 +32,10 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal, prepared
   const resumed = audio.state === 'running' ? Promise.resolve(true) : audio.resume().then(() => true, () => false)
   const video = document.createElement('video')
   video.playsInline = true
+  // Safari blocks script-initiated audible playback after the asynchronous file picker.
+  // Keep the element muted; decoded audio is routed to MediaStreamDestination below.
+  video.muted = true
+  video.defaultMuted = true
   video.preload = 'auto'
   const url = URL.createObjectURL(file)
   let stream: MediaStream | undefined
