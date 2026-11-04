@@ -337,6 +337,31 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const postSubmitInFlightRef = useRef(false)
   const [videoPreview, setVideoPreview] = useState<string | null>(null)
   const [videoPreviewPoster, setVideoPreviewPoster] = useState<string | null>(null)
+  const captureVideoPreviewPoster = (video: HTMLVideoElement) => {
+    if (videoPreviewPoster || !video.videoWidth || !video.videoHeight || video.readyState < 2) return
+    const expectedUrl = videoPreview
+    const capture = () => {
+      // A late decoded-frame callback must never replace a newer attachment's poster.
+      if (!expectedUrl || expectedUrl !== videoPreview || video.currentSrc !== expectedUrl || videoPreviewPoster) return
+      try {
+        const canvas = document.createElement('canvas')
+        const scale = Math.min(1, 640 / Math.max(video.videoWidth, video.videoHeight))
+        canvas.width = Math.max(1, Math.round(video.videoWidth * scale))
+        canvas.height = Math.max(1, Math.round(video.videoHeight * scale))
+        const context = canvas.getContext('2d')
+        if (!context) return
+        context.drawImage(video, 0, 0, canvas.width, canvas.height)
+        const pixels = context.getImageData(0, 0, Math.min(8, canvas.width), Math.min(8, canvas.height)).data
+        if (!pixels.some((value, index) => index % 4 !== 3 && value > 16)) return
+        setVideoPreviewPoster(canvas.toDataURL('image/jpeg', 0.76))
+      } catch { /* A missing/undecodable frame must not block video playback. */ }
+    }
+    if (typeof video.requestVideoFrameCallback === 'function') {
+      video.requestVideoFrameCallback(() => capture())
+    } else {
+      capture()
+    }
+  }
   useEffect(() => { setVideoPreviewPoster(null); if (!videoFile) { setVideoPreview(null); return }; const url = URL.createObjectURL(videoFile); setVideoPreview(url); return () => URL.revokeObjectURL(url) }, [videoFile])
   const [imageFiles, setImageFiles] = useState<File[]>([])
   const [imagePreviews, setImagePreviews] = useState<string[]>([])
@@ -2622,23 +2647,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
               try { video.currentTime = Math.min(0.4, video.duration / 2) } catch { /* native video fallback */ }
             }
           }}
-          onSeeked={event => {
-            if (videoPreviewPoster) return
-            const video = event.currentTarget
-            if (!video.videoWidth || !video.videoHeight || video.readyState < 2) return
-            try {
-              const canvas = document.createElement('canvas')
-              const scale = Math.min(1, 640 / Math.max(video.videoWidth, video.videoHeight))
-              canvas.width = Math.max(1, Math.round(video.videoWidth * scale))
-              canvas.height = Math.max(1, Math.round(video.videoHeight * scale))
-              const context = canvas.getContext('2d')
-              if (!context) return
-              context.drawImage(video, 0, 0, canvas.width, canvas.height)
-              const pixels = context.getImageData(0, 0, Math.min(8, canvas.width), Math.min(8, canvas.height)).data
-              if (!pixels.some((value, index) => index % 4 !== 3 && value > 16)) return
-              setVideoPreviewPoster(canvas.toDataURL('image/jpeg', 0.76))
-            } catch { /* preserve native preview and playback */ }
-          }}
+          onSeeked={event => captureVideoPreviewPoster(event.currentTarget)}
+          onLoadedData={event => captureVideoPreviewPoster(event.currentTarget)}
+          onCanPlay={event => captureVideoPreviewPoster(event.currentTarget)}
           style={{ width: '100%', maxHeight: 360, borderRadius: 10 }} />
         {!videoPreviewPoster && <span style={{ position: 'absolute', right: 8, top: 8, background: '#222', color: '#ddd', padding: '4px 7px', borderRadius: 6, fontSize: 11, pointerEvents: 'none' }}>プレビューを準備中</span>}
       </div>}
