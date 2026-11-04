@@ -18,7 +18,7 @@ try {
   assert.match(timelineSource, /onLoadedData=\{event => captureVideoPreviewPoster\(event\.currentTarget\)\}/)
   assert.match(timelineSource, /onCanPlay=\{event => captureVideoPreviewPoster\(event\.currentTarget\)\}/)
   assert.match(timelineSource, /requestVideoFrameCallback/)
-  assert.match(timelineSource, /expectedUrl !== videoPreview/)
+  assert.match(timelineSource, /expectedUrl !== videoPreviewUrlRef\.current/)
   const source = await readFile('src/videoMovConversion.ts', 'utf8')
   const js = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText
   const fixture = join(qa, 'camera.mov')
