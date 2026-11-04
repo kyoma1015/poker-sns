@@ -96,6 +96,7 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal, prepared
       let stopRequested = false
       let playbackStartedAt = 0
       let playbackWatchdog = 0
+      let resumeAttempted = false
       const stopAtSourceEnd = () => {
         if (done || stopRequested || !recorder || recorder.state !== 'recording') return
         stopRequested = true
@@ -134,8 +135,14 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal, prepared
             if (done) return
             if (video.ended || video.currentTime >= duration - 0.05) {
               stopAtSourceEnd()
-            } else if (performance.now() - playbackStartedAt > (duration + 2) * 1000) {
-              finish(new Error('動画の終了を確認できず、安全停止しました。' + MOV_CONVERSION_HELP))
+            } else if (video.paused && !resumeAttempted) {
+              // Some Safari MOV decoders pause after the initial play() resolves.
+              // Attempt one local resume, never restart recording or upload.
+              resumeAttempted = true
+              void video.play().catch(() => {})
+            } else if (performance.now() - playbackStartedAt > (duration + 4) * 1000) {
+              const position = Number.isFinite(video.currentTime) ? video.currentTime.toFixed(2) : 'unknown'
+              finish(new Error('動画の終了を確認できず、安全停止しました（再生位置 ' + position + '秒 / ' + duration.toFixed(2) + '秒、停止=' + video.paused + '、読込状態=' + video.readyState + '）。' + MOV_CONVERSION_HELP))
             }
           }, 100)
         }).catch(() => finish(new Error('SafariでMOVの再生を開始できませんでした。' + MOV_CONVERSION_HELP)))
