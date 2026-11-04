@@ -1,0 +1,19 @@
+{
+  "accessed_splits": [
+    "train",
+    "validation"
+  ],
+  "final_evaluated": false,
+  "protocol_sha256": "68e6dee27402ac2c43109403e54aac720a0fce35eb8e3c053a77ca61f5956526",
+  "selected_config": {
+    "family": "response",
+    "iterations": 4096,
+    "name": "response_4096"
+  },
+  "selection_sha256": "9542c648569487a61bef110d43a225a1004eba4040d896e26db721c51c2deba3",
+  "source_sha256": {
+    "value_response.cc": "1562eb48935c6ba21aed066d64ec557a25231e58ad7fc73e50b2b57cb64793cd",
+    "value_response.py": "aae51bb13375acfb2030aaf0b17dbe609cbfff3a9471b71f27838677e545a959",
+    "value_study.py": "9d589106adc07fed63da10eba1f4b08309dab4f30665e30fe1571114c7407225"
+  }
+}
