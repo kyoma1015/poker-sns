@@ -24,7 +24,7 @@ try {
   assert.match(source, /video\.currentTime >= duration - 0\.05/)
   assert.match(source, /performance\.now\(\) - playbackStartedAt > \(duration \+ 4\) \* 1000/)
   assert.match(source, /video\.paused && !resumeAttempted/)
-  assert.doesNotMatch(source, /video\.muted = false|video\.defaultMuted = false/, 'Safari conversion must remain muted during playback')
+  assert.match(source, /video\.muted = false/, 'Decoded audio capture requires unmuting in Chrome')
   assert.match(source, /再生位置 /)
   assert.match(source, /video\.onended = stopAtSourceEnd/)
   assert.match(source, /window\.clearInterval\(playbackWatchdog\)/)
