@@ -93,11 +93,20 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal, prepared
       const chunks: Blob[] = []
       let bytes = 0
       let done = false
+      let stopRequested = false
+      let playbackStartedAt = 0
+      let playbackWatchdog = 0
+      const stopAtSourceEnd = () => {
+        if (done || stopRequested || !recorder || recorder.state !== 'recording') return
+        stopRequested = true
+        try { recorder.stop() } catch { finish(new Error(MOV_CONVERSION_HELP)) }
+      }
       const timer = window.setTimeout(() => finish(new Error('変換が時間内に完了しませんでした。' + MOV_CONVERSION_HELP)), 45000)
       const finish = (error?: Error) => {
         if (done) return
         done = true
         clearTimeout(timer)
+        window.clearInterval(playbackWatchdog)
         cancel = undefined
         video.pause()
         if (error) reject(error); else resolve(new Blob(chunks, { type: 'video/mp4' }))
@@ -113,12 +122,22 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal, prepared
         recorder.onerror = () => finish(new Error(MOV_CONVERSION_HELP))
         recorder.onstop = () => finish()
         video.onerror = () => finish(new Error(MOV_CONVERSION_HELP))
-        video.onended = () => { if (recorder?.state === 'recording') recorder.stop() }
+        video.onended = stopAtSourceEnd
         recorder.start(250)
         void video.play().then(() => {
           // Start muted to satisfy Safari autoplay; restore audio for WebAudio capture.
           video.muted = false
           video.defaultMuted = false
+          playbackStartedAt = performance.now()
+          // Safari can omit ended on very short MOVs. Never record indefinitely.
+          playbackWatchdog = window.setInterval(() => {
+            if (done) return
+            if (video.ended || video.currentTime >= duration - 0.05) {
+              stopAtSourceEnd()
+            } else if (performance.now() - playbackStartedAt > (duration + 2) * 1000) {
+              finish(new Error('動画の終了を確認できず、安全停止しました。' + MOV_CONVERSION_HELP))
+            }
+          }, 100)
         }).catch(() => finish(new Error('SafariでMOVの再生を開始できませんでした。' + MOV_CONVERSION_HELP)))
         if (signal?.aborted) abort()
       } catch { finish(new Error('SafariのMP4録画処理を開始できませんでした。' + MOV_CONVERSION_HELP)) }
