@@ -398,6 +398,7 @@
     "structure_expert_knn9",
     "board_interpolation3x5"
   ],
+  "preregistration_correction": "Before any learning or validation: trips has insufficient unseen suit-orbits after historical exclusion. Exclude trips from all new splits;21/7/7 across7 strata. No tested result used.",
   "projection": "own-type marginal chance-weighted probabilities; never equal weight latent types",
   "real_game_approximation_error": "UNKNOWN",
   "schema": "pokerid-matched-factorial-preregistration-v1",
@@ -462,22 +463,6 @@
       }
     ],
     "train": [
-      {
-        "cards": [
-          17,
-          18,
-          19
-        ],
-        "category": "trips"
-      },
-      {
-        "cards": [
-          48,
-          49,
-          51
-        ],
-        "category": "trips"
-      },
       {
         "cards": [
           15,
