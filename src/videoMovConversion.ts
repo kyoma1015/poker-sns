@@ -126,10 +126,11 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal, prepared
         video.onended = stopAtSourceEnd
         recorder.start(250)
         void video.play().then(() => {
-          // Keep the media element muted for the entire Safari playback. Unmuting
-          // after play() resolves can trigger autoplay suspension (paused at ~0.08s).
-          // WebAudio's MediaElementAudioSourceNode captures decoded audio upstream
-          // of the element's muted output; the browser QA verifies audible samples.
+          // Chrome records silence from a muted media element even with WebAudio routing.
+          // Preserve the previously verified decoded audio until Safari-specific
+          // playback recovery can be validated without breaking the audio contract.
+          video.muted = false
+          video.defaultMuted = false
           playbackStartedAt = performance.now()
           // Safari can omit ended on very short MOVs. Never record indefinitely.
           playbackWatchdog = window.setInterval(() => {
