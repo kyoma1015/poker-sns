@@ -55,6 +55,13 @@ class Factorial(unittest.TestCase):
   with tempfile.TemporaryDirectory() as root:
    lib=base.build(Path(root));r=fg.information_floor(lib,g,coarse,1000,17)
   self.assertLessEqual(r['minimum_richer_reference_nashconv_lower_bb'],.2);self.assertGreaterEqual(r['constructive_upper_bb'],.2);self.assertTrue(r['absolute_0_1_impossible_in_reference']);self.assertLess(r['constructive_upper_bb'],.21)
+ def test_native_full_chance_matches_existing_range_game(self):
+  from gto.abstract import range_game,flop_exact,range_features
+  from gto.abstract.generalization_features import uniform_strength
+  with tempfile.TemporaryDirectory() as root:
+   rank,lib,flib,pi,_=fs.initialize(Path(root));m=flop_exact.matrix(rank,[0,5,10]);book=range_features.books(flib,m,pi,'vs_4bet',uniform_strength(m));g=fg.game(lib,m,pi,'vs_4bet',book);old=range_game.game(lib,m,pi,'vs_4bet',book)
+  self.assertEqual(g['tensor'],old['tensor']);self.assertEqual(g['hkeys'],old['hkeys']);self.assertAlmostEqual(sum(g['chance_mass']),1,places=12)
+  coarse=fg.reindex(g,lambda k:k[:20]);self.assertAlmostEqual(sum(coarse['chance_mass']),1,places=12)
  def test_final_never_fits_or_selects_before_identity_validation(self):
   with patch.object(fs,'initialize',side_effect=AssertionError('fit/evaluate accessed')),patch.object(fs,'choose',side_effect=AssertionError('selection')):
    with self.assertRaises(ValueError):fs.final(Path('/tmp/no'),{}, {},Path('/tmp/no'))
