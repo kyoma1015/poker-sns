@@ -1,10 +1,13 @@
-name: GTO matched-factorial generalization and information floor
+name: GTO conditional-value learning and bounded response verification
 on:
   push:
     branches: ['codex/c-native-hand169-bridge-20261023']
     paths:
       - 'gto/abstract/range_*'
       - 'gto/abstract/factorial_*'
+      - 'gto/abstract/value_*'
+      - 'tests/test_value_response.py'
+      - 'docs/qa/value-response-20261104/**'
       - 'tests/test_factorial_generalization.py'
       - 'docs/qa/factorial-generalization-20261104/**'
       - 'gto/abstract/reached_range.cc'
@@ -52,19 +55,13 @@ jobs:
         run: python -B -m unittest tests.test_reached_range -v
       - name: Matched-factorial projection, leakage and floor tests
         run: python -B -m unittest tests.test_factorial_generalization -v
-      - name: Reproduce matched teachers and validation-only selection
+      - name: Conditional posterior EV and independent response update tests
+        run: python -B -m unittest tests.test_value_response -v
+      - name: Reproduce train and validation selection without final boards
         run: |
-          python -B -m gto.abstract.factorial_study --phase select --build-dir "$RUNNER_TEMP/factorial-select" --output "$RUNNER_TEMP/factorial-selection.json"
-          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/factorial-selection.json" --expected docs/qa/factorial-generalization-20261104/selection.json
-      - name: Reproduce frozen final without fitting or reselection
+          python -B -m gto.abstract.value_study --phase select --build-dir "$RUNNER_TEMP/value-select" --output "$RUNNER_TEMP/value-selection.json"
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/value-selection.json" --expected docs/qa/value-response-20261104/selection.json
+      - name: Locked final inference with fixed declared local response budget
         run: |
-          python -B -m gto.abstract.factorial_study --phase final --build-dir "$RUNNER_TEMP/factorial-final" --output "$RUNNER_TEMP/factorial-final.json"
-          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/factorial-final.json" --expected docs/qa/factorial-generalization-20261104/final-results.json
-      - name: Reproduce separately labelled information-floor diagnostics
-        run: |
-          python -B -m gto.abstract.factorial_study --phase diagnose --build-dir "$RUNNER_TEMP/factorial-diagnostics" --output "$RUNNER_TEMP/factorial-diagnostics.json"
-          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/factorial-diagnostics.json" --expected docs/qa/factorial-generalization-20261104/diagnostics.json
-      - name: Reproduce readonly known-anchor and worst-type attribution
-        run: |
-          python -B -m gto.abstract.factorial_audit --build-dir "$RUNNER_TEMP/factorial-audit" --output "$RUNNER_TEMP/factorial-audit.json"
-          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/factorial-audit.json" --expected docs/qa/factorial-generalization-20261104/error-attribution.json
+          python -B -m gto.abstract.value_study --phase final --build-dir "$RUNNER_TEMP/value-final" --output "$RUNNER_TEMP/value-final.json"
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/value-final.json" --expected docs/qa/value-response-20261104/final-results.json
