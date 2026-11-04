@@ -44,6 +44,8 @@ jobs:
           assert digest(root/'selection.json')==lock['selection_sha256']
           dep=json.loads((root/'dependency-manifest.json').read_text())
           assert all(digest(p)==h for p,h in dep['preserved_dependency_sha256'].items())
+          new=json.loads(Path('docs/qa/factorial-generalization-20261104/dependency-manifest.json').read_text())
+          assert all(digest(p)==h for p,h in new['preserved_and_research_source_sha256'].items())
           print('PASS preregistered source/selection/base')
           PYCODE
       - name: Public history posterior, own-information and phase-isolation tests
@@ -62,3 +64,7 @@ jobs:
         run: |
           python -B -m gto.abstract.factorial_study --phase diagnose --build-dir "$RUNNER_TEMP/factorial-diagnostics" --output "$RUNNER_TEMP/factorial-diagnostics.json"
           python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/factorial-diagnostics.json" --expected docs/qa/factorial-generalization-20261104/diagnostics.json
+      - name: Reproduce readonly known-anchor and worst-type attribution
+        run: |
+          python -B -m gto.abstract.factorial_audit --build-dir "$RUNNER_TEMP/factorial-audit" --output "$RUNNER_TEMP/factorial-audit.json"
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/factorial-audit.json" --expected docs/qa/factorial-generalization-20261104/error-attribution.json

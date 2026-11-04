@@ -62,6 +62,9 @@ class Factorial(unittest.TestCase):
    rank,lib,flib,pi,_=fs.initialize(Path(root));m=flop_exact.matrix(rank,[0,5,10]);book=range_features.books(flib,m,pi,'vs_4bet',uniform_strength(m));g=fg.game(lib,m,pi,'vs_4bet',book);old=range_game.game(lib,m,pi,'vs_4bet',book)
   self.assertEqual(g['tensor'],old['tensor']);self.assertEqual(g['hkeys'],old['hkeys']);self.assertAlmostEqual(sum(g['chance_mass']),1,places=12)
   coarse=fg.reindex(g,lambda k:k[:20]);self.assertAlmostEqual(sum(coarse['chance_mass']),1,places=12)
+ def test_error_attribution_sums_to_exact_nashconv(self):
+  from gto.abstract.factorial_audit import deviations
+  g=toy();p=FrozenContinuation({k:(.25,)*4 for k in g['hkeys']+g['vkeys']});before=copy.deepcopy(p.table);d=deviations(g,p);self.assertAlmostEqual(d['total_deviation_bb'],base.evaluate(g,p)['restricted_nashconv_bb'],places=12);self.assertEqual(before,p.table)
  def test_final_never_fits_or_selects_before_identity_validation(self):
   with patch.object(fs,'initialize',side_effect=AssertionError('fit/evaluate accessed')),patch.object(fs,'choose',side_effect=AssertionError('selection')):
    with self.assertRaises(ValueError):fs.final(Path('/tmp/no'),{}, {},Path('/tmp/no'))
