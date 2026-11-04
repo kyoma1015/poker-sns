@@ -49,6 +49,8 @@ jobs:
           assert all(digest(p)==h for p,h in dep['preserved_dependency_sha256'].items())
           new=json.loads(Path('docs/qa/factorial-generalization-20261104/dependency-manifest.json').read_text())
           assert all(digest(p)==h for p,h in new['preserved_and_research_source_sha256'].items())
+          current=json.loads(Path('docs/qa/value-response-20261104/dependency-manifest.json').read_text())
+          assert all(digest(p)==h for p,h in current['preserved_and_research_source_sha256'].items())
           print('PASS preregistered source/selection/base')
           PYCODE
       - name: Public history posterior, own-information and phase-isolation tests
@@ -65,3 +67,5 @@ jobs:
         run: |
           python -B -m gto.abstract.value_study --phase final --build-dir "$RUNNER_TEMP/value-final" --output "$RUNNER_TEMP/value-final.json"
           python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/value-final.json" --expected docs/qa/value-response-20261104/final-results.json
+      - name: Readonly selected-budget timing smoke on validation only
+        run: python -B -m gto.abstract.value_benchmark --build-dir "$RUNNER_TEMP/value-benchmark" --limit 1 --output "$RUNNER_TEMP/value-benchmark.json"
