@@ -978,7 +978,7 @@
     },
     {
       "path": ".github/workflows/first-release.yml",
-      "sha": "9ea25799ada63caaea288086208413e05a77f9ef",
+      "sha": "5c7dcac70aaac2c07fcdb393ad15874874ea2923",
       "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
     },
     {
@@ -990,6 +990,21 @@
       "path": "tests/first-release/preview.test.mjs",
       "sha": "81542d355e99d87cc8518434f68d3b3056f865d1",
       "reason": "compiled OFF-state artifact browser smoke; no real auth or original32 ledger changes"
+    },
+    {
+      "path": "vercel.first-release.json",
+      "sha": "a7d45dd4baaad0d92727a4080908735bf49deee2",
+      "reason": "reviewed candidate-only server refusal preparation; does not activate deployment or promote safety gates"
+    },
+    {
+      "path": "tests/first-release/server-config.test.mjs",
+      "sha": "69e1b6eebbd1c6c8ae41b7c29d1a6d2baa01bad1",
+      "reason": "reviewed candidate-only server refusal preparation; does not activate deployment or promote safety gates"
+    },
+    {
+      "path": "docs/progress/FIRST_RELEASE_SERVER_REVIEW.md",
+      "sha": "7d8da3fcdcd3fb4912d65e9771f82a1a65db18f5",
+      "reason": "reviewed candidate-only server refusal preparation; does not activate deployment or promote safety gates"
     }
   ],
   "overrides": [
