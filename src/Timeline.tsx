@@ -337,12 +337,13 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const postSubmitInFlightRef = useRef(false)
   const [videoPreview, setVideoPreview] = useState<string | null>(null)
   const [videoPreviewPoster, setVideoPreviewPoster] = useState<string | null>(null)
+  const videoPreviewUrlRef = useRef<string | null>(null)
   const captureVideoPreviewPoster = (video: HTMLVideoElement) => {
     if (videoPreviewPoster || !video.videoWidth || !video.videoHeight || video.readyState < 2) return
     const expectedUrl = videoPreview
     const capture = () => {
       // A late decoded-frame callback must never replace a newer attachment's poster.
-      if (!expectedUrl || expectedUrl !== videoPreview || video.currentSrc !== expectedUrl || videoPreviewPoster) return
+      if (!expectedUrl || expectedUrl !== videoPreviewUrlRef.current || video.currentSrc !== expectedUrl || videoPreviewPoster) return
       try {
         const canvas = document.createElement('canvas')
         const scale = Math.min(1, 640 / Math.max(video.videoWidth, video.videoHeight))
@@ -356,13 +357,13 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         setVideoPreviewPoster(canvas.toDataURL('image/jpeg', 0.76))
       } catch { /* A missing/undecodable frame must not block video playback. */ }
     }
+    // Safari may never dispatch a frame callback for a paused preview.
+    capture()
     if (typeof video.requestVideoFrameCallback === 'function') {
       video.requestVideoFrameCallback(() => capture())
-    } else {
-      capture()
     }
   }
-  useEffect(() => { setVideoPreviewPoster(null); if (!videoFile) { setVideoPreview(null); return }; const url = URL.createObjectURL(videoFile); setVideoPreview(url); return () => URL.revokeObjectURL(url) }, [videoFile])
+  useEffect(() => { setVideoPreviewPoster(null); if (!videoFile) { videoPreviewUrlRef.current = null; setVideoPreview(null); return }; const url = URL.createObjectURL(videoFile); videoPreviewUrlRef.current = url; setVideoPreview(url); return () => { if (videoPreviewUrlRef.current === url) videoPreviewUrlRef.current = null; URL.revokeObjectURL(url) } }, [videoFile])
   const [imageFiles, setImageFiles] = useState<File[]>([])
   const [imagePreviews, setImagePreviews] = useState<string[]>([])
   const [selectedDiagnosis, setSelectedDiagnosis] = useState<{ result_id: string; animal_name_ja: string; catchphrase: string; result_type_key: string; completed_at: string } | null>(null)
