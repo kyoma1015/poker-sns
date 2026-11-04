@@ -34,3 +34,7 @@ regression_buildはSelected381/現行538実行・通常build/lint・候補build/
 ### 候補artifactの追加確認
 preview.test.mjs は生成済みindex.htmlをVite previewで配信し、コンポーネントをmockせずに390/1280pxでTDA・診断・timelineの6経路を確認する。閉じた入口では外部通信/データAPI呼出しやpageerrorを許可しない。これはOFF状態のartifact確認であり、認証後SNS E2Eとは別。
 ローカルで確認可能になった場合も、通常dev入口ではなく候補build/previewを使い、旧workspaceを壊さない。Vercelや実DBへ接続するテストには置き換えない。
+
+## 2026-11-04 現在の再判定（過去証拠は上記のまま保持）
+現在の確定PASSは3/12、BLOCKED9。regression_buildは最新回帰のFAIL/未検証によりBLOCKEDへ戻した。0cb075aの初回専用CI41882779878は44件と追加サーバ設定契約PASS。Selected41882780046は変更workflowのmanifest pin漏れでFAIL、0d8bdc2でpinを修正したが最終HEAD検証は未確認。Poll41882779978は進捗の履歴blob検証14PASS/1FAIL、DB段階未実行。保護テスト・32台帳は変更しない。
+main ref/commitsは4e359af131a3b377a4a1da9e93a129f321628849、PR応答のbaseは旧781fと不一致。最新mainには別担当の動画変更があり、今回の候補との選択統合を未検証。旧mainのPASSを現在の統合PASSとしない。設定案vercel.first-release.jsonは未適用、通常App/APIを変更しない。実JWT・外部RPC・埋込・cache・認証後モバイルQAは未完了。公開OFF/NO-GO維持。

@@ -943,7 +943,7 @@
     },
     {
       "path": "docs/progress/FIRST_RELEASE_V1.json",
-      "sha": "f1ad355fd2c26cf1d2f1f1943a836cd66845112b",
+      "sha": "62e42ed25bcb9889b2f8b5fb359bc3cfd84ac321",
       "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
     },
     {
@@ -973,7 +973,7 @@
     },
     {
       "path": "docs/progress/FIRST_RELEASE_V1.md",
-      "sha": "58f589dd178a034263798b3b42af29a8ab9f3395",
+      "sha": "81952501b17d1215222547a2e15c83401bac5df4",
       "reason": "owner-authorized separate initial-release candidate and strict gate; original32 ledger/main source unchanged"
     },
     {

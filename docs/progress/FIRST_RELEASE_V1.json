@@ -69,11 +69,12 @@
     },
     {
       "id": "regression_build",
-      "status": "PASS",
+      "status": "BLOCKED",
       "evidence": [
         "Selected40836608461 at6b860b5: preserved381 plus current538 Node executions, normal build/lintPASS",
         "First release40836608463 at6b860b5: unit5/mobile-desktop30/artifact3PASS; canonical build still refuses NO-GO",
-        "This gate is not whole-PR CI approval: separate legacy Poll40836608432 has deferred-TDA fixture timingFAIL"
+        "This gate is not whole-PR CI approval: separate legacy Poll40836608432 has deferred-TDA fixture timingFAIL",
+        "2026-11-04 source0cb075a Selected41882780046 FAIL (reviewed manifest omission fixed0d8bdc2, verification pending); Poll41882779978 FAIL historical blob mismatch; actual main4e359 differs from old781. Historical PASS is not current integration PASS."
       ],
       "condition": "元381回帰・通常build/lint・候補buildがHEAD一致PASS"
     },
@@ -167,7 +168,7 @@
       "canonical_html": "dist-first-release/index.html"
     }
   },
-  "assessed_source_head": "6b860b5844dfc656799c8ac9a4d363ed17cd0c33",
+  "assessed_source_head": "0d8bdc24ed722e9ebe061476f957edb1bcfd8dcc",
   "legacy_ci_observation": {
     "source_head": "6b860b5844dfc656799c8ac9a4d363ed17cd0c33",
     "run": 40836608432,
@@ -181,5 +182,14 @@
     "publishing_ci": "Read latest PR125 exact-head checkpoint; no retry-success=root-fix claim"
   },
   "runtime_activation": "OFF until all mandatory safety evidence and reviewed activation; no source flag flip in this batch",
-  "publishing_receipt": "Latest PR125 checkpoint carries final publishing HEAD CI; do not infer it from source receipts"
+  "publishing_receipt": "Latest PR125 checkpoint carries final publishing HEAD CI; do not infer it from source receipts",
+  "current_observation": {
+    "at": "2026-11-04T18:06:00Z",
+    "passed": 3,
+    "blocked": 9,
+    "previous_passed": 4,
+    "actual_main": "4e359af131a3b377a4a1da9e93a129f321628849",
+    "pr_metadata_base": "781f038415503ece850c25a26e72ef67dee9c8a1",
+    "final_head_ci": "PENDING_OBSERVATION"
+  }
 }
