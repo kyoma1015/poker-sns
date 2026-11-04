@@ -12,6 +12,13 @@ const qa = await mkdtemp(join(tmpdir(), 'poker-mov-'))
 let browser
 let server
 try {
+  // Guard the Safari composer poster fallback even when no new frame callback fires.
+  const timelineSource = await readFile('src/Timeline.tsx', 'utf8')
+  assert.match(timelineSource, /onSeeked=\{event => captureVideoPreviewPoster\(event\.currentTarget\)\}/)
+  assert.match(timelineSource, /onLoadedData=\{event => captureVideoPreviewPoster\(event\.currentTarget\)\}/)
+  assert.match(timelineSource, /onCanPlay=\{event => captureVideoPreviewPoster\(event\.currentTarget\)\}/)
+  assert.match(timelineSource, /requestVideoFrameCallback/)
+  assert.match(timelineSource, /expectedUrl !== videoPreview/)
   const source = await readFile('src/videoMovConversion.ts', 'utf8')
   const js = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText
   const fixture = join(qa, 'camera.mov')
