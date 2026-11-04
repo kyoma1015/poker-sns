@@ -20,6 +20,11 @@ try {
   assert.match(timelineSource, /requestVideoFrameCallback/)
   assert.match(timelineSource, /expectedUrl !== videoPreviewUrlRef\.current/)
   const source = await readFile('src/videoMovConversion.ts', 'utf8')
+  // Safari can omit ended for short MOVs: source time must independently stop recording.
+  assert.match(source, /video\.currentTime >= duration - 0\.05/)
+  assert.match(source, /performance\.now\(\) - playbackStartedAt > \(duration \+ 2\) \* 1000/)
+  assert.match(source, /video\.onended = stopAtSourceEnd/)
+  assert.match(source, /window\.clearInterval\(playbackWatchdog\)/)
   const js = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText
   const fixture = join(qa, 'camera.mov')
   execFileSync('ffmpeg', ['-v','error','-f','lavfi','-i','testsrc2=size=320x240:rate=30','-f','lavfi','-i','sine=frequency=440:sample_rate=48000','-t','2','-c:v','libx264','-profile:v','baseline','-pix_fmt','yuv420p','-c:a','aac','-y',fixture])
