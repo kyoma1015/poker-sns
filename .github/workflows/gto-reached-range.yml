@@ -1,9 +1,12 @@
-name: GTO preregistered reached-range generalization
+name: GTO matched-factorial generalization and information floor
 on:
   push:
     branches: ['codex/c-native-hand169-bridge-20261023']
     paths:
       - 'gto/abstract/range_*'
+      - 'gto/abstract/factorial_*'
+      - 'tests/test_factorial_generalization.py'
+      - 'docs/qa/factorial-generalization-20261104/**'
       - 'gto/abstract/reached_range.cc'
       - 'gto/abstract/generalization_features.py'
       - 'gto/abstract/continuation_game*'
@@ -45,15 +48,17 @@ jobs:
           PYCODE
       - name: Public history posterior, own-information and phase-isolation tests
         run: python -B -m unittest tests.test_reached_range -v
-      - name: Reproduce train/validation selection without final boards
+      - name: Matched-factorial projection, leakage and floor tests
+        run: python -B -m unittest tests.test_factorial_generalization -v
+      - name: Reproduce matched teachers and validation-only selection
         run: |
-          python -B -m gto.abstract.range_study --phase select --build-dir "$RUNNER_TEMP/selection" --output "$RUNNER_TEMP/selection.json"
-          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/selection.json" --expected docs/qa/range-generalization-20261101/selection.json
-      - name: Exact final evaluation of already locked range and uniform policies
+          python -B -m gto.abstract.factorial_study --phase select --build-dir "$RUNNER_TEMP/factorial-select" --output "$RUNNER_TEMP/factorial-selection.json"
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/factorial-selection.json" --expected docs/qa/factorial-generalization-20261104/selection.json
+      - name: Reproduce frozen final without fitting or reselection
         run: |
-          python -B -m gto.abstract.range_study --phase final --selection docs/qa/range-generalization-20261101/selection.json --build-dir "$RUNNER_TEMP/final" --output "$RUNNER_TEMP/final.json"
-          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/final.json" --expected docs/qa/range-generalization-20261101/final-results.json
-      - name: Readonly train/validation audit of the same locked policies
+          python -B -m gto.abstract.factorial_study --phase final --build-dir "$RUNNER_TEMP/factorial-final" --output "$RUNNER_TEMP/factorial-final.json"
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/factorial-final.json" --expected docs/qa/factorial-generalization-20261104/final-results.json
+      - name: Reproduce separately labelled information-floor diagnostics
         run: |
-          python -B -m gto.abstract.range_study --phase audit --selection docs/qa/range-generalization-20261101/selection.json --build-dir "$RUNNER_TEMP/audit" --output "$RUNNER_TEMP/audit.json"
-          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/audit.json" --expected docs/qa/range-generalization-20261101/training-audit.json
+          python -B -m gto.abstract.factorial_study --phase diagnose --build-dir "$RUNNER_TEMP/factorial-diagnostics" --output "$RUNNER_TEMP/factorial-diagnostics.json"
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/factorial-diagnostics.json" --expected docs/qa/factorial-generalization-20261104/diagnostics.json
