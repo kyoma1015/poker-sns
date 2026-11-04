@@ -13,7 +13,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const card = await fetch(`${base}/rest/v1/poker_id_cards?user_id=eq.${encodeURIComponent(id)}&is_public=eq.true&select=user_id`, { headers, cache:'no-store' })
     if (!card.ok) throw new Error(`Card lookup failed (${card.status})`)
-    if (!(await card.json()).length) return res.status(404).send('Card not public')
+    const cards: unknown = await card.json()
+    if (!Array.isArray(cards)) throw new Error('Invalid card lookup response')
+    if (cards.length === 0) return res.status(404).send('Card not public')
+    // A malformed or unrelated rowset cannot authorize a service-role Storage read.
+    const row: unknown = cards[0]
+    if (cards.length !== 1 || !row || typeof row !== 'object' || Array.isArray(row) ||
+      !('user_id' in row) || typeof row.user_id !== 'string' ||
+      row.user_id.toLowerCase() !== id.toLowerCase()) {
+      throw new Error('Invalid card lookup response')
+    }
     const png = await fetch(`${base}/storage/v1/object/poker-id-card-og/${encodeURIComponent(id)}/card.png`, { headers, cache:'no-store' })
     if (png.status === 404 || png.status === 400) return res.status(404).send('Card preview image not yet generated')
     if (!png.ok) throw new Error(`Image lookup failed (${png.status})`)

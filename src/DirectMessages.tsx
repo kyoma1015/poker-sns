@@ -26,216 +26,119 @@ type Conversation = {
 
 function DirectMessages() {
   const navigate = useNavigate()
+  const [accountId, setAccountId] = useState<string | null | undefined>(undefined)
+  const authIdentity = useRef<string | null>(null)
+  useEffect(() => {
+    let active = true
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!active) return
+      // Synchronous invalidation only: SDK calls inside this callback may deadlock.
+      const id = session?.user?.id ?? null
+      authIdentity.current = id
+      setAccountId(id)
+    })
+    return () => { active = false; authIdentity.current = null; subscription.unsubscribe() }
+  }, [])
+  useEffect(() => { if (accountId === null) navigate('/login') }, [accountId, navigate])
+  if (accountId === undefined) return <main className="app"><p>読み込み中...</p></main>
+  if (accountId === null) return <main className="app"><p>ログインが必要です。</p></main>
+  return <AccountInbox key={accountId} accountId={accountId} authIdentity={authIdentity} />
+}
+
+function AccountInbox({ accountId, authIdentity }: {
+  accountId: string
+  authIdentity: { current: string | null }
+}) {
+  const navigate = useNavigate()
   const refreshRootRef = useRef<HTMLElement | null>(null)
   const reloadRef = useRef<() => Promise<void>>(async () => {})
   const { pullDistance, isRefreshing, refreshError } = usePullToRefresh(refreshRootRef, {
     onRefresh: () => reloadRef.current(),
   })
-
-  const [conversations, setConversations] =
-    useState<Conversation[]>([])
-
-  const [message, setMessage] =
-    useState('読み込み中...')
+  const [conversations, setConversations] = useState<Conversation[]>([])
+  const [message, setMessage] = useState('読み込み中...')
+  const [readFailed, setReadFailed] = useState(false)
 
   useEffect(() => {
-    let channel:
-      | ReturnType<typeof supabase.channel>
-      | null = null
-
-    const setup = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-
-      if (!user) {
-        navigate('/login')
-        return
-      }
-
-      const loadConversations = async () => {
-        const {
-          data: messages,
-          error,
-        } = await supabase
+    let active = true
+    let generation = 0
+    const valid = () => active && authIdentity.current === accountId
+    const loadConversations = async () => {
+      if (!valid()) return
+      const request = ++generation
+      const current = () => valid() && generation === request
+      try {
+        const { data: { user }, error: authError } = await supabase.auth.getUser()
+        if (!current()) return
+        if (authError || !user || user.id !== accountId) throw new Error('Authentication unavailable')
+        const { data: messages, error } = await supabase
           .from('direct_messages')
           .select('*')
-          .order('created_at', {
-            ascending: false,
-          })
-
-        if (error) {
-          console.error(error)
-
-          setMessage(
-            `DMの取得に失敗しました：${error.message}`
-          )
-
+          .or(`sender_id.eq.${accountId},receiver_id.eq.${accountId}`)
+          .order('created_at', { ascending: false })
+        if (!current()) return
+        if (error) throw error
+        // This is defense in depth, never a replacement for server-side RLS.
+        const ownedMessages = (messages || []).filter(dm =>
+          dm.sender_id === accountId || dm.receiver_id === accountId)
+        if (ownedMessages.length === 0) {
+          setConversations([]); setMessage(''); setReadFailed(false)
           return
         }
-
-        if (
-          !messages ||
-          messages.length === 0
-        ) {
-          setConversations([])
-          setMessage('')
+        const blockedUserIds = await getBlockedUserIds(accountId)
+        if (!current()) return
+        const visibleMessages = ownedMessages.filter(dm =>
+          !blockedUserIds.has(dm.sender_id === accountId ? dm.receiver_id : dm.sender_id))
+        const otherUserIds = [...new Set(visibleMessages.map(dm =>
+          dm.sender_id === accountId ? dm.receiver_id : dm.sender_id))]
+        if (otherUserIds.length === 0) {
+          setConversations([]); setMessage(''); setReadFailed(false)
           return
         }
-
-        let blockedUserIds: Set<string>
-        try {
-          blockedUserIds = await getBlockedUserIds(user.id)
-        } catch (blockError) {
-          console.error('ブロック情報取得エラー:', blockError)
-          setConversations([])
-          setMessage('ブロック情報を取得できませんでした。再読み込みしてください。')
-          return
-        }
-
-        const visibleMessages = messages.filter(dm =>
-          !blockedUserIds.has(dm.sender_id === user.id ? dm.receiver_id : dm.sender_id)
-        )
-        if (visibleMessages.length === 0) {
-          setConversations([])
-          setMessage('')
-          return
-        }
-
-        const otherUserIds = [
-          ...new Set(
-            visibleMessages.map((dm) =>
-              dm.sender_id === user.id
-                ? dm.receiver_id
-                : dm.sender_id
-            )
-          ),
-        ]
-
-        const {
-          data: profiles,
-          error: profileError,
-        } = await supabase
-          .from('profiles')
-          .select(
-            'id, display_name, poker_id, avatar_url'
-          )
-          .in('id', otherUserIds)
-
-        if (profileError) {
-          console.error(profileError)
-
-          setMessage(
-            `プロフィールの取得に失敗しました：${profileError.message}`
-          )
-
-          return
-        }
-
-        const conversationList: Conversation[] =
-          otherUserIds.map(
-            (otherUserId) => {
-              const conversationMessages =
-                visibleMessages.filter(
-                  (dm) =>
-                    (dm.sender_id ===
-                      user.id &&
-                      dm.receiver_id ===
-                        otherUserId) ||
-                    (dm.sender_id ===
-                      otherUserId &&
-                      dm.receiver_id ===
-                        user.id)
-                )
-
-              const latestMessage =
-                conversationMessages[0]
-
-              const unreadCount =
-                conversationMessages.filter(
-                  (dm) =>
-                    dm.sender_id ===
-                      otherUserId &&
-                    dm.receiver_id ===
-                      user.id &&
-                    dm.read_at === null
-                ).length
-
-              const profile =
-                profiles?.find(
-                  (item) =>
-                    item.id ===
-                    otherUserId
-                )
-
-              return {
-                userId: otherUserId,
-                displayName:
-                  profile?.display_name ||
-                  'Unknown Player',
-                pokerId:
-                  profile?.poker_id ||
-                  'unknown',
-                avatarUrl:
-                  profile?.avatar_url ||
-                  null,
-                lastMessage:
-                  latestMessage?.content ||
-                  '',
-                lastMessageAt:
-                  latestMessage?.created_at ||
-                  '',
-                unreadCount,
-              }
-            }
-          )
-
-        conversationList.sort(
-          (a, b) =>
-            new Date(
-              b.lastMessageAt
-            ).getTime() -
-            new Date(
-              a.lastMessageAt
-            ).getTime()
-        )
-
-        setConversations(
-          conversationList
-        )
-
-        setMessage('')
-      }
-
-      reloadRef.current = loadConversations
-      await loadConversations()
-
-      channel = supabase
-        .channel(`dm-list-${user.id}`)
-        .on(
-          'postgres_changes',
-          {
-            event: '*',
-            schema: 'public',
-            table: 'direct_messages',
-          },
-          () => {
-            loadConversations()
+        const { data: profiles, error: profileError } = await supabase
+          .from('profiles').select('id, display_name, poker_id, avatar_url').in('id', otherUserIds)
+        if (!current()) return
+        if (profileError) throw profileError
+        const conversationList: Conversation[] = otherUserIds.map(otherUserId => {
+          const conversationMessages = visibleMessages.filter(dm =>
+            (dm.sender_id === accountId && dm.receiver_id === otherUserId) ||
+            (dm.sender_id === otherUserId && dm.receiver_id === accountId))
+          const latestMessage = conversationMessages[0]
+          const profile = profiles?.find(item => item.id === otherUserId)
+          return {
+            userId: otherUserId,
+            displayName: profile?.display_name || 'Unknown Player',
+            pokerId: profile?.poker_id || 'unknown',
+            avatarUrl: profile?.avatar_url || null,
+            lastMessage: latestMessage?.content || '',
+            lastMessageAt: latestMessage?.created_at || '',
+            unreadCount: conversationMessages.filter(dm =>
+              dm.sender_id === otherUserId && dm.receiver_id === accountId && dm.read_at === null).length,
           }
-        )
-        .subscribe()
-    }
-
-    setup()
-
-    return () => {
-      if (channel) {
-        supabase.removeChannel(
-          channel
-        )
+        })
+        conversationList.sort((a, b) => new Date(b.lastMessageAt).getTime() - new Date(a.lastMessageAt).getTime())
+        setConversations(conversationList); setMessage(''); setReadFailed(false)
+      } catch {
+        if (!current()) return
+        setConversations([])
+        setMessage('DM一覧を読み込めませんでした。もう一度お試しください。')
+        setReadFailed(true)
       }
     }
-  }, [navigate])
+    reloadRef.current = loadConversations
+    // Subscribe before the initial snapshot so an event during its read triggers
+    // a newer generation instead of being silently missed.
+    const channel = supabase.channel(`dm-list-${accountId}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'direct_messages' },
+        () => { if (valid()) void loadConversations() })
+      .subscribe()
+    void loadConversations()
+    return () => {
+      active = false; generation++
+      reloadRef.current = async () => {}
+      void supabase.removeChannel(channel)
+    }
+  }, [accountId, authIdentity])
 
   const formatTime = (
     createdAt: string
@@ -376,6 +279,7 @@ function DirectMessages() {
             }}
           >
             {message}
+            {readFailed && <div><button type="button" onClick={() => { void reloadRef.current() }}>DM一覧を再読み込み</button></div>}
           </div>
         )}
 

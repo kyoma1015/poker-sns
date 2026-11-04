@@ -1,0 +1,157 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import { readFileSync, readdirSync } from 'node:fs'
+import { animalEmoji } from '../src/playerTypeAnimals.ts'
+import { topPersonalTraits, personalAdvice, traitPositiveMax, relativePositiveScore, avoidSkillGuarantees } from '../src/playerTypePresentation.ts'
+import { parseQuestions, LatestRequest } from '../src/playerTypeQuestions.ts'
+
+const fixture = JSON.parse(readFileSync(new URL('./fixtures/player-type-v2.json', import.meta.url)))
+const detail = scores => ({ trait_scores: scores, discriminator_scores: {} })
+
+test('all 32 positive ceilings equal the sum of per-question attainable maxima', () => {
+  const questions = parseQuestions(fixture.rows)
+  const scores = Object.fromEntries(fixture.scores.map(s => [s.option_id, s]))
+  for (const [key, cap] of Object.entries(traitPositiveMax)) {
+    assert.equal(cap, questions.reduce((sum, q) => sum + Math.max(0, ...q.options.map(o => scores[o.id][key])), 0), key)
+  }
+})
+
+test('negative, zero, unknown and nonfinite values do not become top tendencies', () => {
+  assert.deepEqual(topPersonalTraits(detail({ initiative: -1, exploit: 0, analytical: NaN, patience: Infinity, bogus: 99 })), [])
+  assert.equal(relativePositiveScore('bogus', 100), 0)
+})
+
+test('normalization compares proportions rather than raw totals', () => {
+  assert.deepEqual(topPersonalTraits(detail({ exploit: 24, risk_tolerance: 3, patience: 23 })).map(t => t.key), ['patience', 'risk_tolerance', 'exploit'])
+})
+
+test('one incidental selective-burst point must not assert attacking ability', () => {
+  const weak = fixture.personas[0]
+  assert.equal(weak.raw.selective_burst, 1)
+  assert.match(personalAdvice(detail(weak.raw)), /危険のサインや難しい衝突/)
+  assert.doesNotMatch(personalAdvice(detail(weak.raw)), /武器|踏み込める|攻めを続ける回答/)
+})
+
+test('noticing danger must not imply that a calling station folds', () => {
+  const caller = fixture.personas.find(p => p.name === 'コーリングステーション')
+  assert.ok(caller)
+  assert.equal(caller.raw.threat_sensitivity, 9)
+  assert.equal(caller.raw.collision_avoidance, -3)
+  const advice = personalAdvice(detail(caller.raw))
+  assert.match(advice, /参加を続ける場合も降りる場合も/)
+  assert.doesNotMatch(advice, /避ける回答|降りる前に/)
+})
+
+test('attack wording needs both initiative and sustained attack at the threshold', () => {
+  const high = { initiative: 8.55, confidence: 3.3, attack_momentum: 6, threat_sensitivity: 0 }
+  assert.match(personalAdvice(detail(high)), /自分から動き、攻めを続ける/)
+  for (const key of ['initiative', 'confidence', 'attack_momentum']) {
+    assert.doesNotMatch(personalAdvice(detail({ ...high, [key]: high[key] - .01 })), /自分から動き、攻めを続ける/)
+  }
+})
+
+for (const persona of fixture.personas) {
+  test(`fixed persona replay (not live): ${persona.name}`, () => {
+    const questions = parseQuestions(fixture.rows)
+    const byId = Object.fromEntries(fixture.scores.map(s => [s.option_id, s]))
+    const chosen = questions.map((q, i) => byId[q.options.find(o => o.order === persona.answers[i].charCodeAt(0) - 64).id])
+    const raw = Object.fromEntries(Object.keys(traitPositiveMax).map(k => [k, chosen.reduce((sum, s) => sum + s[k], 0)]))
+    assert.deepEqual(raw, persona.raw)
+    const traits = topPersonalTraits(detail(raw))
+    assert.equal(traits.length, 3)
+    assert.ok(traits.every(t => raw[t.key] > 0))
+    const advice = personalAdvice(detail(raw))
+    if (raw.attack_momentum < 0 || raw.initiative < 8.55) assert.doesNotMatch(advice, /自分から動き、攻めを続ける|攻めを続ける回答/)
+    assert.doesNotMatch(advice, /武器|さらに強く|確実に勝てる/)
+  })
+}
+
+test('question bank validation rejects incomplete or contradictory data', () => {
+  assert.equal(parseQuestions(fixture.rows).length, 50)
+  const withoutQ50 = fixture.rows.filter(r => r.question_order !== 50)
+  const onlyOneOption = fixture.rows.filter(r => r.question_order !== 50 || r.option_order === 1)
+  for (const invalid of [null, {}, withoutQ50, onlyOneOption, [...fixture.rows, fixture.rows[0]],
+    fixture.rows.map((r, i) => i === 0 ? { ...r, option_text: '' } : r),
+    fixture.rows.map((r, i) => i === 0 ? { ...r, question_order: 2 } : r),
+    fixture.rows.map((r, i) => i === 0 ? { ...r, option_order: 9 } : r)]) {
+    assert.throws(() => parseQuestions(invalid))
+  }
+})
+
+test('a late result cannot win after a new request, restart or unmount', () => {
+  const gate = new LatestRequest()
+  const old = gate.start()
+  const next = gate.start()
+  assert.equal(gate.isCurrent(old), false)
+  assert.equal(gate.isCurrent(next), true)
+  gate.invalidate()
+  assert.equal(gate.isCurrent(next), false)
+})
+
+test('audit wording corrections apply only to the displayed copy, without mutating saved data', () => {
+  const text = '大きなミスをしてくれない。確実に取り切る。判断品質を落とさない。'
+  const original = { result_id: 'saved-id', description: text, behavior_text: text, strength_text: text,
+    weakness_text: text, perceived_text: text, best_situation_text: text }
+  const corrected = avoidSkillGuarantees(original)
+  assert.equal(original.description, text)
+  assert.equal(corrected.result_id, original.result_id)
+  for (const key of ['description', 'behavior_text', 'strength_text', 'weakness_text', 'perceived_text', 'best_situation_text']) {
+    assert.doesNotMatch(corrected[key], /大きなミスをしてくれない|確実に取り切る|判断品質を落とさない/)
+    assert.match(corrected[key], /自分の判断基準を維持しようとする/)
+  }
+})
+
+test('wording correction leaves unrelated copy unchanged', () => {
+  const d = { description: '', behavior_text: '回答傾向', strength_text: '観察', weakness_text: '', perceived_text: '', best_situation_text: '' }
+  assert.deepEqual(avoidSkillGuarantees(d), d)
+})
+
+
+test('result action snapshots do not invalidate each other, but navigation invalidates all old actions', () => {
+  const gate = new LatestRequest()
+  const result = gate.start()
+  const share = gate.capture()
+  const image = gate.capture()
+  assert.equal(result, share)
+  assert.equal(gate.isCurrent(image), true)
+  gate.invalidate()
+  assert.equal(gate.isCurrent(share), false)
+  assert.equal(gate.isCurrent(image), false)
+})
+
+
+test('all 36 configured animal display keys have exactly one matching PNG asset', () => {
+  const assets = readdirSync(new URL('../public/animals/', import.meta.url)).filter(name => name.endsWith('.png')).map(name => name.slice(0, -4)).sort()
+  assert.equal(Object.keys(animalEmoji).length, 36)
+  assert.deepEqual(Object.keys(animalEmoji).sort(), assets)
+  assert.ok(Object.values(animalEmoji).every(emoji => typeof emoji === 'string' && emoji.length > 0))
+})
+
+for(const key of ['constructor','toString','__proto__','hasOwnProperty','valueOf']){
+ test(`prototype key ${key} is not a known trait`,()=>{
+  const scores=JSON.parse(`{"${key}":1}`)
+  assert.deepEqual(topPersonalTraits({trait_scores:scores,discriminator_scores:{}}),[])
+  assert.equal(relativePositiveScore(key,1),0)
+ })
+}
+test('known trait remains finite and wins over inherited key',()=>{
+ const r=topPersonalTraits({trait_scores:JSON.parse('{"constructor":999,"initiative":1}'),discriminator_scores:{}})
+ assert.deepEqual(r.map(x=>x.key),['initiative'])
+ assert.ok(Number.isFinite(relativePositiveScore('initiative',1)))
+})
+
+const { auditPlayerType } = await import('../scripts/audit-player-type.mjs')
+const personaAssets = readdirSync(new URL('../public/animals/', import.meta.url)).filter(x => x.endsWith('.png')).map(x => x.slice(0, -4))
+for (const answers of [[], Array(49).fill('A'), Array(51).fill('A'), null]) {
+ test(`persona audit rejects invalid answer count ${answers?.length ?? 'null'}`, () => {
+  const data = structuredClone(fixture); data.personas[0].answers = answers
+  const result = auditPlayerType(data, personaAssets)
+  assert.equal(result.status, 'FAIL')
+  assert.ok(result.errors.some(e => e.code === 'INVALID_PERSONA_ANSWER_COUNT'))
+ })
+}
+test('persona audit rejects choice outside the question options', () => {
+ const data = structuredClone(fixture); data.personas[0].answers[0] = '?'
+ const result = auditPlayerType(data, personaAssets)
+ assert.equal(result.status, 'FAIL'); assert.ok(result.errors.some(e => e.code === 'INVALID_PERSONA_CHOICE'))
+})

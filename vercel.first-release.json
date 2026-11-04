@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "buildCommand": "node scripts/build-first-release.mjs",
+  "outputDirectory": "dist-first-release",
+  "routes": [
+    {
+      "src": "^/(?:[aA][pP][iI]|[sS][hH][aA][rR][eE])(?:/.*)?$",
+      "status": 404,
+      "headers": {
+        "Cache-Control": "private, no-store, max-age=0",
+        "X-Robots-Tag": "noindex, nofollow"
+      }
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/.*",
+      "dest": "/index.html"
+    }
+  ]
+}
