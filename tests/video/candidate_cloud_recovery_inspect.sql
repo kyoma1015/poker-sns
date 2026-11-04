@@ -42,5 +42,5 @@ begin
     'storage_present',v_object.id is not null
   );
 end $$;
-revoke all on function public.video_cloud_recovery_inspect_v1(text) from public, anon;
+revoke all on function public.video_cloud_recovery_inspect_v1(text) from public, anon, service_role;
 grant execute on function public.video_cloud_recovery_inspect_v1(text) to authenticated;
