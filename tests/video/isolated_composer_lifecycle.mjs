@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { execFileSync } from 'node:child_process'
 
 // Actual Timeline, real local feed/auth; lifecycle notifications and delayed
 // metadata/social response are controlled explicitly, with no production IO.
@@ -160,7 +161,7 @@ export async function verifyComposerLifecycle({browser,origin,jwt,anon,bytes}) {
     } finally { await page.close() }
   }
 
-  // Real Timeline poster regression: independent muted probe, stale callback
+  // The ordinary E2E fixture is deliberately all-black. Generate a bright\n  // disposable WebM so the production near-black poster rejection can pass.\n  const posterBytes=execFileSync('ffmpeg',['-v','error','-f','lavfi','-i','testsrc2=size=160x120:rate=10','-t','2','-c:v','libvpx','-b:v','250k','-f','webm','pipe:1'])\n  // Real Timeline poster regression: independent muted probe, stale callback
   // fencing and playback when Canvas extraction fails. No submit or uploads.
   for (const scenario of ['poster-before-play','stale-probe','canvas-unavailable']) {
     const page=await browser.newPage()
@@ -189,7 +190,7 @@ export async function verifyComposerLifecycle({browser,origin,jwt,anon,bytes}) {
       const composer=page.getByRole('dialog',{name:'新しい投稿'})
       await composer.waitFor()
       const picker=page.locator('input[type="file"][accept*="video/mp4"]')
-      await picker.setInputFiles({name:'poster-a.webm',mimeType:'video/webm',buffer:bytes})
+      await picker.setInputFiles({name:'poster-a.webm',mimeType:'video/webm',buffer:posterBytes})
       const player=composer.locator('video')
       await player.waitFor()
       if(scenario==='canvas-unavailable') {
@@ -207,7 +208,7 @@ export async function verifyComposerLifecycle({browser,origin,jwt,anon,bytes}) {
         assert.equal(await player.evaluate(video=>video.paused),true,'poster must appear before user playback')
         if(scenario==='stale-probe') {
           const old=await player.getAttribute('src')
-          await picker.setInputFiles({name:'poster-b.webm',mimeType:'video/webm',buffer:bytes})
+          await picker.setInputFiles({name:'poster-b.webm',mimeType:'video/webm',buffer:posterBytes})
           await page.waitForFunction(previous=>{
             const player=document.querySelector('[role="dialog"] video')
             return Boolean(player?.src && player.src!==previous && player.poster?.startsWith('data:image/jpeg'))
