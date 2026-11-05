@@ -1,4 +1,4 @@
-name: GTO extensive actions and true-chance EV intervals
+name: GTO high-reach CALL continuation coverage
 on:
   push:
     branches: ['codex/c-native-hand169-bridge-20261023']
@@ -8,6 +8,9 @@ on:
       - 'gto/abstract/value_*'
       - 'gto/abstract/gap_*'
       - 'gto/abstract/street_*'
+      - 'gto/abstract/call_*'
+      - 'tests/test_call_coverage.py'
+      - 'docs/qa/call-coverage-20261105/**'
       - 'gto/abstract/chance_coverage.py'
       - 'tests/test_street_coverage.py'
       - 'docs/qa/street-coverage-20261105/**'
@@ -74,19 +77,18 @@ jobs:
         run: python -B -m unittest tests.test_gap_decomposition -v
       - name: Behavioral CFR, legal actions, private BR and probability intervals
         run: python -B -m unittest tests.test_street_coverage -v
-      - name: Reproduce validation-only action-tree selection
+      - name: New CALL-prefix reach, legal sizing and root attribution tests
+        run: python -B -m unittest tests.test_call_coverage -v
+      - name: Reproduce chance-only design fixed before EV evaluation
         run: |
-          python -B -m gto.abstract.street_study --phase select --build-dir "$RUNNER_TEMP/street-select" --output "$RUNNER_TEMP/street-selection.json"
-          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/street-selection.json" --expected docs/qa/street-coverage-20261105/selection.json
-      - name: Reproduce locked final action-tree comparison
+          python -B -m gto.abstract.call_study --phase design --build-dir "$RUNNER_TEMP/call-design" --chance-output "$RUNNER_TEMP/call-chance.json" --output "$RUNNER_TEMP/call-design.json"
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/call-chance.json" --expected docs/qa/call-coverage-20261105/chance.json
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/call-design.json" --expected docs/qa/call-coverage-20261105/design.json
+      - name: Reproduce preregistered512 and2048 cohort without final selection
         run: |
-          python -B -m gto.abstract.street_study --phase final --build-dir "$RUNNER_TEMP/street-final" --output "$RUNNER_TEMP/street-final.json"
-          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/street-final.json" --expected docs/qa/street-coverage-20261105/final-results.json
-      - name: Full population stratified intervals with guarded resumable cache
+          python -B -m gto.abstract.call_study --phase cohort --build-dir "$RUNNER_TEMP/call-cohort" --output "$RUNNER_TEMP/call-cohort.json"
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/call-cohort.json" --expected docs/qa/call-coverage-20261105/cohort-results.json
+      - name: Chance-stratified and priority evaluation with root EV bounds
         run: |
-          python -B -m gto.abstract.street_study --phase population --build-dir "$RUNNER_TEMP/street-population" --cache-dir "$RUNNER_TEMP/street-population-cache" --output "$RUNNER_TEMP/street-population.json"
-          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/street-population.json" --expected docs/qa/street-coverage-20261105/population-results.json
-      - name: Readonly root reach attribution with all other CALLs bounded
-        run: |
-          python -B -m gto.abstract.street_root_bounds --population "$RUNNER_TEMP/street-population.json" --build-dir "$RUNNER_TEMP/street-root" --output "$RUNNER_TEMP/street-root.json"
-          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/street-root.json" --expected docs/qa/street-coverage-20261105/root-bounds.json
+          python -B -m gto.abstract.call_study --phase population --build-dir "$RUNNER_TEMP/call-population" --cache-dir "$RUNNER_TEMP/call-cache" --output "$RUNNER_TEMP/call-population.json"
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/call-population.json" --expected docs/qa/call-coverage-20261105/population-results.json
