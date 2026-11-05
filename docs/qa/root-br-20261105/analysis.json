@@ -1,0 +1,109 @@
+{
+  "class_pair_BR_kernel_root_board_probability": 0.0031697444835622115,
+  "class_scalar_max_error_bb": 1.7763568394002505e-15,
+  "deterministic_interval_after_bb": [
+    -29.102312731374155,
+    28.996693152157842
+  ],
+  "deterministic_interval_before_bb": [
+    -29.261958063893193,
+    29.154022267995025
+  ],
+  "deterministic_width_after_bb": 58.099005883532,
+  "deterministic_width_before_bb": 58.41598033188822,
+  "deterministic_width_reduction_bb": 0.3169744483562198,
+  "events_by_prefix": {
+    "limp_check": {
+      "count": 24,
+      "under0_1": 24,
+      "worst_nashconv_bb": 0.012182382457872065
+    },
+    "limp_raise_call": {
+      "count": 24,
+      "under0_1": 24,
+      "worst_nashconv_bb": 0.029751023382408093
+    },
+    "open_call": {
+      "count": 208,
+      "under0_1": 208,
+      "worst_nashconv_bb": 0.03838523169301411
+    }
+  },
+  "external_gto_comparison": "NOT PERFORMED",
+  "fixed512_root_stat_interval_98percent_unchanged_bb": [
+    -3.038183244899788,
+    3.060236341943823
+  ],
+  "formal_acceptance_complete": 0,
+  "formal_acceptance_total": 12,
+  "history_sync": "complete with old fa4d156 backup, snapshots and source objectstore retained",
+  "local_new_tests_pass": 8,
+  "native_manual_error_bb": 3.656566605059197e-09,
+  "new_events": 256,
+  "new_head_CI": "PENDING when result commit written",
+  "new_normal_GTO_ranges": 0,
+  "new_root_board_probability": 0.007830866302895608,
+  "next_unseen_excluded_suit_orbits": 694,
+  "old_root_board_probability": 0.004661121819333397,
+  "preflop_BR_bounds_new_class_kernel_only": {
+    "bb_deviation_gain_interval": [
+      0.0,
+      68.87546791169996
+    ],
+    "bb_preflop_br_sb_ev_interval": [
+      -39.646911947760834,
+      11.37121770331145
+    ],
+    "external_gto_comparison": "NOT PERFORMED",
+    "kernel_uses_new_boards_only": true,
+    "policy_digest_after": "837ec7e0ef2c66714f65a174f9e83a398e713e65f82de4fb7b7e1699dee12778",
+    "policy_digest_before": "837ec7e0ef2c66714f65a174f9e83a398e713e65f82de4fb7b7e1699dee12778",
+    "policy_updated": false,
+    "preflop_nashconv_interval": [
+      0.0,
+      89.58777191667272
+    ],
+    "profile_sb_ev_interval": [
+      -29.336562103581667,
+      29.228555963939126
+    ],
+    "real_game_approximation_error": "UNKNOWN",
+    "sb_deviation_gain_interval": [
+      0.0,
+      79.27742207249356
+    ],
+    "sb_preflop_br_ev_interval": [
+      -0.49999999999988737,
+      49.940859968911894
+    ],
+    "scope": "169-class preflop-only BR; fixed postflop profiles, no suit-specific or fullNLHE BR guarantee",
+    "units": "BB before blinds",
+    "unknown_matched_cells": "\u00b150BB, not zero"
+  },
+  "previous_research_CI_pass": 86,
+  "public_base": "cc905fc7633fa2da07f7fe1c1c7e88adaa4ac4fa",
+  "real_game_approximation_error": "UNKNOWN",
+  "responses": {
+    "fresh_audit": {
+      "budget_counts": {
+        "512": 4,
+        "1024": 9,
+        "2048": 1
+      },
+      "cases": 14,
+      "max_after_nashconv_bb": 0.09875343272772341,
+      "max_before512_nashconv_bb": 0.3339917473665537,
+      "passes": 14
+    },
+    "known_diagnostic": {
+      "budget_counts": {
+        "2048": 4,
+        "4096": 2
+      },
+      "cases": 6,
+      "max_after_nashconv_bb": 0.09883666581739714,
+      "max_before512_nashconv_bb": 0.36355856776910356,
+      "passes": 6
+    }
+  }
+}
