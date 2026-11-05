@@ -1,0 +1,302 @@
+{
+  "external_gto_comparison": "NOT PERFORMED",
+  "final_summary": {
+    "by_game": {
+      "full_half": {
+        "contexts": 28,
+        "mean_nashconv_bb": 0.022473058704950442,
+        "worst_nashconv_bb": 0.03935260662702511
+      },
+      "full_multi": {
+        "contexts": 28,
+        "mean_nashconv_bb": 0.04796165304581184,
+        "worst_nashconv_bb": 0.08793746184456275
+      }
+    },
+    "by_stage": {
+      "vs_3bet": {
+        "contexts": 28,
+        "mean_nashconv_bb": 0.03180634902587709,
+        "worst_nashconv_bb": 0.07496660173584932
+      },
+      "vs_4bet": {
+        "contexts": 28,
+        "mean_nashconv_bb": 0.038628362724885186,
+        "worst_nashconv_bb": 0.08793746184456275
+      }
+    },
+    "overall": {
+      "contexts": 56,
+      "mean_nashconv_bb": 0.03521735587538114,
+      "worst_nashconv_bb": 0.08793746184456275
+    }
+  },
+  "fixed_board_showdown_sampling_error_bb": 0,
+  "formal_acceptance_complete": 0,
+  "formal_acceptance_total": 12,
+  "half_to_multi_offtree": {
+    "mean_nashconv_bb": 1.848613621161064,
+    "worst_nashconv_bb": 3.8600650324818515
+  },
+  "legacy_profile_lift_max_abs_error_bb": 1.4210854715202004e-14,
+  "legacy_reference_summaries": {
+    "legacy4": {
+      "by_game": {
+        "full_half": {
+          "contexts": 28,
+          "mean_nashconv_bb": 2.7721260627218345,
+          "worst_nashconv_bb": 7.499833716520783
+        },
+        "full_multi": {
+          "contexts": 28,
+          "mean_nashconv_bb": 4.828093567913229,
+          "worst_nashconv_bb": 11.991729038044355
+        }
+      },
+      "by_stage": {
+        "vs_3bet": {
+          "contexts": 28,
+          "mean_nashconv_bb": 2.486645511323753,
+          "worst_nashconv_bb": 4.068955503859549
+        },
+        "vs_4bet": {
+          "contexts": 28,
+          "mean_nashconv_bb": 5.113574119311311,
+          "worst_nashconv_bb": 11.991729038044355
+        }
+      },
+      "overall": {
+        "contexts": 56,
+        "mean_nashconv_bb": 3.800109815317532,
+        "worst_nashconv_bb": 11.991729038044355
+      }
+    },
+    "legacy5": {
+      "by_game": {
+        "full_half": {
+          "contexts": 28,
+          "mean_nashconv_bb": 0.7324818227307442,
+          "worst_nashconv_bb": 2.450938427223228
+        },
+        "full_multi": {
+          "contexts": 28,
+          "mean_nashconv_bb": 2.4719983878558027,
+          "worst_nashconv_bb": 4.160915904240049
+        }
+      },
+      "by_stage": {
+        "vs_3bet": {
+          "contexts": 28,
+          "mean_nashconv_bb": 1.5755538542558303,
+          "worst_nashconv_bb": 3.1442304707574884
+        },
+        "vs_4bet": {
+          "contexts": 28,
+          "mean_nashconv_bb": 1.6289263563307173,
+          "worst_nashconv_bb": 4.160915904240049
+        }
+      },
+      "overall": {
+        "contexts": 56,
+        "mean_nashconv_bb": 1.6022401052932735,
+        "worst_nashconv_bb": 4.160915904240049
+      }
+    }
+  },
+  "local_regression_tests_pass": 57,
+  "local_unit_tests_pass": 16,
+  "new_head_ci": "PENDING at results commit; receipt outside repository will record final head",
+  "next_unseen_excluded_orbit_count": 410,
+  "numerical_guard_bb": 1e-07,
+  "physical_probability_previous_comparison": {
+    "vs_3bet": {
+      "current_physical_boards": 128,
+      "current_probability": 0.00584522970481284,
+      "different_continuation_games_and_profiles": "Do not interpret as a same-policy EV accuracy comparison.",
+      "previous_physical_boards": 7,
+      "previous_probability": 0.0002981875073948978,
+      "probability_ratio": 19.602530487878035,
+      "same_frozen_prefix_chance": true
+    },
+    "vs_4bet": {
+      "current_physical_boards": 128,
+      "current_probability": 0.005869225251691683,
+      "different_continuation_games_and_profiles": "Do not interpret as a same-policy EV accuracy comparison.",
+      "previous_physical_boards": 7,
+      "previous_probability": 0.0003084066371488546,
+      "probability_ratio": 19.030800718010685,
+      "same_frozen_prefix_chance": true
+    }
+  },
+  "population": {
+    "vs_3bet": {
+      "criteria": {
+        "game_value_width_at_most_half_safe_range": true,
+        "no_empty_intersection": true,
+        "physical_probability_at_least_0_003": true,
+        "profile_interval_width_at_most50bb": true
+      },
+      "final_checkpoint": {
+        "deterministic_restricted_game_value_interval_bb": [
+          -8.961110465953487,
+          8.93454226231677
+        ],
+        "draw_count": 128,
+        "draws_by_stratum": {
+          "monotone": 8,
+          "paired_rainbow_high": 4,
+          "paired_rainbow_low": 11,
+          "paired_twotone": 12,
+          "rainbow": 36,
+          "trips": 3,
+          "twotone_connected": 12,
+          "twotone_disconnected": 42
+        },
+        "empty_intersection_failure": false,
+        "evaluated_board_probability": 0.00584522970481284,
+        "exact_ev_integration_complete": false,
+        "external_gto_comparison": "NOT PERFORMED",
+        "game_value_sampling_radius_bb": 3.200707939079104,
+        "model_approximation_error": "UNKNOWN",
+        "profile_ev_estimate_bb": -2.1643165957978923,
+        "profile_sampling_radius_bb": 17.78171077266169,
+        "restricted_game_value_interval_bb": [
+          -5.4352293674153,
+          1.1129330372587736
+        ],
+        "sampled_game_lower_estimate_bb": -2.2345213283361955,
+        "sampled_game_upper_estimate_bb": -2.0877750018203303,
+        "sampled_mean_local_br_width_bb": 0.14674632651586528,
+        "statistical_game_value_interval_bb": [
+          -5.4352293674153,
+          1.1129330372587736
+        ],
+        "statistical_profile_interval_bb": [
+          -19.946027468459583,
+          15.617394276863797
+        ],
+        "statistical_target": "all22100physicalboards under frozen history, restrictedgame value and fixed uniform512profile;NOTrealNLHE",
+        "uncomputed_game_value_contribution_bounds_bb": [
+          -8.947392932656685,
+          8.947392932656685
+        ],
+        "uncomputed_profile_ev_contribution_bounds_bb": [
+          -49.707738514759356,
+          49.707738514759356
+        ],
+        "unevaluated_board_probability": 0.9941547702951872,
+        "uniform512_profile_ev_interval_bb": [
+          -19.946027468459583,
+          15.617394276863797
+        ],
+        "unique_physical_boards": 128,
+        "weighted_hoeffding_variance_factor": 0.008124891107822418
+      },
+      "note": "Uniform512 population profile differs from selected warm2048 final profile. Statistical99% interval targets restricted game only."
+    },
+    "vs_4bet": {
+      "criteria": {
+        "game_value_width_at_most_half_safe_range": true,
+        "no_empty_intersection": true,
+        "physical_probability_at_least_0_003": true,
+        "profile_interval_width_at_most50bb": true
+      },
+      "final_checkpoint": {
+        "deterministic_restricted_game_value_interval_bb": [
+          -20.926636889533594,
+          20.827842203553352
+        ],
+        "draw_count": 128,
+        "draws_by_stratum": {
+          "monotone": 8,
+          "paired_rainbow_high": 4,
+          "paired_rainbow_low": 11,
+          "paired_twotone": 12,
+          "rainbow": 36,
+          "trips": 3,
+          "twotone_connected": 12,
+          "twotone_disconnected": 42
+        },
+        "empty_intersection_failure": false,
+        "evaluated_board_probability": 0.005869225251691683,
+        "exact_ev_integration_complete": false,
+        "external_gto_comparison": "NOT PERFORMED",
+        "game_value_sampling_radius_bb": 7.467347720836567,
+        "model_approximation_error": "UNKNOWN",
+        "profile_ev_estimate_bb": -8.374738250641308,
+        "profile_sampling_radius_bb": 17.77939933532516,
+        "restricted_game_value_interval_bb": [
+          -15.920299107194305,
+          -0.810468369894027
+        ],
+        "sampled_game_lower_estimate_bb": -8.45295128635774,
+        "sampled_game_upper_estimate_bb": -8.277816190730594,
+        "sampled_mean_local_br_width_bb": 0.17513509562714624,
+        "statistical_game_value_interval_bb": [
+          -15.920299107194305,
+          -0.810468369894027
+        ],
+        "statistical_profile_interval_bb": [
+          -26.154137685966468,
+          9.404661184683851
+        ],
+        "statistical_target": "all22100physicalboards under frozen history, restrictedgame value and fixed uniform512profile;NOTrealNLHE",
+        "uncomputed_game_value_contribution_bounds_bb": [
+          -20.876746269714474,
+          20.876746269714474
+        ],
+        "uncomputed_profile_ev_contribution_bounds_bb": [
+          -49.706538737415414,
+          49.706538737415414
+        ],
+        "unevaluated_board_probability": 0.9941307747483084,
+        "uniform512_profile_ev_interval_bb": [
+          -26.154137685966468,
+          9.404661184683851
+        ],
+        "unique_physical_boards": 128,
+        "weighted_hoeffding_variance_factor": 0.008122778942543362
+      },
+      "note": "Uniform512 population profile differs from selected warm2048 final profile. Statistical99% interval targets restricted game only."
+    }
+  },
+  "real_game_approximation_error": "UNKNOWN",
+  "root_bounds": {
+    "computed_root_board_probability": 0.00015370111829851498,
+    "conditional_prefixes": {
+      "vs_3bet": {
+        "call_leaf_probability": 0.024493875627518404,
+        "evaluated_root_board_probability": 0.00014317232940396182,
+        "root_sb_contribution_interval_bb": [
+          -0.4885555160755148,
+          0.38253051304341956
+        ]
+      },
+      "vs_4bet": {
+        "call_leaf_probability": 0.0017938975662108846,
+        "evaluated_root_board_probability": 1.0528788894553177e-05,
+        "root_sb_contribution_interval_bb": [
+          -0.016870998810242337,
+          0.046917843941199626
+        ]
+      }
+    },
+    "confidence": 0.99,
+    "exact_fold_terminal_root_contribution_bb": -0.055161178162137496,
+    "other_call_ev_contribution_bounds_bb": [
+      -28.126657539369944,
+      28.126657539369944
+    ],
+    "other_call_probability_unknown": 0.5625331507873989,
+    "policy_updated": false,
+    "real_game_approximation_error": "UNKNOWN",
+    "root_sb_ev_interval_bb": [
+      -28.687245232417837,
+      28.500944718192425
+    ],
+    "scope": "fixed frozen preflop actions; new uniform512 restricted continuations at two CALL leaves; all other CALL continuations unconstrained within50BB. NOT original frozen full payoff or GTO.",
+    "two_profile_call_probability": 0.02628777319372929
+  },
+  "selected_iterations": 2048,
+  "validation_criteria_pass": true
+}

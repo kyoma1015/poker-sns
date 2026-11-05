@@ -60,6 +60,8 @@ jobs:
           assert all(digest(p)==h for p,h in current['preserved_and_research_source_sha256'].items())
           gap=json.loads(Path('docs/qa/model-gap-20261105/dependency-manifest.json').read_text())
           assert all(digest(p)==h for p,h in gap['preserved_and_research_source_sha256'].items())
+          street=json.loads(Path('docs/qa/street-coverage-20261105/dependency-manifest.json').read_text())
+          assert all(digest(p)==h for k in ('preserved_dependency_sha256','research_source_sha256','artifacts_sha256') for p,h in street[k].items())
           print('PASS preregistered source/selection/base')
           PYCODE
       - name: Public history posterior, own-information and phase-isolation tests
@@ -84,3 +86,7 @@ jobs:
         run: |
           python -B -m gto.abstract.street_study --phase population --build-dir "$RUNNER_TEMP/street-population" --cache-dir "$RUNNER_TEMP/street-population-cache" --output "$RUNNER_TEMP/street-population.json"
           python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/street-population.json" --expected docs/qa/street-coverage-20261105/population-results.json
+      - name: Readonly root reach attribution with all other CALLs bounded
+        run: |
+          python -B -m gto.abstract.street_root_bounds --population "$RUNNER_TEMP/street-population.json" --build-dir "$RUNNER_TEMP/street-root" --output "$RUNNER_TEMP/street-root.json"
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/street-root.json" --expected docs/qa/street-coverage-20261105/root-bounds.json

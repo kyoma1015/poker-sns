@@ -1,5 +1,14 @@
 {
   "comparison_performed": false,
+  "existing_provider_audit": {
+    "datasets_acquired": 0,
+    "do_not_repeat_paid_or_mismatched_acquisition": true,
+    "existing_normalized_comparator": "python -B -m gto.abstract.reference_compare --reference <authorized-normalized.json> --mode flop_controller --output /tmp/comparison.json",
+    "path": "docs/qa/reference-calibration-20261031/SOURCES.md",
+    "promising_free_candidate": "GTOBase HU Cash public catalog lists 50BB/free; full tree, ante, EV basis, lawful data export/reuse still unestablished",
+    "retrieved_at": "2026-10-31; not claimed freshly reverified",
+    "sha256": "c355b3a2e4f4df04136cae66d0179b0ce5a3d0ca2787695804ad924f7ff3dbcf"
+  },
   "external_gto_deviation": "UNKNOWN",
   "investigated": [
     {

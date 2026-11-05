@@ -85,4 +85,20 @@ class CoverageTests(unittest.TestCase):
  def test_validation_only_selection_uses_cheapest_acceptable(self):
   c=lambda n,w,m:{'iterations':n,'summary':{'overall':{'worst_nashconv_bb':w,'mean_nashconv_bb':m}}};self.assertEqual(study.choose([c(512,.2,.1),c(2048,.09,.04),c(8192,.01,.01)]),(2048,True));self.assertEqual(study.choose([c(512,.2,.1),c(2048,.15,.06)]),(2048,False))
 
+
+class RootBoundsTests(unittest.TestCase):
+ def test_frozen_root_reach_and_readonly_interval_conservation(self):
+  from gto.abstract import street_root_bounds as rb
+  # Reuse frozen input decoder without modifying the policy or payoff archive.
+  from gto.abstract.range_study import initialize
+  with tempfile.TemporaryDirectory() as d:
+   _,_,_,pi,_=initialize(Path(d));before=list(pi);population={'family_confidence':.99,'stages':{s:{'checkpoints':[{'uniform512_profile_ev_interval_bb':[-50.,50.],'evaluated_board_probability':.01,'empty_intersection_failure':False}]} for s in ('vs_3bet','vs_4bet')}};out=rb.root_bounds(pi,population);self.assertEqual(pi,before);self.assertGreater(out['computed_root_board_probability'],0);self.assertLessEqual(out['root_sb_ev_interval_bb'][0],out['root_sb_ev_interval_bb'][1]);self.assertAlmostEqual(out['computed_root_board_probability'],.01*out['two_profile_call_probability']);self.assertLessEqual(out['other_call_probability_unknown']+out['two_profile_call_probability'],1+1e-12)
+   population['stages']['vs_3bet']['checkpoints'][0]['uniform512_profile_ev_interval_bb']=[-1.,2.];population['stages']['vs_4bet']['checkpoints'][0]['uniform512_profile_ev_interval_bb']=[3.,4.];asym=rb.root_bounds(pi,population);entry=asym['conditional_prefixes']['vs_4bet'];mass=entry['call_leaf_probability'];self.assertEqual(entry['root_sb_contribution_interval_bb'],[-4*mass,-3*mass])
+ def test_invalid_conditional_interval_rejected(self):
+  from gto.abstract import street_root_bounds as rb
+  from gto.abstract.range_study import initialize
+  with tempfile.TemporaryDirectory() as d:
+   _,_,_,pi,_=initialize(Path(d));p={'family_confidence':.99,'stages':{s:{'checkpoints':[{'uniform512_profile_ev_interval_bb':[-1,1],'evaluated_board_probability':.01,'empty_intersection_failure':True}]} for s in ('vs_3bet','vs_4bet')}}
+   with self.assertRaises(ValueError):rb.root_bounds(pi,p)
+
 if __name__=='__main__':unittest.main()
