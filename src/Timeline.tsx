@@ -352,7 +352,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         const context = canvas.getContext('2d')
         if (!context) return
         context.drawImage(video, 0, 0, canvas.width, canvas.height)
-        const pixels = context.getImageData(0, 0, Math.min(8, canvas.width), Math.min(8, canvas.height)).data
+        const sampleSize = Math.min(24, canvas.width, canvas.height)
+        const pixels = context.getImageData(Math.floor((canvas.width - sampleSize) / 2), Math.floor((canvas.height - sampleSize) / 2), sampleSize, sampleSize).data
         if (!pixels.some((value, index) => index % 4 !== 3 && value > 16)) return
         setVideoPreviewPoster(canvas.toDataURL('image/jpeg', 0.76))
       } catch { /* A missing/undecodable frame must not block video playback. */ }
@@ -2651,6 +2652,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           onSeeked={event => captureVideoPreviewPoster(event.currentTarget)}
           onLoadedData={event => captureVideoPreviewPoster(event.currentTarget)}
           onCanPlay={event => captureVideoPreviewPoster(event.currentTarget)}
+          onPlaying={event => captureVideoPreviewPoster(event.currentTarget)}
+          onTimeUpdate={event => { if (!videoPreviewPoster) captureVideoPreviewPoster(event.currentTarget) }}
           style={{ width: '100%', maxHeight: 360, borderRadius: 10 }} />
         {!videoPreviewPoster && <span style={{ position: 'absolute', right: 8, top: 8, background: '#222', color: '#ddd', padding: '4px 7px', borderRadius: 6, fontSize: 11, pointerEvents: 'none' }}>プレビューを準備中</span>}
       </div>}
