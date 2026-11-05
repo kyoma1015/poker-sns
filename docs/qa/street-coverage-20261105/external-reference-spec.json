@@ -1,0 +1,67 @@
+{
+  "comparison_performed": false,
+  "external_gto_deviation": "UNKNOWN",
+  "investigated": [
+    {
+      "availability": "Public README describes approximate Balanced preflop model; matching verified 169 EV export not identified",
+      "license": "not established; no data copied or executed",
+      "url": "https://github.com/MatthewPDingle/GTOpen"
+    },
+    {
+      "availability": "Push/fold-only game; incompatible with 50BB raise/call/3bet/4bet game",
+      "license": "not established; no data copied or executed",
+      "url": "https://github.com/benbae300/Preflop-Heads-Up-Solver"
+    },
+    {
+      "availability": "Postflop solver code, not a same-condition preflop reference dataset",
+      "license": "README states AGPL-3.0-or-later; data reuse rights separately required",
+      "url": "https://github.com/b-inary/postflop-solver"
+    }
+  ],
+  "public_readme_metadata_provenance": [
+    {
+      "sha256": "1e2aa979c54eb22869515efa4c4a35ab3bf01bf48ce528d90b9639f8f049c241",
+      "url": "https://api.github.com/repos/MatthewPDingle/GTOpen"
+    },
+    {
+      "sha256": "312ab0ddfc0a6b77b55adc057113debd2e315f48ee03e9f7e62d3f015eba58a7",
+      "url": "https://raw.githubusercontent.com/MatthewPDingle/GTOpen/master/README.md"
+    },
+    {
+      "sha256": "65091dd92cfa23e16922a14d33ada4ae7be6991770063dce75aeb7e12a1686f9",
+      "url": "https://api.github.com/repos/benbae300/Preflop-Heads-Up-Solver"
+    },
+    {
+      "sha256": "c3fdf398f6ef3cd5f2e35b51c11657cf2b6686b4e6f0c4455860cbe095980f26",
+      "url": "https://raw.githubusercontent.com/benbae300/Preflop-Heads-Up-Solver/main/README.md"
+    }
+  ],
+  "required_conditions": {
+    "ante_bb": 0,
+    "blinds_bb": [
+      0.5,
+      1
+    ],
+    "coverage": "169 frequency and conditional action EV for RFI/vs_open/vs3bet/vs4bet",
+    "effective_stack_bb": 50,
+    "ev_origin": "explicit before-blinds or reproducible conversion",
+    "ev_unit": "BB",
+    "include_limp_and_all_legal_continuations": true,
+    "players": 2,
+    "postflop_action_abstraction": "must be disclosed; mismatch is reference-only",
+    "preflop_raise_to_bb": [
+      2.5,
+      9,
+      21,
+      50
+    ],
+    "rake": 0,
+    "source": "versioned original data with reuse permission and solver precision evidence"
+  },
+  "rules": [
+    "Do not call different stacks/rake/sizes or push-fold ranges matching GTO.",
+    "Do not infer code license grants permission to solver data.",
+    "No credentials, paywall bypass or paid acquisition."
+  ],
+  "status": "NO MATCHING EXTERNAL REFERENCE ACQUIRED"
+}

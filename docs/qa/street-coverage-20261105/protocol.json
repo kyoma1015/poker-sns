@@ -918,7 +918,7 @@
       "name": "full_multi"
     }
   ],
-  "half_to_multi_extension": "same-kind public node at nearest faced/own bet amount, ties smaller; new own bet amounts have zero prior probability; unreachable own histories uniform. Explicit research extension,not unique GTO continuation",
+  "half_to_multi_extension": "same-kind public node at nearest faced/own bet amount, ties smaller; new own bet amounts have zero prior probability; unreachable own histories uniform. Explicit research extension,not unique GTO continuation; unavailable raise maps to CALL, clarified before first fit",
   "initialization": "legacy5plan4096 response lifted by own-history-conditioned plan mixtures; first iteration prior, then regret matching; fixed seeds31/43 are frozen teacher priors,not MC chance seeds",
   "initialization_seeds": [
     31,
