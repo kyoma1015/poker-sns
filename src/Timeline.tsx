@@ -364,7 +364,64 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       video.requestVideoFrameCallback(() => capture())
     }
   }
-  useEffect(() => { setVideoPreviewPoster(null); if (!videoFile) { videoPreviewUrlRef.current = null; setVideoPreview(null); return }; const url = URL.createObjectURL(videoFile); videoPreviewUrlRef.current = url; setVideoPreview(url); return () => { if (videoPreviewUrlRef.current === url) videoPreviewUrlRef.current = null; URL.revokeObjectURL(url) } }, [videoFile])
+  useEffect(() => {
+    setVideoPreviewPoster(null)
+    if (!videoFile) {
+      videoPreviewUrlRef.current = null
+      setVideoPreview(null)
+      return
+    }
+    const url = URL.createObjectURL(videoFile)
+    videoPreviewUrlRef.current = url
+    setVideoPreview(url)
+    // Decode the poster on a separate, muted element. Never seek or play the
+    // visible player: Safari can stall playback when poster seeking races it.
+    const probe = document.createElement('video')
+    probe.muted = true
+    probe.defaultMuted = true
+    probe.playsInline = true
+    probe.preload = 'auto'
+    let cancelled = false
+    let captured = false
+    const capture = () => {
+      if (cancelled || captured || videoPreviewUrlRef.current !== url ||
+          probe.readyState < 2 || !probe.videoWidth || !probe.videoHeight) return
+      try {
+        const canvas = document.createElement('canvas')
+        const scale = Math.min(1, 640 / Math.max(probe.videoWidth, probe.videoHeight))
+        canvas.width = Math.max(1, Math.round(probe.videoWidth * scale))
+        canvas.height = Math.max(1, Math.round(probe.videoHeight * scale))
+        const context = canvas.getContext('2d')
+        if (!context) return
+        context.drawImage(probe, 0, 0, canvas.width, canvas.height)
+        // Sample the centre rather than a potentially letterboxed corner.
+        const side = Math.min(24, canvas.width, canvas.height)
+        const pixels = context.getImageData(Math.floor((canvas.width - side) / 2), Math.floor((canvas.height - side) / 2), side, side).data
+        if (!pixels.some((value, index) => index % 4 !== 3 && value > 16)) return
+        captured = true
+        setVideoPreviewPoster(canvas.toDataURL('image/jpeg', 0.76))
+      } catch { /* Preserve playable preview if Safari cannot decode a poster. */ }
+    }
+    const seek = () => {
+      if (cancelled || !Number.isFinite(probe.duration) || probe.duration <= 0) return
+      try { probe.currentTime = Math.min(0.4, probe.duration / 2) } catch { /* Seek not supported. */ }
+      capture()
+    }
+    probe.addEventListener('loadedmetadata', seek)
+    probe.addEventListener('loadeddata', capture)
+    probe.addEventListener('seeked', capture)
+    probe.addEventListener('canplay', capture)
+    probe.src = url
+    probe.load()
+    return () => {
+      cancelled = true
+      probe.pause()
+      probe.removeAttribute('src')
+      probe.load()
+      if (videoPreviewUrlRef.current === url) videoPreviewUrlRef.current = null
+      URL.revokeObjectURL(url)
+    }
+  }, [videoFile])
   const [imageFiles, setImageFiles] = useState<File[]>([])
   const [imagePreviews, setImagePreviews] = useState<string[]>([])
   const [selectedDiagnosis, setSelectedDiagnosis] = useState<{ result_id: string; animal_name_ja: string; catchphrase: string; result_type_key: string; completed_at: string } | null>(null)
