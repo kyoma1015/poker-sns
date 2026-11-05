@@ -65,6 +65,8 @@ jobs:
           assert all(digest(p)==h for p,h in gap['preserved_and_research_source_sha256'].items())
           street=json.loads(Path('docs/qa/street-coverage-20261105/dependency-manifest.json').read_text())
           assert all(digest(p)==h for k in ('preserved_dependency_sha256','research_source_sha256','artifacts_sha256') for p,h in street[k].items())
+          call=json.loads(Path('docs/qa/call-coverage-20261105/dependency-manifest.json').read_text())
+          assert all(digest(p)==h for k in ('preserved_dependency_sha256','research_source_sha256','artifacts_sha256') for p,h in call[k].items())
           print('PASS preregistered source/selection/base')
           PYCODE
       - name: Public history posterior, own-information and phase-isolation tests
@@ -87,7 +89,7 @@ jobs:
       - name: Reproduce preregistered512 and2048 cohort without final selection
         run: |
           python -B -m gto.abstract.call_study --phase cohort --build-dir "$RUNNER_TEMP/call-cohort" --output "$RUNNER_TEMP/call-cohort.json"
-          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/call-cohort.json" --expected docs/qa/call-coverage-20261105/cohort-results.json
+          python -B -m gto.abstract.call_verify --actual "$RUNNER_TEMP/call-cohort.json" --expected docs/qa/call-coverage-20261105/cohort-results.json
       - name: Chance-stratified and priority evaluation with root EV bounds
         run: |
           python -B -m gto.abstract.call_study --phase population --build-dir "$RUNNER_TEMP/call-population" --cache-dir "$RUNNER_TEMP/call-cache" --output "$RUNNER_TEMP/call-population.json"

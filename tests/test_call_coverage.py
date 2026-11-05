@@ -55,4 +55,12 @@ class CallTests(unittest.TestCase):
    with tempfile.TemporaryDirectory() as d,patch.object(cs,'ROOT',Path(d)):
     with self.assertRaises(ValueError):cs.population(Path(d),Path(d),self.p,{})
 
+class AuditToleranceTests(unittest.TestCase):
+ def test_only_raw_deal_roundoff_gets_native_guard_not_ev_or_identity(self):
+  from gto.abstract.call_verify import verify
+  a={'maximum_board_chance_mass_error':2e-10,'ev_bb':.1,'source':'fixed'};b={**a,'maximum_board_chance_mass_error':3e-10};verify(a,b)
+  for other in ({**b,'maximum_board_chance_mass_error':1e-5},{**b,'ev_bb':.100001},{**b,'source':'changed'}):
+   with self.assertRaises(ValueError):verify(a,other)
+  self.assertIn('maximum_board_chance_mass_error',a)
+
 if __name__=='__main__':unittest.main()
