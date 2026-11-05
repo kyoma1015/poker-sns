@@ -1,0 +1,11 @@
+# C GTO priority coverage, minimal responses and honest root BR
+
+Base public/local cc905fc7633fa2da07f7fe1c1c7e88adaa4ac4fa synchronized after environment recovery. Preserved old fa4d156 refs under backup/gto-call-local-20261105, diffs/untracked/ref snapshots /workspace/gto-preserve-call-20261105; unchanged alternates /workspace/poker-sns/.git/objects. No reset/clean/forcepush. Previous6SUCCESS/86PASS recognized,no rerun.
+
+Before new fit: protocol fixes256NEW population prefix/physicalboard events,24minimumper3CALL then global true-rootP*boardP*100 priority; no EV selection. Existing scalar coverage reused,not rerun. Prior674suitorbits excluded from7fresh audits seed27011,2stages; known worst3/stage are diagnostic,not unseen. Registered adaptive checkpoint512/1024/2048/4096 stops first exact restrictedNC<=.1, elseFAIL; no post-final budget expansion. New responses do not replace fixed512 profiles in rootEV target.
+
+Add standalone behavioral terminal-coefficient oracle, reuse exact type_leaf/unweighted combo/runout aggregation for newboards. Scalar reachedEV cannot supply off-reach classpair payoff. New classpair kernel only256cases supports readonly169class rootBR bounds with all missing payoffs±50BB and folds exact. No zero placeholders; no original CFR policy/payoff mutation. BR restricted to preflop169class actions,not fullNLHE/suit-aware BR. Separate kernelBRcoverage from scalarEVcoverage, model assumptions from deterministic incomplete-coverage bounds. Uncertainty may remain wide;report failures.
+
+Acceptance: newunique events, rootcoveragegain/deterministicwidthdecrease, olddiagnostic+freshNCthreshold within4096, independent class/scalar and root/manual checks1e-8BB; BR monotonic/private-info tests. All before fit. Formal0/12,externalNOT PERFORMED,realgameerrorUNKNOWN. Protect frozenCFR,8ranges1352/HU1BB/2..9/staticdemo and otherPR/main/prod/SSO/fees. MVP roadmap must reference12actual criteria and distinguish preflop release work from postflop research; no formal20stack/sizing invented.
+
+Next implement/test; lock source/design before computations; response+priority/kernel integration; acceptance/MVP document; commits/one publicFF/newCI. No autonomous restart.
