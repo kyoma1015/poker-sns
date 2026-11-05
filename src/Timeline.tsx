@@ -2643,12 +2643,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       {styleSnapshot && renderStyleSnapshot(styleSnapshot)}
       {videoPreview && <div style={{ position: 'relative' }}>
         <video key={videoPreview} controls playsInline preload="auto" src={videoPreview} poster={videoPreviewPoster || undefined}
-          onLoadedMetadata={event => {
-            const video = event.currentTarget
-            if (Number.isFinite(video.duration) && video.duration > 0.3) {
-              try { video.currentTime = Math.min(0.4, video.duration / 2) } catch { /* native video fallback */ }
-            }
-          }}
+          // Never seek the user-controlled player to generate a poster:
+          // iPhone Safari can stall playback when metadata-driven seeking races decoding.
           onSeeked={event => captureVideoPreviewPoster(event.currentTarget)}
           onLoadedData={event => captureVideoPreviewPoster(event.currentTarget)}
           onCanPlay={event => captureVideoPreviewPoster(event.currentTarget)}
