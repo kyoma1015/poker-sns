@@ -133,7 +133,7 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal, prepared
           // suspend playback immediately (observed at 0.00s and 0.08s).
           // Keep Safari's element muted while WebAudio routes decoded samples
           // into the recording. Chrome still requires unmuting for audible capture.
-          const safari = /Safari\//.test(navigator.userAgent) && !/CriOS|FxiOS|EdgiOS/.test(navigator.userAgent)
+          const safari = /Safari\//.test(navigator.userAgent) && !/Chrome\/|Chromium\/|CriOS|FxiOS|EdgiOS|OPR\/|Edg\/|Android/.test(navigator.userAgent)
           if (!safari) {
             video.muted = false
             video.defaultMuted = false
