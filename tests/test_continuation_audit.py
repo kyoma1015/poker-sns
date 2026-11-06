@@ -26,6 +26,11 @@ class ContinuationAuditTests(unittest.TestCase):
     if node['actor']<0:self.assertLessEqual(node['c1'],100)
    m=[1/64]*64;e=[.4/64]*64;pi=self.pi(g);x=a.evaluate(self.lib,g,pi,m,e);ref=independent(g,pi,m,e)
    for k,v in ref.items():self.assertAlmostEqual(x[k],v,places=10)
+ def test_native_training_FFI_and_regret_certificate(self):
+  g=a.game(self.r,[.1,.25,1/3,.5,.75,1,2,10],0,expanded=True);pi,trace=a.train(self.lib,g,[1/64]*64,[.4/64]*64,[16,64,256]);self.assertEqual([x['iterations'] for x in trace],[16,64,256]);self.assertLessEqual(trace[-1]['restricted_nashconv_bb'],trace[-1]['regret_bound_bb']+1e-7)
+  for k,n in enumerate(g['tree']['nodes']):
+   if n['actor']>=0:
+    for t in range(8):self.assertAlmostEqual(sum(pi[g['offsets'][k]+t*len(n['actions']):g['offsets'][k]+(t+1)*len(n['actions'])]),1.,places=12)
  def test_future_envelope_does_not_treat_unplayed_turnriver_as_known(self):
   g=a.game(self.r,[.5],0);pi=self.pi(g);env=a.future_envelope(g,pi,[1/64]*64,[.4/64]*64);value=a.evaluate(self.lib,g,pi,[1/64]*64,[.4/64]*64)['profile_hero_ev_bb'];self.assertGreater(env['unresolved_showdown_probability'],0);self.assertLessEqual(env['root_lower'],value);self.assertGreaterEqual(env['root_upper'],value)
  def test_BR_does_not_choose_actions_using_actual_opponent_private_type(self):

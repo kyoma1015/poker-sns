@@ -46,3 +46,15 @@ both originalpreflopreaches reported,no finalselection. Conditional moments must
 NOT be reused as unweighted offreach preflopcounterfactual payoffs after changing
 ranges. The UI export explicitly marks counterfactual_preflop_oracle=false.
 No normalGTO registration; old range/EV datasets stay byte-identical.
+
+Actual analysis failure: ctypes street_train declared18parameters but C++/call
+has17; evaluation/moment generation were unaffected. Corrected the extra DP and
+added an actual native-training/regret/normalization regression (8PythonPASS).
+No results were accepted from the failed run. Preregistered profile candidates,
+counts,criteria andprotocol unchanged. Preserved olddesign/source inQA/localgit.
+Migrated1755cached momentpackets only after verifying identical AST of all moment
+producer/path/input/read functions,unchanged inputs/orbits/protocol,only FFI wrapper
+file changed,and all numericpacket checksums valid. Originalcache retained at
+/workspace/continuation-audit-cache-before-ffi-fix; migration proof versioned.
+No recomputation or invented recovery; fresh CI will regenerate from corrected
+source,not use the migratedlocalcache. Restart analysis with same registered cases.

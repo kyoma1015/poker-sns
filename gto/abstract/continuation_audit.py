@@ -22,7 +22,7 @@ def check():
  return d
 
 def build(root):
- root.mkdir(parents=True,exist_ok=True);target=root/'audit.so';subprocess.run(['c++','-std=c++17','-O3','-ffp-contract=off','-fno-tree-vectorize','-shared','-fPIC',str(Path(__file__).with_suffix('.cc')),'-o',str(target)],check=True);lib=C.CDLL(str(target.resolve()));a=[C.c_int,C.c_int,C.c_int,IP,IP,IP,DP,DP,DP,DP,DP];lib.street_evaluate.argtypes=[*a,DP];lib.street_train.argtypes=[*a,C.c_int,C.c_int,DP,DP,DP,DP,DP];return lib
+ root.mkdir(parents=True,exist_ok=True);target=root/'audit.so';subprocess.run(['c++','-std=c++17','-O3','-ffp-contract=off','-fno-tree-vectorize','-shared','-fPIC',str(Path(__file__).with_suffix('.cc')),'-o',str(target)],check=True);lib=C.CDLL(str(target.resolve()));a=[C.c_int,C.c_int,C.c_int,IP,IP,IP,DP,DP,DP,DP,DP];lib.street_evaluate.argtypes=[*a,DP];lib.street_train.argtypes=[*a,C.c_int,C.c_int,DP,DP,DP,DP];return lib
 
 def expanded_tree(pot,remaining,hero_actor,fractions):
  ns=[];amounts=sorted(set(min(remaining,max(1.,pot*x)) for x in fractions))
