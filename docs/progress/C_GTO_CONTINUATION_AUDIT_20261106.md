@@ -1,0 +1,32 @@
+# C: release-directed continuation approximation audit
+
+Base8087b6ab6ecbcced84c233fb166f847526a72ce7 clean,prior6SUCCESS/786unit executions,
+formal0/12. Preserve old8ranges1352,new8ranges1352,HU1BB,2..9,staticdemo,frozenCFR.
+No production/main/otherPR/SSO/fees/forcepush/reset/clean. Cloud skill/readiness
+checked:connected,enforcedHTTPunrestricted,no credentialbindings. Do not repeat
+stalled additional-network-permission commands; use existing GitHubconnector/CI.
+
+Protocol/source/design frozen before fits/fullpopulation moments. Focus actual
+newpreflop reach after vs3betCALL/vs4betCALL,2currentpolicies=4fixedconfigurations.
+Compute1755orbit/22100physicalF exact cardremoved joint moments for each seat's
+own169class*8flags vsopponent8flags. True root/history chance weighting,not equal
+normalized-board averaging. Opponent concrete cards only in chance/showdownkernel,
+never action choice. Sameclasses/publicflags invariant under global suit relabel.
+
+Compare allfive specified profiles on SAMEreaches: fixedsmall/fixedlarge teachers,
+posterior-small/posterior-large retrained from exact fullpopulation moments,
+posterior-union with0.1/0.25/1/3/1/2/3/4/1/2/10pot sizes(capped) andtwo raises.
+No final model selection,preflop/frozencontrollers/range datasets unchanged.
+Own/public info refinement: texture+3flags→texture+169class+flags→actualflop+
+169class+flags. Independent recursive PythonBR checks actualcoarsegames; new
+stride12memory-reduced nativeengine supports expanded legal actions. Testagainst
+legacy engine,private-information counterexample,fullpolicyvalue preservation,
+legal stacks/raise sizes. BRgain must not decrease when revealing moreinfo.
+
+Fitcoarse subgames512/2048/8192checkpoints. This is not jointpreflop+postflop CFR
+convergence and not externalGTO precision. Late-street betting remains omitted;
+report nonallin showdown mass and conservative±50BB futurevalue envelope,not a
+fabricated late-street error. Actual callerEV must match published exact CALL
+EV atsamepreflopprofile. Formal0/12 until originalprofiles/size+realapprox evidence.
+Next:run two finite momentworkers,analyze/refit/BR,guarded UI diagnostic display,
+mobile/tests/build/lint,commit+FFpush,newCIverify. No persistentdaemon/autoresume.
