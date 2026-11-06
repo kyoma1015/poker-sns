@@ -44,3 +44,7 @@ jobs:
           python -B -m gto.abstract.independent_verify --actual "$RUNNER_TEMP/suit-results.json" --expected docs/qa/suit-exact-preflop-20261106/results.json
           python -B -m gto.abstract.suit_exact --phase export --input "$RUNNER_TEMP/suit-results.json" --output "$RUNNER_TEMP/suit-ui.json"
           python -B -m gto.abstract.independent_verify --actual "$RUNNER_TEMP/suit-ui.json" --expected src/gto/independentResearchData.json
+          python -B -m gto.abstract.suit_exact_compare --input "$RUNNER_TEMP/suit-results.json" --build-dir "$RUNNER_TEMP/suit-compare" --output "$RUNNER_TEMP/suit-comparison.json"
+          python -B -m gto.abstract.independent_verify --actual "$RUNNER_TEMP/suit-comparison.json" --expected docs/qa/suit-exact-preflop-20261106/comparison.json
+          python -B -m gto.abstract.suit_exact_reference --input "$RUNNER_TEMP/suit-results.json" --output "$RUNNER_TEMP/suit-reference.json"
+          python -B -m gto.abstract.independent_verify --actual "$RUNNER_TEMP/suit-reference.json" --expected docs/qa/suit-exact-preflop-20261106/reference-status.json

@@ -41,3 +41,34 @@ orbit160 withoutfailure). Finite reverse cache prefill is optional compute-only
 parallelism; representative/aggregation order unchanged,not a newagent/daemon.
 GitHub issue search repoGTO"20" returned0; localREADME/acceptance/nativebatch still
 say missing originalowner/G11profile. No original20stack/size source recovered.
+
+MC baseline policies were recovered from the actual pre-evaluation freeze and their
+joint digest matched the prior reported artifact. Same-policy comparison protocol
+was committed before exact results; no reconstruction from displayed row mixes.
+It will separately report MC-bound shrinkage at fixedpolicy/fixedcontinuation and
+new-policy learning effect. External reference adapter reuses the strict existing
+comparator,not a newly invented reference; missing comparison remains0/676permodel.
+Current work is class-symmetric only. Arbitrary suit-dependent ranges/controllers
+are outside the orbit proof and must not use this oracle unchanged.
+
+Exact run COMPLETE at2026-11-0605:56UTC. All1755orbits/22100physicalF; all169²mass
+sum error0at output precision. Max suit transform payoff error4.337e-19BB/board,
+allin diagonal9.860e-19BB. Source/design identities unchanged. Native/Python BR
+maxdiff7.574e-15BB. Both model0.1research thresholds met in the enumerated fixed
+continuation game,NOT realNLHE. Sampled-oldpolicy same-model NC now small
+[0.021715158742,0.021715338002],large[0.022569531025,0.022569697595]BB instead of
+previousMC[0,7.711587009]/[0,11.665099038]. This holds oldpolicy and teacher fixed.
+New exact-table learning NC small[0.001505467301,0.001505651561],large
+[0.001422508028,0.001422675688]BB. New rootSB EV small
+[0.030880211883,0.030880305006],large[0.037254171989,0.037254255296]BB.
+These are1e-7leaf numerical-guard intervals,NOT statistical confidence intervals
+or formal rounding proofs. Integration sampling error0within this fixed finite
+model; realgameapproximationUNKNOWN,externalreference0/676permodel,formal0/12.
+
+New8research contexts retain169each/1352rows with actionEV/frequencies; allaction
+numerical interval widths≤2.000001e-7BB. Source/output replay PASS,Python5PASS,Node22PASS,
+newdata typecheck/build/lint PASS. Newv2 mobile still requires its own newCI.
+Original protected8ranges1352 unchanged. Full result /workspace/suit-exact-full-results.json,
+repo compact3oracle packets store exact binary count/SHA fingerprints,
+validated against full payload before replay. OldMC snapshots kept unchanged.
+Next finalmanifest/README,commit+FFpush,newCI(reproduce1755orbits+BR+UI),fix failures.

@@ -13,6 +13,7 @@ export default function IndependentPreflop({ stage }: { stage: IndependentStage 
   const model = data.models[variant], context = model.contexts[stage], row = context.hands[hand]
   const sample = data.oracle_summary.evaluation_oracle
   const exact = data.uncertainty_kind === 'enumerated_population_with_empirical_rounding_guard'
+  const actionName = (action: string) => stage === 'rfi' && action === 'call' ? 'リンプ（1BBまで）' : names[action]
   return <section className="card gto-research" aria-label="独立学習プリフロップ研究版">
     <h2>独立学習プリフロップ研究版</h2>
     <p role="note"><strong>研究版／実戦GTO精度未検証</strong>。通常GTOの合格データではありません。</p>
@@ -23,7 +24,7 @@ export default function IndependentPreflop({ stage }: { stage: IndependentStage 
     <p>フロップの学習方策を固定し、全プリフロップ分岐を一貫したゲームとして学習。フロップは1回のベットと応答まで、後続ストリートはチェックで進む近似モデルです。相手の実際の非公開カードは判断に使いません。</p>
     <p>学習利得表内NashConv：{model.sample_game_nashconv_bb.toFixed(6)} BB。{exact ? '全列挙した固定モデル内の評価' : '独立評価標本'}：{model.evaluation_sample_nashconv_bb.toFixed(6)} BB。固定継続モデルの期待ゲームに対する{exact ? '数値ガード付きNashConv区間' : 'NashConv区間'}：[{pair(model.root_expected_game_bounds_bb.preflop_nashconv_interval)}] BB。</p>
     <p>{data.quality.expected_game_root_NC_upper_at_most0_1 ? 'この固定継続モデルの計算値は研究上の0.1BB基準を満たしました。' : '期待ゲームの0.1BB収束基準は未達です。'} 実ゲームの近似誤差UNKNOWN、外部GTO比較未実施です。</p>
-    <div className="gto-legend">{context.actions.map((a, i) => <span key={a}><i style={{ background: colors[i] }} />{names[a]}</span>)}</div>
+    <div className="gto-legend">{context.actions.map((a, i) => <span key={a}><i style={{ background: colors[i] }} />{actionName(a)}</span>)}</div>
     <div className="gto-matrix-scroll" tabIndex={0} role="region" aria-label="独立学習169ハンド表">
       <table className="gto-matrix"><caption>研究用の混合頻度・モデルEV（通常GTOではありません）</caption>
         <tbody>{handGrid.map((r, i) => <tr key={i}>{r.map(label => <td key={label}>
@@ -32,7 +33,7 @@ export default function IndependentPreflop({ stage }: { stage: IndependentStage 
       </table>
     </div>
     <section aria-live="polite" data-independent-detail><h3>{hand}：独立学習の頻度・EV</h3>
-      <ul>{context.actions.map((a, i) => <li key={a}>{names[a]}：{(row.frequencies[i] * 100).toFixed(1)}%／モデルEV {row.action_ev_bb[i].toFixed(3)} BB／区間 [{pair(row.action_ev_intervals_bb[i])}] BB</li>)}</ul>
+      <ul>{context.actions.map((a, i) => <li key={a}>{actionName(a)}：{(row.frequencies[i] * 100).toFixed(1)}%／モデルEV {row.action_ev_bb[i].toFixed(3)} BB／区間 [{pair(row.action_ev_intervals_bb[i])}] BB</li>)}</ul>
       <p>混合方策EV：{row.ev_bb.toFixed(3)} BB／区間 [{pair(row.model_ev_interval_bb)}] BB。ブラインド支出を含む純損益です。</p>
     </section>
     <details><summary>計算範囲・誤差・再現性</summary>

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict'
 import { createServer } from 'vite'
 import react from '@vitejs/plugin-react'
 import { chromium } from 'playwright-core'
+import data from '../src/gto/independentResearchData.json' with { type: 'json' }
 const server = await createServer({ configFile: false, plugins: [react()], server: { host: '127.0.0.1', port: 0 } })
 let browser
 try {
@@ -30,6 +31,11 @@ try {
   await page.getByLabel('独立学習の継続モデル', { exact: true }).selectOption('learned_large')
   assert.equal(await page.locator('[data-independent-hand]').count(), 169)
   console.log('PASS I03 both independently trained continuation models')
+  if (data.schema.endsWith('v2')) {
+    assert.equal(await page.getByText(/形式的な丸め誤差証明でもありません/).count(), 1)
+    assert.equal(await page.getByText(/表示区間は学習・独立評価の両利得表を合わせ同時99%/).count(), 0)
+    console.log('PASS I06 exact-model numeric guard is distinct from sampling confidence and realGTO accuracy')
+  }
   await page.getByLabel('有効スタック（BB）', { exact: true }).fill('49'); await search()
   assert.equal(await page.locator('[data-independent-hand]').count(), 0)
   console.log('PASS I04 condition edit removes stale strategy; unsupported conditions never interpolate')

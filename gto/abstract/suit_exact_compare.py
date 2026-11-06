@@ -1,5 +1,5 @@
 """Hold previous policies and continuation game fixed while removing oracle noise."""
-import argparse,json
+import argparse,json,math
 from pathlib import Path
 from gto.abstract import suit_exact as s,fullsupport as fs,independent_preflop as old,model,root_interval as ri
 from gto.abstract.suit_exact_br import evaluate
@@ -14,7 +14,12 @@ def compare(full,root):
   for k,v in interval.items():
    if isinstance(v,list):interval[k]=[x/2 for x in v]
   oldbounds=prior['models'][name]['root_expected_game_bounds_bb'];out[name]={'same_policy_digest':fs.digest(pi),'previous_MC_expected_game_bounds_bb':oldbounds,'enumerated_same_policy_bounds_bb':interval,'enumerated_same_policy_point':independent,'maximum_native_python_difference_bb':error,'new_exact_trained_policy_nashconv_bb':full['models'][name]['root_expected_game_bounds_bb']['preflop_nashconv_interval'],'interpretation':'MCvsenumerated comparison holds policy and continuation MODEL fixed; new-training effect reported separately;NOT externalGTO validation'}
- return {'baseline_digest':protocol['baseline_digest'],'teacher_sha256':sha(old.TEACHER),'comparison_protocol_sha256':sha(s.ROOT/'comparison-protocol.json'),'models':out,'selection_performed':False,'real_game_approximation_error':'UNKNOWN','external_gto_comparison':'NOT PERFORMED'}
+ sensitivity={}
+ variants=list(full['models'])
+ for stage in ('rfi','vs_open','vs_3bet','vs_4bet'):
+  a,b=[full['models'][name]['contexts'][stage]['hands'] for name in variants]
+  sensitivity[stage]={'mean_hand_frequency_TV':math.fsum(math.fsum(abs(x-y) for x,y in zip(a[h]['frequencies'],b[h]['frequencies']))/2 for h in model.CLASSES)/169,'max_action_ev_difference_bb':max(abs(x-y) for h in model.CLASSES for x,y in zip(a[h]['action_ev_bb'],b[h]['action_ev_bb'])),'interpretation':'two fixed size-model sensitivity,NOT error against externalGTO'}
+ return {'size_sensitivity':sensitivity,'baseline_digest':protocol['baseline_digest'],'teacher_sha256':sha(old.TEACHER),'comparison_protocol_sha256':sha(s.ROOT/'comparison-protocol.json'),'models':out,'selection_performed':False,'real_game_approximation_error':'UNKNOWN','external_gto_comparison':'NOT PERFORMED'}
 if __name__=='__main__':
  p=argparse.ArgumentParser();p.add_argument('--input',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--build-dir',type=Path,required=True);v=p.parse_args()
  if v.output.exists():p.error('fresh output required')
