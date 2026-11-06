@@ -10,7 +10,9 @@ def compare(a,b,path='root'):
    if a['count']!=b['count']:raise ValueError('packet shape '+path)
    if 'data' not in b:
     unpack(a) # Validate actual payload before comparing exact expected binary fingerprint.
-    compare({k:v for k,v in a.items() if k!='data'},b,path+'.fingerprint');return
+    if set(b)!={'codec','count','sha256'}:raise ValueError('unexpected packet fingerprint '+path)
+    for k in b:compare(a[k],b[k],path+'.fingerprint.'+k)
+    return
    compare(unpack(a),unpack(b),path+'.decoded');return
   if set(a)!=set(b):raise ValueError('replay fields '+path)
   for k in a:compare(a[k],b[k],path+'.'+k)

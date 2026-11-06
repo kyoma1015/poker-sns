@@ -60,7 +60,7 @@ class IndependentPreflopTests(unittest.TestCase):
   self.assertTrue(all(0<=x<=1/17296 for x in mass))
  def test_replay_compares_decoded_values_and_checks_each_packet(self):
   from gto.abstract.independent_verify import compare
-  p=fs.pack([1.,2.]);compare(p,fs.pack([1.+1e-13,2.]));q={**p,'sha256':'bad'}
+  p=fs.pack([1.,2.]);compare(p,fs.pack([1.+1e-13,2.]));compare(p,{k:v for k,v in p.items() if k!='data'});q={**p,'sha256':'bad'}
   with self.assertRaises(ValueError):compare(p,q)
  def test_policy_mixing_is_seat_local_and_nonmutating(self):
   n=len(model.tree())*3*169;a=[1.]*n;b=[2.]*n;c=ev.mix(a,b)

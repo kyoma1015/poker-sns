@@ -20,3 +20,8 @@ Additional sandbox network permission calls stalled previously; do not repeat th
 Use existing GitHub connector and CI for network/browser verification. AUTO-RESUME
 and independent restart do not exist. Last failed environment was an executor
 startup problem,not a solver error. Preserve oldrepo/objects/protected artifacts.
+
+Recovery verifier initially recursed into a fingerprint without payload and failed
+with KeyError(data). Fixed fingerprint-field comparison,added a positive regression,
+then full-result vs6fingerprints replay PASS and13Python PASS. The calculation
+source/teacher/policies/values are unchanged; only serialization QA was corrected.
