@@ -161,7 +161,9 @@ export async function verifyComposerLifecycle({browser,origin,jwt,anon,bytes}) {
     } finally { await page.close() }
   }
 
-  // The ordinary E2E fixture is deliberately all-black. Generate a bright\n  // disposable WebM so the production near-black poster rejection can pass.\n  const posterBytes=execFileSync('ffmpeg',['-v','error','-f','lavfi','-i','testsrc2=size=160x120:rate=10','-t','2','-c:v','libvpx','-b:v','250k','-f','webm','pipe:1'])\n  // Real Timeline poster regression: independent muted probe, stale callback
+  // The ordinary E2E fixture is deliberately all-black. Generate a bright
+  // disposable WebM so the production near-black poster rejection can pass.
+  const posterBytes=execFileSync('ffmpeg',['-v','error','-f','lavfi','-i','testsrc2=size=160x120:rate=10','-t','2','-c:v','libvpx','-b:v','250k','-f','webm','pipe:1'])\n  // Real Timeline poster regression: independent muted probe, stale callback
   // fencing and playback when Canvas extraction fails. No submit or uploads.
   for (const scenario of ['poster-before-play','stale-probe','canvas-unavailable']) {
     const page=await browser.newPage()
