@@ -75,7 +75,7 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
           <button type="button" onClick={() => { change(abstractResearchQuery); setResearchOptIn(true); setIndependentOptIn(false) }}>研究用：HU50BB抽象化モデル</button>
         </aside>
         <aside className="gto-notice">
-          <p>全プリフロップ分岐を学習する新しい研究版です。期待ゲームの収束・実戦GTO精度は未確認で、通常GTOとしては表示しません。</p>
+          <p>全プリフロップ分岐を学習する研究版です。固定モデル内の計算と実戦GTO精度は別です。対3bet・対4betでは継続方策の独立BR検証も確認できます。通常GTOとしては表示しません。</p>
           <button type="button" onClick={() => { change(independentQuery); setIndependentOptIn(true); setResearchOptIn(false) }}>研究用：独立学習HU50BB</button>
         </aside>
         <form aria-label="プリフロップ検索条件" onSubmit={search}>

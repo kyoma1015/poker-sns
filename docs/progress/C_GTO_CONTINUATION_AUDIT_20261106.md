@@ -58,3 +58,18 @@ file changed,and all numericpacket checksums valid. Originalcache retained at
 /workspace/continuation-audit-cache-before-ffi-fix; migration proof versioned.
 No recomputation or invented recovery; fresh CI will regenerate from corrected
 source,not use the migratedlocalcache. Restart analysis with same registered cases.
+
+Corrected analysis completed successfully: all1755moments/22100flops; all320actual
+coarse native/PythonBR comparisons,profilevalue/refinement monotonicity,published
+CALL-EV/root-probability checks passed.96/96newcoarse games belowresearch0.1BB.
+Yet fullboard+ownclass BR aftervs4bet remains2.608232/3.244178BB for refit-large/
+refit-small on respective reaches. Originalprofile feasible rootdeviation gains
+sum0.123806936(small)/0.141242529(large)BB at2CALLbranches with preflop fixed.
+This is lowerbound-found-gain,not wholeGTO upperbound. Expandedmodel fullboardBR
+2.778087(smallrange)/3.087952(largerange),not monotonicallybetter/differentactiongame.
+Late-bet unresolved mass inlarge-range/vs4bet grows0.176210%→64.449087%from
+refit-large toexpanded; futureenvelopes are NOT measured modelerror. Original
+perhand modelEV max7.647099BB retained; commonrange meanCALL EVdelta0.008365/
+0.038492BB is a different aggregation. No ordinaryadmission or formalPASS.
+Local8PythonPASS,25NodePASS,npmci/typecheck/build/lintPASS;newmobile CI pending.
+Next commit validated result/UI+manifest,expectedHEAD FFpush,run newCI andfix failures.
