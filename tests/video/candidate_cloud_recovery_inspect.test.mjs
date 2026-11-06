@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict'
+import {readFileSync} from 'node:fs'
+const sql=readFileSync(new URL('./candidate_cloud_recovery_inspect.sql',import.meta.url),'utf8')
+const api=readFileSync(new URL('../../server/video-cloud-http.mjs',import.meta.url),'utf8')
+assert.match(sql,/auth\.uid\(\)/)
+assert.match(sql,/owner_id=v_owner/)
+assert.match(sql,/user_id=v_owner/)
+assert.match(sql,/owner_id=v_owner::text/)
+assert.match(sql,/allow_resume',false/)
+assert.match(sql,/revoke all on function public\.video_cloud_recovery_inspect_v1\(text\) from public, anon, service_role/i)
+assert.doesNotMatch(sql,/\b(delete|truncate|drop)\s+(from\s+)?(video_cloud\.reservations|storage\.objects|public\.posts)\b/i)
+assert.match(api,/body\.action==='recovery_inspect'/)
+assert.match(api,/await identity\(\)!==uid/)
+assert.match(api,/result\.data\.allow_resume!==false/)
+console.log('read-only recovery inspection candidate static QA PASS')

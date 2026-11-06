@@ -8,8 +8,17 @@ export function isMovVideo(file: Pick<File, 'name' | 'type'>): boolean {
   return file.type === 'video/quicktime' || /\.mov$/i.test(file.name)
 }
 
-/** Must start from the file-picker gesture so Safari can resume its audio context. */
-export async function convertMovToMp4(file: File, signal?: AbortSignal): Promise<File> {
+/** Prefer an audio context resumed by the attachment-button gesture before Safari opens the picker. */
+export function prepareMovAudioContext(): AudioContext | null {
+  if (typeof AudioContext === 'undefined') return null
+  try {
+    const audio = new AudioContext()
+    void audio.resume().catch(() => {})
+    return audio
+  } catch { return null }
+}
+
+export async function convertMovToMp4(file: File, signal?: AbortSignal, preparedAudio?: AudioContext | null): Promise<File> {
   signal?.throwIfAborted()
   if (!isMovVideo(file)) return file
   if (file.size <= 0 || file.size > MAX_BYTES) throw new Error('変換前のMOVも20MiB以内にしてください。' + MOV_CONVERSION_HELP)
@@ -18,11 +27,15 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal): Promise
   const canvas = document.createElement('canvas')
   if (!mime) throw new Error('SafariがMP4動画の録画形式に対応していません。' + MOV_CONVERSION_HELP)
   if (typeof canvas.captureStream !== 'function') throw new Error('Safariが画面映像の変換に対応していません。' + MOV_CONVERSION_HELP)
-  const audio = new AudioContext()
-  // Do this before any await; no microphone permission or speaker output is needed.
-  const resumed = audio.resume().then(() => true, () => false)
+  const audio = preparedAudio && preparedAudio.state !== 'closed' ? preparedAudio : new AudioContext()
+  // A prepared context may already be running from the initial attachment tap.
+  const resumed = audio.state === 'running' ? Promise.resolve(true) : audio.resume().then(() => true, () => false)
   const video = document.createElement('video')
   video.playsInline = true
+  // Safari blocks script-initiated audible playback after the asynchronous file picker.
+  // Keep the element muted; decoded audio is routed to MediaStreamDestination below.
+  video.muted = true
+  video.defaultMuted = true
   video.preload = 'auto'
   const url = URL.createObjectURL(file)
   let stream: MediaStream | undefined
@@ -80,11 +93,21 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal): Promise
       const chunks: Blob[] = []
       let bytes = 0
       let done = false
+      let stopRequested = false
+      let playbackStartedAt = 0
+      let playbackWatchdog = 0
+      let resumeAttempted = false
+      const stopAtSourceEnd = () => {
+        if (done || stopRequested || !recorder || recorder.state !== 'recording') return
+        stopRequested = true
+        try { recorder.stop() } catch { finish(new Error(MOV_CONVERSION_HELP)) }
+      }
       const timer = window.setTimeout(() => finish(new Error('変換が時間内に完了しませんでした。' + MOV_CONVERSION_HELP)), 45000)
       const finish = (error?: Error) => {
         if (done) return
         done = true
         clearTimeout(timer)
+        window.clearInterval(playbackWatchdog)
         cancel = undefined
         video.pause()
         if (error) reject(error); else resolve(new Blob(chunks, { type: 'video/mp4' }))
@@ -100,9 +123,38 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal): Promise
         recorder.onerror = () => finish(new Error(MOV_CONVERSION_HELP))
         recorder.onstop = () => finish()
         video.onerror = () => finish(new Error(MOV_CONVERSION_HELP))
-        video.onended = () => { if (recorder?.state === 'recording') recorder.stop() }
+        video.onended = stopAtSourceEnd
         recorder.start(250)
-        void video.play().catch(() => finish(new Error('SafariでMOVの再生を開始できませんでした。' + MOV_CONVERSION_HELP)))
+        void video.play().then(() => {
+          // Chrome records silence from a muted media element even with WebAudio routing.
+          // Preserve the previously verified decoded audio until Safari-specific
+          // playback recovery can be validated without breaking the audio contract.
+          // On iPhone Safari, unmuting after an asynchronous file picker can
+          // suspend playback immediately (observed at 0.00s and 0.08s).
+          // Keep Safari's element muted while WebAudio routes decoded samples
+          // into the recording. Chrome still requires unmuting for audible capture.
+          const safari = /Safari\//.test(navigator.userAgent) && !/Chrome\/|Chromium\/|CriOS|FxiOS|EdgiOS|OPR\/|Edg\/|Android/.test(navigator.userAgent)
+          if (!safari) {
+            video.muted = false
+            video.defaultMuted = false
+          }
+          playbackStartedAt = performance.now()
+          // Safari can omit ended on very short MOVs. Never record indefinitely.
+          playbackWatchdog = window.setInterval(() => {
+            if (done) return
+            if (video.ended || video.currentTime >= duration - 0.05) {
+              stopAtSourceEnd()
+            } else if (video.paused && !resumeAttempted) {
+              // Some Safari MOV decoders pause after the initial play() resolves.
+              // Attempt one local resume, never restart recording or upload.
+              resumeAttempted = true
+              void video.play().catch(() => {})
+            } else if (performance.now() - playbackStartedAt > (duration + 4) * 1000) {
+              const position = Number.isFinite(video.currentTime) ? video.currentTime.toFixed(2) : 'unknown'
+              finish(new Error('動画の終了を確認できず、安全停止しました（再生位置 ' + position + '秒 / ' + duration.toFixed(2) + '秒、停止=' + video.paused + '、読込状態=' + video.readyState + '）。' + MOV_CONVERSION_HELP))
+            }
+          }, 100)
+        }).catch(() => finish(new Error('SafariでMOVの再生を開始できませんでした。' + MOV_CONVERSION_HELP)))
         if (signal?.aborted) abort()
       } catch { finish(new Error('SafariのMP4録画処理を開始できませんでした。' + MOV_CONVERSION_HELP)) }
     })

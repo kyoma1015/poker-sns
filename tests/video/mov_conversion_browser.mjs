@@ -12,7 +12,22 @@ const qa = await mkdtemp(join(tmpdir(), 'poker-mov-'))
 let browser
 let server
 try {
+  // Guard the Safari composer poster fallback even when no new frame callback fires.
+  const timelineSource = await readFile('src/Timeline.tsx', 'utf8')
+  assert.match(timelineSource, /onSeeked=\{event => captureVideoPreviewPoster\(event\.currentTarget\)\}/)
+  assert.match(timelineSource, /onLoadedData=\{event => captureVideoPreviewPoster\(event\.currentTarget\)\}/)
+  assert.match(timelineSource, /onCanPlay=\{event => captureVideoPreviewPoster\(event\.currentTarget\)\}/)
+  assert.match(timelineSource, /requestVideoFrameCallback/)
+  assert.match(timelineSource, /expectedUrl !== videoPreviewUrlRef\.current/)
   const source = await readFile('src/videoMovConversion.ts', 'utf8')
+  // Safari can omit ended for short MOVs: source time must independently stop recording.
+  assert.match(source, /video\.currentTime >= duration - 0\.05/)
+  assert.match(source, /performance\.now\(\) - playbackStartedAt > \(duration \+ 4\) \* 1000/)
+  assert.match(source, /video\.paused && !resumeAttempted/)
+  assert.match(source, /video\.muted = false/, 'Decoded audio capture requires unmuting in Chrome')
+  assert.match(source, /再生位置 /)
+  assert.match(source, /video\.onended = stopAtSourceEnd/)
+  assert.match(source, /window\.clearInterval\(playbackWatchdog\)/)
   const js = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText
   const fixture = join(qa, 'camera.mov')
   execFileSync('ffmpeg', ['-v','error','-f','lavfi','-i','testsrc2=size=320x240:rate=30','-f','lavfi','-i','sine=frequency=440:sample_rate=48000','-t','2','-c:v','libx264','-profile:v','baseline','-pix_fmt','yuv420p','-c:a','aac','-y',fixture])

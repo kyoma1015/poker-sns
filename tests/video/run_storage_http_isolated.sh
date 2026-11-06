@@ -13,8 +13,21 @@ trap 'npx --yes supabase@2.81.3 stop --workdir tests/video/local-stack --no-back
 # never upload it as an artifact or echo it into the public CI log.
 if ! npx --yes supabase@2.81.3 start --workdir tests/video/local-stack --exclude studio,imgproxy,mailpit,edge-runtime,realtime,vector,logflare >"$qa/start.log" 2>&1; then
   python3 scripts/video_ci_startup_diagnostic.py "$qa/start.log"
-  echo 'ERROR: isolated Supabase startup failed; credential-bearing startup log withheld'
-  exit 1
+  # One bounded retry for an ephemeral port conflict on this disposable runner.
+  # Never retry credential/config/image failures or touch a remote Supabase stack.
+  if grep -Eiq 'port is already allocated|address already in use' "$qa/start.log"; then
+    echo 'Retrying local disposable Supabase startup once after port conflict'
+    npx --yes supabase@2.81.3 stop --workdir tests/video/local-stack --no-backup >"$qa/retry-stop.log" 2>&1 || true
+    sleep 3
+    if ! npx --yes supabase@2.81.3 start --workdir tests/video/local-stack --exclude studio,imgproxy,mailpit,edge-runtime,realtime,vector,logflare >"$qa/retry-start.log" 2>&1; then
+      python3 scripts/video_ci_startup_diagnostic.py "$qa/retry-start.log"
+      echo 'ERROR: isolated Supabase retry failed; credential-bearing logs withheld'
+      exit 1
+    fi
+  else
+    echo 'ERROR: isolated Supabase startup failed; credential-bearing startup log withheld'
+    exit 1
+  fi
 fi
 npx --yes supabase@2.81.3 status --workdir tests/video/local-stack -o env > "$qa/local.env"
 apiurl="$(sed -n 's/^API_URL=//p' "$qa/local.env" | tr -d '\"')"
@@ -72,7 +85,23 @@ psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/isolated_attested_generation.sql
 psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/production_attested_candidate_review_only.sql
 psql "$dburl" -v ON_ERROR_STOP=1 -c "insert into video_private.attestation_keys(key_id,secret,active) values(1,decode(repeat('41',32),'hex'),true),(2,decode(repeat('42',32),'hex'),true); grant execute on function public.video_publish_attested_v1(uuid,text,uuid,text,integer,text,bigint,text,text,smallint) to authenticated; notify pgrst, 'reload schema';"
 VIDEO_QA_ENV="$qa/local.env" node tests/video/isolated_attested_real_http_e2e.mjs
-# Review-only recovery RPCs and owner-JWT API: disposable local stack ONLY.
-psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/recovery_candidate_review_only.sql
+# Production-like candidate migration is executed ONLY against the already
+# pinned disposable localhost DB, never a connected Supabase project.
+# Test partial-install refusal, first application, identical reapply, and grants.
+bash tests/video/recovery_production_candidate_isolated_qa.sh "$dburl" install
 psql "$dburl" -v ON_ERROR_STOP=1 -c "notify pgrst, 'reload schema';"
 VIDEO_QA_ENV="$qa/local.env" node tests/video/isolated_recovery_candidate_e2e.mjs
+bash tests/video/recovery_production_candidate_isolated_qa.sh "$dburl" recheck
+# After the HTTP E2E has created post/nonce/manifest rows, introduce isolated
+# definition drift and prove rerunning the candidate fails without row changes.
+bash tests/video/recovery_production_candidate_isolated_qa.sh "$dburl" drift
+# Final disposable-only RLS test: exercise permissive OR vs restrictive AND
+# with actual authenticated-role Storage INSERTs and candidate reapplication.
+psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/isolated_storage_insert_stop_qa.sql
+# A changed existing policy must fail closed, without restoring its body.
+if psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/production_storage_insert_stop_NOT_APPROVED.sql >"$qa/storage-drift.log" 2>&1; then
+  echo 'FAIL: drifted restrictive Storage policy was silently accepted'
+  exit 1
+fi
+psql "$dburl" -v ON_ERROR_STOP=1 -Atqc "select 1 from pg_policies where schemaname='storage' and tablename='objects' and policyname='video_recovery_restrict_video_bucket_insert' and with_check='true'" | grep -qx 1
+echo 'PASS: drifted restrictive Storage policy rejected without overwrite'

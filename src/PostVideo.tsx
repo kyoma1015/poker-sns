@@ -1,14 +1,17 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { loadAuthorizedVideo, VIDEO_SERVER_ENABLED } from './videoApi'
 import { supabase } from './supabase'
+import { readLocalVideoPoster } from './videoPosterCache'
 
 /** Playback is gated until the server verifies JWT and post visibility per request. */
-export default function PostVideo({ postId }: { postId: string }) {
+export default function PostVideo({ postId, videoPath }: { postId: string; videoPath?: string | null }) {
   const [url, setUrl] = useState('')
   const [error, setError] = useState('')
   const [poster, setPoster] = useState('')
   const [playing, setPlaying] = useState(false)
   const [playbackError, setPlaybackError] = useState('')
+  const posterSeekAttempts = useRef(0)
+  const posterFrameCallback = useRef<number | null>(null)
   useEffect(() => {
     if (!VIDEO_SERVER_ENABLED) { setUrl(''); setError('動画再生は安全なサーバー接続の準備中です。'); return }
     let active = true
@@ -34,6 +37,8 @@ export default function PostVideo({ postId }: { postId: string }) {
     })
     setUrl('')
     setPoster('')
+    posterSeekAttempts.current = 0
+    posterFrameCallback.current = null
     setPlaying(false)
     setPlaybackError('')
     setError('')
@@ -51,17 +56,63 @@ export default function PostVideo({ postId }: { postId: string }) {
     })().then(value => {
       if (!value) return
       objectUrl = value
-      if (active) setUrl(value)
+      if (active) {
+        // Read only after JWT-backed authorization succeeds; never grant media access via cache.
+        setPoster(readLocalVideoPoster(viewerId || '', videoPath || ''))
+        setUrl(value)
+      }
       else URL.revokeObjectURL(value)
     }).catch(() => {
       if (active) setError('動画を読み込めません。権限を確認してください。')
     })
     return () => { active = false; subscription.unsubscribe(); if (objectUrl) URL.revokeObjectURL(objectUrl) }
-  }, [postId])
+  }, [postId, videoPath])
+  const capturePoster = (video: HTMLVideoElement) => {
+    if (poster || playing || !video.videoWidth || !video.videoHeight || video.readyState < 2) return
+    try {
+      const canvas = document.createElement('canvas')
+      const scale = Math.min(1, 640 / Math.max(video.videoWidth, video.videoHeight))
+      canvas.width = Math.max(1, Math.round(video.videoWidth * scale))
+      canvas.height = Math.max(1, Math.round(video.videoHeight * scale))
+      const context = canvas.getContext('2d')
+      if (!context) return
+      context.drawImage(video, 0, 0, canvas.width, canvas.height)
+      const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data
+      let nonBlack = 0
+      for (let i = 0; i < pixels.length; i += Math.max(4, Math.floor(pixels.length / 256 / 4) * 4)) {
+        if (pixels[i] > 16 || pixels[i + 1] > 16 || pixels[i + 2] > 16) nonBlack++
+      }
+      if (nonBlack > 2) { setPoster(canvas.toDataURL('image/jpeg', 0.76)); return }
+    } catch { /* cross-origin or Safari decoding failure: preserve playback */ }
+    const next = [0.8, 1.6, 2.8, 4.0][posterSeekAttempts.current++]
+    if (next !== undefined && Number.isFinite(video.duration) && video.duration > 0.1) {
+      const time = Math.min(next, video.duration * 0.85)
+      if (time > video.currentTime + 0.05) {
+        try { video.currentTime = time } catch { /* keep native playback */ }
+      }
+    }
+  }
+  const captureAfterDecodedFrame = (video: HTMLVideoElement) => {
+    // Safari may fire seeked before the frame is actually available to Canvas.
+    // requestVideoFrameCallback runs when a decoded frame is submitted for presentation.
+    if ('requestVideoFrameCallback' in video) {
+      if (posterFrameCallback.current !== null) video.cancelVideoFrameCallback(posterFrameCallback.current)
+      posterFrameCallback.current = video.requestVideoFrameCallback(() => {
+        posterFrameCallback.current = null
+        capturePoster(video)
+      })
+    } else capturePoster(video)
+  }
   if (error) return <p role="status">{error}</p>
   if (!url) return <p role="status">動画を読み込み中...</p>
   return <div style={{ position: 'relative', margin: '10px 0 14px', borderRadius: 12, overflow: 'hidden', background: '#101010' }}>
     <video key={postId} controls={playing || Boolean(playbackError)} playsInline preload="auto" src={url} poster={poster || undefined}
+      onLoadedMetadata={event => {
+        const video = event.currentTarget
+        if (!poster && !playing && Number.isFinite(video.duration) && video.duration > 0.2) {
+          try { video.currentTime = Math.min(0.35, video.duration / 2) } catch { /* native fallback */ }
+        }
+      }}
       onLoadedData={event => {
         if (poster) return
         const video = event.currentTarget
@@ -73,23 +124,8 @@ export default function PostVideo({ postId }: { postId: string }) {
           try { video.currentTime = Math.min(0.15, video.duration / 2) } catch { /* keep native preview */ }
         }
       }}
-      onSeeked={event => {
-        if (poster || playing) return
-        const video = event.currentTarget
-        if (!video.videoWidth || !video.videoHeight || video.readyState < 2) return
-        try {
-          const canvas = document.createElement('canvas')
-          const scale = Math.min(1, 640 / Math.max(video.videoWidth, video.videoHeight))
-          canvas.width = Math.max(1, Math.round(video.videoWidth * scale))
-          canvas.height = Math.max(1, Math.round(video.videoHeight * scale))
-          const context = canvas.getContext('2d')
-          if (!context) return
-          context.drawImage(video, 0, 0, canvas.width, canvas.height)
-          const pixels = context.getImageData(0, 0, Math.min(canvas.width, 8), Math.min(canvas.height, 8)).data
-          if (!pixels.some((value, index) => index % 4 !== 3 && value > 12)) return
-          setPoster(canvas.toDataURL('image/jpeg', 0.72))
-        } catch { /* Native video preview and playback remain available. */ }
-      }}
+      onSeeked={event => captureAfterDecodedFrame(event.currentTarget)}
+      onCanPlay={event => { if (!poster && !playing) captureAfterDecodedFrame(event.currentTarget) }}
       onPlay={() => { setPlaying(true); setPlaybackError('') }} onPause={() => setPlaying(false)}
       onError={() => setPlaybackError('動画を再生できません。形式または通信状態をご確認ください。')}
       style={{ display: 'block', width: '100%', maxHeight: 480, minHeight: 120, objectFit: 'contain' }} />

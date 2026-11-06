@@ -1,15 +1,16 @@
 import { withVideoRecoveryDeadline } from './videoRecoveryDeadline'
 import { VIDEO_RECOVERY_CANDIDATE_ENABLED, inspectVideoRecoveryCandidate, finalizeRecoveredVideoCandidate } from './videoRecoveryCandidate'
-import { handOffVideoTransfer, hasVideoTransferJournal, readVideoTransferHint, finishRecoveredVideoTransfer, VIDEO_TRANSFER_RECOVERY_MESSAGE, VideoTransferRecoveryRequiredError } from './videoTransferJournal'
+import { handOffVideoTransfer, hasVideoTransferJournal, readVideoTransferHint, finishRecoveredVideoTransfer, discardProvenExpiredVideoTransfer, VIDEO_TRANSFER_RECOVERY_MESSAGE, VideoTransferRecoveryRequiredError } from './videoTransferJournal'
 import { createPollRequest, pollDisplayResult } from './interactiveRequests'
 import { useEffect, useRef, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 import { validateVideo, uploadPostVideo, MAX_VIDEO_BYTES } from './videoUpload'
 import { compressOversizedVideo } from './videoCompression'
-import { convertMovToMp4, isMovVideo } from './videoMovConversion'
-import { hideVideoPost, finalizeUploadedVideo, VIDEO_SERVER_ENABLED } from './videoApi'
+import { convertMovToMp4, isMovVideo, prepareMovAudioContext } from './videoMovConversion'
+import { hideVideoPost, finalizeUploadedVideo, inspectCloudVideoRecovery, VIDEO_SERVER_ENABLED } from './videoApi'
 import PostVideo from './PostVideo'
+import { rememberLocalVideoPoster } from './videoPosterCache'
 
 import { supabase } from './supabase'
 import { usePullToRefresh } from './usePullToRefresh'
@@ -171,6 +172,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const [resultsLoading, setResultsLoading] = useState(false)
   const imageInputRef = useRef<HTMLInputElement>(null)
   const videoInputRef = useRef<HTMLInputElement>(null)
+  const preparedMovAudioRef = useRef<AudioContext | null>(null)
   const videoSelectionRef = useRef(0)
   const videoConversionAbortRef = useRef<AbortController | null>(null)
   const composerLifetimeRef = useRef(0)
@@ -178,8 +180,47 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const [videoRecoveryBlocked, setVideoRecoveryBlocked] = useState(false)
   // Feed refreshes own the general message; they must not erase recovery's stop reason.
   const [videoRecoveryNotice, setVideoRecoveryNotice] = useState('')
+  const [recoveryChecking, setRecoveryChecking] = useState(false)
+  const confirmPublishedVideoRecovery = async () => {
+    if (recoveryChecking || videoSubmitInFlightRef.current) return
+    setRecoveryChecking(true)
+    try {
+      const {data:{user},error}=await supabase.auth.getUser()
+      if(error||!user) throw new Error('本人認証を確認できません。')
+      const hint=readVideoTransferHint(user.id)
+      const proof=await inspectCloudVideoRecovery(hint.path)
+      if(proof.state!=='published'||proof.allow_resume!==false||!proof.storage_present||
+        proof.sha256!==hint.sha256||proof.size!==hint.size||!proof.post_id)
+        throw new Error('投稿完了と元ファイルの一致を証明できません。')
+      // Recheck the current account before acting on a response from an earlier session.
+      const {data:{user:currentUser},error:currentError}=await supabase.auth.getUser()
+      if(currentError||currentUser?.id!==user.id) throw new Error('照合中にログイン状態が変わりました。')
+      // The journal must remain byte-for-byte unchanged since the authenticated proof.
+      discardProvenExpiredVideoTransfer(user.id,hint.path,hint.raw)
+      // Clear only the matching local pending pointer after proven publication.
+      const pendingRaw=sessionStorage.getItem('poker-id-pending-video-v1')
+      if(pendingRaw) {
+        try {
+          const pending=JSON.parse(pendingRaw)
+          if(pending.owner===user.id&&pending.path===hint.path&&
+            sessionStorage.getItem('poker-id-pending-video-v1')===pendingRaw)
+            sessionStorage.removeItem('poker-id-pending-video-v1')
+        } catch { /* An unrelated or malformed pointer is never deleted. */ }
+      }
+      pendingVideoRef.current=null
+      setPendingVideo(null)
+      setVideoRecoveryBlocked(false)
+      setVideoRecoveryNotice('')
+      setMessage('前回の動画は投稿済みと確認できました。新しい投稿を開始できます。')
+      setComposeOpen(false)
+      await loadPosts()
+    } catch(error) {
+      setVideoRecoveryBlocked(true)
+      setVideoRecoveryNotice(error instanceof Error?error.message:'復旧状態を確認できません。送信停止を維持します。')
+    } finally {setRecoveryChecking(false)}
+  }
+
   const [videoFile, setVideoFile] = useState<File | null>(null)
-  const [pendingMovConversion, setPendingMovConversion] = useState<File | null>(null)
   // Retain the exact immutable object path after an uncertain finalize result.
   type PendingVideo = { path: string; owner: string; content: string }
   const [pendingVideo, setPendingVideo] = useState<PendingVideo | null>(null)
@@ -243,6 +284,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       if (hasVideoTransferJournal(user.id)) {
         setVideoRecoveryBlocked(true)
         setComposeOpen(true)
+        if (!VIDEO_RECOVERY_CANDIDATE_ENABLED) {
+          setVideoRecoveryNotice('前回の動画送信状態が未確認です。重複投稿を防ぐため新しい送信を停止しています。再送信・再選択・ブラウザの保存データ削除はせず、サポートへ発生時刻と表示内容を伝えてください。動画データは自動削除されません。')
+        }
         if (VIDEO_RECOVERY_CANDIDATE_ENABLED) {
           const hint=readVideoTransferHint(user.id)
           await recover(user.id,hint.path,hint)
@@ -292,7 +336,92 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const videoRequestAbortRef = useRef<AbortController | null>(null)
   const postSubmitInFlightRef = useRef(false)
   const [videoPreview, setVideoPreview] = useState<string | null>(null)
-  useEffect(() => { if (!videoFile) { setVideoPreview(null); return }; const url = URL.createObjectURL(videoFile); setVideoPreview(url); return () => URL.revokeObjectURL(url) }, [videoFile])
+  const [videoPreviewPoster, setVideoPreviewPoster] = useState<string | null>(null)
+  const videoPreviewUrlRef = useRef<string | null>(null)
+  const captureVideoPreviewPoster = (video: HTMLVideoElement) => {
+    if (videoPreviewPoster || !video.videoWidth || !video.videoHeight || video.readyState < 2) return
+    const expectedUrl = videoPreview
+    const capture = () => {
+      // A late decoded-frame callback must never replace a newer attachment's poster.
+      if (!expectedUrl || expectedUrl !== videoPreviewUrlRef.current || video.currentSrc !== expectedUrl || videoPreviewPoster) return
+      try {
+        const canvas = document.createElement('canvas')
+        const scale = Math.min(1, 640 / Math.max(video.videoWidth, video.videoHeight))
+        canvas.width = Math.max(1, Math.round(video.videoWidth * scale))
+        canvas.height = Math.max(1, Math.round(video.videoHeight * scale))
+        const context = canvas.getContext('2d')
+        if (!context) return
+        context.drawImage(video, 0, 0, canvas.width, canvas.height)
+        const sampleSize = Math.min(24, canvas.width, canvas.height)
+        const pixels = context.getImageData(Math.floor((canvas.width - sampleSize) / 2), Math.floor((canvas.height - sampleSize) / 2), sampleSize, sampleSize).data
+        if (!pixels.some((value, index) => index % 4 !== 3 && value > 16)) return
+        setVideoPreviewPoster(canvas.toDataURL('image/jpeg', 0.76))
+      } catch { /* A missing/undecodable frame must not block video playback. */ }
+    }
+    // Safari may never dispatch a frame callback for a paused preview.
+    capture()
+    if (typeof video.requestVideoFrameCallback === 'function') {
+      video.requestVideoFrameCallback(() => capture())
+    }
+  }
+  useEffect(() => {
+    setVideoPreviewPoster(null)
+    if (!videoFile) {
+      videoPreviewUrlRef.current = null
+      setVideoPreview(null)
+      return
+    }
+    const url = URL.createObjectURL(videoFile)
+    videoPreviewUrlRef.current = url
+    setVideoPreview(url)
+    // Decode the poster on a separate, muted element. Never seek or play the
+    // visible player: Safari can stall playback when poster seeking races it.
+    const probe = document.createElement('video')
+    probe.muted = true
+    probe.defaultMuted = true
+    probe.playsInline = true
+    probe.preload = 'auto'
+    let cancelled = false
+    let captured = false
+    const capture = () => {
+      if (cancelled || captured || videoPreviewUrlRef.current !== url ||
+          probe.readyState < 2 || !probe.videoWidth || !probe.videoHeight) return
+      try {
+        const canvas = document.createElement('canvas')
+        const scale = Math.min(1, 640 / Math.max(probe.videoWidth, probe.videoHeight))
+        canvas.width = Math.max(1, Math.round(probe.videoWidth * scale))
+        canvas.height = Math.max(1, Math.round(probe.videoHeight * scale))
+        const context = canvas.getContext('2d')
+        if (!context) return
+        context.drawImage(probe, 0, 0, canvas.width, canvas.height)
+        // Sample the centre rather than a potentially letterboxed corner.
+        const side = Math.min(24, canvas.width, canvas.height)
+        const pixels = context.getImageData(Math.floor((canvas.width - side) / 2), Math.floor((canvas.height - side) / 2), side, side).data
+        if (!pixels.some((value, index) => index % 4 !== 3 && value > 16)) return
+        captured = true
+        setVideoPreviewPoster(canvas.toDataURL('image/jpeg', 0.76))
+      } catch { /* Preserve playable preview if Safari cannot decode a poster. */ }
+    }
+    const seek = () => {
+      if (cancelled || !Number.isFinite(probe.duration) || probe.duration <= 0) return
+      try { probe.currentTime = Math.min(0.4, probe.duration / 2) } catch { /* Seek not supported. */ }
+      capture()
+    }
+    probe.addEventListener('loadedmetadata', seek)
+    probe.addEventListener('loadeddata', capture)
+    probe.addEventListener('seeked', capture)
+    probe.addEventListener('canplay', capture)
+    probe.src = url
+    probe.load()
+    return () => {
+      cancelled = true
+      probe.pause()
+      probe.removeAttribute('src')
+      probe.load()
+      if (videoPreviewUrlRef.current === url) videoPreviewUrlRef.current = null
+      URL.revokeObjectURL(url)
+    }
+  }, [videoFile])
   const [imageFiles, setImageFiles] = useState<File[]>([])
   const [imagePreviews, setImagePreviews] = useState<string[]>([])
   const [selectedDiagnosis, setSelectedDiagnosis] = useState<{ result_id: string; animal_name_ja: string; catchphrase: string; result_type_key: string; completed_at: string } | null>(null)
@@ -848,7 +977,6 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
   const beginAttachmentSelection = () => {
     videoConversionAbortRef.current?.abort()
-    setPendingMovConversion(null)
     setMessage('')
     setAttachmentBusy(false)
     setResultsLoading(false)
@@ -870,8 +998,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         setPosts([])
         setCurrentUserId('')
         setVideoFile(null)
-        setPendingMovConversion(null)
-        setVideoRecoveryBlocked(next ? hasVideoTransferJournal(next) : false)
+            setVideoRecoveryBlocked(next ? hasVideoTransferJournal(next) : false)
         setVideoRecoveryNotice('')
         setImageFiles([])
         setSelectedResult(null)
@@ -961,7 +1088,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       {attachmentScreen === 'menu' ? <>
         <div style={{ fontSize: 12, color: '#aaa', marginBottom: 10 }}>添付するものを選択</div>
         <button type="button" style={optionStyle} onClick={() => { imageInputRef.current?.click(); setAttachmentsOpen(false) }}>▧　画像を添付（最大4枚・各5MB）</button>
-        <button type="button" style={optionStyle} onClick={() => { videoInputRef.current?.click(); setAttachmentsOpen(false) }}>▶　動画を添付（最大30秒・20MB）</button>
+        <button type="button" style={optionStyle} onClick={() => { void preparedMovAudioRef.current?.close().catch(() => {}); preparedMovAudioRef.current = prepareMovAudioContext(); videoInputRef.current?.click(); setAttachmentsOpen(false) }}>▶　動画を添付（最大30秒・20MB）</button>
         <button type="button" style={optionStyle} onClick={() => { void loadDiagnoses() }}>♧　自己診断を添付　›</button>
         <button type="button" style={optionStyle} onClick={() => { void loadStyleSnapshot() }}>♙　自分への他者評価を添付（3人以上）</button>
         <button type="button" style={optionStyle} onClick={() => setAttachmentScreen('results')}>♠　戦績を添付　›</button>
@@ -1030,16 +1157,15 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     }
   }
 
-  const chooseVideo = async (file: File | undefined, fromExplicitGesture = false) => {
+  const chooseVideo = async (file: File | undefined) => {
     if (!file) return
     if (videoRecoveryBlocked) { setMessage(VIDEO_TRANSFER_RECOVERY_MESSAGE); return }
     const selection = beginAttachmentSelection()
     if (pendingVideoRef.current || videoSubmitInFlightRef.current) { setMessage('保留中の動画を先に再試行してください。'); return }
     if (imageFiles.length || selectedResult || selectedDiagnosis || styleSnapshot || interactiveMode !== 'normal') { setMessage('動画は画像・戦績・診断・アンケートと同時に添付できません。'); return }
-    if (isMovVideo(file) && !fromExplicitGesture) {
-      setPendingMovConversion(file)
-      setMessage('MOVを選択しました。「MOV変換を開始」を押すと、この端末内でMP4へ変換します。変換までは送信されません。')
-      return
+    if (!isMovVideo(file) && preparedMovAudioRef.current) {
+      void preparedMovAudioRef.current.close().catch(() => {})
+      preparedMovAudioRef.current = null
     }
     let selectedFile = file
     const conversion = new AbortController()
@@ -1047,14 +1173,21 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     try {
       if (isMovVideo(file)) {
         setMessage('MOVを端末内でMP4へ変換しています。画面を開いたままお待ちください。変換後は音声と映像を確認してください。')
-        selectedFile = await convertMovToMp4(file, conversion.signal)
+        selectedFile = await convertMovToMp4(file, conversion.signal, preparedMovAudioRef.current)
+        preparedMovAudioRef.current = null
       }
       if (selectedFile.size > MAX_VIDEO_BYTES) {
         setMessage('動画を圧縮しています。完了までお待ちください。')
         selectedFile = await compressOversizedVideo(selectedFile)
       }
     } catch (error) {
-      if (selection === videoSelectionRef.current) setMessage(error instanceof Error ? error.message : '動画の圧縮に失敗しました。')
+      if (preparedMovAudioRef.current) {
+        void preparedMovAudioRef.current.close().catch(() => {})
+        preparedMovAudioRef.current = null
+      }
+      if (selection === videoSelectionRef.current) {
+        setMessage(error instanceof Error ? `自動変換に失敗しました：${error.message} 動画をMP4形式に変換して選び直してください。` : '動画の圧縮に失敗しました。')
+      }
       return
     }
     if (selection !== videoSelectionRef.current || conversion.signal.aborted) return
@@ -1206,6 +1339,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         if (VIDEO_RECOVERY_CANDIDATE_ENABLED) await finalizeRecoveredVideoCandidate(path, content.trim(), requestController.signal)
         else await finalizeUploadedVideo(path, content.trim(), requestController.signal)
         if (!isCurrent()) return
+        // Persist the already verified pre-post thumbnail for this viewer/device.
+        // No new Storage writes or public URLs; the cache is scoped by JWT user and object path.
+        if (videoPreviewPoster) rememberLocalVideoPoster(user.id, path, videoPreviewPoster)
         pendingVideoRef.current = null
         setPendingVideo(null)
         try { sessionStorage.removeItem('poker-id-pending-video-v1') } catch { /* best effort */ }
@@ -2562,7 +2698,18 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       {selectedResult?.type === 'cash' && renderCashResultCard(previewPost)}
       {selectedDiagnosis && <div style={{ border: '1px solid #92733a', borderRadius: 12, padding: 16, color: '#f6e5bf' }}>♧ 自己診断：{playerTypeEmoji[selectedDiagnosis.result_type_key]} {selectedDiagnosis.animal_name_ja}<div style={{ fontSize: 12 }}>{selectedDiagnosis.catchphrase}</div></div>}
       {styleSnapshot && renderStyleSnapshot(styleSnapshot)}
-      {videoPreview && <video controls preload="metadata" src={videoPreview} style={{ width: '100%', maxHeight: 360, borderRadius: 10 }} />}
+      {videoPreview && <div style={{ position: 'relative' }}>
+        <video key={videoPreview} controls playsInline preload="auto" src={videoPreview} poster={videoPreviewPoster || undefined}
+          // Never seek the user-controlled player to generate a poster:
+          // iPhone Safari can stall playback when metadata-driven seeking races decoding.
+          onSeeked={event => captureVideoPreviewPoster(event.currentTarget)}
+          onLoadedData={event => captureVideoPreviewPoster(event.currentTarget)}
+          onCanPlay={event => captureVideoPreviewPoster(event.currentTarget)}
+          onPlaying={event => captureVideoPreviewPoster(event.currentTarget)}
+          onTimeUpdate={event => { if (!videoPreviewPoster) captureVideoPreviewPoster(event.currentTarget) }}
+          style={{ width: '100%', maxHeight: 360, borderRadius: 10 }} />
+        {!videoPreviewPoster && <span style={{ position: 'absolute', right: 8, top: 8, background: '#222', color: '#ddd', padding: '4px 7px', borderRadius: 6, fontSize: 11, pointerEvents: 'none' }}>プレビューを準備中</span>}
+      </div>}
       {pendingVideo && <div style={{ padding: 12, border: '1px solid #675331', borderRadius: 10, background: '#211c15' }}>
         <p role="status" style={{ fontSize: 12, color: '#e6c27a', margin: '0 0 8px' }}>動画はアップロード済みです。前回と同じ内容で投稿を再試行できます。動画の再選択は不要です。</p>
         <button type="button" disabled={isPosting} onClick={() => { if (videoSubmitInFlightRef.current) return; setContent(pendingVideo.content); setMessage('投稿内容を元に戻しました。「投稿する」から再試行してください。') }} style={{ width: 'auto', padding: '7px 10px', borderRadius: 8, border: '1px solid #675331', background: '#30271b', color: '#f0d8ac', fontSize: 12 }}>投稿内容を元に戻す</button>
@@ -2789,12 +2936,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
           {renderInteractiveFields()}
           <input ref={imageInputRef} type="file" accept="image/jpeg,image/png,image/webp" multiple hidden onChange={e => { chooseImages(e.target.files); e.target.value = '' }} />
-          <input ref={videoInputRef} type="file" accept="video/mp4,video/webm,video/quicktime,.mov" hidden onChange={e => { void chooseVideo(e.target.files?.[0]); e.target.value = '' }} />
-          {pendingMovConversion && <div role="group" aria-label="MOV変換の確認" style={{ padding: 12, marginTop: 10, border: '1px solid #555', borderRadius: 10, background: '#202020' }}>
-            <p style={{ color: '#eee', fontSize: 13, margin: '0 0 10px' }}>MOVを選択しました。変換は端末内で行います。画面を開いたまま操作してください。</p>
-            <button type="button" onClick={() => { if (pendingMovConversion) void chooseVideo(pendingMovConversion, true) }} style={{ background: '#444', color: '#fff', border: '1px solid #777', borderRadius: 9, padding: '10px 14px', fontWeight: 700 }}>▶ MOV変換を開始</button>
-            <button type="button" onClick={() => { beginAttachmentSelection(); setPendingMovConversion(null) }} style={{ background: 'transparent', color: '#ddd', border: '1px solid #555', borderRadius: 9, padding: '10px 14px', marginLeft: 8 }}>キャンセル</button>
-          </div>}
+          <input ref={videoInputRef} type="file" accept="video/mp4,video/webm,video/quicktime,.mov" hidden onChange={e => { if (!e.target.files?.[0]) { void preparedMovAudioRef.current?.close().catch(() => {}); preparedMovAudioRef.current = null } void chooseVideo(e.target.files?.[0]); e.target.value = '' }} />
           {attachmentsOpen && renderAttachmentPicker()}
           {renderSelectedResultPreview()}
         </section>
@@ -3048,16 +3190,16 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
             <textarea autoFocus placeholder="ポーカーについて何を投稿する？" maxLength={500} value={content} onChange={e => setContent(e.target.value)} style={{ width: '100%', minHeight: 180, padding: 8, background: 'transparent', color: '#fff', border: 'none', fontSize: 17, resize: 'vertical' }}/>
             {renderPostModeButtons()}
             {renderInteractiveFields()}
-            {pendingMovConversion && <div role="group" aria-label="MOV変換の確認" style={{ padding: 12, marginTop: 10, border: '1px solid #555', borderRadius: 10, background: '#202020' }}>
-              <p style={{ color: '#eee', fontSize: 13, margin: '0 0 10px' }}>MOVを選択しました。変換は端末内で行います。画面を開いたまま操作してください。</p>
-              <button type="button" onClick={() => { if (pendingMovConversion) void chooseVideo(pendingMovConversion, true) }} style={{ background: '#444', color: '#fff', border: '1px solid #777', borderRadius: 9, padding: '10px 14px', fontWeight: 700 }}>▶ MOV変換を開始</button>
-              <button type="button" onClick={() => { beginAttachmentSelection(); setPendingMovConversion(null) }} style={{ background: 'transparent', color: '#ddd', border: '1px solid #555', borderRadius: 9, padding: '10px 14px', marginLeft: 8 }}>キャンセル</button>
-            </div>}
             {attachmentsOpen && renderAttachmentPicker()}
             {renderSelectedResultPreview()}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 18 }}><span style={{ color: '#888', fontSize: 12 }}>{content.length}/500</span><button type="button" disabled={isPosting || !canSubmitPost} onClick={handlePost} style={{ width: 'auto', borderRadius: 99, background: '#fff', color: '#000', padding: '10px 24px', fontWeight: 800 }}>{isPosting ? '投稿中...' : '投稿する'}</button></div>
             {message && <div style={{ color: '#ccc', marginTop: 10, fontSize: 12 }}>{message}</div>}
             {videoRecoveryNotice && <div role="status" style={{ color: '#ccc', marginTop: 10, fontSize: 12 }}>{videoRecoveryNotice}</div>}
+            {videoRecoveryBlocked && <button type="button" disabled={recoveryChecking || isPosting} onClick={() => { void confirmPublishedVideoRecovery() }}
+              style={{ marginTop: 10, padding: '9px 14px', borderRadius: 9, border: '1px solid #666', background: '#292929', color: '#fff', fontWeight: 700 }}>
+              {recoveryChecking?'前回の投稿を照合中...':'前回の投稿済み状態を確認'}
+            </button>}
+
           </div>
         </div>}
         {/* 投稿一覧 */}
@@ -3635,7 +3777,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
                     )}
 
                     {post.style_snapshot && renderStyleSnapshot(post.style_snapshot)}
-                    {post.video_path && <PostVideo postId={post.id} />}
+                    {post.video_path && <PostVideo postId={post.id} videoPath={post.video_path} />}
                     {Array.isArray(post.image_urls) && post.image_urls.length > 0 && <div style={{ display: 'grid', gridTemplateColumns: post.image_urls.length > 1 ? 'repeat(2,minmax(0,1fr))' : '1fr', gap: 5, margin: '10px 0 14px' }}>{post.image_urls.map((url, i) => <a key={`${post.id}-${i}`} href={url} target="_blank" rel="noopener noreferrer"><img src={url} alt={`投稿画像${i+1}`} loading="lazy" style={{ width: '100%', maxHeight: 460, objectFit: 'cover', borderRadius: 10 }}/></a>)}</div>}
                     {/* アクション */}
                       <style>{`

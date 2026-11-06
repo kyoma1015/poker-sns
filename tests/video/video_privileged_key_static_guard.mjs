@@ -90,4 +90,48 @@ assert.match(adapter,/production video publish requires provisioned server-attes
  'production release must fail closed without approval and key')
 const finalize=readFileSync('api/video-finalize.ts','utf8')
 assert.match(finalize,/!isolatedReservation/,'production reservation must remain disabled')
+// Production recovery writes require independent explicit gates and caller JWT+DB
+// authorization; no request is allowed to use the isolated signer in production.
+const recovery=readFileSync('server/video-recovery-candidate.ts','utf8')
+assert.match(recovery,/VIDEO_RECOVERY_STATUS_ONLY_ENABLED==='true'/,
+ 'production recovery inspection must require an independent opt-in')
+assert.match(recovery,/body.action!=='recovery_status' && !productionWrites/,
+ 'production recovery must reject mutation before I/O unless independently enabled')
+assert.match(recovery,/VIDEO_RECOVERY_PRODUCTION_WRITES_ENABLED==='true'/,
+ 'production recovery writes require an independent explicit opt-in')
+assert.match(recovery,/await assertProductionVideoPublisher/,
+ 'production recovery writes must enforce caller JWT-scoped DB publisher authorization')
+assert.match(recovery,/assertServerAttestationAvailable/,
+ 'production recovery finalize must require attestation gate')
+assert.match(recovery,/VIDEO_ATTESTATION_KEY_ID/,
+ 'production recovery must use the provisioned production rotation key')
+assert.match(recovery,/await assertProductionVideoMember\(client,owner\)/,
+ 'production recovery inspection must enforce the JWT-scoped rollout allowlist')
+assert.match(recovery,/JSON.stringify\(before\)!==JSON.stringify\(after\)/,
+ 'recovery must reject manifest or Storage generation races')
+assert.match(recovery,/inspected.sha256!==before.sha256/,
+ 'recovery must reject media digest mismatch')
+assert.match(recovery,/await authenticate\(\)!==owner/,
+ 'recovery must recheck authenticated identity before responding or publishing')
+// Review-only migration must never be silently deployed, overwrite an
+// unsealed partial installation, or make the recovery manifest public.
+const candidate=readFileSync('tests/video/recovery_production_candidate_NOT_APPROVED.sql','utf8')
+assert.match(candidate,/begin;[\s\S]*commit;\s*$/, 'recovery migration must be transactional')
+assert.match(candidate,/recovery_migration_seal/, 'repeated migration must require a private definition seal')
+assert.match(candidate,/definition_digest=md5\(/, 'rerun must reject changed SQL function definitions')
+assert.match(candidate,/preexisting unsealed migration objects/, 'partial legacy migration must fail closed')
+assert.match(candidate,/preflight: RLS or grants drift/, 'rerun must enforce table privileges')
+assert.match(candidate,/revoke all on video_private\.recovery_manifests from public,anon,authenticated,service_role/,
+ 'private recovery manifest must not be user-accessible')
+assert.match(candidate,/revoke all on video_private\.recovery_migration_seal from public,anon,authenticated,service_role/,
+ 'migration seal must be inaccessible to client JWTs')
+assert.match(candidate,/on conflict \(version\) do nothing/, 'migration seal must be write-once')
+assert.doesNotMatch(candidate,/drop\s+(?:table|function|schema)\s+/i,
+ 'candidate must not drop existing production schema objects')
+const policy=readFileSync('tests/video/production_storage_insert_stop_NOT_APPROVED.sql','utf8')
+assert.match(policy,/as restrictive for insert to authenticated/,
+ 'stop policy must restrict rather than broaden video uploads')
+assert.match(policy,/public\.video_rollout_allowed\(\)/,
+ 'video INSERT must be gated by existing DB rollout authority')
+console.log('PASS: review-only SQL drift seal and restrictive Storage kill-switch static checks')
 console.log('PASS: video runtime privileged-key isolation and production fail-closed gates')
