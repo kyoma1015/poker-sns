@@ -6,12 +6,14 @@ const labels = { fixed_small: '元の小サイズ方策', fixed_large: '元の�
 export default function ContinuationAudit({ stage }: { stage: AuditStage }) {
  const [preflop, setPreflop] = useState('learned_small'), c = findContinuationAudit(stage, preflop)
  if (!c) return <section className="card gto-research" role="alert">継続モデル検証データが条件・品質情報と一致しません。結果を表示できません。</section>
+ const gain = auditData.constructed_root_continuation_gains[preflop]
  const caller = stage === 'vs_3bet' ? '0' : '1', probability = c.root_call_probability
  return <section className="card gto-research gto-audit" aria-label="継続モデルの独立BR検証">
   <h2>研究用：継続モデルの独立BR検証</h2>
   <p><strong>実ゲームGTO精度は未検証です。</strong> プリフロップ方策を固定し、CALL後の継続ゲームで一方が応答を変えたときの利得を測っています。全ゲームGTOの誤差上限ではありません。</p>
   <label>固定するプリフロップ方策<select aria-label="固定するプリフロップ方策" value={preflop} onChange={e => setPreflop(e.target.value)}><option value="learned_small">小サイズ継続モデルで学習した方策</option><option value="learned_large">大サイズ継続モデルで学習した方策</option></select></label>
   <p>{stage === 'vs_3bet' ? '対3bet：SBが9BBまでコール' : '対4bet：BBが21BBまでコール'}。このCALL枝のルート到達確率：{(probability * 100).toFixed(4)}%。全{auditData.population.physical_flops.toLocaleString()}フロップを{auditData.population.orbits.toLocaleString()}同型代表で正しく加重しています。</p>
+  <p>対3bet・対4betの2つのCALL枝で実際に構成した継続応答のルート改善利得：SB {gain.by_seat_bb['0'].toFixed(4)}／BB {gain.by_seat_bb['1'].toFixed(4)} BB、和 {gain.sum_bb.toFixed(4)} BB。これはプリフロップを変えずに見つかった利得で、全体の最大改善利得の上限ではありません。</p>
   <div className="gto-matrix-scroll" tabIndex={0} role="region" aria-label="継続モデルBR比較表"><table className="gto-audit-table"><caption>同じ到達レンジで比較。数値はCALL到達後の規定ゲーム内NashConv・BBです。</caption><thead><tr><th>継続方策</th><th>8特徴</th><th>本人169クラス追加</th><th>個別フロップも観測</th><th>CALLした側のモデルEV</th></tr></thead><tbody>
    {auditModels.map(name => { const m = c.models[name]; return <tr key={name} data-audit-model={name}><th>{labels[name]}</th><td>{m.texture_flags.conditional_call_nashconv_bb.toFixed(4)}</td><td>{m.texture_class_flags.conditional_call_nashconv_bb.toFixed(4)}</td><td>{m.board_class_flags.conditional_call_nashconv_bb.toFixed(4)}</td><td>{(m.by_seat[caller].texture_flags.profile_root_bb / probability).toFixed(4)}</td></tr> })}
   </tbody></table></div>

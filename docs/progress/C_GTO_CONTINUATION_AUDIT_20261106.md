@@ -38,3 +38,11 @@ contained. Normalcatalog untouched. Newtests3Node+4mobilechecks planned; origina
 169frequency/EV and UIregressions retained. GitHubG11search foundissue22 reiterating
 originalconditions but no profilelist; defaultcode20-stack search0. Reference
 acquisition still0,FORMAL_ACCEPTANCE retainsall12 (PARTIAL10/BLOCKED2).
+
+Derivative export sums each player's actual found postflop gains over the two
+mutually exclusiveCALLbranches with preflop fixed. This constructs a feasible
+rootresponse lowerbound,not a whole-game deviation upperbound. All profiles and
+both originalpreflopreaches reported,no finalselection. Conditional moments must
+NOT be reused as unweighted offreach preflopcounterfactual payoffs after changing
+ranges. The UI export explicitly marks counterfactual_preflop_oracle=false.
+No normalGTO registration; old range/EV datasets stay byte-identical.
