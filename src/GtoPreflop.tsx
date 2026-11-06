@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { lazy, Suspense, useState } from 'react'
 import type { FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { canonicalQuery, findVerifiedRange, handGrid, oneBBQuery, positions } from './gto/rangeCatalog'
@@ -11,6 +11,8 @@ import IndependentPreflop from './IndependentPreflop'
 import { findIndependentResearch, histories, independentQuery, independentStages } from './gto/independentResearch'
 import type { IndependentStage } from './gto/independentResearch'
 import './GtoPreflop.css'
+
+const ContinuationAudit = lazy(() => import('./ContinuationAudit'))
 
 const stages = { rfi: 'RFI（自分まで全員フォールド）', vs_open: 'オープンへの対応',
   vs_3bet: '3ベットへの対応', vs_4bet: '4ベットへの対応', forced_blind_allin: '検証用：HU1BB・BB強制オールインへの対応' }
@@ -157,6 +159,7 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
         </section>}
       </section>
       {independentStage && <IndependentPreflop key={independentStage} stage={independentStage} />}
+      {(independentStage === 'vs_3bet' || independentStage === 'vs_4bet') && <Suspense fallback={<p>継続モデル検証を読み込み中です。</p>}><ContinuationAudit key={independentStage} stage={independentStage} /></Suspense>}
       {researchStage && <AbstractResearchPanel key={researchStage} stage={researchStage} />}
     </main>
   )

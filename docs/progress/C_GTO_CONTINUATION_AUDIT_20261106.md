@@ -30,3 +30,11 @@ fabricated late-street error. Actual callerEV must match published exact CALL
 EV atsamepreflopprofile. Formal0/12 until originalprofiles/size+realapprox evidence.
 Next:run two finite momentworkers,analyze/refit/BR,guarded UI diagnostic display,
 mobile/tests/build/lint,commit+FFpush,newCIverify. No persistentdaemon/autoresume.
+
+UI diagnostic is a separate lazyloaded module in GtoPreflop,not an edit to frozen
+researchdata/component. Reactbestpractices reviewed: unconditionalhook,staticimports
+foradapter,separate lazy component,accessible labels/scrollregion,mobileoverflow
+contained. Normalcatalog untouched. Newtests3Node+4mobilechecks planned; original
+169frequency/EV and UIregressions retained. GitHubG11search foundissue22 reiterating
+originalconditions but no profilelist; defaultcode20-stack search0. Reference
+acquisition still0,FORMAL_ACCEPTANCE retainsall12 (PARTIAL10/BLOCKED2).
