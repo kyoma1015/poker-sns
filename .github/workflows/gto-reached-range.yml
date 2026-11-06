@@ -1,8 +1,12 @@
-name: GTO new-only coverage and conservative preflop BR
+name: GTO independent preflop learning and conservative EV
 on:
   push:
     branches: ['codex/c-native-hand169-bridge-20261023']
     paths:
+      - 'gto/abstract/fullsupport*'
+      - 'gto/abstract/independent_*'
+      - 'tests/test_independent_preflop.py'
+      - 'docs/qa/independent-preflop-20261105/**'
       - 'gto/abstract/range_*'
       - 'gto/abstract/factorial_*'
       - 'gto/abstract/value_*'
@@ -42,7 +46,7 @@ permissions:
 jobs:
   reached_range:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
@@ -88,15 +92,19 @@ jobs:
         run: python -B -m unittest tests.test_call_coverage -v
       - name: Private-information BR, conservative cells and class-pair oracle tests
         run: python -B -m unittest tests.test_root_interval -v
-      - name: Reproduce new-only chance priority without EV selection
+      - name: Full-support oracle, conditional payoffs and independent evaluation tests
+        run: python -B -m unittest tests.test_independent_preflop -v
+      - name: Reproduce fixed independent learning design
         run: |
-          python -B -m gto.abstract.root_br_study --phase design --output "$RUNNER_TEMP/root-br-design.json"
-          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/root-br-design.json" --expected docs/qa/root-br-20261105/design.json
-      - name: Minimal registered response updates on known and fresh cases
+          python -B -m gto.abstract.independent_preflop --phase design --output "$RUNNER_TEMP/independent-design.json"
+          python -B -m gto.abstract.independent_verify --actual "$RUNNER_TEMP/independent-design.json" --expected docs/qa/independent-preflop-20261105/design.json
+      - name: Reproduce frozen learned continuation policies
         run: |
-          python -B -m gto.abstract.root_br_study --phase responses --build-dir "$RUNNER_TEMP/root-response" --output "$RUNNER_TEMP/root-response.json"
-          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/root-response.json" --expected docs/qa/root-br-20261105/response-results.json
-      - name: New-only exact board coverage and conservative root EV and BR
+          python -B -m gto.abstract.independent_preflop --phase teacher --build-dir "$RUNNER_TEMP/independent-teacher" --output "$RUNNER_TEMP/independent-teacher.json"
+          python -B -m gto.abstract.independent_verify --actual "$RUNNER_TEMP/independent-teacher.json" --expected docs/qa/independent-preflop-20261105/teacher.json
+      - name: Replay complete payoff oracle, preflop CFR and independent evaluation
         run: |
-          python -B -m gto.abstract.root_br_study --phase expand --build-dir "$RUNNER_TEMP/root-expand" --cache-dir "$RUNNER_TEMP/root-cache" --output "$RUNNER_TEMP/root-expand.json"
-          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/root-expand.json" --expected docs/qa/root-br-20261105/expansion-results.json
+          python -B -m gto.abstract.independent_preflop --phase train --build-dir "$RUNNER_TEMP/independent-train" --cache-dir "$RUNNER_TEMP/independent-cache" --output "$RUNNER_TEMP/independent-results.json"
+          python -B -m gto.abstract.independent_verify --actual "$RUNNER_TEMP/independent-results.json" --expected docs/qa/independent-preflop-20261105/results.json
+          python -B -m gto.abstract.independent_preflop --phase export --input "$RUNNER_TEMP/independent-results.json" --output "$RUNNER_TEMP/independent-ui.json"
+          python -B -m gto.abstract.independent_verify --actual "$RUNNER_TEMP/independent-ui.json" --expected src/gto/independentResearchData.json

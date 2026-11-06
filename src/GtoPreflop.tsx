@@ -7,6 +7,9 @@ import { reviewedCertificates, verifiedCatalog } from './gto/verifiedCatalog'
 import { abstractResearch, abstractResearchQuery, findAbstractResearch } from './gto/abstractResearch'
 import type { AbstractStage } from './gto/abstractResearch'
 import { conditionalPrecision } from './gto/precisionResearch'
+import IndependentPreflop from './IndependentPreflop'
+import { findIndependentResearch, histories, independentQuery, independentStages } from './gto/independentResearch'
+import type { IndependentStage } from './gto/independentResearch'
 import './GtoPreflop.css'
 
 const stages = { rfi: 'RFI（自分まで全員フォールド）', vs_open: 'オープンへの対応',
@@ -32,22 +35,25 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
   const [selected, setSelected] = useState('AA')
   const [researchOptIn, setResearchOptIn] = useState(false)
   const [researchStage, setResearchStage] = useState<AbstractStage | null>(null)
+  const [independentOptIn, setIndependentOptIn] = useState(false)
+  const [independentStage, setIndependentStage] = useState<IndependentStage | null>(null)
   const isForced = form.stage === 'forced_blind_allin'
   const hasOneBB = findVerifiedRange(oneBBQuery, catalog, certificates) !== null
   function change(patch: Partial<RangeQuery>) {
     setForm(previous => ({ ...previous, ...patch }))
-    setResearchStage(null); setResult(null); setError(''); setMessage('条件を入力して検索してください。')
+    setIndependentStage(null); setResearchStage(null); setResult(null); setError(''); setMessage('条件を入力して検索してください。')
   }
   function search(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     try {
       const query = canonicalQuery(form)
       const match = findVerifiedRange(query, catalog, certificates)
+      setIndependentStage(independentOptIn ? findIndependentResearch(query) : null)
       setResearchStage(researchOptIn ? findAbstractResearch(query) : null)
       setResult(match); setSelected('AA'); setError('')
       setMessage(match ? '計算条件と検証根拠が一致するデータを表示しています。' : 'この条件の検証済みデータはまだありません。')
     } catch (caught) {
-      setResearchStage(null); setResult(null); setError(caught instanceof Error ? caught.message : '検索条件を確認してください。')
+      setIndependentStage(null); setResearchStage(null); setResult(null); setError(caught instanceof Error ? caught.message : '検索条件を確認してください。')
     }
   }
   const selectedRow = result?.hands[selected]
@@ -64,10 +70,15 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
         </aside>}
         <aside className="gto-notice">
           <p>HU50BBの抽象化モデルを研究用に比較できます。実ゲームのGTO精度は未検証で、正式GTOレンジには含めていません。</p>
-          <button type="button" onClick={() => { change(abstractResearchQuery); setResearchOptIn(true) }}>研究用：HU50BB抽象化モデル</button>
+          <button type="button" onClick={() => { change(abstractResearchQuery); setResearchOptIn(true); setIndependentOptIn(false) }}>研究用：HU50BB抽象化モデル</button>
+        </aside>
+        <aside className="gto-notice">
+          <p>全プリフロップ分岐を学習する新しい研究版です。期待ゲームの収束・実戦GTO精度は未確認で、通常GTOとしては表示しません。</p>
+          <button type="button" onClick={() => { change(independentQuery); setIndependentOptIn(true); setResearchOptIn(false) }}>研究用：独立学習HU50BB</button>
         </aside>
         <form aria-label="プリフロップ検索条件" onSubmit={search}>
           <label><input type="checkbox" checked={researchOptIn} onChange={event => { setResearchOptIn(event.target.checked); setResearchStage(null) }} />抽象化モデルの研究結果も確認する（実ゲームGTO未検証）</label>
+          <label><input type="checkbox" checked={independentOptIn} onChange={e => { setIndependentOptIn(e.target.checked); setIndependentStage(null) }} />独立学習の研究結果も確認する（実戦GTO精度未検証）</label>
           <fieldset className="gto-fields"><legend>計算条件</legend>
             <label>ゲーム形式<select aria-label="ゲーム形式" disabled={isForced} value={form.format} onChange={event => change({ format: event.target.value as RangeQuery['format'], rakePct: '0', rakeCapBb: null })}>
               <option value="mtt">MTT（chipEV）</option><option value="ring">リングゲーム</option>
@@ -91,9 +102,12 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
             <label>オープンサイズ（BB）<input aria-label="オープンサイズ（BB）" disabled={isForced} required={!isForced} inputMode="decimal" value={form.openBb ?? ''} placeholder={isForced ? '適用なし' : '合計額'} onChange={event => change({ openBb: event.target.value })} /></label>
             <label>3ベットサイズ（BB）<input aria-label="3ベットサイズ（BB）" disabled={isForced} required={!isForced} inputMode="decimal" value={form.threeBetBb ?? ''} placeholder={isForced ? '適用なし' : '合計額'} onChange={event => change({ threeBetBb: event.target.value })} /></label>
             <label>4ベットサイズ（BB）<input aria-label="4ベットサイズ（BB）" disabled={isForced} required={!isForced} inputMode="decimal" value={form.fourBetBb ?? ''} placeholder={isForced ? '適用なし' : '合計額'} onChange={event => change({ fourBetBb: event.target.value })} /></label>
+            {independentOptIn && form.players === 2 && <label className="gto-wide">公開アクション履歴<select aria-label="公開アクション履歴" disabled={isForced} value={isForced ? 'forced' : form.stage} onChange={e => { const stage = e.target.value as IndependentStage; change({ stage, seat: stage === 'rfi' || stage === 'vs_3bet' ? 0 : 1 }) }}>
+              {isForced ? <option value="forced">BB強制オールイン</option> : independentStages.map(s => <option key={s} value={s}>{histories[s]}</option>)}
+            </select></label>}
             <label className="gto-wide">対象局面<select aria-label="対象局面" value={form.stage} onChange={event => {
               const stage = event.target.value as RangeQuery['stage']
-              change(stage === 'forced_blind_allin' ? oneBBQuery : isForced ? { stage, openBb: '', threeBetBb: '', fourBetBb: '' } : { stage })
+              change(stage === 'forced_blind_allin' ? oneBBQuery : isForced ? { stage, openBb: '', threeBetBb: '', fourBetBb: '' } : independentOptIn && form.players === 2 ? { stage, seat: stage === 'rfi' || stage === 'vs_3bet' ? 0 : 1 } : { stage })
             }}>
               {Object.entries(stages).map(([key, label]) => <option key={key} value={key}>{label}</option>)}
             </select></label>
@@ -142,6 +156,7 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
           </details>
         </section>}
       </section>
+      {independentStage && <IndependentPreflop key={independentStage} stage={independentStage} />}
       {researchStage && <AbstractResearchPanel key={researchStage} stage={researchStage} />}
     </main>
   )

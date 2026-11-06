@@ -7,3 +7,16 @@ Before fit: protocol fixes learned_small/learned_large continuation profiles, ow
 Implement fullsupportoracle→independent preflopCFR/BR→artifact+researchUI+mobile tests in one batch. Only evidence-qualified datasets may pass ordinary GTO gate. If precision bound>.1 orrealgameunknown,markFAIL/research,no formalPASS. Formalall12 remain pending evidence,not reducedtoHU50. Protectedold8ranges1352,H U1BB,2..9,staticdemo,frozenCFR,otherPR/main/prodDB/Storage/Vercel/SSO/fees unchanged. No exact all-postflop requirement; validate approximation separately.
 
 Next implement/testcore,freeze source,train+oracle+newrootprofiles; parallel UI integration while computing; mobile/build/lint; commit/push/newCI/fixfailures. No autonomous restart. Source/nextsteps must be saved if capacity/environment fails.
+
+2026-11-06 recovery: localcf1b54a and2commits,all pending source/UI/teacher/results
+present. Saved15files/status/refs/diff+incrementalbundle to
+/workspace/independent-recovery-20261106. Full arrays preserved before compacting
+only packet payload storage to exact numeric fingerprints; no computation changed.
+Local13Python/20Node/build PASS. New CI/mobile pending. Samplegame2/2converged,
+expectedgame0/2at0.1BB; formal0/12. New8research rows1352,ordinaryGTO0.
+Next publish preserved work via expected-head FF,CI/mobile; then independently
+preregister/test suit-orbit integration preserving reach/cardremoval/privateinfo.
+Additional sandbox network permission calls stalled previously; do not repeat them.
+Use existing GitHub connector and CI for network/browser verification. AUTO-RESUME
+and independent restart do not exist. Last failed environment was an executor
+startup problem,not a solver error. Preserve oldrepo/objects/protected artifacts.

@@ -47,6 +47,21 @@ class IndependentPreflopTests(unittest.TestCase):
   for i,node in enumerate(model.tree()):
    if node['actor']<0:self.assertEqual(values[i*fs.S],6. if node['matched'] else node['value'])
   with self.assertRaises(ValueError):fs.payoff_planes(o,{},'missing',names)
+ def test_real_flop_class_payoffs_match_private_type_game_for_both_seats(self):
+  from gto.abstract import call_study as cs,gap_models as gm
+  from gto.abstract.factorial_transfer import category
+  env=cs.setup(Path(self.tmp.name)/'actual');flop=[8,13,18];m=cs.exact.matrix(env[0],flop);groups=fs.groups(m);ranges=[__import__('gto.abstract.call_reach',fromlist=['extract']).extract(env[3],h,'test') for h in (['raise_to_5','call'],['raise_to_5','raise_to_18','call'])];profiles={};games=[]
+  for r in ranges:
+   moments=(C.c_double*128)();self.assertEqual(env[1].type_aggregate(m['n'],8,8,m['cards'],ints(m['labels']),ints(groups),ints(groups),m['win'],m['tie'],doubles(r['hero_reach']),doubles(r['villain_reach']),moments),0)
+   g=fs.game(r,[.5,1.,2.],list(moments)[::2],list(moments)[1::2]);pi=st.uniform(g);profiles[str(r['leaf_index'])+'|'+category(flop)]=pi;games.append((g,pi))
+  coef=fs.coefficients({'ranges':ranges,'profiles':{'one':profiles}},{'variants':{'one':[.5,1.,2.]}},category(flop),self.coeff);y,mass=fs.evaluate_flop(self.native,env[0],flop,coef);full=ri.full_counts()
+  for plane,(r,(g,pi)) in enumerate(zip(ranges,games)):
+   z=gm.direct_mass(env[5],r,flop);observed=math.fsum(y[plane*fs.S+i*169+j]*full[i*169+j]*17296*r['seat_reach'][0][i]*r['seat_reach'][1][j] for i in range(169) for j in range(169))/z;expected=st.evaluate(env[-1],g,pi)['profile_hero_ev_bb']*(1 if r['hero_actor']==0 else -1);self.assertAlmostEqual(observed,expected,places=11)
+  self.assertTrue(all(0<=x<=1/17296 for x in mass))
+ def test_replay_compares_decoded_values_and_checks_each_packet(self):
+  from gto.abstract.independent_verify import compare
+  p=fs.pack([1.,2.]);compare(p,fs.pack([1.+1e-13,2.]));q={**p,'sha256':'bad'}
+  with self.assertRaises(ValueError):compare(p,q)
  def test_policy_mixing_is_seat_local_and_nonmutating(self):
   n=len(model.tree())*3*169;a=[1.]*n;b=[2.]*n;c=ev.mix(a,b)
   for k,node in enumerate(model.tree()):self.assertEqual(c[k*3*169],2. if node['actor']==1 else 1.)

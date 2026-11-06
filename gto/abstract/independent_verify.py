@@ -8,6 +8,9 @@ def compare(a,b,path='root'):
  if isinstance(a,dict):
   if a.get('codec')=='f64le-zlib-base64':
    if a['count']!=b['count']:raise ValueError('packet shape '+path)
+   if 'data' not in b:
+    unpack(a) # Validate actual payload before comparing exact expected binary fingerprint.
+    compare({k:v for k,v in a.items() if k!='data'},b,path+'.fingerprint');return
    compare(unpack(a),unpack(b),path+'.decoded');return
   if set(a)!=set(b):raise ValueError('replay fields '+path)
   for k in a:compare(a[k],b[k],path+'.'+k)

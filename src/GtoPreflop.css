@@ -32,3 +32,4 @@
 .gto-detail summary { cursor: pointer; min-height: 44px; }
 .gto-preflop :focus-visible { outline: 2px solid #91d6ff; outline-offset: 3px; }
 @media (max-width: 360px) { .gto-fields { grid-template-columns: minmax(0, 1fr); } }
+.gto-research .gto-digest { overflow-wrap: anywhere; }
