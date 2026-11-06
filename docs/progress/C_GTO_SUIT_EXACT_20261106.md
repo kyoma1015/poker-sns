@@ -31,3 +31,13 @@ Logs /workspace/suit-exact-learning.log,tests /workspace/suit-exact-tests.log.
 After run export UI into fresh file,verify/commit results+newCI+mobile. No permanent
 restart/scheduler/AUTO-RESUME. Preserve oldrepo Gitobjects. CI oldsuccess no manual
 rerun. Authoritative20stacks/fullsizes and matched trustedreference remainBLOCKED.
+
+CI00985184: UI42169300218/job127733092222 SUCCESS,logs confirm20Node+11old
+browser+5new390px browser checks,all4histories169tap,conditions/model/gating,
+no pageoverflow or externalrequests. Build/lint succeeded in CI. Static42169300305
+SUCCESS. Other four pending at this observation; do not assume finalSUCCESS.
+Local exact5tests PASS; actual8texture symmetry audit passed (integration reached
+orbit160 withoutfailure). Finite reverse cache prefill is optional compute-only
+parallelism; representative/aggregation order unchanged,not a newagent/daemon.
+GitHub issue search repoGTO"20" returned0; localREADME/acceptance/nativebatch still
+say missing originalowner/G11profile. No original20stack/size source recovered.

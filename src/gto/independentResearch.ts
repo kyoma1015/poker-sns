@@ -10,10 +10,10 @@ type Model = { contexts: Record<IndependentStage, Context>; sample_game_nashconv
   policy_digest: string; game_scope: string; root_expected_game_bounds_bb: { preflop_nashconv_interval: number[] } }
 export type IndependentData = { schema: string; models: Record<string, Model>; full_game_gto_verified: boolean;
   ordinary_catalog_admission: string; real_game_approximation_error: string; external_gto_comparison: string;
-  confidence_simultaneous_both_oracles: number; formal_acceptance_complete: number; protocol_sha256: string;
+  confidence_simultaneous_both_oracles: number | null; uncertainty_kind?: string; numeric_guard_bb?: number; numeric_guard_is_formal_rounding_proof?: boolean; formal_acceptance_complete: number; protocol_sha256: string;
   condition: { players: number; stack_bb: number; ante_bb: number; rake_pct: number; raise_to_bb: number[]; formal_profile: boolean };
   quality: { sample_game_convergence: boolean; expected_game_root_NC_upper_at_most0_1: boolean };
-  oracle_summary: Record<string, { samples: number; exact_board_fraction: number; unique_physical_flops: number }> }
+  oracle_summary: Record<string, { samples: number; exact_board_fraction: number; unique_physical_flops: number; represented_physical_flops?: number }> }
 export const independentResearch = data as unknown as IndependentData
 export const independentQuery: RangeQuery = { format: 'mtt', players: 2, seat: 0, stackBb: '50', anteBb: '0',
   rakePct: '0', rakeCapBb: null, openBb: '2.5', threeBetBb: '9', fourBetBb: '21', stage: 'rfi' }
@@ -29,10 +29,11 @@ const interval = (xs: number[], x: number) => Array.isArray(xs) && xs.length ===
 export function findIndependentResearch(value: unknown, source: unknown = independentResearch): IndependentStage | null {
   try {
     const q = canonicalQuery(value), d = source as IndependentData, c = d.condition
-    if (d.schema !== 'pokerid-independent-preflop-research-v1' || d.full_game_gto_verified !== false ||
+    const exact = d.schema === 'pokerid-independent-preflop-research-v2'
+    if ((!exact && d.schema !== 'pokerid-independent-preflop-research-v1') || d.full_game_gto_verified !== false ||
       d.ordinary_catalog_admission !== 'REJECTED_RESEARCH_ONLY' || d.formal_acceptance_complete !== 0 ||
       d.real_game_approximation_error !== 'UNKNOWN' || d.external_gto_comparison !== 'NOT PERFORMED' ||
-      d.confidence_simultaneous_both_oracles !== .99 || !c || c.formal_profile !== false ||
+      (exact ? d.confidence_simultaneous_both_oracles !== null || d.uncertainty_kind !== 'enumerated_population_with_empirical_rounding_guard' || d.numeric_guard_bb !== 1e-7 || d.numeric_guard_is_formal_rounding_proof !== false : d.confidence_simultaneous_both_oracles !== .99) || !c || c.formal_profile !== false ||
       c.players !== 2 || c.stack_bb !== 50 || c.ante_bb !== 0 || c.rake_pct !== 0 || JSON.stringify(c.raise_to_bb) !== '[2.5,9,21,50]' ||
       q.players !== 2 || q.stackBb !== '50' || q.anteBb !== '0' || q.rakePct !== '0' || q.rakeCapBb !== null ||
       q.openBb !== '2.5' || q.threeBetBb !== '9' || q.fourBetBb !== '21' || !independentStages.includes(q.stage as IndependentStage)) return null
@@ -40,6 +41,7 @@ export function findIndependentResearch(value: unknown, source: unknown = indepe
     if (q.seat !== (stage === 'rfi' || stage === 'vs_3bet' ? 0 : 1) ||
       Object.keys(d.models).sort().join(',') !== 'learned_large,learned_small') return null
     for (const model of Object.values(d.models)) {
+      if (!Array.isArray(model.root_expected_game_bounds_bb?.preflop_nashconv_interval) || model.root_expected_game_bounds_bb.preflop_nashconv_interval.length !== 2 || model.root_expected_game_bounds_bb.preflop_nashconv_interval.some(x => !finite(x) || x < 0) || model.root_expected_game_bounds_bb.preflop_nashconv_interval[0] > model.root_expected_game_bounds_bb.preflop_nashconv_interval[1]) return null
       if (!finite(model.sample_game_nashconv_bb) || model.sample_game_nashconv_bb < 0 || !finite(model.evaluation_sample_nashconv_bb)) return null
       for (const s of independentStages) {
         const context = model.contexts[s]
