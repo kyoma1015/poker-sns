@@ -24,9 +24,13 @@ def prepare(nodes,worlds):
     """
     if not nodes or not worlds:raise ValueError('nonempty finite game')
     if any(not math.isfinite(w['mass']) or w['mass']<=0 or not 0<=w['equity']<=1 for w in worlds) or not math.isclose(math.fsum(w['mass'] for w in worlds),1,abs_tol=1e-10):raise ValueError('normalized unweighted joint chance required')
+    for w in worlds:
+        if len(w['signals'])!=2 or any(type(x) is not int or not 0<=x<169*8 for x in w['signals']):raise ValueError('own169 class/flags required')
+        if len(w['flop'])!=3 or len(set(w['flop']))!=3 or any(type(c) is not int or not 0<=c<52 for c in w['flop']):raise ValueError('legal public flop')
     parents={};width=[];info=array('i');keys=[];memory=[{} for _ in nodes]
     for k,n in enumerate(nodes):
         children=n['children'];count=len(children)
+        if n.get('street') not in ('preflop','flop') or any(not math.isfinite(n.get(x,0)) for x in ('c0','c1')):raise ValueError('finite cashflow and explicit street required')
         if n['actor'] not in (-1,0,1) or count>4 or (n['actor']<0)!=(count==0):raise ValueError('legal actor/actions')
         for a,c in enumerate(children):
             if not k<c<len(nodes) or c in parents:raise ValueError('tree with unique public histories required')
@@ -92,3 +96,22 @@ def independent_br(g,policy,owner):
             values[k]=[values[n['children'][best[g['info'][k*W+w]]]][w] for w in range(W)]
         else:values[k]=[math.fsum(policy[g['info'][k*W+w]+a]*values[c][w] for a,c in enumerate(n['children'])) for w in range(W)]
     return math.fsum(w['mass']*v for w,v in zip(ws,values[0]))
+
+def conditional_opponent(g,policy,node,own_observation):
+    """Opponent class posterior at a public history, excluding own action reach.
+
+    Conditioning is on OWN abstraction and public history only. The actual
+    opponent signal is integrated out. Zero mass is returned as missing, not0EV.
+    """
+    ns,ws=g['nodes'],g['worlds'];owner=ns[node]['actor'];parents={c:(k,a) for k,n in enumerate(ns) for a,c in enumerate(n['children'])}
+    path=[];k=node
+    while k:k,a=parents[k];path.append((k,a))
+    mass=[0.]*169;W=len(ws)
+    for w,world in enumerate(ws):
+        if observation(ns[node],world)!=own_observation:continue
+        z=world['mass']
+        for k,a in path:
+            if ns[k]['actor']!=owner:z*=policy[g['info'][k*W+w]+a]
+        mass[world['signals'][1-owner]//8]+=z
+    total=math.fsum(mass)
+    return {'counterfactual_mass':total,'opponent_class_probability':[z/total for z in mass] if total else None,'own_reach_included':False}

@@ -19,6 +19,10 @@ Do not compare its values directly against previous full-population BR numbers.
 Compare uniform joint profile and synchronous full-sweep CFR checkpoints 16,64,256
 in the SAME finite game. Report every checkpoint, including deterioration. No
 seed/model selection: complete conditional enumeration, no Monte Carlo seed.
+Also evaluate the frozen learned_small preflop/coarse continuation profile on
+exactly this same board subset/action game, with read-only information refinement.
+This is an integration comparison, not a comparison to its published full-board
+numbers. No existing policy is modified or replaced.
 The chance tensor is unweighted by either preflop policy; card removal enters
 joint hole-pair mass before learning. Average strategy uses own reach; regret
 uses chance times OPPONENT reach only. All histories, including own-zero-reach
