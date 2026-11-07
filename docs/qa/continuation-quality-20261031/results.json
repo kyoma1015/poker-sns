@@ -1,0 +1,2303 @@
+{
+  "arms": [
+    {
+      "bet": 0,
+      "call_bet": 1,
+      "call_raise": 1,
+      "raise_after_bet": 0
+    },
+    {
+      "bet": 1,
+      "call_bet": 1,
+      "call_raise": 1,
+      "raise_after_bet": 0
+    },
+    {
+      "bet": 1,
+      "call_bet": 1,
+      "call_raise": 1,
+      "raise_after_bet": 1
+    },
+    {
+      "bet": 1,
+      "call_bet": 0,
+      "call_raise": 0,
+      "raise_after_bet": 0
+    }
+  ],
+  "condition": {
+    "ante": 0,
+    "bb_chips": 2,
+    "formal_profile": false,
+    "full_game_gto_verified": false,
+    "players": 2,
+    "postflop_abstraction": "one half-pot flop bet, own-hand/public-flop fixed controllers; turn/river check-through",
+    "private_abstraction": "169 starting classes; exact compatible-combo chance mass",
+    "raise_to_chips": [
+      5,
+      18,
+      42,
+      100
+    ],
+    "rake": 0,
+    "sb_chips": 1,
+    "stacks_chips": [
+      100,
+      100
+    ]
+  },
+  "external_gto_deviation_bb": null,
+  "formal_acceptance_complete": 0,
+  "frozen_preflop_policy_digest": "0146870c1b2f2168940f4b51a31563417c63c236f808b5eb0e27981833616fec",
+  "full_game_gto_verified": false,
+  "heldout_flops": [
+    [
+      44,
+      25,
+      2
+    ],
+    [
+      40,
+      41,
+      7
+    ],
+    [
+      36,
+      32,
+      29
+    ],
+    [
+      20,
+      12,
+      4
+    ]
+  ],
+  "numerical_guard_bb": 1e-07,
+  "real_game_model_approximation_error_bb": null,
+  "research_training_board_weights": [
+    0.5,
+    0.5
+  ],
+  "rows": [
+    {
+      "legacy_sample_learner_on_same_joint_game": [
+        {
+          "original_flop": [
+            48,
+            21,
+            3
+          ],
+          "original_seed": 17,
+          "same_joint_game_evaluation": {
+            "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+            "full_game_gto_verified": false,
+            "hero_br_ev_bb": -0.1619280220529471,
+            "hero_deviation_gain_bb": 1.336305511040807,
+            "numerical_guard_bb": 1e-07,
+            "profile_hero_ev_bb": -1.4982335330937542,
+            "restricted_exploitability_bb": 1.3528354177678952,
+            "restricted_nashconv_bb": 2.7056708355357904,
+            "sampling_error_bb": 0,
+            "villain_br_hero_ev_bb": -2.8675988575887374,
+            "villain_deviation_gain_bb": 1.3693653244949833
+          }
+        },
+        {
+          "original_flop": [
+            48,
+            21,
+            3
+          ],
+          "original_seed": 29,
+          "same_joint_game_evaluation": {
+            "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+            "full_game_gto_verified": false,
+            "hero_br_ev_bb": -0.10391368802846793,
+            "hero_deviation_gain_bb": 1.40369642399382,
+            "numerical_guard_bb": 1e-07,
+            "profile_hero_ev_bb": -1.507610112022288,
+            "restricted_exploitability_bb": 1.3939109504236822,
+            "restricted_nashconv_bb": 2.7878219008473644,
+            "sampling_error_bb": 0,
+            "villain_br_hero_ev_bb": -2.8917355888758323,
+            "villain_deviation_gain_bb": 1.3841254768535443
+          }
+        },
+        {
+          "original_flop": [
+            35,
+            31,
+            27
+          ],
+          "original_seed": 17,
+          "same_joint_game_evaluation": {
+            "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+            "full_game_gto_verified": false,
+            "hero_br_ev_bb": -0.5943866237874129,
+            "hero_deviation_gain_bb": 0.10033448197250061,
+            "numerical_guard_bb": 1e-07,
+            "profile_hero_ev_bb": -0.6947211057599135,
+            "restricted_exploitability_bb": 0.6726003870462957,
+            "restricted_nashconv_bb": 1.3452007740925913,
+            "sampling_error_bb": 0,
+            "villain_br_hero_ev_bb": -1.9395873978800042,
+            "villain_deviation_gain_bb": 1.2448662921200908
+          }
+        },
+        {
+          "original_flop": [
+            35,
+            31,
+            27
+          ],
+          "original_seed": 29,
+          "same_joint_game_evaluation": {
+            "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+            "full_game_gto_verified": false,
+            "hero_br_ev_bb": -0.593121592464086,
+            "hero_deviation_gain_bb": 0.01676765015918147,
+            "numerical_guard_bb": 1e-07,
+            "profile_hero_ev_bb": -0.6098892426232675,
+            "restricted_exploitability_bb": 0.6545055472005691,
+            "restricted_nashconv_bb": 1.3090110944011382,
+            "sampling_error_bb": 0,
+            "villain_br_hero_ev_bb": -1.9021326868652242,
+            "villain_deviation_gain_bb": 1.2922434442419566
+          }
+        }
+      ],
+      "runs": [
+        {
+          "fixed_opponent_responses": [
+            {
+              "hero_br_vs_fixed_bb": 1.4159024486605036,
+              "hero_improvement_bb": 2.3084951600436012,
+              "hero_vs_fixed_ev_bb": -0.8925927113830976,
+              "opponent": "uniform",
+              "villain_br_hero_ev_bb": -4.717278041071598,
+              "villain_improvement_bb": 1.0040538983125535,
+              "villain_vs_fixed_hero_ev_bb": -3.7132241427590444
+            },
+            {
+              "hero_br_vs_fixed_bb": -0.45096896506845796,
+              "hero_improvement_bb": 0.8508249317627322,
+              "hero_vs_fixed_ev_bb": -1.3017938968311902,
+              "opponent": "pure_arm_0",
+              "villain_br_hero_ev_bb": -3.161994377496365,
+              "villain_improvement_bb": 0.8149980827283461,
+              "villain_vs_fixed_hero_ev_bb": -2.3469962947680187
+            },
+            {
+              "hero_br_vs_fixed_bb": -0.23673869104260237,
+              "hero_improvement_bb": 0.8558345039166422,
+              "hero_vs_fixed_ev_bb": -1.0925731949592445,
+              "opponent": "pure_arm_1",
+              "villain_br_hero_ev_bb": -2.467278041071597,
+              "villain_improvement_bb": 0.0,
+              "villain_vs_fixed_hero_ev_bb": -2.4672780410715975
+            },
+            {
+              "hero_br_vs_fixed_bb": -0.23673869104260237,
+              "hero_improvement_bb": 0.8558345039166422,
+              "hero_vs_fixed_ev_bb": -1.0925731949592445,
+              "opponent": "pure_arm_2",
+              "villain_br_hero_ev_bb": -6.32398875499273,
+              "villain_improvement_bb": 2.582173638754392,
+              "villain_vs_fixed_hero_ev_bb": -3.7418151162383375
+            },
+            {
+              "hero_br_vs_fixed_bb": 18.0,
+              "hero_improvement_bb": 18.08343055878271,
+              "hero_vs_fixed_ev_bb": -0.08343055878270997,
+              "opponent": "pure_arm_3",
+              "villain_br_hero_ev_bb": -9.0,
+              "villain_improvement_bb": 2.703192881041775,
+              "villain_vs_fixed_hero_ev_bb": -6.296807118958225
+            },
+            {
+              "hero_br_vs_fixed_bb": -0.7673646829030683,
+              "hero_improvement_bb": 0.5253681508215158,
+              "hero_vs_fixed_ev_bb": -1.292732833724584,
+              "opponent": "own_strength",
+              "villain_br_hero_ev_bb": -3.07154490725554,
+              "villain_improvement_bb": 1.2100751594552808,
+              "villain_vs_fixed_hero_ev_bb": -1.861469747800259
+            }
+          ],
+          "frozen_policy": [
+            {
+              "key": [
+                0,
+                18.0,
+                41.0,
+                0,
+                0,
+                0
+              ],
+              "probabilities": [
+                0.5463947929490947,
+                1.2325160143472249e-05,
+                1.4184073674613043e-05,
+                0.4535786978170872
+              ]
+            },
+            {
+              "key": [
+                0,
+                18.0,
+                41.0,
+                0,
+                1,
+                0
+              ],
+              "probabilities": [
+                0.9999390148913255,
+                4.5114847466206554e-05,
+                1.1648898293627623e-05,
+                4.221362914688372e-06
+              ]
+            },
+            {
+              "key": [
+                0,
+                18.0,
+                41.0,
+                1,
+                0,
+                0
+              ],
+              "probabilities": [
+                3.8394570495654315e-06,
+                0.9999266122960893,
+                6.698370539415925e-05,
+                2.5645414669886624e-06
+              ]
+            },
+            {
+              "key": [
+                0,
+                18.0,
+                41.0,
+                1,
+                0,
+                1
+              ],
+              "probabilities": [
+                9.525074157896709e-07,
+                3.161690692795313e-06,
+                0.9999932426878119,
+                2.6431140796015595e-06
+              ]
+            },
+            {
+              "key": [
+                0,
+                18.0,
+                41.0,
+                1,
+                1,
+                0
+              ],
+              "probabilities": [
+                1.8290717064074852e-06,
+                3.33674763078931e-06,
+                0.9999939898459393,
+                8.443347234482042e-07
+              ]
+            },
+            {
+              "key": [
+                0,
+                18.0,
+                41.0,
+                1,
+                1,
+                1
+              ],
+              "probabilities": [
+                4.445602402345679e-06,
+                5.432451302921242e-06,
+                0.9999877255229163,
+                2.396423378448671e-06
+              ]
+            },
+            {
+              "key": [
+                1,
+                18.0,
+                41.0,
+                0,
+                0,
+                0
+              ],
+              "probabilities": [
+                0.00011978673204620026,
+                7.958370792351234e-06,
+                9.571152079391152e-06,
+                0.999862683745082
+              ]
+            },
+            {
+              "key": [
+                1,
+                18.0,
+                41.0,
+                0,
+                1,
+                0
+              ],
+              "probabilities": [
+                0.9999812568622692,
+                7.043626635017051e-06,
+                8.315737062480034e-06,
+                3.383774033307766e-06
+              ]
+            },
+            {
+              "key": [
+                1,
+                18.0,
+                41.0,
+                1,
+                0,
+                0
+              ],
+              "probabilities": [
+                0.21853795074878982,
+                0.3907286588299153,
+                0.3907301416917977,
+                3.24872949722685e-06
+              ]
+            },
+            {
+              "key": [
+                1,
+                18.0,
+                41.0,
+                1,
+                0,
+                1
+              ],
+              "probabilities": [
+                0.9999068764780199,
+                4.397923462548511e-05,
+                4.628745279807174e-05,
+                2.856834556579282e-06
+              ]
+            },
+            {
+              "key": [
+                1,
+                18.0,
+                41.0,
+                1,
+                1,
+                0
+              ],
+              "probabilities": [
+                0.9995817719890978,
+                0.00020798103023697814,
+                0.00020949699277184993,
+                7.499878933513042e-07
+              ]
+            },
+            {
+              "key": [
+                1,
+                18.0,
+                41.0,
+                1,
+                1,
+                1
+              ],
+              "probabilities": [
+                5.8899447226477095e-06,
+                0.4999955819825518,
+                0.49999682746983337,
+                1.7006028921974332e-06
+              ]
+            }
+          ],
+          "heldout_flops": [
+            {
+              "fallback": "uniform plans for unknown own type, never fit on heldout",
+              "flop": [
+                44,
+                25,
+                2
+              ],
+              "hero_unseen_type_mass": 0.0,
+              "metrics": {
+                "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+                "full_game_gto_verified": false,
+                "hero_br_ev_bb": -0.11695600495630164,
+                "hero_deviation_gain_bb": 2.8974383775136787,
+                "numerical_guard_bb": 1e-07,
+                "profile_hero_ev_bb": -3.0143943824699804,
+                "restricted_exploitability_bb": 1.523622130905884,
+                "restricted_nashconv_bb": 3.047244261811768,
+                "sampling_error_bb": 0,
+                "villain_br_hero_ev_bb": -3.1642002667680695,
+                "villain_deviation_gain_bb": 0.14980588429808916
+              },
+              "research_leaf": {
+                "class_pair_coverage": 28558,
+                "exact_type_game_hero_ev_bb": -3.0143943824699804,
+                "frozen_cfr_updated": false,
+                "leaf_sha256": "185d67095732eb1c2252725b1edfbc216a746c5a25e8c764397c78e56b6b821c",
+                "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+                "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+                "weighted_hero_ev_bb": -3.0143943824699764
+              },
+              "villain_unseen_type_mass": 0.0
+            },
+            {
+              "fallback": "uniform plans for unknown own type, never fit on heldout",
+              "flop": [
+                40,
+                41,
+                7
+              ],
+              "hero_unseen_type_mass": 0.0,
+              "metrics": {
+                "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+                "full_game_gto_verified": false,
+                "hero_br_ev_bb": -1.9708126073711194,
+                "hero_deviation_gain_bb": 0.6776250384030005,
+                "numerical_guard_bb": 1e-07,
+                "profile_hero_ev_bb": -2.64843764577412,
+                "restricted_exploitability_bb": 0.33885538693072437,
+                "restricted_nashconv_bb": 0.6777107738614487,
+                "sampling_error_bb": 0,
+                "villain_br_hero_ev_bb": -2.648523381232568,
+                "villain_deviation_gain_bb": 8.573545844825503e-05
+              },
+              "research_leaf": {
+                "class_pair_coverage": 28510,
+                "exact_type_game_hero_ev_bb": -2.64843764577412,
+                "frozen_cfr_updated": false,
+                "leaf_sha256": "35fbfadab51c09677a26adc3b1a405fd9d6814a31e9b9bc9b1a3c0761947d4d2",
+                "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+                "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+                "weighted_hero_ev_bb": -2.6484376457741043
+              },
+              "villain_unseen_type_mass": 0.0
+            },
+            {
+              "fallback": "uniform plans for unknown own type, never fit on heldout",
+              "flop": [
+                36,
+                32,
+                29
+              ],
+              "hero_unseen_type_mass": 0.0,
+              "metrics": {
+                "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+                "full_game_gto_verified": false,
+                "hero_br_ev_bb": 0.8388331027198077,
+                "hero_deviation_gain_bb": 1.0791476146436159,
+                "numerical_guard_bb": 1e-07,
+                "profile_hero_ev_bb": -0.24031451192380804,
+                "restricted_exploitability_bb": 0.6390026601782357,
+                "restricted_nashconv_bb": 1.2780053203564714,
+                "sampling_error_bb": 0,
+                "villain_br_hero_ev_bb": -0.4391722176366636,
+                "villain_deviation_gain_bb": 0.19885770571285555
+              },
+              "research_leaf": {
+                "class_pair_coverage": 28558,
+                "exact_type_game_hero_ev_bb": -0.24031451192380804,
+                "frozen_cfr_updated": false,
+                "leaf_sha256": "2b9884b7b0d69d09b7c17b8e870bac93b64acc4b5cf8e9f62059cca472efac74",
+                "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+                "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+                "weighted_hero_ev_bb": -0.24031451192380698
+              },
+              "villain_unseen_type_mass": 0.0
+            },
+            {
+              "fallback": "uniform plans for unknown own type, never fit on heldout",
+              "flop": [
+                20,
+                12,
+                4
+              ],
+              "hero_unseen_type_mass": 0.0,
+              "metrics": {
+                "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+                "full_game_gto_verified": false,
+                "hero_br_ev_bb": -3.0540541762568596,
+                "hero_deviation_gain_bb": 0.6994442924776991,
+                "numerical_guard_bb": 1e-07,
+                "profile_hero_ev_bb": -3.7534984687345587,
+                "restricted_exploitability_bb": 0.5797615254920818,
+                "restricted_nashconv_bb": 1.1595230509841636,
+                "sampling_error_bb": 0,
+                "villain_br_hero_ev_bb": -4.213577227241023,
+                "villain_deviation_gain_bb": 0.4600787585064645
+              },
+              "research_leaf": {
+                "class_pair_coverage": 28558,
+                "exact_type_game_hero_ev_bb": -3.7534984687345587,
+                "frozen_cfr_updated": false,
+                "leaf_sha256": "0d881498bb28e37f7da69e3f001f9ecd3695eb04083b1b9d65a3b0f8abc502cb",
+                "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+                "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+                "weighted_hero_ev_bb": -3.753498468734547
+              },
+              "villain_unseen_type_mass": 0.0
+            }
+          ],
+          "initialization_seed": 17,
+          "training_curve": [
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": 2.7340614236830585,
+              "hero_deviation_gain_bb": 4.64654238221827,
+              "initialization_seed": 17,
+              "iterations": 1,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 7.54917161109301,
+              "profile_hero_ev_bb": -1.9124809585352114,
+              "restricted_exploitability_bb": 3.774585805546505,
+              "restricted_nashconv_bb": 7.54917161109301,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -4.815110187409951,
+              "villain_deviation_gain_bb": 2.9026292288747397
+            },
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": -0.8852344008147126,
+              "hero_deviation_gain_bb": 1.1172918886861676,
+              "initialization_seed": 17,
+              "iterations": 10,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 1.6112306632674944,
+              "profile_hero_ev_bb": -2.00252628950088,
+              "restricted_exploitability_bb": 0.8056153316337473,
+              "restricted_nashconv_bb": 1.6112306632674946,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -2.4964650640822073,
+              "villain_deviation_gain_bb": 0.49393877458132707
+            },
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": -1.4965740943000567,
+              "hero_deviation_gain_bb": 0.13889003025300872,
+              "initialization_seed": 17,
+              "iterations": 100,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 0.2170357038585611,
+              "profile_hero_ev_bb": -1.6354641245530654,
+              "restricted_exploitability_bb": 0.10851785192928054,
+              "restricted_nashconv_bb": 0.21703570385856108,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -1.7136097981586178,
+              "villain_deviation_gain_bb": 0.07814567360555236
+            },
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": -1.6149273810534515,
+              "hero_deviation_gain_bb": 0.020846292371313524,
+              "initialization_seed": 17,
+              "iterations": 1000,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 0.03728970846302202,
+              "profile_hero_ev_bb": -1.635773673424765,
+              "restricted_exploitability_bb": 0.018644854231511077,
+              "restricted_nashconv_bb": 0.03728970846302215,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -1.6522170895164736,
+              "villain_deviation_gain_bb": 0.01644341609170863
+            },
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": -1.6272773228686404,
+              "hero_deviation_gain_bb": 0.008052755930620714,
+              "initialization_seed": 17,
+              "iterations": 10000,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 0.009087356724680709,
+              "profile_hero_ev_bb": -1.635330078799261,
+              "restricted_exploitability_bb": 0.004543678362340042,
+              "restricted_nashconv_bb": 0.009087356724680085,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -1.6363646795933204,
+              "villain_deviation_gain_bb": 0.0010346007940593704
+            },
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": -1.6346887389835882,
+              "hero_deviation_gain_bb": 0.0006382410900360735,
+              "initialization_seed": 17,
+              "iterations": 100000,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 0.0026812383898730764,
+              "profile_hero_ev_bb": -1.6353269800736243,
+              "restricted_exploitability_bb": 0.0013406191949371093,
+              "restricted_nashconv_bb": 0.0026812383898742187,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -1.6373699773734625,
+              "villain_deviation_gain_bb": 0.002042997299838145
+            }
+          ],
+          "training_leaf_audits": [
+            {
+              "class_pair_coverage": 28558,
+              "exact_type_game_hero_ev_bb": -4.0671399359336835,
+              "frozen_cfr_updated": false,
+              "leaf_sha256": "1515abca161536a8acbdd7a4db47527a3aa0f7c8af690992117b309093417f6f",
+              "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+              "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+              "weighted_hero_ev_bb": -4.067139935933679
+            },
+            {
+              "class_pair_coverage": 28558,
+              "exact_type_game_hero_ev_bb": 0.7964859757864348,
+              "frozen_cfr_updated": false,
+              "leaf_sha256": "5d5e7cdaf1e05017bb2369f3c1d44118e79384b567e4d6d72d9f22fb73fd7d77",
+              "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+              "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+              "weighted_hero_ev_bb": 0.7964859757864343
+            }
+          ]
+        },
+        {
+          "fixed_opponent_responses": [
+            {
+              "hero_br_vs_fixed_bb": 1.4159024486605036,
+              "hero_improvement_bb": 2.3084844115437613,
+              "hero_vs_fixed_ev_bb": -0.8925819628832575,
+              "opponent": "uniform",
+              "villain_br_hero_ev_bb": -4.717278041071598,
+              "villain_improvement_bb": 1.0044491912650026,
+              "villain_vs_fixed_hero_ev_bb": -3.7128288498065953
+            },
+            {
+              "hero_br_vs_fixed_bb": -0.45096896506845796,
+              "hero_improvement_bb": 0.8517500696211621,
+              "hero_vs_fixed_ev_bb": -1.30271903468962,
+              "opponent": "pure_arm_0",
+              "villain_br_hero_ev_bb": -3.161994377496365,
+              "villain_improvement_bb": 0.8153500454976297,
+              "villain_vs_fixed_hero_ev_bb": -2.346644331998735
+            },
+            {
+              "hero_br_vs_fixed_bb": -0.23673869104260237,
+              "hero_improvement_bb": 0.8555021640751297,
+              "hero_vs_fixed_ev_bb": -1.092240855117732,
+              "opponent": "pure_arm_1",
+              "villain_br_hero_ev_bb": -2.467278041071597,
+              "villain_improvement_bb": 0.0,
+              "villain_vs_fixed_hero_ev_bb": -2.4672780410715975
+            },
+            {
+              "hero_br_vs_fixed_bb": -0.23673869104260237,
+              "hero_improvement_bb": 0.8555021640751297,
+              "hero_vs_fixed_ev_bb": -1.092240855117732,
+              "opponent": "pure_arm_2",
+              "villain_br_hero_ev_bb": -6.32398875499273,
+              "villain_improvement_bb": 2.582883928228078,
+              "villain_vs_fixed_hero_ev_bb": -3.7411048267646514
+            },
+            {
+              "hero_br_vs_fixed_bb": 18.0,
+              "hero_improvement_bb": 18.083127106607947,
+              "hero_vs_fixed_ev_bb": -0.08312710660794491,
+              "opponent": "pure_arm_3",
+              "villain_br_hero_ev_bb": -9.0,
+              "villain_improvement_bb": 2.7037118006086027,
+              "villain_vs_fixed_hero_ev_bb": -6.296288199391397
+            },
+            {
+              "hero_br_vs_fixed_bb": -0.7673646829030683,
+              "hero_improvement_bb": 0.5250325920244416,
+              "hero_vs_fixed_ev_bb": -1.2923972749275099,
+              "opponent": "own_strength",
+              "villain_br_hero_ev_bb": -3.07154490725554,
+              "villain_improvement_bb": 1.2097334617106448,
+              "villain_vs_fixed_hero_ev_bb": -1.861811445544895
+            }
+          ],
+          "frozen_policy": [
+            {
+              "key": [
+                0,
+                18.0,
+                41.0,
+                0,
+                0,
+                0
+              ],
+              "probabilities": [
+                0.5459021795915044,
+                1.0881157476487152e-05,
+                1.4229657322780803e-05,
+                0.4540727095936962
+              ]
+            },
+            {
+              "key": [
+                0,
+                18.0,
+                41.0,
+                0,
+                1,
+                0
+              ],
+              "probabilities": [
+                0.999932934733537,
+                4.689626448429253e-05,
+                1.5751370113072655e-05,
+                4.417631865753721e-06
+              ]
+            },
+            {
+              "key": [
+                0,
+                18.0,
+                41.0,
+                1,
+                0,
+                0
+              ],
+              "probabilities": [
+                3.883838708512132e-06,
+                0.9999332723746853,
+                6.16105979285438e-05,
+                1.2331886776787589e-06
+              ]
+            },
+            {
+              "key": [
+                0,
+                18.0,
+                41.0,
+                1,
+                0,
+                1
+              ],
+              "probabilities": [
+                3.169213324833322e-06,
+                4.439885310920852e-06,
+                0.9999915153167998,
+                8.755845644173595e-07
+              ]
+            },
+            {
+              "key": [
+                0,
+                18.0,
+                41.0,
+                1,
+                1,
+                0
+              ],
+              "probabilities": [
+                2.2683721524683266e-06,
+                6.622002799361917e-06,
+                0.9999880225870759,
+                3.087037972325294e-06
+              ]
+            },
+            {
+              "key": [
+                0,
+                18.0,
+                41.0,
+                1,
+                1,
+                1
+              ],
+              "probabilities": [
+                1.5503056052266348e-06,
+                2.622860501961423e-06,
+                0.9999936668211578,
+                2.160012735052404e-06
+              ]
+            },
+            {
+              "key": [
+                1,
+                18.0,
+                41.0,
+                0,
+                0,
+                0
+              ],
+              "probabilities": [
+                0.00012291576261283405,
+                7.0453651158255404e-06,
+                6.9737155918362444e-06,
+                0.9998630651566796
+              ]
+            },
+            {
+              "key": [
+                1,
+                18.0,
+                41.0,
+                0,
+                1,
+                0
+              ],
+              "probabilities": [
+                0.999983880111308,
+                4.312790862783672e-06,
+                7.701110353091162e-06,
+                4.105987476168318e-06
+              ]
+            },
+            {
+              "key": [
+                1,
+                18.0,
+                41.0,
+                1,
+                0,
+                0
+              ],
+              "probabilities": [
+                0.21878187543875258,
+                0.39060899725362536,
+                0.3906057821765326,
+                3.3451310895418453e-06
+              ]
+            },
+            {
+              "key": [
+                1,
+                18.0,
+                41.0,
+                1,
+                0,
+                1
+              ],
+              "probabilities": [
+                0.9999221195947449,
+                3.879966340861764e-05,
+                3.612876349817922e-05,
+                2.9519783483649976e-06
+              ]
+            },
+            {
+              "key": [
+                1,
+                18.0,
+                41.0,
+                1,
+                1,
+                0
+              ],
+              "probabilities": [
+                0.99961400568418,
+                0.00019297079202002833,
+                0.00019022541054038782,
+                2.7981132596478115e-06
+              ]
+            },
+            {
+              "key": [
+                1,
+                18.0,
+                41.0,
+                1,
+                1,
+                1
+              ],
+              "probabilities": [
+                3.3561724642044926e-06,
+                0.4999957949153695,
+                0.49999865456489295,
+                2.1943472733848847e-06
+              ]
+            }
+          ],
+          "heldout_flops": [
+            {
+              "fallback": "uniform plans for unknown own type, never fit on heldout",
+              "flop": [
+                44,
+                25,
+                2
+              ],
+              "hero_unseen_type_mass": 0.0,
+              "metrics": {
+                "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+                "full_game_gto_verified": false,
+                "hero_br_ev_bb": -0.11593625551948741,
+                "hero_deviation_gain_bb": 2.8988104080444734,
+                "numerical_guard_bb": 1e-07,
+                "profile_hero_ev_bb": -3.014746663563961,
+                "restricted_exploitability_bb": 1.5241531734527727,
+                "restricted_nashconv_bb": 3.0483063469055454,
+                "sampling_error_bb": 0,
+                "villain_br_hero_ev_bb": -3.1642426024250327,
+                "villain_deviation_gain_bb": 0.14949593886107193
+              },
+              "research_leaf": {
+                "class_pair_coverage": 28558,
+                "exact_type_game_hero_ev_bb": -3.014746663563961,
+                "frozen_cfr_updated": false,
+                "leaf_sha256": "fb78b5a4b7f8be80878887fe43b1f86bcc3a8acc3780e6cb166ad52a439efced",
+                "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+                "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+                "weighted_hero_ev_bb": -3.0147466635639546
+              },
+              "villain_unseen_type_mass": 0.0
+            },
+            {
+              "fallback": "uniform plans for unknown own type, never fit on heldout",
+              "flop": [
+                40,
+                41,
+                7
+              ],
+              "hero_unseen_type_mass": 0.0,
+              "metrics": {
+                "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+                "full_game_gto_verified": false,
+                "hero_br_ev_bb": -1.9705948098622772,
+                "hero_deviation_gain_bb": 0.677829588983476,
+                "numerical_guard_bb": 1e-07,
+                "profile_hero_ev_bb": -2.648424398845753,
+                "restricted_exploitability_bb": 0.33895294286047994,
+                "restricted_nashconv_bb": 0.6779058857209599,
+                "sampling_error_bb": 0,
+                "villain_br_hero_ev_bb": -2.648500695583237,
+                "villain_deviation_gain_bb": 7.629673748388299e-05
+              },
+              "research_leaf": {
+                "class_pair_coverage": 28510,
+                "exact_type_game_hero_ev_bb": -2.648424398845753,
+                "frozen_cfr_updated": false,
+                "leaf_sha256": "bf931e810a92def841665f2d51e7ebd334ac8bc0cc54ad110800acc8124d63b0",
+                "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+                "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+                "weighted_hero_ev_bb": -2.648424398845737
+              },
+              "villain_unseen_type_mass": 0.0
+            },
+            {
+              "fallback": "uniform plans for unknown own type, never fit on heldout",
+              "flop": [
+                36,
+                32,
+                29
+              ],
+              "hero_unseen_type_mass": 0.0,
+              "metrics": {
+                "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+                "full_game_gto_verified": false,
+                "hero_br_ev_bb": 0.8386977251673734,
+                "hero_deviation_gain_bb": 1.0794460777199995,
+                "numerical_guard_bb": 1e-07,
+                "profile_hero_ev_bb": -0.24074835255262608,
+                "restricted_exploitability_bb": 0.6390624309207302,
+                "restricted_nashconv_bb": 1.2781248618414605,
+                "sampling_error_bb": 0,
+                "villain_br_hero_ev_bb": -0.43942713667408695,
+                "villain_deviation_gain_bb": 0.19867878412146087
+              },
+              "research_leaf": {
+                "class_pair_coverage": 28558,
+                "exact_type_game_hero_ev_bb": -0.24074835255262608,
+                "frozen_cfr_updated": false,
+                "leaf_sha256": "2691060b6cadd8dd436a42683686e9cba91ac32a2b569e1413815f45a9c24f97",
+                "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+                "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+                "weighted_hero_ev_bb": -0.24074835255262447
+              },
+              "villain_unseen_type_mass": 0.0
+            },
+            {
+              "fallback": "uniform plans for unknown own type, never fit on heldout",
+              "flop": [
+                20,
+                12,
+                4
+              ],
+              "hero_unseen_type_mass": 0.0,
+              "metrics": {
+                "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+                "full_game_gto_verified": false,
+                "hero_br_ev_bb": -3.0541091236501567,
+                "hero_deviation_gain_bb": 0.699311897942176,
+                "numerical_guard_bb": 1e-07,
+                "profile_hero_ev_bb": -3.7534210215923327,
+                "restricted_exploitability_bb": 0.5797379133757168,
+                "restricted_nashconv_bb": 1.1594758267514336,
+                "sampling_error_bb": 0,
+                "villain_br_hero_ev_bb": -4.21358495040159,
+                "villain_deviation_gain_bb": 0.4601639288092576
+              },
+              "research_leaf": {
+                "class_pair_coverage": 28558,
+                "exact_type_game_hero_ev_bb": -3.7534210215923327,
+                "frozen_cfr_updated": false,
+                "leaf_sha256": "9141ab7de0bc16a770dd172013f59e325bec293dc3d34317f4b2e5cdbde149b7",
+                "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+                "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+                "weighted_hero_ev_bb": -3.7534210215923203
+              },
+              "villain_unseen_type_mass": 0.0
+            }
+          ],
+          "initialization_seed": 29,
+          "training_curve": [
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": 2.768689431575437,
+              "hero_deviation_gain_bb": 4.691868424705641,
+              "initialization_seed": 29,
+              "iterations": 1,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 7.235480413458601,
+              "profile_hero_ev_bb": -1.9231789931302041,
+              "restricted_exploitability_bb": 3.617740206729301,
+              "restricted_nashconv_bb": 7.235480413458602,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -4.4667909818831655,
+              "villain_deviation_gain_bb": 2.5436119887529616
+            },
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": -0.8697767837058166,
+              "hero_deviation_gain_bb": 1.070499849581767,
+              "initialization_seed": 29,
+              "iterations": 10,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 1.624876493054065,
+              "profile_hero_ev_bb": -1.9402766332875836,
+              "restricted_exploitability_bb": 0.8124382465270328,
+              "restricted_nashconv_bb": 1.6248764930540656,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -2.494653276759882,
+              "villain_deviation_gain_bb": 0.5543766434722985
+            },
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": -1.4915906605470937,
+              "hero_deviation_gain_bb": 0.1421173428678033,
+              "initialization_seed": 29,
+              "iterations": 100,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 0.2121642663074313,
+              "profile_hero_ev_bb": -1.633708003414897,
+              "restricted_exploitability_bb": 0.10608213315371584,
+              "restricted_nashconv_bb": 0.21216426630743168,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -1.7037549268545253,
+              "villain_deviation_gain_bb": 0.07004692343962837
+            },
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": -1.6197887660945476,
+              "hero_deviation_gain_bb": 0.01575252932326099,
+              "initialization_seed": 29,
+              "iterations": 1000,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 0.0368671394136931,
+              "profile_hero_ev_bb": -1.6355412954178086,
+              "restricted_exploitability_bb": 0.01843356970684662,
+              "restricted_nashconv_bb": 0.03686713941369324,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -1.6566559055082408,
+              "villain_deviation_gain_bb": 0.02111461009043225
+            },
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": -1.6285603995179652,
+              "hero_deviation_gain_bb": 0.006774006449411729,
+              "initialization_seed": 29,
+              "iterations": 10000,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 0.00917675510941832,
+              "profile_hero_ev_bb": -1.635334405967377,
+              "restricted_exploitability_bb": 0.004588377554709089,
+              "restricted_nashconv_bb": 0.009176755109418178,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -1.6377371546273833,
+              "villain_deviation_gain_bb": 0.0024027486600064485
+            },
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": -1.6343937390168277,
+              "hero_deviation_gain_bb": 0.0009298087173024161,
+              "initialization_seed": 29,
+              "iterations": 100000,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 0.0026841076870411954,
+              "profile_hero_ev_bb": -1.6353235477341301,
+              "restricted_exploitability_bb": 0.0013420538435204854,
+              "restricted_nashconv_bb": 0.002684107687040971,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -1.6370778467038687,
+              "villain_deviation_gain_bb": 0.0017542989697385547
+            }
+          ],
+          "training_leaf_audits": [
+            {
+              "class_pair_coverage": 28558,
+              "exact_type_game_hero_ev_bb": -4.06689151225331,
+              "frozen_cfr_updated": false,
+              "leaf_sha256": "1f549f90bf501d490c291f9c276e8d93e3380800f48778ec71ce83a1d0f9379e",
+              "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+              "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+              "weighted_hero_ev_bb": -4.066891512253304
+            },
+            {
+              "class_pair_coverage": 28558,
+              "exact_type_game_hero_ev_bb": 0.796244416785049,
+              "frozen_cfr_updated": false,
+              "leaf_sha256": "c9a996110c3b23c932d5932583449b8c8a9a8e6f2836002e5014f3001e535c09",
+              "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+              "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+              "weighted_hero_ev_bb": 0.7962444167850495
+            }
+          ]
+        }
+      ],
+      "stage": "vs_3bet",
+      "training_type_counts": [
+        6,
+        6
+      ]
+    },
+    {
+      "legacy_sample_learner_on_same_joint_game": [
+        {
+          "original_flop": [
+            48,
+            21,
+            3
+          ],
+          "original_seed": 17,
+          "same_joint_game_evaluation": {
+            "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+            "full_game_gto_verified": false,
+            "hero_br_ev_bb": -1.660368937152,
+            "hero_deviation_gain_bb": 1.860419216425067,
+            "numerical_guard_bb": 1e-07,
+            "profile_hero_ev_bb": -3.520788153577067,
+            "restricted_exploitability_bb": 2.628729766578126,
+            "restricted_nashconv_bb": 5.257459533156252,
+            "sampling_error_bb": 0,
+            "villain_br_hero_ev_bb": -6.917828470308253,
+            "villain_deviation_gain_bb": 3.397040316731186
+          }
+        },
+        {
+          "original_flop": [
+            48,
+            21,
+            3
+          ],
+          "original_seed": 29,
+          "same_joint_game_evaluation": {
+            "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+            "full_game_gto_verified": false,
+            "hero_br_ev_bb": -1.7404866450057874,
+            "hero_deviation_gain_bb": 1.787987318145517,
+            "numerical_guard_bb": 1e-07,
+            "profile_hero_ev_bb": -3.5284739631513045,
+            "restricted_exploitability_bb": 2.588079742911938,
+            "restricted_nashconv_bb": 5.176159485823876,
+            "sampling_error_bb": 0,
+            "villain_br_hero_ev_bb": -6.916646130829664,
+            "villain_deviation_gain_bb": 3.388172167678359
+          }
+        },
+        {
+          "original_flop": [
+            35,
+            31,
+            27
+          ],
+          "original_seed": 17,
+          "same_joint_game_evaluation": {
+            "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+            "full_game_gto_verified": false,
+            "hero_br_ev_bb": -3.4322917797170307,
+            "hero_deviation_gain_bb": 0.8768439369236578,
+            "numerical_guard_bb": 1e-07,
+            "profile_hero_ev_bb": -4.3091357166406885,
+            "restricted_exploitability_bb": 0.6841713821774427,
+            "restricted_nashconv_bb": 1.3683427643548853,
+            "sampling_error_bb": 0,
+            "villain_br_hero_ev_bb": -4.800634544071916,
+            "villain_deviation_gain_bb": 0.4914988274312275
+          }
+        },
+        {
+          "original_flop": [
+            35,
+            31,
+            27
+          ],
+          "original_seed": 29,
+          "same_joint_game_evaluation": {
+            "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+            "full_game_gto_verified": false,
+            "hero_br_ev_bb": -3.7181957610356746,
+            "hero_deviation_gain_bb": 0.6649977309815536,
+            "numerical_guard_bb": 1e-07,
+            "profile_hero_ev_bb": -4.383193492017228,
+            "restricted_exploitability_bb": 0.6835110673305207,
+            "restricted_nashconv_bb": 1.3670221346610414,
+            "sampling_error_bb": 0,
+            "villain_br_hero_ev_bb": -5.085217895696716,
+            "villain_deviation_gain_bb": 0.7020244036794878
+          }
+        }
+      ],
+      "runs": [
+        {
+          "fixed_opponent_responses": [
+            {
+              "hero_br_vs_fixed_bb": 2.6408303694768502,
+              "hero_improvement_bb": 2.4807359312210466,
+              "hero_vs_fixed_ev_bb": 0.16009443825580347,
+              "opponent": "uniform",
+              "villain_br_hero_ev_bb": -13.264940951748358,
+              "villain_improvement_bb": 4.002261612874667,
+              "villain_vs_fixed_hero_ev_bb": -9.26267933887369
+            },
+            {
+              "hero_br_vs_fixed_bb": -0.5257068579327789,
+              "hero_improvement_bb": 0.5691113743314481,
+              "hero_vs_fixed_ev_bb": -1.094818232264227,
+              "opponent": "pure_arm_0",
+              "villain_br_hero_ev_bb": -5.741161572020006,
+              "villain_improvement_bb": 1.1037680945020467,
+              "villain_vs_fixed_hero_ev_bb": -4.63739347751796
+            },
+            {
+              "hero_br_vs_fixed_bb": -3.271197745730493,
+              "hero_improvement_bb": 0.0,
+              "hero_vs_fixed_ev_bb": -3.2711977457304924,
+              "opponent": "pure_arm_1",
+              "villain_br_hero_ev_bb": -5.171247191518191,
+              "villain_improvement_bb": 0.3319015913351766,
+              "villain_vs_fixed_hero_ev_bb": -4.839345600183014
+            },
+            {
+              "hero_br_vs_fixed_bb": -2.848381740041934,
+              "hero_improvement_bb": 0.21690143998172928,
+              "hero_vs_fixed_ev_bb": -3.065283180023663,
+              "opponent": "pure_arm_2",
+              "villain_br_hero_ev_bb": -5.171247191518191,
+              "villain_improvement_bb": 0.3319015913351766,
+              "villain_vs_fixed_hero_ev_bb": -4.839345600183014
+            },
+            {
+              "hero_br_vs_fixed_bb": 21.020734455855976,
+              "hero_improvement_bb": 12.949057544814382,
+              "hero_vs_fixed_ev_bb": 8.071676911041594,
+              "opponent": "pure_arm_3",
+              "villain_br_hero_ev_bb": -41.99999999999985,
+              "villain_improvement_bb": 19.26536732238908,
+              "villain_vs_fixed_hero_ev_bb": -22.734632677610772
+            },
+            {
+              "hero_br_vs_fixed_bb": -2.975472169955794,
+              "hero_improvement_bb": 1.4425714440990998,
+              "hero_vs_fixed_ev_bb": -4.418043614054894,
+              "opponent": "own_strength",
+              "villain_br_hero_ev_bb": -7.439749586462882,
+              "villain_improvement_bb": 1.3670163838568747,
+              "villain_vs_fixed_hero_ev_bb": -6.072733202606007
+            }
+          ],
+          "frozen_policy": [
+            {
+              "key": [
+                0,
+                42.0,
+                29.0,
+                0,
+                0,
+                0
+              ],
+              "probabilities": [
+                0.5857468559722215,
+                2.1218122584359636e-06,
+                2.4278679955176586e-05,
+                0.4142267435355649
+              ]
+            },
+            {
+              "key": [
+                0,
+                42.0,
+                29.0,
+                0,
+                1,
+                0
+              ],
+              "probabilities": [
+                0.5188806629432823,
+                8.508127356960178e-06,
+                2.9140059027917664e-05,
+                0.4810816888703329
+              ]
+            },
+            {
+              "key": [
+                0,
+                42.0,
+                29.0,
+                1,
+                0,
+                0
+              ],
+              "probabilities": [
+                7.880736866592357e-06,
+                8.993988790450692e-06,
+                0.9999798765448458,
+                3.2487294972268444e-06
+              ]
+            },
+            {
+              "key": [
+                0,
+                42.0,
+                29.0,
+                1,
+                0,
+                1
+              ],
+              "probabilities": [
+                4.059106688052373e-06,
+                0.9996352763768329,
+                0.0003578076819225116,
+                2.8568345565792815e-06
+              ]
+            },
+            {
+              "key": [
+                0,
+                42.0,
+                29.0,
+                1,
+                1,
+                0
+              ],
+              "probabilities": [
+                2.1375766158238556e-06,
+                0.9996997832501177,
+                0.0002973291853731695,
+                7.499878933513042e-07
+              ]
+            },
+            {
+              "key": [
+                0,
+                42.0,
+                29.0,
+                1,
+                1,
+                1
+              ],
+              "probabilities": [
+                6.747464783308874e-06,
+                4.405048274218976e-06,
+                0.9999871468840503,
+                1.7006028921974332e-06
+              ]
+            },
+            {
+              "key": [
+                1,
+                42.0,
+                29.0,
+                0,
+                0,
+                0
+              ],
+              "probabilities": [
+                0.9999623849317232,
+                1.7283600075070377e-05,
+                1.7426570309924735e-05,
+                2.9048978917846917e-06
+              ]
+            },
+            {
+              "key": [
+                1,
+                42.0,
+                29.0,
+                0,
+                1,
+                0
+              ],
+              "probabilities": [
+                0.5671256380602264,
+                0.21643478018573026,
+                0.2164354412282773,
+                4.1405257659596855e-06
+              ]
+            },
+            {
+              "key": [
+                1,
+                42.0,
+                29.0,
+                1,
+                0,
+                0
+              ],
+              "probabilities": [
+                0.3741657772456762,
+                0.31291448778028313,
+                0.31291717043257367,
+                2.5645414669886734e-06
+              ]
+            },
+            {
+              "key": [
+                1,
+                42.0,
+                29.0,
+                1,
+                0,
+                1
+              ],
+              "probabilities": [
+                0.0010939392709715095,
+                0.49945074413990515,
+                0.4994526734750438,
+                2.643114079601559e-06
+              ]
+            },
+            {
+              "key": [
+                1,
+                42.0,
+                29.0,
+                1,
+                1,
+                0
+              ],
+              "probabilities": [
+                1.8290717064074852e-06,
+                0.49999833674763083,
+                0.4999989898459394,
+                8.443347234482042e-07
+              ]
+            },
+            {
+              "key": [
+                1,
+                42.0,
+                29.0,
+                1,
+                1,
+                1
+              ],
+              "probabilities": [
+                4.475364210822086e-06,
+                0.49999791206161304,
+                0.4999952161507977,
+                2.396423378448671e-06
+              ]
+            }
+          ],
+          "heldout_flops": [
+            {
+              "fallback": "uniform plans for unknown own type, never fit on heldout",
+              "flop": [
+                44,
+                25,
+                2
+              ],
+              "hero_unseen_type_mass": 0.0,
+              "metrics": {
+                "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+                "full_game_gto_verified": false,
+                "hero_br_ev_bb": -18.984354183289536,
+                "hero_deviation_gain_bb": 0.6350854150235001,
+                "numerical_guard_bb": 1e-07,
+                "profile_hero_ev_bb": -19.619439598313036,
+                "restricted_exploitability_bb": 0.47232679691190604,
+                "restricted_nashconv_bb": 0.9446535938238121,
+                "sampling_error_bb": 0,
+                "villain_br_hero_ev_bb": -19.92900777711335,
+                "villain_deviation_gain_bb": 0.30956817880031196
+              },
+              "research_leaf": {
+                "class_pair_coverage": 28558,
+                "exact_type_game_hero_ev_bb": -19.619439598313036,
+                "frozen_cfr_updated": false,
+                "leaf_sha256": "7e7676fc92db89065d71943f8a48bf5540142631995125e14d40e6669184785c",
+                "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+                "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+                "weighted_hero_ev_bb": -19.619439598313136
+              },
+              "villain_unseen_type_mass": 0.0
+            },
+            {
+              "fallback": "uniform plans for unknown own type, never fit on heldout",
+              "flop": [
+                40,
+                41,
+                7
+              ],
+              "hero_unseen_type_mass": 0.0,
+              "metrics": {
+                "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+                "full_game_gto_verified": false,
+                "hero_br_ev_bb": -4.9041776406846385,
+                "hero_deviation_gain_bb": 0.39210871814547943,
+                "numerical_guard_bb": 1e-07,
+                "profile_hero_ev_bb": -5.296286358830118,
+                "restricted_exploitability_bb": 0.2923770586297394,
+                "restricted_nashconv_bb": 0.5847541172594788,
+                "sampling_error_bb": 0,
+                "villain_br_hero_ev_bb": -5.488931757944117,
+                "villain_deviation_gain_bb": 0.19264539911399936
+              },
+              "research_leaf": {
+                "class_pair_coverage": 28510,
+                "exact_type_game_hero_ev_bb": -5.296286358830118,
+                "frozen_cfr_updated": false,
+                "leaf_sha256": "105f9a59ed645fe6a3949f9f074b55bfdd07945767d4b45457cea79590d24b0c",
+                "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+                "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+                "weighted_hero_ev_bb": -5.296286358830359
+              },
+              "villain_unseen_type_mass": 0.0
+            },
+            {
+              "fallback": "uniform plans for unknown own type, never fit on heldout",
+              "flop": [
+                36,
+                32,
+                29
+              ],
+              "hero_unseen_type_mass": 0.0,
+              "metrics": {
+                "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+                "full_game_gto_verified": false,
+                "hero_br_ev_bb": -1.4728833854727026,
+                "hero_deviation_gain_bb": 0.6694736843843727,
+                "numerical_guard_bb": 1e-07,
+                "profile_hero_ev_bb": -2.1423570698570753,
+                "restricted_exploitability_bb": 1.012056004627961,
+                "restricted_nashconv_bb": 2.024112009255922,
+                "sampling_error_bb": 0,
+                "villain_br_hero_ev_bb": -3.4969953947286245,
+                "villain_deviation_gain_bb": 1.3546383248715492
+              },
+              "research_leaf": {
+                "class_pair_coverage": 28558,
+                "exact_type_game_hero_ev_bb": -2.1423570698570753,
+                "frozen_cfr_updated": false,
+                "leaf_sha256": "d70ad6f896b8a0945c81ec34acb1f3fb679edc9abb0f4c15398a076adf5b8617",
+                "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+                "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+                "weighted_hero_ev_bb": -2.1423570698570606
+              },
+              "villain_unseen_type_mass": 0.0
+            },
+            {
+              "fallback": "uniform plans for unknown own type, never fit on heldout",
+              "flop": [
+                20,
+                12,
+                4
+              ],
+              "hero_unseen_type_mass": 0.0,
+              "metrics": {
+                "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+                "full_game_gto_verified": false,
+                "hero_br_ev_bb": -4.9446281311935065,
+                "hero_deviation_gain_bb": 0.12019953048636278,
+                "numerical_guard_bb": 1e-07,
+                "profile_hero_ev_bb": -5.064827661679869,
+                "restricted_exploitability_bb": 0.20223939824753945,
+                "restricted_nashconv_bb": 0.4044787964950789,
+                "sampling_error_bb": 0,
+                "villain_br_hero_ev_bb": -5.349106927688585,
+                "villain_deviation_gain_bb": 0.2842792660087161
+              },
+              "research_leaf": {
+                "class_pair_coverage": 28558,
+                "exact_type_game_hero_ev_bb": -5.064827661679869,
+                "frozen_cfr_updated": false,
+                "leaf_sha256": "d4dce8ef3906c9e14479ebdf81cf23c963cfd38aa0db9227e74db3aee4a4a04d",
+                "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+                "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+                "weighted_hero_ev_bb": -5.0648276616798915
+              },
+              "villain_unseen_type_mass": 0.0
+            }
+          ],
+          "initialization_seed": 17,
+          "training_curve": [
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": 3.002254017769176,
+              "hero_deviation_gain_bb": 4.128667824271726,
+              "initialization_seed": 17,
+              "iterations": 1,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 16.528853935585207,
+              "profile_hero_ev_bb": -1.1264138065025497,
+              "restricted_exploitability_bb": 8.264426967792605,
+              "restricted_nashconv_bb": 16.52885393558521,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -13.526599917816034,
+              "villain_deviation_gain_bb": 12.400186111313484
+            },
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": -3.1211252936141243,
+              "hero_deviation_gain_bb": 1.051681010286389,
+              "initialization_seed": 17,
+              "iterations": 10,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 2.2226324050147097,
+              "profile_hero_ev_bb": -4.172806303900513,
+              "restricted_exploitability_bb": 1.1113162025073549,
+              "restricted_nashconv_bb": 2.2226324050147097,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -5.343757698628834,
+              "villain_deviation_gain_bb": 1.1709513947283208
+            },
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": -4.2323164478593105,
+              "hero_deviation_gain_bb": 0.17073312376045457,
+              "initialization_seed": 17,
+              "iterations": 100,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 0.3182316075259155,
+              "profile_hero_ev_bb": -4.403049571619765,
+              "restricted_exploitability_bb": 0.15911580376295786,
+              "restricted_nashconv_bb": 0.3182316075259157,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -4.550548055385226,
+              "villain_deviation_gain_bb": 0.14749848376546115
+            },
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": -4.403675618640216,
+              "hero_deviation_gain_bb": 0.033171970015037466,
+              "initialization_seed": 17,
+              "iterations": 1000,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 0.05727089275209386,
+              "profile_hero_ev_bb": -4.436847588655254,
+              "restricted_exploitability_bb": 0.028635446376047202,
+              "restricted_nashconv_bb": 0.057270892752094404,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -4.460946511392311,
+              "villain_deviation_gain_bb": 0.024098922737056938
+            },
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": -4.435800788428089,
+              "hero_deviation_gain_bb": 0.003552044555286571,
+              "initialization_seed": 17,
+              "iterations": 10000,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 0.014223324181848466,
+              "profile_hero_ev_bb": -4.439352832983375,
+              "restricted_exploitability_bb": 0.007111662090924842,
+              "restricted_nashconv_bb": 0.014223324181849684,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -4.450024112609938,
+              "villain_deviation_gain_bb": 0.010671279626563113
+            },
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": -4.43783598035443,
+              "hero_deviation_gain_bb": 0.00176445242097234,
+              "initialization_seed": 17,
+              "iterations": 100000,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 0.004098525229317625,
+              "profile_hero_ev_bb": -4.439600432775403,
+              "restricted_exploitability_bb": 0.0020492626146579873,
+              "restricted_nashconv_bb": 0.004098525229315975,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -4.441934505583746,
+              "villain_deviation_gain_bb": 0.0023340728083436346
+            }
+          ],
+          "training_leaf_audits": [
+            {
+              "class_pair_coverage": 28558,
+              "exact_type_game_hero_ev_bb": -7.767497684387666,
+              "frozen_cfr_updated": false,
+              "leaf_sha256": "503bbd76ee04c3811050c8a3fe42dcdd668e2e5081cf7c1607544f6754d0dad5",
+              "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+              "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+              "weighted_hero_ev_bb": -7.767497684387701
+            },
+            {
+              "class_pair_coverage": 28558,
+              "exact_type_game_hero_ev_bb": -1.1117031811631377,
+              "frozen_cfr_updated": false,
+              "leaf_sha256": "01326a0034ad4d6cc3c9cd46fe7e34ed6d1f2096f11e4b1905901d9e4aebbed0",
+              "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+              "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+              "weighted_hero_ev_bb": -1.111703181163141
+            }
+          ]
+        },
+        {
+          "fixed_opponent_responses": [
+            {
+              "hero_br_vs_fixed_bb": 2.6408303694768502,
+              "hero_improvement_bb": 2.4880326306812846,
+              "hero_vs_fixed_ev_bb": 0.15279773879556582,
+              "opponent": "uniform",
+              "villain_br_hero_ev_bb": -13.264940951748358,
+              "villain_improvement_bb": 4.002667419149601,
+              "villain_vs_fixed_hero_ev_bb": -9.262273532598757
+            },
+            {
+              "hero_br_vs_fixed_bb": -0.5257068579327789,
+              "hero_improvement_bb": 0.5730411756975126,
+              "hero_vs_fixed_ev_bb": -1.0987480336302915,
+              "opponent": "pure_arm_0",
+              "villain_br_hero_ev_bb": -5.741161572020006,
+              "villain_improvement_bb": 1.1057941836369762,
+              "villain_vs_fixed_hero_ev_bb": -4.63536738838303
+            },
+            {
+              "hero_br_vs_fixed_bb": -3.271197745730493,
+              "hero_improvement_bb": 0.0,
+              "hero_vs_fixed_ev_bb": -3.271197745730493,
+              "opponent": "pure_arm_1",
+              "villain_br_hero_ev_bb": -5.171247191518191,
+              "villain_improvement_bb": 0.33175870077986147,
+              "villain_vs_fixed_hero_ev_bb": -4.839488490738329
+            },
+            {
+              "hero_br_vs_fixed_bb": -2.848381740041934,
+              "hero_improvement_bb": 0.21836451349554986,
+              "hero_vs_fixed_ev_bb": -3.0667462535374836,
+              "opponent": "pure_arm_2",
+              "villain_br_hero_ev_bb": -5.171247191518191,
+              "villain_improvement_bb": 0.33175870077986147,
+              "villain_vs_fixed_hero_ev_bb": -4.839488490738329
+            },
+            {
+              "hero_br_vs_fixed_bb": 21.020734455855976,
+              "hero_improvement_bb": 12.972851467775445,
+              "hero_vs_fixed_ev_bb": 8.04788298808053,
+              "opponent": "pure_arm_3",
+              "villain_br_hero_ev_bb": -41.99999999999985,
+              "villain_improvement_bb": 19.265250239464514,
+              "villain_vs_fixed_hero_ev_bb": -22.734749760535337
+            },
+            {
+              "hero_br_vs_fixed_bb": -2.975472169955794,
+              "hero_improvement_bb": 1.4364199093751484,
+              "hero_vs_fixed_ev_bb": -4.411892079330943,
+              "opponent": "own_strength",
+              "villain_br_hero_ev_bb": -7.439749586462882,
+              "villain_improvement_bb": 1.3668809551990702,
+              "villain_vs_fixed_hero_ev_bb": -6.072868631263812
+            }
+          ],
+          "frozen_policy": [
+            {
+              "key": [
+                0,
+                42.0,
+                29.0,
+                0,
+                0,
+                0
+              ],
+              "probabilities": [
+                0.584953651798136,
+                1.9173127181728134e-06,
+                1.2884428150759064e-05,
+                0.41503154646099505
+              ]
+            },
+            {
+              "key": [
+                0,
+                42.0,
+                29.0,
+                0,
+                1,
+                0
+              ],
+              "probabilities": [
+                0.5180309857614152,
+                1.2413501217993175e-05,
+                2.39969086737516e-05,
+                0.4819326038286932
+              ]
+            },
+            {
+              "key": [
+                0,
+                42.0,
+                29.0,
+                1,
+                0,
+                0
+              ],
+              "probabilities": [
+                7.890708895575303e-06,
+                1.5026554647692403e-05,
+                0.9999737376053672,
+                3.3451310895418453e-06
+              ]
+            },
+            {
+              "key": [
+                0,
+                42.0,
+                29.0,
+                1,
+                0,
+                1
+              ],
+              "probabilities": [
+                1.3157793110742128e-05,
+                0.9996546167111353,
+                0.00032927351740556104,
+                2.9519783483649976e-06
+              ]
+            },
+            {
+              "key": [
+                0,
+                42.0,
+                29.0,
+                1,
+                1,
+                0
+              ],
+              "probabilities": [
+                6.898908899833825e-06,
+                0.99963911365515,
+                0.00035118932269050996,
+                2.7981132596478115e-06
+              ]
+            },
+            {
+              "key": [
+                0,
+                42.0,
+                29.0,
+                1,
+                1,
+                1
+              ],
+              "probabilities": [
+                5.028959706950914e-06,
+                4.935351392965198e-06,
+                0.9999878413416268,
+                2.1943472733848847e-06
+              ]
+            },
+            {
+              "key": [
+                1,
+                42.0,
+                29.0,
+                0,
+                0,
+                0
+              ],
+              "probabilities": [
+                0.9999265974741174,
+                3.3596869744457385e-05,
+                3.567037842681652e-05,
+                4.135277711340153e-06
+              ]
+            },
+            {
+              "key": [
+                1,
+                42.0,
+                29.0,
+                0,
+                1,
+                0
+              ],
+              "probabilities": [
+                0.5633564798432973,
+                0.21831911456738431,
+                0.21832101838700974,
+                3.3872023087149782e-06
+              ]
+            },
+            {
+              "key": [
+                1,
+                42.0,
+                29.0,
+                1,
+                0,
+                0
+              ],
+              "probabilities": [
+                0.3773486546204714,
+                0.3113266596268836,
+                0.31132345256396726,
+                1.2331886776787563e-06
+              ]
+            },
+            {
+              "key": [
+                1,
+                42.0,
+                29.0,
+                1,
+                0,
+                1
+              ],
+              "probabilities": [
+                0.0015370052308171951,
+                0.49923228906427336,
+                0.499229830120345,
+                8.755845644173598e-07
+              ]
+            },
+            {
+              "key": [
+                1,
+                42.0,
+                29.0,
+                1,
+                1,
+                0
+              ],
+              "probabilities": [
+                3.596650345818431e-06,
+                0.49999806088051285,
+                0.499995255431169,
+                3.087037972325294e-06
+              ]
+            },
+            {
+              "key": [
+                1,
+                42.0,
+                29.0,
+                1,
+                1,
+                1
+              ],
+              "probabilities": [
+                3.2902052026077524e-06,
+                0.4999966191074699,
+                0.4999979306745924,
+                2.1600127350524036e-06
+              ]
+            }
+          ],
+          "heldout_flops": [
+            {
+              "fallback": "uniform plans for unknown own type, never fit on heldout",
+              "flop": [
+                44,
+                25,
+                2
+              ],
+              "hero_unseen_type_mass": 0.0,
+              "metrics": {
+                "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+                "full_game_gto_verified": false,
+                "hero_br_ev_bb": -18.9833045871875,
+                "hero_deviation_gain_bb": 0.6326281737410646,
+                "numerical_guard_bb": 1e-07,
+                "profile_hero_ev_bb": -19.615932760928565,
+                "restricted_exploitability_bb": 0.4718694177352045,
+                "restricted_nashconv_bb": 0.943738835470409,
+                "sampling_error_bb": 0,
+                "villain_br_hero_ev_bb": -19.92704342265791,
+                "villain_deviation_gain_bb": 0.31111066172934443
+              },
+              "research_leaf": {
+                "class_pair_coverage": 28558,
+                "exact_type_game_hero_ev_bb": -19.615932760928565,
+                "frozen_cfr_updated": false,
+                "leaf_sha256": "c61d5ec2d61e740689f682f2e7d2c32333835f67a2f63fc7c78d80b522be0a94",
+                "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+                "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+                "weighted_hero_ev_bb": -19.615932760928665
+              },
+              "villain_unseen_type_mass": 0.0
+            },
+            {
+              "fallback": "uniform plans for unknown own type, never fit on heldout",
+              "flop": [
+                40,
+                41,
+                7
+              ],
+              "hero_unseen_type_mass": 0.0,
+              "metrics": {
+                "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+                "full_game_gto_verified": false,
+                "hero_br_ev_bb": -4.904173775539812,
+                "hero_deviation_gain_bb": 0.3900843061272905,
+                "numerical_guard_bb": 1e-07,
+                "profile_hero_ev_bb": -5.2942580816671025,
+                "restricted_exploitability_bb": 0.2908681452993567,
+                "restricted_nashconv_bb": 0.5817362905987133,
+                "sampling_error_bb": 0,
+                "villain_br_hero_ev_bb": -5.485910066138525,
+                "villain_deviation_gain_bb": 0.19165198447142284
+              },
+              "research_leaf": {
+                "class_pair_coverage": 28510,
+                "exact_type_game_hero_ev_bb": -5.2942580816671025,
+                "frozen_cfr_updated": false,
+                "leaf_sha256": "3f8fa94c4407f550ce0283545024b9c627e0901ac7d3b10bf08948810cafec05",
+                "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+                "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+                "weighted_hero_ev_bb": -5.294258081667345
+              },
+              "villain_unseen_type_mass": 0.0
+            },
+            {
+              "fallback": "uniform plans for unknown own type, never fit on heldout",
+              "flop": [
+                36,
+                32,
+                29
+              ],
+              "hero_unseen_type_mass": 0.0,
+              "metrics": {
+                "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+                "full_game_gto_verified": false,
+                "hero_br_ev_bb": -1.4708986727830065,
+                "hero_deviation_gain_bb": 0.6728843069537198,
+                "numerical_guard_bb": 1e-07,
+                "profile_hero_ev_bb": -2.1437829797367263,
+                "restricted_exploitability_bb": 1.0142087990538426,
+                "restricted_nashconv_bb": 2.0284175981076853,
+                "sampling_error_bb": 0,
+                "villain_br_hero_ev_bb": -3.4993162708906915,
+                "villain_deviation_gain_bb": 1.3555332911539653
+              },
+              "research_leaf": {
+                "class_pair_coverage": 28558,
+                "exact_type_game_hero_ev_bb": -2.1437829797367263,
+                "frozen_cfr_updated": false,
+                "leaf_sha256": "aa20af0ed64f34e651fe928cae15aa23d70796e50a8d2c7eaf498a1971e83b91",
+                "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+                "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+                "weighted_hero_ev_bb": -2.1437829797367107
+              },
+              "villain_unseen_type_mass": 0.0
+            },
+            {
+              "fallback": "uniform plans for unknown own type, never fit on heldout",
+              "flop": [
+                20,
+                12,
+                4
+              ],
+              "hero_unseen_type_mass": 0.0,
+              "metrics": {
+                "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+                "full_game_gto_verified": false,
+                "hero_br_ev_bb": -4.9429938249941605,
+                "hero_deviation_gain_bb": 0.12186895579739598,
+                "numerical_guard_bb": 1e-07,
+                "profile_hero_ev_bb": -5.0648627807915565,
+                "restricted_exploitability_bb": 0.19924198404954785,
+                "restricted_nashconv_bb": 0.3984839680990957,
+                "sampling_error_bb": 0,
+                "villain_br_hero_ev_bb": -5.341477793093256,
+                "villain_deviation_gain_bb": 0.2766150123016997
+              },
+              "research_leaf": {
+                "class_pair_coverage": 28558,
+                "exact_type_game_hero_ev_bb": -5.0648627807915565,
+                "frozen_cfr_updated": false,
+                "leaf_sha256": "651b58ad758779c820609b6f79147f8fde893d6004d81a067cf75918509b24f9",
+                "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+                "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+                "weighted_hero_ev_bb": -5.06486278079158
+              },
+              "villain_unseen_type_mass": 0.0
+            }
+          ],
+          "initialization_seed": 29,
+          "training_curve": [
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": 4.043703091365521,
+              "hero_deviation_gain_bb": 3.382535461722224,
+              "initialization_seed": 29,
+              "iterations": 1,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 13.726865180901186,
+              "profile_hero_ev_bb": 0.6611676296432972,
+              "restricted_exploitability_bb": 6.863432590450595,
+              "restricted_nashconv_bb": 13.72686518090119,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -9.683162089535667,
+              "villain_deviation_gain_bb": 10.344329719178964
+            },
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": -3.2251873013761942,
+              "hero_deviation_gain_bb": 0.7409620510095709,
+              "initialization_seed": 29,
+              "iterations": 10,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 1.9911410926203428,
+              "profile_hero_ev_bb": -3.966149352385765,
+              "restricted_exploitability_bb": 0.9955705463101716,
+              "restricted_nashconv_bb": 1.9911410926203432,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -5.2163283939965375,
+              "villain_deviation_gain_bb": 1.2501790416107723
+            },
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": -4.271801464528436,
+              "hero_deviation_gain_bb": 0.12023929034652081,
+              "initialization_seed": 29,
+              "iterations": 100,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 0.30771488176224365,
+              "profile_hero_ev_bb": -4.392040754874957,
+              "restricted_exploitability_bb": 0.1538574408811222,
+              "restricted_nashconv_bb": 0.3077148817622444,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -4.5795163462906805,
+              "villain_deviation_gain_bb": 0.18747559141572356
+            },
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": -4.416064685730719,
+              "hero_deviation_gain_bb": 0.020398185415288594,
+              "initialization_seed": 29,
+              "iterations": 1000,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 0.05398784163881727,
+              "profile_hero_ev_bb": -4.4364628711460075,
+              "restricted_exploitability_bb": 0.026993920819408768,
+              "restricted_nashconv_bb": 0.053987841638817535,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -4.470052527369536,
+              "villain_deviation_gain_bb": 0.03358965622352894
+            },
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": -4.437726809642642,
+              "hero_deviation_gain_bb": 0.0016167823259536362,
+              "initialization_seed": 29,
+              "iterations": 10000,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 0.01315965145476423,
+              "profile_hero_ev_bb": -4.439343591968596,
+              "restricted_exploitability_bb": 0.006579825727382804,
+              "restricted_nashconv_bb": 0.013159651454765608,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -4.450886461097408,
+              "villain_deviation_gain_bb": 0.011542869128811972
+            },
+            {
+              "convention": "two-player zero-sum NashConv/2; only4whole plans and own key types",
+              "full_game_gto_verified": false,
+              "hero_br_ev_bb": -4.438923290365146,
+              "hero_deviation_gain_bb": 0.0006896197921300029,
+              "initialization_seed": 29,
+              "iterations": 100000,
+              "numerical_guard_bb": 1e-07,
+              "positive_external_regret_bound_bb": 0.004050761400190803,
+              "profile_hero_ev_bb": -4.439612910157276,
+              "restricted_exploitability_bb": 0.00202538070009739,
+              "restricted_nashconv_bb": 0.00405076140019478,
+              "sampling_error_bb": 0,
+              "villain_br_hero_ev_bb": -4.442974051765341,
+              "villain_deviation_gain_bb": 0.003361141608064777
+            }
+          ],
+          "training_leaf_audits": [
+            {
+              "class_pair_coverage": 28558,
+              "exact_type_game_hero_ev_bb": -7.766933347534709,
+              "frozen_cfr_updated": false,
+              "leaf_sha256": "76d40f27b54225572d3bd628cbb1aa7a1909a3bbabfeeb90f3b749a3e6e17117",
+              "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+              "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+              "weighted_hero_ev_bb": -7.766933347534744
+            },
+            {
+              "class_pair_coverage": 28558,
+              "exact_type_game_hero_ev_bb": -1.1122924727798442,
+              "frozen_cfr_updated": false,
+              "leaf_sha256": "9d9d451f71a2accd8ec22b9e4345e9ff0c75009d36a38980518ad4e84e7ba6e1",
+              "sb_chip_sign_and_order": "SB rows/BB columns; hero BB transposed and negated;2chips/BB",
+              "scope": "RESEARCH ONLY; caller must integrate true public-board chance; not connected to frozen CFR",
+              "weighted_hero_ev_bb": -1.112292472779848
+            }
+          ]
+        }
+      ],
+      "stage": "vs_4bet",
+      "training_type_counts": [
+        6,
+        6
+      ]
+    }
+  ],
+  "sampling_error_bb": 0,
+  "schema": "pokerid-restricted-continuation-quality-v1",
+  "scope": "exact Bayesian4arm signal game; whole-plan mixtures; own signal only; heldout boards never used for training or selection; restricted NashConv/2 is NOT NLHE exploitability; leaf hook research-only,no frozen CFR updates",
+  "source_sha256": {
+    "continuation_game.cc": "b0ee2c0c67f9c2a1783f621480c01902bf2af56d8f9a0a13a7986476929c87a2",
+    "continuation_game.py": "e9b0c6acf473c4b821d0f1b74eb266fcb21108e43aaebb2b7b41d6d5282b7428",
+    "continuation_learning.py": "586ae8153f447af36876cb85d9559828baff59c4bccea3bbcccdd808e40da914",
+    "continuation_quality.py": "3aedd29594f0ae6d7f40f6b0859f2aeba010673dab248d8e8187344ce8faaef9",
+    "flop_exact.py": "b3ffeaf96779c58076e9d1fa927518979c13f3c3b2435ed4defab37bdf7c9f25",
+    "flop_exact_matrix.cc": "55d6ef38d16d8e868b241bb1ed7485e953c30b051abd807d3c5e10df61dd04f1"
+  },
+  "target_is_formal_gto_acceptance": false,
+  "target_restricted_training_nashconv_bb": 0.01,
+  "training_flops": [
+    [
+      48,
+      21,
+      3
+    ],
+    [
+      35,
+      31,
+      27
+    ]
+  ],
+  "weights_are_real_flop_chance": false
+}

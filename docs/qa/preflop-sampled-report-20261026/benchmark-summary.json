@@ -1,0 +1,31 @@
+{
+  "samples": 60000,
+  "seconds": 60.45199969999976,
+  "sha256": "5fda3d50ef791f293ecdfb4901e3568dcbea4a5d41b2bff9415c2fbf5467abc5",
+  "confidence": 0.95,
+  "max_infosets": 300000,
+  "actions": {
+    "0": {
+      "hero_mean_chips": -18.0,
+      "hero_interval": [
+        -25.027822481481415,
+        -10.972177518518587
+      ]
+    },
+    "1": {
+      "hero_mean_chips": 26.4579,
+      "hero_interval": [
+        19.430077518518583,
+        33.48572248148142
+      ]
+    },
+    "92": {
+      "hero_mean_chips": 58.1445,
+      "hero_interval": [
+        51.116677518518586,
+        65.17232248148143
+      ]
+    }
+  },
+  "scope": "sampled common-hero action values under explicit support; not equilibrium"
+}

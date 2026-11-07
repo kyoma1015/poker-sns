@@ -1,0 +1,162 @@
+{
+  "external_gto_comparison": "NOT PERFORMED",
+  "final_by_structure": {
+    "monotone": {
+      "previous_frozen_probability": {
+        "evaluations": 4,
+        "mean_nashconv_bb": 0.5791981288680887,
+        "worst_nashconv_bb": 0.765731249050914
+      },
+      "probability_knn9": {
+        "evaluations": 4,
+        "mean_nashconv_bb": 0.6947050600700188,
+        "worst_nashconv_bb": 0.7920101141093552
+      },
+      "response_4096": {
+        "evaluations": 4,
+        "mean_nashconv_bb": 0.0035700872908859815,
+        "worst_nashconv_bb": 0.0037805091458444906
+      }
+    },
+    "paired_rainbow_high": {
+      "previous_frozen_probability": {
+        "evaluations": 4,
+        "mean_nashconv_bb": 0.8391966452399394,
+        "worst_nashconv_bb": 1.0904553375782733
+      },
+      "probability_knn9": {
+        "evaluations": 4,
+        "mean_nashconv_bb": 4.1231849779867,
+        "worst_nashconv_bb": 6.589049507400894
+      },
+      "response_4096": {
+        "evaluations": 4,
+        "mean_nashconv_bb": 0.008237311537901151,
+        "worst_nashconv_bb": 0.009307208436394626
+      }
+    },
+    "paired_rainbow_low": {
+      "previous_frozen_probability": {
+        "evaluations": 4,
+        "mean_nashconv_bb": 2.0837253877179434,
+        "worst_nashconv_bb": 3.053405531723186
+      },
+      "probability_knn9": {
+        "evaluations": 4,
+        "mean_nashconv_bb": 0.1947947463585833,
+        "worst_nashconv_bb": 0.29530266114062576
+      },
+      "response_4096": {
+        "evaluations": 4,
+        "mean_nashconv_bb": 0.019593591163774904,
+        "worst_nashconv_bb": 0.03224119169454376
+      }
+    },
+    "paired_twotone": {
+      "previous_frozen_probability": {
+        "evaluations": 4,
+        "mean_nashconv_bb": 0.17663821641936517,
+        "worst_nashconv_bb": 0.20587201250463494
+      },
+      "probability_knn9": {
+        "evaluations": 4,
+        "mean_nashconv_bb": 0.19440599803799286,
+        "worst_nashconv_bb": 0.2335145258961946
+      },
+      "response_4096": {
+        "evaluations": 4,
+        "mean_nashconv_bb": 0.0008438848209595395,
+        "worst_nashconv_bb": 0.0012047419621499245
+      }
+    },
+    "rainbow": {
+      "previous_frozen_probability": {
+        "evaluations": 4,
+        "mean_nashconv_bb": 0.5540847737938124,
+        "worst_nashconv_bb": 0.7342233722639451
+      },
+      "probability_knn9": {
+        "evaluations": 4,
+        "mean_nashconv_bb": 0.5338952235155165,
+        "worst_nashconv_bb": 0.617431826376345
+      },
+      "response_4096": {
+        "evaluations": 4,
+        "mean_nashconv_bb": 0.002480831730873101,
+        "worst_nashconv_bb": 0.0041399676155622345
+      }
+    },
+    "twotone_connected": {
+      "previous_frozen_probability": {
+        "evaluations": 4,
+        "mean_nashconv_bb": 0.2318895741201661,
+        "worst_nashconv_bb": 0.2336986756608428
+      },
+      "probability_knn9": {
+        "evaluations": 4,
+        "mean_nashconv_bb": 0.5196052674216706,
+        "worst_nashconv_bb": 0.6460113151737499
+      },
+      "response_4096": {
+        "evaluations": 4,
+        "mean_nashconv_bb": 0.0022332272667421327,
+        "worst_nashconv_bb": 0.0038441940586779744
+      }
+    },
+    "twotone_disconnected": {
+      "previous_frozen_probability": {
+        "evaluations": 4,
+        "mean_nashconv_bb": 0.4587324082446729,
+        "worst_nashconv_bb": 0.6883023473904908
+      },
+      "probability_knn9": {
+        "evaluations": 4,
+        "mean_nashconv_bb": 0.3964979679444552,
+        "worst_nashconv_bb": 0.5924144147793697
+      },
+      "response_4096": {
+        "evaluations": 4,
+        "mean_nashconv_bb": 0.003491206533424357,
+        "worst_nashconv_bb": 0.004644906865198806
+      }
+    }
+  },
+  "formal_acceptance_complete": 0,
+  "formal_acceptance_total": 12,
+  "interpretation": "selected method is fixed-budget public-board local solving, not zero-shot model generalization; conditional-utility/regret transfer candidates regressed on validation",
+  "real_game_approximation_error": "UNKNOWN",
+  "same_new_cases_reductions_percent": {
+    "previous_frozen_probability": 99.17842131018853,
+    "probability_knn9": 99.39237497233175
+  },
+  "target_prediction_errors": {
+    "final": {
+      "average_own_chance_weighted_arm_mae_bb": 1.547538727683376,
+      "maximum_conditional_arm_error_bb": 30.48029767726982,
+      "reference": "against fixed matched probability-control opponent, not GTO; not sampling error"
+    },
+    "validation": {
+      "average_own_chance_weighted_arm_mae_bb": 1.517630875728795,
+      "maximum_conditional_arm_error_bb": 21.087585249105615,
+      "reference": "against fixed matched probability-control opponent, not GTO; not sampling error"
+    }
+  },
+  "timing_median_and_max_seconds": {
+    "cold_neighbor_probability_prediction_seconds": {
+      "max": 1.007855126998038,
+      "median": 0.6879172044991719
+    },
+    "features_and_game_seconds": {
+      "max": 0.3377355559969146,
+      "median": 0.2725218540017522
+    },
+    "full_hole_runout_matrix_seconds_shared_between_stages": {
+      "max": 1.0417894419988443,
+      "median": 1.0072575489975861
+    },
+    "selected_planning_and_exact_certification_seconds": {
+      "max": 0.3013675999973202,
+      "median": 0.14257599399934406
+    }
+  }
+}

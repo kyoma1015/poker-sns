@@ -1,0 +1,17 @@
+{
+  "commits": [
+    {
+      "date": "2026-11-05T14:59:05Z",
+      "local_sha": "0bbaf0711ab6fe78146c1bce5d9f559d6d4c356b",
+      "message": "Preregister new-only coverage, minimal response checkpoints and conservative preflop BR bounds",
+      "tree": "b59908bbd9f0d6451baf86071a9613fb6db02b98"
+    },
+    {
+      "date": "2026-11-05T15:09:05Z",
+      "local_sha": "b792c1eb13d4967c021b4999f744605e8604df93",
+      "message": "Implement unweighted class-pair root payoff bounds and freeze new-only priority design",
+      "tree": "7b96ff15592cdef2badb089d7b02bd829e599c1e"
+    }
+  ],
+  "note": "Local frozen commits precede calculations; later GitHub API timestamps are not independent preregistration"
+}

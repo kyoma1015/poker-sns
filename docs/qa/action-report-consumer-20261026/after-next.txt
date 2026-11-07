@@ -1,0 +1,20 @@
+test_bad_rational_refuses (__main__.Consumer.test_bad_rational_refuses) ... ok
+test_bool_actions_and_coverage_flag_refuse (__main__.Consumer.test_bool_actions_and_coverage_flag_refuse) ... ok
+test_count_mass_and_mean_tamper_refuse (__main__.Consumer.test_count_mass_and_mean_tamper_refuse) ... ok
+test_duplicate_json_and_nonfinite_refuse (__main__.Consumer.test_duplicate_json_and_nonfinite_refuse) ... ok
+test_legacy_report_warns_not_validated (__main__.Consumer.test_legacy_report_warns_not_validated) ... ok
+test_legacy_values_withheld (__main__.Consumer.test_legacy_values_withheld) ... ok
+test_missing_duplicate_combo_or_class_refuses (__main__.Consumer.test_missing_duplicate_combo_or_class_refuses) ... ok
+test_native_producer_consumer_exact_partial (__main__.Consumer.test_native_producer_consumer_exact_partial) ... ok
+test_nested_action_and_cli_rejection_are_bounded (__main__.Consumer.test_nested_action_and_cli_rejection_are_bounded) ... ok
+test_render_and_cli_roundtrip (__main__.Consumer.test_render_and_cli_roundtrip) ... ok
+test_renderer_escapes_untrusted_display_strings (__main__.Consumer.test_renderer_escapes_untrusted_display_strings) ... ok
+test_size_depth_and_utf8_refuse (__main__.Consumer.test_size_depth_and_utf8_refuse) ... ok
+test_unknown_ev_or_frequency_injection_refuses (__main__.Consumer.test_unknown_ev_or_frequency_injection_refuses) ... ok
+test_wrong_board_and_unsupported_schema_refuse (__main__.Consumer.test_wrong_board_and_unsupported_schema_refuse) ... ok
+test_wrong_pin_refuses (__main__.Consumer.test_wrong_pin_refuses) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.236s
+
+OK

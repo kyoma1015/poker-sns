@@ -1,0 +1,247 @@
+test_checkpoint_resume_preserves_policy_rng_and_provenance (__main__.InitialReach.test_checkpoint_resume_preserves_policy_rng_and_provenance) ... ERROR
+test_complete_native_1326_policy_coverage_with_exact_mass (__main__.InitialReach.test_complete_native_1326_policy_coverage_with_exact_mass) ... ERROR
+test_exact_combinatorial_probability_all_counts (__main__.InitialReach.test_exact_combinatorial_probability_all_counts) ... ok
+test_native_action_identity_mismatch_is_rejected (__main__.InitialReach.test_native_action_identity_mismatch_is_rejected) ... ERROR
+test_native_initial_actors_and_contexts_2_to_9 (__main__.InitialReach.test_native_initial_actors_and_contexts_2_to_9) ... 
+  test_native_initial_actors_and_contexts_2_to_9 (__main__.InitialReach.test_native_initial_actors_and_contexts_2_to_9) (players=2) ... ERROR
+  test_native_initial_actors_and_contexts_2_to_9 (__main__.InitialReach.test_native_initial_actors_and_contexts_2_to_9) (players=3) ... ERROR
+  test_native_initial_actors_and_contexts_2_to_9 (__main__.InitialReach.test_native_initial_actors_and_contexts_2_to_9) (players=4) ... ERROR
+  test_native_initial_actors_and_contexts_2_to_9 (__main__.InitialReach.test_native_initial_actors_and_contexts_2_to_9) (players=5) ... ERROR
+  test_native_initial_actors_and_contexts_2_to_9 (__main__.InitialReach.test_native_initial_actors_and_contexts_2_to_9) (players=6) ... ERROR
+  test_native_initial_actors_and_contexts_2_to_9 (__main__.InitialReach.test_native_initial_actors_and_contexts_2_to_9) (players=7) ... ERROR
+  test_native_initial_actors_and_contexts_2_to_9 (__main__.InitialReach.test_native_initial_actors_and_contexts_2_to_9) (players=8) ... ERROR
+  test_native_initial_actors_and_contexts_2_to_9 (__main__.InitialReach.test_native_initial_actors_and_contexts_2_to_9) (players=9) ... ERROR
+test_nonempty_history_has_no_claimed_chance_only_proof (__main__.InitialReach.test_nonempty_history_has_no_claimed_chance_only_proof) ... ERROR
+test_public_config_mismatch_is_rejected (__main__.InitialReach.test_public_config_mismatch_is_rejected) ... ERROR
+test_root_action_or_fixture_restriction_is_rejected (__main__.InitialReach.test_root_action_or_fixture_restriction_is_rejected) ... ERROR
+test_runtime_config_drift_is_rejected (__main__.InitialReach.test_runtime_config_drift_is_rejected) ... ERROR
+test_wrong_seat_is_rejected (__main__.InitialReach.test_wrong_seat_is_rejected) ... ERROR
+
+======================================================================
+ERROR: test_checkpoint_resume_preserves_policy_rng_and_provenance (__main__.InitialReach.test_checkpoint_resume_preserves_policy_rng_and_provenance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 65, in test_checkpoint_resume_preserves_policy_rng_and_provenance
+    g=self.game();direct=self.solver(g,iterations=400)
+      ^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 23, in game
+    def game(self,n=2):return NativeGame([4]*n,bb=2,bba=0,rake_num=0,rake_den=1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/training.py", line 27, in __init__
+    from pokerid_rules import Rules
+ModuleNotFoundError: No module named 'pokerid_rules'
+
+======================================================================
+ERROR: test_complete_native_1326_policy_coverage_with_exact_mass (__main__.InitialReach.test_complete_native_1326_policy_coverage_with_exact_mass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 49, in test_complete_native_1326_policy_coverage_with_exact_mass
+    g=self.game();s=self.solver(g,iterations=20000)
+      ^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 23, in game
+    def game(self,n=2):return NativeGame([4]*n,bb=2,bba=0,rake_num=0,rake_den=1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/training.py", line 27, in __init__
+    from pokerid_rules import Rules
+ModuleNotFoundError: No module named 'pokerid_rules'
+
+======================================================================
+ERROR: test_native_action_identity_mismatch_is_rejected (__main__.InitialReach.test_native_action_identity_mismatch_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 103, in test_native_action_identity_mismatch_is_rejected
+    dirty=self.game();dirty.stacks[0]=6
+          ^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 23, in game
+    def game(self,n=2):return NativeGame([4]*n,bb=2,bba=0,rake_num=0,rake_den=1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/training.py", line 27, in __init__
+    from pokerid_rules import Rules
+ModuleNotFoundError: No module named 'pokerid_rules'
+
+======================================================================
+ERROR: test_native_initial_actors_and_contexts_2_to_9 (__main__.InitialReach.test_native_initial_actors_and_contexts_2_to_9) (players=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 41, in test_native_initial_actors_and_contexts_2_to_9
+    g=self.game(n);s=self.solver(g,iterations=2)
+      ^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 23, in game
+    def game(self,n=2):return NativeGame([4]*n,bb=2,bba=0,rake_num=0,rake_den=1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/training.py", line 27, in __init__
+    from pokerid_rules import Rules
+ModuleNotFoundError: No module named 'pokerid_rules'
+
+======================================================================
+ERROR: test_native_initial_actors_and_contexts_2_to_9 (__main__.InitialReach.test_native_initial_actors_and_contexts_2_to_9) (players=3)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 41, in test_native_initial_actors_and_contexts_2_to_9
+    g=self.game(n);s=self.solver(g,iterations=2)
+      ^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 23, in game
+    def game(self,n=2):return NativeGame([4]*n,bb=2,bba=0,rake_num=0,rake_den=1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/training.py", line 27, in __init__
+    from pokerid_rules import Rules
+ModuleNotFoundError: No module named 'pokerid_rules'
+
+======================================================================
+ERROR: test_native_initial_actors_and_contexts_2_to_9 (__main__.InitialReach.test_native_initial_actors_and_contexts_2_to_9) (players=4)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 41, in test_native_initial_actors_and_contexts_2_to_9
+    g=self.game(n);s=self.solver(g,iterations=2)
+      ^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 23, in game
+    def game(self,n=2):return NativeGame([4]*n,bb=2,bba=0,rake_num=0,rake_den=1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/training.py", line 27, in __init__
+    from pokerid_rules import Rules
+ModuleNotFoundError: No module named 'pokerid_rules'
+
+======================================================================
+ERROR: test_native_initial_actors_and_contexts_2_to_9 (__main__.InitialReach.test_native_initial_actors_and_contexts_2_to_9) (players=5)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 41, in test_native_initial_actors_and_contexts_2_to_9
+    g=self.game(n);s=self.solver(g,iterations=2)
+      ^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 23, in game
+    def game(self,n=2):return NativeGame([4]*n,bb=2,bba=0,rake_num=0,rake_den=1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/training.py", line 27, in __init__
+    from pokerid_rules import Rules
+ModuleNotFoundError: No module named 'pokerid_rules'
+
+======================================================================
+ERROR: test_native_initial_actors_and_contexts_2_to_9 (__main__.InitialReach.test_native_initial_actors_and_contexts_2_to_9) (players=6)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 41, in test_native_initial_actors_and_contexts_2_to_9
+    g=self.game(n);s=self.solver(g,iterations=2)
+      ^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 23, in game
+    def game(self,n=2):return NativeGame([4]*n,bb=2,bba=0,rake_num=0,rake_den=1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/training.py", line 27, in __init__
+    from pokerid_rules import Rules
+ModuleNotFoundError: No module named 'pokerid_rules'
+
+======================================================================
+ERROR: test_native_initial_actors_and_contexts_2_to_9 (__main__.InitialReach.test_native_initial_actors_and_contexts_2_to_9) (players=7)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 41, in test_native_initial_actors_and_contexts_2_to_9
+    g=self.game(n);s=self.solver(g,iterations=2)
+      ^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 23, in game
+    def game(self,n=2):return NativeGame([4]*n,bb=2,bba=0,rake_num=0,rake_den=1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/training.py", line 27, in __init__
+    from pokerid_rules import Rules
+ModuleNotFoundError: No module named 'pokerid_rules'
+
+======================================================================
+ERROR: test_native_initial_actors_and_contexts_2_to_9 (__main__.InitialReach.test_native_initial_actors_and_contexts_2_to_9) (players=8)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 41, in test_native_initial_actors_and_contexts_2_to_9
+    g=self.game(n);s=self.solver(g,iterations=2)
+      ^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 23, in game
+    def game(self,n=2):return NativeGame([4]*n,bb=2,bba=0,rake_num=0,rake_den=1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/training.py", line 27, in __init__
+    from pokerid_rules import Rules
+ModuleNotFoundError: No module named 'pokerid_rules'
+
+======================================================================
+ERROR: test_native_initial_actors_and_contexts_2_to_9 (__main__.InitialReach.test_native_initial_actors_and_contexts_2_to_9) (players=9)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 41, in test_native_initial_actors_and_contexts_2_to_9
+    g=self.game(n);s=self.solver(g,iterations=2)
+      ^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 23, in game
+    def game(self,n=2):return NativeGame([4]*n,bb=2,bba=0,rake_num=0,rake_den=1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/training.py", line 27, in __init__
+    from pokerid_rules import Rules
+ModuleNotFoundError: No module named 'pokerid_rules'
+
+======================================================================
+ERROR: test_nonempty_history_has_no_claimed_chance_only_proof (__main__.InitialReach.test_nonempty_history_has_no_claimed_chance_only_proof)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 83, in test_nonempty_history_has_no_claimed_chance_only_proof
+    g=self.game();s=self.solver(g);c=self.context(g);c['betting_history']=[[0,0,1,2,2]]
+      ^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 23, in game
+    def game(self,n=2):return NativeGame([4]*n,bb=2,bba=0,rake_num=0,rake_den=1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/training.py", line 27, in __init__
+    from pokerid_rules import Rules
+ModuleNotFoundError: No module named 'pokerid_rules'
+
+======================================================================
+ERROR: test_public_config_mismatch_is_rejected (__main__.InitialReach.test_public_config_mismatch_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 87, in test_public_config_mismatch_is_rejected
+    g=self.game();s=self.solver(g);c=self.context(g)
+      ^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 23, in game
+    def game(self,n=2):return NativeGame([4]*n,bb=2,bba=0,rake_num=0,rake_den=1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/training.py", line 27, in __init__
+    from pokerid_rules import Rules
+ModuleNotFoundError: No module named 'pokerid_rules'
+
+======================================================================
+ERROR: test_root_action_or_fixture_restriction_is_rejected (__main__.InitialReach.test_root_action_or_fixture_restriction_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 97, in test_root_action_or_fixture_restriction_is_rejected
+    g=self.game();s=self.solver(g);c=self.context(g);setattr(g,field,value)
+      ^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 23, in game
+    def game(self,n=2):return NativeGame([4]*n,bb=2,bba=0,rake_num=0,rake_den=1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/training.py", line 27, in __init__
+    from pokerid_rules import Rules
+ModuleNotFoundError: No module named 'pokerid_rules'
+
+======================================================================
+ERROR: test_runtime_config_drift_is_rejected (__main__.InitialReach.test_runtime_config_drift_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 92, in test_runtime_config_drift_is_rejected
+    g=self.game();s=self.solver(g);c=self.context(g);g.stacks[0]=6
+      ^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 23, in game
+    def game(self,n=2):return NativeGame([4]*n,bb=2,bba=0,rake_num=0,rake_den=1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/training.py", line 27, in __init__
+    from pokerid_rules import Rules
+ModuleNotFoundError: No module named 'pokerid_rules'
+
+======================================================================
+ERROR: test_wrong_seat_is_rejected (__main__.InitialReach.test_wrong_seat_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 79, in test_wrong_seat_is_rejected
+    g=self.game();s=self.solver(g);c=self.context(g);c['seat']=1
+      ^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/test_initial_chance_reach.py", line 23, in game
+    def game(self,n=2):return NativeGame([4]*n,bb=2,bba=0,rake_num=0,rake_den=1)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-initial-chance-reach/gto/native/training.py", line 27, in __init__
+    from pokerid_rules import Rules
+ModuleNotFoundError: No module named 'pokerid_rules'
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.011s
+
+FAILED (errors=16)

@@ -1,0 +1,65 @@
+{
+  "base": "27f0ff3fda230f377ccba90222c7b61b5ae4f7e3",
+  "files": {
+    "gto/native/test_hand169_bridge.py": {
+      "sha256": "de6b1f4a9b074aea20da06058f6fd8e1be2658197068d0dcecd1087e5c99129b",
+      "same_as_base": true
+    },
+    "gto/native/test_hand169_bridge_boundaries.py": {
+      "sha256": "7df8fcb641ce64ce55e7c6e2c89f6ebaa8e276b3f941a730c7cc9b5cf09ce81b",
+      "same_as_base": true
+    },
+    "gto/native/test_initial_chance_reach.py": {
+      "sha256": "82db3023aff7997332bf270dec5f49db29ab494dc6b5ed603f319b59683221e9",
+      "same_as_base": true
+    },
+    "gto/native/test_poker_oracle_probability_guard.py": {
+      "sha256": "c32793c93044143999a98eebf82070337ffaee1bd07e2c8a119a7fc6e264e1ac",
+      "same_as_base": true
+    },
+    "gto/native/test_poker_oracle_profiles.py": {
+      "sha256": "ac0f6a4711bcd675818e3f9a44957dc5d6ba5feecc708c479951e8941b7cc641",
+      "same_as_base": true
+    },
+    "gto/native/test_training_batch.py": {
+      "sha256": "9d096b028fa93176fa3db6433863ce2997df080a0a161c6013440e9ac2f751cf",
+      "same_as_base": true
+    },
+    "gto/tests/test_checkpoints.py": {
+      "sha256": "a900ebc1d56b1a4ba935b75b7e620eafa99266ed4c90633feca214f96f83b5ff",
+      "same_as_base": true
+    },
+    "gto/tests/test_hand169.py": {
+      "sha256": "10ef8a33d33dda7e2f35cd311e9098d0e300cbeab9f6fd881cce75c7c1fb4d4d",
+      "same_as_base": true
+    },
+    "tests/worker_acceptance/test_coverage_flag.py": {
+      "sha256": "7fada2998bf186d5f828783ce4706a2633c9a8f195d3d480f350990214d9a0ca",
+      "same_as_base": true
+    },
+    "tests/worker_acceptance/test_frequency_snapshot.py": {
+      "sha256": "cae8f5e1980fdfce880f9b3539e40024cdce8c8d09b4278b788f85e0b30c585e",
+      "same_as_base": true
+    },
+    "tests/worker_acceptance/test_subnormal_ev.py": {
+      "sha256": "f846b25044ce7c760e11ddf844ab21b438e6e308ad061bb897aa73378d7575f4",
+      "same_as_base": true
+    },
+    "tests/worker_acceptance/test_subnormal_policy.py": {
+      "sha256": "bb4e4976489fd42380363283fa6aac3d06f154fe6878c725e93c2501fca51b22",
+      "same_as_base": true
+    },
+    "tests/worker_acceptance/test_unrepresentable_numbers.py": {
+      "sha256": "efe50901d3a6b3ea7316399578396bc39c2d5c774d0312e5a25b3d3aef945778",
+      "same_as_base": true
+    },
+    "tests/worker_acceptance/test_weighted_ev.py": {
+      "sha256": "2e1e12ca637ecbd870ee336c604c6850da5c1b0348562d1c9a0530d4dac2dfb7",
+      "same_as_base": true
+    },
+    "tests/worker_acceptance/test_weighted_maximum.py": {
+      "sha256": "d2e19b79797eb6a47bb70614224798b0c3e30fc10e5c404d9db8323749ccaf73",
+      "same_as_base": true
+    }
+  }
+}

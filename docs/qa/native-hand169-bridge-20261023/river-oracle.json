@@ -1,0 +1,29 @@
+{
+  "values": [
+    "20/11",
+    "-20/11"
+  ],
+  "nodes": 133,
+  "terminal_nodes": 44,
+  "scope": "explicit-policy finite native poker subtree; not equilibrium/exploitability",
+  "expected": [
+    "20/11",
+    "-20/11"
+  ],
+  "policy": "always check/call, no fold/raise",
+  "hero_hole_cards": [
+    48,
+    49
+  ],
+  "opponent_hole_cards": [
+    0,
+    1
+  ],
+  "turn_board": [
+    8,
+    17,
+    26,
+    32
+  ],
+  "uniform_river_count": 44
+}

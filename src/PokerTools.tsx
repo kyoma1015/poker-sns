@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 type Tool = { icon: string; title: string; description: string; path?: string }
 
 const available: Tool[] = [
+  { icon: '▦', title: 'プリフロップレンジ検索', description: '検証済み条件を検索（未提供条件あり）', path: '/gto/preflop' },
   { icon: '♠', title: 'TDAクイズ', description: 'ルールをクイズで学習', path: '/tda' },
   { icon: '⌕', title: 'TDA検索', description: 'ルール・裁定を調べる', path: '/tda' },
   { icon: '▥', title: '実戦記録', description: '成績・収支を管理', path: '/results' },

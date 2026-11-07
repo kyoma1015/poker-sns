@@ -1,0 +1,8 @@
+test_oracle_exact_uniform_river_chance (__main__.NewBoundaries.test_oracle_exact_uniform_river_chance) ... ok
+test_unhashable_board_rejected_as_value_error (__main__.NewBoundaries.test_unhashable_board_rejected_as_value_error) ... ok
+test_unhashable_cards_rejected_as_value_error (__main__.NewBoundaries.test_unhashable_cards_rejected_as_value_error) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.015s
+
+OK

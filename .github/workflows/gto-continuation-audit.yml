@@ -1,0 +1,47 @@
+name: GTO continuation abstraction and private BR audit
+on:
+  push:
+    branches: ['codex/c-native-hand169-bridge-20261023']
+    paths:
+      - 'gto/abstract/continuation_audit*'
+      - 'tests/test_continuation_audit.py'
+      - 'docs/qa/continuation-audit-20261106/**'
+      - '.github/workflows/gto-continuation-audit.yml'
+permissions:
+  contents: read
+jobs:
+  continuation-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Verify protected ranges, original solver and preregistered audit artifacts
+        run: |
+          python -B - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          for path in ['docs/qa/independent-preflop-20261105/dependency-manifest.json','docs/qa/suit-exact-preflop-20261106/dependency-manifest.json','docs/qa/continuation-audit-20261106/dependency-manifest.json']:
+           m=json.loads(Path(path).read_text())
+           for group in m.values():
+            for p,h in group.items():assert hashlib.sha256(Path(p).read_bytes()).hexdigest()==h,p
+          print('PASS preserved source/ranges and new immutable audit identities')
+          PY
+      - name: Legal actions, independent cashflow BR, private-information and envelope tests
+        run: python -B -m unittest tests.test_continuation_audit -v
+      - name: Replay population, fixed ranges and action/info criteria before evaluation
+        run: |
+          python -B -m gto.abstract.continuation_audit --phase design --output "$RUNNER_TEMP/audit-design.json"
+          python -B -m gto.abstract.independent_verify --actual "$RUNNER_TEMP/audit-design.json" --expected docs/qa/continuation-audit-20261106/design.json
+      - name: Enumerate all joint moments, fit registered continuations and evaluate private/public BR
+        run: |
+          python -B -m gto.abstract.continuation_audit --phase moments --parity 1 --build-dir "$RUNNER_TEMP/odd" --cache-dir "$RUNNER_TEMP/moments" > "$RUNNER_TEMP/odd.log" 2>&1 &
+          audit_worker_pid=$!
+          python -B -m gto.abstract.continuation_audit --phase moments --parity 0 --build-dir "$RUNNER_TEMP/even" --cache-dir "$RUNNER_TEMP/moments"
+          wait "$audit_worker_pid"
+          python -B -m gto.abstract.continuation_audit --phase analyze --build-dir "$RUNNER_TEMP/evaluate" --cache-dir "$RUNNER_TEMP/moments" --output "$RUNNER_TEMP/audit-results.json"
+          python -B -m gto.abstract.independent_verify --actual "$RUNNER_TEMP/audit-results.json" --expected docs/qa/continuation-audit-20261106/results.json
+          python -B -m gto.abstract.continuation_audit_export --input "$RUNNER_TEMP/audit-results.json" --output "$RUNNER_TEMP/audit-ui.json"
+          python -B -m gto.abstract.independent_verify --actual "$RUNNER_TEMP/audit-ui.json" --expected src/gto/continuationAuditData.json

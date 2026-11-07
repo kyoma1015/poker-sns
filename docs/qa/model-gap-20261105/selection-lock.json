@@ -1,0 +1,18 @@
+{
+  "accessed_splits": [
+    "train",
+    "validation"
+  ],
+  "board_chance_sha256": "e3d887f3d4af4e00d1b625e3462cb6ec7efd7a347fdd741cc70559748aaec072",
+  "final_accessed": false,
+  "protocol_sha256": "614cd83629e5b0d9297894be117d93a3c4f500a15d5f439e2a81e42df9fe99a5",
+  "selected_calibration": "raw",
+  "selection_sha256": "e67c82360827e2625cd6941a8fdcf69049cdeca790ba0d3064ebf8efa4142d2d",
+  "source_sha256": {
+    "gap_adapter.py": "fbde3663c9f9e9e74aab292c32f2dda2ec73a6694a88cd37d0038beb419ee561",
+    "gap_calibration.py": "69c57f881f4a882a198736f305b52b962a1aa3db31de448c491750a5f29cb9c5",
+    "gap_models.py": "46414a3fd81703d5c5ed15a7e89b5e54d2c7fcda7fe226fdc4331ad161e0ea13",
+    "gap_reference.cc": "ac3fb815b3ed75881e741ee3229901fec5c92d75579d09d65fc54fe54e1b2654",
+    "gap_study.py": "318dbf0510eaf9540dbbe5d94a6f6ffcba97268f7a3a7982ee23b38c7aba5a4b"
+  }
+}

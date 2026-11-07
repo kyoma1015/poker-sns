@@ -1,0 +1,26 @@
+{
+  "source_and_artifacts_sha256": {
+    ".github/workflows/gto-suit-exact.yml": "2d98ee06dfbd7bdb98757a6180af7160f380a209652cd7f322acc88a8dc25829",
+    "docs/qa/suit-exact-preflop-20261106/ACCEPTANCE.md": "7f65ca57b5432d703a965513de1e60f02581ce0adf3a9d5c8447031eee6e7c98",
+    "docs/qa/suit-exact-preflop-20261106/README.md": "a60b2924f9ae60d0e0f0ac391abc07604283c99e96181c0b6179c3013ed99f92",
+    "docs/qa/suit-exact-preflop-20261106/comparison-protocol.json": "3c7d7d6c453130da19175d23d7c41baa1ec293acfae4a7a7213962b16f3bcb99",
+    "docs/qa/suit-exact-preflop-20261106/comparison.json": "34a6340bedb3cb70a3ad0773cde42ff2d1783f641f403aaca98f79fb1832d5a0",
+    "docs/qa/suit-exact-preflop-20261106/design.json": "043fd50d13e6441268b21fdc1fccff6b24809d07e5c3e0f4f48b5634f01831d9",
+    "docs/qa/suit-exact-preflop-20261106/protocol.json": "2bb14b94c5912735ce8cdfbd2cede94a0d0ef24b4cf7fe90c27b35bab4caa121",
+    "docs/qa/suit-exact-preflop-20261106/reference-status.json": "584f93da6056ca62192815fec6b6b697593ef26506fb8120e57a07533de2a3b0",
+    "docs/qa/suit-exact-preflop-20261106/results.json": "cae8d1cf855e5cb2970b0b6fd22edb1342e916b3ac8223783a74650430b5f7c3",
+    "docs/qa/suit-exact-preflop-20261106/sampled-policy-baseline.json": "98f0cb3fb04f9af603d14967a2c09aa2a0441536ea749d2ed250658d63dfa7f5",
+    "gto/abstract/suit_exact.py": "47c30d2deedbe3ff88c10bd1a3515096df5dd69146ce23f42bfdcc4b8be052ed",
+    "gto/abstract/suit_exact_br.py": "e82628d383e12a8fd7107bdc89450233123b05ebb56e96f2dd633756d68fb1af",
+    "gto/abstract/suit_exact_compare.py": "019bd29d7e016fcc2ed8b4fee409ef2bed87e80180a048279c7d7da2cfd56c80",
+    "gto/abstract/suit_exact_native.cc": "00bd03b3962e44e605c41d4109fe982ff536d1a998f6c1e6ce8b14d24be1cb27",
+    "gto/abstract/suit_exact_prefill.py": "bb1d63fbf6a7f0ce004fa896f72d7670fd188622ee92664df2df03b22367c709",
+    "gto/abstract/suit_exact_reference.py": "46de096df53455f7f4d06fdc188701b259c540fd73c3c9f97a7de5963a848e32",
+    "src/IndependentPreflop.tsx": "95ce3f575fe202cad078e3bfc32916aa22878837804cf5cdb8cb68783113b649",
+    "src/gto/independentResearch.ts": "28c36972335b47105ad95a02438c85643e60aa258c51193923860d510ff6b398",
+    "src/gto/independentResearchData.json": "21b4964d90df893bf1b0268db9303865774cb2beedb5b5ad5b1c51b67b3ad7ac",
+    "tests/gto-independent-browser.mjs": "8c7808b30e600d86a8770edeaed4fb8d5cfa96ab9022e83532c46b02a00674c5",
+    "tests/gto-independent.test.mjs": "0b007c863ff0fdff6d2e1ddfb7cd1390395112d3a35f31cc27beca19edbde84d",
+    "tests/test_suit_exact.py": "5820bb839c089c840a7cc92f2ba19921e54086771fcd4fb5550bdd489d51f87a"
+  }
+}

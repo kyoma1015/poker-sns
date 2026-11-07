@@ -1,0 +1,5 @@
+.gto-audit-table { width: 100%; min-width: 760px; border-collapse: collapse; font-size: 12px; }
+.gto-audit-table th, .gto-audit-table td { padding: 10px; border: 1px solid #555; text-align: right; }
+.gto-audit-table th:first-child { text-align: left; }
+.gto-audit-table caption { text-align: left; padding: 10px; }
+.gto-audit select { display: block; max-width: 100%; min-height: 44px; }
