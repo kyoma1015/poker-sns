@@ -4,9 +4,11 @@ from pathlib import Path
 from gto.abstract import joint_stream as s,joint_stream_cache as c,model,fullsupport as fs,suit_exact as old,street_tree as st
 from gto.abstract.factorial_transfer import category
 
-def frozen(store,cache_dir):
+def frozen(store,cache_dir,seconds=3600):
     """Lift immutable frozen small policy onto the identical full-information game."""
     if store.meta()['epoch'] or store.meta()['cursor']:raise ValueError('fresh readonly baseline store required')
+    start_time=time.monotonic();cursor=int(store.get('baseline:init-cursor') or b'0')
+    if seconds<=0:return False
     fixed=json.loads((old.ROOT/'results.json').read_text())['complete_preflop_policies']['learned_small'];teacher=json.loads(old.old.TEACHER.read_text());ns,mapping,leaves=s.tree();inverse={new:old for old,new in mapping.items()};starts=dict(leaves);reach={r['leaf_index']:r for r in fs.leaves(fixed)};offsets={}
     for leaf,r in reach.items():
         if not r['remaining_stack_bb']:continue
@@ -18,8 +20,11 @@ def frozen(store,cache_dir):
         if start>=store.pre:continue
         for t in range(169):
             for a in range(n):prefix[store.pre+start+t*n+a]=fixed[(inverse[k]*3+a)*169+t]
-    with store.db:store.put('pre',s.pack(prefix))
+    if cursor==0:
+        with store.db:store.put('pre',s.pack(prefix))
     for i,row in enumerate(store.rows):
+        if i<cursor:continue
+        if time.monotonic()-start_time>=seconds:return False
         obj,_=c.read(cache_dir,row);codes=obj['codes'];ns,base,layout,P,S,b=s.layout(len(codes));sums=[0.]*(S-P)
         for start,T,n,k in layout:
             if start<P:continue
@@ -28,15 +33,19 @@ def frozen(store,cache_dir):
                 vals=coarse[off+(code%8)*n:off+(code%8+1)*n]
                 if abs(sum(vals)-1)>1e-10:raise ValueError('frozen action tree mismatch')
                 sums[start-P+t*n:start-P+(t+1)*n]=vals
-        with store.db:store.put('b:'+str(i),s.pack([0.]*(S-P)+sums))
+        with store.db:
+            store.put('b:'+str(i),s.pack([0.]*(S-P)+sums));store.put('baseline:init-cursor',str(i+1).encode())
     with store.db:store.put('baseline:ready',b'1')
+    return True
 
 def run_locked(root,cache_dir,seconds=3600):
     root=Path(root);root.mkdir(parents=True,exist_ok=True);start=time.monotonic();lib=s.build(root/'native');rows=c.population();store=s.Store(root/'learned.sqlite',rows);baseline=s.Store(root/'frozen.sqlite',rows)
     if not baseline.get('baseline:ready'):
-        try:frozen(baseline,cache_dir)
+        try:ready=frozen(baseline,cache_dir,max(0,seconds-(time.monotonic()-start)))
         except FileNotFoundError:return {'status':'WAITING_CACHE','phase':'baseline_initialize'}
-    if not (root/'frozen-evaluation.json').exists():
+        if not ready:return {'status':'BUDGET','phase':'baseline_initialize'}
+    baseline_path=root/'frozen-evaluation.json'
+    if not baseline_path.exists() or json.loads(baseline_path.read_text())['coverage']<1:
         result=s.evaluate(baseline,lib,cache_dir,seconds=max(0,seconds-(time.monotonic()-start)));(root/'frozen-evaluation.json').write_text(json.dumps(result,sort_keys=True,indent=2)+'\n')
         print(json.dumps({'phase':'frozen','orbits':result['evaluated_orbits'],'nashconv':result['restricted_nashconv_interval_bb']}),flush=True)
         if result['coverage']<1:return {'status':'BUDGET','phase':'baseline_evaluate'}
