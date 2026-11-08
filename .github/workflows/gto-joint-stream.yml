@@ -6,6 +6,7 @@ on:
       - 'gto/abstract/joint_stream*'
       - 'tests/test_joint_stream.py'
       - 'tests/test_joint_stream_study.py'
+      - 'tests/test_joint_stream_export.py'
       - 'docs/qa/joint-stream-20261108/**'
       - '.github/workflows/gto-joint-stream.yml'
 permissions:
@@ -32,7 +33,7 @@ jobs:
           print('PASS protected identities and full physical board population')
           PY
       - name: Exact monolithic parity, independent BR, atomic restart and resource stops
-        run: python -B -m unittest tests.test_joint_stream tests.test_joint_stream_study -v
+        run: python -B -m unittest tests.test_joint_stream tests.test_joint_stream_study tests.test_joint_stream_export -v
       - name: Full-population results qualification remains explicit
         run: |
           python -B - <<'PY'
@@ -46,6 +47,10 @@ jobs:
            from gto.abstract.joint_stream import source_identity
            from gto.abstract.joint_stream_cache import identity
            assert r['source_identity']==source_identity() and r['producer_identity']==identity()
+           from gto.abstract import fullsupport as fs,joint_stream_cache as cache
+           from gto.abstract.joint_reach_study import tree
+           expected=fs.digest({'source':source_identity(),'producer':identity(),'population':cache.population(),'nodes':tree()[0],'version':1})
+           assert r['checkpoint_identity']==expected
            assert r['formal_acceptance']==0 and r['normal_GTO_ranges']==0
            for result in r['evaluations'].values():
             assert result['population_orbits']==1755 and result['coverage']==1 and result['evaluated_orbits']==1755
