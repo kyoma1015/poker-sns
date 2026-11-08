@@ -4,6 +4,9 @@ on:
     branches: ['codex/c-native-hand169-bridge-20261023']
     paths:
       - 'gto/abstract/joint_stream*'
+      - 'gto/abstract/joint_update*'
+      - 'tests/test_joint_updates.py'
+      - 'docs/qa/joint-updates-20261108/**'
       - 'tests/test_joint_stream.py'
       - 'tests/test_joint_stream_study.py'
       - 'tests/test_joint_stream_export.py'
@@ -35,7 +38,7 @@ jobs:
           print('PASS protected identities and full physical board population')
           PY
       - name: Exact monolithic parity, independent BR, atomic restart and resource stops
-        run: python -B -m unittest tests.test_joint_stream tests.test_joint_stream_study tests.test_joint_stream_export -v
+        run: python -B -m unittest tests.test_joint_stream tests.test_joint_stream_study tests.test_joint_stream_export tests.test_joint_updates -v
       - name: Verify approved telemetry-only compatibility transition
         run: PYTHONPATH=. python -B docs/qa/joint-stream-20261108/migrate_timing.py --verify-source-only
       - name: Full-population results qualification remains explicit
