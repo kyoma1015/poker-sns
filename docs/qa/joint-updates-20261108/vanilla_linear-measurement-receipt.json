@@ -1,0 +1,13 @@
+{
+  "method": "vanilla_linear",
+  "policy_hash_before": "4f1e8263b17a808f700a05c085179fa1e4cbef10f930939fdb713353679a0a9a",
+  "policy_hash_after": "4f1e8263b17a808f700a05c085179fa1e4cbef10f930939fdb713353679a0a9a",
+  "policy_unchanged": true,
+  "additional_measurement_seconds": 359.7602025640008,
+  "additional_measurement_budget_seconds": 1800,
+  "coverage": 1.0,
+  "nc": [
+    2.473734206797557,
+    2.473734206797557
+  ]
+}

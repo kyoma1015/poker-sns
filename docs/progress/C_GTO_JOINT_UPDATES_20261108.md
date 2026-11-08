@@ -36,3 +36,19 @@ first. No background automatic restart exists. Completed candidate must not reru
 Current results PENDING; no convergence improvement or formal acceptance claimed.
 NewheadCI required; successful old508CI not rerun. Existing official20stack/fullsize
 source and matched authorized reference still unavailable, real-game errorUNKNOWN.
+
+## Completed results and disclosed extra measurement
+All3registered full-population candidates trained3epochs,checkpoint1/2/3 BR now
+complete1755/22100. Final NC linear2.473734206798,CFR+4.888656674494,
+DCFR3.726963290928BB,allWORSE thanfrozen0.932107;0.1targetFAIL,noadoption.
+26localtestsPASS,protected manifestsPASS. First published239f2d40 CI6/6SUCCESS,
+806test executions+27browser. Final guard/data/CI-history-depth fix needs newheadCI.
+Original7200s cap left third evaluation partial; explicitly registered extra1800s
+measurement-only(no training),completed421.565219s wall,all policyhashesunchanged.
+Original partial outcomes preserved. Final-source update formulas were not changed
+while the experiment ran. Full raw checkpoint JSON is gzip-preserved inQA.
+3x4contexts/2028handrows/6084actionEVcells research-only,newUI0/normal0/formal0/12.
+The4e-16 report-comparison artifact was fixed with a1e-8 improvement guard.
+CI checkout history nowfull so the required old telemetry-transition commit is
+available after further descendants; no verification disabled. Baseline remains
+best of measured candidates; no completed experiment should be rerun on resume.

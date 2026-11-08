@@ -1,0 +1,13 @@
+{
+  "method": "cfr_plus",
+  "policy_hash_before": "8f7ff1dbc2999f5dabce5c4fb229983c6a8d80d65056457b5e18bc6703e3d6a2",
+  "policy_hash_after": "8f7ff1dbc2999f5dabce5c4fb229983c6a8d80d65056457b5e18bc6703e3d6a2",
+  "policy_unchanged": true,
+  "additional_measurement_seconds": 421.4708126629994,
+  "additional_measurement_budget_seconds": 1800,
+  "coverage": 1.0,
+  "nc": [
+    4.8886566744936895,
+    4.8886566744936895
+  ]
+}

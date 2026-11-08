@@ -1,0 +1,11 @@
+{
+  "status": "DERIVED_LOWER_BOUND_NOT_DIRECT_BR_MEASUREMENT",
+  "scope": "same finite game;common second current policy;realization-plan averages",
+  "formula": "NC(average)<= (NC(first)+lambda*NC(second))/(1+lambda)",
+  "second_current_policy_nc_lower_bounds": {
+    "uniform2": 1.4495319351428897,
+    "linear2": 1.7468197362434974,
+    "dcfr2": 1.9858247791778019
+  },
+  "real_game_error": "UNKNOWN"
+}
