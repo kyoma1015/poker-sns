@@ -13,7 +13,9 @@ permissions:
   contents: read
 concurrency:
   group: gto-native-${{ github.ref }}
-  cancel-in-progress: false
+  # Only PR120's dedicated GTO head supersedes obsolete unfinished native runs.
+  # Other PRs and workflow_dispatch retain the existing noncancelling behavior.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' && github.event.pull_request.number == 120 && github.head_ref == 'codex/c-native-hand169-bridge-20261023' }}
 jobs:
   reconstructed:
     runs-on: ubuntu-latest
