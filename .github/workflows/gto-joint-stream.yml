@@ -1,0 +1,53 @@
+name: GTO population streaming and resumable joint learning
+on:
+  push:
+    branches: ['codex/c-native-hand169-bridge-20261023']
+    paths:
+      - 'gto/abstract/joint_stream*'
+      - 'tests/test_joint_stream.py'
+      - 'docs/qa/joint-stream-20261108/**'
+      - '.github/workflows/gto-joint-stream.yml'
+permissions:
+  contents: read
+jobs:
+  population-stream:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Preserve all frozen engines, ranges and UI
+        run: |
+          python -B - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          for folder in ['independent-preflop-20261105','suit-exact-preflop-20261106','continuation-audit-20261106']:
+           for group in json.loads(Path('docs/qa',folder,'dependency-manifest.json').read_text()).values():
+            for p,h in group.items():assert hashlib.sha256(Path(p).read_bytes()).hexdigest()==h,p
+          from gto.abstract.joint_stream_cache import population
+          rows=population();assert len(rows)==1755 and sum(r['multiplicity'] for r in rows)==22100
+          print('PASS protected identities and full physical board population')
+          PY
+      - name: Exact monolithic parity, independent BR, atomic restart and resource stops
+        run: python -B -m unittest tests.test_joint_stream -v
+      - name: Full-population results qualification remains explicit
+        run: |
+          python -B - <<'PY'
+          import json,hashlib
+          from pathlib import Path
+          p=Path('docs/qa/joint-stream-20261108/results.json')
+          if not p.exists():
+           print('Full local population experiment PENDING; no numerical population claim verified by this CI')
+          else:
+           r=json.loads(p.read_text())
+           from gto.abstract.joint_stream import source_identity
+           from gto.abstract.joint_stream_cache import identity
+           assert r['source_identity']==source_identity() and r['producer_identity']==identity()
+           assert r['formal_acceptance']==0 and r['normal_GTO_ranges']==0
+           for result in r['evaluations'].values():
+            assert result['population_orbits']==1755 and result['coverage']==1 and result['evaluated_orbits']==1755
+            assert result['full_real_game_gto_verified'] is False
+           print('PASS local artifact identities/coverage/qualification guards; full numerical population replay is NOT performed in this short CI')
+          PY
