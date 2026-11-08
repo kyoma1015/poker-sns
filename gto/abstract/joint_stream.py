@@ -125,9 +125,9 @@ def evaluate(store,lib,cache_dir,*,max_blocks=1755,seconds=3600):
         if done%64==0:print(json.dumps({'phase':'evaluate','blocks':cursor,'seconds':time.monotonic()-start}),flush=True)
     coverage=sum(r['multiplicity'] for r in store.rows[:cursor])/sum(r['multiplicity'] for r in store.rows);missing=1-coverage;h,v=collapse(total[:2*B*169]);ev,known,unknown=total[2*B*169:2*B*169+3];nc=h+v
     prefix=unpack(store.get('pre'));ns,base,rows,_,_,_=layout(1);bound=total[-2]
-    for start,types,n,k in rows:
-        if start<P:
-            for t in range(types):bound+=max(0.,*prefix[start+t*n:start+(t+1)*n])
+    for row_start,types,n,k in rows:
+        if row_start<P:
+            for t in range(types):bound+=max(0.,*prefix[row_start+t*n:row_start+(t+1)*n])
     epoch=store.meta()['epoch'];bound=bound/epoch if epoch else None
     if not missing and epoch and nc>bound+1e-8:raise ValueError('population regret certificate mismatch')
     prepi=strategy(prefix[:P],prefix[P:2*P],[r for r in rows if r[0]<P],True)

@@ -89,3 +89,28 @@ fingerprints now in QA. New research-row adapter and all12local testsPASS, no
 skips. RFI/vsopen/vs3bet/vs4bet169each exported with proper BBlabels/positions;
 ordinary admission hard-rejected. No new data is imported into existing UI.
 Warmtrial is stillRUNNING; no warm quality result claimed at this snapshot.
+
+## Completed warm trial / reporting fix
+
+Warm2 full populationNC1.190819543932BB,SB/BB root gains0.610933422816/
+0.579886121117BB,SBnetEV0.034797048935BB. Better than uniform2, worse than
+frozen0.932107BB;0.1BB targetFAIL. Formal0/12,ordinary0,UI additions0 unchanged.
+
+Found final elapsed-time reporting shadowed `start` with a policy-row offset.
+Renamed it, added a fixed-clock regression;13local testsPASS without skips.
+This changes no numerical code. All3completed DBs backed up physically at
+/workspace/joint-stream-before-timing, source metadata migrated fromc9336398...
+to251cccffb1b5dfcc3f990049e7bb5ebe1ebbb82889ebb6bb9d346e54e580715a.
+Every nonidentity state hash unchanged, receipts timing-migration.json. Cached
+revalidation of baseline/uniform4/warm2 matches every numeric output exactly;
+this is NOT full compute replay. Historical evaluation timer fields marked
+invalid rather than invented. Original raw logs/JSON and backups retained.
+Current source strict checkpoint identity is251ccc...; old64block pilot remains
+archived under the old source and is NOT the latest resume point.
+
+The current main and warm checkpoints are complete epoch4/epoch2,cursor0; no
+training process remains. Do not rerun completed study just to recreate metrics.
+Final source/QA correction still needs normal push and new-head CI verification
+at this recording. Old9e865 native/UI/EV/abstraction/static allSUCCESS; new-source
+CI must be checked separately. PR120-only latest-native cancellation preserves
+all tests and otherPR/dispatch behavior. No successful run was manually rerun.

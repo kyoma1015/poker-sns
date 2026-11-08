@@ -71,5 +71,10 @@ class StreamTests(unittest.TestCase):
     def test_zero_wall_budget_preserves_checkpoint(self):
         a=self.store('a');before=a.digest();r=a.train(self.lib,'unused',seconds=0)
         self.assertEqual(r['blocks'],0);self.assertEqual(before,a.digest())
+    def test_reported_wall_time_is_not_a_policy_row_offset(self):
+        a=self.store('a')
+        with patch.object(s.time,'monotonic',return_value=100.):
+            result=s.evaluate(a,self.lib,'unused',max_blocks=0)
+        self.assertEqual(result['wall_seconds'],0.)
 
 if __name__=='__main__':unittest.main()
