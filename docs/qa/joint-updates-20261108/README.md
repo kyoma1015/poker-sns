@@ -15,7 +15,7 @@ Original sources/frozenCFR/UI/demo/ranges are protected; no ordinary admission.
 All completed registered outcomes retained; no newly trained strategy adopted.
 No4e-16 roundoff claimed as improvement. Selfplay SB EV increases are not improved
 equilibrium quality. Full3checkpoint results/raw actionEV and frequencies are in
-checkpoints/*.json.gz,standard gzip/JSON; research-only3x4x169ranges in *ranges.gz.
+checkpoints/*.json.gz.b64,base64-decode then standard gzip/JSON; research-only3x4x169ranges in *ranges.gz.b64.
 3candidates x676rows=2028research rows,6084actionEV cells. NewUI data0,normal0.
 Small analytic-game witnesses are explicitly NOT HU50 EV measurements.
 
@@ -64,3 +64,8 @@ then require SAMEpopulation independentBR improvement before adopting. Alternati
 updates need their own coherent fullpopulation protocol,not per-board preflop
 updates. Complete formal provenance and independent richer-game/reference
 calibration before normal range admission. Remaining release hoursUNKNOWN.
+
+Publication transport: binary blob API stalled without creating its first object;
+lossless gzip+base64 text permits the existing Git tree API. Original gzip bytes
+retained in local backup ref85929ad and /workspace/joint-updates-gzip-originals.
+No numerical values or policies changed. No permission/authentication was bypassed.

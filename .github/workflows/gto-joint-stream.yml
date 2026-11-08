@@ -69,7 +69,7 @@ jobs:
       - name: Independently guard registered update comparison artifacts
         run: |
           python -B - <<'PYCODE'
-          import gzip,hashlib,json
+          import base64,gzip,hashlib,json
           from pathlib import Path
           from gto.abstract.joint_update_report import checked,improves
           from gto.abstract import joint_updates as u,joint_stream_cache as cache
@@ -83,7 +83,7 @@ jobs:
            for method,points in result['methods'].items():
             assert registration['identities'][method]==u.identity(method,cache.population())
             for point in points:
-             name=method+'-epoch'+str(point['epoch'])+'.json';raw=gzip.decompress((root/'checkpoints'/ (name+'.gz')).read_bytes())
+             name=method+'-epoch'+str(point['epoch'])+'.json';raw=gzip.decompress(base64.b64decode((root/'checkpoints'/ (name+'.gz.b64')).read_bytes()))
              assert hashlib.sha256(raw).hexdigest()==result['evidence_sha256'][name]
              original=json.loads(raw);verified=checked(original)
              assert original['method']==method and original['epoch']==point['epoch']
