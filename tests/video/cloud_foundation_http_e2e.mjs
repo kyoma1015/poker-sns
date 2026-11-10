@@ -1,4 +1,4 @@
-import {verifyCloudHttp} from './cloud_http_browser_e2e.mjs'
+import {verifyCloudHttp,verifyCloudRecoveryHttp} from './cloud_http_browser_e2e.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
 import {execFileSync} from 'node:child_process'
@@ -117,6 +117,7 @@ assert.equal(publishedInspect.data.size,bytes.length)
 assert.equal(publishedInspect.data.storage_present,true)
 // Published posts remain valid even after the original reservation expires.
 assert.equal(typeof publishedInspect.data.expired,'boolean')
+await verifyCloudRecoveryHttp({owner,other,key,url:env.API_URL,path,postId:results[0].data,sha256:digest,size:bytes.length,sql})
 assert.ok((await other.rpc('video_cloud_recovery_inspect_v1',{p_path:path})).error)
 assert.ok((await anon.rpc('video_cloud_recovery_inspect_v1',{p_path:path})).error)
 assert.ifError((await quotaOwner.storage.from('post-videos').upload(fresh.p_path,bytes,{contentType:'video/mp4',upsert:false})).error)
