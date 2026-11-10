@@ -117,6 +117,9 @@ export default function PostVideo({ postId, videoPath }: { postId: string; video
         if (poster) return
         const video = event.currentTarget
         if (!video.videoWidth || !video.videoHeight) return
+        // Some Safari builds do not dispatch a frame callback for paused video.
+        // Attempt a synchronous capture as well; black frames are rejected.
+        capturePoster(video)
         // Safari can expose a decoded first frame before it is actually paintable.
         // Seek slightly forward once; only capture after seeked, never freeze a black
         // initial canvas as the poster. Playback remains independent of this step.
