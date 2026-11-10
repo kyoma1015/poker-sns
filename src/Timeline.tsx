@@ -1,3 +1,4 @@
+import { isProvenPublishedVideoRecovery, matchesPendingVideoRecovery } from './videoRecoveryProof'
 import { withVideoRecoveryDeadline } from './videoRecoveryDeadline'
 import { VIDEO_RECOVERY_CANDIDATE_ENABLED, inspectVideoRecoveryCandidate, finalizeRecoveredVideoCandidate } from './videoRecoveryCandidate'
 import { handOffVideoTransfer, hasVideoTransferJournal, readVideoTransferHint, finishRecoveredVideoTransfer, discardProvenExpiredVideoTransfer, VIDEO_TRANSFER_RECOVERY_MESSAGE, VideoTransferRecoveryRequiredError } from './videoTransferJournal'
@@ -189,8 +190,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       if(error||!user) throw new Error('本人認証を確認できません。')
       const hint=readVideoTransferHint(user.id)
       const proof=await inspectCloudVideoRecovery(hint.path)
-      if(proof.state!=='published'||proof.allow_resume!==false||!proof.storage_present||
-        proof.sha256!==hint.sha256||proof.size!==hint.size||!proof.post_id)
+      if(!isProvenPublishedVideoRecovery(proof,hint))
         throw new Error('投稿完了と元ファイルの一致を証明できません。')
       // Recheck the current account before acting on a response from an earlier session.
       const {data:{user:currentUser},error:currentError}=await supabase.auth.getUser()
@@ -198,15 +198,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       // Never clear the transfer journal while an unrelated or malformed
       // pending draft exists: it could still require separate server proof.
       const pendingRaw=sessionStorage.getItem('poker-id-pending-video-v1')
-      if(pendingRaw!==null) {
-        let pending:unknown
-        try { pending=JSON.parse(pendingRaw) }
-        catch { throw new VideoTransferRecoveryRequiredError() }
-        if(!pending||typeof pending!=='object'||Array.isArray(pending)||
-          (pending as {owner?:unknown}).owner!==user.id||
-          (pending as {path?:unknown}).path!==hint.path)
-          throw new VideoTransferRecoveryRequiredError()
-      }
+      if(!matchesPendingVideoRecovery(pendingRaw,user.id,hint.path))
+        throw new VideoTransferRecoveryRequiredError()
       // Recheck the journal and pending draft before changing either pointer.
       if(readVideoTransferHint(user.id).raw!==hint.raw||
         sessionStorage.getItem('poker-id-pending-video-v1')!==pendingRaw)
