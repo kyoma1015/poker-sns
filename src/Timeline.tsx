@@ -338,12 +338,14 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const [videoPreview, setVideoPreview] = useState<string | null>(null)
   const [videoPreviewPoster, setVideoPreviewPoster] = useState<string | null>(null)
   const videoPreviewUrlRef = useRef<string | null>(null)
+  const videoPosterGenerationRef = useRef(0)
   const captureVideoPreviewPoster = (video: HTMLVideoElement) => {
     if (videoPreviewPoster || !video.videoWidth || !video.videoHeight || video.readyState < 2) return
     const expectedUrl = videoPreview
+    const generation = videoPosterGenerationRef.current
     const capture = () => {
       // A late decoded-frame callback must never replace a newer attachment's poster.
-      if (!expectedUrl || expectedUrl !== videoPreviewUrlRef.current || video.currentSrc !== expectedUrl || videoPreviewPoster) return
+      if (!expectedUrl || generation !== videoPosterGenerationRef.current || expectedUrl !== videoPreviewUrlRef.current || video.currentSrc !== expectedUrl || videoPreviewPoster) return
       try {
         const canvas = document.createElement('canvas')
         const scale = Math.min(1, 640 / Math.max(video.videoWidth, video.videoHeight))
@@ -372,6 +374,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       return
     }
     const url = URL.createObjectURL(videoFile)
+    const generation = ++videoPosterGenerationRef.current
     videoPreviewUrlRef.current = url
     setVideoPreview(url)
     // Decode the poster on a separate, muted element. Never seek or play the
@@ -384,7 +387,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     let cancelled = false
     let captured = false
     const capture = () => {
-      if (cancelled || captured || videoPreviewUrlRef.current !== url ||
+      if (cancelled || captured || generation !== videoPosterGenerationRef.current || videoPreviewUrlRef.current !== url ||
           probe.readyState < 2 || !probe.videoWidth || !probe.videoHeight) return
       try {
         const canvas = document.createElement('canvas')
@@ -1196,6 +1199,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     if (error) { setMessage(error); return }
     // Re-check after async metadata validation: finalize may have started meanwhile.
     if (pendingVideoRef.current || videoSubmitInFlightRef.current) { setMessage('保留中の動画を先に再試行してください。'); return }
+    // Invalidate older decoded-frame callbacks before the new preview renders.
+    videoPosterGenerationRef.current++
+    setVideoPreviewPoster(null)
     setVideoFile(selectedFile)
     setMessage(VIDEO_SERVER_ENABLED ? '' : '動画のプレビューを確認できます。サーバーAPIの安全確認が終わるまで投稿は無効です。')
   }
