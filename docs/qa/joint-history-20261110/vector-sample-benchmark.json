@@ -1,0 +1,62 @@
+{
+  "samples": [
+    {
+      "orbit": 0,
+      "types": 168,
+      "cpu_seconds": {
+        "original": 0.213469468,
+        "vector": 0.07342225499999999
+      },
+      "ratio": 0.34394733676855366,
+      "max_abs_error": {
+        "grad": 2.1510571102112408e-16,
+        "avg": 5.0306980803327406e-17,
+        "leaf": 1.3921155894713877e-16,
+        "metrics": 9.320877403240502e-13,
+        "action_num": 1.734723475976807e-16,
+        "action_den": 3.2959746043559335e-17
+      }
+    },
+    {
+      "orbit": 500,
+      "types": 169,
+      "cpu_seconds": {
+        "original": 0.27472708799999995,
+        "vector": 0.050570258000000035
+      },
+      "ratio": 0.18407452416923678,
+      "max_abs_error": {
+        "grad": 1.0278236595162582e-16,
+        "avg": 3.2959746043559335e-17,
+        "leaf": 1.1449174941446927e-16,
+        "metrics": 1.6583956430338276e-13,
+        "action_num": 9.367506770274758e-17,
+        "action_den": 1.5612511283791264e-17
+      }
+    },
+    {
+      "orbit": 1500,
+      "types": 224,
+      "cpu_seconds": {
+        "original": 0.32802143000000006,
+        "vector": 0.08285284400000004
+      },
+      "ratio": 0.2525836315023687,
+      "max_abs_error": {
+        "grad": 2.3083495403295883e-16,
+        "avg": 5.0306980803327406e-17,
+        "leaf": 1.491862189340054e-16,
+        "metrics": 9.015010959956271e-13,
+        "action_num": 1.8735013540549517e-16,
+        "action_den": 3.252606517456513e-17
+      }
+    }
+  ],
+  "source_sha256": {
+    "gto/abstract/joint_vector.py": "7d484ff5bff3e4b6aec8dbbfa4725ff616e4ad2adf9b95c338c729ce1df408b9",
+    "gto/abstract/joint_vector.cc": "a72816f2228ab49d991818b6d36ac1e6ca7fbbfe7f7fc578e58af5b2e660c6c2"
+  },
+  "deployed_in_registered_population_run": false,
+  "all1755parity": "NOT PERFORMED",
+  "real_game_error": "UNKNOWN"
+}
