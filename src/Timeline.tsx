@@ -195,18 +195,25 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       // Recheck the current account before acting on a response from an earlier session.
       const {data:{user:currentUser},error:currentError}=await supabase.auth.getUser()
       if(currentError||currentUser?.id!==user.id) throw new Error('照合中にログイン状態が変わりました。')
-      // The journal must remain byte-for-byte unchanged since the authenticated proof.
-      discardProvenExpiredVideoTransfer(user.id,hint.path,hint.raw)
-      // Clear only the matching local pending pointer after proven publication.
+      // Never clear the transfer journal while an unrelated or malformed
+      // pending draft exists: it could still require separate server proof.
       const pendingRaw=sessionStorage.getItem('poker-id-pending-video-v1')
-      if(pendingRaw) {
-        try {
-          const pending=JSON.parse(pendingRaw)
-          if(pending.owner===user.id&&pending.path===hint.path&&
-            sessionStorage.getItem('poker-id-pending-video-v1')===pendingRaw)
-            sessionStorage.removeItem('poker-id-pending-video-v1')
-        } catch { /* An unrelated or malformed pointer is never deleted. */ }
+      if(pendingRaw!==null) {
+        let pending:unknown
+        try { pending=JSON.parse(pendingRaw) }
+        catch { throw new VideoTransferRecoveryRequiredError() }
+        if(!pending||typeof pending!=='object'||Array.isArray(pending)||
+          (pending as {owner?:unknown}).owner!==user.id||
+          (pending as {path?:unknown}).path!==hint.path)
+          throw new VideoTransferRecoveryRequiredError()
       }
+      // Recheck the journal and pending draft before changing either pointer.
+      if(readVideoTransferHint(user.id).raw!==hint.raw||
+        sessionStorage.getItem('poker-id-pending-video-v1')!==pendingRaw)
+        throw new VideoTransferRecoveryRequiredError()
+      discardProvenExpiredVideoTransfer(user.id,hint.path,hint.raw)
+      if(pendingRaw!==null && sessionStorage.getItem('poker-id-pending-video-v1')===pendingRaw)
+        sessionStorage.removeItem('poker-id-pending-video-v1')
       pendingVideoRef.current=null
       setPendingVideo(null)
       setVideoRecoveryBlocked(false)
