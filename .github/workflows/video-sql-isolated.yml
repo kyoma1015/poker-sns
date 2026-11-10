@@ -35,8 +35,12 @@ jobs:
           set -euo pipefail
           sudo apt-get update -qq
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ffmpeg
-          ffmpeg -version | head -n 1
-          ffprobe -version | head -n 1
+          mkdir -p api/bin
+          cp "$(command -v ffmpeg)" api/bin/ffmpeg
+          cp "$(command -v ffprobe)" api/bin/ffprobe
+          chmod +x api/bin/ffmpeg api/bin/ffprobe
+          api/bin/ffmpeg -version | head -n 1
+          api/bin/ffprobe -version | head -n 1
       - name: Trusted finalization core unit tests
         run: python3 -m unittest tests.video.test_finalize_core -v
       - name: Authenticated finalize boundary unit tests
