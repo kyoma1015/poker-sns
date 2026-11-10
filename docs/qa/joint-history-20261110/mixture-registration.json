@@ -1,0 +1,10 @@
+{
+  "utc": "2026-11-10T13:24:22Z",
+  "protocol_sha256": "5b890f913d4875cf149f9443798b46698d07bd6dbba4a98780949de5cf57c3b3",
+  "source_sha256": "e49774021ce9b8efa43a2b6e8b305d8994a9b5f68b433f9fc6a8a6ef97566e90",
+  "lambda": 0.25,
+  "candidate_epoch": 5,
+  "evaluation_seconds": 900,
+  "extra_training": 0,
+  "raw_population_results_observed": false
+}

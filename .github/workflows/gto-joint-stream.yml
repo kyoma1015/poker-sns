@@ -7,6 +7,8 @@ on:
       - 'gto/abstract/joint_update*'
       - 'gto/abstract/joint_history.py'
       - 'gto/abstract/joint_alternating.py'
+      - 'gto/abstract/joint_realization.py'
+      - 'tests/test_joint_realization.py'
       - 'tests/test_joint_history.py'
       - 'tests/test_joint_alternating.py'
       - 'docs/qa/joint-history-20261110/**'
@@ -44,7 +46,7 @@ jobs:
           print('PASS protected identities and full physical board population')
           PY
       - name: Exact monolithic parity, independent BR, atomic restart and resource stops
-        run: python -B -m unittest tests.test_joint_stream tests.test_joint_stream_study tests.test_joint_stream_export tests.test_joint_updates tests.test_joint_update_report tests.test_joint_history tests.test_joint_alternating -v
+        run: python -B -m unittest tests.test_joint_stream tests.test_joint_stream_study tests.test_joint_stream_export tests.test_joint_updates tests.test_joint_update_report tests.test_joint_history tests.test_joint_alternating tests.test_joint_realization -v
       - name: Verify approved telemetry-only compatibility transition
         run: PYTHONPATH=. python -B docs/qa/joint-stream-20261108/migrate_timing.py --verify-source-only
       - name: Full-population results qualification remains explicit
