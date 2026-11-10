@@ -2,7 +2,7 @@ import argparse,hashlib,json,math,os,time
 from pathlib import Path
 from gto.abstract import joint_vector as v,joint_stream as s,joint_stream_cache as c,joint_alternating as alt,fullsupport as fs,model
 FIELDS=('grad','avg','leaf','metrics','action_num','action_den')
-def run(root):
+def run(root,cpu_limit=900,wall_limit=1500):
  root=Path(root);root.mkdir(parents=True,exist_ok=True);rows=c.population();store=s.Store('/workspace/joint-stream-run/frozen.sqlite',rows);parent=alt.numeric_digest(store.db)
  identity=fs.digest({'sources':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in [Path(v.__file__),Path(v.__file__).with_suffix('.cc'),Path(s.__file__),Path(s.__file__).with_suffix('.cc')]},'producer':c.identity(),'population':rows,'parent_numeric_digest':parent})
  path=root/'checkpoint.json';P=store.pre;L=2*len(model.tree())*169
@@ -12,7 +12,7 @@ def run(root):
  def save():
   nonlocal lastcpu,lastwall
   nowcpu=time.process_time();nowwall=time.monotonic();state['cpu']+=nowcpu-lastcpu;state['wall']+=nowwall-lastwall;lastcpu=nowcpu;lastwall=nowwall;state['totals']={k:fs.pack(x) for k,x in totals.items()};tmp=path.with_suffix('.tmp');tmp.write_text(json.dumps(state,sort_keys=True));os.replace(tmp,path)
- while state['cursor']<len(rows) and state['cpu']+time.process_time()-lastcpu<900 and state['wall']+time.monotonic()-lastwall<1500:
+ while state['cursor']<len(rows) and state['cpu']+time.process_time()-lastcpu<cpu_limit and state['wall']+time.monotonic()-lastwall<wall_limit:
   i=state['cursor'];row=rows[i];obj,data=c.read('/workspace/joint-stream-cache',row);reg,avg=store.state(i,len(obj['codes']));out={}
   for name,lib in [('original',old),('vector',new)]:
    start=time.process_time();out[name]=s.block(lib,obj,data,reg,avg,True);state['backend_cpu'][name]+=time.process_time()-start
@@ -34,4 +34,4 @@ def run(root):
   assert abs(metrics['vector']['root_nc']-.9321071527220774)<1e-8 and result['max_action_ev_difference']<1e-8
  (root/'result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result),flush=True)
 if __name__=='__main__':
- p=argparse.ArgumentParser();p.add_argument('--root',type=Path,required=True);a=p.parse_args();run(a.root)
+ p=argparse.ArgumentParser();p.add_argument('--root',type=Path,required=True);p.add_argument('--completion',action='store_true');a=p.parse_args();run(a.root,1200 if a.completion else 900,1800 if a.completion else 1500)

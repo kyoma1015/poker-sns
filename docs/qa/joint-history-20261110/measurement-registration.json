@@ -1,0 +1,10 @@
+{
+  "utc": "2026-11-10T14:33:21Z",
+  "protocol_sha256": "10ed52c9ec75543461b62a755decefa73f38a12c318558ba0cc24841ece78327",
+  "original_partial_hashes": {
+    "epoch5": "eab5913df307c1683aff427341d71b18d564e9ded6b9ad53b0eb9dfa8c5e1099",
+    "mixture": "0686b992619c173d001efb76f669c23674766a059956f21cffab5b05a1f29370",
+    "vector": "ac2115651fec48252c24a04ed8392df8a4da5d66766a6257573b41f734ba133f"
+  },
+  "additional_training": 0
+}

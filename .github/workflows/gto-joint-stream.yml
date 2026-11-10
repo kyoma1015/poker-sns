@@ -114,3 +114,31 @@ jobs:
           assert actual['full_population_gate_pass']
           print('PASS tiny history study replay,all64pureBR certificate;not fullHU50GTO')
           PYCODE
+
+      - name: Guard full-population history and exact backend evidence
+        run: |
+          python -B - <<'PYCODE'
+          import base64,gzip,hashlib,json
+          from pathlib import Path
+          from gto.abstract.joint_update_report import checked,improves
+          from gto.abstract.joint_stream_export import export
+          root=Path('docs/qa/joint-history-20261110');path=root/'results.json'
+          if not path.exists():
+           print('Full population history comparison PENDING;no population quality claim')
+          else:
+           r=json.loads(path.read_text());assert r['formal_acceptance']==[0,12] and r['normal_GTO_added']==0 and r['UI_added']==0
+           best={'name':'immutable_frozen','nashconv_bb':r['baseline']['nashconv_bb']}
+           for name,point in r['points'].items():
+            raw=(root/(name+'.json')).read_bytes();x=json.loads(raw);actual=checked(x)
+            assert hashlib.sha256(raw).hexdigest()==point['source_sha256']
+            for key,value in actual.items():assert point[key]==value,(name,key)
+            packet=json.loads(gzip.decompress(base64.b64decode((root/(name+'-research-ranges.json.gz.b64')).read_bytes())))
+            assert packet==export(x) and packet['normal_gto_eligible'] is False
+            if improves(point['nashconv_bb'],best['nashconv_bb']):best={'name':name,'nashconv_bb':point['nashconv_bb']}
+           assert best==r['selected_same_game_profile']
+           v=json.loads((root/'vector-population-result.json').read_text());assert v['full_population_pass'] and v['orbits']==1755 and v['physical_coverage']==1
+           assert max(v['max_abs_errors'].values())<1e-8 and v['max_action_ev_difference']<1e-8
+           assert abs(v['root_metrics']['vector']['root_nc']-r['baseline']['nashconv_bb'])<1e-8
+           for file,h in json.loads((root/'vector-sample-benchmark.json').read_text())['source_sha256'].items():assert hashlib.sha256(Path(file).read_bytes()).hexdigest()==h
+           print('PASS complete numeric artifacts,research isolation,protected baseline selection;shortCI doesNOT replay all1755kernels')
+          PYCODE

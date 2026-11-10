@@ -1,0 +1,11 @@
+{
+  "archive": "/workspace/joint-updates-recovery-20261110.zip",
+  "sha256": "8a407ddf573c4e6d0a39f1a7cf3b95cfd9e6ad8ed23f41798b6637c0214d8f65",
+  "bytes": 3722772758,
+  "verified_entries": 1832,
+  "actual_learned_DBs": 3,
+  "actual_frozen_input_DBs": 1,
+  "actual_cache_files": 1755,
+  "seconds": 47.668818771999895,
+  "external_backup": false
+}

@@ -27,3 +27,15 @@ NewDB /workspace/joint-alternating-run/alternating.sqlite. Completed old3trials
 notrerun. Parent is actualCFR+3,not nonexistentfrozenregret. New full resultsPENDING.
 Formal0/12,normal0,UI0. Official20stacks/sizes/externalreference stillmissing;
 MTT/ring/2–9/position/ante/rake scope and modelomissions remain unchanged.
+
+## Completed population outcomes
+All1755/22100:alternating4NC4.522014844830,5NC2.934646009312;fixed25%mix
+NC0.956863011290. Allworse thanimmutablefrozen.932107152722;noneadopted/.1FAIL.
+Originalbudgets stoppedpartial;registered nolearning suffixmeasurement completed
+raw5/mix/fullvector qualification without resetting counters;allpartials retained.
+Newvectorbackend original723.723371CPU/vector190.408290CPU=3.800903x on all1755
+frozenboards,maxanyoutput1.968925e-12BB/actionEV9.237056e-14BB. RootNC unchanged.
+It wasNOT switched into registered training. New normal0/UI0/formal0/12 unchanged.
+Newstudy artifacts/results and fullrecoveryextension need finalcommit/push/CI.
+InitialZIP hashabove is old9bf snapshot;currentfinal hash must come from updated
+receipt/PR afterappend. Final8c/dd/7c sourcecommits published;finaldata pending.
