@@ -5,6 +5,11 @@ on:
     paths:
       - 'gto/abstract/joint_stream*'
       - 'gto/abstract/joint_update*'
+      - 'gto/abstract/joint_history.py'
+      - 'gto/abstract/joint_alternating.py'
+      - 'tests/test_joint_history.py'
+      - 'tests/test_joint_alternating.py'
+      - 'docs/qa/joint-history-20261110/**'
       - 'tests/test_joint_updates.py'
       - 'tests/test_joint_update_report.py'
       - 'docs/qa/joint-updates-20261108/**'
@@ -39,7 +44,7 @@ jobs:
           print('PASS protected identities and full physical board population')
           PY
       - name: Exact monolithic parity, independent BR, atomic restart and resource stops
-        run: python -B -m unittest tests.test_joint_stream tests.test_joint_stream_study tests.test_joint_stream_export tests.test_joint_updates tests.test_joint_update_report -v
+        run: python -B -m unittest tests.test_joint_stream tests.test_joint_stream_study tests.test_joint_stream_export tests.test_joint_updates tests.test_joint_update_report tests.test_joint_history tests.test_joint_alternating -v
       - name: Verify approved telemetry-only compatibility transition
         run: PYTHONPATH=. python -B docs/qa/joint-stream-20261108/migrate_timing.py --verify-source-only
       - name: Full-population results qualification remains explicit
@@ -90,4 +95,18 @@ jobs:
              for key,value in verified.items():assert point[key]==value,(method,key)
              assert point['improves_frozen']==improves(point['nashconv_bb'],result['frozen_baseline']['nashconv_bb'])
            print('PASS update report/identity/numeric packet hashes/research isolation; full numerical population replay NOT performed')
+          PYCODE
+
+      - name: Replay finite history study with independently checked LP certificate
+        run: |
+          python -B - <<'PYCODE'
+          import json
+          from pathlib import Path
+          from gto.abstract.joint_history import study
+          expected=json.loads(Path('docs/qa/joint-history-20261110/small-results.json').read_text())
+          actual=study(references=[g['reference'] for g in expected['games']])
+          from gto.abstract.independent_verify import compare
+          compare(actual,expected)
+          assert actual['full_population_gate_pass']
+          print('PASS tiny history study replay,all64pureBR certificate;not fullHU50GTO')
           PYCODE
