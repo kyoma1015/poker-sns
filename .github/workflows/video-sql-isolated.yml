@@ -17,7 +17,7 @@ permissions:
 jobs:
   video-sql-isolated:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -29,15 +29,14 @@ jobs:
           python3 -m unittest tests.video.test_startup_diagnostic -v
       - name: Isolated PostgreSQL video schema and RLS
         run: bash tests/video/run_isolated.sh
-      - name: Install pinned ffmpeg and ffprobe for isolated media validation
-        timeout-minutes: 4
+      - name: Install FFmpeg and ffprobe for isolated media validation
+        timeout-minutes: 18
         run: |
           set -euo pipefail
-          VIDEO_CI_FFMPEG_FIXTURES=true node scripts/bundle-ffprobe.mjs
-          test -x api/bin/ffmpeg
-          test -x api/bin/ffprobe
-          api/bin/ffprobe -version
-          echo "$PWD/api/bin" >> "$GITHUB_PATH"
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ffmpeg
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
       - name: Trusted finalization core unit tests
         run: python3 -m unittest tests.video.test_finalize_core -v
       - name: Authenticated finalize boundary unit tests
