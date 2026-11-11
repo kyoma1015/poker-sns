@@ -1,0 +1,36 @@
+name: Controller selective integration (isolated fixtures only)
+on:
+  pull_request:
+    paths:
+      - 'scripts/code_worker.py'
+      - 'scripts/continuation_recovery.py'
+      - 'scripts/pr_overlap.py'
+      - 'scripts/development_queue.py'
+      - 'tests/worker_acceptance/**'
+      - 'tests/automation/test_code_worker.py'
+      - 'tests/automation/test_development_queue.py'
+      - 'tests/automation/test_controller_integration.py'
+      - '.github/queues/development.json'
+      - '.github/workflows/controller-main-integration.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  isolated-controller:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Preserved protected acceptance (27)
+        run: python -B -m unittest discover -s tests/worker_acceptance -v
+      - name: Existing worker safety (22)
+        run: python -B tests/automation/test_code_worker.py
+      - name: Existing queue safety (15)
+        run: python -B tests/automation/test_development_queue.py
+      - name: Bounded lock timeout and process restart
+        run: python -B tests/automation/test_controller_integration.py
