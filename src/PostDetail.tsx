@@ -1,5 +1,6 @@
 import { pollDisplayResult } from './interactiveRequests'
 import { useEffect, useRef, useState } from 'react'
+import { createVerifiedNotification } from './createVerifiedNotification'
 import { useNavigate, useParams } from 'react-router-dom'
 import { supabase } from './supabase'
 import PostVideo from './PostVideo'
@@ -360,15 +361,7 @@ function PostDetail() {
       }
 
       if (post.user_id !== currentUserId) {
-        const { error: notificationError } =
-          await supabase
-            .from('notifications')
-            .insert({
-              user_id: post.user_id,
-              actor_id: currentUserId,
-              type: 'like',
-              post_id: post.id,
-            })
+        const notificationError = await createVerifiedNotification('like', post.id)
 
         /*
           23505 は、
@@ -468,7 +461,7 @@ function PostDetail() {
         uploadedUrls.push(bucket.getPublicUrl(path).data.publicUrl)
       }
 
-      const { error } = await supabase
+      const { data: savedComment, error } = await supabase
         .from('post_comments')
         .insert({
           post_id: post.id,
@@ -477,6 +470,8 @@ function PostDetail() {
           parent_comment_id: replyTarget ? (replyTarget.parent_comment_id || replyTarget.id) : null,
           image_urls: uploadedUrls,
         })
+        .select('id')
+        .single()
       if (error) throw new Error(`コメントできませんでした：${error.message}`)
       commentSaved = true
 
@@ -488,9 +483,7 @@ function PostDetail() {
       setMessage('')
 
       if (post.user_id !== currentUserId) {
-        const { error: notificationError } = await supabase
-          .from('notifications')
-          .insert({ user_id: post.user_id, actor_id: currentUserId, type: 'comment', post_id: post.id })
+        const notificationError = await createVerifiedNotification('comment', savedComment.id)
         if (notificationError) console.error('コメント通知作成エラー:', notificationError)
       }
       await loadPost(true)
