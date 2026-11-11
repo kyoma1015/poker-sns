@@ -1,0 +1,23 @@
+{
+  "epochs": [
+    5,
+    6,
+    7
+  ],
+  "evaluation_seconds_each": 900,
+  "formal_acceptance": [
+    0,
+    12
+  ],
+  "max_blocks": 10530,
+  "normal_GTO_added": 0,
+  "protocol_hash": "d7a03155b5bc476655cc000ef5ded7ae837720f26d9e2eda5bbf2f7a0d467c5d",
+  "seconds": 3600,
+  "source_hashes": {
+    "/workspace/poker-gto-value/docs/qa/joint-training-20261111/run_window.py": "7f8e5e6327e30e39f60ab59fca02e2c3fde91e09750905cda3318eb8e3e86bfc",
+    "/workspace/poker-gto-value/gto/abstract/joint_training.py": "2dfada8010e055b4cf4fbf732d654bd151afc996742e474779dc120cdbfb269c",
+    "/workspace/poker-gto-value/gto/abstract/joint_training_window.py": "f7e00d9419d7a9a783c089206ceedb75fc4fd8de497b882103abfc58c2775b13"
+  },
+  "storage_addendum_hash": "2580c4ef3fd847cc5a74d10924011989e5d78bd8a135e7ed06253b36c98c6591",
+  "utc": 1794377551.9517727
+}

@@ -51,7 +51,7 @@ jobs:
           print('PASS protected identities and full physical board population')
           PY
       - name: Exact monolithic parity, independent BR, atomic restart and resource stops
-        run: python -B -m unittest tests.test_joint_stream tests.test_joint_stream_study tests.test_joint_stream_export tests.test_joint_updates tests.test_joint_update_report tests.test_joint_history tests.test_joint_alternating tests.test_joint_realization tests.test_joint_vector tests.test_joint_training tests.test_joint_training_study tests.test_joint_training_report tests.test_joint_training_window -v
+        run: python -B -m unittest tests.test_joint_stream tests.test_joint_stream_study tests.test_joint_stream_export tests.test_joint_updates tests.test_joint_update_report tests.test_joint_history tests.test_joint_alternating tests.test_joint_realization tests.test_joint_vector tests.test_joint_training tests.test_joint_training_study tests.test_joint_training_report tests.test_joint_training_window tests.test_joint_training_evidence -v
       - name: Verify approved telemetry-only compatibility transition
         run: PYTHONPATH=. python -B docs/qa/joint-stream-20261108/migrate_timing.py --verify-source-only
       - name: Replay registered averaging study without promoting research data
@@ -66,7 +66,7 @@ jobs:
           assert expected['normal_GTO_added']==0 and expected['formal_acceptance']==[0,12]
           print('PASS tiny fixed averaging study replay;not whole-population or externalGTO evidence')
           PY
-      - name: Guard actual full-epoch training evidence and resource-blocked extension
+      - name: Guard actual full-epoch training evidence and initial resource refusal
         run: |
           python -B - <<'PY'
           import hashlib,json
@@ -83,6 +83,43 @@ jobs:
           assert gate['available_bytes']<gate['required_before_start_bytes']
           assert expected['adopted_strategies']==0 and expected['formal_acceptance']==[0,12]
           print('PASS actual training evidence hashes/research guards;no full1755replay or externalGTO claim')
+          PY
+      - name: Guard registered complete delayed-average outcomes and unsupported rows
+        run: |
+          python -B - <<'PY'
+          import base64,gzip,hashlib,json,math
+          from pathlib import Path
+          from gto.abstract import fullsupport as fs
+          root=Path('docs/qa/joint-training-20261111');load=lambda n:json.loads((root/n).read_text())
+          summary=load('window-summary.json');result=load('window-result.json');points=load('window-training-points.json')
+          assert result['status']=='COMPLETE' and result['normal_GTO_added']==0 and result['formal_acceptance']==[0,12]
+          assert [p['meta']['epoch'] for p in points]==[5,6,7] and sum(p['blocks'] for p in points)==10530
+          assert all(p['meta']['cursor']==p['meta']['owner']==0 for p in points)
+          for path,h in load('window-registration.json')['source_hashes'].items():assert hashlib.sha256(Path(path).relative_to('/workspace/poker-gto-value').read_bytes()).hexdigest()==h
+          for name,h in summary['evidence_sha256'].items():assert hashlib.sha256((root/name).read_bytes()).hexdigest()==h
+          for name in ('full7','delayed7'):
+           r=load('window-'+name+'.json');assert r['epoch']==7 and r['coverage']==1 and r['evaluated_orbits']==r['population_orbits']==1755
+           actual_frequency=fs.unpack(r['preflop_frequency'])
+           packet=json.loads(gzip.decompress(base64.b64decode((root/(name+'-research-ranges.json.gz.b64')).read_bytes())))
+           assert packet['normal_gto_eligible'] is False and packet['policy_checkpoint_digest']==r['state_digest']
+           for context in packet['ranges']:
+            assert len(context['hands'])==169
+            layout=next(row for row in r['preflop_layout'] if row['history']==context['history']);base=layout['base'];width=len(layout['actions'])
+            supported=0
+            for index,hand in enumerate(context['hands']):
+             p=hand['frequencies'];q=hand['action_ev_bb'];assert all(math.isfinite(x) for x in p+q) and abs(math.fsum(p)-1)<1e-10
+             start=base+index*width;assert p==actual_frequency[start:start+width] and q==r['preflop_action_ev_bb'][start:start+width]
+             assert abs(hand['model_ev_bb']-math.fsum(a*b for a,b in zip(p,q)))<1e-10
+             assert hand['average_mass']>=0 and hand['average_supported']==(hand['average_mass']>0)
+             supported+=hand['average_supported']
+             if not hand['average_supported']:assert hand['strategy_source']=='ZERO_AVERAGE_MASS_UNIFORM_EXTENSION' and max(abs(x-1/len(p)) for x in p)<1e-10
+            assert supported==summary[name]['support'][context['context']]['supported']
+          candidates=result['candidates_nashconv_bb'];assert result['selected_same_game_profile']==min(candidates,key=candidates.get)
+          assert result['strictly_improves_frozen']==(min(candidates.values())<candidates['immutable_frozen']-1e-8)
+          bound=(28*candidates['full7']-10*load('vector-evaluation.json')['restricted_nashconv_interval_bb'][1])/18
+          assert candidates['delayed7']+1e-8>=bound
+          assert load('window-placement.json')['pass'] and load('window-snapshot-validation.json')['matches_measured_original_vector4']
+          print('PASS failed candidates retained,actual169support disclosed,model-only averaging identity;no fullpopulation replay')
           PY
       - name: Full-population results qualification remains explicit
         run: |

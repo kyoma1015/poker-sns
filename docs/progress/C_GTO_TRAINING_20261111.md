@@ -79,3 +79,43 @@ budgets,source/snapshot/cutoff hashes under /workspace/joint-window-run/,live lo
 /workspace/joint-window-run.log. Runner refuses blindrelaunch ifregistrationexists.
 No automaticresume. Original source4copy quickcheck/hashPASS before anyextraepoch.
 Atlastcheck d0dd15f newCI4SUCCESS/2running; finalCI countsUNKNOWN until logsread.
+
+## Completed registered extension and final handoff
+
+Currentpublished0ca2b6f protocolHEAD new6/6SUCCESS with logs confirming843test
+executions(Python815+Node28),27browserchecks. These are not futurefinalHEAD CI.
+Routine push and PR120body PATCH command prefixes are now narrowly approved;
+normalpush and normalREST bodyupdate worked. GET confirms latestmeasuredresults
+and resumeinstructions in PR,Drafttrue/unmerged. No auth/SSO changes.
+
+Actual extraepochs5/6/7 completed10530updates in1901.939793CPU/1917.762253training
+wallseconds,under3600registeredbudget. Both finaloriginalBR passes full1755/22100:
+full7NC3.113677782658094,SBgain2.038932150810659,BBgain1.074745631847435;
+delayed7NC4.889039960464410,SBgain3.696431402981270,BBgain1.192608557483140.
+PolicySB_EV-.109300473345550/-.383466170258237BB. Bothworse thanfrozen.932107153,
+noadoption/0.1FAIL. Full7 also+.179031773BB versusprioractual5=2.934646009.
+No candidate/period retuning after results. Tinyteacher128 gate failed to transfer
+to earlypopulationhistory,not proof that moreiterations alone will fixquality.
+
+Source-bound research exporter generated1352rawrows/4056modelactionEVcells. Positive
+average support full676/676,delayed574/676(vs3bet168/169,vs4bet68/169). All102delayed
+zero-mass rows explicitly marked uniformextensions,not learnedconditionalGTO.
+Actualsource4snapshot logicalhash matches measuredoriginal4; bothfilesystems
+endedabove2GiBreserve. ParentDB bytehash and original5GBZIP remain unchanged.
+Localfinal60testsPASS17.443s,build/lintPASS; data/identityCIsteps locallyexecutedPASS.
+Newkernel checkpoint files/logic/classproof allpresent; originalengine/UI untouched.
+
+Formal0/12,ordinary0,newUI0,externalUNPERFORMED/realgameapproxUNKNOWN. Nextfulltrial
+with samepreservation needs3286052864workspacebytes;free2234490880,deficit1051561984.
+Onlyreconstructablecutoff is in/tmp; actualsource4copy and current7Q/S remain on
+workspace. Do not remove those to hide spacefailure or reset an experimentbudget.
+Allfiniteworkerscompleted; no auto-resume/daemon/independentrestart. Finaldata
+commit/push/CI and finalPRbody/receipt are the remaining publicationsteps now.
+
+Shortest next scientific task: an actuallegalpureBR policy extractor,verified
+against existing independentBR value,then smallmatchedearly-history restricted-
+strategy/doubleoracle comparison before another registeredwholepopulationtrial.
+No guarantee that this alternative converges faster. Formal20stack/fullsize
+source,MTT/ring/2–9/position/ante/rake datasets and independentrealgamecalibration
+still required before normalUIadmission. ReleasehoursUNKNOWN; no ownerdecision
+requested for routinecode. No main/prodDB/Storage/Vercel/SSO/fees/otherPR changes.

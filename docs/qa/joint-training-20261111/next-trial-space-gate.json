@@ -1,0 +1,8 @@
+{
+  "source_epoch": 7,
+  "workspace_free": 2234490880,
+  "snapshot_bytes": 1138569216,
+  "reserve_bytes": 2147483648,
+  "required_for_next_same_preservation_trial": 3286052864,
+  "pass": false
+}

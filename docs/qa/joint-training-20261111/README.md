@@ -36,7 +36,7 @@ Existing frozen0.932107BB is
 still adoptionbaseline; ordinaryGTO0/formal0/12/UI0. Small delayed-output averaging
 candidate passed bothtiny gates. Losslesscutoff/outputwindow API and independent
 monolithicBR tests retain actualR/S and reject source updates duringevaluation.
-Fullpopulation extension SPACE-BLOCKED before anyextraepoch:free3374813184bytes,
+Initial same-volume extension gate was SPACE-BLOCKED before anyextraepoch:free3374813184bytes,
 required3744333904 to retain exactvector4snapshot,all1755cutoffmasses and2GiB
 reserve. Deficit369520720bytes(352.402MiB). Overlays have only101/102freeSQLitepages,
 so VACUUM cannot recover thatspace. No originaldata deleted,guard relaxed or
@@ -52,3 +52,39 @@ sandbox proxy. Explicit approved escalation subsequently allowed normalFFpush
 45dce36→aae7e74. Final evidence commit and its CI tracked in progress/PR receipts.
 Never label old830CI as new-source verification. After completion, the experiment
 driver gained a fail-closed existing-registration guard; no numeric work repeated.
+
+## Registered delayed-output trial: completed, both fail adoption
+
+Initial same-volume space refusal was preserved. Existing independent/tmp enabled
+the pre-outcome storage addendum: exactsource4 snapshot stays onworkspace with
+the mutablelearner; only reconstructable cutoffmass goes to/tmp. Both2GiB guards
+retained. Allnew3epochs5/6/7 completed10530updates,then originalBR bothfull1755.
+No history reset,policy retuning,olddata deletion or extra charge.
+
+|Output|NashConv BB|SB BRgain|BB BRgain|SelfplaySB EV BB|
+|---|---:|---:|---:|---:|
+|Fullhistory7|3.113677782658094|2.038932150810659|1.074745631847435|-0.109300473345550|
+|Delayed5–7|4.889039960464410|3.696431402981270|1.192608557483140|-0.383466170258237|
+
+Bothworse thanimmutablefrozen.932107153,0.1BBFAIL,noadoption. Full7 is also worse
+thanprior5NC2.934646009 by.179031773BB. Smallteacher128 gate did NOT transfer to
+this early genuinepopulationhistory; this is a limitation,not evidence that
+moreepochs/strongerdelay will fixquality. Completednegativecomparisons retained.
+No causal claim that nonmonotonicity alone proves an implementation bug.
+
+Allmain4contexts169rows/2028actionEVcells peroutput,1352rows/4056EVcells total.
+Positiveactualaveragemass support full7=169/169 each; delayedRFI169,vsopen169,
+vs3bet168,vs4bet68. The102remaining delayedrows are explicitly ZERO_AVERAGE_MASS_
+UNIFORM_EXTENSION,not sold as learnedconditional169GTO recommendations. New
+evidence exporter binds sourcecheckpoint/frequencies/mass and rejects mismatch.
+Newresearch8contexts are artifactsonly; existingUI8ranges1352rows unchanged.
+
+AVERAGING_IDENTITY.md distinguishes policyEV from minimaxvalue bounds and checks
+realization-average convexity. ObserveddelayedNC4.88904 exceeds derivedlowerbound
+2.3312683; no newmodel,externalreference or acceptance criterion was introduced.
+Formal0/12,ordinaryregistration0,UInew0 remain unchanged. Next research priority:
+extract an actual legal pureBR policy from qualifiedvalueoracle,validate its payoff
+against independentBR,then a budgeted restrictedstrategy/doubleoracle comparison
+on matched early-history smallgames. Avoid merely repeating moreCFRepochs or
+using a teacher128 success as proof of teacher3 transfer. Richergame/calibration
+and formalregistry/reference evidence are still required before ordinaryrelease.
