@@ -1,0 +1,32 @@
+name: D main-based persona audit reuse
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/audit-player-type.mjs'
+      - 'src/playerType*.ts'
+      - 'tests/player-type*.test.mjs'
+      - 'tests/fixtures/player-type-v2.json'
+      - '.github/workflows/d-persona-audit.yml'
+permissions:
+  contents: read
+concurrency:
+  group: d-persona-audit-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node tests/player-type.test.mjs
+      - run: node tests/player-type-audit.test.mjs
+      - run: node scripts/audit-player-type.mjs
+      - run: npm ci --cache "$RUNNER_TEMP/npm-cache"
+      - run: npm run build
+      - run: npm run lint

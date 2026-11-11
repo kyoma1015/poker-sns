@@ -1,0 +1,30 @@
+{
+  "scripts/audit-player-type.mjs": {
+    "source_commit": "65901ec358ac75ec7aaea250800b7acfdbb7b0a3",
+    "sha256": "df4d502b4ecf47c37217f456f8e7f5dacb609d3ed05ac34d57e20ae7e9d7ffd4"
+  },
+  "src/playerTypeAnimals.ts": {
+    "source_commit": "65901ec358ac75ec7aaea250800b7acfdbb7b0a3",
+    "sha256": "3adac4cde2377ccc4d80e1bc700a37a4d9e58c5249c36db8f60b85582be6d374"
+  },
+  "src/playerTypeQuestions.ts": {
+    "source_commit": "65901ec358ac75ec7aaea250800b7acfdbb7b0a3",
+    "sha256": "9d7b929682d2a4a03874f95a47df82197e0395a0c0d33ce3bc9579a0364b37b7"
+  },
+  "src/playerTypePresentation.ts": {
+    "source_commit": "65901ec358ac75ec7aaea250800b7acfdbb7b0a3",
+    "sha256": "d7b3030c78aa0bc2b6725115b65b7d53e35035c79c9521d12ce5bd37226dc5c4"
+  },
+  "tests/player-type.test.mjs": {
+    "source_commit": "65901ec358ac75ec7aaea250800b7acfdbb7b0a3",
+    "sha256": "03d5bff766b176a45bf0897ffdc5107fa2da057ee36633ed724bc2f07d14777e"
+  },
+  "tests/player-type-audit.test.mjs": {
+    "source_commit": "65901ec358ac75ec7aaea250800b7acfdbb7b0a3",
+    "sha256": "4ce555bb1a92bf356ff796a786f651a32c464292eacca4b3b1daa29282911c42"
+  },
+  "tests/fixtures/player-type-v2.json": {
+    "source_commit": "65901ec358ac75ec7aaea250800b7acfdbb7b0a3",
+    "sha256": "ef15e04c485f090f72707656a9127c54a855c98e2453771ad86c68068cfe4d2c"
+  }
+}
