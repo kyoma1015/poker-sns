@@ -34,3 +34,33 @@ Formal0/12,ordinary0,external comparisonUNPERFORMED,realgameapproxUNKNOWN. Origi
 Next:collect completebenchmark/array-policyparity/independentBR or budgetpartial;
 commit actual results; normalFF push/newCI when network available. No AutoResume,
 daemon, main/prodDB/Storage/Vercel/SSO/fees/otherPR changes.
+
+## Final witnessed full-population integration
+
+Actualsame-parent/full1755/22100/9branches oneadditionalepoch4 bothcomplete3510
+updates. Legacy1350.745334CPU/vector628.279293CPU seconds=2.149912x;wall1364.993498/
+634.265770=2.152084x. Python/cache/SQL/compression included;compile/initialvalidation,
+fullparity and independentBR excluded. Cumulativeprocesspeak618.754MiB,notisolated
+vectorpeak. Allregret/average differences<=1.144917494e-15,allcurrent/averagepolicy
+differences<=6.257001584e-10 across1755. Same-backend restart byteexact; different
+backendhashes recorded rather than claimedidentical.
+
+OriginalindependentBR bothfull1755:NC4.5220148448303314/4.522014844830331;
+SBgain2.457878694300621/2.4578786943006214,BBgain2.0641361505297104/
+2.0641361505297087. Prior sameepoch4 reproduced,NOT better thanfrozen.932107153.
+Prior epoch5 2.934646 is a DIFFERENT horizon,not a same-budget comparison.
+No adoptedstrategy/ordinaryUI/formalchange. Localfull59testsPASS16.562seconds,
+build/lintPASS,protectedmanifests and parentDBbytehash match oldverifiedZIP.
+
+Delayed-outputwindow capture/evaluation implemented;independentmonolithicBR,
+historyunchanged,earliercutoff/nooverwrite/sourceadvance rejection testsPASS.
+Registered extraepochs5/6/7 NOT STARTED: exactsource4copy+cutoff+2GiBreserve needs
+3744333904bytes,free3374813184;deficit369520720bytes. Do not deletecheckpoints or
+relaxregisteredguard. No final7 numbers exist. This legitimate resourceBLOCKER
+does not undo completed integration/parity/BR work. Currentvector/legacyoverlays
+remain coherentepoch4 withfullindependentBR. Newoverlays are NOT inside old5GBZIP.
+
+Normalpush45dce36→aae7e74 succeeded through explicit approved escalation after
+defaultsocketdenial and stalledadditionalnetwork path. Its new6CI started;final
+numeric/windowevidence commit to follow. Use matching finalHEAD CIreceipt only,
+never relabel old830runs. PRbody update is stillpending until actualPATCH+GET.

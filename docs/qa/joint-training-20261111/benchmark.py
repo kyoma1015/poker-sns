@@ -7,6 +7,7 @@ ROOT=Path('/workspace/joint-training-run');QA=Path('docs/qa/joint-training-20261
 def save(p,x):p.write_text(json.dumps(x,indent=2,sort_keys=True)+'\n')
 def main():
  ROOT.mkdir(exist_ok=True);rows=cache.population();parent='/workspace/joint-updates-run/cfr_plus.sqlite';results={}
+ if (ROOT/'registration.json').exists():raise RuntimeError('registered run already exists; inspect checkpoints and consumed budgets instead of rerunning')
  save(ROOT/'registration.json',{'utc':time.time(),'protocol_sha256':hashlib.sha256((QA/'PROTOCOL.md').read_bytes()).hexdigest(),'source_sha256':hashlib.sha256(Path(t.__file__).read_bytes()).hexdigest(),'backends':['legacy','vector'],'epochs':1,'max_blocks':3510,'seconds_each':1800,'evaluation_seconds_each':900,'parent':parent,'formal_acceptance':[0,12]})
  for backend in ('legacy','vector'):
   lib=t.build(ROOT/(backend+'-native'),backend);store=t.Store(ROOT/(backend+'.sqlite'),rows,parent,backend);initial=store.logical_digest()

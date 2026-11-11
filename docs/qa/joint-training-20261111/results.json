@@ -1,0 +1,37 @@
+{
+  "adopted_strategies": 0,
+  "array_parity_pass": true,
+  "baseline_frozen_nashconv_bb": 0.9321071527220774,
+  "cpu_speedup": 2.149912226650171,
+  "evaluations": {
+    "legacy": {
+      "bb_br_gain_bb": 2.0641361505297104,
+      "nashconv_interval_bb": [
+        4.5220148448303314,
+        4.5220148448303314
+      ],
+      "sb_br_gain_bb": 2.457878694300621
+    },
+    "vector": {
+      "bb_br_gain_bb": 2.0641361505297087,
+      "nashconv_interval_bb": [
+        4.522014844830331,
+        4.522014844830331
+      ],
+      "sb_br_gain_bb": 2.4578786943006214
+    }
+  },
+  "evidence_sha256": {
+    "legacy-evaluation.json": "cf412805cac5462748ad6b622856b6ab67bf46ed6e5b3cd899520ccae62e739d",
+    "vector-evaluation.json": "9178f98a2247d4e88a423a04bd3fa292948559ec81f7aebb9f97b5cf98178f20"
+  },
+  "external_GTO": "NOT PERFORMED",
+  "formal_acceptance": [
+    0,
+    12
+  ],
+  "normal_GTO_added": 0,
+  "policy_parity_pass": true,
+  "previous_same_epoch_nashconv_bb": 4.5220148448303314,
+  "real_game_error": "UNKNOWN"
+}

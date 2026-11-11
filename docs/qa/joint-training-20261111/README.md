@@ -24,17 +24,31 @@ not misrepresented as bit-identical. Same-backend atomicrestart is byte-exact in
 independent tests. Initial logicalhash equals actualparenthash for bothbackends.
 Runtime/compiler and actualnative binary hashes are in runtime.json.
 
-Independent ORIGINAL world-BR evaluation of bothnew checkpoints IN PROGRESS.
-Do not infer restrictedNashConv from array parity. Existing frozen0.932107BB is
+Independent ORIGINAL world-BR evaluation of bothnew checkpoints COMPLETE1755/1755.
+LegacyNC4.5220148448303314/vectorNC4.522014844830331BB. LegacySB/BBBR gains
+2.457878694300621/2.0641361505297104BB;vector2.4578786943006214/
+2.0641361505297087BB. SB EV.13694469211204544/.13694469211204563BB.
+IndependentBRwall795.060144/807.717229seconds,separate from learning throughput.
+RestrictedNashConv was independently measured,not inferred from array parity.
+Same-epoch original priorlegacy4NC4.5220148448303314 is reproduced; previous
+epoch5NC2.934646009312 is a DIFFERENT training horizon,not a same-budget baseline.
+Existing frozen0.932107BB is
 still adoptionbaseline; ordinaryGTO0/formal0/12/UI0. Small delayed-output averaging
-candidate passed bothtiny gates but has NOT been deployed as a new fullpopulation
-quality trial. Missing official20stacks/fullsizes/external comparison and model
+candidate passed bothtiny gates. Losslesscutoff/outputwindow API and independent
+monolithicBR tests retain actualR/S and reject source updates duringevaluation.
+Fullpopulation extension SPACE-BLOCKED before anyextraepoch:free3374813184bytes,
+required3744333904 to retain exactvector4snapshot,all1755cutoffmasses and2GiB
+reserve. Deficit369520720bytes(352.402MiB). Overlays have only101/102freeSQLitepages,
+so VACUUM cannot recover thatspace. No originaldata deleted,guard relaxed or
+fictitious final7 result produced. Missing official20stacks/fullsizes/external comparison and model
 omissions remain unchanged. RealNLHE approximation errorUNKNOWN.
 
 Evidence: PROTOCOL.md,registration.json,legacy-training.json,vector-training.json,
 parity.json,runtime.json,small-results.json. NewoverlayDBs local under
 /workspace/joint-training-run; original5GB recoveryZIP unchanged and doesNOT
 already include these newoverlays. Existing archive SHA reverified. Network
-privileged command stalled and ordinaryGitpush cannot connect to sandbox proxy;
-publication/CI remains pending until actual verifiedpush. Never label old830CI
-as new-source verification.
+additional-network command stalled and ordinaryGitpush could not connect to the
+sandbox proxy. Explicit approved escalation subsequently allowed normalFFpush
+45dce36→aae7e74. Final evidence commit and its CI tracked in progress/PR receipts.
+Never label old830CI as new-source verification. After completion, the experiment
+driver gained a fail-closed existing-registration guard; no numeric work repeated.

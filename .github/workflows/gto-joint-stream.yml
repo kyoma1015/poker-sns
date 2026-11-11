@@ -51,7 +51,7 @@ jobs:
           print('PASS protected identities and full physical board population')
           PY
       - name: Exact monolithic parity, independent BR, atomic restart and resource stops
-        run: python -B -m unittest tests.test_joint_stream tests.test_joint_stream_study tests.test_joint_stream_export tests.test_joint_updates tests.test_joint_update_report tests.test_joint_history tests.test_joint_alternating tests.test_joint_realization tests.test_joint_vector tests.test_joint_training tests.test_joint_training_study tests.test_joint_training_report -v
+        run: python -B -m unittest tests.test_joint_stream tests.test_joint_stream_study tests.test_joint_stream_export tests.test_joint_updates tests.test_joint_update_report tests.test_joint_history tests.test_joint_alternating tests.test_joint_realization tests.test_joint_vector tests.test_joint_training tests.test_joint_training_study tests.test_joint_training_report tests.test_joint_training_window -v
       - name: Verify approved telemetry-only compatibility transition
         run: PYTHONPATH=. python -B docs/qa/joint-stream-20261108/migrate_timing.py --verify-source-only
       - name: Replay registered averaging study without promoting research data
@@ -65,6 +65,24 @@ jobs:
           compare(run(),expected)
           assert expected['normal_GTO_added']==0 and expected['formal_acceptance']==[0,12]
           print('PASS tiny fixed averaging study replay;not whole-population or externalGTO evidence')
+          PY
+      - name: Guard actual full-epoch training evidence and resource-blocked extension
+        run: |
+          python -B - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          from gto.abstract.joint_training_report import compare
+          from gto.abstract.independent_verify import compare as check
+          root=Path('docs/qa/joint-training-20261111');load=lambda n:json.loads((root/n).read_text())
+          expected=load('results.json')
+          actual=compare(load('legacy-training.json'),load('vector-training.json'),load('parity.json'),{k:load(k+'-evaluation.json') for k in ('legacy','vector')})
+          check(actual,{k:expected[k] for k in actual})
+          for name,h in expected['evidence_sha256'].items():assert hashlib.sha256((root/name).read_bytes()).hexdigest()==h
+          assert hashlib.sha256(Path('gto/abstract/joint_training.py').read_bytes()).hexdigest()==load('registration.json')['source_sha256']
+          gate=load('window-space-gate.json');assert not gate['space_gate_pass'] and not gate['additional_training_started']
+          assert gate['available_bytes']<gate['required_before_start_bytes']
+          assert expected['adopted_strategies']==0 and expected['formal_acceptance']==[0,12]
+          print('PASS actual training evidence hashes/research guards;no full1755replay or externalGTO claim')
           PY
       - name: Full-population results qualification remains explicit
         run: |
