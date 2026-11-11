@@ -143,3 +143,26 @@ test('production reservation cannot be enabled by a release flag and HMAC keys',
     }
   }
 })
+
+// Exercise the real TypeScript API entrypoint, not just its source text.
+// An incomplete cloud-test opt-in must fail before any network or adapter I/O.
+test('real finalize entrypoint rejects incomplete cloud-test opt-in before I/O', async () => {
+  const names = ['VIDEO_CLOUD_TEST_ENABLED','VIDEO_CLOUD_TEST_PROJECT_REF','VIDEO_CLOUD_TEST_VERCEL_PROJECT_ID','VERCEL_ENV']
+  const previous = Object.fromEntries(names.map(name => [name, process.env[name]]))
+  try {
+    process.env.VIDEO_CLOUD_TEST_ENABLED = 'true'
+    delete process.env.VIDEO_CLOUD_TEST_PROJECT_REF
+    delete process.env.VIDEO_CLOUD_TEST_VERCEL_PROJECT_ID
+    process.env.VERCEL_ENV = 'preview'
+    const res = response()
+    await createVideoFinalizeHandler(undefined, { isolatedLocalOnly: true })(request({ headers: { authorization: '' } }), res)
+    assert.equal(res.statusCode, 503)
+    assert.equal(res.headers['Cache-Control'], 'no-store, private')
+    assert.equal(res.headers['Vary'], 'Authorization')
+  } finally {
+    for (const name of names) {
+      if (previous[name] === undefined) delete process.env[name]
+      else process.env[name] = previous[name]
+    }
+  }
+})
