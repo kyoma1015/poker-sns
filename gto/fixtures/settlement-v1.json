@@ -1,0 +1,912 @@
+{
+  "schema": "pokerid-synthetic-settlement-v1",
+  "provenance": "Hand-derived synthetic candidate-rule examples, NOT recovered G11 baseline or approved house-rule profiles",
+  "base_rules": {
+    "bb": 10,
+    "bba": 0,
+    "ante_order": "ante_first",
+    "stack_basis": "before_ante",
+    "dead_eligibility": "all_live",
+    "rake_rate": "0",
+    "rake_cap": null,
+    "no_flop_no_drop": true,
+    "cap_scope": "whole_hand",
+    "rounding": "floor",
+    "rake_ante": true,
+    "collection": "terminal"
+  },
+  "cases": [
+    {
+      "id": "hu_fold_no_flop_no_drop",
+      "stacks": [
+        100,
+        100
+      ],
+      "actions": [
+        0
+      ],
+      "ranks": [
+        [
+          2
+        ],
+        [
+          1
+        ]
+      ],
+      "flop_seen": false,
+      "overrides": {
+        "rake_rate": "1/10"
+      },
+      "expected": {
+        "net": [
+          -5,
+          5
+        ],
+        "rake": 0,
+        "refund": [
+          0,
+          5
+        ],
+        "payout": [
+          0,
+          10
+        ],
+        "dead": [
+          0,
+          0
+        ],
+        "pot_amounts": [
+          10
+        ],
+        "pot_rakes": [
+          0
+        ]
+      }
+    },
+    {
+      "id": "hu_fold_drop_enabled",
+      "stacks": [
+        100,
+        100
+      ],
+      "actions": [
+        0
+      ],
+      "ranks": [
+        [
+          2
+        ],
+        [
+          1
+        ]
+      ],
+      "flop_seen": false,
+      "overrides": {
+        "rake_rate": "1/10",
+        "no_flop_no_drop": false
+      },
+      "expected": {
+        "net": [
+          -5,
+          4
+        ],
+        "rake": 1,
+        "refund": [
+          0,
+          5
+        ],
+        "payout": [
+          0,
+          9
+        ],
+        "dead": [
+          0,
+          0
+        ],
+        "pot_amounts": [
+          10
+        ],
+        "pot_rakes": [
+          1
+        ]
+      }
+    },
+    {
+      "id": "hu_showdown_no_rake",
+      "stacks": [
+        100,
+        100
+      ],
+      "actions": [],
+      "ranks": [
+        [
+          2
+        ],
+        [
+          1
+        ]
+      ],
+      "flop_seen": true,
+      "overrides": {},
+      "expected": {
+        "net": [
+          10,
+          -10
+        ],
+        "rake": 0,
+        "refund": [
+          0,
+          0
+        ],
+        "payout": [
+          20,
+          0
+        ],
+        "dead": [
+          0,
+          0
+        ],
+        "pot_amounts": [
+          20
+        ],
+        "pot_rakes": [
+          0
+        ]
+      }
+    },
+    {
+      "id": "short_bb_ante_first_dead_pool",
+      "stacks": [
+        100,
+        5
+      ],
+      "actions": [],
+      "ranks": [
+        [
+          2
+        ],
+        [
+          1
+        ]
+      ],
+      "flop_seen": true,
+      "overrides": {
+        "bba": 10
+      },
+      "expected": {
+        "net": [
+          5,
+          -5
+        ],
+        "rake": 0,
+        "refund": [
+          5,
+          0
+        ],
+        "payout": [
+          5,
+          0
+        ],
+        "dead": [
+          0,
+          5
+        ],
+        "pot_amounts": [
+          5
+        ],
+        "pot_rakes": [
+          0
+        ]
+      }
+    },
+    {
+      "id": "short_bb_blind_first",
+      "stacks": [
+        100,
+        5
+      ],
+      "actions": [],
+      "ranks": [
+        [
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "flop_seen": true,
+      "overrides": {
+        "bba": 10,
+        "ante_order": "bb_first"
+      },
+      "expected": {
+        "net": [
+          -5,
+          5
+        ],
+        "rake": 0,
+        "refund": [
+          0,
+          0
+        ],
+        "payout": [
+          0,
+          10
+        ],
+        "dead": [
+          0,
+          0
+        ],
+        "pot_amounts": [
+          10
+        ],
+        "pot_rakes": [
+          0
+        ]
+      }
+    },
+    {
+      "id": "side_pots_short_wins_main_medium_wins_side",
+      "stacks": [
+        20,
+        50,
+        100
+      ],
+      "actions": [
+        100,
+        1,
+        1
+      ],
+      "ranks": [
+        [
+          3
+        ],
+        [
+          2
+        ],
+        [
+          1
+        ]
+      ],
+      "flop_seen": true,
+      "overrides": {},
+      "expected": {
+        "net": [
+          40,
+          10,
+          -50
+        ],
+        "rake": 0,
+        "refund": [
+          0,
+          0,
+          50
+        ],
+        "payout": [
+          60,
+          60,
+          0
+        ],
+        "dead": [
+          0,
+          0,
+          0
+        ],
+        "pot_amounts": [
+          60,
+          60
+        ],
+        "pot_rakes": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "folded_best_rank_cannot_win",
+      "stacks": [
+        20,
+        50,
+        100
+      ],
+      "actions": [
+        100,
+        0,
+        1
+      ],
+      "ranks": [
+        [
+          3
+        ],
+        [
+          2
+        ],
+        [
+          1
+        ]
+      ],
+      "flop_seen": true,
+      "overrides": {},
+      "expected": {
+        "net": [
+          -5,
+          55,
+          -50
+        ],
+        "rake": 0,
+        "refund": [
+          0,
+          0,
+          50
+        ],
+        "payout": [
+          0,
+          105,
+          0
+        ],
+        "dead": [
+          0,
+          0,
+          0
+        ],
+        "pot_amounts": [
+          15,
+          90
+        ],
+        "pot_rakes": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "split_pot_odd_chip_seat_order",
+      "stacks": [
+        100,
+        100,
+        100
+      ],
+      "actions": [
+        1,
+        0,
+        1
+      ],
+      "ranks": [
+        [
+          3
+        ],
+        [
+          2
+        ],
+        [
+          2
+        ]
+      ],
+      "flop_seen": true,
+      "overrides": {},
+      "expected": {
+        "net": [
+          -5,
+          3,
+          2
+        ],
+        "rake": 0,
+        "refund": [
+          0,
+          0,
+          0
+        ],
+        "payout": [
+          0,
+          13,
+          12
+        ],
+        "dead": [
+          0,
+          0,
+          0
+        ],
+        "pot_amounts": [
+          15,
+          10
+        ],
+        "pot_rakes": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "uncalled_refund_not_raked",
+      "stacks": [
+        100,
+        20
+      ],
+      "actions": [
+        100,
+        1
+      ],
+      "ranks": [
+        [
+          2
+        ],
+        [
+          1
+        ]
+      ],
+      "flop_seen": true,
+      "overrides": {
+        "rake_rate": "1/10"
+      },
+      "expected": {
+        "net": [
+          16,
+          -20
+        ],
+        "rake": 4,
+        "refund": [
+          80,
+          0
+        ],
+        "payout": [
+          36,
+          0
+        ],
+        "dead": [
+          0,
+          0
+        ],
+        "pot_amounts": [
+          40
+        ],
+        "pot_rakes": [
+          4
+        ]
+      }
+    },
+    {
+      "id": "rake_includes_dead_ante",
+      "stacks": [
+        100,
+        100
+      ],
+      "actions": [],
+      "ranks": [
+        [
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "flop_seen": true,
+      "overrides": {
+        "rake_rate": "1/10",
+        "bba": 10
+      },
+      "expected": {
+        "net": [
+          -10,
+          7
+        ],
+        "rake": 3,
+        "refund": [
+          0,
+          0
+        ],
+        "payout": [
+          0,
+          27
+        ],
+        "dead": [
+          0,
+          10
+        ],
+        "pot_amounts": [
+          30
+        ],
+        "pot_rakes": [
+          3
+        ]
+      }
+    },
+    {
+      "id": "rake_excludes_dead_ante",
+      "stacks": [
+        100,
+        100
+      ],
+      "actions": [],
+      "ranks": [
+        [
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "flop_seen": true,
+      "overrides": {
+        "rake_rate": "1/10",
+        "bba": 10,
+        "rake_ante": false
+      },
+      "expected": {
+        "net": [
+          -10,
+          8
+        ],
+        "rake": 2,
+        "refund": [
+          0,
+          0
+        ],
+        "payout": [
+          0,
+          28
+        ],
+        "dead": [
+          0,
+          10
+        ],
+        "pot_amounts": [
+          30
+        ],
+        "pot_rakes": [
+          2
+        ]
+      }
+    },
+    {
+      "id": "after_ante_stack_basis",
+      "stacks": [
+        100,
+        100
+      ],
+      "actions": [],
+      "ranks": [
+        [
+          2
+        ],
+        [
+          1
+        ]
+      ],
+      "flop_seen": true,
+      "overrides": {
+        "bba": 10,
+        "stack_basis": "after_ante"
+      },
+      "expected": {
+        "net": [
+          20,
+          -20
+        ],
+        "rake": 0,
+        "refund": [
+          0,
+          0
+        ],
+        "payout": [
+          30,
+          0
+        ],
+        "dead": [
+          0,
+          10
+        ],
+        "initial": [
+          100,
+          110
+        ],
+        "pot_amounts": [
+          30
+        ],
+        "pot_rakes": [
+          0
+        ]
+      }
+    },
+    {
+      "id": "whole_hand_cap",
+      "stacks": [
+        1000,
+        2000,
+        3000
+      ],
+      "actions": [
+        3000,
+        1,
+        1
+      ],
+      "ranks": [
+        [
+          3
+        ],
+        [
+          2
+        ],
+        [
+          1
+        ]
+      ],
+      "flop_seen": true,
+      "overrides": {
+        "rake_rate": "1/10",
+        "rake_cap": 50
+      },
+      "expected": {
+        "net": [
+          1950,
+          0,
+          -2000
+        ],
+        "rake": 50,
+        "refund": [
+          0,
+          0,
+          1000
+        ],
+        "payout": [
+          2950,
+          2000,
+          0
+        ],
+        "dead": [
+          0,
+          0,
+          0
+        ],
+        "pot_amounts": [
+          3000,
+          2000
+        ],
+        "pot_rakes": [
+          50,
+          0
+        ]
+      }
+    },
+    {
+      "id": "per_pot_cap",
+      "stacks": [
+        1000,
+        2000,
+        3000
+      ],
+      "actions": [
+        3000,
+        1,
+        1
+      ],
+      "ranks": [
+        [
+          3
+        ],
+        [
+          2
+        ],
+        [
+          1
+        ]
+      ],
+      "flop_seen": true,
+      "overrides": {
+        "rake_rate": "1/10",
+        "rake_cap": 50,
+        "cap_scope": "per_pot"
+      },
+      "expected": {
+        "net": [
+          1950,
+          -50,
+          -2000
+        ],
+        "rake": 100,
+        "refund": [
+          0,
+          0,
+          1000
+        ],
+        "payout": [
+          2950,
+          1950,
+          0
+        ],
+        "dead": [
+          0,
+          0,
+          0
+        ],
+        "pot_amounts": [
+          3000,
+          2000
+        ],
+        "pot_rakes": [
+          50,
+          50
+        ]
+      }
+    },
+    {
+      "id": "rounding_floor",
+      "stacks": [
+        100,
+        100,
+        100
+      ],
+      "actions": [
+        1,
+        0,
+        1
+      ],
+      "ranks": [
+        [
+          3
+        ],
+        [
+          2
+        ],
+        [
+          1
+        ]
+      ],
+      "flop_seen": true,
+      "overrides": {
+        "rake_rate": "1/10",
+        "rounding": "floor"
+      },
+      "expected": {
+        "net": [
+          -5,
+          13,
+          -10
+        ],
+        "rake": 2,
+        "refund": [
+          0,
+          0,
+          0
+        ],
+        "payout": [
+          0,
+          23,
+          0
+        ],
+        "dead": [
+          0,
+          0,
+          0
+        ],
+        "pot_amounts": [
+          15,
+          10
+        ],
+        "pot_rakes": [
+          2,
+          0
+        ]
+      }
+    },
+    {
+      "id": "rounding_nearest",
+      "stacks": [
+        100,
+        100,
+        100
+      ],
+      "actions": [
+        1,
+        0,
+        1
+      ],
+      "ranks": [
+        [
+          3
+        ],
+        [
+          2
+        ],
+        [
+          1
+        ]
+      ],
+      "flop_seen": true,
+      "overrides": {
+        "rake_rate": "1/10",
+        "rounding": "nearest"
+      },
+      "expected": {
+        "net": [
+          -5,
+          12,
+          -10
+        ],
+        "rake": 3,
+        "refund": [
+          0,
+          0,
+          0
+        ],
+        "payout": [
+          0,
+          22,
+          0
+        ],
+        "dead": [
+          0,
+          0,
+          0
+        ],
+        "pot_amounts": [
+          15,
+          10
+        ],
+        "pot_rakes": [
+          3,
+          0
+        ]
+      }
+    },
+    {
+      "id": "rounding_ceil",
+      "stacks": [
+        100,
+        100,
+        100
+      ],
+      "actions": [
+        1,
+        0,
+        1
+      ],
+      "ranks": [
+        [
+          3
+        ],
+        [
+          2
+        ],
+        [
+          1
+        ]
+      ],
+      "flop_seen": true,
+      "overrides": {
+        "rake_rate": "1/10",
+        "rounding": "ceil"
+      },
+      "expected": {
+        "net": [
+          -5,
+          12,
+          -10
+        ],
+        "rake": 3,
+        "refund": [
+          0,
+          0,
+          0
+        ],
+        "payout": [
+          0,
+          22,
+          0
+        ],
+        "dead": [
+          0,
+          0,
+          0
+        ],
+        "pot_amounts": [
+          15,
+          10
+        ],
+        "pot_rakes": [
+          3,
+          0
+        ]
+      }
+    }
+  ]
+}

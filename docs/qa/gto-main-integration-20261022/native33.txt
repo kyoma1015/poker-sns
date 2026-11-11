@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "settlement_cases": 17,
+  "rank7_status": "PASS",
+  "rank7_cases": 16,
+  "all_native_compared": true,
+  "reference_payloads": {
+    "pokerid_rules.py": {
+      "bytes": 10318,
+      "sha256": "456225cf675a1b8ecf9ac7b16b7e3b6185900fe3dea75fe8f1687ad12354ea5a"
+    },
+    "g11_rules_embed.h": {
+      "bytes": 10159,
+      "sha256": "870b64c0253be86ef139d0c2437d202d9d4f10097e871dd8bde526402dd49353"
+    }
+  },
+  "dependency": {
+    "wheel_sha256": "237c41e29157b962835d356b370ededd57594a26d5894a795960f0047cb5caf5",
+    "headers": 36
+  },
+  "test_only_bridge": true,
+  "three_solver_rebuild": false,
+  "historical_baseline_used": false,
+  "strategy_convergence_proof": false
+}

@@ -1,0 +1,197 @@
+{
+  "base_main": "7da31f078624178dbddf8f1edf59eb8d0bf782b7",
+  "source_pr": 66,
+  "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+  "method": "selective exact committed bytes; no branch merge",
+  "files": [
+    {
+      "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+      "source_path": "gto/hand169.py",
+      "destination_path": "gto/hand169.py",
+      "bytes": 3713,
+      "sha256": "4963e87428d37a58139750b3b75fc0ce64de27f90844293663404c17d2fa645f",
+      "reason": "169-class/card and weighted-export regression closure",
+      "exact_bytes": true
+    },
+    {
+      "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+      "source_path": "gto/native/checkpoints.py",
+      "destination_path": "gto/native/checkpoints.py",
+      "bytes": 3685,
+      "sha256": "a3176dcbc8850216322fa2b62cd6fa08a9ac4a2292fad1dbefdec8bbd4b2fa18",
+      "reason": "read-only copied-checkpoint digest/header/budget boundary",
+      "exact_bytes": true
+    },
+    {
+      "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+      "source_path": "gto/native/settlement.py",
+      "destination_path": "gto/native/settlement.py",
+      "bytes": 10088,
+      "sha256": "e8e31465465b0645c3b2e7f9e49f23b1e37b0963853c20bbf840dc3c63cfdece",
+      "reason": "preserved reference/expected settlement/rank7 and exact chip validator",
+      "exact_bytes": true
+    },
+    {
+      "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+      "source_path": "gto/native/settlement_probe.cc",
+      "destination_path": "gto/native/settlement_probe.cc",
+      "bytes": 651,
+      "sha256": "dacdb27aaa86546204dfbc1feab71c6455ab702baf0a45a685b520f51c57e430",
+      "reason": "test-only unchanged embedded Ledger/rank7 bridge",
+      "exact_bytes": true
+    },
+    {
+      "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+      "source_path": "gto/fixtures/settlement-v1.json",
+      "destination_path": "gto/fixtures/settlement-v1.json",
+      "bytes": 13431,
+      "sha256": "4b2dddbe9d7a192a6fc0e0407c1edf78d6b838fa2e7c09732dcf29fef0beea49",
+      "reason": "17 hand-derived synthetic expected chip cases",
+      "exact_bytes": true
+    },
+    {
+      "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+      "source_path": "gto/fixtures/rank7-v1.json",
+      "destination_path": "gto/fixtures/rank7-v1.json",
+      "bytes": 3643,
+      "sha256": "98b13be96b76628b14b671f32087a78499792a05e1e4587811684ae707ca86d7",
+      "reason": "16 hand-derived synthetic seven-card expected rank cases",
+      "exact_bytes": true
+    },
+    {
+      "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+      "source_path": "handoff/gto/compressed/pokerid_rules.py.zlib.b64",
+      "destination_path": "handoff/gto/compressed/pokerid_rules.py.zlib.b64",
+      "bytes": 4528,
+      "sha256": "99d4034970b3fb125e6c6ed376d20ff67937d9d2c64a4efe4adf926d2fcf2b9c",
+      "reason": "hash-pinned Python reference required by tests",
+      "exact_bytes": true
+    },
+    {
+      "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+      "source_path": "handoff/gto/compressed/g11_rules_embed.h.zlib.b64",
+      "destination_path": "handoff/gto/compressed/g11_rules_embed.h.zlib.b64",
+      "bytes": 5116,
+      "sha256": "e642809f82f176062c0d11f63a89c5b458b78b9b312a5b00b480cf0ef33be43c",
+      "reason": "hash-pinned unchanged embedded Ledger header for isolated bridge",
+      "exact_bytes": true
+    },
+    {
+      "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+      "source_path": "handoff/gto/verify_native_solvers.py",
+      "destination_path": "handoff/gto/verify_native_solvers.py",
+      "bytes": 1338,
+      "sha256": "dcc545530dee06cc11fc69202bb63f9d2ec1243aca5e218cf330149767107fae",
+      "reason": "read-only verification of transferred original three solver payloads",
+      "exact_bytes": true
+    },
+    {
+      "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+      "source_path": "gto/tests/test_checkpoints.py",
+      "destination_path": "gto/tests/test_checkpoints.py",
+      "bytes": 3226,
+      "sha256": "a900ebc1d56b1a4ba935b75b7e620eafa99266ed4c90633feca214f96f83b5ff",
+      "reason": "existing GTO unit regression",
+      "exact_bytes": true
+    },
+    {
+      "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+      "source_path": "gto/tests/test_hand169.py",
+      "destination_path": "gto/tests/test_hand169.py",
+      "bytes": 3694,
+      "sha256": "10ef8a33d33dda7e2f35cd311e9098d0e300cbeab9f6fd881cce75c7c1fb4d4d",
+      "reason": "existing GTO unit regression",
+      "exact_bytes": true
+    },
+    {
+      "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+      "source_path": "gto/tests/test_rank7.py",
+      "destination_path": "gto/tests/test_rank7.py",
+      "bytes": 982,
+      "sha256": "306e5e387128446acb9aafa3458ed01b1da6a2579d960fa3fbe9c4dae67e3d8d",
+      "reason": "existing GTO unit regression",
+      "exact_bytes": true
+    },
+    {
+      "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+      "source_path": "gto/tests/test_settlement.py",
+      "destination_path": "gto/tests/test_settlement.py",
+      "bytes": 1696,
+      "sha256": "6150be1dcbaf59f26e176ebbabb156ce97f8e0f0f9fe2bd1656c3dcb7e33c2fe",
+      "reason": "existing GTO unit regression",
+      "exact_bytes": true
+    },
+    {
+      "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+      "source_path": "tests/worker_acceptance/test_checkpoint_budget.py",
+      "destination_path": "gto/integration_acceptance/test_checkpoint_budget.py",
+      "bytes": 4134,
+      "sha256": "af8bfd8693d6f77c661a5a9b53843b7377423e9c6f0735e8fe2b26978bef7b4a",
+      "reason": "unchanged fixed C acceptance, isolated destination avoids other lanes",
+      "exact_bytes": true
+    },
+    {
+      "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+      "source_path": "tests/worker_acceptance/test_chip_oracle_types.py",
+      "destination_path": "gto/integration_acceptance/test_chip_oracle_types.py",
+      "bytes": 3632,
+      "sha256": "d835e4892502bc869ccbee8d4d2ce154fa5faf1c84bdada82d96035d84f00e5a",
+      "reason": "unchanged fixed C acceptance, isolated destination avoids other lanes",
+      "exact_bytes": true
+    },
+    {
+      "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+      "source_path": "tests/worker_acceptance/test_nonempty_settlement.py",
+      "destination_path": "gto/integration_acceptance/test_nonempty_settlement.py",
+      "bytes": 1701,
+      "sha256": "02c4d041ca2253bd31694f4625ebdf7fd847341eb79b1576eeb2558c7c0f66d0",
+      "reason": "unchanged fixed C acceptance, isolated destination avoids other lanes",
+      "exact_bytes": true
+    },
+    {
+      "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+      "source_path": "tests/worker_acceptance/test_rank7.py",
+      "destination_path": "gto/integration_acceptance/test_rank7.py",
+      "bytes": 3034,
+      "sha256": "7146239998b7ce048bb576ad4bb174ccfa4d2c56df3ac91eb5cbe236c9536c07",
+      "reason": "unchanged fixed C acceptance, isolated destination avoids other lanes",
+      "exact_bytes": true
+    },
+    {
+      "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+      "source_path": "tests/worker_acceptance/test_settlement_expectations.py",
+      "destination_path": "gto/integration_acceptance/test_settlement_expectations.py",
+      "bytes": 2701,
+      "sha256": "cb24da18274a5cb0c30ba94202ed412c0ef85d865715d8b1a8ebe27e46cd8cb2",
+      "reason": "unchanged fixed C acceptance, isolated destination avoids other lanes",
+      "exact_bytes": true
+    },
+    {
+      "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+      "source_path": "handoff/gto/compressed/g12_next_solver_disk.cc.zlib.b64",
+      "destination_path": "handoff/gto/compressed/g12_next_solver_disk.cc.zlib.b64",
+      "bytes": 11212,
+      "sha256": "a1bdaf29c65f783ed4f55603e1bd5531db9cb2d29f05d103357448fff066d47b",
+      "reason": "original solver byte-verification only; no full solver build/backend transplant",
+      "exact_bytes": true
+    },
+    {
+      "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+      "source_path": "handoff/gto/compressed/g12_p1_cache_solver_disk.cc.zlib.b64",
+      "destination_path": "handoff/gto/compressed/g12_p1_cache_solver_disk.cc.zlib.b64",
+      "bytes": 12128,
+      "sha256": "d109d0c41e103a991339fea64b82d32ff5c7bd938c80cd67600c6c3df0df1a91",
+      "reason": "original solver byte-verification only; no full solver build/backend transplant",
+      "exact_bytes": true
+    },
+    {
+      "source_commit": "b492f8c7730cb5ebb66beee909ba2526dcb7cc85",
+      "source_path": "handoff/gto/compressed/g12_p1_packed_solver_disk.cc.zlib.b64",
+      "destination_path": "handoff/gto/compressed/g12_p1_packed_solver_disk.cc.zlib.b64",
+      "bytes": 11484,
+      "sha256": "808f7b036ee5213d1b123fe1173092f95f2eb13b690cd22ce1857669759f998d",
+      "reason": "original solver byte-verification only; no full solver build/backend transplant",
+      "exact_bytes": true
+    }
+  ]
+}
