@@ -64,3 +64,18 @@ Normalpush45dce36→aae7e74 succeeded through explicit approved escalation after
 defaultsocketdenial and stalledadditionalnetwork path. Its new6CI started;final
 numeric/windowevidence commit to follow. Use matching finalHEAD CIreceipt only,
 never relabel old830runs. PRbody update is stillpending until actualPATCH+GET.
+
+## Storage alternative before further learning
+
+Initialspace failure remains true for allpayloads onworkspace. Actualdf found
+independent/tmp4.9GiB existingfree,not extraallocated/paid. New pre-outcome storage
+addendum keeps exactvector4 snapshot /workspace/joint-window-parent/vector4.sqlite
+and mutablelearner onworkspace;only reconstructableS4 cutoff goes to
+/tmp/joint-window-cutoff/cutoff.sqlite. Lostcutoff can be regenerated from actual
+preservedworkspace4,never guessed. Workspace placement free3374145536≥3191128064
+required;tmp5221474304≥2700689488. Both2GiB guards retained,alloriginaldata kept.
+Registered extra5/6/7 trial started,not completed or accepted yet. Actualmetadata,
+budgets,source/snapshot/cutoff hashes under /workspace/joint-window-run/,live log
+/workspace/joint-window-run.log. Runner refuses blindrelaunch ifregistrationexists.
+No automaticresume. Original source4copy quickcheck/hashPASS before anyextraepoch.
+Atlastcheck d0dd15f newCI4SUCCESS/2running; finalCI countsUNKNOWN until logsread.
