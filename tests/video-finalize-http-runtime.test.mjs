@@ -195,3 +195,47 @@ test('real finalize entrypoint dispatches valid isolated cloud config and denies
     }
   }
 })
+
+// The real API entrypoint and Supabase client are exercised with a strict
+// in-process transport fixture. No network request can escape this test.
+test('real finalize entrypoint reads owner recovery proof through isolated mocked HTTP', async () => {
+  const names = ['VIDEO_CLOUD_TEST_ENABLED','VIDEO_CLOUD_TEST_PROJECT_REF','VIDEO_CLOUD_TEST_VERCEL_PROJECT_ID','VERCEL_ENV','VERCEL_PROJECT_ID','VITE_SUPABASE_URL','SUPABASE_URL','VITE_SUPABASE_ANON_KEY','VIDEO_PRODUCTION_FENCED_READY','VIDEO_ATTESTED_RPC_RELEASE_APPROVED','SUPABASE_SERVICE_ROLE_KEY','SUPABASE_SECRET_KEY','SUPABASE_DB_URL','DATABASE_URL','VIDEO_QA_ENV']
+  const previous = Object.fromEntries(names.map(name => [name, process.env[name]]))
+  const originalFetch = globalThis.fetch
+  const uid = '11111111-1111-4111-8111-111111111111'
+  const path = uid + '/22222222-2222-4222-8222-222222222222.mp4'
+  const calls = []
+  try {
+    Object.assign(process.env, {VIDEO_CLOUD_TEST_ENABLED:'true',VIDEO_CLOUD_TEST_PROJECT_REF:'hbhyuotzginwysrineyo',VIDEO_CLOUD_TEST_VERCEL_PROJECT_ID:'prj_isolated_fixture_only',VERCEL_PROJECT_ID:'prj_isolated_fixture_only',VERCEL_ENV:'preview',VITE_SUPABASE_URL:'https://hbhyuotzginwysrineyo.supabase.co',SUPABASE_URL:'https://hbhyuotzginwysrineyo.supabase.co',VITE_SUPABASE_ANON_KEY:'fixture-anon'})
+    for (const name of ['VIDEO_PRODUCTION_FENCED_READY','VIDEO_ATTESTED_RPC_RELEASE_APPROVED','SUPABASE_SERVICE_ROLE_KEY','SUPABASE_SECRET_KEY','SUPABASE_DB_URL','DATABASE_URL','VIDEO_QA_ENV']) delete process.env[name]
+    globalThis.fetch = async (input, init = {}) => {
+      const url = String(input instanceof Request ? input.url : input)
+      const base = 'https://hbhyuotzginwysrineyo.supabase.co'
+      assert.ok(url.startsWith(base + '/'), 'unexpected network origin')
+      const endpoint = url.slice(base.length).split('?')[0]
+      calls.push(endpoint)
+      const data = endpoint === '/auth/v1/user' ? {id:uid,aud:'authenticated',app_metadata:{provider:'email',providers:['email']},user_metadata:{},created_at:'2026-01-01T00:00:00Z'}
+        : endpoint === '/rest/v1/rpc/video_cloud_allowed' ? true
+        : endpoint === '/rest/v1/rpc/video_cloud_recovery_inspect_v1' ? {path,state:'published',allow_resume:false,expired:false,storage_present:true,post_id:'33333333-3333-4333-8333-333333333333',sha256:'a'.repeat(64),size:1024}
+        : null
+      assert.notEqual(data,null,'unexpected endpoint: '+endpoint)
+      return new Response(JSON.stringify(data),{status:200,headers:{'content-type':'application/json'}})
+    }
+    const res = response()
+    await createVideoFinalizeHandler()(request({headers:{authorization:'Bearer fixture.token'},body:{action:'recovery_inspect',object_path:path}}),res)
+    assert.equal(res.statusCode,200)
+    assert.equal(res.body.state,'published')
+    assert.equal(res.body.allow_resume,false)
+    assert.equal(res.body.storage_present,true)
+    assert.equal(res.body.size,1024)
+    assert.equal(calls.filter(x=>x==='/auth/v1/user').length,2)
+    assert.equal(calls.filter(x=>x==='/rest/v1/rpc/video_cloud_allowed').length,2)
+    assert.equal(calls.filter(x=>x==='/rest/v1/rpc/video_cloud_recovery_inspect_v1').length,1)
+  } finally {
+    globalThis.fetch = originalFetch
+    for (const name of names) {
+      if (previous[name] === undefined) delete process.env[name]
+      else process.env[name] = previous[name]
+    }
+  }
+})
