@@ -166,3 +166,32 @@ test('real finalize entrypoint rejects incomplete cloud-test opt-in before I/O',
     }
   }
 })
+
+// A complete, dedicated preview test configuration must reach the real cloud
+// dispatcher. Missing bearer is rejected inside the cloud handler before I/O.
+// No local-only bypass, external request, DB mutation, or production flag is used.
+test('real finalize entrypoint dispatches valid isolated cloud config and denies anonymous before I/O', async () => {
+  const names = ['VIDEO_CLOUD_TEST_ENABLED','VIDEO_CLOUD_TEST_PROJECT_REF','VIDEO_CLOUD_TEST_VERCEL_PROJECT_ID','VERCEL_ENV','VERCEL_PROJECT_ID','VITE_SUPABASE_URL','SUPABASE_URL','VIDEO_PRODUCTION_FENCED_READY','VIDEO_ATTESTED_RPC_RELEASE_APPROVED','SUPABASE_SERVICE_ROLE_KEY','SUPABASE_SECRET_KEY','SUPABASE_DB_URL','DATABASE_URL','VIDEO_QA_ENV']
+  const previous = Object.fromEntries(names.map(name => [name, process.env[name]]))
+  try {
+    process.env.VIDEO_CLOUD_TEST_ENABLED = 'true'
+    process.env.VIDEO_CLOUD_TEST_PROJECT_REF = 'hbhyuotzginwysrineyo'
+    process.env.VIDEO_CLOUD_TEST_VERCEL_PROJECT_ID = 'prj_isolated_fixture_only'
+    process.env.VERCEL_PROJECT_ID = 'prj_isolated_fixture_only'
+    process.env.VERCEL_ENV = 'preview'
+    process.env.VITE_SUPABASE_URL = 'https://hbhyuotzginwysrineyo.supabase.co'
+    process.env.SUPABASE_URL = process.env.VITE_SUPABASE_URL
+    for (const name of ['VIDEO_PRODUCTION_FENCED_READY','VIDEO_ATTESTED_RPC_RELEASE_APPROVED','SUPABASE_SERVICE_ROLE_KEY','SUPABASE_SECRET_KEY','SUPABASE_DB_URL','DATABASE_URL','VIDEO_QA_ENV']) delete process.env[name]
+    const res = response()
+    await createVideoFinalizeHandler()(request({ headers: { authorization: '' } }), res)
+    assert.equal(res.statusCode, 401)
+    assert.equal(res.headers['Cache-Control'], 'no-store, private')
+    assert.equal(res.headers['Vary'], 'Authorization')
+    assert.equal(res.headers['X-Content-Type-Options'], 'nosniff')
+  } finally {
+    for (const name of names) {
+      if (previous[name] === undefined) delete process.env[name]
+      else process.env[name] = previous[name]
+    }
+  }
+})
