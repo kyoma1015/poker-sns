@@ -1,0 +1,23 @@
+{
+  "kind": "exact_existing_source_reuse",
+  "source_commit": "4bff6519c9b12d3d0eed162936085bd87b71c113",
+  "sha256": "b7957ce063c6064367d71a78a22a61ad94c3104f6f528fe766d5aca70b3f101e",
+  "base_main": "781f038415503ece850c25a26e72ef67dee9c8a1",
+  "fixed17": "4FAIL to17PASS",
+  "old_hand16910": "PASS",
+  "strategy_convergence": "UNVERIFIED",
+  "original_checkpoint_modified": false,
+  "historical_initial_transfer": true,
+  "latest_source_commit": "dd883b7ded3b792b366c12b18e3b1937ca469156",
+  "latest_sha256": "11f19f9d6486f1368474b3a512128a07035ad4731ac8df116c74ad5569463ae0",
+  "latest_fixed21": "4FAIL to21PASS",
+  "prior_followup": {
+    "source_commit": "381059c799c55f4eb876cbf3f426527a0b09d97a",
+    "sha256": "400c1f0b3683f1bdeaddab0d8e41e2a6e548fc910a068fddb0533ccbe7e8beb2",
+    "fixed": "4FAIL to21PASS"
+  },
+  "latest_fixed33": "10ERROR before to33PASS after",
+  "latest_old_hand16910": "PASS",
+  "selected_reuse_commit": "a4f93af20d5ff85371ecb61c347aaf7df23a68cf",
+  "selected_reuse_ci": 39822187456
+}
