@@ -1,0 +1,22 @@
+{
+  "backend": "legacy",
+  "blocks": 3510,
+  "checkpoint_digest": "40779ad2d429d034e83220352c3cd79d020533d3187a14da5e06d24dbf0a1e0a",
+  "complete_epoch": true,
+  "cpu_seconds": 1350.745334391,
+  "logical_digest": "d44948dfb6f21ef5eb197685b53058bcf450f43cbc6490939090a5f744cd9bfe",
+  "meta": {
+    "backend": "legacy",
+    "cursor": 0,
+    "epoch": 4,
+    "identity": "989e6abd1e0e75ceab5487a54b886d71a129f863a9c5ecc31bc4fae687b46e10",
+    "inherited_actual_epochs": 3,
+    "owner": 0,
+    "parent_numeric_digest": "8f1341058c0290b1dfa8a55084a1964dced46a4bad678bdb70b8479070250c27"
+  },
+  "parent_logical_digest": "8f1341058c0290b1dfa8a55084a1964dced46a4bad678bdb70b8479070250c27",
+  "process_peak_rss_kib": 633604,
+  "seconds": 1364.9934981690003,
+  "whole_call_cpu_seconds": 1357.8538535100001,
+  "whole_call_wall_seconds": 1372.5462933130002
+}

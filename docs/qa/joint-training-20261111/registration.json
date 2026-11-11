@@ -1,0 +1,18 @@
+{
+  "backends": [
+    "legacy",
+    "vector"
+  ],
+  "epochs": 1,
+  "evaluation_seconds_each": 900,
+  "formal_acceptance": [
+    0,
+    12
+  ],
+  "max_blocks": 3510,
+  "parent": "/workspace/joint-updates-run/cfr_plus.sqlite",
+  "protocol_sha256": "4db0566efd837e704901162205dd212ffb1c68b29a3ce022a2bcaaa4ae12f0be",
+  "seconds_each": 1800,
+  "source_sha256": "2dfada8010e055b4cf4fbf732d654bd151afc996742e474779dc120cdbfb269c",
+  "utc": 1794368532.4923918
+}

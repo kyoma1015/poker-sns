@@ -1,0 +1,9 @@
+{
+  "python": "3.12.14",
+  "machine": "x86_64",
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "native_binaries": {
+    "/workspace/joint-training-run/vector-native/joint-vector.so": "1f1d2ebf8a71a36ee2f31e12418767d7254714d9e9de6da0eb5ea524128d195f",
+    "/workspace/joint-training-run/legacy-native/joint-updates.so": "e75a01370a896909fde762c5f795a189e5bd666eba04d4d92fa5aca1086b4418"
+  }
+}

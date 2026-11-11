@@ -27,6 +27,7 @@ class TrainingTests(unittest.TestCase):
         self.assertEqual(a.numeric_digest(x.parent),self.parent_digest)
     def test_full_training_arrays_strategy_and_independent_br_match(self):
         old=self.fork('old','legacy');new=self.fork('new','vector')
+        self.assertNotEqual(old.identity,new.identity)
         for x,lib in ((old,self.legacy),(new,self.vector)):x.train(lib,'unused',epochs=2,max_blocks=8)
         for i in range(2):
             for xs,ys in zip(old.state(i,2),new.state(i,2)):
@@ -54,5 +55,12 @@ class TrainingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'checkpoint mismatch'):t.Store(self.root/'x',self.rows,self.root/'parent','legacy')
         x.train(self.vector,'unused',max_blocks=1)
         with self.assertRaisesRegex(ValueError,'both full'):t.evaluate(x,self.br,'unused')
+    def test_parent_cannot_be_overwritten_and_old_evaluation_is_not_inherited(self):
+        with self.assertRaisesRegex(ValueError,'differ'):t.Store(self.root/'parent',self.rows,self.root/'parent','vector')
+        import sqlite3
+        parent=sqlite3.connect(self.root/'parent')
+        with parent:parent.execute('insert or replace into state values (?,?)',('eval:sum',s.pack([999.])))
+        parent.close()
+        x=self.fork('x','vector');self.assertIsNone(x.get('eval:sum'));self.assertEqual(x.logical_digest(),self.parent_digest)
 
 if __name__=='__main__':unittest.main()

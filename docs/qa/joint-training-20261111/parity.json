@@ -1,0 +1,7 @@
+{
+  "cpu_speedup": 2.149912226650171,
+  "max_array_difference": 1.1449174941446927e-15,
+  "max_policy_difference": 6.257001583520605e-10,
+  "orbits": 1755,
+  "pass": true
+}
