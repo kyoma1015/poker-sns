@@ -1,0 +1,33 @@
+name: GTO standalone static demo verification
+on:
+  pull_request:
+    paths:
+      - 'scripts/gto-demo/**'
+      - 'public/gto-demo/**'
+      - 'src/gto/*ResearchData.json'
+      - 'tests/gto-demo*'
+      - '.github/workflows/gto-static-demo.yml'
+permissions:
+  contents: read
+jobs:
+  standalone:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node scripts/gto-demo/build.mjs /tmp/gto-demo.html
+      - run: cmp /tmp/gto-demo.html public/gto-demo/index.html
+      - run: node --test --test-isolation=none tests/gto-demo.test.mjs
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npx --no-install playwright-core install chromium
+      - run: node tests/gto-demo-browser.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: poker-id-gto-offline-demo
+          path: |
+            public/gto-demo/index.html
+            /tmp/gto-demo-shots/mobile.png
+          retention-days: 3

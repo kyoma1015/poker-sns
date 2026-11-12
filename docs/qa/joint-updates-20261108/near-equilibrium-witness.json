@@ -1,0 +1,28 @@
+{
+  "game": "analytic2x2 payoff[[2,-1],[-1,1]],not HU50BB",
+  "initial": [
+    [
+      0.400001,
+      0.599999
+    ],
+    [
+      0.399999,
+      0.600001
+    ]
+  ],
+  "initial_nashconv": 4.0000000000595115e-06,
+  "second_current_policy": [
+    [
+      0.0,
+      1.0
+    ],
+    [
+      0.0,
+      1.0
+    ]
+  ],
+  "vanilla_average2_nc": 0.9999994999999999,
+  "linear_average2_nc": 1.3333329999999999,
+  "quadratic_average2_nc": 1.5999998,
+  "interpretation": "Behavioral epsilon prior carries no historical regret; legitimate early overshoot is not proof of a sign/reach bug"
+}

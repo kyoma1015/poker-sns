@@ -1,0 +1,15 @@
+test_checkpoint_resume_preserves_policy_rng_and_provenance (__main__.InitialReach.test_checkpoint_resume_preserves_policy_rng_and_provenance) ... ok
+test_complete_native_1326_policy_coverage_with_exact_mass (__main__.InitialReach.test_complete_native_1326_policy_coverage_with_exact_mass) ... ok
+test_exact_combinatorial_probability_all_counts (__main__.InitialReach.test_exact_combinatorial_probability_all_counts) ... ok
+test_native_action_identity_mismatch_is_rejected (__main__.InitialReach.test_native_action_identity_mismatch_is_rejected) ... ok
+test_native_initial_actors_and_contexts_2_to_9 (__main__.InitialReach.test_native_initial_actors_and_contexts_2_to_9) ... ok
+test_nonempty_history_has_no_claimed_chance_only_proof (__main__.InitialReach.test_nonempty_history_has_no_claimed_chance_only_proof) ... ok
+test_public_config_mismatch_is_rejected (__main__.InitialReach.test_public_config_mismatch_is_rejected) ... ok
+test_root_action_or_fixture_restriction_is_rejected (__main__.InitialReach.test_root_action_or_fixture_restriction_is_rejected) ... ok
+test_runtime_config_drift_is_rejected (__main__.InitialReach.test_runtime_config_drift_is_rejected) ... ok
+test_wrong_seat_is_rejected (__main__.InitialReach.test_wrong_seat_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 1.662s
+
+OK

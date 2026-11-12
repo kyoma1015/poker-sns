@@ -1,4 +1,9 @@
 # C | GTO handoff closure and remaining gates
+
+2026-10-26 release continuation: see `C_GTO_RELEASE_20261026.md` for native
+preflop four-bet query, seven rake profiles, unvisited-policy guard and bounded
+fixed-policy EV sampling. Full-strategy convergence/verified169EV/app wiring
+remain unfinished; no reduced release specification or production adoption.
 Date: 2026-10-20 JST
 Source: chore/codex-handoff-artifacts-20261020 @ 8509484bf9186534ca10694eb62aba7075395aee.
 Status: latest active milestone below supersedes the initial handoff-only state: reconstructed native build PASS; original G11 parity/historical resume BLOCKED.
@@ -64,3 +69,73 @@ Local native tests: eight per separate Next/Cache/Packed process, plus existing
 18 Python tests. Original G9 source, 20 owner stacks, G11 ABI and full poker
 convergence remain unproved; native exported EV remains null. No retained state,
 controller, scheduler or production changes.
+
+## Native hand169 wiring and finite real-poker oracle — 2026-10-23
+PR115 follow-up adds actual native infoset-context → 169 frequency export with
+mandatory caller mass and null EV. Exact native poker policy oracles cover fold,
+known river and all44 river chance outcomes. It reuses the exact PR103 hand169
+blob and33 original acceptance tests; these are not newly implemented fixes.
+See docs/workers/GTO_NATIVE_HAND169_BRIDGE_20261023.md. Complete coverage, authentic
+reach mass, original G9/G11 and full poker convergence remain unproved.
+
+## Initial chance marginal — resumed 2026-10-24
+Preserved interruption input cca4c0e and uncommitted module resumed. New source
+proves initial uniform-card own ordered-hand probability1/2652 for2..9 players,
+only exact first preflop actor/no history/fixture/prefix, with native/context hash
+evidence. Next/Cache/Packed10cases each pass with complete verified local modules;
+checkpoint/RNG/policy equality and1326/169 coverage included. Wrong incomplete
+local artifact path failure is retained, not a source fix. See
+GTO_INITIAL_CHANCE_REACH_20261024.md. General action reach, native EV, G9/G11 and
+poker convergence remain unproved; no state/controller/scheduler adoption.
+
+## Finite history reach / conditional EV — 2026-10-24
+Saved initial-chance branch retained. New history_reach.py separates exact chance
+mass and per-player explicit strategy mass on finite NativeState paths, then
+connects the existing oracle to conditional complete-state chip EV and branch
+contribution. Learned-row adapter refuses missing/unvisited policy; infoset EV
+remains null. Local232PASS (old187+45 across3variants), no PR/CI started.
+See GTO_HISTORY_REACH_EV_20261024.md. General belief/infoset reach, justified169EV,
+originalG9/G11 and full poker convergence remain gates. No specification shrink.
+
+## Bounded conditional belief / immutable learned policy — 2026-10-24
+Existing branch continues from e8e40bf. Exact finite heads-up explicit support
+prior→public chance/per-player strategy→posterior→conditional EV now available;
+immutable copied native rows survive later training. Local271PASS (old232+39),
+3separate variants, no new PR/CI. See GTO_BOUNDED_BELIEF_20261024.md. Conditional
+full-state policy is NOT information-set strategy proof; native169EV remainsnull.
+No originalG9/G11/history compatibility or convergence success claimed.
+
+## Public observation conditioning / queried hero consistency — 2026-10-24
+Cycle2 adds explicit blocker-conditioned support with exact compatible/removed
+prior mass, native history/advertised-board equality and queried hero-infoset
+policy consistency. Local310PASS (old271+39),3variant exact canonical output match;
+see GTO_BELIEF_OBSERVATION_20261024.md. Null remains for native169EV and impossible
+observation, no equilibrium or originalG9/G11 claim. No PR/CI/production adoption.
+
+## Common-hero action intervention values — 2026-10-24
+Cycle3 now compares selected legal actions using the same actual native hero
+information key and observed prefix posterior across explicit opponent support.
+Do-action EV excludes target policy probability; actor-excluded counterfactual
+mass remains distinct. Local349PASS (old310+39),3variant exact canonical equality.
+See GTO_INFOSET_ACTION_VALUES_20261024.md. Native169EV remainsnull, fullstrategy
+convergence/G9/G11 still unproved. No PR/manualCI/main or operational adoption.
+
+## Native combo action export — 2026-10-25
+New immutable explicit/native-average PolicySnapshot and actual native combo action
+records connect the existing action oracle to coverage-aware169 conditional action
+reports and exact-rational JSON transport. Missing generic native/169EV staysnull;
+no fullstrategy proof. Local400PASS includes6 repeated stub executions; comparable
+existing CI suite394=old349+45new. Three serialized reports exactly match SHA
+418f0a4bdca743b6d4e44fad0440654e01270e89aeb543b2a50e65d41d48d036.
+See GTO_COMBO_ACTION_EXPORT_20261025.md. No production/main/checkpoint/controller
+adoption, no originalG9/G11 or convergence claim. CI is pending parent publication.
+
+## Coverage-preserving offline consumer — 2026-10-26
+Native exactJSON now has a usable read-only CLI/reusable view/staticHTML consumer.
+It pins observation/config/policy, recomputes cardcoverage/counts/masses/conditional
+means from additive board+percombo data, withholds legacy unverified values, and
+labels frequencies unavailable. Generic native/169EVnull and convergenceUNKNOWN
+remain. Local445PASS includes6repeatstub cases; comparableCI439=old394+45new.
+See GTO_ACTION_REPORT_CONSUMER_20261026.md and action-report-consumer-20261026 QA.
+No frontend integration/production/runtime/oldcheckpoint claim. G9/G11 original
+vendor/ABI/expected outputs/history gates remain blocked; parentpublication CI pending.

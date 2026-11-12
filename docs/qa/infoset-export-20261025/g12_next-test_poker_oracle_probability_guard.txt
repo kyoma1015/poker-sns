@@ -1,0 +1,8 @@
+test_infinity_is_not_a_uniform_probability (__main__.DistributionGuard.test_infinity_is_not_a_uniform_probability) ... ok
+test_nan_is_not_a_uniform_probability (__main__.DistributionGuard.test_nan_is_not_a_uniform_probability) ... ok
+test_negative_is_not_a_uniform_probability (__main__.DistributionGuard.test_negative_is_not_a_uniform_probability) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK

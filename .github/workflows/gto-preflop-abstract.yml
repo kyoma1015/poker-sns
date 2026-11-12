@@ -1,0 +1,32 @@
+name: GTO preflop abstraction research verification
+on:
+  pull_request:
+    paths:
+      - 'gto/abstract/**'
+      - 'src/gto/abstractResearch*'
+      - '.github/workflows/gto-preflop-abstract.yml'
+permissions:
+  contents: read
+jobs:
+  abstract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build separate C++ abstraction with verified reused hand ranks
+        run: |
+          python -B -c 'from gto.abstract.model import build; import os; build(os.environ["RUNNER_TEMP"]+"/abstract-tests")'
+          cat "$RUNNER_TEMP/abstract-tests/manifest.json"
+      - name: Exact card-removal, lawful BR, controller information and solver oracles
+        run: GTO_ABSTRACT_LIBRARY="$RUNNER_TEMP/abstract-tests/abstract.so" python -B -m unittest gto.abstract.test_model -v
+      - name: Independent original-ledger legal actions and2000 terminal net checks
+        run: python -B -m gto.abstract.audit_ledger --build-directory "$RUNNER_TEMP/abstract-tests"
+      - name: Independent seeds, continuation models and fixed-policy heldout EV
+        run: python -B -m gto.abstract.study --output "$RUNNER_TEMP/abstract-study" --samples 256 --iterations 4000
+      - name: Research artifact reproducibility and non-GTO admission gate
+        run: |
+          python -B -m gto.abstract.export_research --evidence "$RUNNER_TEMP/abstract-study/evidence.json" --output "$RUNNER_TEMP/research.json"
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/research.json" --expected src/gto/abstractResearchData.json

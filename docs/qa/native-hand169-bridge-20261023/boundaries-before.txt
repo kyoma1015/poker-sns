@@ -1,0 +1,23 @@
+test_oracle_exact_uniform_river_chance (__main__.NewBoundaries.test_oracle_exact_uniform_river_chance) ... ok
+test_unhashable_board_rejected_as_value_error (__main__.NewBoundaries.test_unhashable_board_rejected_as_value_error) ... ok
+test_unhashable_cards_rejected_as_value_error (__main__.NewBoundaries.test_unhashable_cards_rejected_as_value_error) ... ERROR
+
+======================================================================
+ERROR: test_unhashable_cards_rejected_as_value_error (__main__.NewBoundaries.test_unhashable_cards_rejected_as_value_error)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-native-hand169-bridge/gto/native/test_hand169_bridge_boundaries.py", line 16, in test_unhashable_cards_rejected_as_value_error
+    with self.assertRaises(ValueError):context_of(json.dumps(d))
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-native-hand169-bridge/gto/native/hand169_bridge.py", line 51, in context_of
+    value=_object(infoset)
+          ^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-native-hand169-bridge/gto/native/hand169_bridge.py", line 36, in _object
+    if (not isinstance(hand,list) or len(hand)!=2 or len(set(hand))!=2
+                                                         ^^^^^^^^^
+TypeError: unhashable type: 'list'
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.008s
+
+FAILED (errors=1)

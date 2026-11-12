@@ -1,0 +1,163 @@
+{
+  "all_registered_checkpoints_completed": true,
+  "evidence_sha256": {
+    "cfr_plus-epoch1.json": "3368af811a3f09d9909059088d886425c3e35d27db53c95de2af22ff0e495612",
+    "cfr_plus-epoch2.json": "7f65506ef1dfc0881b3d5fe6475ccceb46b91f4823a24da82af237067b949fbf",
+    "cfr_plus-epoch3.json": "7bcecbfa317c9c49fa49969cf09e2621c226915491a46c8bbc3d862b4efc759a",
+    "dcfr-epoch1.json": "49038a689b9837a433d4ae092afd09ff5d45ac8591d7c9fac2b4de70e7774395",
+    "dcfr-epoch2.json": "a61732600cad445c1c515a9988c62018d9bcfd26edfb10c99c0ff100bc88c9fa",
+    "dcfr-epoch3.json": "27f74273289b49c572a6d3303362d9cc5be033b692562be37640f134116a8aea",
+    "vanilla_linear-epoch1.json": "872dba238ad35b4eef49c6508595857b7e9419c787e72bed3845719677f6783b",
+    "vanilla_linear-epoch2.json": "94f73ea8a42561e8211c169e34bf1d57a743fdb1bd94b7386a9f022950be1b3c",
+    "vanilla_linear-epoch3.json": "ae63654374519a92d4430039333eff1bb3872225fd75247090f6e9c0f515ecb7"
+  },
+  "external_GTO": "NOT PERFORMED",
+  "formal_acceptance": [
+    0,
+    12
+  ],
+  "frozen_baseline": {
+    "bb_br_gain_bb": 0.44130433309171235,
+    "nashconv_bb": 0.9321071527220774,
+    "ordinary_admission": false,
+    "restricted_target_pass": false,
+    "sb_br_gain_bb": 0.49080281963036515,
+    "sb_ev_bb": 0.030880258444870145
+  },
+  "historical_vanilla_uniform2": {
+    "bb_br_gain_bb": 0.5798861211169469,
+    "nashconv_bb": 1.1908195439324836,
+    "ordinary_admission": false,
+    "restricted_target_pass": false,
+    "sb_br_gain_bb": 0.6109334228155366,
+    "sb_ev_bb": 0.03479704893466581
+  },
+  "methods": {
+    "cfr_plus": [
+      {
+        "bb_br_gain_bb": 0.441304333091712,
+        "delta_vs_frozen_bb": -4.440892098500626e-16,
+        "delta_vs_vanilla2_bb": -0.25871239121040657,
+        "epoch": 1,
+        "improves_frozen": false,
+        "nashconv_bb": 0.932107152722077,
+        "ordinary_admission": false,
+        "restricted_target_pass": false,
+        "sb_br_gain_bb": 0.49080281963036504,
+        "sb_ev_bb": 0.03088025844487016,
+        "status": "COMPLETE"
+      },
+      {
+        "bb_br_gain_bb": 0.7435925717322921,
+        "delta_vs_frozen_bb": 0.5431417223476132,
+        "delta_vs_vanilla2_bb": 0.28442933113720703,
+        "epoch": 2,
+        "improves_frozen": false,
+        "nashconv_bb": 1.4752488750696906,
+        "ordinary_admission": false,
+        "restricted_target_pass": false,
+        "sb_br_gain_bb": 0.7316563033373986,
+        "sb_ev_bb": 0.03188256499260189,
+        "status": "COMPLETE"
+      },
+      {
+        "bb_br_gain_bb": 1.5002664625404356,
+        "delta_vs_frozen_bb": 3.956549521771612,
+        "delta_vs_vanilla2_bb": 3.697837130561206,
+        "epoch": 3,
+        "improves_frozen": false,
+        "nashconv_bb": 4.8886566744936895,
+        "ordinary_admission": false,
+        "restricted_target_pass": false,
+        "sb_br_gain_bb": 3.388390211953254,
+        "sb_ev_bb": 0.10664967851256271,
+        "status": "COMPLETE"
+      }
+    ],
+    "dcfr": [
+      {
+        "bb_br_gain_bb": 0.441304333091712,
+        "delta_vs_frozen_bb": -4.440892098500626e-16,
+        "delta_vs_vanilla2_bb": -0.25871239121040657,
+        "epoch": 1,
+        "improves_frozen": false,
+        "nashconv_bb": 0.932107152722077,
+        "ordinary_admission": false,
+        "restricted_target_pass": false,
+        "sb_br_gain_bb": 0.49080281963036504,
+        "sb_ev_bb": 0.03088025844487016,
+        "status": "COMPLETE"
+      },
+      {
+        "bb_br_gain_bb": 0.9192416253510703,
+        "delta_vs_frozen_bb": 0.8429741011645793,
+        "delta_vs_vanilla2_bb": 0.5842617099541731,
+        "epoch": 2,
+        "improves_frozen": false,
+        "nashconv_bb": 1.7750812538866567,
+        "ordinary_admission": false,
+        "restricted_target_pass": false,
+        "sb_br_gain_bb": 0.8558396285355864,
+        "sb_ev_bb": 0.028031748761031993,
+        "status": "COMPLETE"
+      },
+      {
+        "bb_br_gain_bb": 1.494921594226457,
+        "delta_vs_frozen_bb": 2.7948561382059505,
+        "delta_vs_vanilla2_bb": 2.5361437469955446,
+        "epoch": 3,
+        "improves_frozen": false,
+        "nashconv_bb": 3.726963290928028,
+        "ordinary_admission": false,
+        "restricted_target_pass": false,
+        "sb_br_gain_bb": 2.2320416967015704,
+        "sb_ev_bb": 0.051881855970552344,
+        "status": "COMPLETE"
+      }
+    ],
+    "vanilla_linear": [
+      {
+        "bb_br_gain_bb": 0.441304333091712,
+        "delta_vs_frozen_bb": -4.440892098500626e-16,
+        "delta_vs_vanilla2_bb": -0.25871239121040657,
+        "epoch": 1,
+        "improves_frozen": false,
+        "nashconv_bb": 0.932107152722077,
+        "ordinary_admission": false,
+        "restricted_target_pass": false,
+        "sb_br_gain_bb": 0.49080281963036504,
+        "sb_ev_bb": 0.03088025844487016,
+        "status": "COMPLETE"
+      },
+      {
+        "bb_br_gain_bb": 0.7435925717322921,
+        "delta_vs_frozen_bb": 0.5431417223476132,
+        "delta_vs_vanilla2_bb": 0.28442933113720703,
+        "epoch": 2,
+        "improves_frozen": false,
+        "nashconv_bb": 1.4752488750696906,
+        "ordinary_admission": false,
+        "restricted_target_pass": false,
+        "sb_br_gain_bb": 0.7316563033373986,
+        "sb_ev_bb": 0.03188256499260189,
+        "status": "COMPLETE"
+      },
+      {
+        "bb_br_gain_bb": 1.1241220580843942,
+        "delta_vs_frozen_bb": 1.5416270540754797,
+        "delta_vs_vanilla2_bb": 1.2829146628650736,
+        "epoch": 3,
+        "improves_frozen": false,
+        "nashconv_bb": 2.473734206797557,
+        "ordinary_admission": false,
+        "restricted_target_pass": false,
+        "sb_br_gain_bb": 1.349612148713163,
+        "sb_ev_bb": 0.051686221873696446,
+        "status": "COMPLETE"
+      }
+    ]
+  },
+  "ordinary_GTO_added": 0,
+  "real_game_error": "UNKNOWN",
+  "selection": "No automatic adoption; all registered outcomes retained"
+}

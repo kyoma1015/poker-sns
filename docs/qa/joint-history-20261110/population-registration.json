@@ -1,0 +1,24 @@
+{
+  "utc": "2026-11-10T13:14:19Z",
+  "source_sha256": {
+    "gto/abstract/joint_alternating.py": "ec2a24cfc7b7df505f971e4d6ee86294d25fa5041c431a594b047cd83e226bd2",
+    "gto/abstract/joint_history.py": "8c6b0e8a48a9e3a86d244c7ce1142aa85271ce9b037e6d0632bf811266bda21d",
+    "gto/abstract/joint_updates.py": "ba0a46e8481c79489a669fc28540a7b3ab444bc8ad76f556b475fc174a2b4c0f",
+    "gto/abstract/joint_stream.py": "0d6d2b19ab009e9116510bd066c7da14451198f1862520c76a9530e93894bbfe",
+    "gto/abstract/joint_stream.cc": "c3fcbffab8fa5e429e7240f63de11a7b86659cc6e7d46277a268a7897e34336c"
+  },
+  "protocol_sha256": "a11699fa558458c3fafeed0706f232c7e64c8ec58f6c948dba0c62a294c311e4",
+  "parent": "/workspace/joint-updates-run/cfr_plus.sqlite",
+  "parent_epoch": 3,
+  "new_checkpoints": [
+    4,
+    5
+  ],
+  "seconds": 3600,
+  "cpu_max": "200000 100000",
+  "memory_max": "8589934592",
+  "baseline_frozen_nc": 0.9321071527220774,
+  "parent_nc": 4.8886566744936895,
+  "target_nc": 0.1,
+  "ordinary_admission": false
+}

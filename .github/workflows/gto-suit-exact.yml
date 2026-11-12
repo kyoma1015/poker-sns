@@ -1,0 +1,50 @@
+name: GTO finite-population preflop precision
+on:
+  push:
+    branches: ['codex/c-native-hand169-bridge-20261023']
+    paths:
+      - 'gto/abstract/suit_exact*'
+      - 'tests/test_suit_exact.py'
+      - 'docs/qa/suit-exact-preflop-20261106/**'
+      - '.github/workflows/gto-suit-exact.yml'
+permissions:
+  contents: read
+jobs:
+  exact-preflop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Check preserved original artifacts and exact source identities
+        run: |
+          python -B - <<'PY'
+          import json,hashlib
+          from pathlib import Path
+          for manifest,keys in [('docs/qa/independent-preflop-20261105/dependency-manifest.json',('preserved_dependency_sha256','new_source_and_artifacts_sha256')),('docs/qa/suit-exact-preflop-20261106/dependency-manifest.json',('source_and_artifacts_sha256',))]:
+           d=json.loads(Path(manifest).read_text())
+           for key in keys:
+            for path,digest in d[key].items():assert hashlib.sha256(Path(path).read_bytes()).hexdigest()==digest,path
+          print('PASS protected inputs and exact source/artifact identities')
+          PY
+      - name: Orbit, exact weighting and independent private-information BR tests
+        run: python -B -m unittest tests.test_suit_exact -v
+      - name: Reproduce full-population design without payoff selection
+        run: |
+          python -B -m gto.abstract.suit_exact --phase design --output "$RUNNER_TEMP/suit-design.json"
+          python -B -m gto.abstract.independent_verify --actual "$RUNNER_TEMP/suit-design.json" --expected docs/qa/suit-exact-preflop-20261106/design.json
+      - name: Enumerate all suit-orbits, learn coherent preflop strategies and independently evaluate BR
+        run: |
+          python -B -m gto.abstract.suit_exact_prefill --build-dir "$RUNNER_TEMP/prefill" --cache-dir "$RUNNER_TEMP/exact-cache" --limit 1000 > "$RUNNER_TEMP/prefill.log" 2>&1 &
+          worker_pid=$!
+          python -B -m gto.abstract.suit_exact --phase run --build-dir "$RUNNER_TEMP/suit-exact" --cache-dir "$RUNNER_TEMP/exact-cache" --output "$RUNNER_TEMP/suit-results.json"
+          wait "$worker_pid"
+          python -B -m gto.abstract.independent_verify --actual "$RUNNER_TEMP/suit-results.json" --expected docs/qa/suit-exact-preflop-20261106/results.json
+          python -B -m gto.abstract.suit_exact --phase export --input "$RUNNER_TEMP/suit-results.json" --output "$RUNNER_TEMP/suit-ui.json"
+          python -B -m gto.abstract.independent_verify --actual "$RUNNER_TEMP/suit-ui.json" --expected src/gto/independentResearchData.json
+          python -B -m gto.abstract.suit_exact_compare --input "$RUNNER_TEMP/suit-results.json" --build-dir "$RUNNER_TEMP/suit-compare" --output "$RUNNER_TEMP/suit-comparison.json"
+          python -B -m gto.abstract.independent_verify --actual "$RUNNER_TEMP/suit-comparison.json" --expected docs/qa/suit-exact-preflop-20261106/comparison.json
+          python -B -m gto.abstract.suit_exact_reference --input "$RUNNER_TEMP/suit-results.json" --output "$RUNNER_TEMP/suit-reference.json"
+          python -B -m gto.abstract.independent_verify --actual "$RUNNER_TEMP/suit-reference.json" --expected docs/qa/suit-exact-preflop-20261106/reference-status.json

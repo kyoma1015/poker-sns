@@ -1,0 +1,8 @@
+{
+  "scope": "SYNTHETIC UNIT ORACLE ONLY; NOT real-policy EV measurements",
+  "baseline_public_commit": "6580ff1840f6d9967f15a56e242b62acce1ca4d3",
+  "case": "BB OOP bets before IP opponent; IP folds",
+  "expected_street_cashflow_bb": 9,
+  "baseline_result_bb": -0.8999999999999998,
+  "fixed_result_bb": 9.0
+}

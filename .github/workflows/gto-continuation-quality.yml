@@ -1,0 +1,35 @@
+name: GTO restricted continuation quality verification
+on:
+  push:
+    branches: ['codex/c-native-hand169-bridge-20261023']
+    paths:
+      - 'gto/abstract/continuation_game*'
+      - 'gto/abstract/continuation_quality.py'
+      - 'gto/abstract/continuation_learning.py'
+      - 'gto/abstract/flop_exact*'
+      - 'gto/abstract/flop_conditional.py'
+      - 'gto/abstract/precision_native.cc'
+      - 'gto/abstract/frozen_flop_reach.py'
+      - 'gto/abstract/model.py'
+      - 'gto/hand169.py'
+      - 'docs/qa/ev-precision-20261030/frozen-inputs.json'
+      - 'docs/qa/continuation-quality-20261031/**'
+      - 'tests/test_continuation_game.py'
+      - '.github/workflows/gto-continuation-quality.yml'
+permissions:
+  contents: read
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Own-information BR, uniform-average regrets and exact leaf oracles
+        run: python -B -m unittest tests.test_continuation_game -v
+      - name: Exact convergence, fixed opponents and untouched heldout boards
+        run: |
+          python -B -m gto.abstract.continuation_quality --build-dir "$RUNNER_TEMP/quality" --output "$RUNNER_TEMP/quality.json"
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/quality.json" --expected docs/qa/continuation-quality-20261031/results.json

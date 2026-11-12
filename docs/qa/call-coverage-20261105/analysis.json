@@ -1,0 +1,291 @@
+{
+  "cohort_criteria": {
+    "2048mean_at_most_0_05": true,
+    "2048nonincrease_vs512": true,
+    "2048worst_at_most_0_1": true
+  },
+  "deterministic_interval_width_reduction_bb": 0.4507419596522908,
+  "external_gto_comparison": "NOT PERFORMED",
+  "final_by_stage": {
+    "limp_check": {
+      "2048": {
+        "contexts": 7,
+        "mean_nashconv_bb": 0.003319025246066226,
+        "worst_nashconv_bb": 0.004650747754157414
+      },
+      "512": {
+        "contexts": 7,
+        "mean_nashconv_bb": 0.011714417774880182,
+        "worst_nashconv_bb": 0.014464926615645524
+      }
+    },
+    "limp_raise_call": {
+      "2048": {
+        "contexts": 7,
+        "mean_nashconv_bb": 0.010551631518015045,
+        "worst_nashconv_bb": 0.016823007697359588
+      },
+      "512": {
+        "contexts": 7,
+        "mean_nashconv_bb": 0.03670088398008583,
+        "worst_nashconv_bb": 0.0535043636718259
+      }
+    },
+    "open_call": {
+      "2048": {
+        "contexts": 7,
+        "mean_nashconv_bb": 0.010473477659265465,
+        "worst_nashconv_bb": 0.020393469770071837
+      },
+      "512": {
+        "contexts": 7,
+        "mean_nashconv_bb": 0.037709360102502525,
+        "worst_nashconv_bb": 0.06708279724471411
+      }
+    }
+  },
+  "final_summaries": {
+    "2048": {
+      "contexts": 21,
+      "mean_nashconv_bb": 0.008114711474448913,
+      "worst_nashconv_bb": 0.020393469770071837
+    },
+    "512": {
+      "contexts": 21,
+      "mean_nashconv_bb": 0.02870822061915618,
+      "worst_nashconv_bb": 0.06708279724471411
+    }
+  },
+  "formal_acceptance_complete": 0,
+  "formal_acceptance_total": 12,
+  "local_new_tests_pass": 13,
+  "maximum_native_chance_direct_mass_error": 1.7462298274040222e-10,
+  "new_head_ci": "PENDING at result commit",
+  "new_stages": {
+    "limp_check": {
+      "all_evaluated512_nashconv": {
+        "below0_1_count": 127,
+        "mean_unweighted_diagnostic_bb": 0.011968118221059764,
+        "unique_contexts": 127,
+        "worst_bb": 0.021378062724526692
+      },
+      "deterministic": {
+        "conservative50_profile_interval_bb": [
+          -49.71230916187983,
+          49.70958659389382
+        ],
+        "evaluated_board_probability": 0.005781044442263557,
+        "known_profile_ev_contribution_bb": -0.0013612839930040913,
+        "uncomputed_contribution_bounds_bb": [
+          -49.71094777788682,
+          49.71094777788682
+        ],
+        "unique_physical_boards": 127
+      },
+      "hero_actor": 1,
+      "legal_bets_bb": [
+        1.0,
+        1.5
+      ],
+      "mass": 0.17031083012224532,
+      "population512_nashconv": {
+        "below0_1_count": 128,
+        "count": 128,
+        "mean_bb": 0.011956605680332546,
+        "worst_bb": 0.021378062724526692
+      },
+      "pot_bb": 2.0,
+      "profile_interval_bb": [
+        -2.071648996710486,
+        1.6055404629416223
+      ],
+      "spr": 24.5
+    },
+    "limp_raise_call": {
+      "all_evaluated512_nashconv": {
+        "below0_1_count": 128,
+        "mean_unweighted_diagnostic_bb": 0.034693482145210626,
+        "unique_contexts": 128,
+        "worst_bb": 0.06546487778656657
+      },
+      "deterministic": {
+        "conservative50_profile_interval_bb": [
+          -49.715342939745106,
+          49.70507745757673
+        ],
+        "evaluated_board_probability": 0.005795798026781601,
+        "known_profile_ev_contribution_bb": -0.005132741084186217,
+        "uncomputed_contribution_bounds_bb": [
+          -49.710210098660916,
+          49.710210098660916
+        ],
+        "unique_physical_boards": 128
+      },
+      "hero_actor": 0,
+      "legal_bets_bb": [
+        1.6666666666666665,
+        2.5,
+        3.75
+      ],
+      "mass": 0.10745708202408938,
+      "population512_nashconv": {
+        "below0_1_count": 128,
+        "count": 128,
+        "mean_bb": 0.034693482145210626,
+        "worst_bb": 0.06546487778656657
+      },
+      "pot_bb": 5.0,
+      "profile_interval_bb": [
+        -5.464403030168211,
+        3.7339527515079234
+      ],
+      "spr": 9.5
+    },
+    "open_call": {
+      "all_evaluated512_nashconv": {
+        "below0_1_count": 224,
+        "mean_unweighted_diagnostic_bb": 0.028738131093316625,
+        "unique_contexts": 224,
+        "worst_bb": 0.07241920147297087
+      },
+      "deterministic": {
+        "conservative50_profile_interval_bb": [
+          -49.47811143518255,
+          49.46535937560733
+        ],
+        "evaluated_board_probability": 0.010565293892101212,
+        "known_profile_ev_contribution_bb": -0.006376029787611275,
+        "uncomputed_contribution_bounds_bb": [
+          -49.47173530539494,
+          49.47173530539494
+        ],
+        "unique_physical_boards": 224
+      },
+      "hero_actor": 1,
+      "legal_bets_bb": [
+        1.6666666666666665,
+        2.5,
+        3.75
+      ],
+      "mass": 0.2744880273807224,
+      "population512_nashconv": {
+        "below0_1_count": 128,
+        "count": 128,
+        "mean_bb": 0.030703465714615727,
+        "worst_bb": 0.07241920147297087
+      },
+      "pot_bb": 5.0,
+      "profile_interval_bb": [
+        -5.166071125910618,
+        4.018773662724671
+      ],
+      "spr": 9.5
+    }
+  },
+  "next_unseen_excluded_orbit_count": 674,
+  "numerical_guard_bb": 1e-07,
+  "population_criteria": {
+    "deterministic_width_decreases": true,
+    "root_board_probability_increases": true,
+    "statistical_width_less_than_previous_half": true
+  },
+  "posthoc_error_decomposition": {
+    "model_support_only_root_interval_bb": [
+      -7.262903076053492,
+      7.076602561828084
+    ],
+    "note": "posthoc bookkeeping,not a replacement preregistered criterion; tightening from old\u00b150 to registered restricted-game support is a modeling assumption, not measured real-game accuracy. Further sampling interval reduction is separate."
+  },
+  "preserved_old512_nonconvergence": {
+    "vs_3bet": {
+      "not_recomputed": true,
+      "worst_nashconv_bb": 0.36355856776910356
+    },
+    "vs_4bet": {
+      "not_recomputed": true,
+      "worst_nashconv_bb": 0.3611021179463334
+    }
+  },
+  "previous_research_ci_pass": 73,
+  "real_game_approximation_error": "UNKNOWN",
+  "root": {
+    "before_new_computation_deterministic_interval_bb": [
+      -29.48875947958545,
+      29.377962811955065
+    ],
+    "call_prefix_probability_evaluated": 0.5785437127207864,
+    "computed_root_board_probability": 0.004661121819333397,
+    "exact_fold_root_sb_contribution_bb": -0.055161178162137496,
+    "external_gto_comparison": "NOT PERFORMED",
+    "other_call_probability_unknown": 0.010277211260341756,
+    "prefix_details": {
+      "limp_check": {
+        "call_probability": 0.17031083012224532,
+        "evaluated_board_probability": 0.005781044442263557,
+        "hero_actor": 1,
+        "root_evaluated_board_probability": 0.0009845744779354991,
+        "root_statistical_sb_contribution_interval_bb": [
+          -0.27344092903844175,
+          0.3528242603516795
+        ]
+      },
+      "limp_raise_call": {
+        "call_probability": 0.10745708202408938,
+        "evaluated_board_probability": 0.005795798026781601,
+        "hero_actor": 0,
+        "root_evaluated_board_probability": 0.0006227995439589258,
+        "root_statistical_sb_contribution_interval_bb": [
+          -0.587188804625468,
+          0.40123966709286113
+        ]
+      },
+      "open_call": {
+        "call_probability": 0.2744880273807224,
+        "evaluated_board_probability": 0.010565293892101212,
+        "hero_actor": 1,
+        "root_evaluated_board_probability": 0.002900046679140457,
+        "root_statistical_sb_contribution_interval_bb": [
+          -1.1031052551708957,
+          1.418024672659713
+        ]
+      },
+      "vs_3bet": {
+        "call_probability": 0.024493875627518404,
+        "evaluated_board_probability": 0.00584522970481284,
+        "hero_actor": 0,
+        "root_evaluated_board_probability": 0.00014317232940396182,
+        "root_statistical_sb_contribution_interval_bb": [
+          -0.4885555160755148,
+          0.38253051304341956
+        ]
+      },
+      "vs_4bet": {
+        "call_probability": 0.0017938975662108846,
+        "evaluated_board_probability": 0.005869225251691683,
+        "hero_actor": 1,
+        "root_evaluated_board_probability": 1.0528788894553177e-05,
+        "root_statistical_sb_contribution_interval_bb": [
+          -0.016870998810242337,
+          0.046917843941199626
+        ]
+      }
+    },
+    "previous_computed_root_board_probability": 0.00015370111829851498,
+    "previous_root_confidence": 0.99,
+    "previous_root_statistical_interval_bb": [
+      -28.687245232417837,
+      28.500944718192425
+    ],
+    "real_game_approximation_error": "UNKNOWN",
+    "root_confidence": 0.98,
+    "root_sb_conservative50_deterministic_interval_bb": [
+      -29.261958063893193,
+      29.154022267995025
+    ],
+    "root_sb_statistical_interval_bb": [
+      -3.038183244899788,
+      3.060236341943823
+    ],
+    "scope": "fixed preflop actions, five research continuation profiles, remaining CALLs\u00b150BB; NOT original full frozen payoff or GTO"
+  }
+}

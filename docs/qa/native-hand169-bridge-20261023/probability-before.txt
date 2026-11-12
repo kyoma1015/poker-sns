@@ -1,0 +1,20 @@
+test_infinity_is_not_a_uniform_probability (__main__.DistributionGuard.test_infinity_is_not_a_uniform_probability) ... ok
+test_nan_is_not_a_uniform_probability (__main__.DistributionGuard.test_nan_is_not_a_uniform_probability) ... FAIL
+test_negative_is_not_a_uniform_probability (__main__.DistributionGuard.test_negative_is_not_a_uniform_probability) ... ok
+
+======================================================================
+FAIL: test_nan_is_not_a_uniform_probability (__main__.DistributionGuard.test_nan_is_not_a_uniform_probability)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/work/issue22-c-native-hand169-bridge/gto/native/test_poker_oracle_probability_guard.py", line 21, in test_nan_is_not_a_uniform_probability
+    def test_nan_is_not_a_uniform_probability(self):self.check(float('nan'))
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue22-c-native-hand169-bridge/gto/native/test_poker_oracle_probability_guard.py", line 19, in check
+    with self.assertRaisesRegex(ValueError,'uniform-card chance'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+FAILED (failures=1)

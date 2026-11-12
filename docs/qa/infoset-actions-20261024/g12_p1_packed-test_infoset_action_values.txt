@@ -1,0 +1,18 @@
+test_action_and_total_nodes_bound (__main__.Actions.test_action_and_total_nodes_bound) ... ok
+test_allblocked_support_null_unvalidated (__main__.Actions.test_allblocked_support_null_unvalidated) ... ok
+test_board_mismatch_refused (__main__.Actions.test_board_mismatch_refused) ... ok
+test_exact_aggregate_budget_and_action_order_determinism (__main__.Actions.test_exact_aggregate_budget_and_action_order_determinism) ... ok
+test_exact_same_posterior_for_both_interventions (__main__.Actions.test_exact_same_posterior_for_both_interventions) ... ok
+test_hidden_information_dependent_prefix_policy_refused (__main__.Actions.test_hidden_information_dependent_prefix_policy_refused) ... ok
+test_illegal_duplicate_empty_bool_actions_refused (__main__.Actions.test_illegal_duplicate_empty_bool_actions_refused) ... ok
+test_intervention_not_scaled_by_target_policy (__main__.Actions.test_intervention_not_scaled_by_target_policy) ... ok
+test_observation_mass_and_counterfactual_distinct (__main__.Actions.test_observation_mass_and_counterfactual_distinct) ... ok
+test_only_common_hero_decision_is_accepted (__main__.Actions.test_only_common_hero_decision_is_accepted) ... ok
+test_opponent_call_changes_action_values_with_exact_weights (__main__.Actions.test_opponent_call_changes_action_values_with_exact_weights) ... ok
+test_public_conditioned_support_provenance_kept (__main__.Actions.test_public_conditioned_support_provenance_kept) ... ok
+test_zero_prefix_reach_values_null (__main__.Actions.test_zero_prefix_reach_values_null) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.019s
+
+OK

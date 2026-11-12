@@ -1,0 +1,25 @@
+{
+  "protocol_sha256": "c5eec793850abc0fdd3ba3b4e88ff08a57b88c511cb3e5a533e9c322a6d2d2f7",
+  "methods": [
+    "vanilla_linear",
+    "cfr_plus",
+    "dcfr"
+  ],
+  "identities": {
+    "vanilla_linear": "952741a42eca434b917cf2f84641212b9499eb2d4f43055685266c9b03dd71ee",
+    "cfr_plus": "5c68f270d5652998ebc5aaf25c4fa4dafa61d5748514525005ca6c5fb93a1eae",
+    "dcfr": "99f93a0730057991c2dd44ca5601eb19af2188c888b3beb0357b150ff7391b64"
+  },
+  "checkpoints": [
+    1,
+    2
+  ],
+  "epoch_budget": 2,
+  "per_worker_seconds": 7200,
+  "operator_seconds": 10800,
+  "cpu_quota": "200000 100000",
+  "memory_max": "8589934592",
+  "frozen_reference": 0.9321071527220774,
+  "historical_vanilla2": 1.1908195439324836,
+  "started_utc": "2026-11-08T14:57:08Z"
+}

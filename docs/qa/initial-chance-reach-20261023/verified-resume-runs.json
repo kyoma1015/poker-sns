@@ -1,0 +1,23 @@
+[
+  {
+    "variant": "g12_next",
+    "exit": 0,
+    "tests": 10,
+    "module_dir": "/workspace/work/gto-native-final-20261020/g12_next",
+    "module_sha256": "b5d6ffd97f00d2aaf75e69bbb4dea313096f147ea764d1c29283d5339edf51e7"
+  },
+  {
+    "variant": "g12_p1_cache",
+    "exit": 0,
+    "tests": 10,
+    "module_dir": "/workspace/work/gto-native-final-20261020/g12_p1_cache",
+    "module_sha256": "3eb9a5aed8a6c5b012e30c9f6418c35e147df0bc88f2003e9e56d1fe8cfb3b6e"
+  },
+  {
+    "variant": "g12_p1_packed",
+    "exit": 0,
+    "tests": 10,
+    "module_dir": "/workspace/work/gto-native-final-20261020/g12_p1_packed",
+    "module_sha256": "05d5f04b4436ed339ef48ad54638c34f03a55e192b21a5cca8f7fc128a2596c6"
+  }
+]

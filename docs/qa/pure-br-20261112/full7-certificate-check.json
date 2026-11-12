@@ -1,0 +1,13 @@
+{
+  "br_gains_bb": [
+    2.038932150810659,
+    1.0747456318474349
+  ],
+  "diagnostic_seconds": 104.47034801799964,
+  "max_recomputed_error_bb": 2.546851618490109e-12,
+  "nashconv_bb": 3.113677782658094,
+  "physical_flops": 22100,
+  "population_orbits": 1755,
+  "raw_certificate_sha256": "940eea00b188fceef9fbbbe748934d73e6df95868304569cb97087302a37caa8",
+  "scope": "MEASURED_RESTRICTED_GAME_ONLY;SHORT_CI_DOES_NOT_REPLAY_KERNELS"
+}

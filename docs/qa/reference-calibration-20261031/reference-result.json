@@ -1,0 +1,11 @@
+{
+  "ev_rows": 0,
+  "expected_rows": 676,
+  "frequency_rows": 0,
+  "full_game_gto_verified": false,
+  "real_game_approximation_error": null,
+  "reason": "No lawfully available trusted condition-matched169-hand reference artifact acquired",
+  "reference_difference": null,
+  "schema": "pokerid-reference-comparison-v1",
+  "status": "UNPERFORMED"
+}

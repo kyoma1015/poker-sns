@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/workspace/work/issue22-published-C-4a988513/gto/native/test_action_report.py", line 5, in <module>
+    from gto.native.action_report import consume_report,render_html
+ModuleNotFoundError: No module named 'gto.native.action_report'

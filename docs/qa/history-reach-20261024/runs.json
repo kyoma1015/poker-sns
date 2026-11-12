@@ -1,0 +1,132 @@
+[
+  {
+    "label": "g12_next-test_history_reach",
+    "exit": 0,
+    "unittest_methods": 12
+  },
+  {
+    "label": "g12_next-test_history_ev_integration",
+    "exit": 0,
+    "unittest_methods": 3
+  },
+  {
+    "label": "g12_next-test_training_batch",
+    "exit": 0,
+    "unittest_methods": 8
+  },
+  {
+    "label": "g12_next-test_hand169_bridge",
+    "exit": 0,
+    "unittest_methods": 9
+  },
+  {
+    "label": "g12_next-test_hand169_bridge_boundaries",
+    "exit": 0,
+    "unittest_methods": 3
+  },
+  {
+    "label": "g12_next-test_poker_oracle_profiles",
+    "exit": 0,
+    "unittest_methods": 3
+  },
+  {
+    "label": "g12_next-test_initial_chance_reach",
+    "exit": 0,
+    "unittest_methods": 10
+  },
+  {
+    "label": "g12_p1_cache-test_history_reach",
+    "exit": 0,
+    "unittest_methods": 12
+  },
+  {
+    "label": "g12_p1_cache-test_history_ev_integration",
+    "exit": 0,
+    "unittest_methods": 3
+  },
+  {
+    "label": "g12_p1_cache-test_training_batch",
+    "exit": 0,
+    "unittest_methods": 8
+  },
+  {
+    "label": "g12_p1_cache-test_hand169_bridge",
+    "exit": 0,
+    "unittest_methods": 9
+  },
+  {
+    "label": "g12_p1_cache-test_hand169_bridge_boundaries",
+    "exit": 0,
+    "unittest_methods": 3
+  },
+  {
+    "label": "g12_p1_cache-test_poker_oracle_profiles",
+    "exit": 0,
+    "unittest_methods": 3
+  },
+  {
+    "label": "g12_p1_cache-test_initial_chance_reach",
+    "exit": 0,
+    "unittest_methods": 10
+  },
+  {
+    "label": "g12_p1_packed-test_history_reach",
+    "exit": 0,
+    "unittest_methods": 12
+  },
+  {
+    "label": "g12_p1_packed-test_history_ev_integration",
+    "exit": 0,
+    "unittest_methods": 3
+  },
+  {
+    "label": "g12_p1_packed-test_training_batch",
+    "exit": 0,
+    "unittest_methods": 8
+  },
+  {
+    "label": "g12_p1_packed-test_hand169_bridge",
+    "exit": 0,
+    "unittest_methods": 9
+  },
+  {
+    "label": "g12_p1_packed-test_hand169_bridge_boundaries",
+    "exit": 0,
+    "unittest_methods": 3
+  },
+  {
+    "label": "g12_p1_packed-test_poker_oracle_profiles",
+    "exit": 0,
+    "unittest_methods": 3
+  },
+  {
+    "label": "g12_p1_packed-test_initial_chance_reach",
+    "exit": 0,
+    "unittest_methods": 10
+  },
+  {
+    "label": "old18",
+    "exit": 0,
+    "unittest_methods": 18
+  },
+  {
+    "label": "reused33",
+    "exit": 0,
+    "unittest_methods": 33
+  },
+  {
+    "label": "next-backend9",
+    "exit": 0,
+    "unittest_methods": 9
+  },
+  {
+    "label": "packed-backend25",
+    "exit": 0,
+    "unittest_methods": 0
+  },
+  {
+    "label": "chance-stub3",
+    "exit": 0,
+    "unittest_methods": 3
+  }
+]

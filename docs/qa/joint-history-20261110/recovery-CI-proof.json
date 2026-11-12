@@ -1,0 +1,50 @@
+[
+  {
+    "id": 42768887123,
+    "name": "GTO preflop abstraction research verification",
+    "status": "success",
+    "python": 8,
+    "node": 0,
+    "browser": 0
+  },
+  {
+    "id": 42768887084,
+    "name": "GTO standalone static demo verification",
+    "status": "success",
+    "python": 0,
+    "node": 3,
+    "browser": 6
+  },
+  {
+    "id": 42768887080,
+    "name": "GTO preflop search verification",
+    "status": "success",
+    "python": 0,
+    "node": 25,
+    "browser": 21
+  },
+  {
+    "id": 42768887372,
+    "name": "GTO fixed-policy EV precision verification",
+    "status": "success",
+    "python": 50,
+    "node": 0,
+    "browser": 0
+  },
+  {
+    "id": 42768887309,
+    "name": "GTO reconstructed native verification",
+    "status": "success",
+    "python": 698,
+    "node": 0,
+    "browser": 0
+  },
+  {
+    "id": 42768878707,
+    "name": "GTO population streaming and resumable joint learning",
+    "status": "success",
+    "python": 26,
+    "node": 0,
+    "browser": 0
+  }
+]

@@ -1,0 +1,455 @@
+{
+  "calibration": {
+    "raw": {
+      "by_stage": {
+        "vs_3bet": {
+          "action_mae_bb": [
+            0.6138385582488345,
+            0.8197755060536949,
+            1.1033662214307538,
+            0.9474778026104981
+          ],
+          "action_max_error_bb": [
+            4.152542012275406,
+            5.3558373541662405,
+            6.815253028840775,
+            7.331799076556775
+          ],
+          "contexts": 14,
+          "maximum_action_error_bb": 7.331799076556775,
+          "mean_action_mae_bb": 0.8711145220859453,
+          "mean_one_sided_greedy_regret_loss_bb": 0.3116279082588393,
+          "mean_simultaneous_greedy_nashconv_bb": 0.9644284413469665
+        },
+        "vs_4bet": {
+          "action_mae_bb": [
+            1.741423930343744,
+            1.5648577248378626,
+            2.055607967429551,
+            3.1969731402491317
+          ],
+          "action_max_error_bb": [
+            8.634333265846816,
+            10.521465208174476,
+            19.744115710790943,
+            18.3813013171787
+          ],
+          "contexts": 14,
+          "maximum_action_error_bb": 19.744115710790943,
+          "mean_action_mae_bb": 2.139715690715072,
+          "mean_one_sided_greedy_regret_loss_bb": 1.0606004155881752,
+          "mean_simultaneous_greedy_nashconv_bb": 1.7420141870588977
+        }
+      },
+      "overall": {
+        "action_mae_bb": [
+          1.1776312442962893,
+          1.1923166154457785,
+          1.5794870944301524,
+          2.0722254714298147
+        ],
+        "action_max_error_bb": [
+          8.634333265846816,
+          10.521465208174476,
+          19.744115710790943,
+          18.3813013171787
+        ],
+        "contexts": 28,
+        "maximum_action_error_bb": 19.744115710790943,
+        "mean_action_mae_bb": 1.5054151064005088,
+        "mean_one_sided_greedy_regret_loss_bb": 0.6861141619235073,
+        "mean_simultaneous_greedy_nashconv_bb": 1.3532213142029321
+      }
+    }
+  },
+  "calibration_criteria": {
+    "maximum_error_nonincrease": true,
+    "mean_mae_20percent_reduction": false,
+    "stagewise_greedy_loss_nonincrease": true,
+    "stagewise_mae_nonincrease": true
+  },
+  "chance_summaries": {
+    "vs_3bet": {
+      "actual_category_probability": {
+        "monotone": 0.05184576939699438,
+        "paired_rainbow_high": 0.01683912387155554,
+        "paired_rainbow_low": 0.06834033874637196,
+        "paired_twotone": 0.08528773317454205,
+        "rainbow": 0.3098734476273598,
+        "trips": 0.0024040683386328853,
+        "twotone_connected": 0.09543365595107206,
+        "twotone_disconnected": 0.36997586289346557
+      },
+      "all22100_is_chance_normalization_not_unseen_policy_evaluation": true,
+      "category_balanced_research_probability": {
+        "monotone": 0.14285714285714285,
+        "paired_rainbow_high": 0.14285714285714285,
+        "paired_rainbow_low": 0.14285714285714285,
+        "paired_twotone": 0.14285714285714285,
+        "rainbow": 0.14285714285714285,
+        "trips": 0,
+        "twotone_connected": 0.14285714285714285,
+        "twotone_disconnected": 0.14285714285714285
+      },
+      "category_counts": {
+        "monotone": 1144,
+        "paired_rainbow_high": 432,
+        "paired_rainbow_low": 1440,
+        "paired_twotone": 1872,
+        "rainbow": 6864,
+        "trips": 52,
+        "twotone_connected": 2088,
+        "twotone_disconnected": 8208
+      },
+      "maximum_board_probability": 5.6794987574352874e-05,
+      "minimum_board_probability": 2.9809108351766512e-05,
+      "physical_board_count": 22100,
+      "probability_sum": 0.9999999999999989,
+      "raw_preflop_reach_mass": 39786.62687555936,
+      "total_variation_vs_category_balanced_distribution": 0.3965390931451779,
+      "total_variation_vs_uniform_physical_boards": 0.038453812398570625
+    },
+    "vs_4bet": {
+      "actual_category_probability": {
+        "monotone": 0.051841875486158547,
+        "paired_rainbow_high": 0.01595889543527382,
+        "paired_rainbow_low": 0.06973492875730375,
+        "paired_twotone": 0.08584375790557332,
+        "rainbow": 0.3093214470402988,
+        "trips": 0.0024558415444462128,
+        "twotone_connected": 0.09598701846532297,
+        "twotone_disconnected": 0.368856235365631
+      },
+      "all22100_is_chance_normalization_not_unseen_policy_evaluation": true,
+      "category_balanced_research_probability": {
+        "monotone": 0.14285714285714285,
+        "paired_rainbow_high": 0.14285714285714285,
+        "paired_rainbow_low": 0.14285714285714285,
+        "paired_twotone": 0.14285714285714285,
+        "rainbow": 0.14285714285714285,
+        "trips": 0,
+        "twotone_connected": 0.14285714285714285,
+        "twotone_disconnected": 0.14285714285714285
+      },
+      "category_counts": {
+        "monotone": 1144,
+        "paired_rainbow_high": 432,
+        "paired_rainbow_low": 1440,
+        "paired_twotone": 1872,
+        "rainbow": 6864,
+        "trips": 52,
+        "twotone_connected": 2088,
+        "twotone_disconnected": 8208
+      },
+      "maximum_board_probability": 5.755678741550976e-05,
+      "minimum_board_probability": 2.9418762435113842e-05,
+      "physical_board_count": 22100,
+      "probability_sum": 1.0000000000000018,
+      "raw_preflop_reach_mass": 2913.917511674669,
+      "total_variation_vs_category_balanced_distribution": 0.39491923823608327,
+      "total_variation_vs_uniform_physical_boards": 0.04882769343576996
+    }
+  },
+  "coverage": [
+    {
+      "conditional_selected_ev_difference_bb": -0.12237759651206437,
+      "equal_selected_board_ev_bb": -1.5070355980601242,
+      "full_continuation_ev_interval_bb": [
+        -49.985576495289266,
+        49.984604753971254
+      ],
+      "full_ev_coverage_complete": false,
+      "missing_probability_mass": 0.9997018124926051,
+      "not_a_full_preflop_ev": true,
+      "readonly_root_attribution": {
+        "absolute_error_bb": 3.3881317890172014e-20,
+        "all_other_leaves": "ZERO FOR LINEAR ATTRIBUTION ONLY; not a complete poker payoff",
+        "call_leaf_index": 21,
+        "frozen_policy_digest_after": "837ec7e0ef2c66714f65a174f9e83a398e713e65f82de4fb7b7e1699dee12778",
+        "frozen_policy_digest_before": "837ec7e0ef2c66714f65a174f9e83a398e713e65f82de4fb7b7e1699dee12778",
+        "manual_root_selected_contribution_sb_bb": -1.1900855492749413e-05,
+        "native_root_selected_contribution_sb_bb": -1.1900855492749379e-05,
+        "not_full_game_ev": true,
+        "policy_updated": false,
+        "unused_br_metrics_not_gto_evidence": true
+      },
+      "restricted_nashconv_equal_selected_bb": 0.010054637361625306,
+      "restricted_nashconv_true_chance_conditioned_on_selected_bb": 0.009297611282569429,
+      "seed": 31,
+      "selected_physical_boards": 7,
+      "selected_raw_ev_contribution_bb": -0.0004858706590058385,
+      "stage": "vs_3bet",
+      "total_physical_boards": 22100,
+      "true_chance_conditioned_on_selected_ev_bb": -1.6294131945721886,
+      "true_probability_coverage": 0.0002981875073948978,
+      "tv_selected_true_vs_equal": 0.05142426299931978,
+      "uncomputed_ev_contribution_absolute_bound_bb": 49.98509062463026
+    },
+    {
+      "conditional_selected_ev_difference_bb": -0.12237792514732226,
+      "equal_selected_board_ev_bb": -1.5070376291637928,
+      "full_continuation_ev_interval_bb": [
+        -49.98557649599291,
+        49.98460475326761
+      ],
+      "full_ev_coverage_complete": false,
+      "missing_probability_mass": 0.9997018124926051,
+      "not_a_full_preflop_ev": true,
+      "readonly_root_attribution": {
+        "absolute_error_bb": 3.7269449679189215e-20,
+        "all_other_leaves": "ZERO FOR LINEAR ATTRIBUTION ONLY; not a complete poker payoff",
+        "call_leaf_index": 21,
+        "frozen_policy_digest_after": "837ec7e0ef2c66714f65a174f9e83a398e713e65f82de4fb7b7e1699dee12778",
+        "frozen_policy_digest_before": "837ec7e0ef2c66714f65a174f9e83a398e713e65f82de4fb7b7e1699dee12778",
+        "manual_root_selected_contribution_sb_bb": -1.1900872727734413e-05,
+        "native_root_selected_contribution_sb_bb": -1.1900872727734376e-05,
+        "not_full_game_ev": true,
+        "policy_updated": false,
+        "unused_br_metrics_not_gto_evidence": true
+      },
+      "restricted_nashconv_equal_selected_bb": 0.010347156614204945,
+      "restricted_nashconv_true_chance_conditioned_on_selected_bb": 0.009552094782369935,
+      "seed": 43,
+      "selected_physical_boards": 7,
+      "selected_raw_ev_contribution_bb": -0.00048587136265050714,
+      "stage": "vs_3bet",
+      "total_physical_boards": 22100,
+      "true_chance_conditioned_on_selected_ev_bb": -1.629415554311115,
+      "true_probability_coverage": 0.0002981875073948978,
+      "tv_selected_true_vs_equal": 0.05142426299931978,
+      "uncomputed_ev_contribution_absolute_bound_bb": 49.98509062463026
+    },
+    {
+      "conditional_selected_ev_difference_bb": 0.2133424669134305,
+      "equal_selected_board_ev_bb": -7.413907855662539,
+      "full_continuation_ev_interval_bb": [
+        -49.986800370299676,
+        49.98235896598544
+      ],
+      "full_ev_coverage_complete": false,
+      "missing_probability_mass": 0.9996915933628512,
+      "not_a_full_preflop_ev": true,
+      "readonly_root_attribution": {
+        "absolute_error_bb": 6.437450399132683e-20,
+        "all_other_leaves": "ZERO FOR LINEAR ATTRIBUTION ONLY; not a complete poker payoff",
+        "call_leaf_index": 24,
+        "frozen_policy_digest_after": "837ec7e0ef2c66714f65a174f9e83a398e713e65f82de4fb7b7e1699dee12778",
+        "frozen_policy_digest_before": "837ec7e0ef2c66714f65a174f9e83a398e713e65f82de4fb7b7e1699dee12778",
+        "manual_root_selected_contribution_sb_bb": 3.983712194927048e-06,
+        "native_root_selected_contribution_sb_bb": 3.983712194927113e-06,
+        "not_full_game_ev": true,
+        "policy_updated": false,
+        "unused_br_metrics_not_gto_evidence": true
+      },
+      "restricted_nashconv_equal_selected_bb": 0.005007131398176323,
+      "restricted_nashconv_true_chance_conditioned_on_selected_bb": 0.004630483281102347,
+      "seed": 31,
+      "selected_physical_boards": 7,
+      "selected_raw_ev_contribution_bb": -0.0022207021571145477,
+      "stage": "vs_4bet",
+      "total_physical_boards": 22100,
+      "true_chance_conditioned_on_selected_ev_bb": -7.200565388749109,
+      "true_probability_coverage": 0.0003084066371488546,
+      "tv_selected_true_vs_equal": 0.06141974704618,
+      "uncomputed_ev_contribution_absolute_bound_bb": 49.98457966814256
+    },
+    {
+      "conditional_selected_ev_difference_bb": 0.2133506039136419,
+      "equal_selected_board_ev_bb": -7.413968399476415,
+      "full_continuation_ev_interval_bb": [
+        -49.986800386462285,
+        49.98235894982283
+      ],
+      "full_ev_coverage_complete": false,
+      "missing_probability_mass": 0.9996915933628512,
+      "not_a_full_preflop_ev": true,
+      "readonly_root_attribution": {
+        "absolute_error_bb": 1.6093625997831706e-20,
+        "all_other_leaves": "ZERO FOR LINEAR ATTRIBUTION ONLY; not a complete poker payoff",
+        "call_leaf_index": 24,
+        "frozen_policy_digest_after": "837ec7e0ef2c66714f65a174f9e83a398e713e65f82de4fb7b7e1699dee12778",
+        "frozen_policy_digest_before": "837ec7e0ef2c66714f65a174f9e83a398e713e65f82de4fb7b7e1699dee12778",
+        "manual_root_selected_contribution_sb_bb": 3.983741188992295e-06,
+        "native_root_selected_contribution_sb_bb": 3.983741188992279e-06,
+        "not_full_game_ev": true,
+        "policy_updated": false,
+        "unused_br_metrics_not_gto_evidence": true
+      },
+      "restricted_nashconv_equal_selected_bb": 0.004879532831246155,
+      "restricted_nashconv_true_chance_conditioned_on_selected_bb": 0.004529750353453793,
+      "seed": 43,
+      "selected_physical_boards": 7,
+      "selected_raw_ev_contribution_bb": -0.0022207183197237136,
+      "stage": "vs_4bet",
+      "total_physical_boards": 22100,
+      "true_chance_conditioned_on_selected_ev_bb": -7.200617795562773,
+      "true_probability_coverage": 0.0003084066371488546,
+      "tv_selected_true_vs_equal": 0.06141974704618,
+      "uncomputed_ev_contribution_absolute_bound_bb": 49.98457966814256
+    }
+  ],
+  "external_gto_comparison": "NOT PERFORMED",
+  "formal_acceptance_complete": 0,
+  "formal_acceptance_total": 12,
+  "independent_rank_matchups": 70,
+  "independent_rank_mismatches": 0,
+  "numerical_maxima": {
+    "base_tensor_max_error_bb": 0.0,
+    "chance_direct_raw_mass_error": 1.709850039333105e-10,
+    "class_leaf_error_bb": 2.1316282072803006e-14,
+    "conditional_arm_max_implementation_error_bb": 1.3145040611561853e-13,
+    "own_marginal_max_error": 1.6653345369377348e-16,
+    "reference_profile_and_br_max_error_bb": 5.329070518200751e-15,
+    "root_attribution_error_bb": 6.437450399132683e-20
+  },
+  "real_game_approximation_error": "UNKNOWN",
+  "sensitivity": {
+    "add_check_fold": {
+      "by_stage": {
+        "vs_3bet": {
+          "mean_nashconv_bb": 0.007517990143655082,
+          "worst_nashconv_bb": 0.03415207546776422
+        },
+        "vs_4bet": {
+          "mean_nashconv_bb": 0.005742862744209543,
+          "worst_nashconv_bb": 0.009194290634907176
+        }
+      },
+      "contexts": 28,
+      "frozen_base_mean_nashconv_bb": 1.808416958153041,
+      "frozen_base_worst_nashconv_bb": 6.803468143418496,
+      "maximum_absolute_profile_ev_shift_from_base_bb": 2.6860315307749616,
+      "reoptimized_below_0_1": 28,
+      "reoptimized_mean_nashconv_bb": 0.006630426443932312,
+      "reoptimized_worst_nashconv_bb": 0.03415207546776422,
+      "same_physics5_reference_mean_nashconv_bb": 0.006630426443932312,
+      "same_physics5_reference_worst_nashconv_bb": 0.03415207546776422
+    },
+    "base": {
+      "by_stage": {
+        "vs_3bet": {
+          "mean_nashconv_bb": 0.010200896987915126,
+          "worst_nashconv_bb": 0.04273743740520741
+        },
+        "vs_4bet": {
+          "mean_nashconv_bb": 0.00494333211471124,
+          "worst_nashconv_bb": 0.00994204420807776
+        }
+      },
+      "contexts": 28,
+      "frozen_base_mean_nashconv_bb": 0.007572114551313182,
+      "frozen_base_worst_nashconv_bb": 0.04273743740520741,
+      "maximum_absolute_profile_ev_shift_from_base_bb": 0.0,
+      "reoptimized_below_0_1": 28,
+      "reoptimized_mean_nashconv_bb": 0.007572114551313182,
+      "reoptimized_worst_nashconv_bb": 0.04273743740520741,
+      "same_physics5_reference_mean_nashconv_bb": 1.808416958153041,
+      "same_physics5_reference_worst_nashconv_bb": 6.803468143418496
+    },
+    "bet_one_third": {
+      "by_stage": {
+        "vs_3bet": {
+          "mean_nashconv_bb": 0.0060534765069575934,
+          "worst_nashconv_bb": 0.02924858685588605
+        },
+        "vs_4bet": {
+          "mean_nashconv_bb": 0.005416657517242962,
+          "worst_nashconv_bb": 0.016172583578616617
+        }
+      },
+      "contexts": 28,
+      "frozen_base_mean_nashconv_bb": 0.4378669006876467,
+      "frozen_base_worst_nashconv_bb": 1.150334291983084,
+      "maximum_absolute_profile_ev_shift_from_base_bb": 2.2643333641717653,
+      "reoptimized_below_0_1": 28,
+      "reoptimized_mean_nashconv_bb": 0.005735067012100277,
+      "reoptimized_worst_nashconv_bb": 0.02924858685588605,
+      "same_physics5_reference_mean_nashconv_bb": null,
+      "same_physics5_reference_worst_nashconv_bb": null
+    },
+    "bet_three_quarters": {
+      "by_stage": {
+        "vs_3bet": {
+          "mean_nashconv_bb": 0.013667944619583275,
+          "worst_nashconv_bb": 0.04066621596497644
+        },
+        "vs_4bet": {
+          "mean_nashconv_bb": 0.0051133510201273,
+          "worst_nashconv_bb": 0.011011256105787126
+        }
+      },
+      "contexts": 28,
+      "frozen_base_mean_nashconv_bb": 0.8305141488631858,
+      "frozen_base_worst_nashconv_bb": 1.713937950569127,
+      "maximum_absolute_profile_ev_shift_from_base_bb": 1.6063343746945975,
+      "reoptimized_below_0_1": 28,
+      "reoptimized_mean_nashconv_bb": 0.009390647819855288,
+      "reoptimized_worst_nashconv_bb": 0.04066621596497644,
+      "same_physics5_reference_mean_nashconv_bb": null,
+      "same_physics5_reference_worst_nashconv_bb": null
+    },
+    "spr_double": {
+      "by_stage": {
+        "vs_3bet": {
+          "mean_nashconv_bb": 0.010200896987915126,
+          "worst_nashconv_bb": 0.04273743740520741
+        },
+        "vs_4bet": {
+          "mean_nashconv_bb": 0.011005102681601533,
+          "worst_nashconv_bb": 0.02596978056340582
+        }
+      },
+      "contexts": 28,
+      "frozen_base_mean_nashconv_bb": 0.9074118587277278,
+      "frozen_base_worst_nashconv_bb": 3.4673725405124234,
+      "maximum_absolute_profile_ev_shift_from_base_bb": 0.8316589021699237,
+      "reoptimized_below_0_1": 28,
+      "reoptimized_mean_nashconv_bb": 0.01060299983475833,
+      "reoptimized_worst_nashconv_bb": 0.04273743740520741,
+      "same_physics5_reference_mean_nashconv_bb": null,
+      "same_physics5_reference_worst_nashconv_bb": null
+    },
+    "spr_half": {
+      "by_stage": {
+        "vs_3bet": {
+          "mean_nashconv_bb": 0.005444296362066539,
+          "worst_nashconv_bb": 0.023321772543948516
+        },
+        "vs_4bet": {
+          "mean_nashconv_bb": 0.00033342231577981885,
+          "worst_nashconv_bb": 0.0005173185489226739
+        }
+      },
+      "contexts": 28,
+      "frozen_base_mean_nashconv_bb": 0.6344269589134504,
+      "frozen_base_worst_nashconv_bb": 1.4265198866977542,
+      "maximum_absolute_profile_ev_shift_from_base_bb": 3.141669841155707,
+      "reoptimized_below_0_1": 28,
+      "reoptimized_mean_nashconv_bb": 0.0028888593389231787,
+      "reoptimized_worst_nashconv_bb": 0.023321772543948516,
+      "same_physics5_reference_mean_nashconv_bb": null,
+      "same_physics5_reference_worst_nashconv_bb": null
+    },
+    "uniform_range": {
+      "by_stage": {
+        "vs_3bet": {
+          "mean_nashconv_bb": 0.006005329112286255,
+          "worst_nashconv_bb": 0.010997739678014096
+        },
+        "vs_4bet": {
+          "mean_nashconv_bb": 0.008721990274185005,
+          "worst_nashconv_bb": 0.014503755366592541
+        }
+      },
+      "contexts": 28,
+      "frozen_base_mean_nashconv_bb": 4.173741693777265,
+      "frozen_base_worst_nashconv_bb": 9.13152686436774,
+      "maximum_absolute_profile_ev_shift_from_base_bb": 12.28485556266723,
+      "reoptimized_below_0_1": 28,
+      "reoptimized_mean_nashconv_bb": 0.00736365969323563,
+      "reoptimized_worst_nashconv_bb": 0.014503755366592541,
+      "same_physics5_reference_mean_nashconv_bb": 2.842025284093801,
+      "same_physics5_reference_worst_nashconv_bb": 5.748268174298156
+    }
+  }
+}

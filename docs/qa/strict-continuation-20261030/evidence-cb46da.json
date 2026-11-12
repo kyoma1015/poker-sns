@@ -1,0 +1,4246 @@
+{
+  "additional_iterations": 64,
+  "before": [
+    {
+      "hand": [
+        20,
+        6
+      ],
+      "updates": 0,
+      "visits": 11
+    },
+    {
+      "hand": [
+        26,
+        10
+      ],
+      "updates": 0,
+      "visits": 8
+    },
+    {
+      "hand": [
+        39,
+        15
+      ],
+      "updates": 0,
+      "visits": 3
+    },
+    {
+      "hand": [
+        43,
+        8
+      ],
+      "updates": 0,
+      "visits": 5
+    }
+  ],
+  "checkpoint_sha256": "d50eb1728a4d805a07768a5177454181ca0ba4aa2f6540a695d7ace32ea533d9",
+  "contexts": [
+    {
+      "complete_frequency_classes": 169,
+      "stage": "rfi",
+      "updated_orderings": 2652
+    },
+    {
+      "complete_frequency_classes": 169,
+      "stage": "vs_open",
+      "updated_orderings": 2652
+    },
+    {
+      "complete_frequency_classes": 169,
+      "stage": "vs_3bet",
+      "updated_orderings": 2652
+    },
+    {
+      "complete_frequency_classes": 169,
+      "stage": "vs_4bet",
+      "updated_orderings": 2652
+    }
+  ],
+  "formal_acceptance_complete": 0,
+  "full_game_convergence_verified": false,
+  "infoset_diagnosis": {
+    "created_key_census_by_board_cards": {
+      "0": 268282,
+      "3": 297211,
+      "4": 85861,
+      "5": 23275
+    },
+    "native_key_actions_average_roundtrip": true,
+    "roundtrip_owner_updated_rows": {
+      "0": 32,
+      "3": 32,
+      "4": 32,
+      "5": 32
+    },
+    "row_sample_scope": "bounded lexical examples for identity checks, not a coverage estimate",
+    "sampled_no_owner_update_rows": {
+      "0": 34,
+      "3": 31,
+      "4": 30,
+      "5": 33
+    },
+    "sampled_owner_update_sum": {
+      "0": 32,
+      "3": 32,
+      "4": 32,
+      "5": 32
+    },
+    "solver_unchanged": true
+  },
+  "ordinary_verified_gto_ranges": 0,
+  "parent_sha256": "c899f988c7f271e98516165f25ca6ad36e7dbe829b8b74d4b98f98513db7cf32",
+  "progress": [
+    {
+      "iteration": 100064,
+      "rows": [
+        {
+          "hand": [
+            20,
+            6
+          ],
+          "updates": 6,
+          "visits": 17
+        },
+        {
+          "hand": [
+            26,
+            10
+          ],
+          "updates": 4,
+          "visits": 12
+        },
+        {
+          "hand": [
+            39,
+            15
+          ],
+          "updates": 5,
+          "visits": 8
+        },
+        {
+          "hand": [
+            43,
+            8
+          ],
+          "updates": 1,
+          "visits": 6
+        }
+      ]
+    }
+  ],
+  "strict_evaluation": {
+    "assumptions": "fixed sample size; IID uniform deck/action PRNG model; policy frozen before evaluation",
+    "complete_169_sample_coverage": true,
+    "confidence": 0.99,
+    "config_digest": "e277f1d9eca0952eb0d2fba6484f6d02d21d750e7312249dbbef4b5328d1ff15",
+    "fallback_actions": 0,
+    "full_game_convergence_verified": false,
+    "global": {
+      "endpoint_means_bb": [
+        -47.10216666666667,
+        46.65495833333333
+      ],
+      "ev_envelope_bb": [
+        -47.93402816519181,
+        47.562474182252686
+      ],
+      "point_ev_bb": null,
+      "raw_endpoint_moments": [
+        [
+          -1130452,
+          114464260,
+          12000
+        ],
+        [
+          1119719,
+          114632671,
+          12000
+        ]
+      ],
+      "samples": 12000
+    },
+    "hands": {
+      "22": {
+        "endpoint_means_bb": [
+          -48.45192307692308,
+          49.05769230769231
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -5039,
+            501685,
+            52
+          ],
+          [
+            5102,
+            510004,
+            52
+          ]
+        ],
+        "samples": 52
+      },
+      "32o": {
+        "endpoint_means_bb": [
+          -47.922680412371136,
+          45.86082474226804
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -9297,
+            930009,
+            97
+          ],
+          [
+            8897,
+            928477,
+            97
+          ]
+        ],
+        "samples": 97
+      },
+      "32s": {
+        "endpoint_means_bb": [
+          -48.6578947368421,
+          46.078947368421055
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3698,
+            370004,
+            38
+          ],
+          [
+            3502,
+            370004,
+            38
+          ]
+        ],
+        "samples": 38
+      },
+      "33": {
+        "endpoint_means_bb": [
+          -46.794642857142854,
+          46.0625
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -5241,
+            521945,
+            56
+          ],
+          [
+            5159,
+            521945,
+            56
+          ]
+        ],
+        "samples": 56
+      },
+      "42o": {
+        "endpoint_means_bb": [
+          -45.954918032786885,
+          45.78688524590164
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -11213,
+            1157939,
+            122
+          ],
+          [
+            11172,
+            1147052,
+            122
+          ]
+        ],
+        "samples": 122
+      },
+      "42s": {
+        "endpoint_means_bb": [
+          -46.59090909090909,
+          44.40909090909091
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -4100,
+            410006,
+            44
+          ],
+          [
+            3908,
+            408470,
+            44
+          ]
+        ],
+        "samples": 44
+      },
+      "43o": {
+        "endpoint_means_bb": [
+          -48.02100840336134,
+          46.00840336134454
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -11429,
+            1138819,
+            119
+          ],
+          [
+            10950,
+            1142066,
+            119
+          ]
+        ],
+        "samples": 119
+      },
+      "43s": {
+        "endpoint_means_bb": [
+          -47.22222222222222,
+          50
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3400,
+            360000,
+            36
+          ],
+          [
+            3600,
+            360000,
+            36
+          ]
+        ],
+        "samples": 36
+      },
+      "44": {
+        "endpoint_means_bb": [
+          -46.54385964912281,
+          43.87719298245614
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -5306,
+            536190,
+            57
+          ],
+          [
+            5002,
+            535086,
+            57
+          ]
+        ],
+        "samples": 57
+      },
+      "52o": {
+        "endpoint_means_bb": [
+          -46.64150943396226,
+          45.556603773584904
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -9888,
+            982764,
+            106
+          ],
+          [
+            9658,
+            992322,
+            106
+          ]
+        ],
+        "samples": 106
+      },
+      "52s": {
+        "endpoint_means_bb": [
+          -48.785714285714285,
+          47.01190476190476
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -4098,
+            410004,
+            42
+          ],
+          [
+            3949,
+            402813,
+            42
+          ]
+        ],
+        "samples": 42
+      },
+      "53o": {
+        "endpoint_means_bb": [
+          -48.25769230769231,
+          46.70384615384615
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -12547,
+            1252717,
+            130
+          ],
+          [
+            12143,
+            1244113,
+            130
+          ]
+        ],
+        "samples": 130
+      },
+      "53s": {
+        "endpoint_means_bb": [
+          -45.838235294117645,
+          44.1764705882353
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3117,
+            326889,
+            34
+          ],
+          [
+            3004,
+            320008,
+            34
+          ]
+        ],
+        "samples": 34
+      },
+      "54o": {
+        "endpoint_means_bb": [
+          -45.963541666666664,
+          45.192708333333336
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -8825,
+            881321,
+            96
+          ],
+          [
+            8677,
+            871325,
+            96
+          ]
+        ],
+        "samples": 96
+      },
+      "54s": {
+        "endpoint_means_bb": [
+          -47.088235294117645,
+          47.05882352941177
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3202,
+            339604,
+            34
+          ],
+          [
+            3200,
+            340000,
+            34
+          ]
+        ],
+        "samples": 34
+      },
+      "55": {
+        "endpoint_means_bb": [
+          -47.041666666666664,
+          47.25
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -5645,
+            582213,
+            60
+          ],
+          [
+            5670,
+            589098,
+            60
+          ]
+        ],
+        "samples": 60
+      },
+      "62o": {
+        "endpoint_means_bb": [
+          -47.733333333333334,
+          45.727777777777774
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -8592,
+            860016,
+            90
+          ],
+          [
+            8231,
+            855861,
+            90
+          ]
+        ],
+        "samples": 90
+      },
+      "62s": {
+        "endpoint_means_bb": [
+          -46.34146341463415,
+          46.34146341463415
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3800,
+            380006,
+            41
+          ],
+          [
+            3800,
+            380006,
+            41
+          ]
+        ],
+        "samples": 41
+      },
+      "63o": {
+        "endpoint_means_bb": [
+          -48.422680412371136,
+          48.97422680412371
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -9394,
+            940012,
+            97
+          ],
+          [
+            9501,
+            949417,
+            97
+          ]
+        ],
+        "samples": 97
+      },
+      "63s": {
+        "endpoint_means_bb": [
+          -48.6578947368421,
+          45.56578947368421
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3698,
+            370004,
+            38
+          ],
+          [
+            3463,
+            351689,
+            38
+          ]
+        ],
+        "samples": 38
+      },
+      "64o": {
+        "endpoint_means_bb": [
+          -45.68421052631579,
+          45.39035087719298
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10416,
+            1075174,
+            114
+          ],
+          [
+            10349,
+            1080001,
+            114
+          ]
+        ],
+        "samples": 114
+      },
+      "64s": {
+        "endpoint_means_bb": [
+          -48.725,
+          48.4375
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3898,
+            390004,
+            40
+          ],
+          [
+            3875,
+            385333,
+            40
+          ]
+        ],
+        "samples": 40
+      },
+      "65o": {
+        "endpoint_means_bb": [
+          -48.37931034482759,
+          46.4367816091954
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -8418,
+            837290,
+            87
+          ],
+          [
+            8080,
+            827858,
+            87
+          ]
+        ],
+        "samples": 87
+      },
+      "65s": {
+        "endpoint_means_bb": [
+          -46.675,
+          47.575
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3734,
+            388218,
+            40
+          ],
+          [
+            3806,
+            398836,
+            40
+          ]
+        ],
+        "samples": 40
+      },
+      "66": {
+        "endpoint_means_bb": [
+          -47.53333333333333,
+          43.37777777777778
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -4278,
+            426732,
+            45
+          ],
+          [
+            3904,
+            430008,
+            45
+          ]
+        ],
+        "samples": 45
+      },
+      "72o": {
+        "endpoint_means_bb": [
+          -48.630434782608695,
+          47.743478260869566
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -11185,
+            1125225,
+            115
+          ],
+          [
+            10981,
+            1137841,
+            115
+          ]
+        ],
+        "samples": 115
+      },
+      "72s": {
+        "endpoint_means_bb": [
+          -50,
+          50
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3900,
+            390000,
+            39
+          ],
+          [
+            3900,
+            390000,
+            39
+          ]
+        ],
+        "samples": 39
+      },
+      "73o": {
+        "endpoint_means_bb": [
+          -44.598214285714285,
+          43.504464285714285
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -9990,
+            1040026,
+            112
+          ],
+          [
+            9745,
+            1018245,
+            112
+          ]
+        ],
+        "samples": 112
+      },
+      "73s": {
+        "endpoint_means_bb": [
+          -43.86764705882353,
+          44.36764705882353
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -2983,
+            317577,
+            34
+          ],
+          [
+            3017,
+            317577,
+            34
+          ]
+        ],
+        "samples": 34
+      },
+      "74o": {
+        "endpoint_means_bb": [
+          -49.484848484848484,
+          48.68181818181818
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -9798,
+            980004,
+            99
+          ],
+          [
+            9639,
+            969533,
+            99
+          ]
+        ],
+        "samples": 99
+      },
+      "74s": {
+        "endpoint_means_bb": [
+          -44.03030303030303,
+          46.878787878787875
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -2906,
+            308108,
+            33
+          ],
+          [
+            3094,
+            308108,
+            33
+          ]
+        ],
+        "samples": 33
+      },
+      "75o": {
+        "endpoint_means_bb": [
+          -46.388297872340424,
+          46.101063829787236
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -8721,
+            889201,
+            94
+          ],
+          [
+            8667,
+            891457,
+            94
+          ]
+        ],
+        "samples": 94
+      },
+      "75s": {
+        "endpoint_means_bb": [
+          -48.725,
+          45
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3898,
+            390004,
+            40
+          ],
+          [
+            3600,
+            375208,
+            40
+          ]
+        ],
+        "samples": 40
+      },
+      "76o": {
+        "endpoint_means_bb": [
+          -47.19318181818182,
+          47.446969696969695
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -12459,
+            1280493,
+            132
+          ],
+          [
+            12526,
+            1284324,
+            132
+          ]
+        ],
+        "samples": 132
+      },
+      "76s": {
+        "endpoint_means_bb": [
+          -46.357142857142854,
+          46.464285714285715
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -2596,
+            260008,
+            28
+          ],
+          [
+            2602,
+            259612,
+            28
+          ]
+        ],
+        "samples": 28
+      },
+      "77": {
+        "endpoint_means_bb": [
+          -44.458333333333336,
+          47.885416666666664
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -4268,
+            464904,
+            48
+          ],
+          [
+            4597,
+            460029,
+            48
+          ]
+        ],
+        "samples": 48
+      },
+      "82o": {
+        "endpoint_means_bb": [
+          -47.52991452991453,
+          47.05128205128205
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -11122,
+            1108740,
+            117
+          ],
+          [
+            11010,
+            1120020,
+            117
+          ]
+        ],
+        "samples": 117
+      },
+      "82s": {
+        "endpoint_means_bb": [
+          -48.5,
+          48.55882352941177
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3298,
+            330004,
+            34
+          ],
+          [
+            3302,
+            330004,
+            34
+          ]
+        ],
+        "samples": 34
+      },
+      "83o": {
+        "endpoint_means_bb": [
+          -46.76881720430107,
+          46.98924731182796
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -8699,
+            890037,
+            93
+          ],
+          [
+            8740,
+            883758,
+            93
+          ]
+        ],
+        "samples": 93
+      },
+      "83s": {
+        "endpoint_means_bb": [
+          -50,
+          44.775
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -4000,
+            400000,
+            40
+          ],
+          [
+            3582,
+            396724,
+            40
+          ]
+        ],
+        "samples": 40
+      },
+      "84o": {
+        "endpoint_means_bb": [
+          -47.7,
+          45.55909090909091
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10494,
+            1070012,
+            110
+          ],
+          [
+            10023,
+            1051621,
+            110
+          ]
+        ],
+        "samples": 110
+      },
+      "84s": {
+        "endpoint_means_bb": [
+          -46.76829268292683,
+          43.53658536585366
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3835,
+            380867,
+            41
+          ],
+          [
+            3570,
+            379892,
+            41
+          ]
+        ],
+        "samples": 41
+      },
+      "85o": {
+        "endpoint_means_bb": [
+          -47.472972972972975,
+          43.4009009009009
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10539,
+            1052421,
+            111
+          ],
+          [
+            9635,
+            1005779,
+            111
+          ]
+        ],
+        "samples": 111
+      },
+      "85s": {
+        "endpoint_means_bb": [
+          -50,
+          47.875
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -4000,
+            400000,
+            40
+          ],
+          [
+            3830,
+            394900,
+            40
+          ]
+        ],
+        "samples": 40
+      },
+      "86o": {
+        "endpoint_means_bb": [
+          -47.23451327433628,
+          45.92035398230089
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10675,
+            1061203,
+            113
+          ],
+          [
+            10378,
+            1058660,
+            113
+          ]
+        ],
+        "samples": 113
+      },
+      "86s": {
+        "endpoint_means_bb": [
+          -46.07692307692308,
+          42.85897435897436
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3594,
+            360012,
+            39
+          ],
+          [
+            3343,
+            344241,
+            39
+          ]
+        ],
+        "samples": 39
+      },
+      "87o": {
+        "endpoint_means_bb": [
+          -47.333333333333336,
+          48.71052631578947
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10792,
+            1100016,
+            114
+          ],
+          [
+            11106,
+            1110012,
+            114
+          ]
+        ],
+        "samples": 114
+      },
+      "87s": {
+        "endpoint_means_bb": [
+          -47.96,
+          48.04
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -2398,
+            240004,
+            25
+          ],
+          [
+            2402,
+            240004,
+            25
+          ]
+        ],
+        "samples": 25
+      },
+      "88": {
+        "endpoint_means_bb": [
+          -47.992063492063494,
+          48.833333333333336
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -6047,
+            602609,
+            63
+          ],
+          [
+            6153,
+            622209,
+            63
+          ]
+        ],
+        "samples": 63
+      },
+      "92o": {
+        "endpoint_means_bb": [
+          -49.02150537634409,
+          47.75268817204301
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -9118,
+            907542,
+            93
+          ],
+          [
+            8882,
+            907542,
+            93
+          ]
+        ],
+        "samples": 93
+      },
+      "92s": {
+        "endpoint_means_bb": [
+          -45.39473684210526,
+          41.723684210526315
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3450,
+            342342,
+            38
+          ],
+          [
+            3171,
+            339885,
+            38
+          ]
+        ],
+        "samples": 38
+      },
+      "93o": {
+        "endpoint_means_bb": [
+          -47.239583333333336,
+          47.098958333333336
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -9070,
+            925046,
+            96
+          ],
+          [
+            9043,
+            931809,
+            96
+          ]
+        ],
+        "samples": 96
+      },
+      "93s": {
+        "endpoint_means_bb": [
+          -48.354838709677416,
+          45.5
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -2998,
+            300004,
+            31
+          ],
+          [
+            2821,
+            296565,
+            31
+          ]
+        ],
+        "samples": 31
+      },
+      "94o": {
+        "endpoint_means_bb": [
+          -48.14705882352941,
+          47.09411764705882
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -8185,
+            818293,
+            85
+          ],
+          [
+            8006,
+            820012,
+            85
+          ]
+        ],
+        "samples": 85
+      },
+      "94s": {
+        "endpoint_means_bb": [
+          -47.82432432432432,
+          43.24324324324324
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3539,
+            351685,
+            37
+          ],
+          [
+            3200,
+            360000,
+            37
+          ]
+        ],
+        "samples": 37
+      },
+      "95o": {
+        "endpoint_means_bb": [
+          -46.785714285714285,
+          46.410714285714285
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10480,
+            1065138,
+            112
+          ],
+          [
+            10396,
+            1078698,
+            112
+          ]
+        ],
+        "samples": 112
+      },
+      "95s": {
+        "endpoint_means_bb": [
+          -47.38461538461539,
+          47.48717948717949
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3696,
+            370008,
+            39
+          ],
+          [
+            3704,
+            370008,
+            39
+          ]
+        ],
+        "samples": 39
+      },
+      "96o": {
+        "endpoint_means_bb": [
+          -48.10747663551402,
+          46.52336448598131
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10295,
+            1030013,
+            107
+          ],
+          [
+            9956,
+            1006294,
+            107
+          ]
+        ],
+        "samples": 107
+      },
+      "96s": {
+        "endpoint_means_bb": [
+          -48.63414634146341,
+          48.80487804878049
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3988,
+            398104,
+            41
+          ],
+          [
+            4002,
+            400004,
+            41
+          ]
+        ],
+        "samples": 41
+      },
+      "97o": {
+        "endpoint_means_bb": [
+          -43.78333333333333,
+          43.97222222222222
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -7881,
+            790041,
+            90
+          ],
+          [
+            7915,
+            810033,
+            90
+          ]
+        ],
+        "samples": 90
+      },
+      "97s": {
+        "endpoint_means_bb": [
+          -50,
+          50
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3000,
+            300000,
+            30
+          ],
+          [
+            3000,
+            300000,
+            30
+          ]
+        ],
+        "samples": 30
+      },
+      "98o": {
+        "endpoint_means_bb": [
+          -47.526923076923076,
+          46.176923076923075
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -12357,
+            1233227,
+            130
+          ],
+          [
+            12006,
+            1239258,
+            130
+          ]
+        ],
+        "samples": 130
+      },
+      "98s": {
+        "endpoint_means_bb": [
+          -50,
+          50
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3300,
+            330000,
+            33
+          ],
+          [
+            3300,
+            330000,
+            33
+          ]
+        ],
+        "samples": 33
+      },
+      "99": {
+        "endpoint_means_bb": [
+          -46.8125,
+          46.9375
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -5992,
+            600016,
+            64
+          ],
+          [
+            6008,
+            600016,
+            64
+          ]
+        ],
+        "samples": 64
+      },
+      "A2o": {
+        "endpoint_means_bb": [
+          -47.427927927927925,
+          45.63513513513514
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10529,
+            1065807,
+            111
+          ],
+          [
+            10131,
+            1061961,
+            111
+          ]
+        ],
+        "samples": 111
+      },
+      "A2s": {
+        "endpoint_means_bb": [
+          -47.567567567567565,
+          42.08108108108108
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3520,
+            348168,
+            37
+          ],
+          [
+            3114,
+            342524,
+            37
+          ]
+        ],
+        "samples": 37
+      },
+      "A3o": {
+        "endpoint_means_bb": [
+          -48.722772277227726,
+          46.32673267326733
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -9842,
+            981854,
+            101
+          ],
+          [
+            9358,
+            981854,
+            101
+          ]
+        ],
+        "samples": 101
+      },
+      "A3s": {
+        "endpoint_means_bb": [
+          -44.9,
+          41.766666666666666
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -2694,
+            270012,
+            30
+          ],
+          [
+            2506,
+            270012,
+            30
+          ]
+        ],
+        "samples": 30
+      },
+      "A4o": {
+        "endpoint_means_bb": [
+          -44.72844827586207,
+          45.40948275862069
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10377,
+            1093671,
+            116
+          ],
+          [
+            10535,
+            1105201,
+            116
+          ]
+        ],
+        "samples": 116
+      },
+      "A4s": {
+        "endpoint_means_bb": [
+          -48.706896551724135,
+          47.8448275862069
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -2825,
+            280625,
+            29
+          ],
+          [
+            2775,
+            280625,
+            29
+          ]
+        ],
+        "samples": 29
+      },
+      "A5o": {
+        "endpoint_means_bb": [
+          -44.40243902439025,
+          46.28048780487805
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10923,
+            1110125,
+            123
+          ],
+          [
+            11385,
+            1140813,
+            123
+          ]
+        ],
+        "samples": 123
+      },
+      "A5s": {
+        "endpoint_means_bb": [
+          -46.67391304347826,
+          42.45652173913044
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -4294,
+            430012,
+            46
+          ],
+          [
+            3906,
+            430012,
+            46
+          ]
+        ],
+        "samples": 46
+      },
+      "A6o": {
+        "endpoint_means_bb": [
+          -46.94,
+          48.895
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -9388,
+            973818,
+            100
+          ],
+          [
+            9779,
+            975633,
+            100
+          ]
+        ],
+        "samples": 100
+      },
+      "A6s": {
+        "endpoint_means_bb": [
+          -46.30487804878049,
+          41.96341463414634
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3797,
+            380009,
+            41
+          ],
+          [
+            3441,
+            373643,
+            41
+          ]
+        ],
+        "samples": 41
+      },
+      "A7o": {
+        "endpoint_means_bb": [
+          -46.08771929824562,
+          46.85087719298246
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10508,
+            1080894,
+            114
+          ],
+          [
+            10682,
+            1088362,
+            114
+          ]
+        ],
+        "samples": 114
+      },
+      "A7s": {
+        "endpoint_means_bb": [
+          -43.6875,
+          46.9375
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -2796,
+            300008,
+            32
+          ],
+          [
+            3004,
+            300008,
+            32
+          ]
+        ],
+        "samples": 32
+      },
+      "A8o": {
+        "endpoint_means_bb": [
+          -46.70909090909091,
+          48.25909090909091
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10276,
+            1066694,
+            110
+          ],
+          [
+            10617,
+            1077577,
+            110
+          ]
+        ],
+        "samples": 110
+      },
+      "A8s": {
+        "endpoint_means_bb": [
+          -43.78048780487805,
+          44.02439024390244
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3590,
+            360020,
+            41
+          ],
+          [
+            3610,
+            360020,
+            41
+          ]
+        ],
+        "samples": 41
+      },
+      "A9o": {
+        "endpoint_means_bb": [
+          -48.13084112149533,
+          48.51401869158879
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10300,
+            1070000,
+            107
+          ],
+          [
+            10382,
+            1056994,
+            107
+          ]
+        ],
+        "samples": 107
+      },
+      "A9s": {
+        "endpoint_means_bb": [
+          -45.23148148148148,
+          39.25925925925926
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -4885,
+            489045,
+            54
+          ],
+          [
+            4240,
+            474978,
+            54
+          ]
+        ],
+        "samples": 54
+      },
+      "AA": {
+        "endpoint_means_bb": [
+          -47.57142857142857,
+          48.833333333333336
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3996,
+            400008,
+            42
+          ],
+          [
+            4102,
+            410004,
+            42
+          ]
+        ],
+        "samples": 42
+      },
+      "AJo": {
+        "endpoint_means_bb": [
+          -45.24152542372882,
+          47.00423728813559
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10677,
+            1122083,
+            118
+          ],
+          [
+            11093,
+            1120485,
+            118
+          ]
+        ],
+        "samples": 118
+      },
+      "AJs": {
+        "endpoint_means_bb": [
+          -47.38461538461539,
+          47.48717948717949
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3696,
+            370008,
+            39
+          ],
+          [
+            3704,
+            370008,
+            39
+          ]
+        ],
+        "samples": 39
+      },
+      "AKo": {
+        "endpoint_means_bb": [
+          -45.160377358490564,
+          46.367924528301884
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -9574,
+            995964,
+            106
+          ],
+          [
+            9830,
+            996748,
+            106
+          ]
+        ],
+        "samples": 106
+      },
+      "AKs": {
+        "endpoint_means_bb": [
+          -45.80555555555556,
+          50
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3298,
+            350004,
+            36
+          ],
+          [
+            3600,
+            360000,
+            36
+          ]
+        ],
+        "samples": 36
+      },
+      "AQo": {
+        "endpoint_means_bb": [
+          -48.2801724137931,
+          47.241379310344826
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -11201,
+            1114981,
+            116
+          ],
+          [
+            10960,
+            1102520,
+            116
+          ]
+        ],
+        "samples": 116
+      },
+      "AQs": {
+        "endpoint_means_bb": [
+          -47.24285714285714,
+          48.042857142857144
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3307,
+            348649,
+            35
+          ],
+          [
+            3363,
+            341369,
+            35
+          ]
+        ],
+        "samples": 35
+      },
+      "ATo": {
+        "endpoint_means_bb": [
+          -49.84090909090909,
+          47.34659090909091
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -8772,
+            875184,
+            88
+          ],
+          [
+            8333,
+            851469,
+            88
+          ]
+        ],
+        "samples": 88
+      },
+      "ATs": {
+        "endpoint_means_bb": [
+          -48.30612244897959,
+          48.61224489795919
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -4734,
+            471300,
+            49
+          ],
+          [
+            4764,
+            481296,
+            49
+          ]
+        ],
+        "samples": 49
+      },
+      "J2o": {
+        "endpoint_means_bb": [
+          -47.24311926605505,
+          46.41284403669725
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10299,
+            1056785,
+            109
+          ],
+          [
+            10118,
+            1062956,
+            109
+          ]
+        ],
+        "samples": 109
+      },
+      "J2s": {
+        "endpoint_means_bb": [
+          -48.111111111111114,
+          44.48148148148148
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -2598,
+            260004,
+            27
+          ],
+          [
+            2402,
+            260004,
+            27
+          ]
+        ],
+        "samples": 27
+      },
+      "J3o": {
+        "endpoint_means_bb": [
+          -46.4,
+          44.06956521739131
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10672,
+            1083778,
+            115
+          ],
+          [
+            10136,
+            1082242,
+            115
+          ]
+        ],
+        "samples": 115
+      },
+      "J3s": {
+        "endpoint_means_bb": [
+          -50,
+          44.5625
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3200,
+            320000,
+            32
+          ],
+          [
+            2852,
+            312304,
+            32
+          ]
+        ],
+        "samples": 32
+      },
+      "J4o": {
+        "endpoint_means_bb": [
+          -46.97844827586207,
+          44.47844827586207
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10899,
+            1099245,
+            116
+          ],
+          [
+            10319,
+            1083801,
+            116
+          ]
+        ],
+        "samples": 116
+      },
+      "J4s": {
+        "endpoint_means_bb": [
+          -42.4,
+          45.74285714285714
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -2968,
+            334904,
+            35
+          ],
+          [
+            3202,
+            340004,
+            35
+          ]
+        ],
+        "samples": 35
+      },
+      "J5o": {
+        "endpoint_means_bb": [
+          -46.74,
+          46.42
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -9348,
+            933624,
+            100
+          ],
+          [
+            9284,
+            947712,
+            100
+          ]
+        ],
+        "samples": 100
+      },
+      "J5s": {
+        "endpoint_means_bb": [
+          -48.241379310344826,
+          48.310344827586206
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -2798,
+            280004,
+            29
+          ],
+          [
+            2802,
+            280004,
+            29
+          ]
+        ],
+        "samples": 29
+      },
+      "J6o": {
+        "endpoint_means_bb": [
+          -46.228070175438596,
+          45.0921052631579
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10540,
+            1042596,
+            114
+          ],
+          [
+            10281,
+            1064987,
+            114
+          ]
+        ],
+        "samples": 114
+      },
+      "J6s": {
+        "endpoint_means_bb": [
+          -46.70967741935484,
+          46.83870967741935
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -2896,
+            290008,
+            31
+          ],
+          [
+            2904,
+            290008,
+            31
+          ]
+        ],
+        "samples": 31
+      },
+      "J7o": {
+        "endpoint_means_bb": [
+          -49.17142857142857,
+          48.58095238095238
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10326,
+            1028646,
+            105
+          ],
+          [
+            10202,
+            1030372,
+            105
+          ]
+        ],
+        "samples": 105
+      },
+      "J7s": {
+        "endpoint_means_bb": [
+          -50,
+          50
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3500,
+            350000,
+            35
+          ],
+          [
+            3500,
+            350000,
+            35
+          ]
+        ],
+        "samples": 35
+      },
+      "J8o": {
+        "endpoint_means_bb": [
+          -44.57,
+          46.23
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -8914,
+            891196,
+            100
+          ],
+          [
+            9246,
+            932076,
+            100
+          ]
+        ],
+        "samples": 100
+      },
+      "J8s": {
+        "endpoint_means_bb": [
+          -43.81395348837209,
+          46.58139534883721
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3768,
+            395488,
+            43
+          ],
+          [
+            4006,
+            400012,
+            43
+          ]
+        ],
+        "samples": 43
+      },
+      "J9o": {
+        "endpoint_means_bb": [
+          -44.01485148514851,
+          46.31188118811881
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -8891,
+            950021,
+            101
+          ],
+          [
+            9355,
+            942937,
+            101
+          ]
+        ],
+        "samples": 101
+      },
+      "J9s": {
+        "endpoint_means_bb": [
+          -47.166666666666664,
+          48.638888888888886
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3396,
+            340008,
+            36
+          ],
+          [
+            3502,
+            350004,
+            36
+          ]
+        ],
+        "samples": 36
+      },
+      "JJ": {
+        "endpoint_means_bb": [
+          -43.16,
+          46.26
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -4316,
+            467856,
+            50
+          ],
+          [
+            4626,
+            476092,
+            50
+          ]
+        ],
+        "samples": 50
+      },
+      "JTo": {
+        "endpoint_means_bb": [
+          -46.30555555555556,
+          47.74074074074074
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10002,
+            1019320,
+            108
+          ],
+          [
+            10312,
+            1032750,
+            108
+          ]
+        ],
+        "samples": 108
+      },
+      "JTs": {
+        "endpoint_means_bb": [
+          -46.078125,
+          45.578125
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -2949,
+            292817,
+            32
+          ],
+          [
+            2917,
+            307229,
+            32
+          ]
+        ],
+        "samples": 32
+      },
+      "K2o": {
+        "endpoint_means_bb": [
+          -47.04040404040404,
+          48.23737373737374
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -9314,
+            946412,
+            99
+          ],
+          [
+            9551,
+            962513,
+            99
+          ]
+        ],
+        "samples": 99
+      },
+      "K2s": {
+        "endpoint_means_bb": [
+          -50,
+          50
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -4300,
+            430000,
+            43
+          ],
+          [
+            4300,
+            430000,
+            43
+          ]
+        ],
+        "samples": 43
+      },
+      "K3o": {
+        "endpoint_means_bb": [
+          -46.8421052631579,
+          45.06315789473684
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -8900,
+            885520,
+            95
+          ],
+          [
+            8562,
+            881448,
+            95
+          ]
+        ],
+        "samples": 95
+      },
+      "K3s": {
+        "endpoint_means_bb": [
+          -43.71590909090909,
+          44.10227272727273
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3847,
+            414019,
+            44
+          ],
+          [
+            3881,
+            404803,
+            44
+          ]
+        ],
+        "samples": 44
+      },
+      "K4o": {
+        "endpoint_means_bb": [
+          -43.17788461538461,
+          45.26442307692308
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -8981,
+            920041,
+            104
+          ],
+          [
+            9415,
+            940033,
+            104
+          ]
+        ],
+        "samples": 104
+      },
+      "K4s": {
+        "endpoint_means_bb": [
+          -48.544117647058826,
+          48.51470588235294
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3301,
+            330001,
+            34
+          ],
+          [
+            3299,
+            330001,
+            34
+          ]
+        ],
+        "samples": 34
+      },
+      "K5o": {
+        "endpoint_means_bb": [
+          -48.97826086956522,
+          48.23478260869565
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -11265,
+            1119559,
+            115
+          ],
+          [
+            11094,
+            1126078,
+            115
+          ]
+        ],
+        "samples": 115
+      },
+      "K5s": {
+        "endpoint_means_bb": [
+          -50,
+          50
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3200,
+            320000,
+            32
+          ],
+          [
+            3200,
+            320000,
+            32
+          ]
+        ],
+        "samples": 32
+      },
+      "K6o": {
+        "endpoint_means_bb": [
+          -48.81443298969072,
+          48.324742268041234
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -9470,
+            964612,
+            97
+          ],
+          [
+            9375,
+            958177,
+            97
+          ]
+        ],
+        "samples": 97
+      },
+      "K6s": {
+        "endpoint_means_bb": [
+          -46.15,
+          43.85
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -2769,
+            275337,
+            30
+          ],
+          [
+            2631,
+            275337,
+            30
+          ]
+        ],
+        "samples": 30
+      },
+      "K7o": {
+        "endpoint_means_bb": [
+          -45.86893203883495,
+          47.62135922330097
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -9449,
+            963745,
+            103
+          ],
+          [
+            9810,
+            980020,
+            103
+          ]
+        ],
+        "samples": 103
+      },
+      "K7s": {
+        "endpoint_means_bb": [
+          -46.6,
+          46.733333333333334
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -2796,
+            280008,
+            30
+          ],
+          [
+            2804,
+            280008,
+            30
+          ]
+        ],
+        "samples": 30
+      },
+      "K8o": {
+        "endpoint_means_bb": [
+          -47.82377049180328,
+          45.872950819672134
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -11669,
+            1165793,
+            122
+          ],
+          [
+            11193,
+            1174759,
+            122
+          ]
+        ],
+        "samples": 122
+      },
+      "K8s": {
+        "endpoint_means_bb": [
+          -47.282051282051285,
+          45.833333333333336
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3688,
+            364702,
+            39
+          ],
+          [
+            3575,
+            360733,
+            39
+          ]
+        ],
+        "samples": 39
+      },
+      "K9o": {
+        "endpoint_means_bb": [
+          -45.84375,
+          47.13392857142857
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10269,
+            1057459,
+            112
+          ],
+          [
+            10558,
+            1062130,
+            112
+          ]
+        ],
+        "samples": 112
+      },
+      "K9s": {
+        "endpoint_means_bb": [
+          -47,
+          44.44444444444444
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3384,
+            337752,
+            36
+          ],
+          [
+            3200,
+            338568,
+            36
+          ]
+        ],
+        "samples": 36
+      },
+      "KJo": {
+        "endpoint_means_bb": [
+          -47.450980392156865,
+          46.47549019607843
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -9680,
+            982696,
+            102
+          ],
+          [
+            9481,
+            976417,
+            102
+          ]
+        ],
+        "samples": 102
+      },
+      "KJs": {
+        "endpoint_means_bb": [
+          -44.68421052631579,
+          44.78947368421053
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3396,
+            360008,
+            38
+          ],
+          [
+            3404,
+            360008,
+            38
+          ]
+        ],
+        "samples": 38
+      },
+      "KK": {
+        "endpoint_means_bb": [
+          -42.043103448275865,
+          46.62068965517241
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -4877,
+            508309,
+            58
+          ],
+          [
+            5408,
+            540016,
+            58
+          ]
+        ],
+        "samples": 58
+      },
+      "KQo": {
+        "endpoint_means_bb": [
+          -47.60280373831776,
+          47.691588785046726
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10187,
+            1014589,
+            107
+          ],
+          [
+            10206,
+            1023540,
+            107
+          ]
+        ],
+        "samples": 107
+      },
+      "KQs": {
+        "endpoint_means_bb": [
+          -47.608108108108105,
+          48.0945945945946
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3523,
+            352005,
+            37
+          ],
+          [
+            3559,
+            361681,
+            37
+          ]
+        ],
+        "samples": 37
+      },
+      "KTo": {
+        "endpoint_means_bb": [
+          -46.06140350877193,
+          45.416666666666664
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10502,
+            1061130,
+            114
+          ],
+          [
+            10355,
+            1077645,
+            114
+          ]
+        ],
+        "samples": 114
+      },
+      "KTs": {
+        "endpoint_means_bb": [
+          -47.7093023255814,
+          47.674418604651166
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -4103,
+            429409,
+            43
+          ],
+          [
+            4100,
+            430000,
+            43
+          ]
+        ],
+        "samples": 43
+      },
+      "Q2o": {
+        "endpoint_means_bb": [
+          -46.294117647058826,
+          44.84033613445378
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -11018,
+            1099150,
+            119
+          ],
+          [
+            10672,
+            1072544,
+            119
+          ]
+        ],
+        "samples": 119
+      },
+      "Q2s": {
+        "endpoint_means_bb": [
+          -47.38461538461539,
+          48.743589743589745
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3696,
+            370008,
+            39
+          ],
+          [
+            3802,
+            380004,
+            39
+          ]
+        ],
+        "samples": 39
+      },
+      "Q3o": {
+        "endpoint_means_bb": [
+          -48.00892857142857,
+          47.535714285714285
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10754,
+            1073258,
+            112
+          ],
+          [
+            10648,
+            1067322,
+            112
+          ]
+        ],
+        "samples": 112
+      },
+      "Q3s": {
+        "endpoint_means_bb": [
+          -48.725,
+          48.775
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3898,
+            390004,
+            40
+          ],
+          [
+            3902,
+            390004,
+            40
+          ]
+        ],
+        "samples": 40
+      },
+      "Q4o": {
+        "endpoint_means_bb": [
+          -45.359223300970875,
+          47.62135922330097
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -9344,
+            972846,
+            103
+          ],
+          [
+            9810,
+            980020,
+            103
+          ]
+        ],
+        "samples": 103
+      },
+      "Q4s": {
+        "endpoint_means_bb": [
+          -45.421875,
+          43.90625
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -2907,
+            304665,
+            32
+          ],
+          [
+            2810,
+            318100,
+            32
+          ]
+        ],
+        "samples": 32
+      },
+      "Q5o": {
+        "endpoint_means_bb": [
+          -47.54587155963303,
+          46.9954128440367
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10365,
+            1050657,
+            109
+          ],
+          [
+            10245,
+            1053057,
+            109
+          ]
+        ],
+        "samples": 109
+      },
+      "Q5s": {
+        "endpoint_means_bb": [
+          -47.114285714285714,
+          45.74285714285714
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3298,
+            330004,
+            35
+          ],
+          [
+            3202,
+            340004,
+            35
+          ]
+        ],
+        "samples": 35
+      },
+      "Q6o": {
+        "endpoint_means_bb": [
+          -47.8375,
+          47.94166666666667
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -11481,
+            1157921,
+            120
+          ],
+          [
+            11506,
+            1170012,
+            120
+          ]
+        ],
+        "samples": 120
+      },
+      "Q6s": {
+        "endpoint_means_bb": [
+          -47.5125,
+          47.5
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3801,
+            399801,
+            40
+          ],
+          [
+            3800,
+            400000,
+            40
+          ]
+        ],
+        "samples": 40
+      },
+      "Q7o": {
+        "endpoint_means_bb": [
+          -46.89915966386555,
+          45.7436974789916
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -11162,
+            1113646,
+            119
+          ],
+          [
+            10887,
+            1106287,
+            119
+          ]
+        ],
+        "samples": 119
+      },
+      "Q7s": {
+        "endpoint_means_bb": [
+          -49.035714285714285,
+          48.13095238095238
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -4119,
+            407765,
+            42
+          ],
+          [
+            4043,
+            408641,
+            42
+          ]
+        ],
+        "samples": 42
+      },
+      "Q8o": {
+        "endpoint_means_bb": [
+          -47.6530612244898,
+          47.19387755102041
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -9340,
+            932038,
+            98
+          ],
+          [
+            9250,
+            933038,
+            98
+          ]
+        ],
+        "samples": 98
+      },
+      "Q8s": {
+        "endpoint_means_bb": [
+          -48.5,
+          47.11764705882353
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3298,
+            330004,
+            34
+          ],
+          [
+            3204,
+            320008,
+            34
+          ]
+        ],
+        "samples": 34
+      },
+      "Q9o": {
+        "endpoint_means_bb": [
+          -48.02066115702479,
+          47.84710743801653
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -11621,
+            1160857,
+            121
+          ],
+          [
+            11579,
+            1160857,
+            121
+          ]
+        ],
+        "samples": 121
+      },
+      "Q9s": {
+        "endpoint_means_bb": [
+          -47.22222222222222,
+          50
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3400,
+            360000,
+            36
+          ],
+          [
+            3600,
+            360000,
+            36
+          ]
+        ],
+        "samples": 36
+      },
+      "QJo": {
+        "endpoint_means_bb": [
+          -47.111111111111114,
+          45.74074074074074
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10176,
+            1040336,
+            108
+          ],
+          [
+            9880,
+            1030706,
+            108
+          ]
+        ],
+        "samples": 108
+      },
+      "QJs": {
+        "endpoint_means_bb": [
+          -50,
+          50
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -2900,
+            290000,
+            29
+          ],
+          [
+            2900,
+            290000,
+            29
+          ]
+        ],
+        "samples": 29
+      },
+      "QQ": {
+        "endpoint_means_bb": [
+          -49.089285714285715,
+          49.125
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -5498,
+            550004,
+            56
+          ],
+          [
+            5502,
+            550004,
+            56
+          ]
+        ],
+        "samples": 56
+      },
+      "QTo": {
+        "endpoint_means_bb": [
+          -47.80357142857143,
+          47.69642857142857
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -13385,
+            1339433,
+            140
+          ],
+          [
+            13355,
+            1343045,
+            140
+          ]
+        ],
+        "samples": 140
+      },
+      "QTs": {
+        "endpoint_means_bb": [
+          -50,
+          50
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -2700,
+            270000,
+            27
+          ],
+          [
+            2700,
+            270000,
+            27
+          ]
+        ],
+        "samples": 27
+      },
+      "T2o": {
+        "endpoint_means_bb": [
+          -46.76495726495727,
+          44.55128205128205
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10943,
+            1091979,
+            117
+          ],
+          [
+            10425,
+            1070749,
+            117
+          ]
+        ],
+        "samples": 117
+      },
+      "T2s": {
+        "endpoint_means_bb": [
+          -48.785714285714285,
+          48.833333333333336
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -4098,
+            410004,
+            42
+          ],
+          [
+            4102,
+            410004,
+            42
+          ]
+        ],
+        "samples": 42
+      },
+      "T3o": {
+        "endpoint_means_bb": [
+          -47.91826923076923,
+          47.42307692307692
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -9967,
+            1024401,
+            104
+          ],
+          [
+            9864,
+            1029640,
+            104
+          ]
+        ],
+        "samples": 104
+      },
+      "T3s": {
+        "endpoint_means_bb": [
+          -45.69444444444444,
+          45.916666666666664
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3290,
+            329228,
+            36
+          ],
+          [
+            3306,
+            330012,
+            36
+          ]
+        ],
+        "samples": 36
+      },
+      "T4o": {
+        "endpoint_means_bb": [
+          -45.773109243697476,
+          44.28151260504202
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -10894,
+            1084258,
+            119
+          ],
+          [
+            10539,
+            1083301,
+            119
+          ]
+        ],
+        "samples": 119
+      },
+      "T4s": {
+        "endpoint_means_bb": [
+          -46.84375,
+          45.40625
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -2998,
+            300004,
+            32
+          ],
+          [
+            2906,
+            290012,
+            32
+          ]
+        ],
+        "samples": 32
+      },
+      "T5o": {
+        "endpoint_means_bb": [
+          -48.604166666666664,
+          49.170833333333334
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -11665,
+            1164633,
+            120
+          ],
+          [
+            11801,
+            1180005,
+            120
+          ]
+        ],
+        "samples": 120
+      },
+      "T5s": {
+        "endpoint_means_bb": [
+          -50,
+          47.6375
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -4000,
+            400000,
+            40
+          ],
+          [
+            3811,
+            397921,
+            40
+          ]
+        ],
+        "samples": 40
+      },
+      "T6o": {
+        "endpoint_means_bb": [
+          -47.63385826771653,
+          47.838582677165356
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -12099,
+            1250005,
+            127
+          ],
+          [
+            12151,
+            1242505,
+            127
+          ]
+        ],
+        "samples": 127
+      },
+      "T6s": {
+        "endpoint_means_bb": [
+          -48.5945945945946,
+          48.63513513513514
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -3596,
+            359026,
+            37
+          ],
+          [
+            3599,
+            360001,
+            37
+          ]
+        ],
+        "samples": 37
+      },
+      "T7o": {
+        "endpoint_means_bb": [
+          -44.79090909090909,
+          48.377272727272725
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -9854,
+            1020302,
+            110
+          ],
+          [
+            10643,
+            1073369,
+            110
+          ]
+        ],
+        "samples": 110
+      },
+      "T7s": {
+        "endpoint_means_bb": [
+          -48.354838709677416,
+          42.306451612903224
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -2998,
+            300004,
+            31
+          ],
+          [
+            2623,
+            296245,
+            31
+          ]
+        ],
+        "samples": 31
+      },
+      "T8o": {
+        "endpoint_means_bb": [
+          -49.3855421686747,
+          49.006024096385545
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -8198,
+            820004,
+            83
+          ],
+          [
+            8135,
+            824225,
+            83
+          ]
+        ],
+        "samples": 83
+      },
+      "T8s": {
+        "endpoint_means_bb": [
+          -49.845238095238095,
+          47.773809523809526
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -4187,
+            417569,
+            42
+          ],
+          [
+            4013,
+            417569,
+            42
+          ]
+        ],
+        "samples": 42
+      },
+      "T9o": {
+        "endpoint_means_bb": [
+          -49.81122448979592,
+          48.515306122448976
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -9763,
+            973969,
+            98
+          ],
+          [
+            9509,
+            968653,
+            98
+          ]
+        ],
+        "samples": 98
+      },
+      "T9s": {
+        "endpoint_means_bb": [
+          -44.407407407407405,
+          48.18518518518518
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -2398,
+            260004,
+            27
+          ],
+          [
+            2602,
+            260004,
+            27
+          ]
+        ],
+        "samples": 27
+      },
+      "TT": {
+        "endpoint_means_bb": [
+          -47.65625,
+          49.979166666666664
+        ],
+        "ev_envelope_bb": [
+          -50,
+          50
+        ],
+        "point_ev_bb": null,
+        "raw_endpoint_moments": [
+          [
+            -4575,
+            475625,
+            48
+          ],
+          [
+            4798,
+            479604,
+            48
+          ]
+        ],
+        "samples": 48
+      }
+    },
+    "known_decisions": {
+      "seat0:board0": 12422,
+      "seat1:board0": 2590
+    },
+    "point_ev_bb": null,
+    "policy_digest": "6e826e4f55b316a952eb06a111feb65d447ce5e5f5db9eedac319db9ca992f5e",
+    "samples": 12000,
+    "schema": "pokerid-strict-partial-policy-envelope-v1",
+    "scope": "confidence envelope for every completion of partial policy; no action or EV invented at missing rows",
+    "seed": 300017,
+    "source_sha256": "83782e2769778fcc26e615e09c03413002120428b555f3b4a4bcd90043aee3f5",
+    "stopping_reasons": {
+      "known_terminal": 564,
+      "unknown:seat0:board0:absent:terminal_only_envelope": 162,
+      "unknown:seat0:board0:absent:utility_span": 1183,
+      "unknown:seat0:board0:no_owner_update:terminal_only_envelope": 18,
+      "unknown:seat0:board0:no_owner_update:utility_span": 141,
+      "unknown:seat1:board0:absent:terminal_only_envelope": 148,
+      "unknown:seat1:board0:absent:utility_span": 7914,
+      "unknown:seat1:board0:no_owner_update:terminal_only_envelope": 26,
+      "unknown:seat1:board0:no_owner_update:utility_span": 1485,
+      "unknown:seat1:board3:absent:utility_span": 359
+    },
+    "trajectory_sha256": "dc679418bbc2ee1349471d060fe40fd0759899ca2c6f7ab0cf472be6ed9de052"
+  }
+}

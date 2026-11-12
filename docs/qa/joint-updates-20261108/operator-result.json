@@ -1,0 +1,10 @@
+{
+  "status": "FINITE_WORKERS_FINISHED",
+  "elapsed_seconds": 5140.214581828004,
+  "workers": {
+    "vanilla_linear": 0,
+    "cfr_plus": 0,
+    "dcfr": 0
+  },
+  "max_child_rss_KiB": 633368
+}

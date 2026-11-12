@@ -1,0 +1,12 @@
+{
+  "workspace_free": 2210861056,
+  "full7_db_bytes": 1138569216,
+  "full_copy_required_with_2GiB_and_32MiB_margin": 3319607296,
+  "full_copy_deficit": 1108746240,
+  "compact_policy_bytes": {
+    "frozen": 9289728,
+    "full7": 8544256
+  },
+  "full_BR_qualification": "COMPLETE2/2",
+  "new_full_learning": "BLOCKED BY GATE AND FULL-COPY CAPACITY"
+}

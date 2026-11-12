@@ -1,0 +1,20 @@
+test_action_identity_required (__main__.Export.test_action_identity_required) ... ok
+test_action_order_is_identity_not_position_guess (__main__.Export.test_action_order_is_identity_not_position_guess) ... ok
+test_board_blocks_expected_coverage (__main__.Export.test_board_blocks_expected_coverage) ... ok
+test_callback_without_snapshot_refused (__main__.Export.test_callback_without_snapshot_refused) ... ok
+test_complete_class_requires_every_eligible_combination (__main__.Export.test_complete_class_requires_every_eligible_combination) ... ok
+test_duplicate_combo_and_empty_export_refused (__main__.Export.test_duplicate_combo_and_empty_export_refused) ... ok
+test_exact_json_transport_keeps_null_and_separates_reach (__main__.Export.test_exact_json_transport_keeps_null_and_separates_reach) ... ok
+test_invalid_mass_refused (__main__.Export.test_invalid_mass_refused) ... ok
+test_observation_and_policy_identity_required (__main__.Export.test_observation_and_policy_identity_required) ... ok
+test_observed_native_snapshot_and_checkpoint_digest (__main__.Export.test_observed_native_snapshot_and_checkpoint_digest) ... ok
+test_real_native_combo_and_partial_class (__main__.Export.test_real_native_combo_and_partial_class) ... ok
+test_record_frozen_and_explicit_support_provenance (__main__.Export.test_record_frozen_and_explicit_support_provenance) ... ok
+test_snapshot_immutable_from_input_and_stable_digest (__main__.Export.test_snapshot_immutable_from_input_and_stable_digest) ... ok
+test_snapshot_unknown_and_invalid_probabilities_refused (__main__.Export.test_snapshot_unknown_and_invalid_probabilities_refused) ... ok
+test_zero_mass_remains_unknown (__main__.Export.test_zero_mass_remains_unknown) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.898s
+
+OK

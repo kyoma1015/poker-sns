@@ -1,0 +1,102 @@
+{
+  "UI_added": 0,
+  "baseline": {
+    "bb_br_gain_bb": 0.44130433309171235,
+    "nashconv_bb": 0.9321071527220774,
+    "ordinary_admission": false,
+    "restricted_target_pass": false,
+    "sb_br_gain_bb": 0.49080281963036515,
+    "sb_ev_bb": 0.030880258444870145
+  },
+  "coverage": {
+    "alternating4": {
+      "UI_added": 0,
+      "action_ev_cells": 2028,
+      "contexts": 4,
+      "hand_rows": 676,
+      "normal": false
+    },
+    "alternating5": {
+      "UI_added": 0,
+      "action_ev_cells": 2028,
+      "contexts": 4,
+      "hand_rows": 676,
+      "normal": false
+    },
+    "mixture025": {
+      "UI_added": 0,
+      "action_ev_cells": 2028,
+      "contexts": 4,
+      "hand_rows": 676,
+      "normal": false
+    }
+  },
+  "external_GTO": "NOT PERFORMED",
+  "formal_acceptance": [
+    0,
+    12
+  ],
+  "normal_GTO_added": 0,
+  "parent_cfrplus3": {
+    "bb_br_gain_bb": 1.5002664625404356,
+    "delta_vs_frozen_bb": 3.956549521771612,
+    "delta_vs_vanilla2_bb": 3.697837130561206,
+    "epoch": 3,
+    "improves_frozen": false,
+    "nashconv_bb": 4.8886566744936895,
+    "ordinary_admission": false,
+    "restricted_target_pass": false,
+    "sb_br_gain_bb": 3.388390211953254,
+    "sb_ev_bb": 0.10664967851256271,
+    "status": "COMPLETE"
+  },
+  "points": {
+    "alternating4": {
+      "bb_br_gain_bb": 2.0641361505297104,
+      "delta_frozen_bb": 3.589907692108254,
+      "epoch": 4,
+      "improves_frozen": false,
+      "nashconv_bb": 4.5220148448303314,
+      "ordinary_admission": false,
+      "restricted_target_pass": false,
+      "sb_br_gain_bb": 2.457878694300621,
+      "sb_ev_bb": 0.13694469211204544,
+      "source_sha256": "b187a4fa401dc35e16f135f477fc8c4018140130d87ce79d616874ed09354c5e",
+      "status": "COMPLETE"
+    },
+    "alternating5": {
+      "bb_br_gain_bb": 1.1940675892226924,
+      "delta_frozen_bb": 2.0025388565900637,
+      "epoch": 5,
+      "improves_frozen": false,
+      "nashconv_bb": 2.934646009312141,
+      "ordinary_admission": false,
+      "restricted_target_pass": false,
+      "sb_br_gain_bb": 1.7405784200894485,
+      "sb_ev_bb": 0.06990256159323165,
+      "source_sha256": "e27ffd07ed98c00d5fc742a84ca59e64d5d91544509df7ff73567d6394bcc860",
+      "status": "COMPLETE"
+    },
+    "mixture025": {
+      "bb_br_gain_bb": 0.382669075258809,
+      "delta_frozen_bb": 0.024755858568399458,
+      "epoch": 0,
+      "improves_frozen": false,
+      "nashconv_bb": 0.9568630112904769,
+      "ordinary_admission": false,
+      "restricted_target_pass": false,
+      "sb_br_gain_bb": 0.5741939360316679,
+      "sb_ev_bb": 0.03555120705127378,
+      "source_sha256": "c7bf2a18bc10f4246e1d6f5f7f7059945ecceea53cacfc17819a55f8dfb912d9",
+      "status": "COMPLETE"
+    }
+  },
+  "real_game_error": "UNKNOWN",
+  "selected_same_game_profile": {
+    "name": "immutable_frozen",
+    "nashconv_bb": 0.9321071527220774
+  },
+  "selection_scope": "same limited optimization game,not holdout/fullNLHE accuracy",
+  "vector_call_cpu_speedup": 3.8009026328405793,
+  "vector_full_population_pass": true
+}

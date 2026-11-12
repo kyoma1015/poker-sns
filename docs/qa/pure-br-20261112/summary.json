@@ -1,0 +1,63 @@
+{
+  "external_GTO_comparison": "UNPERFORMED",
+  "formal_acceptance_after": [
+    0,
+    12
+  ],
+  "formal_acceptance_before": [
+    0,
+    12
+  ],
+  "frozen_nashconv_change_bb": 0.0,
+  "full7_minus_frozen_nashconv_bb": 2.1815706299360165,
+  "full7_nashconv_change_vs_its_prior_measurement_bb": 0.0,
+  "intermediate_head_CI": {
+    "fail": 0,
+    "head": "e3151279355336ab5768e5c5c57602278f0b2ba4",
+    "success": 6
+  },
+  "latest_commit_CI": "Resulting-commit CI is recorded separately in PRbody/final-head external receipt;this precommit artifact makes no latest-head success claim",
+  "new_full_training_runs": 0,
+  "new_methods_adopted": 0,
+  "normal_GTO_added": 0,
+  "population": {
+    "complete_target_profiles": 2,
+    "continuation_branches": 9,
+    "orbits": 1755,
+    "physical_flops": 22100
+  },
+  "real_game_approximation_error": "UNKNOWN",
+  "small_cohorts": 8,
+  "small_eligible": [],
+  "small_methods": 9,
+  "targets": {
+    "actual_failed_full7": {
+      "baseline_sb_ev_bb": -0.10930047334555032,
+      "independent_br_gains_bb": [
+        2.038932150810659,
+        1.0747456318474349
+      ],
+      "max_agreement_error_bb": 2.547295707699959e-12,
+      "nashconv_bb": 3.113677782658094,
+      "pass_tolerance": true,
+      "realized_br_gains_bb": [
+        2.038932150810658,
+        1.0747456318474335
+      ]
+    },
+    "immutable_frozen": {
+      "baseline_sb_ev_bb": 0.030880258444870145,
+      "independent_br_gains_bb": [
+        0.49080281963036515,
+        0.44130433309171235
+      ],
+      "max_agreement_error_bb": 4.934941344458821e-14,
+      "nashconv_bb": 0.9321071527220774,
+      "pass_tolerance": true,
+      "realized_br_gains_bb": [
+        0.4908028196303655,
+        0.4413043330917118
+      ]
+    }
+  }
+}

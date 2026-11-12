@@ -1,0 +1,262 @@
+{
+  "baseline_summary": {
+    "checkdown": {
+      "rfi": {
+        "action_max_radius_bb": 0.2963921930747544,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 0.24475675954521955
+      },
+      "vs_3bet": {
+        "action_max_radius_bb": 1.742569594130681,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 1.7422708854105529
+      },
+      "vs_4bet": {
+        "action_max_radius_bb": 6.448430196734156,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 6.22511267088551
+      },
+      "vs_open": {
+        "action_max_radius_bb": 0.7670225018824554,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 0.7669005261946131
+      }
+    },
+    "flop_controller": {
+      "rfi": {
+        "action_max_radius_bb": 0.3532865226359655,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 0.3405681250175817
+      },
+      "vs_3bet": {
+        "action_max_radius_bb": 2.1859052451631897,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 2.185547243879054
+      },
+      "vs_4bet": {
+        "action_max_radius_bb": 5.056212499328809,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 5.055974554205212
+      },
+      "vs_open": {
+        "action_max_radius_bb": 0.7122642853094946,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 0.7121559503773102
+      }
+    }
+  },
+  "cfr_iterations_added": 0,
+  "confidence": 0.99,
+  "exact_cells": {
+    "boards_per_matchup": 1712304,
+    "class_records": 890,
+    "concrete_matchups_enumerated": 2210,
+    "exact_plane_entries": 2287,
+    "exact_showdown_cells": 1611,
+    "seconds": 265.57970712600036,
+    "targets": [
+      "AA",
+      "KK",
+      "AKo",
+      "AKs"
+    ]
+  },
+  "expected_controller_game_bounds": {
+    "checkdown": {
+      "confidence": 0.9975,
+      "expected_game_convergence_verified": false,
+      "nashconv_interval_bb": [
+        0.0,
+        0.1520740833706142
+      ],
+      "nashconv_point_bb": 0.004813571364245074,
+      "players": [
+        {
+          "best_response_ev_bb": -0.04469155745636337,
+          "hero": 0,
+          "interval_bb": [
+            -0.09704465058365908,
+            0.02079035037129173
+          ],
+          "profile_ev_bb": -0.04734575063520625
+        },
+        {
+          "best_response_ev_bb": 0.049505128820608445,
+          "hero": 1,
+          "interval_bb": [
+            -0.009280161151581071,
+            0.13128373199932247
+          ],
+          "profile_ev_bb": 0.04734575063520627
+        }
+      ],
+      "real_game_gto_verified": false,
+      "scope": "Global information-set best response against fixed opponent in fixed continuation-controller game only; uniform terminal confidence before maximization; not real-game exploitability"
+    },
+    "flop_controller": {
+      "confidence": 0.9975,
+      "expected_game_convergence_verified": false,
+      "nashconv_interval_bb": [
+        0.0,
+        0.2801729426381296
+      ],
+      "nashconv_point_bb": 0.007488843013203822,
+      "players": [
+        {
+          "best_response_ev_bb": 0.02349002826979341,
+          "hero": 0,
+          "interval_bb": [
+            -0.05158236699000447,
+            0.15364088630880013
+          ],
+          "profile_ev_bb": 0.020167446508037472
+        },
+        {
+          "best_response_ev_bb": -0.016001185256589587,
+          "hero": 1,
+          "interval_bb": [
+            -0.10274373250243385,
+            0.12653205532932943
+          ],
+          "profile_ev_bb": -0.020167446508037475
+        }
+      ],
+      "real_game_gto_verified": false,
+      "scope": "Global information-set best response against fixed opponent in fixed continuation-controller game only; uniform terminal confidence before maximization; not real-game exploitability"
+    }
+  },
+  "fixed_policy_digests": {
+    "checkdown": "cc653c5dcb882ddd95dc6d20d77fd82277d877dd0f612c1f45888fb1d6604c1c",
+    "flop_controller": "0146870c1b2f2168940f4b51a31563417c63c236f808b5eb0e27981833616fec"
+  },
+  "formal_acceptance_complete": 0,
+  "full_game_gto_verified": false,
+  "improved_summary": {
+    "checkdown": {
+      "rfi": {
+        "action_max_radius_bb": 0.16140073216797923,
+        "exact_actions": 177,
+        "exact_profiles": 4,
+        "profile_max_radius_bb": 0.1295147842762443
+      },
+      "vs_3bet": {
+        "action_max_radius_bb": 1.1641180609112214,
+        "exact_actions": 177,
+        "exact_profiles": 4,
+        "profile_max_radius_bb": 1.0089725145442674
+      },
+      "vs_4bet": {
+        "action_max_radius_bb": 4.397145429920964,
+        "exact_actions": 177,
+        "exact_profiles": 4,
+        "profile_max_radius_bb": 3.7191708106682206
+      },
+      "vs_open": {
+        "action_max_radius_bb": 0.45349146165933923,
+        "exact_actions": 177,
+        "exact_profiles": 4,
+        "profile_max_radius_bb": 0.2886504425763582
+      }
+    },
+    "flop_controller": {
+      "rfi": {
+        "action_max_radius_bb": 0.23239287488998076,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 0.2178525113381952
+      },
+      "vs_3bet": {
+        "action_max_radius_bb": 1.36622664214467,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 1.1754660512020192
+      },
+      "vs_4bet": {
+        "action_max_radius_bb": 3.4910353870510695,
+        "exact_actions": 173,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 3.260013536952268
+      },
+      "vs_open": {
+        "action_max_radius_bb": 0.4358984838626027,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 0.43583330421058203
+      }
+    }
+  },
+  "independent_native_action_ev_checks": 4056,
+  "inputs_sha256": "3cfde9d919a540b4a084764d76b6f65a4ecbf55a67dc712eeae4d122ce1001ab",
+  "rb_seconds": 271.2533952020003,
+  "real_game_approximation_error": null,
+  "reference_difference": null,
+  "reference_solution_comparison": "UNPERFORMED",
+  "refined_table_diagnostics": {
+    "checkdown": {
+      "expected_game_convergence_verified": false,
+      "nashconv_on_refined_table_bb": 0.004813571364244602,
+      "profile_sb_ev_bb": -0.04734575063520621
+    },
+    "flop_controller": {
+      "expected_game_convergence_verified": false,
+      "nashconv_on_refined_table_bb": 0.0074888430132115345,
+      "profile_sb_ev_bb": 0.020167446508037225
+    }
+  },
+  "samples_per_class_pair": 256,
+  "schema": "pokerid-ev-precision-study-v1",
+  "scope": "99% simultaneous conditional fixed-policy model EV intervals; opponent/action integration exact in finite model, floating arithmetic; board/holes sampling remains outside exact cells",
+  "source": {
+    "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+    "flags": [
+      "-std=c++17",
+      "-O3",
+      "-ffp-contract=off",
+      "-fno-tree-vectorize",
+      "-shared",
+      "-fPIC"
+    ],
+    "source_sha256": "7b1ac459ea0794c76b64321fe3242eae710c4b1995bcbd1b4030257df328e79a"
+  },
+  "validation_seed": 700017,
+  "variance_comparison": [
+    {
+      "conditional_weighted_variance": 2708.8024996480626,
+      "observed_ratio": 0.3160332544962344,
+      "original_weighted_variance": 8571.257806289936,
+      "plane": 0
+    },
+    {
+      "conditional_weighted_variance": 3.243944439580854,
+      "observed_ratio": 0.4769198237350751,
+      "original_weighted_variance": 6.8018653831064855,
+      "plane": 1
+    },
+    {
+      "conditional_weighted_variance": 20.274652747380337,
+      "observed_ratio": 0.4769198237350751,
+      "original_weighted_variance": 42.51165864441553,
+      "plane": 2
+    },
+    {
+      "conditional_weighted_variance": 262.75949960604913,
+      "observed_ratio": 0.476919823735075,
+      "original_weighted_variance": 550.9510960316253,
+      "plane": 3
+    },
+    {
+      "conditional_weighted_variance": 1430.5794978551564,
+      "observed_ratio": 0.4769198237350751,
+      "original_weighted_variance": 2999.62263394996,
+      "plane": 4
+    }
+  ]
+}

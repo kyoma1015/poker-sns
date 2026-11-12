@@ -1,0 +1,7 @@
+{
+  "final_accessed": false,
+  "protocol_sha256": "0c064399121fe0cb7e2ee29f5f72151e3c684e13f1602b2cd0d3cad1cf2d54fb",
+  "selected_iterations": 2048,
+  "selection_sha256": "0771342b149bb6da082fc3557f68ff5e876dce1e46ffe9eb6036310f832e213c",
+  "selection_uses_validation_only": true
+}
