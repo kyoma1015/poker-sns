@@ -33,7 +33,7 @@ def main():
     parser=argparse.ArgumentParser();parser.add_argument('--root',type=Path,required=True);parser.add_argument('--temporary',type=Path,required=True);a=parser.parse_args();a.root.mkdir(parents=True,exist_ok=True)
     # This second run starts only after the first run's measured durable footprint.
     first=Path('/workspace/pure-br-run/result.json')
-    if not first.exists() or not json.loads(first.read_text()).get('complete'):raise ValueError('finish frozen qualification first')
+    if not first.exists() or not json.loads(first.read_text()).get('complete') or not json.loads(first.read_text()).get('pass_tolerance'):raise ValueError('finish and pass frozen qualification first')
     import shutil
     if not (a.root/'policy.sqlite').exists() and shutil.disk_usage(a.root).free<2*1024**3+48*1024**2+4*1024**2:raise ValueError('prove full7 capacity before starting')
     with (a.root/'operator.lock').open('a') as lock:

@@ -37,3 +37,25 @@ comparisonUNPERFORMED. Official20stack/fullsize/modes2–9/ante/rake scope unwai
 
 Originalengines/UI8ranges1352rows/HU1BB/2–9/staticdemo protected. No main/prodDB/
 Storage/Vercel/SSO/fees/otherPR changes. No automaticresume or independentscheduler.
+
+## Confirmed interim checkpoint,2026-11-12T16:16Z
+
+Published9a92f42d0653b9bdeaa79b6cc1ec58315e608658,automatic6CI SUCCESS.
+Frozen1755 qualifier COMPLETE/PASS. Independent/realized SBgain.49080281963036515/
+.4908028196303655,BBgain.44130433309171235/.4413043330917118BB;maxagreement
+4.934941344458821e-14BB. NC remains.9321071527220774,not a newequilibrium.
+Matched8cohort9method smallstudy COMPLETE,eligiblemethodsNONE;no newfulltraining.
+Localstream70testsPASS,build/typePASS,lintPASS(with pre-existing out-of-scope
+warnings),protected143filesMATCH. Source/evidence uncommitted intentionallyuntil
+secondtarget completes; do not lose staged/untracked pure_br_diagnostics/report,
+SMALL_PROTOCOL amendments,newQA JSON/base64certificates or workflowguards.
+
+Actualfull7 qualifier ongoingroot/workspace/pure-br-full7-run,logsameprefix.log,
+source/workspace/joint-training-run/vector.sqlite,temporary/tmp/pure-br-full7-
+diagnostics;session66494,currently1728/1755extraction. Newpurepolicy only;no R/S
+copy. Afteractual1755verification andpass_tolerance,run read-onlydiagnostic
+enrichment,certificate capture,QA manifests;thencommit/push/new6CI/PRbodyGETproof
+andcompactrecoveryZIP/offlineGitbundlevalidation. Do not claimpendingfull7PASS.
+Frozenpost-flopdriverlabelsbeingderived onlyfromcachedadvantages/reach,
+log/workspace/pure-br-enrichment.log,output/workspace/pure-br-run/enriched-post.json.
+No automaticresume/independentrestart;pendingwork requires an active executor.

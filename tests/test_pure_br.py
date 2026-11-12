@@ -70,4 +70,35 @@ class PureBRTests(unittest.TestCase):
             writer.db.close();source=p.Frozen(path,rows);before=source.numeric_digest()
             with self.assertRaises(sqlite3.OperationalError):source.db.execute("update state set value='bad' where key='pre'")
             self.assertEqual(before,source.numeric_digest());source.close()
+    def test_scoped_all_matches_original_alternating_with_real_history(self):
+        from gto.abstract.pure_br_small import scoped_step
+        for age in (3,128):
+            teacher=h.Trainer()
+            for _ in range(age):teacher.step()
+            original=h.Trainer.restore(teacher.state());scoped=h.Trainer.restore(teacher.state())
+            for _ in range(4):
+                original.step('alternating');scoped_step(scoped,'all')
+                self.assertEqual(original.state(),scoped.state())
+    def test_post_only_preserves_shared_preflop_and_real_average_history(self):
+        from gto.abstract.pure_br_small import scoped_step
+        teacher=h.Trainer()
+        for _ in range(3):teacher.step()
+        before=teacher.state()
+        for _ in range(4):scoped_step(teacher,'post')
+        for b in range(2):
+            self.assertEqual(teacher.R[b][:8],before['R'][b][:8])
+            self.assertEqual(teacher.behavior[b][:8],before['behavior'][b][:8])
+            self.assertTrue(all(v>=u for u,v in zip(before['S'][b],teacher.S[b])))
+            self.assertGreater(sum(teacher.S[b]),sum(before['S'][b]))
+        self.assertEqual(teacher.behavior[0][:8],teacher.behavior[1][:8])
+    def test_realization_certificate_rejects_partial_and_changed_utility(self):
+        import copy,json
+        from gto.abstract import pure_br_report as report
+        root=Path('docs/qa/pure-br-20261112')
+        cert=report.read(root/'frozen-certificate.json.gz.b64');result=json.loads((root/'frozen-result.json').read_text())
+        self.assertLess(report.check(cert,result)['max_recomputed_error_bb'],1e-8)
+        bad=copy.deepcopy(cert);bad['meta']['cursor']-=1
+        with self.assertRaises(ValueError):report.check(bad,result)
+        bad=copy.deepcopy(cert);bad['stats']['ev'][0]+=.001
+        with self.assertRaises(ValueError):report.check(bad,result)
 if __name__=='__main__':unittest.main()

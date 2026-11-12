@@ -1,0 +1,14 @@
+[
+  {
+    "path": "/workspace/joint-updates-recovery-20261110.zip",
+    "bytes": 5016837237,
+    "sha256": "0f34f1c0457cb7d601662a24f6996491f033e7b74682663f38263c0bdfc96106",
+    "PASS": true
+  },
+  {
+    "path": "/workspace/joint-training-source-evidence-20261111.zip",
+    "bytes": 873649,
+    "sha256": "c811963b2fab81ed9ba5c4255377084855c82edfeff2894368a0a42c3cec745a",
+    "PASS": true
+  }
+]

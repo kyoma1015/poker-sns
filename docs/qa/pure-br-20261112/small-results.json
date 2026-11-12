@@ -1,0 +1,3260 @@
+{
+  "cases": [
+    {
+      "additional_budget": 4,
+      "game": 0,
+      "initial": {
+        "bb_gain": 0.04147385070284426,
+        "ev": 0.644972308347072,
+        "nc": 0.28092341735577175,
+        "sb_gain": 0.2394495666529275
+      },
+      "methods": {
+        "alt_damp025": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 4,
+            "bb_gain": 0.04629127754386342,
+            "ev": 0.7584894497418266,
+            "nc": 0.22468175113140088,
+            "sb_gain": 0.17839047358753746
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.04147385070284426,
+              "ev": 0.644972308347072,
+              "nc": 0.28092341735577175,
+              "sb_gain": 0.2394495666529275
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.05883444662143078,
+              "ev": 0.7171515329703386,
+              "nc": 0.23893685121020236,
+              "sb_gain": 0.18010240458877158
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.073758986191231,
+              "ev": 0.7368325706242256,
+              "nc": 0.24633743197007607,
+              "sb_gain": 0.17257844577884507
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.04629127754386342,
+              "ev": 0.7584894497418266,
+              "nc": 0.22468175113140088,
+              "sb_gain": 0.17839047358753746
+            }
+          ]
+        },
+        "alt_damp05": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 4,
+            "bb_gain": 0.018569643673557623,
+            "ev": 0.7893174935540181,
+            "nc": 0.16491199109165977,
+            "sb_gain": 0.14634234741810215
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.04147385070284426,
+              "ev": 0.644972308347072,
+              "nc": 0.28092341735577175,
+              "sb_gain": 0.2394495666529275
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.05883444662143078,
+              "ev": 0.7171515329703386,
+              "nc": 0.23893685121020236,
+              "sb_gain": 0.18010240458877158
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.062132081196585864,
+              "ev": 0.7420085494141051,
+              "nc": 0.23137679249190446,
+              "sb_gain": 0.1692447112953186
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.018569643673557623,
+              "ev": 0.7893174935540181,
+              "nc": 0.16491199109165977,
+              "sb_gain": 0.14634234741810215
+            }
+          ]
+        },
+        "alt_delayed": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 4,
+            "bb_gain": 0.033339933653490306,
+            "ev": 0.8576903970332729,
+            "nc": 0.05499283157590962,
+            "sb_gain": 0.021652897922419312
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.04147385070284426,
+              "ev": 0.644972308347072,
+              "nc": 0.28092341735577175,
+              "sb_gain": 0.2394495666529275
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.05883444662143078,
+              "ev": 0.7171515329703386,
+              "nc": 0.23893685121020236,
+              "sb_gain": 0.18010240458877158
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.018548212799023855,
+              "ev": 0.8155402183882641,
+              "nc": 0.2007428077365513,
+              "sb_gain": 0.18219459493752743
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.033339933653490306,
+              "ev": 0.8576903970332729,
+              "nc": 0.05499283157590962,
+              "sb_gain": 0.021652897922419312
+            }
+          ]
+        },
+        "alt_history": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 4,
+            "bb_gain": 0.030131226559549695,
+            "ev": 0.8045752006313174,
+            "nc": 0.11129597895657373,
+            "sb_gain": 0.08116475239702403
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.04147385070284426,
+              "ev": 0.644972308347072,
+              "nc": 0.28092341735577175,
+              "sb_gain": 0.2394495666529275
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.05883444662143078,
+              "ev": 0.7171515329703386,
+              "nc": 0.23893685121020236,
+              "sb_gain": 0.18010240458877158
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.04164039030893374,
+              "ev": 0.7551226260955022,
+              "nc": 0.19051587118223912,
+              "sb_gain": 0.14887548087330538
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.030131226559549695,
+              "ev": 0.8045752006313174,
+              "nc": 0.11129597895657373,
+              "sb_gain": 0.08116475239702403
+            }
+          ]
+        },
+        "post_only": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 1,
+            "bb_gain": 0.05883444662143078,
+            "ev": 0.7171515329703386,
+            "nc": 0.23893685121020236,
+            "sb_gain": 0.18010240458877158
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.04147385070284426,
+              "ev": 0.644972308347072,
+              "nc": 0.28092341735577175,
+              "sb_gain": 0.2394495666529275
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.05883444662143078,
+              "ev": 0.7171515329703386,
+              "nc": 0.23893685121020236,
+              "sb_gain": 0.18010240458877158
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.09103498990862402,
+              "ev": 0.7373056905570939,
+              "nc": 0.2646933605747428,
+              "sb_gain": 0.17365837066611878
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.10432999780559327,
+              "ev": 0.739414768875085,
+              "nc": 0.351996383061697,
+              "sb_gain": 0.24766638525610374
+            }
+          ]
+        },
+        "post_then_full": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 1,
+            "bb_gain": 0.05883444662143078,
+            "ev": 0.7171515329703386,
+            "nc": 0.23893685121020236,
+            "sb_gain": 0.18010240458877158
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.04147385070284426,
+              "ev": 0.644972308347072,
+              "nc": 0.28092341735577175,
+              "sb_gain": 0.2394495666529275
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.05883444662143078,
+              "ev": 0.7171515329703386,
+              "nc": 0.23893685121020236,
+              "sb_gain": 0.18010240458877158
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.09103498990862402,
+              "ev": 0.7373056905570939,
+              "nc": 0.2646933605747428,
+              "sb_gain": 0.17365837066611878
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.06483154362954835,
+              "ev": 0.7590919011767767,
+              "nc": 0.2608584433859342,
+              "sb_gain": 0.19602689975638588
+            }
+          ]
+        },
+        "pre_only": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 4,
+            "bb_gain": 0.03015480785466318,
+            "ev": 0.8047654459756438,
+            "nc": 0.11338176920242238,
+            "sb_gain": 0.0832269613477592
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.04147385070284426,
+              "ev": 0.644972308347072,
+              "nc": 0.28092341735577175,
+              "sb_gain": 0.2394495666529275
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.05883444662143078,
+              "ev": 0.7171515329703386,
+              "nc": 0.23893685121020236,
+              "sb_gain": 0.18010240458877158
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.03848265487833413,
+              "ev": 0.7519648906649026,
+              "nc": 0.19034686757360242,
+              "sb_gain": 0.15186421269526829
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.03015480785466318,
+              "ev": 0.8047654459756438,
+              "nc": 0.11338176920242238,
+              "sb_gain": 0.0832269613477592
+            }
+          ]
+        },
+        "reset_regret_diagnostic": {
+          "actual_initial_regret_history_retained": false,
+          "average_history_retained": true,
+          "best": {
+            "additional": 1,
+            "bb_gain": 0.05883444662143078,
+            "ev": 0.7171515329703386,
+            "nc": 0.23893685121020236,
+            "sb_gain": 0.18010240458877158
+          },
+          "eligible_for_adoption": false,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.04147385070284426,
+              "ev": 0.644972308347072,
+              "nc": 0.28092341735577175,
+              "sb_gain": 0.2394495666529275
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.05883444662143078,
+              "ev": 0.7171515329703386,
+              "nc": 0.23893685121020236,
+              "sb_gain": 0.18010240458877158
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.1109956846600848,
+              "ev": 0.5938609238599282,
+              "nc": 0.5047231614142713,
+              "sb_gain": 0.3937274767541865
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.09094738222017873,
+              "ev": 0.7216277786253356,
+              "nc": 0.2989923879311922,
+              "sb_gain": 0.20804500571101348
+            }
+          ]
+        },
+        "sim_history": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 4,
+            "bb_gain": 0.056766279957249144,
+            "ev": 0.8330191471409508,
+            "nc": 0.18248417332726297,
+            "sb_gain": 0.12571789337001382
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.04147385070284426,
+              "ev": 0.644972308347072,
+              "nc": 0.28092341735577175,
+              "sb_gain": 0.2394495666529275
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.05883444662143078,
+              "ev": 0.7171515329703386,
+              "nc": 0.23893685121020236,
+              "sb_gain": 0.18010240458877158
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.03557310673116998,
+              "ev": 0.7490553425177384,
+              "nc": 0.21370931937959348,
+              "sb_gain": 0.1781362126484235
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.056766279957249144,
+              "ev": 0.8330191471409508,
+              "nc": 0.18248417332726297,
+              "sb_gain": 0.12571789337001382
+            }
+          ]
+        }
+      },
+      "protected_original_baseline": {
+        "bb_gain": 0.3633268125,
+        "ev": -0.11369818749999998,
+        "nc": 1.6549812499999996,
+        "sb_gain": 1.2916544374999996
+      },
+      "teacher_actual_iterations": 3
+    },
+    {
+      "additional_budget": 128,
+      "game": 0,
+      "initial": {
+        "bb_gain": 0.04147385070284426,
+        "ev": 0.644972308347072,
+        "nc": 0.28092341735577175,
+        "sb_gain": 0.2394495666529275
+      },
+      "methods": {
+        "alt_damp025": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.011785177565295624,
+            "ev": 0.8392695048564338,
+            "nc": 0.014851885013315469,
+            "sb_gain": 0.0030667074480198453
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.04147385070284426,
+              "ev": 0.644972308347072,
+              "nc": 0.28092341735577175,
+              "sb_gain": 0.2394495666529275
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.027981553538830917,
+              "ev": 0.8469138351907826,
+              "nc": 0.049276625292392295,
+              "sb_gain": 0.02129507175356138
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.014837487420531037,
+              "ev": 0.835526753123081,
+              "nc": 0.028921382499200066,
+              "sb_gain": 0.014083895078669029
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.011785177565295624,
+              "ev": 0.8392695048564338,
+              "nc": 0.014851885013315469,
+              "sb_gain": 0.0030667074480198453
+            }
+          ]
+        },
+        "alt_damp05": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.005264548025984084,
+            "ev": 0.8392491316091596,
+            "nc": 0.007225063944591881,
+            "sb_gain": 0.001960515918607797
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.04147385070284426,
+              "ev": 0.644972308347072,
+              "nc": 0.28092341735577175,
+              "sb_gain": 0.2394495666529275
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.01250506077594804,
+              "ev": 0.8401022593091452,
+              "nc": 0.019822331610262034,
+              "sb_gain": 0.007317270834313994
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.006542962468517155,
+              "ev": 0.8387518734945885,
+              "nc": 0.011241339742073642,
+              "sb_gain": 0.004698377273556487
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.005264548025984084,
+              "ev": 0.8392491316091596,
+              "nc": 0.007225063944591881,
+              "sb_gain": 0.001960515918607797
+            }
+          ]
+        },
+        "alt_delayed": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 64,
+            "bb_gain": 9.992546660508861e-05,
+            "ev": 0.8396775768358979,
+            "nc": 0.00018699120614618092,
+            "sb_gain": 8.706573954109231e-05
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.04147385070284426,
+              "ev": 0.644972308347072,
+              "nc": 0.28092341735577175,
+              "sb_gain": 0.2394495666529275
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.003401204561700344,
+              "ev": 0.839505200263198,
+              "nc": 0.00631476141899856,
+              "sb_gain": 0.0029135568572982162
+            },
+            {
+              "additional": 64,
+              "bb_gain": 9.992546660508861e-05,
+              "ev": 0.8396775768358979,
+              "nc": 0.00018699120614618092,
+              "sb_gain": 8.706573954109231e-05
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.0001268439835105939,
+              "ev": 0.8396760450389983,
+              "nc": 0.00021489996882873008,
+              "sb_gain": 8.805598531813619e-05
+            }
+          ]
+        },
+        "alt_history": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.00036993165306675735,
+            "ev": 0.8396680941504913,
+            "nc": 0.0006593728711657976,
+            "sb_gain": 0.0002894412180990402
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.04147385070284426,
+              "ev": 0.644972308347072,
+              "nc": 0.28092341735577175,
+              "sb_gain": 0.2394495666529275
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.003401204561700344,
+              "ev": 0.839505200263198,
+              "nc": 0.00631476141899856,
+              "sb_gain": 0.0029135568572982162
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.0010294516804907339,
+              "ev": 0.8396464344498227,
+              "nc": 0.0018525846550593306,
+              "sb_gain": 0.0008231329745685967
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.00036993165306675735,
+              "ev": 0.8396680941504913,
+              "nc": 0.0006593728711657976,
+              "sb_gain": 0.0002894412180990402
+            }
+          ]
+        },
+        "post_only": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 0,
+            "bb_gain": 0.04147385070284426,
+            "ev": 0.644972308347072,
+            "nc": 0.28092341735577175,
+            "sb_gain": 0.2394495666529275
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.04147385070284426,
+              "ev": 0.644972308347072,
+              "nc": 0.28092341735577175,
+              "sb_gain": 0.2394495666529275
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.09546594461298097,
+              "ev": 0.7182175112748814,
+              "nc": 0.5458628917871179,
+              "sb_gain": 0.4503969471741369
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.09407474952357686,
+              "ev": 0.7164113230077876,
+              "nc": 0.5617025724765841,
+              "sb_gain": 0.4676278229530072
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.09366912596063204,
+              "ev": 0.7158888539094764,
+              "nc": 0.5661623951187138,
+              "sb_gain": 0.47249326915808176
+            }
+          ]
+        },
+        "post_then_full": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.018799503740509538,
+            "ev": 0.8451680807801687,
+            "nc": 0.10569265763061209,
+            "sb_gain": 0.08689315389010255
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.04147385070284426,
+              "ev": 0.644972308347072,
+              "nc": 0.28092341735577175,
+              "sb_gain": 0.2394495666529275
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.09546594461298097,
+              "ev": 0.7182175112748814,
+              "nc": 0.5458628917871179,
+              "sb_gain": 0.4503969471741369
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.09407474952357686,
+              "ev": 0.7164113230077876,
+              "nc": 0.5617025724765841,
+              "sb_gain": 0.4676278229530072
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.018799503740509538,
+              "ev": 0.8451680807801687,
+              "nc": 0.10569265763061209,
+              "sb_gain": 0.08689315389010255
+            }
+          ]
+        },
+        "pre_only": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.07062688640555015,
+            "ev": 0.8406527224869608,
+            "nc": 0.09118958700065016,
+            "sb_gain": 0.020562700595100014
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.04147385070284426,
+              "ev": 0.644972308347072,
+              "nc": 0.28092341735577175,
+              "sb_gain": 0.2394495666529275
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.06949501286091331,
+              "ev": 0.8398495823210343,
+              "nc": 0.0919678096348252,
+              "sb_gain": 0.022472796773911896
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.07038324274928287,
+              "ev": 0.8404813019063839,
+              "nc": 0.09136056334759901,
+              "sb_gain": 0.02097732059831614
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.07062688640555015,
+              "ev": 0.8406527224869608,
+              "nc": 0.09118958700065016,
+              "sb_gain": 0.020562700595100014
+            }
+          ]
+        },
+        "reset_regret_diagnostic": {
+          "actual_initial_regret_history_retained": false,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.0014889833805112884,
+            "ev": 0.8395926643234026,
+            "nc": 0.0022129459457337353,
+            "sb_gain": 0.0007239625652224468
+          },
+          "eligible_for_adoption": false,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.04147385070284426,
+              "ev": 0.644972308347072,
+              "nc": 0.28092341735577175,
+              "sb_gain": 0.2394495666529275
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.005248705668764897,
+              "ev": 0.8339952160827198,
+              "nc": 0.015327989186433189,
+              "sb_gain": 0.010079283517668292
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.002360595995443582,
+              "ev": 0.8385513439025416,
+              "nc": 0.004978989157903846,
+              "sb_gain": 0.002618393162460264
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.0014889833805112884,
+              "ev": 0.8395926643234026,
+              "nc": 0.0022129459457337353,
+              "sb_gain": 0.0007239625652224468
+            }
+          ]
+        },
+        "sim_history": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.004962283250103727,
+            "ev": 0.8391529196165058,
+            "nc": 0.007065554068404478,
+            "sb_gain": 0.002103270818300751
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.04147385070284426,
+              "ev": 0.644972308347072,
+              "nc": 0.28092341735577175,
+              "sb_gain": 0.2394495666529275
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.014264297329581344,
+              "ev": 0.8407990634008753,
+              "nc": 0.019309664258883252,
+              "sb_gain": 0.005045366929301909
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.007780599319202164,
+              "ev": 0.8386332580962768,
+              "nc": 0.012140966465557401,
+              "sb_gain": 0.004360367146355237
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.004962283250103727,
+              "ev": 0.8391529196165058,
+              "nc": 0.007065554068404478,
+              "sb_gain": 0.002103270818300751
+            }
+          ]
+        }
+      },
+      "protected_original_baseline": {
+        "bb_gain": 0.3633268125,
+        "ev": -0.11369818749999998,
+        "nc": 1.6549812499999996,
+        "sb_gain": 1.2916544374999996
+      },
+      "teacher_actual_iterations": 3
+    },
+    {
+      "additional_budget": 4,
+      "game": 0,
+      "initial": {
+        "bb_gain": 0.004835267919059305,
+        "ev": 0.8392796371522961,
+        "nc": 0.006764417995549388,
+        "sb_gain": 0.0019291500764900826
+      },
+      "methods": {
+        "alt_damp025": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 0,
+            "bb_gain": 0.004835267919059305,
+            "ev": 0.8392796371522961,
+            "nc": 0.006764417995549388,
+            "sb_gain": 0.0019291500764900826
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.004835267919059305,
+              "ev": 0.8392796371522961,
+              "nc": 0.006764417995549388,
+              "sb_gain": 0.0019291500764900826
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.00485168528890767,
+              "ev": 0.839246624488571,
+              "nc": 0.0068100341676011755,
+              "sb_gain": 0.0019583488786935055
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.004876539336735819,
+              "ev": 0.8392120578349972,
+              "nc": 0.006870174997853362,
+              "sb_gain": 0.001993635661117543
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.0049587405432022225,
+              "ev": 0.839130636968841,
+              "nc": 0.007068709728827338,
+              "sb_gain": 0.0021099691856251157
+            }
+          ]
+        },
+        "alt_damp05": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 0,
+            "bb_gain": 0.004835267919059305,
+            "ev": 0.8392796371522961,
+            "nc": 0.006764417995549388,
+            "sb_gain": 0.0019291500764900826
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.004835267919059305,
+              "ev": 0.8392796371522961,
+              "nc": 0.006764417995549388,
+              "sb_gain": 0.0019291500764900826
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.00485168528890767,
+              "ev": 0.839246624488571,
+              "nc": 0.0068100341676011755,
+              "sb_gain": 0.0019583488786935055
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.004884425905061884,
+              "ev": 0.8392087884901174,
+              "nc": 0.006887197551457391,
+              "sb_gain": 0.002002771646395507
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.004969266068228673,
+              "ev": 0.8391035774939508,
+              "nc": 0.007161958651098477,
+              "sb_gain": 0.002192692582869804
+            }
+          ]
+        },
+        "alt_delayed": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 0,
+            "bb_gain": 0.004835267919059305,
+            "ev": 0.8392796371522961,
+            "nc": 0.006764417995549388,
+            "sb_gain": 0.0019291500764900826
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.004835267919059305,
+              "ev": 0.8392796371522961,
+              "nc": 0.006764417995549388,
+              "sb_gain": 0.0019291500764900826
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.00485168528890767,
+              "ev": 0.839246624488571,
+              "nc": 0.0068100341676011755,
+              "sb_gain": 0.0019583488786935055
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.009861122202779793,
+              "ev": 0.8381653329500692,
+              "nc": 0.02666311260442833,
+              "sb_gain": 0.016801990401648537
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.006053158051942731,
+              "ev": 0.8357170382765571,
+              "nc": 0.015495128364809818,
+              "sb_gain": 0.009441970312867087
+            }
+          ]
+        },
+        "alt_history": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 0,
+            "bb_gain": 0.004835267919059305,
+            "ev": 0.8392796371522961,
+            "nc": 0.006764417995549388,
+            "sb_gain": 0.0019291500764900826
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.004835267919059305,
+              "ev": 0.8392796371522961,
+              "nc": 0.006764417995549388,
+              "sb_gain": 0.0019291500764900826
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.00485168528890767,
+              "ev": 0.839246624488571,
+              "nc": 0.0068100341676011755,
+              "sb_gain": 0.0019583488786935055
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.00489827612832916,
+              "ev": 0.8392002271073455,
+              "nc": 0.006925720996214579,
+              "sb_gain": 0.0020274448678854196
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.004881931269988815,
+              "ev": 0.8390650561409678,
+              "nc": 0.0071988746801894266,
+              "sb_gain": 0.0023169434102006115
+            }
+          ]
+        },
+        "post_only": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 0,
+            "bb_gain": 0.004835267919059305,
+            "ev": 0.8392796371522961,
+            "nc": 0.006764417995549388,
+            "sb_gain": 0.0019291500764900826
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.004835267919059305,
+              "ev": 0.8392796371522961,
+              "nc": 0.006764417995549388,
+              "sb_gain": 0.0019291500764900826
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.00485168528890767,
+              "ev": 0.839246624488571,
+              "nc": 0.0068100341676011755,
+              "sb_gain": 0.0019583488786935055
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.004889437269574137,
+              "ev": 0.839199411607317,
+              "nc": 0.006917152739668753,
+              "sb_gain": 0.0020277154700946154
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.0048748075523644685,
+              "ev": 0.8390640352075384,
+              "nc": 0.007191046679525304,
+              "sb_gain": 0.002316239127160835
+            }
+          ]
+        },
+        "post_then_full": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 0,
+            "bb_gain": 0.004835267919059305,
+            "ev": 0.8392796371522961,
+            "nc": 0.006764417995549388,
+            "sb_gain": 0.0019291500764900826
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.004835267919059305,
+              "ev": 0.8392796371522961,
+              "nc": 0.006764417995549388,
+              "sb_gain": 0.0019291500764900826
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.00485168528890767,
+              "ev": 0.839246624488571,
+              "nc": 0.0068100341676011755,
+              "sb_gain": 0.0019583488786935055
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.004889437269574137,
+              "ev": 0.839199411607317,
+              "nc": 0.006917152739668753,
+              "sb_gain": 0.0020277154700946154
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.0048656320460513935,
+              "ev": 0.8390632354724558,
+              "nc": 0.007182182682352822,
+              "sb_gain": 0.0023165506363014288
+            }
+          ]
+        },
+        "pre_only": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 0,
+            "bb_gain": 0.004835267919059305,
+            "ev": 0.8392796371522961,
+            "nc": 0.006764417995549388,
+            "sb_gain": 0.0019291500764900826
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.004835267919059305,
+              "ev": 0.8392796371522961,
+              "nc": 0.006764417995549388,
+              "sb_gain": 0.0019291500764900826
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.00485168528890767,
+              "ev": 0.839246624488571,
+              "nc": 0.0068100341676011755,
+              "sb_gain": 0.0019583488786935055
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.004876817386600285,
+              "ev": 0.839215701258471,
+              "nc": 0.006862455953800084,
+              "sb_gain": 0.001985638567199799
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.0049459570284229315,
+              "ev": 0.8391589581318469,
+              "nc": 0.0069817530461790955,
+              "sb_gain": 0.002035796017756164
+            }
+          ]
+        },
+        "reset_regret_diagnostic": {
+          "actual_initial_regret_history_retained": false,
+          "average_history_retained": true,
+          "best": {
+            "additional": 0,
+            "bb_gain": 0.004835267919059305,
+            "ev": 0.8392796371522961,
+            "nc": 0.006764417995549388,
+            "sb_gain": 0.0019291500764900826
+          },
+          "eligible_for_adoption": false,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.004835267919059305,
+              "ev": 0.8392796371522961,
+              "nc": 0.006764417995549388,
+              "sb_gain": 0.0019291500764900826
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.00485168528890767,
+              "ev": 0.839246624488571,
+              "nc": 0.0068100341676011755,
+              "sb_gain": 0.0019583488786935055
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.011964467652096245,
+              "ev": 0.8335680719021463,
+              "nc": 0.024485401464493517,
+              "sb_gain": 0.012520933812397272
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.016486942515198333,
+              "ev": 0.8362905685746,
+              "nc": 0.028823948328858373,
+              "sb_gain": 0.01233700581366004
+            }
+          ]
+        },
+        "sim_history": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 0,
+            "bb_gain": 0.004835267919059305,
+            "ev": 0.8392796371522961,
+            "nc": 0.006764417995549388,
+            "sb_gain": 0.0019291500764900826
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.004835267919059305,
+              "ev": 0.8392796371522961,
+              "nc": 0.006764417995549388,
+              "sb_gain": 0.0019291500764900826
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.00485168528890767,
+              "ev": 0.839246624488571,
+              "nc": 0.0068100341676011755,
+              "sb_gain": 0.0019583488786935055
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.004903304307013245,
+              "ev": 0.8392052552860296,
+              "nc": 0.006914280998683742,
+              "sb_gain": 0.0020109766916704963
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.004973150853020081,
+              "ev": 0.8390829584403029,
+              "nc": 0.007231027689288849,
+              "sb_gain": 0.0022578768362687685
+            }
+          ]
+        }
+      },
+      "protected_original_baseline": {
+        "bb_gain": 0.3633268125,
+        "ev": -0.11369818749999998,
+        "nc": 1.6549812499999996,
+        "sb_gain": 1.2916544374999996
+      },
+      "teacher_actual_iterations": 128
+    },
+    {
+      "additional_budget": 128,
+      "game": 0,
+      "initial": {
+        "bb_gain": 0.004835267919059305,
+        "ev": 0.8392796371522961,
+        "nc": 0.006764417995549388,
+        "sb_gain": 0.0019291500764900826
+      },
+      "methods": {
+        "alt_damp025": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 0,
+            "bb_gain": 0.004835267919059305,
+            "ev": 0.8392796371522961,
+            "nc": 0.006764417995549388,
+            "sb_gain": 0.0019291500764900826
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.004835267919059305,
+              "ev": 0.8392796371522961,
+              "nc": 0.006764417995549388,
+              "sb_gain": 0.0019291500764900826
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.006361322657797652,
+              "ev": 0.8393628122521728,
+              "nc": 0.007703182992266466,
+              "sb_gain": 0.001341860334468814
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.006785512437937902,
+              "ev": 0.8385264469257513,
+              "nc": 0.008996335706854763,
+              "sb_gain": 0.0022108232689168617
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.006953789526030207,
+              "ev": 0.8380420271606903,
+              "nc": 0.010150501069959739,
+              "sb_gain": 0.0031967115439295313
+            }
+          ]
+        },
+        "alt_damp05": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.0036720842928832376,
+            "ev": 0.8393344470327592,
+            "nc": 0.005082018199225824,
+            "sb_gain": 0.0014099339063425864
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.004835267919059305,
+              "ev": 0.8392796371522961,
+              "nc": 0.006764417995549388,
+              "sb_gain": 0.0019291500764900826
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.004263937414982766,
+              "ev": 0.8392377111389991,
+              "nc": 0.006040199147382852,
+              "sb_gain": 0.0017762617324000862
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.004218569777529213,
+              "ev": 0.8390311764531064,
+              "nc": 0.006389419815766684,
+              "sb_gain": 0.0021708500382374707
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.0036720842928832376,
+              "ev": 0.8393344470327592,
+              "nc": 0.005082018199225824,
+              "sb_gain": 0.0014099339063425864
+            }
+          ]
+        },
+        "alt_delayed": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.00011680317044626687,
+            "ev": 0.839674835706012,
+            "nc": 0.0002514892509094535,
+            "sb_gain": 0.00013468608046318664
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.004835267919059305,
+              "ev": 0.8392796371522961,
+              "nc": 0.006764417995549388,
+              "sb_gain": 0.0019291500764900826
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.0034702805874199383,
+              "ev": 0.8394459375616494,
+              "nc": 0.004920501409302558,
+              "sb_gain": 0.0014502208218826196
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.00039217408170622026,
+              "ev": 0.8396662071621462,
+              "nc": 0.0005889727081950236,
+              "sb_gain": 0.0001967986264888033
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.00011680317044626687,
+              "ev": 0.839674835706012,
+              "nc": 0.0002514892509094535,
+              "sb_gain": 0.00013468608046318664
+            }
+          ]
+        },
+        "alt_history": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.0014906537670663633,
+            "ev": 0.8396605268247836,
+            "nc": 0.0020651071240064267,
+            "sb_gain": 0.0005744533569400634
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.004835267919059305,
+              "ev": 0.8392796371522961,
+              "nc": 0.006764417995549388,
+              "sb_gain": 0.0019291500764900826
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.0034702805874199383,
+              "ev": 0.8394459375616494,
+              "nc": 0.004920501409302558,
+              "sb_gain": 0.0014502208218826196
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.0025847558907955426,
+              "ev": 0.8395702158157528,
+              "nc": 0.003595756432669295,
+              "sb_gain": 0.0010110005418737522
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.0014906537670663633,
+              "ev": 0.8396605268247836,
+              "nc": 0.0020651071240064267,
+              "sb_gain": 0.0005744533569400634
+            }
+          ]
+        },
+        "post_only": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.0019073239166443878,
+            "ev": 0.839563311364308,
+            "nc": 0.002530666103925938,
+            "sb_gain": 0.0006233421872815503
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.004835267919059305,
+              "ev": 0.8392796371522961,
+              "nc": 0.006764417995549388,
+              "sb_gain": 0.0019291500764900826
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.0034205387270346277,
+              "ev": 0.8393557155502229,
+              "nc": 0.004990683284809561,
+              "sb_gain": 0.001570144557774933
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.0027534950356606913,
+              "ev": 0.839502395860845,
+              "nc": 0.0037666504381949073,
+              "sb_gain": 0.001013155402534216
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.0019073239166443878,
+              "ev": 0.839563311364308,
+              "nc": 0.002530666103925938,
+              "sb_gain": 0.0006233421872815503
+            }
+          ]
+        },
+        "post_then_full": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.0016153049542846354,
+            "ev": 0.8396350113111294,
+            "nc": 0.0021827681236168406,
+            "sb_gain": 0.0005674631693322052
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.004835267919059305,
+              "ev": 0.8392796371522961,
+              "nc": 0.006764417995549388,
+              "sb_gain": 0.0019291500764900826
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.0034205387270346277,
+              "ev": 0.8393557155502229,
+              "nc": 0.004990683284809561,
+              "sb_gain": 0.001570144557774933
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.0027534950356606913,
+              "ev": 0.839502395860845,
+              "nc": 0.0037666504381949073,
+              "sb_gain": 0.001013155402534216
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.0016153049542846354,
+              "ev": 0.8396350113111294,
+              "nc": 0.0021827681236168406,
+              "sb_gain": 0.0005674631693322052
+            }
+          ]
+        },
+        "pre_only": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 0,
+            "bb_gain": 0.004835267919059305,
+            "ev": 0.8392796371522961,
+            "nc": 0.006764417995549388,
+            "sb_gain": 0.0019291500764900826
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.004835267919059305,
+              "ev": 0.8392796371522961,
+              "nc": 0.006764417995549388,
+              "sb_gain": 0.0019291500764900826
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.005286822486960552,
+              "ev": 0.8385905691555369,
+              "nc": 0.013922018502805167,
+              "sb_gain": 0.008635196015844615
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.005402605952740669,
+              "ev": 0.8382787154709297,
+              "nc": 0.021929775595379675,
+              "sb_gain": 0.016527169642639006
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.0057263911577920545,
+              "ev": 0.8380349543734614,
+              "nc": 0.030003452982374057,
+              "sb_gain": 0.024277061824582002
+            }
+          ]
+        },
+        "reset_regret_diagnostic": {
+          "actual_initial_regret_history_retained": false,
+          "average_history_retained": true,
+          "best": {
+            "additional": 0,
+            "bb_gain": 0.004835267919059305,
+            "ev": 0.8392796371522961,
+            "nc": 0.006764417995549388,
+            "sb_gain": 0.0019291500764900826
+          },
+          "eligible_for_adoption": false,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.004835267919059305,
+              "ev": 0.8392796371522961,
+              "nc": 0.006764417995549388,
+              "sb_gain": 0.0019291500764900826
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.013520768305476438,
+              "ev": 0.8383275510005915,
+              "nc": 0.02321313889735499,
+              "sb_gain": 0.009692370591878552
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.009955658493783326,
+              "ev": 0.8389853503666846,
+              "nc": 0.016627166123662884,
+              "sb_gain": 0.006671507629879558
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.006184432680570007,
+              "ev": 0.8395280959510533,
+              "nc": 0.009787016762557887,
+              "sb_gain": 0.0036025840819878807
+            }
+          ]
+        },
+        "sim_history": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.003088019543976195,
+            "ev": 0.8393465462077936,
+            "nc": 0.004591451622480536,
+            "sb_gain": 0.001503432078504341
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.004835267919059305,
+              "ev": 0.8392796371522961,
+              "nc": 0.006764417995549388,
+              "sb_gain": 0.0019291500764900826
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.004219583350027811,
+              "ev": 0.8391418230327707,
+              "nc": 0.006276875325949338,
+              "sb_gain": 0.002057291975921527
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.0035844584313123873,
+              "ev": 0.8392872912141371,
+              "nc": 0.005256277882474958,
+              "sb_gain": 0.0016718194511625706
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.003088019543976195,
+              "ev": 0.8393465462077936,
+              "nc": 0.004591451622480536,
+              "sb_gain": 0.001503432078504341
+            }
+          ]
+        }
+      },
+      "protected_original_baseline": {
+        "bb_gain": 0.3633268125,
+        "ev": -0.11369818749999998,
+        "nc": 1.6549812499999996,
+        "sb_gain": 1.2916544374999996
+      },
+      "teacher_actual_iterations": 128
+    },
+    {
+      "additional_budget": 4,
+      "game": 1,
+      "initial": {
+        "bb_gain": 0.10661167304324881,
+        "ev": -0.3304116158817349,
+        "nc": 0.3435930805916504,
+        "sb_gain": 0.2369814075484016
+      },
+      "methods": {
+        "alt_damp025": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 4,
+            "bb_gain": 0.022221157511087608,
+            "ev": -0.1626042563884676,
+            "nc": 0.07352088190578909,
+            "sb_gain": 0.051299724394701485
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.10661167304324881,
+              "ev": -0.3304116158817349,
+              "nc": 0.3435930805916504,
+              "sb_gain": 0.2369814075484016
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.04231888343495077,
+              "ev": -0.2690978056083948,
+              "nc": 0.2138585640433456,
+              "sb_gain": 0.17153968060839483
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.02723531186023792,
+              "ev": -0.2197636986727438,
+              "nc": 0.145124335301099,
+              "sb_gain": 0.11788902344086108
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.022221157511087608,
+              "ev": -0.1626042563884676,
+              "nc": 0.07352088190578909,
+              "sb_gain": 0.051299724394701485
+            }
+          ]
+        },
+        "alt_damp05": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 4,
+            "bb_gain": 0.0399397320204431,
+            "ev": -0.14872143138958105,
+            "nc": 0.06991908494502741,
+            "sb_gain": 0.029979352924584313
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.10661167304324881,
+              "ev": -0.3304116158817349,
+              "nc": 0.3435930805916504,
+              "sb_gain": 0.2369814075484016
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.04231888343495077,
+              "ev": -0.2690978056083948,
+              "nc": 0.2138585640433456,
+              "sb_gain": 0.17153968060839483
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.0417553992790925,
+              "ev": -0.2036356634406582,
+              "nc": 0.139644566486444,
+              "sb_gain": 0.0978891672073515
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.0399397320204431,
+              "ev": -0.14872143138958105,
+              "nc": 0.06991908494502741,
+              "sb_gain": 0.029979352924584313
+            }
+          ]
+        },
+        "alt_delayed": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 4,
+            "bb_gain": 0.02328029442020174,
+            "ev": -0.14485431708145427,
+            "nc": 0.04225059561525768,
+            "sb_gain": 0.01897030119505594
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.10661167304324881,
+              "ev": -0.3304116158817349,
+              "nc": 0.3435930805916504,
+              "sb_gain": 0.2369814075484016
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.04231888343495077,
+              "ev": -0.2690978056083948,
+              "nc": 0.2138585640433456,
+              "sb_gain": 0.17153968060839483
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.011817542808965742,
+              "ev": -0.14443245719103423,
+              "nc": 0.40065260975790806,
+              "sb_gain": 0.3888350669489423
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.02328029442020174,
+              "ev": -0.14485431708145427,
+              "nc": 0.04225059561525768,
+              "sb_gain": 0.01897030119505594
+            }
+          ]
+        },
+        "alt_history": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 4,
+            "bb_gain": 0.03729594140401005,
+            "ev": -0.17622474329206417,
+            "nc": 0.09775305841196097,
+            "sb_gain": 0.06045711700795092
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.10661167304324881,
+              "ev": -0.3304116158817349,
+              "nc": 0.3435930805916504,
+              "sb_gain": 0.2369814075484016
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.04231888343495077,
+              "ev": -0.2690978056083948,
+              "nc": 0.2138585640433456,
+              "sb_gain": 0.17153968060839483
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.07276932539551331,
+              "ev": -0.16942513396671713,
+              "nc": 0.12901155696521907,
+              "sb_gain": 0.05624223156970576
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.03729594140401005,
+              "ev": -0.17622474329206417,
+              "nc": 0.09775305841196097,
+              "sb_gain": 0.06045711700795092
+            }
+          ]
+        },
+        "post_only": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 4,
+            "bb_gain": 0.011732620418365258,
+            "ev": -0.17977434615196547,
+            "nc": 0.08043510241706078,
+            "sb_gain": 0.06870248199869552
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.10661167304324881,
+              "ev": -0.3304116158817349,
+              "nc": 0.3435930805916504,
+              "sb_gain": 0.2369814075484016
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.04231888343495077,
+              "ev": -0.2690978056083948,
+              "nc": 0.2138585640433456,
+              "sb_gain": 0.17153968060839483
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.026800814874113787,
+              "ev": -0.22176112817790194,
+              "nc": 0.14414446329924516,
+              "sb_gain": 0.11734364842513137
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.011732620418365258,
+              "ev": -0.17977434615196547,
+              "nc": 0.08043510241706078,
+              "sb_gain": 0.06870248199869552
+            }
+          ]
+        },
+        "post_then_full": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 4,
+            "bb_gain": 0.027291725840551284,
+            "ev": -0.1585962669056415,
+            "nc": 0.06906162934177507,
+            "sb_gain": 0.04176990350122378
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.10661167304324881,
+              "ev": -0.3304116158817349,
+              "nc": 0.3435930805916504,
+              "sb_gain": 0.2369814075484016
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.04231888343495077,
+              "ev": -0.2690978056083948,
+              "nc": 0.2138585640433456,
+              "sb_gain": 0.17153968060839483
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.026800814874113787,
+              "ev": -0.22176112817790194,
+              "nc": 0.14414446329924516,
+              "sb_gain": 0.11734364842513137
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.027291725840551284,
+              "ev": -0.1585962669056415,
+              "nc": 0.06906162934177507,
+              "sb_gain": 0.04176990350122378
+            }
+          ]
+        },
+        "pre_only": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 4,
+            "bb_gain": 0.03351331695343068,
+            "ev": -0.1783515009967076,
+            "nc": 0.10385800814337104,
+            "sb_gain": 0.07034469118994036
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.10661167304324881,
+              "ev": -0.3304116158817349,
+              "nc": 0.3435930805916504,
+              "sb_gain": 0.2369814075484016
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.04231888343495077,
+              "ev": -0.2690978056083948,
+              "nc": 0.2138585640433456,
+              "sb_gain": 0.17153968060839483
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.07096743065632283,
+              "ev": -0.1712270287059076,
+              "nc": 0.13049841438959822,
+              "sb_gain": 0.059530983733275394
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.03351331695343068,
+              "ev": -0.1783515009967076,
+              "nc": 0.10385800814337104,
+              "sb_gain": 0.07034469118994036
+            }
+          ]
+        },
+        "reset_regret_diagnostic": {
+          "actual_initial_regret_history_retained": false,
+          "average_history_retained": true,
+          "best": {
+            "additional": 1,
+            "bb_gain": 0.04231888343495077,
+            "ev": -0.2690978056083948,
+            "nc": 0.2138585640433456,
+            "sb_gain": 0.17153968060839483
+          },
+          "eligible_for_adoption": false,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.10661167304324881,
+              "ev": -0.3304116158817349,
+              "nc": 0.3435930805916504,
+              "sb_gain": 0.2369814075484016
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.04231888343495077,
+              "ev": -0.2690978056083948,
+              "nc": 0.2138585640433456,
+              "sb_gain": 0.17153968060839483
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.15103261007575805,
+              "ev": -0.16439101595313907,
+              "nc": 0.3506640426955638,
+              "sb_gain": 0.1996314326198057
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.170931895046115,
+              "ev": -0.2513554892067742,
+              "nc": 0.33023658806362677,
+              "sb_gain": 0.15930469301751174
+            }
+          ]
+        },
+        "sim_history": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 2,
+            "bb_gain": 0.025989114889044207,
+            "ev": -0.21620534447318623,
+            "nc": 0.1377825092904774,
+            "sb_gain": 0.11179339440143318
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.10661167304324881,
+              "ev": -0.3304116158817349,
+              "nc": 0.3435930805916504,
+              "sb_gain": 0.2369814075484016
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.04231888343495077,
+              "ev": -0.2690978056083948,
+              "nc": 0.2138585640433456,
+              "sb_gain": 0.17153968060839483
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.025989114889044207,
+              "ev": -0.21620534447318623,
+              "nc": 0.1377825092904774,
+              "sb_gain": 0.11179339440143318
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.07433434557361909,
+              "ev": -0.129425256230001,
+              "nc": 0.16134976541473664,
+              "sb_gain": 0.08701541984111755
+            }
+          ]
+        }
+      },
+      "protected_original_baseline": {
+        "bb_gain": 0.14439318750000005,
+        "ev": -0.10578181249999993,
+        "nc": 0.774375,
+        "sb_gain": 0.6299818125
+      },
+      "teacher_actual_iterations": 3
+    },
+    {
+      "additional_budget": 128,
+      "game": 1,
+      "initial": {
+        "bb_gain": 0.10661167304324881,
+        "ev": -0.3304116158817349,
+        "nc": 0.3435930805916504,
+        "sb_gain": 0.2369814075484016
+      },
+      "methods": {
+        "alt_damp025": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.005326407535785449,
+            "ev": -0.13010925437094858,
+            "nc": 0.014458458616542824,
+            "sb_gain": 0.009132051080757375
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.10661167304324881,
+              "ev": -0.3304116158817349,
+              "nc": 0.3435930805916504,
+              "sb_gain": 0.2369814075484016
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.007734105650343603,
+              "ev": -0.13096853172277198,
+              "nc": 0.017124937608954893,
+              "sb_gain": 0.00939083195861129
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.006817536854433537,
+              "ev": -0.12886310222909905,
+              "nc": 0.01581901640231831,
+              "sb_gain": 0.009001479547884772
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.005326407535785449,
+              "ev": -0.13010925437094858,
+              "nc": 0.014458458616542824,
+              "sb_gain": 0.009132051080757375
+            }
+          ]
+        },
+        "alt_damp05": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.0017454426253115385,
+            "ev": -0.12784866234719205,
+            "nc": 0.005433076927933045,
+            "sb_gain": 0.0036876343026215064
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.10661167304324881,
+              "ev": -0.3304116158817349,
+              "nc": 0.3435930805916504,
+              "sb_gain": 0.2369814075484016
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.004476155029089102,
+              "ev": -0.12945366524371427,
+              "nc": 0.011793880377425764,
+              "sb_gain": 0.007317725348336662
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.004291853349108421,
+              "ev": -0.1287226760436355,
+              "nc": 0.00950242687591546,
+              "sb_gain": 0.0052105735268070386
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.0017454426253115385,
+              "ev": -0.12784866234719205,
+              "nc": 0.005433076927933045,
+              "sb_gain": 0.0036876343026215064
+            }
+          ]
+        },
+        "alt_delayed": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.0001309770197556459,
+            "ev": -0.12799236723910856,
+            "nc": 0.00014224260435208302,
+            "sb_gain": 1.1265584596437117e-05
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.10661167304324881,
+              "ev": -0.3304116158817349,
+              "nc": 0.3435930805916504,
+              "sb_gain": 0.2369814075484016
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.0019868924006797017,
+              "ev": -0.129130164703862,
+              "nc": 0.0036475647370567688,
+              "sb_gain": 0.001660672336377067
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.000318718663961326,
+              "ev": -0.12799352935908886,
+              "nc": 0.00035815005934700106,
+              "sb_gain": 3.943139538567508e-05
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.0001309770197556459,
+              "ev": -0.12799236723910856,
+              "nc": 0.00014224260435208302,
+              "sb_gain": 1.1265584596437117e-05
+            }
+          ]
+        },
+        "alt_history": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.0002673410663741327,
+            "ev": -0.12807414326799044,
+            "nc": 0.0003976616355345075,
+            "sb_gain": 0.00013032056916037482
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.10661167304324881,
+              "ev": -0.3304116158817349,
+              "nc": 0.3435930805916504,
+              "sb_gain": 0.2369814075484016
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.0019868924006797017,
+              "ev": -0.129130164703862,
+              "nc": 0.0036475647370567688,
+              "sb_gain": 0.001660672336377067
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.0007816168941776058,
+              "ev": -0.12830632459741503,
+              "nc": 0.00126786526872244,
+              "sb_gain": 0.00048624837454483427
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.0002673410663741327,
+              "ev": -0.12807414326799044,
+              "nc": 0.0003976616355345075,
+              "sb_gain": 0.00013032056916037482
+            }
+          ]
+        },
+        "post_only": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 1.6905963339614027e-05,
+            "ev": -0.13103988702028233,
+            "nc": 0.012331658563509623,
+            "sb_gain": 0.01231475260017001
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.10661167304324881,
+              "ev": -0.3304116158817349,
+              "nc": 0.3435930805916504,
+              "sb_gain": 0.2369814075484016
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.00023246351055664083,
+              "ev": -0.13306422107437935,
+              "nc": 0.014887935067012886,
+              "sb_gain": 0.014655471556456245
+            },
+            {
+              "additional": 64,
+              "bb_gain": 6.419277699629133e-05,
+              "ev": -0.13148470679249996,
+              "nc": 0.0128932752515456,
+              "sb_gain": 0.012829082474549308
+            },
+            {
+              "additional": 128,
+              "bb_gain": 1.6905963339614027e-05,
+              "ev": -0.13103988702028233,
+              "nc": 0.012331658563509623,
+              "sb_gain": 0.01231475260017001
+            }
+          ]
+        },
+        "post_then_full": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.0011056167975721787,
+            "ev": -0.12825275159825159,
+            "nc": 0.004265025196325045,
+            "sb_gain": 0.0031594083987528665
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.10661167304324881,
+              "ev": -0.3304116158817349,
+              "nc": 0.3435930805916504,
+              "sb_gain": 0.2369814075484016
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.00023246351055664083,
+              "ev": -0.13306422107437935,
+              "nc": 0.014887935067012886,
+              "sb_gain": 0.014655471556456245
+            },
+            {
+              "additional": 64,
+              "bb_gain": 6.419277699629133e-05,
+              "ev": -0.13148470679249996,
+              "nc": 0.0128932752515456,
+              "sb_gain": 0.012829082474549308
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.0011056167975721787,
+              "ev": -0.12825275159825159,
+              "nc": 0.004265025196325045,
+              "sb_gain": 0.0031594083987528665
+            }
+          ]
+        },
+        "pre_only": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 64,
+            "bb_gain": 0.015236772290217193,
+            "ev": -0.12116979764118863,
+            "nc": 0.015807451045202286,
+            "sb_gain": 0.0005706787549850934
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.10661167304324881,
+              "ev": -0.3304116158817349,
+              "nc": 0.3435930805916504,
+              "sb_gain": 0.2369814075484016
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.016988014129108747,
+              "ev": -0.12199235059887387,
+              "nc": 0.018780263554140475,
+              "sb_gain": 0.0017922494250317278
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.015236772290217193,
+              "ev": -0.12116979764118863,
+              "nc": 0.015807451045202286,
+              "sb_gain": 0.0005706787549850934
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.01494753179312236,
+              "ev": -0.12095146767266757,
+              "nc": 0.016685904269289148,
+              "sb_gain": 0.0017383724761667885
+            }
+          ]
+        },
+        "reset_regret_diagnostic": {
+          "actual_initial_regret_history_retained": false,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.0009095881506504533,
+            "ev": -0.12833700314812846,
+            "nc": 0.0015873426909635835,
+            "sb_gain": 0.0006777545403131302
+          },
+          "eligible_for_adoption": false,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.10661167304324881,
+              "ev": -0.3304116158817349,
+              "nc": 0.3435930805916504,
+              "sb_gain": 0.2369814075484016
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.014491213778345835,
+              "ev": -0.13158981823330984,
+              "nc": 0.022401672414843893,
+              "sb_gain": 0.007910458636498058
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.0040259576485091875,
+              "ev": -0.1292446868750771,
+              "nc": 0.006529052026898047,
+              "sb_gain": 0.0025030943783888593
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.0009095881506504533,
+              "ev": -0.12833700314812846,
+              "nc": 0.0015873426909635835,
+              "sb_gain": 0.0006777545403131302
+            }
+          ]
+        },
+        "sim_history": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.0015148204511204466,
+            "ev": -0.1278880367958171,
+            "nc": 0.004687909456885686,
+            "sb_gain": 0.0031730890057652394
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.10661167304324881,
+              "ev": -0.3304116158817349,
+              "nc": 0.3435930805916504,
+              "sb_gain": 0.2369814075484016
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.008140982235613464,
+              "ev": -0.13200520303234536,
+              "nc": 0.018540398760541144,
+              "sb_gain": 0.01039941652492768
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.0037472293165574933,
+              "ev": -0.12886535993218243,
+              "nc": 0.009012806732850182,
+              "sb_gain": 0.005265577416292688
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.0015148204511204466,
+              "ev": -0.1278880367958171,
+              "nc": 0.004687909456885686,
+              "sb_gain": 0.0031730890057652394
+            }
+          ]
+        }
+      },
+      "protected_original_baseline": {
+        "bb_gain": 0.14439318750000005,
+        "ev": -0.10578181249999993,
+        "nc": 0.774375,
+        "sb_gain": 0.6299818125
+      },
+      "teacher_actual_iterations": 3
+    },
+    {
+      "additional_budget": 4,
+      "game": 1,
+      "initial": {
+        "bb_gain": 0.0018975968005628396,
+        "ev": -0.12800848408085944,
+        "nc": 0.005129056596198861,
+        "sb_gain": 0.0032314597956360214
+      },
+      "methods": {
+        "alt_damp025": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 4,
+            "bb_gain": 0.0014027085245482407,
+            "ev": -0.12783995538033016,
+            "nc": 0.004630277074118394,
+            "sb_gain": 0.0032275685495701534
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.0018975968005628396,
+              "ev": -0.12800848408085944,
+              "nc": 0.005129056596198861,
+              "sb_gain": 0.0032314597956360214
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.0017680096039034698,
+              "ev": -0.12796643926395843,
+              "nc": 0.005024302800765962,
+              "sb_gain": 0.003256293196862492
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.001642350349578131,
+              "ev": -0.1279243970088508,
+              "nc": 0.004908344733181941,
+              "sb_gain": 0.0032659943836038097
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.0014027085245482407,
+              "ev": -0.12783995538033016,
+              "nc": 0.004630277074118394,
+              "sb_gain": 0.0032275685495701534
+            }
+          ]
+        },
+        "alt_damp05": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 4,
+            "bb_gain": 0.0013988227909564888,
+            "ev": -0.1278438411139219,
+            "nc": 0.00456444922151128,
+            "sb_gain": 0.003165626430554791
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.0018975968005628396,
+              "ev": -0.12800848408085944,
+              "nc": 0.005129056596198861,
+              "sb_gain": 0.0032314597956360214
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.0017680096039034698,
+              "ev": -0.12796643926395843,
+              "nc": 0.005024302800765962,
+              "sb_gain": 0.003256293196862492
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.0016411237695207748,
+              "ev": -0.12792562358890816,
+              "nc": 0.004894910192083185,
+              "sb_gain": 0.0032537864225624102
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.0013988227909564888,
+              "ev": -0.1278438411139219,
+              "nc": 0.00456444922151128,
+              "sb_gain": 0.003165626430554791
+            }
+          ]
+        },
+        "alt_delayed": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 1,
+            "bb_gain": 0.0017680096039034698,
+            "ev": -0.12796643926395843,
+            "nc": 0.005024302800765962,
+            "sb_gain": 0.003256293196862492
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.0018975968005628396,
+              "ev": -0.12800848408085944,
+              "nc": 0.005129056596198861,
+              "sb_gain": 0.0032314597956360214
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.0017680096039034698,
+              "ev": -0.12796643926395843,
+              "nc": 0.005024302800765962,
+              "sb_gain": 0.003256293196862492
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.032322306279390256,
+              "ev": -0.12392769372060972,
+              "nc": 0.032322306279390256,
+              "sb_gain": 0.0
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.030594267280833587,
+              "ev": -0.12565573271916639,
+              "nc": 0.030594267280833587,
+              "sb_gain": 0.0
+            }
+          ]
+        },
+        "alt_history": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 4,
+            "bb_gain": 0.001395763664805899,
+            "ev": -0.1278469002400725,
+            "nc": 0.004490182960331601,
+            "sb_gain": 0.003094419295525702
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.0018975968005628396,
+              "ev": -0.12800848408085944,
+              "nc": 0.005129056596198861,
+              "sb_gain": 0.0032314597956360214
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.0017680096039034698,
+              "ev": -0.12796643926395843,
+              "nc": 0.005024302800765962,
+              "sb_gain": 0.003256293196862492
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.0016388606263399719,
+              "ev": -0.12792788673208896,
+              "nc": 0.0048685471286839255,
+              "sb_gain": 0.0032296865023439536
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.001395763664805899,
+              "ev": -0.1278469002400725,
+              "nc": 0.004490182960331601,
+              "sb_gain": 0.003094419295525702
+            }
+          ]
+        },
+        "post_only": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 4,
+            "bb_gain": 0.001378273561399579,
+            "ev": -0.12786439034347882,
+            "nc": 0.004644687219085453,
+            "sb_gain": 0.0032664136576858738
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.0018975968005628396,
+              "ev": -0.12800848408085944,
+              "nc": 0.005129056596198861,
+              "sb_gain": 0.0032314597956360214
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.0017680096039034698,
+              "ev": -0.12796643926395843,
+              "nc": 0.005024302800765962,
+              "sb_gain": 0.003256293196862492
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.0016346316072085865,
+              "ev": -0.12793211575122035,
+              "nc": 0.004897957706307493,
+              "sb_gain": 0.0032633260990989066
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.001378273561399579,
+              "ev": -0.12786439034347882,
+              "nc": 0.004644687219085453,
+              "sb_gain": 0.0032664136576858738
+            }
+          ]
+        },
+        "post_then_full": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 4,
+            "bb_gain": 0.0013813843239321444,
+            "ev": -0.12786127958094626,
+            "nc": 0.0046174080808953355,
+            "sb_gain": 0.003236023756963191
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.0018975968005628396,
+              "ev": -0.12800848408085944,
+              "nc": 0.005129056596198861,
+              "sb_gain": 0.0032314597956360214
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.0017680096039034698,
+              "ev": -0.12796643926395843,
+              "nc": 0.005024302800765962,
+              "sb_gain": 0.003256293196862492
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.0016346316072085865,
+              "ev": -0.12793211575122035,
+              "nc": 0.004897957706307493,
+              "sb_gain": 0.0032633260990989066
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.0013813843239321444,
+              "ev": -0.12786127958094626,
+              "nc": 0.0046174080808953355,
+              "sb_gain": 0.003236023756963191
+            }
+          ]
+        },
+        "pre_only": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 4,
+            "bb_gain": 0.0014241159607411569,
+            "ev": -0.12781854794413725,
+            "nc": 0.004558090169880791,
+            "sb_gain": 0.003133974209139634
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.0018975968005628396,
+              "ev": -0.12800848408085944,
+              "nc": 0.005129056596198861,
+              "sb_gain": 0.0032314597956360214
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.0017680096039034698,
+              "ev": -0.12796643926395843,
+              "nc": 0.005024302800765962,
+              "sb_gain": 0.003256293196862492
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.0016473625759212684,
+              "ev": -0.12791938478250767,
+              "nc": 0.004891187986127948,
+              "sb_gain": 0.00324382541020668
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.0014241159607411569,
+              "ev": -0.12781854794413725,
+              "nc": 0.004558090169880791,
+              "sb_gain": 0.003133974209139634
+            }
+          ]
+        },
+        "reset_regret_diagnostic": {
+          "actual_initial_regret_history_retained": false,
+          "average_history_retained": true,
+          "best": {
+            "additional": 1,
+            "bb_gain": 0.0017680096039034698,
+            "ev": -0.12796643926395843,
+            "nc": 0.005024302800765962,
+            "sb_gain": 0.003256293196862492
+          },
+          "eligible_for_adoption": false,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.0018975968005628396,
+              "ev": -0.12800848408085944,
+              "nc": 0.005129056596198861,
+              "sb_gain": 0.0032314597956360214
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.0017680096039034698,
+              "ev": -0.12796643926395843,
+              "nc": 0.005024302800765962,
+              "sb_gain": 0.003256293196862492
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.005241155039825612,
+              "ev": -0.13070440911249645,
+              "nc": 0.013249122605334479,
+              "sb_gain": 0.008007967565508867
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.008322521191185844,
+              "ev": -0.13538775024331726,
+              "nc": 0.02152842545122266,
+              "sb_gain": 0.013205904260036816
+            }
+          ]
+        },
+        "sim_history": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 4,
+            "bb_gain": 0.001395763664805899,
+            "ev": -0.1278469002400725,
+            "nc": 0.004490182960331601,
+            "sb_gain": 0.003094419295525702
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.0018975968005628396,
+              "ev": -0.12800848408085944,
+              "nc": 0.005129056596198861,
+              "sb_gain": 0.0032314597956360214
+            },
+            {
+              "additional": 1,
+              "bb_gain": 0.0017680096039034698,
+              "ev": -0.12796643926395843,
+              "nc": 0.005024302800765962,
+              "sb_gain": 0.003256293196862492
+            },
+            {
+              "additional": 2,
+              "bb_gain": 0.0016388606263399719,
+              "ev": -0.12792788673208896,
+              "nc": 0.0048685471286839255,
+              "sb_gain": 0.0032296865023439536
+            },
+            {
+              "additional": 4,
+              "bb_gain": 0.001395763664805899,
+              "ev": -0.1278469002400725,
+              "nc": 0.004490182960331601,
+              "sb_gain": 0.003094419295525702
+            }
+          ]
+        }
+      },
+      "protected_original_baseline": {
+        "bb_gain": 0.14439318750000005,
+        "ev": -0.10578181249999993,
+        "nc": 0.774375,
+        "sb_gain": 0.6299818125
+      },
+      "teacher_actual_iterations": 128
+    },
+    {
+      "additional_budget": 128,
+      "game": 1,
+      "initial": {
+        "bb_gain": 0.0018975968005628396,
+        "ev": -0.12800848408085944,
+        "nc": 0.005129056596198861,
+        "sb_gain": 0.0032314597956360214
+      },
+      "methods": {
+        "alt_damp025": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 0,
+            "bb_gain": 0.0018975968005628396,
+            "ev": -0.12800848408085944,
+            "nc": 0.005129056596198861,
+            "sb_gain": 0.0032314597956360214
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.0018975968005628396,
+              "ev": -0.12800848408085944,
+              "nc": 0.005129056596198861,
+              "sb_gain": 0.0032314597956360214
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.00300026488340685,
+              "ev": -0.12826916206356795,
+              "nc": 0.008052248984910026,
+              "sb_gain": 0.005051984101503176
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.00443027176149402,
+              "ev": -0.12888512397174212,
+              "nc": 0.010977728547222287,
+              "sb_gain": 0.006547456785728267
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.0038763153341250522,
+              "ev": -0.127796525841303,
+              "nc": 0.009585970349058004,
+              "sb_gain": 0.005709655014932952
+            }
+          ]
+        },
+        "alt_damp05": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 64,
+            "bb_gain": 0.0008445240133416188,
+            "ev": -0.12764445515393708,
+            "nc": 0.0036390002724203396,
+            "sb_gain": 0.002794476259078721
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.0018975968005628396,
+              "ev": -0.12800848408085944,
+              "nc": 0.005129056596198861,
+              "sb_gain": 0.0032314597956360214
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.0017261943263357504,
+              "ev": -0.1279459117356214,
+              "nc": 0.004712403936366655,
+              "sb_gain": 0.0029862096100309043
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.0008445240133416188,
+              "ev": -0.12764445515393708,
+              "nc": 0.0036390002724203396,
+              "sb_gain": 0.002794476259078721
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.0010552371957469886,
+              "ev": -0.12776125251302428,
+              "nc": 0.0036723342403924553,
+              "sb_gain": 0.0026170970446454667
+            }
+          ]
+        },
+        "alt_delayed": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 9.519148134906619e-05,
+            "ev": -0.127991432997818,
+            "nc": 0.00011172145293655844,
+            "sb_gain": 1.6529971587492254e-05
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.0018975968005628396,
+              "ev": -0.12800848408085944,
+              "nc": 0.005129056596198861,
+              "sb_gain": 0.0032314597956360214
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.0010466207238081504,
+              "ev": -0.1278416669755029,
+              "nc": 0.003112327299519879,
+              "sb_gain": 0.0020657065757117288
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.0016793717673330155,
+              "ev": -0.1279959119563222,
+              "nc": 0.003809873102191663,
+              "sb_gain": 0.0021305013348586477
+            },
+            {
+              "additional": 128,
+              "bb_gain": 9.519148134906619e-05,
+              "ev": -0.127991432997818,
+              "nc": 0.00011172145293655844,
+              "sb_gain": 1.6529971587492254e-05
+            }
+          ]
+        },
+        "alt_history": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.0004945266696666228,
+            "ev": -0.12790597859365213,
+            "nc": 0.0012865695592106652,
+            "sb_gain": 0.0007920428895440423
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.0018975968005628396,
+              "ev": -0.12800848408085944,
+              "nc": 0.005129056596198861,
+              "sb_gain": 0.0032314597956360214
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.0010466207238081504,
+              "ev": -0.1278416669755029,
+              "nc": 0.003112327299519879,
+              "sb_gain": 0.0020657065757117288
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.0006121989914783244,
+              "ev": -0.12783512611083805,
+              "nc": 0.0019676099547378256,
+              "sb_gain": 0.0013554109632595013
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.0004945266696666228,
+              "ev": -0.12790597859365213,
+              "nc": 0.0012865695592106652,
+              "sb_gain": 0.0007920428895440423
+            }
+          ]
+        },
+        "post_only": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 0,
+            "bb_gain": 0.0018975968005628396,
+            "ev": -0.12800848408085944,
+            "nc": 0.005129056596198861,
+            "sb_gain": 0.0032314597956360214
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.0018975968005628396,
+              "ev": -0.12800848408085944,
+              "nc": 0.005129056596198861,
+              "sb_gain": 0.0032314597956360214
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.00812680373845312,
+              "ev": -0.12680272277232776,
+              "nc": 0.011061715619450407,
+              "sb_gain": 0.0029349118809972874
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.0156756101706039,
+              "ev": -0.12575316257652794,
+              "nc": 0.018037269498890174,
+              "sb_gain": 0.0023616593282862752
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.023474693747480818,
+              "ev": -0.12442755277060219,
+              "nc": 0.024985162136631406,
+              "sb_gain": 0.0015104683891505877
+            }
+          ]
+        },
+        "post_then_full": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 0,
+            "bb_gain": 0.0018975968005628396,
+            "ev": -0.12800848408085944,
+            "nc": 0.005129056596198861,
+            "sb_gain": 0.0032314597956360214
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.0018975968005628396,
+              "ev": -0.12800848408085944,
+              "nc": 0.005129056596198861,
+              "sb_gain": 0.0032314597956360214
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.00812680373845312,
+              "ev": -0.12680272277232776,
+              "nc": 0.011061715619450407,
+              "sb_gain": 0.0029349118809972874
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.0156756101706039,
+              "ev": -0.12575316257652794,
+              "nc": 0.018037269498890174,
+              "sb_gain": 0.0023616593282862752
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.009435297638868134,
+              "ev": -0.12712887311451176,
+              "nc": 0.011220772318188382,
+              "sb_gain": 0.001785474679320248
+            }
+          ]
+        },
+        "pre_only": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.0011608614363318726,
+            "ev": -0.12742519812881248,
+            "nc": 0.0019638646118894654,
+            "sb_gain": 0.0008030031755575928
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "selected street only",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.0018975968005628396,
+              "ev": -0.12800848408085944,
+              "nc": 0.005129056596198861,
+              "sb_gain": 0.0032314597956360214
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.0013419390664281272,
+              "ev": -0.12762248112948674,
+              "nc": 0.003441882637051058,
+              "sb_gain": 0.002099943570622931
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.0010327780831207445,
+              "ev": -0.12747793490330556,
+              "nc": 0.002418193763723875,
+              "sb_gain": 0.0013854156806031304
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.0011608614363318726,
+              "ev": -0.12742519812881248,
+              "nc": 0.0019638646118894654,
+              "sb_gain": 0.0008030031755575928
+            }
+          ]
+        },
+        "reset_regret_diagnostic": {
+          "actual_initial_regret_history_retained": false,
+          "average_history_retained": true,
+          "best": {
+            "additional": 0,
+            "bb_gain": 0.0018975968005628396,
+            "ev": -0.12800848408085944,
+            "nc": 0.005129056596198861,
+            "sb_gain": 0.0032314597956360214
+          },
+          "eligible_for_adoption": false,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.0018975968005628396,
+              "ev": -0.12800848408085944,
+              "nc": 0.005129056596198861,
+              "sb_gain": 0.0032314597956360214
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.006434614976820463,
+              "ev": -0.13274483450053715,
+              "nc": 0.015339819424788487,
+              "sb_gain": 0.008905204447968024
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.004695949912880415,
+              "ev": -0.13109818342635282,
+              "nc": 0.010686240913312356,
+              "sb_gain": 0.005990291000431941
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.002778930048941114,
+              "ev": -0.1296333592159836,
+              "nc": 0.006057045328635241,
+              "sb_gain": 0.003278115279694127
+            }
+          ]
+        },
+        "sim_history": {
+          "actual_initial_regret_history_retained": true,
+          "average_history_retained": true,
+          "best": {
+            "additional": 128,
+            "bb_gain": 0.0007264498226008109,
+            "ev": -0.12771578508942544,
+            "nc": 0.002808321665346891,
+            "sb_gain": 0.0020818718427460803
+          },
+          "eligible_for_adoption": true,
+          "future_regret_updates": "all",
+          "points": [
+            {
+              "additional": 0,
+              "bb_gain": 0.0018975968005628396,
+              "ev": -0.12800848408085944,
+              "nc": 0.005129056596198861,
+              "sb_gain": 0.0032314597956360214
+            },
+            {
+              "additional": 32,
+              "bb_gain": 0.0009869684899043163,
+              "ev": -0.12772923087098395,
+              "nc": 0.003616683339972032,
+              "sb_gain": 0.002629714850067716
+            },
+            {
+              "additional": 64,
+              "bb_gain": 0.0010607622752104862,
+              "ev": -0.1277751913771368,
+              "nc": 0.003349849692401652,
+              "sb_gain": 0.0022890874171911657
+            },
+            {
+              "additional": 128,
+              "bb_gain": 0.0007264498226008109,
+              "ev": -0.12771578508942544,
+              "nc": 0.002808321665346891,
+              "sb_gain": 0.0020818718427460803
+            }
+          ]
+        }
+      },
+      "protected_original_baseline": {
+        "bb_gain": 0.14439318750000005,
+        "ev": -0.10578181249999993,
+        "nc": 0.774375,
+        "sb_gain": 0.6299818125
+      },
+      "teacher_actual_iterations": 128
+    }
+  ],
+  "eligible_for_later_population_registration": [],
+  "formal_acceptance": [
+    0,
+    12
+  ],
+  "normal_GTO_added": 0,
+  "scope": "SAME TWO EXPLICIT FINITE FIXTURES,NOT NEW HELDOUT/HU50",
+  "warning": "same optimization-game bestcheckpoint;initialhistories retained except labelled reset diagnostic. Scoped updates omit unselected newregrets,not standard fullCFR."
+}
