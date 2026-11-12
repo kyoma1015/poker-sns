@@ -69,3 +69,35 @@ BR improvement before a new population trial/adoption. Recover formal condition
 registry and matched reference/independent richer-model validation in parallel;
 only then qualify169-frequency/actionEV datasets for ordinary UI. Runtime for
 release UNKNOWN; no fabricated completion percentage or delivery deadline.
+
+## Failed actual full7 profile: complete second qualification
+
+Independent and realized SB gains2.038932150810659/2.038932150810658BB,
+BB gains1.0747456318474349/1.0747456318474335BB. Including all signed
+attribution terms,maxerror2.547295707699959e-12BB (criterion1e-8).
+NC3.113677782658094BB matches the previous full7 measurement,delta0.
+Difference to frozen+2.1815706299360166BB;failed profile NOT adopted.
+
+Largest signed phase is SB facing4bet after limp/raise2.5/3bet9/4bet21,
++2.051919847922753BB;earlier SB facingraise afterlimp contributes
+-0.5645423828016677BB. BB flop after open/3bet/4bet/call contributes
++0.4311047960555166BB. These include all signed terms,not independent edits.
+Individual SB A9o chooses shove50 at that limped4bet node:BR-pathgain
+0.0396268750375049BB,BR-pathrootreach0.0021454155917386684;baseline
+rootreach0.00018507651349325383,single-info edit gain0.00341845370231075BB.
+A8o/A7o also appear. This identifies a rare-history/private-class weakness,
+not a proven unique regret-update implementation bug. Next focused tiny game
+should preserve this whole limp/raise/3bet/4bet/shove history and its actual
+reach/average histories before registering another population method.
+
+Frozen individual flop example:SB98o,board6d7hKc,pot18BB,SPR2.2777778,
+selected raise27BB;BR-path contribution2.292131979773056e-5BB,baseline
+single-info edit2.6563296121977165e-9BB. Again,do not mistake an improved
+BR path for the benefit of changing one baseline row.
+
+Complete signed certificates and post-only top40 are preserved for BOTH
+profiles. Layout-reuse diagnostic optimization was checked byte-identical
+against its pre-optimization output;no payoff/BR kernel was rerun for this
+postprocessor parity check. Original full7 physical DB SHA d97ea604... matches
+its prior preserved hash. Large R/S-copy trial still needs about1.11GB extra
+with the fixed2GiB reserve,AND no small candidate passed;new full training0.

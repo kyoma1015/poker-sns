@@ -215,3 +215,34 @@ jobs:
            for file,h in json.loads((root/'vector-sample-benchmark.json').read_text())['source_sha256'].items():assert hashlib.sha256(Path(file).read_bytes()).hexdigest()==h
            print('PASS complete numeric artifacts,research isolation,protected baseline selection;shortCI doesNOT replay all1755kernels')
           PYCODE
+
+      - name: Check measured pure BR realization and signed attribution evidence
+        run: |
+          python -B - <<'PYCODE'
+          import hashlib,json
+          from pathlib import Path
+          from gto.abstract import pure_br_report as report
+          root=Path('docs/qa/pure-br-20261112')
+          for name,h in json.loads((root/'evidence-manifest.json').read_text()).items():
+           assert hashlib.sha256((root/name).read_bytes()).hexdigest()==h,name
+          for name,h in json.loads((root/'provenance.json').read_text())['source_sha256'].items():
+           assert hashlib.sha256(Path(name).read_bytes()).hexdigest()==h,name
+          for target in ('frozen','full7'):
+           cert=report.read(root/(target+'-certificate.json.gz.b64'))
+           measured=json.loads((root/(target+'-result.json')).read_text())
+           print(target,report.check(cert,measured))
+          print('PASS measured full-population artifacts;short CI does NOT rerun1755world kernels or verify NLHE accuracy')
+          PYCODE
+      - name: Replay preregistered matched small-game diagnostic with no promotion
+        run: |
+          python -B - <<'PYCODE'
+          import json
+          from pathlib import Path
+          from gto.abstract.pure_br_small import run
+          from gto.abstract.independent_verify import compare
+          expected=json.loads(Path('docs/qa/pure-br-20261112/small-results.json').read_text())
+          compare(run(),expected)
+          assert not expected['eligible_for_later_population_registration']
+          assert expected['formal_acceptance']==[0,12] and expected['normal_GTO_added']==0
+          print('PASS same-fixture8cohort9method replay;zero eligible new population methods,not externalGTO/heldout evidence')
+          PYCODE

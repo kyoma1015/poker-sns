@@ -1,0 +1,11 @@
+{
+  "workspace_free": 2207268864,
+  "measured_existing_full7_db_bytes": 1138569216,
+  "reserve": 2147483648,
+  "full_copy_learning_required": 3319607296,
+  "full_copy_deficit": 1112338432,
+  "new_full_learning_gate": "NO MATCHED SMALL CANDIDATE PASSED",
+  "new_full_learning_started": false,
+  "compact_BR_qualification": "FROZEN COMPLETE;FULL7 INDEPENDENT REALIZATION ONGOING",
+  "scope": "Actual full7-sized R/S clone estimate,not proof that every possible algorithm requires this storage."
+}

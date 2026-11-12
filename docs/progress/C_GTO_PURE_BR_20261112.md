@@ -59,3 +59,34 @@ andcompactrecoveryZIP/offlineGitbundlevalidation. Do not claimpendingfull7PASS.
 Frozenpost-flopdriverlabelsbeingderived onlyfromcachedadvantages/reach,
 log/workspace/pure-br-enrichment.log,output/workspace/pure-br-run/enriched-post.json.
 No automaticresume/independentrestart;pendingwork requires an active executor.
+
+## Final computational checkpoint,2026-11-12
+
+BOTH1755/22100/9branch pureBR extraction+independent realization COMPLETE/PASS.
+Frozen NC.9321071527220774,full7 NC3.113677782658094:both match oldresults,
+no improvement/adoption. Maxoracle/realization/all-signed attribution errors
+4.934941344458821e-14/2.547295707699959e-12BB. Full7 main driver is SB
+limp/raise2.5/3bet9/4bet21,including A9o/A8o/A7o shove50. Full diagnostics
+and every signed bin in docs/qa/pure-br-20261112,not synthetic poker measurements.
+
+All source/QA goes into the next normal commit/push. Latest automaticCI and
+publication receipt belong to finalHEAD and are saved by the operator outsideGit
+and in PRbody afterGET verification;do not infer them from an earlierHEAD.
+No further source changes after finalcommit solely to add a CIreceipt.
+Reproduction:c++ flags/source hashes in provenance.json;readonly targets:
+/workspace/joint-stream-run/frozen.sqlite,/workspace/joint-training-run/vector.sqlite;
+cache/workspace/joint-stream-cache. Compactpolicy DBs roots/workspace/pure-br-run
+and/workspace/pure-br-full7-run. Existing5GB ZIP verified,not overwritten.
+Finalincrementalbackup uses /workspace/pure-br-make-recovery.py aftercleancommit:
+newsourcebundle requiring fullbase2d946fb...,bothcompactpolicy DBs,evidence;
+offlineGitrestore/fsck and SQLite2/2 restore checked. Largefull7training DB
+is retainedlocally,NOT includedin the compact newarchive.
+
+Next shortest step:preregister a tiny game with actuallimp/raise/3bet/4bet/shove
+history and genuineR/S;compare matched updates with independentpureBR before
+any newwholepopulation learning. Eightcohort/ninemethod gatepassedNONE here.
+R/Sclone capacity deficitabout1.11GB with2GiBreserve;no deletion/clean/fees.
+Formal20stack/fullsize originalmissing,allmodes2–9/positions/ante/rake retained,
+externalreferenceUNPERFORMED,realgameerrorUNKNOWN,formal0/12,ordinary0.
+ResearchUI/ranges/HU1BB/2–9/frozenCFRegines143filesunchanged.
+AUTO-RESUME:NO;independentautomaticrestart:NO. Completedqualifiers neednot rerun.
