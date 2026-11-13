@@ -1266,7 +1266,10 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     && (interactiveMode!=='poll'||(pollOptions.every(o=>o.trim()) && new Set(pollOptions.map(o=>o.trim().toLowerCase())).size===pollOptions.length))
 
   const handlePost = async () => {
-    if (postSubmitInFlightRef.current) return
+    if (postSubmitInFlightRef.current) {
+      setMessage('投稿処理を確認中です。重複送信を防ぐため、新しい投稿は開始しません。')
+      return
+    }
     postSubmitInFlightRef.current = true
     const lifetime = composerLifetimeRef.current
     try { await submitPost() }
@@ -1309,7 +1312,10 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
 
     if (videoFile || pendingVideoRef.current) {
-      if (isPosting || videoSubmitInFlightRef.current) return
+      if (isPosting || videoSubmitInFlightRef.current) {
+        setMessage('動画の投稿処理が進行中です。二重送信は行いません。')
+        return
+      }
       const lifetime = composerLifetimeRef.current
       const isCurrent = () => lifetime === composerLifetimeRef.current
       if (videoRecoveryBlocked) { setMessage(VIDEO_TRANSFER_RECOVERY_MESSAGE); return }
@@ -3212,7 +3218,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
             {attachmentsOpen && renderAttachmentPicker()}
             {renderSelectedResultPreview()}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 18 }}><span style={{ color: '#888', fontSize: 12 }}>{content.length}/500</span><button type="button" disabled={isPosting || !canSubmitPost} onClick={handlePost} style={{ width: 'auto', borderRadius: 99, background: '#fff', color: '#000', padding: '10px 24px', fontWeight: 800 }}>{isPosting ? '投稿中...' : '投稿する'}</button></div>
-            {message && <div style={{ color: '#ccc', marginTop: 10, fontSize: 12 }}>{message}</div>}
+            {(videoFile || pendingVideo || videoRecoveryBlocked) && <div role="status" aria-live="polite" style={{ color: '#e6c27a', marginTop: 10, fontSize: 12 }}>{videoRecoveryBlocked ? '安全停止中：前回の動画転送の確認が必要です。再送信しません。' : isPosting ? '投稿処理中です。完了まで操作せずお待ちください。' : !VIDEO_SERVER_ENABLED ? '動画投稿APIが無効です。動画は送信されません。' : pendingVideo ? '前回の動画を保持中です。新しいファイルは送信しません。' : '動画を選択済みです。再生して映像・音声を確認してください。'}</div>}
+            {message && <div role="alert" style={{ color: '#ccc', marginTop: 10, fontSize: 12 }}>{message}</div>}
             {videoRecoveryNotice && <div role="status" style={{ color: '#ccc', marginTop: 10, fontSize: 12 }}>{videoRecoveryNotice}</div>}
             {videoRecoveryBlocked && <button type="button" disabled={recoveryChecking || isPosting} onClick={() => { void confirmPublishedVideoRecovery() }}
               style={{ marginTop: 10, padding: '9px 14px', borderRadius: 9, border: '1px solid #666', background: '#292929', color: '#fff', fontWeight: 700 }}>
