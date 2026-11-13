@@ -10,9 +10,12 @@ export default function PostVideo({ postId, videoPath }: { postId: string; video
   const [poster, setPoster] = useState('')
   const [playing, setPlaying] = useState(false)
   const [playbackError, setPlaybackError] = useState('')
-  const posterSeekAttempts = useRef(0)
-  const posterFrameCallback = useRef<number | null>(null)
+  const posterGeneration = useRef(0)
+  const posterProbeCleanup = useRef<(() => void) | null>(null)
   useEffect(() => {
+    posterGeneration.current++
+    posterProbeCleanup.current?.()
+    posterProbeCleanup.current = null
     if (!VIDEO_SERVER_ENABLED) { setUrl(''); setError('動画再生は安全なサーバー接続の準備中です。'); return }
     let active = true
     let objectUrl = ''
@@ -29,6 +32,10 @@ export default function PostVideo({ postId, videoPath }: { postId: string; video
         (viewerId !== undefined && session?.user.id !== viewerId)
       if (event === 'SIGNED_OUT' || event === 'USER_UPDATED' || identityChanged) {
         active = false
+        posterGeneration.current++
+        posterProbeCleanup.current?.()
+        posterProbeCleanup.current = null
+        setPoster('')
         if (objectUrl) URL.revokeObjectURL(objectUrl)
         objectUrl = ''
         setUrl('')
@@ -37,8 +44,6 @@ export default function PostVideo({ postId, videoPath }: { postId: string; video
     })
     setUrl('')
     setPoster('')
-    posterSeekAttempts.current = 0
-    posterFrameCallback.current = null
     setPlaying(false)
     setPlaybackError('')
     setError('')
@@ -65,70 +70,122 @@ export default function PostVideo({ postId, videoPath }: { postId: string; video
     }).catch(() => {
       if (active) setError('動画を読み込めません。権限を確認してください。')
     })
-    return () => { active = false; subscription.unsubscribe(); if (objectUrl) URL.revokeObjectURL(objectUrl) }
+    return () => {
+      active = false
+      posterGeneration.current++
+      posterProbeCleanup.current?.()
+      posterProbeCleanup.current = null
+      subscription.unsubscribe()
+      if (objectUrl) URL.revokeObjectURL(objectUrl)
+    }
   }, [postId, videoPath])
-  const capturePoster = (video: HTMLVideoElement) => {
-    if (poster || playing || !video.videoWidth || !video.videoHeight || video.readyState < 2) return
-    try {
-      const canvas = document.createElement('canvas')
-      const scale = Math.min(1, 640 / Math.max(video.videoWidth, video.videoHeight))
-      canvas.width = Math.max(1, Math.round(video.videoWidth * scale))
-      canvas.height = Math.max(1, Math.round(video.videoHeight * scale))
-      const context = canvas.getContext('2d')
-      if (!context) return
-      context.drawImage(video, 0, 0, canvas.width, canvas.height)
-      const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data
-      let nonBlack = 0
-      for (let i = 0; i < pixels.length; i += Math.max(4, Math.floor(pixels.length / 256 / 4) * 4)) {
-        if (pixels[i] > 16 || pixels[i + 1] > 16 || pixels[i + 2] > 16) nonBlack++
+  useEffect(() => {
+    if (!url || poster) return
+    const generation = ++posterGeneration.current
+    const probe = document.createElement('video')
+    probe.muted = true
+    probe.defaultMuted = true
+    probe.playsInline = true
+    probe.preload = 'auto'
+    let disposed = false
+    let completed = false
+    let frameCallback: number | null = null
+    let frameVersion = 0
+    let settleTimer: ReturnType<typeof setTimeout> | undefined
+    let seekIndex = 0
+    let timeout: ReturnType<typeof setTimeout> | undefined
+    const seekTimes = [0.35, 0.8, 1.6, 2.8, 4.0]
+    const isCurrent = () => !disposed && !completed && generation === posterGeneration.current
+    const cleanup = () => {
+      if (disposed) return
+      disposed = true
+      if (timeout !== undefined) clearTimeout(timeout)
+      if (settleTimer !== undefined) clearTimeout(settleTimer)
+      frameVersion++
+      if (frameCallback !== null && typeof probe.cancelVideoFrameCallback === 'function') {
+        probe.cancelVideoFrameCallback(frameCallback)
       }
-      if (nonBlack > 2) { setPoster(canvas.toDataURL('image/jpeg', 0.76)); return }
-    } catch { /* cross-origin or Safari decoding failure: preserve playback */ }
-    const next = [0.8, 1.6, 2.8, 4.0][posterSeekAttempts.current++]
-    if (next !== undefined && Number.isFinite(video.duration) && video.duration > 0.1) {
-      const time = Math.min(next, video.duration * 0.85)
-      if (time > video.currentTime + 0.05) {
-        try { video.currentTime = time } catch { /* keep native playback */ }
+      probe.removeEventListener('loadedmetadata', onMetadata)
+      probe.removeEventListener('loadeddata', onFrame)
+      probe.removeEventListener('seeked', onFrame)
+      probe.removeEventListener('canplay', onFrame)
+      probe.pause()
+      probe.removeAttribute('src')
+      try { probe.load() } catch { /* release even if decoder is gone */ }
+    }
+    const nextSeek = () => {
+      if (!isCurrent() || !Number.isFinite(probe.duration) || probe.duration <= 0) return
+      while (seekIndex < seekTimes.length) {
+        const next = Math.min(seekTimes[seekIndex++], probe.duration * 0.85)
+        if (next <= probe.currentTime + 0.05) continue
+        try {
+          frameVersion++
+          if (frameCallback !== null && typeof probe.cancelVideoFrameCallback === 'function') probe.cancelVideoFrameCallback(frameCallback)
+          frameCallback = null
+          probe.currentTime = next
+          return
+        } catch { /* try next position */ }
       }
     }
-  }
-  const captureAfterDecodedFrame = (video: HTMLVideoElement) => {
-    // Safari may fire seeked before the frame is actually available to Canvas.
-    // requestVideoFrameCallback runs when a decoded frame is submitted for presentation.
-    if ('requestVideoFrameCallback' in video) {
-      if (posterFrameCallback.current !== null) video.cancelVideoFrameCallback(posterFrameCallback.current)
-      posterFrameCallback.current = video.requestVideoFrameCallback(() => {
-        posterFrameCallback.current = null
-        capturePoster(video)
-      })
-    } else capturePoster(video)
-  }
+    const capture = () => {
+      if (!isCurrent() || probe.readyState < 2 || !probe.videoWidth || !probe.videoHeight) return false
+      try {
+        const canvas = document.createElement('canvas')
+        const scale = Math.min(1, 640 / Math.max(probe.videoWidth, probe.videoHeight))
+        canvas.width = Math.max(1, Math.round(probe.videoWidth * scale))
+        canvas.height = Math.max(1, Math.round(probe.videoHeight * scale))
+        const ctx = canvas.getContext('2d')
+        if (!ctx) return false
+        ctx.drawImage(probe, 0, 0, canvas.width, canvas.height)
+        const side = Math.min(24, canvas.width, canvas.height)
+        const pixels = ctx.getImageData(Math.floor((canvas.width - side) / 2), Math.floor((canvas.height - side) / 2), side, side).data
+        if (!pixels.some((v, i) => i % 4 !== 3 && v > 16)) return false
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.76)
+        if (!isCurrent()) return false
+        completed = true
+        setPoster(dataUrl)
+        cleanup()
+        return true
+      } catch { return false /* Safari decode/canvas failure must not block playback */ }
+    }
+    const onFrame = () => {
+      if (!isCurrent()) return
+      if (capture()) return
+      const version = frameVersion
+      if (frameCallback === null && typeof probe.requestVideoFrameCallback === 'function') {
+        frameCallback = probe.requestVideoFrameCallback(() => {
+          frameCallback = null
+          if (version !== frameVersion || !isCurrent()) return
+          if (capture()) return
+          nextSeek()
+        })
+      }
+      if (settleTimer !== undefined) clearTimeout(settleTimer)
+      settleTimer = setTimeout(() => {
+        settleTimer = undefined
+        if (version !== frameVersion || !isCurrent()) return
+        if (capture()) return
+        nextSeek()
+      }, 220)
+    }
+    const onMetadata = () => nextSeek()
+    probe.addEventListener('loadedmetadata', onMetadata)
+    probe.addEventListener('loadeddata', onFrame)
+    probe.addEventListener('seeked', onFrame)
+    probe.addEventListener('canplay', onFrame)
+    timeout = setTimeout(cleanup, 7000)
+    probe.src = url
+    probe.load()
+    posterProbeCleanup.current = cleanup
+    return () => {
+      cleanup()
+      if (posterProbeCleanup.current === cleanup) posterProbeCleanup.current = null
+    }
+  }, [url, poster])
   if (error) return <p role="status">{error}</p>
   if (!url) return <p role="status">動画を読み込み中...</p>
   return <div style={{ position: 'relative', margin: '10px 0 14px', borderRadius: 12, overflow: 'hidden', background: '#101010' }}>
     <video key={postId} controls={playing || Boolean(playbackError)} playsInline preload="auto" src={url} poster={poster || undefined}
-      onLoadedMetadata={event => {
-        const video = event.currentTarget
-        if (!poster && !playing && Number.isFinite(video.duration) && video.duration > 0.2) {
-          try { video.currentTime = Math.min(0.35, video.duration / 2) } catch { /* native fallback */ }
-        }
-      }}
-      onLoadedData={event => {
-        if (poster) return
-        const video = event.currentTarget
-        if (!video.videoWidth || !video.videoHeight) return
-        // Some Safari builds do not dispatch a frame callback for paused video.
-        // Attempt a synchronous capture as well; black frames are rejected.
-        capturePoster(video)
-        // Safari can expose a decoded first frame before it is actually paintable.
-        // Seek slightly forward once; only capture after seeked, never freeze a black
-        // initial canvas as the poster. Playback remains independent of this step.
-        if (video.currentTime === 0 && Number.isFinite(video.duration) && video.duration > 0.2) {
-          try { video.currentTime = Math.min(0.15, video.duration / 2) } catch { /* keep native preview */ }
-        }
-      }}
-      onSeeked={event => captureAfterDecodedFrame(event.currentTarget)}
-      onCanPlay={event => { if (!poster && !playing) captureAfterDecodedFrame(event.currentTarget) }}
       onPlay={() => { setPlaying(true); setPlaybackError('') }} onPause={() => setPlaying(false)}
       onError={() => setPlaybackError('動画を再生できません。形式または通信状態をご確認ください。')}
       style={{ display: 'block', width: '100%', maxHeight: 480, minHeight: 120, objectFit: 'contain' }} />
