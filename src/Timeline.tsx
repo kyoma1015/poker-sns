@@ -2725,6 +2725,12 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       {styleSnapshot && renderStyleSnapshot(styleSnapshot)}
       {videoPreview && <div style={{ position: 'relative' }}>
         <video key={videoPreview} controls playsInline preload="auto" src={videoPreview} poster={videoPreviewPoster || undefined}
+          onError={event => {
+            if (event.currentTarget.currentSrc === videoPreviewUrlRef.current) {
+              const code = event.currentTarget.error?.code
+              setVideoPreviewNotice(`動画を再生できません（メディアエラー ${code ?? "不明"}）。形式を確認してください。`)
+            }
+          }}
           // Never seek the user-controlled player to generate a poster:
           // iPhone Safari can stall playback when metadata-driven seeking races decoding.
           onSeeked={event => captureVideoPreviewPoster(event.currentTarget)}
