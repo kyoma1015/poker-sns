@@ -2739,7 +2739,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           onPlaying={event => captureVideoPreviewPoster(event.currentTarget)}
           onTimeUpdate={event => { if (!videoPreviewPoster) captureVideoPreviewPoster(event.currentTarget) }}
           style={{ width: '100%', maxHeight: 360, borderRadius: 10 }} />
-        {!videoPreviewPoster && <span role="status" style={{ position: 'absolute', right: 8, top: 8, background: '#222', color: '#ddd', padding: '4px 7px', borderRadius: 6, fontSize: 11, pointerEvents: 'none' }}>{videoPreviewNotice || 'プレビューを準備中'}</span>}
+        {(!videoPreviewPoster || videoPreviewNotice.startsWith("動画を再生できません")) && <span role="status" style={{ position: 'absolute', right: 8, top: 8, background: '#222', color: '#ddd', padding: '4px 7px', borderRadius: 6, fontSize: 11, pointerEvents: 'none' }}>{videoPreviewNotice || 'プレビューを準備中'}</span>}
       </div>}
       {pendingVideo && <div style={{ padding: 12, border: '1px solid #675331', borderRadius: 10, background: '#211c15' }}>
         <p role="status" style={{ fontSize: 12, color: '#e6c27a', margin: '0 0 8px' }}>動画はアップロード済みです。前回と同じ内容で投稿を再試行できます。動画の再選択は不要です。</p>
