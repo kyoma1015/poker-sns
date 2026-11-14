@@ -11,7 +11,7 @@ permissions:
 jobs:
   mov-browser:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
@@ -22,6 +22,13 @@ jobs:
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npx tsc -b --pretty false && npx vite build
       - run: npm run lint
-      - run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+      # Runner image may omit FFmpeg; install it with a bounded step.
+      - name: Install FFmpeg for disposable MOV fixtures
+        timeout-minutes: 18
+        run: |
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ffmpeg
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
       - run: node node_modules/playwright-core/cli.js install --with-deps chrome
       - run: node tests/video/mov_conversion_browser.mjs

@@ -34,6 +34,35 @@ export async function finalizeUploadedVideo(objectPath: string, content: string,
   return payload.post_id
 }
 
+/** Read-only recovery classification. Does not authorize upload, clear journal, or publish.
+ * Available only after isolated candidate SQL is deployed and reviewed. */
+export async function inspectCloudVideoRecovery(objectPath: string, signal?: AbortSignal): Promise<{
+  state: 'published' | 'stored_unpublished' | 'expired_empty' | 'reserved_empty' | 'conflict'
+  allow_resume: false; expired: boolean; storage_present: boolean; post_id: string | null; sha256: string; size: number
+}> {
+  assertCurrentVideoCloudTestClient()
+  if (import.meta.env.VITE_VIDEO_CLOUD_TEST_ENABLED !== 'true') throw new Error('テスト環境以外では復旧照合できません。')
+  const response = await fetch(VIDEO_FINALIZE_ROUTE, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: await authHeader(signal) },
+    body: JSON.stringify({action:'recovery_inspect',object_path:objectPath}),
+    redirect:'error',cache:'no-store',
+    signal:signal ? AbortSignal.any([signal,AbortSignal.timeout(30000)]) : AbortSignal.timeout(30000),
+  })
+  if (!response.ok) throw new Error('動画の復旧照合に失敗しました。送信停止を維持します。')
+  const value:unknown = await response.json()
+  if (!value || typeof value!=='object' || Array.isArray(value)) throw new Error('復旧応答が不正です。')
+  const r=value as Record<string,unknown>
+  if (r.allow_resume!==false || !['published','stored_unpublished','expired_empty','reserved_empty','conflict'].includes(String(r.state)) ||
+      typeof r.expired!=='boolean' || typeof r.storage_present!=='boolean' ||
+      (r.post_id!==null && (typeof r.post_id!=='string'||!POST_UUID.test(r.post_id))) ||
+      (r.state==='published' && !r.post_id) ||
+      typeof r.sha256!=='string' || !/^[0-9a-f]{64}$/.test(r.sha256) ||
+      !Number.isSafeInteger(r.size) || (r.size as number)<1 || (r.size as number)>20971520)
+    throw new Error('復旧照合の安全性を確認できません。')
+  return r as {state:'published'|'stored_unpublished'|'expired_empty'|'reserved_empty'|'conflict';allow_resume:false;expired:boolean;storage_present:boolean;post_id:string|null;sha256:string;size:number}
+}
+
 /** Recovery reuses the existing reserved private object; no Storage upload or new key. */
 export async function recoverCloudVideo(objectPath: string): Promise<string> {
   assertCurrentVideoCloudTestClient()

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { execFileSync } from 'node:child_process'
 
 // Actual Timeline, real local feed/auth; lifecycle notifications and delayed
 // metadata/social response are controlled explicitly, with no production IO.
@@ -159,5 +160,76 @@ export async function verifyComposerLifecycle({browser,origin,jwt,anon,bytes}) {
       console.log('PASS: actual Timeline composer lifecycle '+scenario)
     } finally { await page.close() }
   }
-}
 
+  // The ordinary E2E fixture is deliberately all-black. Generate a bright
+  // disposable WebM so the production near-black poster rejection can pass.
+  const posterBytes=execFileSync('ffmpeg',['-v','error','-f','lavfi','-i','testsrc2=size=160x120:rate=10','-t','2','-c:v','libvpx','-b:v','250k','-f','webm','pipe:1'])
+  // Real Timeline poster regression: independent muted probe, stale callback
+  // fencing and playback when Canvas extraction fails. No submit or uploads.
+  for (const scenario of ['poster-before-play','stale-probe','canvas-unavailable']) {
+    const page=await browser.newPage()
+    const errors=[]
+    page.on('pageerror',error=>errors.push(String(error)))
+    let writes=0
+    await page.route('**/internal/video/finalize',route=>{writes++;return route.abort()})
+    try {
+      await page.addInitScript(({jwt,anon,scenario})=>{
+        window.__VIDEO_QA_JWT=jwt
+        window.__VIDEO_QA_ANON=anon
+        window.__POSTER_PROBES=[]
+        const create=document.createElement.bind(document)
+        document.createElement=(tag,...args)=>{
+          const element=create(tag,...args)
+          if(tag==='video') window.__POSTER_PROBES.push(element)
+          return element
+        }
+        if(scenario==='canvas-unavailable') {
+          HTMLCanvasElement.prototype.getContext=function(){return null}
+        }
+      },{jwt,anon,scenario})
+      await page.goto(origin+'/tests/video/browser-real-timeline.html')
+      await page.locator('article video').first().waitFor({timeout:20000})
+      await page.evaluate(()=>window.dispatchEvent(new Event('poker-id-open-compose')))
+      const composer=page.getByRole('dialog',{name:'新しい投稿'})
+      await composer.waitFor()
+      const picker=page.locator('input[type="file"][accept*="video/mp4"]')
+      await picker.setInputFiles({name:'poster-a.webm',mimeType:'video/webm',buffer:posterBytes})
+      const player=composer.locator('video')
+      await player.waitFor()
+      if(scenario==='canvas-unavailable') {
+        await page.waitForFunction(()=>window.__POSTER_PROBES.length>0)
+        assert.equal(await player.getAttribute('poster'),null,'Canvas failure must not create a poster')
+        const playable=await player.evaluate(async video=>{
+          try {await video.play();return !video.paused} catch {return false}
+        })
+        assert.equal(playable,true,'Canvas failure must preserve playable preview')
+      } else {
+        await page.waitForFunction(()=>{
+          const player=document.querySelector('[role="dialog"] video')
+          return Boolean(player?.poster?.startsWith('data:image/jpeg'))
+        },{},{timeout:20000})
+        assert.equal(await player.evaluate(video=>video.paused),true,'poster must appear before user playback')
+        if(scenario==='stale-probe') {
+          const old=await player.getAttribute('src')
+          await picker.setInputFiles({name:'poster-b.webm',mimeType:'video/webm',buffer:posterBytes})
+          await page.waitForFunction(previous=>{
+            const player=document.querySelector('[role="dialog"] video')
+            return Boolean(player?.src && player.src!==previous && player.poster?.startsWith('data:image/jpeg'))
+          },old,{timeout:20000})
+          const current=await player.getAttribute('poster')
+          await page.evaluate(()=>{
+            for(const probe of window.__POSTER_PROBES.slice(0,-1)) {
+              probe.dispatchEvent(new Event('seeked'))
+              probe.dispatchEvent(new Event('loadeddata'))
+            }
+          })
+          await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))))
+          assert.equal(await player.getAttribute('poster'),current,'late prior attachment events must not replace current poster')
+        }
+      }
+      assert.equal(writes,0,'poster regression must never finalize an upload')
+      assert.deepEqual(errors,[],'no unhandled poster errors')
+      console.log('PASS: real Timeline poster '+scenario)
+    } finally {await page.close()}
+  }
+}
