@@ -1272,6 +1272,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     }
     postSubmitInFlightRef.current = true
     const lifetime = composerLifetimeRef.current
+    // Show that the click reached the handler before any auth/network work.
+    // This does not start an extra upload or bypass recovery safety checks.
+    if (videoFile || pendingVideoRef.current) setMessage('投稿操作を受け付けました。安全条件を確認しています。')
     try { await submitPost() }
     catch {
       if (lifetime === composerLifetimeRef.current) {
@@ -3224,7 +3227,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
             {attachmentsOpen && renderAttachmentPicker()}
             {renderSelectedResultPreview()}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 18 }}><span style={{ color: '#888', fontSize: 12 }}>{content.length}/500</span><button type="button" disabled={isPosting || !canSubmitPost} onClick={handlePost} style={{ width: 'auto', borderRadius: 99, background: '#fff', color: '#000', padding: '10px 24px', fontWeight: 800 }}>{isPosting ? '投稿中...' : '投稿する'}</button></div>
-            {(videoFile || pendingVideo || videoRecoveryBlocked) && <div role="status" aria-live="polite" style={{ color: '#e6c27a', marginTop: 10, fontSize: 12 }}>{videoRecoveryBlocked ? '安全停止中：前回の動画転送の確認が必要です。再送信しません。' : isPosting ? '投稿処理中です。完了まで操作せずお待ちください。' : !VIDEO_SERVER_ENABLED ? '動画投稿APIが無効です。動画は送信されません。' : pendingVideo ? '前回の動画を保持中です。新しいファイルは送信しません。' : '動画を選択済みです。再生して映像・音声を確認してください。'}</div>}
+            {(videoFile || pendingVideo || videoRecoveryBlocked || (videoPreview && !canSubmitPost)) && <div role="status" aria-live="polite" style={{ color: '#e6c27a', marginTop: 10, fontSize: 12 }}>{videoRecoveryBlocked ? '安全停止中：前回の動画転送の確認が必要です。再送信しません。' : isPosting ? '投稿処理中です。完了まで操作せずお待ちください。' : !VIDEO_SERVER_ENABLED ? '動画投稿APIが無効です。動画は送信されません。' : pendingVideo ? '前回の動画を保持中です。新しいファイルは送信しません。' : !canSubmitPost ? '投稿ボタンが無効です。添付の選択状態を確認してください。動画の再送信は行いません。' : '動画を選択済みです。再生して映像・音声を確認してください。'}</div>}
             {message && <div role="alert" style={{ color: '#ccc', marginTop: 10, fontSize: 12 }}>{message}</div>}
             {videoRecoveryNotice && <div role="status" style={{ color: '#ccc', marginTop: 10, fontSize: 12 }}>{videoRecoveryNotice}</div>}
             {videoRecoveryBlocked && <button type="button" disabled={recoveryChecking || isPosting} onClick={() => { void confirmPublishedVideoRecovery() }}
