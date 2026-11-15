@@ -19,6 +19,11 @@ try {
   assert.match(timelineSource, /onCanPlay=\{event => captureVideoPreviewPoster\(event\.currentTarget\)\}/)
   assert.match(timelineSource, /requestVideoFrameCallback/)
   assert.match(timelineSource, /expectedUrl !== videoPreviewUrlRef\.current/)
+  // Keep click receipt and disabled-state diagnostics visible without altering upload logic.
+  assert.match(timelineSource, /if \(videoFile \|\| pendingVideoRef\.current\) setMessage\('投稿操作を受け付けました。安全条件を確認しています。'\)/)
+  assert.match(timelineSource, /!canSubmitPost \? '投稿ボタンが無効です。添付の選択状態を確認してください。動画の再送信は行いません。'/)
+  assert.match(timelineSource, /if \(!VIDEO_SERVER_ENABLED\) \{/)
+  assert.match(timelineSource, /if \(postSubmitInFlightRef\.current\) \{/)
   const source = await readFile('src/videoMovConversion.ts', 'utf8')
   // Safari can omit ended for short MOVs: source time must independently stop recording.
   assert.match(source, /video\.currentTime >= duration - 0\.05/)
