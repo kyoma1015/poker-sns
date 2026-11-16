@@ -83,6 +83,8 @@ export function positions(players: number): { seat: number; label: string }[] {
     { seat: 0, label: 'SB' }, { seat: 1, label: 'BB' }]
 }
 export function validateVerifiedRange(value: unknown, registry: Readonly<Record<string, ReviewedCertificate>>): VerifiedRange | null {
+  // Materialize sparse entries before checking: Array.some skips holes, but
+  // missing actions, probabilities and interval endpoints must fail closed.
   if (!object(value) || value.schema !== 'pokerid-verified-preflop-v1' || value.equilibriumVerified !== true ||
       typeof value.conditionClass !== 'string' || !['formal', 'explicit_test'].includes(value.conditionClass) ||
       typeof value.conditionName !== 'string' || !value.conditionName || value.conditionName.length > 200 ||
@@ -91,7 +93,7 @@ export function validateVerifiedRange(value: unknown, registry: Readonly<Record<
       typeof value.configDigest !== 'string' || !digestPattern.test(value.configDigest) ||
       !object(value.coverage) || value.coverage.combinations !== 1326 || value.coverage.hands !== 169 ||
       !Array.isArray(value.actions) || !value.actions.length || value.actions.length > 64 ||
-      value.actions.some(a => typeof a !== 'string' || !a || a.length > 100) ||
+      Array.from(value.actions).some(a => typeof a !== 'string' || !a || a.length > 100) ||
       new Set(value.actions).size !== value.actions.length || !object(value.hands)) return null
   let query: RangeQuery
   try { query = canonicalQuery(value.query) } catch { return null }
@@ -120,10 +122,10 @@ export function validateVerifiedRange(value: unknown, registry: Readonly<Record<
     const expected = label.endsWith('s') ? 4 : label.endsWith('o') ? 12 : 6
     if (!object(row) || row.combinations !== expected || typeof row.evBb !== 'number' || !Number.isFinite(row.evBb) ||
         !Array.isArray(row.evIntervalBb) || row.evIntervalBb.length !== 2 ||
-        row.evIntervalBb.some(v => typeof v !== 'number' || !Number.isFinite(v)) ||
+        Array.from(row.evIntervalBb).some(v => typeof v !== 'number' || !Number.isFinite(v)) ||
         row.evIntervalBb[0] > row.evBb || row.evIntervalBb[1] < row.evBb ||
         !Array.isArray(row.frequencies) || row.frequencies.length !== value.actions.length ||
-        row.frequencies.some(p => typeof p !== 'number' || !Number.isFinite(p) || p < 0 || p > 1) ||
+        Array.from(row.frequencies).some(p => typeof p !== 'number' || !Number.isFinite(p) || p < 0 || p > 1) ||
         Math.abs(row.frequencies.reduce((a: number, b: number) => a + b, 0) - 1) > 1e-9) return null
     if (query.stage === 'forced_blind_allin' && (row.frequencies[0] !== 0 || row.frequencies[1] !== 1 || row.evIntervalBb[0] <= -.5)) return null
     hands[label] = { combinations: expected, frequencies: [...row.frequencies], evBb: row.evBb,

@@ -1,0 +1,15 @@
+test_extractor_preserves_independent_value_outputs (test_pure_br.PureBRTests.test_extractor_preserves_independent_value_outputs) ... ok
+test_future_board_clairvoyance_is_strictly_stronger_than_legal_preflop (test_pure_br.PureBRTests.test_future_board_clairvoyance_is_strictly_stronger_than_legal_preflop) ... ok
+test_illegal_choice_rejected (test_pure_br.PureBRTests.test_illegal_choice_rejected) ... ok
+test_performance_difference_uses_BR_own_reach_and_all_signed_terms (test_pure_br.PureBRTests.test_performance_difference_uses_BR_own_reach_and_all_signed_terms) ... ok
+test_post_only_preserves_shared_preflop_and_real_average_history (test_pure_br.PureBRTests.test_post_only_preserves_shared_preflop_and_real_average_history) ... ok
+test_preflop_is_common_and_each_info_has_one_legal_action (test_pure_br.PureBRTests.test_preflop_is_common_and_each_info_has_one_legal_action) ... ok
+test_pure_policy_realized_value_equals_all64_policies_BR (test_pure_br.PureBRTests.test_pure_policy_realized_value_equals_all64_policies_BR) ... ok
+test_realization_certificate_rejects_partial_and_changed_utility (test_pure_br.PureBRTests.test_realization_certificate_rejects_partial_and_changed_utility) ... ok
+test_scoped_all_matches_original_alternating_with_real_history (test_pure_br.PureBRTests.test_scoped_all_matches_original_alternating_with_real_history) ... ok
+test_snapshot_never_writes_source (test_pure_br.PureBRTests.test_snapshot_never_writes_source) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 1.524s
+
+OK

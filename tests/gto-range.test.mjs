@@ -81,3 +81,16 @@ test('the forced-blind certificate cannot be reused for ordinary RFI or other st
   assert.throws(() => canonicalQuery({ ...oneBBQuery, stage: 'rfi' }))
   assert.throws(() => canonicalQuery({ ...oneBBQuery, openBb: '1' }))
 })
+test('missing array entries cannot cross the verified release boundary', () => {
+  for (const alter of [
+    r => { delete r.actions[1] },
+    r => { r.hands.AA.frequencies = [.5, 0, .5]; delete r.hands.AA.frequencies[1] },
+    r => { delete r.hands.AA.evIntervalBb[0] },
+    r => { delete r.hands.AA.evIntervalBb[1] },
+  ]) {
+    const { record, registry } = fixture()
+    alter(record)
+    assert.equal(validateVerifiedRange(record, registry), null)
+    assert.equal(findVerifiedRange(query, [record], registry), null)
+  }
+})
