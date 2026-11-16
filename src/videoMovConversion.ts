@@ -27,8 +27,8 @@ async function verifyRecordedMp4Audio(blob: Blob, audio: AudioContext, signal?: 
     return bytes.some((value, index) => value === chars[0] && index + 3 < bytes.length &&
       bytes[index + 1] === chars[1] && bytes[index + 2] === chars[2] && bytes[index + 3] === chars[3])
   }
-  if (!containsFourCC('soun') || !containsFourCC('mp4a')) {
-    throw new Error('変換後MP4のAAC音声トラックを確認できませんでした。' + MOV_CONVERSION_HELP)
+  if (!containsFourCC('soun') || !(containsFourCC('mp4a') || containsFourCC('Opus'))) {
+    throw new Error('変換後MP4の音声トラックを確認できませんでした。' + MOV_CONVERSION_HELP)
   }
   signal?.throwIfAborted()
   const probe = document.createElement('video')
