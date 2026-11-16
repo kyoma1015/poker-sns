@@ -404,7 +404,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         const pixels = context.getImageData(Math.floor((canvas.width - side) / 2), Math.floor((canvas.height - side) / 2), side, side).data
         if (!pixels.some((value, index) => index % 4 !== 3 && value > 16)) return
         captured = true
+        probe.pause()
         setVideoPreviewPoster(canvas.toDataURL('image/jpeg', 0.76))
+        setVideoPreviewNotice('')
       } catch { /* Preserve playable preview if Safari cannot decode a poster. */ }
     }
     const seek = () => {
@@ -416,6 +418,14 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     probe.addEventListener('loadeddata', capture)
     probe.addEventListener('seeked', capture)
     probe.addEventListener('canplay', capture)
+    // Safari may decode metadata without delivering a frame to a paused,
+    // offscreen probe. A muted probe can advance independently of the
+    // user-controlled player, which must never be sought or autoplayed.
+    probe.addEventListener('timeupdate', capture)
+    const decodeFallback = window.setTimeout(() => {
+      if (cancelled || captured || generation !== videoPosterGenerationRef.current) return
+      void probe.play().catch(() => { /* Visible playback remains available. */ })
+    }, 1200)
     const timeout = window.setTimeout(() => {
       if (!cancelled && !captured && generation === videoPosterGenerationRef.current) {
         setVideoPreviewNotice('サムネイルを生成できませんでした。再生して映像と音声を確認してください。')
@@ -430,6 +440,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     probe.load()
     return () => {
       window.clearTimeout(timeout)
+      window.clearTimeout(decodeFallback)
       cancelled = true
       probe.pause()
       probe.removeAttribute('src')
