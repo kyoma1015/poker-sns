@@ -99,10 +99,27 @@ try {
       value: 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1'
     })
   })
+  // Safari UA alone must no longer force the capture source into mute.
+  // This uses Chrome's decoder and is NOT evidence of Safari device success.
+  const safariLike=await convert(fixture)
+  assert.equal(safariLike.ok,true,safariLike.error)
+  console.log('PASS Safari-like UA captures non-muted Web Audio in Chrome (not Safari validation)')
+  // Deliberately force a muted media element to simulate Safari returning
+  // silence; the conversion must still fail closed without publishing bytes.
+  await page.evaluate(() => {
+    const originalPlay = HTMLMediaElement.prototype.play
+    HTMLMediaElement.prototype.play = function (...args) {
+      this.muted = true
+      this.defaultMuted = true
+      return originalPlay.apply(this, args)
+    }
+    window.restoreMediaPlay = () => { HTMLMediaElement.prototype.play = originalPlay }
+  })
   const mutedAudio=await convert(fixture)
-  assert.equal(mutedAudio.ok,false,'Muted Safari-like Web Audio must never produce a publishable MP4')
+  assert.equal(mutedAudio.ok,false,'Silent Web Audio must never produce a publishable MP4')
   assert.match(mutedAudio.error,/音声|再生|変換/)
-  console.log('PASS simulated Safari-muted Web Audio fails closed without upload (not Safari device validation)')
+  await page.evaluate(() => window.restoreMediaPlay())
+  console.log('PASS forced-muted Web Audio fails closed without upload (not Safari device validation)')
   await page.evaluate(() => {
     Object.defineProperty(navigator, 'userAgent', { configurable: true, value: 'Chrome/130.0.0.0' })
   })
