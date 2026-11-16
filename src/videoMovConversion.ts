@@ -18,6 +18,69 @@ export function prepareMovAudioContext(): AudioContext | null {
   } catch { return null }
 }
 
+/** A track marker alone does not prove that the recorded audio is audible. */
+async function verifyRecordedMp4Audio(blob: Blob, audio: AudioContext, signal?: AbortSignal): Promise<void> {
+  const bytes = new Uint8Array(await blob.arrayBuffer())
+  // MP4 sample entry and handler names; these are only a structural precheck.
+  const containsFourCC = (name: string) => {
+    const chars = [...name].map(char => char.charCodeAt(0))
+    return bytes.some((value, index) => value === chars[0] && index + 3 < bytes.length &&
+      bytes[index + 1] === chars[1] && bytes[index + 2] === chars[2] && bytes[index + 3] === chars[3])
+  }
+  if (!containsFourCC('soun') || !containsFourCC('mp4a')) {
+    throw new Error('変換後MP4のAAC音声トラックを確認できませんでした。' + MOV_CONVERSION_HELP)
+  }
+  signal?.throwIfAborted()
+  const probe = document.createElement('video')
+  const url = URL.createObjectURL(blob)
+  const analyser = audio.createAnalyser()
+  analyser.fftSize = 2048
+  const samples = new Float32Array(analyser.fftSize)
+  let timer = 0
+  let timeout = 0
+  let source: MediaElementAudioSourceNode | undefined
+  try {
+    probe.playsInline = true
+    probe.preload = 'auto'
+    probe.muted = true
+    probe.defaultMuted = true
+    probe.src = url
+    source = audio.createMediaElementSource(probe)
+    source.connect(analyser)
+    await new Promise<void>((resolve, reject) => {
+      let settled = false
+      const finish = (error?: Error) => {
+        if (settled) return
+        settled = true
+        clearInterval(timer)
+        clearTimeout(timeout)
+        probe.pause()
+        signal?.removeEventListener('abort', onAbort)
+        if (error) reject(error); else resolve()
+      }
+      const onAbort = () => finish(new Error('音声検証を中止しました。元の動画は送信していません。'))
+      signal?.addEventListener('abort', onAbort, { once: true })
+      timeout = window.setTimeout(() => finish(new Error('変換後MP4の音声を検証できませんでした。' + MOV_CONVERSION_HELP)), 8000)
+      probe.onerror = () => finish(new Error('変換後MP4を再デコードできませんでした。' + MOV_CONVERSION_HELP))
+      timer = window.setInterval(() => {
+        analyser.getFloatTimeDomainData(samples)
+        if (samples.some(sample => Math.abs(sample) > 0.002)) finish()
+        else if (probe.ended) finish(new Error('変換後MP4に再生可能な音声を検出できませんでした。' + MOV_CONVERSION_HELP))
+      }, 60)
+      void probe.play().catch(() => finish(new Error('変換後MP4の音声再生検証がブラウザに拒否されました。' + MOV_CONVERSION_HELP)))
+    })
+  } finally {
+    clearInterval(timer)
+    clearTimeout(timeout)
+    probe.pause()
+    source?.disconnect()
+    analyser.disconnect()
+    probe.removeAttribute('src')
+    try { probe.load() } catch { /* release local decoder */ }
+    URL.revokeObjectURL(url)
+  }
+}
+
 export async function convertMovToMp4(file: File, signal?: AbortSignal, preparedAudio?: AudioContext | null): Promise<File> {
   signal?.throwIfAborted()
   if (!isMovVideo(file)) return file
@@ -175,6 +238,9 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal, prepared
     })
     signal?.throwIfAborted()
     if (!result.size || result.size > MAX_BYTES) throw new Error(MOV_CONVERSION_HELP)
+    // Validate the *recorded* MP4, not just the source PCM. Fail closed when
+    // Safari cannot replay/decode it; never upload an unverified conversion.
+    await verifyRecordedMp4Audio(result, audio, signal)
     return new File([result], file.name.replace(/\.[^.]+$/, '') + '-converted.mp4', { type: 'video/mp4' })
   } finally {
     cancelAnimationFrame(frame)
