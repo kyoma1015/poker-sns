@@ -71,9 +71,9 @@ async function verifyRecordedMp4Audio(blob: Blob, audio: AudioContext, gesture: 
         clearTimeout(timeout)
         timeout = window.setTimeout(() => finish(new Error('変換後MP4の音声を検証できませんでした。' + MOV_CONVERSION_HELP)), 8000)
         timer = window.setInterval(() => {
-        analyser.getFloatTimeDomainData(samples)
-        if (samples.some(sample => Math.abs(sample) > 0.002)) finish()
-        else if (probe.ended) finish(new Error('変換後MP4に再生可能な音声を検出できませんでした。' + MOV_CONVERSION_HELP))
+          analyser.getFloatTimeDomainData(samples)
+          if (samples.some(sample => Math.abs(sample) > 0.002)) finish()
+          else if (probe.ended) finish(new Error('変換後MP4に再生可能な音声を検出できませんでした。' + MOV_CONVERSION_HELP))
         }, 60)
       })
     })
@@ -171,6 +171,7 @@ export async function convertMovToMp4(file: File, gesture: MovPlaybackGesture, s
       let playbackStartedAt = 0
       let playbackWatchdog = 0
       let clearControl: (() => void) | undefined
+      let clicked = false
       let audioSampleTimer = 0
       const stopAtSourceEnd = () => {
         if (done || stopRequested || !recorder || recorder.state !== 'recording') return
@@ -222,20 +223,20 @@ export async function convertMovToMp4(file: File, gesture: MovPlaybackGesture, s
             const playing = video.play()
             const playback = Promise.all([resumed, playing])
             void playback.then(() => {
-          if (done) return
-          playbackStartedAt = performance.now()
-          audioSampleTimer = window.setInterval(sampleDecodedAudio, 80)
-          // Safari can omit ended on very short MOVs. Never record indefinitely.
-          playbackWatchdog = window.setInterval(() => {
-            if (done) return
-            if (video.ended || video.currentTime >= duration - 0.05) {
-              stopAtSourceEnd()
-            } else if (performance.now() - playbackStartedAt > (duration + 4) * 1000) {
-              const position = Number.isFinite(video.currentTime) ? video.currentTime.toFixed(2) : 'unknown'
-              finish(new Error('動画の終了を確認できず、安全停止しました（再生位置 ' + position + '秒 / ' + duration.toFixed(2) + '秒、停止=' + video.paused + '、読込状態=' + video.readyState + '）。' + MOV_CONVERSION_HELP))
-            }
-          }, 100)
-        }).catch(() => finish(new Error('SafariでMOVの再生を開始できませんでした。' + MOV_CONVERSION_HELP)))
+                if (done) return
+                playbackStartedAt = performance.now()
+                audioSampleTimer = window.setInterval(sampleDecodedAudio, 80)
+                // Safari can omit ended on very short MOVs. Never record indefinitely.
+                playbackWatchdog = window.setInterval(() => {
+                  if (done) return
+                  if (video.ended || video.currentTime >= duration - 0.05) {
+                    stopAtSourceEnd()
+                  } else if (performance.now() - playbackStartedAt > (duration + 4) * 1000) {
+                    const position = Number.isFinite(video.currentTime) ? video.currentTime.toFixed(2) : 'unknown'
+                    finish(new Error('動画の終了を確認できず、安全停止しました（再生位置 ' + position + '秒 / ' + duration.toFixed(2) + '秒、停止=' + video.paused + '、読込状態=' + video.readyState + '）。' + MOV_CONVERSION_HELP))
+                  }
+                }, 100)
+            }).catch(() => finish(new Error('SafariでMOVの再生を開始できませんでした。' + MOV_CONVERSION_HELP)))
             recorder!.start(250)
           } catch { finish(new Error(MOV_CONVERSION_HELP)) }
         })
