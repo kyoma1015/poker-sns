@@ -1,0 +1,32 @@
+name: GTO full-game qualification boundary verification
+on:
+  push:
+    branches: ['codex/c-native-hand169-bridge-20261023']
+    paths:
+      - 'gto/qualification/**'
+      - 'docs/qa/preflop-qualification-20261117/**'
+      - 'docs/specs/GTO_PREFLOP_RELEASE_PROPOSAL_20261117.md'
+      - '.github/workflows/gto-native-qualification.yml'
+  pull_request:
+    paths:
+      - 'gto/qualification/**'
+      - 'docs/qa/preflop-qualification-20261117/**'
+      - 'docs/specs/GTO_PREFLOP_RELEASE_PROPOSAL_20261117.md'
+      - '.github/workflows/gto-native-qualification.yml'
+permissions:
+  contents: read
+jobs:
+  independent-native-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile original pinned native State without solver training
+        run: python -B -m gto.qualification.build --directory "$RUNNER_TEMP/native-qualification"
+      - name: Verify frozen evidence and independent native replay
+        env:
+          QUALIFICATION_BUILD: '${{ runner.temp }}/native-qualification'
+        run: python -B -m unittest gto.qualification.test_qualification -v

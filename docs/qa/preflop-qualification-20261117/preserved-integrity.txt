@@ -1,0 +1,1 @@
+PASS release hashes; historical numerical sources retained; separately verified UI evolution: ['src/GtoPreflop.tsx', 'src/gto/rangeCatalog.ts']

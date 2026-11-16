@@ -1,0 +1,16 @@
+✔ canonical content hash uses WebCrypto SHA256 and stable object key ordering (16.567886ms)
+✔ ordinary display needs a reviewed payload digest; legacy HU1BB is preserved (21.652721ms)
+✔ coherent frequency and EV tampering cannot reuse a reviewed certificate (6.966299ms)
+✔ actionEV shape, intervals and weighted EV consistency fail closed (23.044697ms)
+✔ actual full-policy evidence yields8 blocked candidates/1352 rows with exact histories and actionEV (195.979702ms)
+✔ missing full policy, changed policy bytes and altered exported frequencies are rejected (173.711083ms)
+✔ review sealing binds candidate, complete-game review, full payload and formal condition review (7.993971ms)
+✔ independent BR arithmetic cannot be replaced by a small labelled convergence number (239.162142ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 850.528373

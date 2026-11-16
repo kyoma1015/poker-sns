@@ -1,0 +1,247 @@
+{
+  "source_checklists": [
+    "docs/qa/ev-precision-20261030/ACCEPTANCE.md",
+    "docs/qa/root-br-20261105/MVP_ACCEPTANCE.md"
+  ],
+  "before": 0,
+  "after": 0,
+  "delta": 0,
+  "total": 12,
+  "items": [
+    {
+      "id": 1,
+      "requirement": "RFI",
+      "formal_status": "PARTIAL",
+      "formal_pass": false,
+      "witnessed_implementation": "HU50モデル169行を完全方策・独立BRに結び候補化",
+      "minimum_remaining": "HU50 SB RFIの補完方策は3BB openで実測反例。未知サイズへの応答を含む全履歴方策を実装し、独立BR上界を取得",
+      "blocker": "全ゲーム偏差・継続誤差・正式条件未検証",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually",
+      "task_id": "RFI_NATIVE",
+      "dependencies": [
+        "validated_profile",
+        "full_native_policy",
+        "full_native_BR_upper",
+        "169_EV_intervals"
+      ],
+      "new_evidence": "native qualification results.json reports0/2; baseline→deviation lower0.204084/0.311262BB",
+      "formal_verdict": "FAIL",
+      "verdict_meaning": "FAIL=completion criteria demonstrably incomplete, not a failed preserved regression; UNKNOWN=formal numerical definition pending"
+    },
+    {
+      "id": 2,
+      "requirement": "vs open／3bet",
+      "formal_status": "PARTIAL",
+      "formal_pass": false,
+      "witnessed_implementation": "位置・履歴・サイズを結合した169行候補と改変拒否",
+      "minimum_remaining": "BB vs2.5BB openは10BB3betで実測反例。SB再応答を含めて生成・独立検証",
+      "blocker": "条件別の実戦品質を証明するデータ不足",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually",
+      "task_id": "VSOPEN_NATIVE",
+      "dependencies": [
+        "validated_profile",
+        "full_native_policy",
+        "source_reach",
+        "full_native_BR_upper"
+      ],
+      "new_evidence": "results.json reports1/3; conditional gain lower2.039733/2.117573BB",
+      "formal_verdict": "FAIL",
+      "verdict_meaning": "FAIL=completion criteria demonstrably incomplete, not a failed preserved regression; UNKNOWN=formal numerical definition pending"
+    },
+    {
+      "id": 3,
+      "requirement": "vs3bet／4bet",
+      "formal_status": "PARTIAL",
+      "formal_pass": false,
+      "witnessed_implementation": "既存vs3bet/vs4betを含む候補出力を維持",
+      "minimum_remaining": "既存vs3bet候補を再利用し、承認サイズごとのfold/call/4betと後続応答を検証",
+      "blocker": "正式サイズと後続ゲーム精度不足",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually",
+      "task_id": "VS3BET_NATIVE",
+      "dependencies": [
+        "approved_sizes",
+        "validated_profile",
+        "full_native_policy"
+      ],
+      "new_evidence": "prior candidate summary only; no new full-game verification",
+      "formal_verdict": "FAIL",
+      "verdict_meaning": "FAIL=completion criteria demonstrably incomplete, not a failed preserved regression; UNKNOWN=formal numerical definition pending"
+    },
+    {
+      "id": 4,
+      "requirement": "169頻度",
+      "formal_status": "PARTIAL",
+      "formal_pass": false,
+      "witnessed_implementation": "8候補×169=1352行、各1326コンボ整合",
+      "minimum_remaining": "正式条件ごとに全169行と合法行動・和1・欠損拒否・証明書を取得",
+      "blocker": "正式profile coverage未確定",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually",
+      "task_id": "ALL169_COVERAGE",
+      "dependencies": [
+        "approved_profiles",
+        "validated_profile",
+        "169_EV_intervals"
+      ],
+      "new_evidence": "existing1352 rows; new results each169 strata; none meets all169 precision",
+      "formal_verdict": "FAIL",
+      "verdict_meaning": "FAIL=completion criteria demonstrably incomplete, not a failed preserved regression; UNKNOWN=formal numerical definition pending"
+    },
+    {
+      "id": 5,
+      "requirement": "verified EV",
+      "formal_status": "PARTIAL",
+      "formal_pass": false,
+      "witnessed_implementation": "行動EV区間と頻度加重EVを照合し表示内容hashへ結合",
+      "minimum_remaining": "現在の条件別EVを集計済み。全169/全表示行動の独立EV区間と一様継続誤差上界を取得",
+      "blocker": "固定継続モデル誤差が未評価",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually",
+      "task_id": "NATIVE_EV",
+      "dependencies": [
+        "full_native_policy",
+        "approved_accuracy",
+        "uniform_model_error_bound"
+      ],
+      "new_evidence": "results.json EV confidence intervals; uniform error UNKNOWN",
+      "formal_verdict": "FAIL",
+      "verdict_meaning": "FAIL=completion criteria demonstrably incomplete, not a failed preserved regression; UNKNOWN=formal numerical definition pending"
+    },
+    {
+      "id": 6,
+      "requirement": "MTT/ring",
+      "formal_status": "PARTIAL",
+      "formal_pass": false,
+      "witnessed_implementation": "入力・native回帰を維持、候補はHU chipEV/zero rake",
+      "minimum_remaining": "chipEVとring条件を明示し、全正式rake/ante組の実方策を生成・検証",
+      "blocker": "MTT/ringの正式strategy coverage不足",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually",
+      "task_id": "FORMAT_COVERAGE",
+      "dependencies": [
+        "approved_profiles",
+        "approved_rake",
+        "full_native_policy"
+      ],
+      "new_evidence": "new evaluation HU50chipEV zero rake only; ring rules proposal pending",
+      "formal_verdict": "FAIL",
+      "verdict_meaning": "FAIL=completion criteria demonstrably incomplete, not a failed preserved regression; UNKNOWN=formal numerical definition pending"
+    },
+    {
+      "id": 7,
+      "requirement": "2〜9人",
+      "formal_status": "PARTIAL",
+      "formal_pass": false,
+      "witnessed_implementation": "全人数の位置・履歴入力と既存native回帰を維持",
+      "minimum_remaining": "HU以外3〜9人の生成と各プレイヤー独立一方偏差を検証",
+      "blocker": "新しい戦略生成モデルはHUのみ",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually",
+      "task_id": "PLAYER_COVERAGE",
+      "dependencies": [
+        "approved_profiles",
+        "multiway_full_native_policy"
+      ],
+      "new_evidence": "prior native2–9 regressions preserved; new real policy HU only",
+      "formal_verdict": "FAIL",
+      "verdict_meaning": "FAIL=completion criteria demonstrably incomplete, not a failed preserved regression; UNKNOWN=formal numerical definition pending"
+    },
+    {
+      "id": 8,
+      "requirement": "正式20スタック",
+      "formal_status": "BLOCKED",
+      "formal_pass": false,
+      "witnessed_implementation": "原典O06候補7値とQ05の20条件要求を識別",
+      "minimum_remaining": "提案Aの20値・意味・format割当と不均等stackの扱いを所有者が決定。決定後profile matrixを固定",
+      "blocker": "正式20値の原典が未回収",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually",
+      "task_id": "STACK_SPEC",
+      "dependencies": [
+        "OWNER_A"
+      ],
+      "new_evidence": "proposal.json + specs proposal SHA; not approved",
+      "formal_verdict": "UNKNOWN",
+      "verdict_meaning": "FAIL=completion criteria demonstrably incomplete, not a failed preserved regression; UNKNOWN=formal numerical definition pending"
+    },
+    {
+      "id": 9,
+      "requirement": "位置別戦略",
+      "formal_status": "PARTIAL",
+      "formal_pass": false,
+      "witnessed_implementation": "2〜9人の座席順・手番・opener履歴を区別",
+      "minimum_remaining": "各人数・位置・合法履歴ごとの検証済みデータをmatrixへ結合",
+      "blocker": "候補戦略はHU SB/BBのみ",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually",
+      "task_id": "POSITION_COVERAGE",
+      "dependencies": [
+        "approved_profiles",
+        "PLAYER_COVERAGE",
+        "validated_profile"
+      ],
+      "new_evidence": "existing position/history UI preserved; new actual evaluation SB/BB",
+      "formal_verdict": "FAIL",
+      "verdict_meaning": "FAIL=completion criteria demonstrably incomplete, not a failed preserved regression; UNKNOWN=formal numerical definition pending"
+    },
+    {
+      "id": 10,
+      "requirement": "BB ante/rake",
+      "formal_status": "PARTIAL",
+      "formal_pass": false,
+      "witnessed_implementation": "条件入力と既存決済oraclesを維持",
+      "minimum_remaining": "提案Bの7rake/BBante・priority/rounding等の家ルールを決定し実方策へ伝搬",
+      "blocker": "元の正式profile mappingとstrategy不足",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually",
+      "task_id": "HOUSE_RULES",
+      "dependencies": [
+        "OWNER_B",
+        "approved_profiles",
+        "validated_profile"
+      ],
+      "new_evidence": "reference/native settlement replay checks; production strategy absent",
+      "formal_verdict": "FAIL",
+      "verdict_meaning": "FAIL=completion criteria demonstrably incomplete, not a failed preserved regression; UNKNOWN=formal numerical definition pending"
+    },
+    {
+      "id": 11,
+      "requirement": "正式全サイズ",
+      "formal_status": "BLOCKED",
+      "formal_pass": false,
+      "witnessed_implementation": "研究木の2.5/9/21/50を正式原典から区別",
+      "minimum_remaining": "全合法0.5BBgridか代替0.25BBgrid/明示表かを決定。64action上限・大サイズUIを決定後拡張",
+      "blocker": "全サイズ原典が未回収",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually",
+      "task_id": "SIZE_SPEC",
+      "dependencies": [
+        "OWNER_B",
+        "approved_sizes"
+      ],
+      "new_evidence": "proposal exact integer-chip definition; full native root99 legal actions replayed",
+      "formal_verdict": "UNKNOWN",
+      "verdict_meaning": "FAIL=completion criteria demonstrably incomplete, not a failed preserved regression; UNKNOWN=formal numerical definition pending"
+    },
+    {
+      "id": 12,
+      "requirement": "Poker ID検索",
+      "formal_status": "PARTIAL",
+      "formal_pass": false,
+      "witnessed_implementation": "hash照合・非同期競合制御・行動EV・エラー表示を実装",
+      "minimum_remaining": "実ゲーム上界・EV・一様誤差を合格した元方策と同一hashの証明書だけを既存registry接続しbrowser検索QA",
+      "blocker": "通常GTOに登録可能な正式データ0",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually",
+      "task_id": "SEARCH_ADMISSION",
+      "dependencies": [
+        "validated_profile",
+        "full_native_BR_upper",
+        "uniform_model_error_bound",
+        "169_EV_intervals"
+      ],
+      "new_evidence": "completed generator/certificate/SHA/search reused; ordinary RFI/vsopen count0",
+      "formal_verdict": "FAIL",
+      "verdict_meaning": "FAIL=completion criteria demonstrably incomplete, not a failed preserved regression; UNKNOWN=formal numerical definition pending"
+    }
+  ],
+  "schema": "pokerid-formal-acceptance-workgraph-v1",
+  "scope": "whole formal12, not subset",
+  "independent_next_tasks": [
+    "Implement public-history size-response coverage in a new experimental full policy without changing frozen source",
+    "Derive action-independent uniform continuation/omitted-action bounds; no default-fold proof substitution",
+    "Connect qualified receipt to completed review certificate only for the exact same policy digest",
+    "After owner A/B/C decision build exact profile/action coverage matrix; never invent remaining numbers"
+  ]
+}

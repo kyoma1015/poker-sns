@@ -139,3 +139,8 @@ remain. Local445PASS includes6repeatstub cases; comparableCI439=old394+45new.
 See GTO_ACTION_REPORT_CONSUMER_20261026.md and action-report-consumer-20261026 QA.
 No frontend integration/production/runtime/oldcheckpoint claim. G9/G11 original
 vendor/ABI/expected outputs/history gates remain blocked; parentpublication CI pending.
+
+2026-11-17 JST release-first follow-up: C_GTO_QUALIFICATION_20261117.md and
+../qa/preflop-qualification-20261117/README.md.20-stack/all-size/quality proposal
+PENDING; independent full-native fixed probes refute4explicit totalizations via
+omitted legal sizes. Formal0/12 unchanged, ordinary RFI/3bet0; no bad adoption.
