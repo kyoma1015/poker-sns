@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Poker ID Safari MOV 音声ローカル診断</title>
+<style>body{font:16px system-ui;max-width:720px;margin:24px auto;padding:0 16px;line-height:1.6}button,input{font:inherit;max-width:100%}button{padding:10px;margin:8px 0}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#eee;color:#111;padding:12px;border-radius:8px}label{display:block;margin-top:16px}</style></head>
+<body><h1>Safari MOV 音声ローカル診断</h1>
+<p>このページはファイルをサーバーに送信せず、投稿・変換・保存・削除を行いません。元MOVと、既に手元にある変換後MP4を別々に選択できます。録画や音声の再生出力は行いません。</p>
+<label>元MOV <input id="original" type="file" accept=".mov,video/quicktime"></label>
+<label>変換後MP4（任意） <input id="converted" type="file" accept=".mp4,video/mp4"></label>
+<button id="run" type="button">ローカル音声を診断</button>
+<pre id="report" aria-live="polite">未実行</pre>
+<script>
+'use strict';
+const original=document.querySelector('#original'),converted=document.querySelector('#converted'),report=document.querySelector('#report'),run=document.querySelector('#run');
+let busy=false;
+function stats(data){let energy=0,peak=0;for(const v of data){energy+=v*v;peak=Math.max(peak,Math.abs(v))}return {rms:Math.sqrt(energy/Math.max(1,data.length)),peak}}
+async function decoded(file){
+  const context=new AudioContext();
+  try {
+    const bytes=await file.arrayBuffer();
+    const decoded=await context.decodeAudioData(bytes.slice(0));
+    const channels=Array.from({length:decoded.numberOfChannels},(_,i)=>stats(decoded.getChannelData(i)));
+    return {state:'decoded',channels:decoded.numberOfChannels,sampleRate:decoded.sampleRate,duration:decoded.duration,pcm:channels};
+  }catch(e){return {state:'unavailable',reason:String(e?.name||e),note:'SafariのdecodeAudioDataがコンテナ/コーデックに非対応の可能性。無音とは判定しない'}}
+  finally{await context.close().catch(()=>{})}
+}
+async function graph(file){
+  const context=new AudioContext(),video=document.createElement('video'),url=URL.createObjectURL(file);
+  let source,destination,analyser,stream,interval;
+  const samples=[];
+  try {
+    video.playsInline=true;video.muted=true;video.defaultMuted=true;video.preload='auto';video.src=url;
+    await new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(new Error('metadata timeout')),8000);video.onloadeddata=()=>{clearTimeout(t);resolve()};video.onerror=()=>{clearTimeout(t);reject(new Error('media load error'))};video.load()});
+    await context.resume();
+    source=context.createMediaElementSource(video);
+    analyser=context.createAnalyser();analyser.fftSize=2048;
+    destination=context.createMediaStreamDestination();
+    source.connect(analyser);analyser.connect(destination);
+    stream=destination.stream;
+    const buffer=new Float32Array(analyser.fftSize);
+    interval=setInterval(()=>{analyser.getFloatTimeDomainData(buffer);samples.push(stats(buffer))},100);
+    const playResult=await video.play().then(()=>({state:'resolved'}),e=>({state:'rejected',reason:String(e?.name||e)}));
+    if(playResult.state==='resolved') await new Promise(resolve=>setTimeout(resolve,Math.min(3000,Math.max(600,Number.isFinite(video.duration)?video.duration*1000:3000))));
+    const track=stream.getAudioTracks()[0];
+    return {play:playResult,muted:video.muted,audioContext:context.state,videoTime:video.currentTime,paused:video.paused,ended:video.ended,track:track?{readyState:track.readyState,enabled:track.enabled,muted:track.muted}:null,analyser:{windows:samples.length,maxRms:Math.max(0,...samples.map(s=>s.rms)),maxPeak:Math.max(0,...samples.map(s=>s.peak))},note:'トラックの存在やAnalyserの値だけでは録画済みMP4のPCMを証明できない'};
+  }catch(e){return {state:'unavailable',reason:String(e?.message||e)}}
+  finally{clearInterval(interval);video.pause();stream?.getTracks().forEach(t=>t.stop());try{source?.disconnect();analyser?.disconnect()}catch{}video.removeAttribute('src');video.load();URL.revokeObjectURL(url);await context.close().catch(()=>{})}
+}
+run.onclick=async()=>{
+  if(busy)return;
+  const source=original.files?.[0],output=converted.files?.[0];
+  if(!source){report.textContent='元MOVを選択してください';return}
+  busy=true;run.disabled=true;report.textContent='ローカルで診断中…';
+  try{
+    const result={scope:'local-only; no upload; no recording; no storage',browser:navigator.userAgent,original:{name:source.name,size:source.size,decodedPcm:await decoded(source),mutedGraph:await graph(source)},converted:output?{name:output.name,size:output.size,decodedPcm:await decoded(output)}:{state:'not-provided'},interpretation:'元MOVのPCM、ミュートしたWeb Audioグラフ、変換後MP4のPCMは独立した観測。RMS=0は無音/デコード不良/ブラウザ制限のいずれもあり得る。診断結果で投稿を拒否しない'};
+    report.textContent=JSON.stringify(result,null,2);
+  }catch(e){report.textContent='診断失敗: '+String(e?.message||e)}
+  finally{busy=false;run.disabled=false}
+};
+</script></body></html>
