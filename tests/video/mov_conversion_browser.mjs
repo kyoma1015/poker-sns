@@ -76,12 +76,21 @@ try {
   assert.ok(probe.streams.some(s=>s.codec_type==='video'&&s.codec_name==='h264'))
   assert.ok(probe.streams.some(s=>s.codec_type==='audio'&&['aac','opus'].includes(s.codec_name)))
   assert.ok(Math.abs(Number(probe.format.duration)-2)<0.4)
-  // Verify decoded audio samples, not merely an advertised/silent audio track.
-  const pcm=execFileSync('ffmpeg',['-v','error','-i',output,'-vn','-ac','1','-ar','48000','-f','f32le','pipe:1'])
-  let energy=0
-  for(let i=0;i<pcm.length;i+=4) energy+=pcm.readFloatLE(i)**2
-  assert.ok(Math.sqrt(energy/(pcm.length/4))>0.02,'source audio must remain audible')
-  console.log('PASS MOV -> H264/audio MP4, duration/size and decoded audible audio')
+  // Compare decoded PCM of the known-audible source with the output, not just track metadata.
+  // This runs locally in Chrome CI and does not claim to validate Safari's Web Audio path.
+  const pcmRms=path=>{
+    const pcm=execFileSync('ffmpeg',['-v','error','-i',path,'-vn','-ac','1','-ar','48000','-f','f32le','pipe:1'])
+    assert.ok(pcm.length>0 && pcm.length%4===0,'PCM decode must return complete samples')
+    let energy=0
+    for(let i=0;i<pcm.length;i+=4) energy+=pcm.readFloatLE(i)**2
+    return Math.sqrt(energy/(pcm.length/4))
+  }
+  const sourceRms=pcmRms(fixture)
+  const convertedRms=pcmRms(output)
+  assert.ok(sourceRms>0.02,'test source must contain audible PCM')
+  assert.ok(convertedRms>0.02,'converted MP4 must contain audible PCM')
+  assert.ok(convertedRms/sourceRms>0.05,'converted audio unexpectedly attenuated relative to source')
+  console.log('PASS MOV -> H264/audio MP4, duration/size and source/output decoded PCM RMS')
   const aborted=await convert(fixture,true)
   assert.equal(aborted.ok,false)
   assert.match(aborted.error,/中止/)
