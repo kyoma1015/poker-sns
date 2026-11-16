@@ -34,3 +34,6 @@ test('both continuation models contain normalized169 hands and model EV interval
     }
   }
 })
+test('explicit public history never falls back to abstract research without history identity', () => {
+  assert.equal(findAbstractResearch({ ...abstractResearchQuery, history: [] }), null)
+})

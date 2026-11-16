@@ -1,0 +1,44 @@
+name: GTO matched-history CFR verification
+on:
+  pull_request:
+    paths:
+      - 'gto/abstract/matched_history.py'
+      - 'gto/abstract/matched_frozen.py'
+      - 'tests/test_matched_history.py'
+      - 'docs/qa/matched-history-20261116/**'
+      - '.github/workflows/gto-matched-history.yml'
+permissions:
+  contents: read
+jobs:
+  matched-history:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Independent path, actual history, pure response and exact resume regressions
+        run: python -B -m unittest discover -s tests -p test_matched_history.py -v
+      - name: Verify measured evidence without replaying training or population kernels
+        run: |
+          python -B - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          root=Path('docs/qa/matched-history-20261116')
+          manifest=json.loads((root/'manifest.json').read_text())
+          for name,h in manifest['evidence_sha256'].items():
+           assert hashlib.sha256((root/name).read_bytes()).hexdigest()==h,name
+          for name,h in manifest['source_sha256'].items():
+           assert hashlib.sha256(Path(name).read_bytes()).hexdigest()==h,name
+          r=json.loads((root/'results.json').read_text())
+          assert len(r['cases'])==4 and r['max_vector_path_error']<1e-10
+          assert r['eligible_small_followup_only']==[] and r['full_population_started'] is False
+          assert r['population_improvement']=='UNMEASURED' and r['normal_GTO_added']==0
+          assert r['formal_acceptance']==[0,12]
+          for case in r['cases']:
+           for method,points in case['methods'].items():
+            assert [p['additional_iterations'] for p in points]==[32,128]
+            assert all(p['independent_pure_br_error_bb']<1e-10 for p in points)
+          print('PASS registered actual-history evidence; no population learning replay or GTO promotion')
+          PY

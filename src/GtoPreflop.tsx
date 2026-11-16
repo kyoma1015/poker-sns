@@ -11,6 +11,8 @@ import IndependentPreflop from './IndependentPreflop'
 import { findIndependentResearch, histories, independentQuery, independentStages } from './gto/independentResearch'
 import type { IndependentStage } from './gto/independentResearch'
 import './GtoPreflop.css'
+import { analyzeHistory } from './gto/preflopHistory'
+import type { PreflopAction } from './gto/preflopHistory'
 
 const ContinuationAudit = lazy(() => import('./ContinuationAudit'))
 
@@ -35,6 +37,8 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
   const [message, setMessage] = useState('条件を入力して検索してください。')
   const [error, setError] = useState('')
   const [selected, setSelected] = useState('AA')
+  const [historyAction, setHistoryAction] = useState<PreflopAction['action']>('fold')
+  const [historyRaise, setHistoryRaise] = useState('')
   const [researchOptIn, setResearchOptIn] = useState(false)
   const [researchStage, setResearchStage] = useState<AbstractStage | null>(null)
   const [independentOptIn, setIndependentOptIn] = useState(false)
@@ -42,7 +46,7 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
   const isForced = form.stage === 'forced_blind_allin'
   const hasOneBB = findVerifiedRange(oneBBQuery, catalog, certificates) !== null
   function change(patch: Partial<RangeQuery>) {
-    setForm(previous => ({ ...previous, ...patch }))
+    setForm(previous => ({ ...previous, ...(patch.players !== undefined ? { history: undefined } : {}), ...patch }))
     setIndependentStage(null); setResearchStage(null); setResult(null); setError(''); setMessage('条件を入力して検索してください。')
   }
   function search(event: FormEvent<HTMLFormElement>) {
@@ -59,6 +63,22 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
     }
   }
   const selectedRow = result?.hands[selected]
+  function editHistory(history: PreflopAction[]) {
+    try {
+      const state = analyzeHistory(form.players, form.stackBb, history)
+      if (state.raises > 3) throw new Error('5ベット後のレンジ検索は未対応です。')
+      const stage = (['rfi', 'vs_open', 'vs_3bet', 'vs_4bet'] as const)[state.raises]
+      change({ history: state.history, seat: state.nextSeat ?? form.seat, stage })
+    } catch (caught) { setResult(null); setResearchStage(null); setIndependentStage(null); setMessage('履歴を確認してください。'); setError(caught instanceof Error ? caught.message : '履歴を確認してください。') }
+  }
+  function addHistory() {
+    try {
+      const state = analyzeHistory(form.players, form.stackBb, form.history)
+      if (state.nextSeat === null) throw new Error('この履歴ではプリフロップのアクションが終了しています。')
+      const action: PreflopAction = historyAction === 'raise' ? { seat: state.nextSeat, action: 'raise', toBb: historyRaise } : { seat: state.nextSeat, action: historyAction }
+      editHistory([...state.history, action])
+    } catch (caught) { setResult(null); setResearchStage(null); setIndependentStage(null); setMessage('履歴を確認してください。'); setError(caught instanceof Error ? caught.message : '履歴を確認してください。') }
+  }
   return (
     <main className="app gto-preflop">
       <section className="card">
@@ -113,6 +133,24 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
             }}>
               {Object.entries(stages).map(([key, label]) => <option key={key} value={key}>{label}</option>)}
             </select></label>
+          </fieldset>
+          <fieldset className="gto-fields"><legend>アクション履歴（任意）</legend>
+            <label><input type="checkbox" disabled={isForced} checked={form.history !== undefined} onChange={event => {
+              if (event.target.checked) editHistory([])
+              else change({ history: undefined })
+            }} />手番ごとの履歴を指定する</label>
+            {form.history !== undefined && <>
+              <p>履歴を完全一致で検索します。追加すると検索対象の手番と局面が進みます。履歴未指定データでは代用しません。</p>
+              <ol aria-label="指定したアクション履歴">{form.history.map((action, i) => <li key={i}>
+                {positions(form.players).find(p => p.seat === action.seat)?.label}：{({ fold: 'フォールド', call: 'コール', check: 'チェック', raise: 'レイズ' })[action.action]}{action.action === 'raise' ? ` ${action.toBb} BBへ` : ''}
+              </li>)}</ol>
+              <label>次のアクション<select aria-label="次のアクション" value={historyAction} onChange={event => setHistoryAction(event.target.value as PreflopAction['action'])}>
+                <option value="fold">フォールド</option><option value="call">コール</option><option value="check">チェック</option><option value="raise">レイズ</option>
+              </select></label>
+              {historyAction === 'raise' && <label>レイズ先（BB）<input aria-label="レイズ先（BB）" inputMode="decimal" value={historyRaise} onChange={event => setHistoryRaise(event.target.value)} /></label>}
+              <button type="button" onClick={addHistory}>履歴に追加</button>
+              <button type="button" disabled={!form.history.length} onClick={() => editHistory(form.history!.slice(0, -1))}>最後のアクションを戻す</button>
+            </>}
           </fieldset>
           <button className="gto-search" type="submit">検証済みレンジを検索</button>
         </form>

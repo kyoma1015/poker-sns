@@ -94,3 +94,55 @@ test('missing array entries cannot cross the verified release boundary', () => {
     assert.equal(findVerifiedRange(query, [record], registry), null)
   }
 })
+test('explicit histories distinguish opener seats and never reuse unspecified-history data', () => {
+  const early = [{ seat: 2, action: 'raise', toBb: '2.50' }]
+  const late = [{ seat: 2, action: 'fold' }, { seat: 3, action: 'raise', toBb: '2.5' },
+    { seat: 4, action: 'fold' }, { seat: 5, action: 'fold' }, { seat: 0, action: 'fold' }]
+  const q = { ...query, stage: 'vs_open', seat: 3, history: early }
+  assert.equal(canonicalQuery(q).history[0].toBb, '2.5')
+  assert.notEqual(queryKey(q), queryKey({ ...q, history: undefined }))
+  assert.notEqual(queryKey({ ...q, seat: 1, history: [...early, { seat: 3, action: 'fold' },
+    { seat: 4, action: 'fold' }, { seat: 5, action: 'fold' }, { seat: 0, action: 'fold' }] }), queryKey({ ...q, seat: 1, history: late }))
+  const { record, registry } = fixture()
+  const threeBetHistory = [{ seat: 2, action: 'raise', toBb: '2.5' }, { seat: 3, action: 'raise', toBb: '9' },
+    { seat: 4, action: 'fold' }, { seat: 5, action: 'fold' }, { seat: 0, action: 'fold' }, { seat: 1, action: 'fold' }]
+  assert.equal(findVerifiedRange({ ...query, history: threeBetHistory }, [record], registry), null)
+})
+test('actual HU limp raise 3bet 4bet history retains the correct next actor', () => {
+  const history = [{ seat: 0, action: 'call' }, { seat: 1, action: 'raise', toBb: '2.5' },
+    { seat: 0, action: 'raise', toBb: '9' }, { seat: 1, action: 'raise', toBb: '21' }]
+  const q = { ...query, players: 2, stackBb: '50', seat: 0, stage: 'vs_4bet', history }
+  assert.deepEqual(canonicalQuery(q).history, history)
+  assert.throws(() => canonicalQuery({ ...q, seat: 1 }))
+  assert.throws(() => canonicalQuery({ ...q, stage: 'vs_3bet' }))
+  assert.throws(() => canonicalQuery({ ...q, threeBetBb: '10' }))
+  assert.throws(() => canonicalQuery({ ...q, history: [...history, { seat: 0, action: 'call' }] }))
+})
+test('illegal or incomplete public actions fail closed without guessing formal sizes', () => {
+  const base = { ...query, stage: 'vs_open', seat: 3 }
+  for (const history of [[{ seat: 3, action: 'raise', toBb: '2.5' }],
+    [{ seat: 2, action: 'raise', toBb: '1.5' }], [{ seat: 2, action: 'raise', toBb: '101' }],
+    [{ seat: 2, action: 'check' }], [{ seat: 2, action: 'fold', toBb: '2' }], new Array(1)]) {
+    assert.throws(() => canonicalQuery({ ...base, history }))
+  }
+  assert.throws(() => canonicalQuery({ ...query, stage: 'rfi', seat: 3, history: [{ seat: 2, action: 'call' }] }))
+})
+test('BB option and all-in calls end the round; every table size starts at the correct seat', async () => {
+  const { analyzeHistory } = await import('../src/gto/preflopHistory.ts')
+  for (let n = 2; n <= 9; n++) assert.equal(analyzeHistory(n, '50', []).nextSeat, n === 2 ? 0 : 2)
+  assert.equal(analyzeHistory(2, '50', [{ seat: 0, action: 'call' }]).nextSeat, 1)
+  assert.equal(analyzeHistory(2, '50', [{ seat: 0, action: 'call' }, { seat: 1, action: 'check' }]).nextSeat, null)
+  const allin = [{ seat: 0, action: 'raise', toBb: '50' }, { seat: 1, action: 'call' }]
+  assert.equal(analyzeHistory(2, '50', allin).nextSeat, null)
+  assert.throws(() => analyzeHistory(2, '50', [...allin, { seat: 0, action: 'check' }]))
+})
+test('only a separately reviewed exact-history certificate enables an explicit-history range', () => {
+  const { record, registry } = fixture()
+  const history = [{ seat: 2, action: 'raise', toBb: '2.5' }, { seat: 3, action: 'raise', toBb: '9' },
+    { seat: 4, action: 'fold' }, { seat: 5, action: 'fold' }, { seat: 0, action: 'fold' }, { seat: 1, action: 'fold' }]
+  record.query = canonicalQuery({ ...query, history })
+  assert.equal(findVerifiedRange(record.query, [record], registry), null)
+  registry['fixture-only'].queryKey = queryKey(record.query)
+  assert.equal(findVerifiedRange(record.query, [record], registry)?.id, record.id)
+  assert.equal(findVerifiedRange(query, [record], registry), null)
+})

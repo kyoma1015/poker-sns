@@ -29,6 +29,7 @@ const interval = (xs: number[], x: number) => Array.isArray(xs) && xs.length ===
 export function findIndependentResearch(value: unknown, source: unknown = independentResearch): IndependentStage | null {
   try {
     const q = canonicalQuery(value), d = source as IndependentData, c = d.condition
+    if (q.history !== undefined) return null
     const exact = d.schema === 'pokerid-independent-preflop-research-v2'
     if ((!exact && d.schema !== 'pokerid-independent-preflop-research-v1') || d.full_game_gto_verified !== false ||
       d.ordinary_catalog_admission !== 'REJECTED_RESEARCH_ONLY' || d.formal_acceptance_complete !== 0 ||

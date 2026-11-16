@@ -9,6 +9,7 @@ export type AbstractStage = 'rfi' | 'vs_open' | 'vs_3bet' | 'vs_4bet'
 export function findAbstractResearch(value: unknown): AbstractStage | null {
   let q: RangeQuery
   try { q = canonicalQuery(value) } catch { return null }
+  if (q.history !== undefined) return null
   if (!['rfi', 'vs_open', 'vs_3bet', 'vs_4bet'].includes(q.stage) || data.full_game_gto_verified !== false ||
     data.schema !== 'pokerid-research-preflop-abstraction-v1' || q.players !== 2 || q.stackBb !== '50' ||
     q.anteBb !== '0' || q.rakePct !== '0' || q.rakeCapBb !== null || q.openBb !== '2.5' || q.threeBetBb !== '9' || q.fourBetBb !== '21') return null

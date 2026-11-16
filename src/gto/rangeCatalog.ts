@@ -1,11 +1,14 @@
 /** Verified-only release boundary. Review certificates are trusted build inputs,
  * not user-uploaded assertions. Existing sampled/native research schemas fail.
  * This checks transport completeness; it does not independently prove Nash. */
+import { analyzeHistory } from './preflopHistory.ts'
+import type { PreflopAction } from './preflopHistory'
 export type RangeQuery = {
   format: 'mtt' | 'ring'; players: number; seat: number; stackBb: string;
   anteBb: '0' | '1'; rakePct: '0' | '5' | '10'; rakeCapBb: null | '5' | '10';
   openBb: string | null; threeBetBb: string | null; fourBetBb: string | null;
   stage: 'rfi' | 'vs_open' | 'vs_3bet' | 'vs_4bet' | 'forced_blind_allin';
+  history?: PreflopAction[];
 }
 export type ReviewedCertificate = {
   datasetId: string; queryKey: string; policyDigest: string; configDigest: string;
@@ -64,11 +67,24 @@ export function canonicalQuery(value: unknown): RangeQuery {
       value.openBb !== null || value.threeBetBb !== null || value.fourBetBb !== null)) {
     throw new Error('この検証用条件はHU・両者1BB・アンティ／レーキなしに限ります。')
   }
+  let history: PreflopAction[] | undefined
+  if (value.history !== undefined) {
+    if (forced) throw new Error('HU1BB検証条件には追加の履歴を指定できません。')
+    const parsed = analyzeHistory(Number(value.players), stack, value.history)
+    const raiseSizes = parsed.history.filter(a => a.action === 'raise').map(a => a.toBb)
+    const treeSizes = [decimal(value.openBb), decimal(value.threeBetBb), decimal(value.fourBetBb)]
+    if (parsed.nextSeat !== value.seat || parsed.raises !== ['rfi', 'vs_open', 'vs_3bet', 'vs_4bet'].indexOf(value.stage) ||
+        raiseSizes.some((size, i) => size !== treeSizes[i]) ||
+        (value.stage === 'rfi' && parsed.history.some(a => a.action !== 'fold'))) {
+      throw new Error('履歴と検索対象の手番・局面が一致しません。')
+    }
+    history = parsed.history
+  }
   return { format: value.format as RangeQuery['format'], players: Number(value.players), seat: Number(value.seat),
     stackBb: stack, anteBb: value.anteBb as RangeQuery['anteBb'],
     rakePct: value.rakePct as RangeQuery['rakePct'], rakeCapBb: value.rakeCapBb as RangeQuery['rakeCapBb'],
     openBb: forced ? null : decimal(value.openBb), threeBetBb: forced ? null : decimal(value.threeBetBb), fourBetBb: forced ? null : decimal(value.fourBetBb),
-    stage: value.stage as RangeQuery['stage'] }
+    stage: value.stage as RangeQuery['stage'], ...(history !== undefined ? { history } : {}) }
 }
 export function queryKey(value: unknown): string { return JSON.stringify(canonicalQuery(value)) }
 export function positions(players: number): { seat: number; label: string }[] {

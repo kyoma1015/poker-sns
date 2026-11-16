@@ -43,3 +43,6 @@ test('numerical guard never masquerades as statistical confidence or real-game p
   } else assert.equal(data.confidence_simultaneous_both_oracles, .99)
   const x = structuredClone(data); x.models.learned_small.root_expected_game_bounds_bb.preflop_nashconv_interval = [NaN, 1]; assert.equal(findIndependentResearch(independentQuery, x), null)
 })
+test('explicit action histories cannot fall back to the legacy research query', () => {
+  assert.equal(findIndependentResearch({ ...independentQuery, history: [] }), null)
+})
