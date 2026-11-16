@@ -74,7 +74,7 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal, prepared
     signal?.throwIfAborted()
     const duration = video.duration
     if (!Number.isFinite(duration) || duration <= 0 || duration > MAX_SECONDS) throw new Error('動画は30秒以内にしてください。元の動画は送信していません。')
-    if (!video.videoWidth || !video.videoHeight || audio.state !== 'running') throw new Error('MOVの映像・音声を読み込めませんでした。' + MOV_CONVERSION_HELP)
+    if (!video.videoWidth || !video.videoHeight || audio.state !== 'running') throw new Error('MOVの映像・音声を読み込めませんでした（映像=' + video.videoWidth + 'x' + video.videoHeight + '、音声状態=' + audio.state + '）。' + MOV_CONVERSION_HELP)
     // Bound decoder/encoder work for 4K/portrait phone captures; preserve aspect ratio.
     const scale = Math.min(1, 1280 / Math.max(video.videoWidth, video.videoHeight))
     canvas.width = Math.max(2, Math.floor(video.videoWidth * scale / 2) * 2)
