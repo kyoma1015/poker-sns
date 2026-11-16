@@ -2,6 +2,9 @@
 // through the real authorized media API. Never used in production builds.
 import assert from 'node:assert/strict'
 import { execFileSync } from 'node:child_process'
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import { createServer as createHttpServer } from 'node:http'
 import { createServer as createViteServer } from 'vite'
 import { chromium } from 'playwright-core'
@@ -336,12 +339,18 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     const movPicker=movPage.locator('input[type="file"][accept*="video/mp4"]')
     // The generic Storage fixture can be silent. The MOV path now fails
     // closed without decoded PCM, so exercise conversion with audible input.
-    const audibleMov = execFileSync('ffmpeg',[
-      '-v','error','-f','lavfi','-i','testsrc2=size=160x120:rate=15',
-      '-f','lavfi','-i','sine=frequency=880:sample_rate=44100',
-      '-t','2','-c:v','mpeg4','-q:v','5','-c:a','aac',
-      '-movflags','+faststart','-f','mov','pipe:1',
-    ])
+    const movDir = mkdtempSync(join(tmpdir(),'poker-audible-mov-'))
+    let audibleMov
+    try {
+      const movPath = join(movDir,'fixture.mov')
+      execFileSync('ffmpeg',[
+        '-v','error','-f','lavfi','-i','testsrc2=size=160x120:rate=15',
+        '-f','lavfi','-i','sine=frequency=880:sample_rate=44100',
+        '-t','2','-c:v','mpeg4','-q:v','5','-c:a','aac',
+        '-movflags','+faststart','-y',movPath,
+      ])
+      audibleMov = readFileSync(movPath)
+    } finally { rmSync(movDir,{recursive:true,force:true}) }
     await movPicker.setInputFiles({name:'phone.mov',mimeType:'video/quicktime',buffer:audibleMov})
     // MOV selection now starts conversion automatically; no mandatory button.
     await movComposer.locator('video').waitFor({timeout:25000})
