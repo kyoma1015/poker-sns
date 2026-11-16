@@ -86,6 +86,17 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal, prepared
     const source = audio.createMediaElementSource(video)
     const destination = audio.createMediaStreamDestination()
     source.connect(destination)
+    // Verify actual decoded PCM reaches Web Audio. A MediaStream audio track
+    // can exist while containing only silence (observed on iPhone Safari).
+    const analyser = audio.createAnalyser()
+    analyser.fftSize = 2048
+    source.connect(analyser)
+    const audioSamples = new Float32Array(analyser.fftSize)
+    let decodedAudioDetected = false
+    const sampleDecodedAudio = () => {
+      analyser.getFloatTimeDomainData(audioSamples)
+      if (audioSamples.some(sample => Math.abs(sample) > 0.002)) decodedAudioDetected = true
+    }
     destination.stream.getAudioTracks().forEach(track => stream!.addTrack(track))
     const draw = () => { ctx.drawImage(video, 0, 0, canvas.width, canvas.height); frame = requestAnimationFrame(draw) }
     draw()
@@ -97,9 +108,15 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal, prepared
       let playbackStartedAt = 0
       let playbackWatchdog = 0
       let resumeAttempted = false
+      let audioSampleTimer = 0
       const stopAtSourceEnd = () => {
         if (done || stopRequested || !recorder || recorder.state !== 'recording') return
         stopRequested = true
+        sampleDecodedAudio()
+        if (!decodedAudioDetected) {
+          finish(new Error('変換中に音声データを検出できませんでした。無音のMP4は投稿せず、音声付きのMP4へ変換して選び直してください。元の動画は送信していません。'))
+          return
+        }
         try { recorder.stop() } catch { finish(new Error(MOV_CONVERSION_HELP)) }
       }
       const timer = window.setTimeout(() => finish(new Error('変換が時間内に完了しませんでした。' + MOV_CONVERSION_HELP)), 45000)
@@ -108,6 +125,7 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal, prepared
         done = true
         clearTimeout(timer)
         window.clearInterval(playbackWatchdog)
+        window.clearInterval(audioSampleTimer)
         cancel = undefined
         video.pause()
         if (error) reject(error); else resolve(new Blob(chunks, { type: 'video/mp4' }))
@@ -139,6 +157,7 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal, prepared
             video.defaultMuted = false
           }
           playbackStartedAt = performance.now()
+          audioSampleTimer = window.setInterval(sampleDecodedAudio, 80)
           // Safari can omit ended on very short MOVs. Never record indefinitely.
           playbackWatchdog = window.setInterval(() => {
             if (done) return
