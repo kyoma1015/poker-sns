@@ -353,7 +353,17 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     } finally { rmSync(movDir,{recursive:true,force:true}) }
     await movPicker.setInputFiles({name:'phone.mov',mimeType:'video/quicktime',buffer:audibleMov})
     // MOV selection now starts conversion automatically; no mandatory button.
-    await movComposer.locator('video').waitFor({timeout:25000})
+    try {
+      await movComposer.locator('video').waitFor({timeout:25000})
+    } catch (error) {
+      // Capture the actual conversion failure instead of masking it as a
+      // generic missing-preview timeout. Do not upload or mutate any media.
+      const diagnostic = await movComposer.evaluate(dialog => ({
+        text: dialog.innerText.slice(0,2500),
+        videoCount: dialog.querySelectorAll('video').length,
+      }))
+      throw new Error('MOV conversion did not produce a preview: '+JSON.stringify(diagnostic),{cause:error})
+    }
     const localMp4=await movComposer.locator('video').evaluate(async video=>{
       const blob=await (await fetch(video.src)).blob();return {type:blob.type,size:blob.size}
     })
