@@ -91,6 +91,21 @@ try {
   assert.ok(convertedRms>0.02,'converted MP4 must contain audible PCM')
   assert.ok(convertedRms/sourceRms>0.05,'converted audio unexpectedly attenuated relative to source')
   console.log('PASS MOV -> H264/audio MP4, duration/size and source/output decoded PCM RMS')
+  // Simulate the Safari muted-media Web Audio path in Chrome. Chromium is not
+  // Safari: this only proves that silent decoded PCM cannot be published.
+  await page.evaluate(() => {
+    Object.defineProperty(navigator, 'userAgent', {
+      configurable: true,
+      value: 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1'
+    })
+  })
+  const mutedAudio=await convert(fixture)
+  assert.equal(mutedAudio.ok,false,'Muted Safari-like Web Audio must never produce a publishable MP4')
+  assert.match(mutedAudio.error,/音声|再生|変換/)
+  console.log('PASS simulated Safari-muted Web Audio fails closed without upload (not Safari device validation)')
+  await page.evaluate(() => {
+    Object.defineProperty(navigator, 'userAgent', { configurable: true, value: 'Chrome/130.0.0.0' })
+  })
   const aborted=await convert(fixture,true)
   assert.equal(aborted.ok,false)
   assert.match(aborted.error,/中止/)
