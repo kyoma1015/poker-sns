@@ -1,6 +1,7 @@
 // Actual React PostVideo in headless Chromium, backed by isolated Supabase
 // through the real authorized media API. Never used in production builds.
 import assert from 'node:assert/strict'
+import { execFileSync } from 'node:child_process'
 import { createServer as createHttpServer } from 'node:http'
 import { createServer as createViteServer } from 'vite'
 import { chromium } from 'playwright-core'
@@ -333,7 +334,15 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     const movComposer=movPage.getByRole('dialog',{name:'新しい投稿'})
     await movComposer.waitFor()
     const movPicker=movPage.locator('input[type="file"][accept*="video/mp4"]')
-    await movPicker.setInputFiles({name:'phone.mov',mimeType:'video/quicktime',buffer:bytes})
+    // The generic Storage fixture can be silent. The MOV path now fails
+    // closed without decoded PCM, so exercise conversion with audible input.
+    const audibleMov = execFileSync('ffmpeg',[
+      '-v','error','-f','lavfi','-i','testsrc2=size=160x120:rate=15',
+      '-f','lavfi','-i','sine=frequency=880:sample_rate=44100',
+      '-t','2','-c:v','mpeg4','-q:v','5','-c:a','aac',
+      '-movflags','+faststart','-f','mov','pipe:1',
+    ])
+    await movPicker.setInputFiles({name:'phone.mov',mimeType:'video/quicktime',buffer:audibleMov})
     // MOV selection now starts conversion automatically; no mandatory button.
     await movComposer.locator('video').waitFor({timeout:25000})
     const localMp4=await movComposer.locator('video').evaluate(async video=>{
@@ -346,7 +355,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
       window.__MOV_CLOSED=0;const close=AudioContext.prototype.close
       AudioContext.prototype.close=function(...args){window.__MOV_CLOSED++;return close.apply(this,args)}
     })
-    await movPicker.setInputFiles({name:'cancel.mov',mimeType:'video/quicktime',buffer:bytes})
+    await movPicker.setInputFiles({name:'cancel.mov',mimeType:'video/quicktime',buffer:audibleMov})
     // Cancellation must interrupt the automatic conversion in progress.
     await movComposer.getByText(/MOVを端末内でMP4へ変換しています/).waitFor()
     await movComposer.getByText(/MOVを端末内でMP4へ変換しています/).waitFor()
