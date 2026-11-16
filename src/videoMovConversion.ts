@@ -142,20 +142,16 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal, prepared
         recorder.onstop = () => finish()
         video.onerror = () => finish(new Error(MOV_CONVERSION_HELP))
         video.onended = stopAtSourceEnd
+        // Chromium must unmute before starting playback to deliver decoded
+        // samples to createMediaElementSource. Safari retains muted playback:
+        // unmuting after its async file picker has been observed to stall it.
+        const safari = /Safari\//.test(navigator.userAgent) && !/Chrome\/|Chromium\/|CriOS|FxiOS|EdgiOS|OPR\/|Edg\/|Android/.test(navigator.userAgent)
+        if (!safari) {
+          video.muted = false
+          video.defaultMuted = false
+        }
         recorder.start(250)
         void video.play().then(() => {
-          // Chrome records silence from a muted media element even with WebAudio routing.
-          // Preserve the previously verified decoded audio until Safari-specific
-          // playback recovery can be validated without breaking the audio contract.
-          // On iPhone Safari, unmuting after an asynchronous file picker can
-          // suspend playback immediately (observed at 0.00s and 0.08s).
-          // Keep Safari's element muted while WebAudio routes decoded samples
-          // into the recording. Chrome still requires unmuting for audible capture.
-          const safari = /Safari\//.test(navigator.userAgent) && !/Chrome\/|Chromium\/|CriOS|FxiOS|EdgiOS|OPR\/|Edg\/|Android/.test(navigator.userAgent)
-          if (!safari) {
-            video.muted = false
-            video.defaultMuted = false
-          }
           playbackStartedAt = performance.now()
           audioSampleTimer = window.setInterval(sampleDecodedAudio, 80)
           // Safari can omit ended on very short MOVs. Never record indefinitely.
