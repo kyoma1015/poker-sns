@@ -1,0 +1,13 @@
+test_projection_matches_existing_immutable_frozen_lift (test_matched_history.FrozenProjectionTests.test_projection_matches_existing_immutable_frozen_lift) ... ok
+test_actual_limp_fourbet_node_and_no_future_board_in_preflop_key (test_matched_history.MatchedHistoryTests.test_actual_limp_fourbet_node_and_no_future_board_in_preflop_key) ... ok
+test_all_three_updates_match_independent_python_and_resume (test_matched_history.MatchedHistoryTests.test_all_three_updates_match_independent_python_and_resume) ... ok
+test_every_vector_regret_and_average_cell_matches_path_products (test_matched_history.MatchedHistoryTests.test_every_vector_regret_and_average_cell_matches_path_products) ... ok
+test_legal_pure_responses_equal_existing_independent_BR_and_realized_payoff (test_matched_history.MatchedHistoryTests.test_legal_pure_responses_equal_existing_independent_BR_and_realized_payoff) ... ok
+test_resume_rejects_corrupt_average_without_changing_state (test_matched_history.MatchedHistoryTests.test_resume_rejects_corrupt_average_without_changing_state) ... ok
+test_vanilla_updates_equal_existing_independent_world_CFR (test_matched_history.MatchedHistoryTests.test_vanilla_updates_equal_existing_independent_world_CFR) ... ok
+test_all_twelve_actual_checkpoints_reproduce_reported_final_metrics (test_matched_history.MeasuredCheckpointTests.test_all_twelve_actual_checkpoints_reproduce_reported_final_metrics) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 3.838s
+
+OK

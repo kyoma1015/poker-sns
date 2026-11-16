@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { canonicalQuery, findVerifiedRange, handGrid, oneBBQuery, positions } from './gto/rangeCatalog'
@@ -13,6 +13,7 @@ import type { IndependentStage } from './gto/independentResearch'
 import './GtoPreflop.css'
 import { analyzeHistory } from './gto/preflopHistory'
 import type { PreflopAction } from './gto/preflopHistory'
+import { findIntegrityCheckedRange } from './gto/rangeIntegrity'
 
 const ContinuationAudit = lazy(() => import('./ContinuationAudit'))
 
@@ -36,6 +37,9 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
   const [result, setResult] = useState<VerifiedRange | null>(null)
   const [message, setMessage] = useState('条件を入力して検索してください。')
   const [error, setError] = useState('')
+  const [pending, setPending] = useState(false)
+  const searchVersion = useRef(0)
+  useEffect(() => () => { searchVersion.current++ }, [])
   const [selected, setSelected] = useState('AA')
   const [historyAction, setHistoryAction] = useState<PreflopAction['action']>('fold')
   const [historyRaise, setHistoryRaise] = useState('')
@@ -46,21 +50,27 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
   const isForced = form.stage === 'forced_blind_allin'
   const hasOneBB = findVerifiedRange(oneBBQuery, catalog, certificates) !== null
   function change(patch: Partial<RangeQuery>) {
+    searchVersion.current++; setPending(false)
     setForm(previous => ({ ...previous, ...(patch.players !== undefined ? { history: undefined } : {}), ...patch }))
     setIndependentStage(null); setResearchStage(null); setResult(null); setError(''); setMessage('条件を入力して検索してください。')
   }
-  function search(event: FormEvent<HTMLFormElement>) {
+  async function search(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    const version = ++searchVersion.current
+    setPending(true); setResult(null); setResearchStage(null); setIndependentStage(null); setError(''); setMessage('データの整合性を検証しています。')
     try {
       const query = canonicalQuery(form)
-      const match = findVerifiedRange(query, catalog, certificates)
+      const match = await findIntegrityCheckedRange(query, catalog, certificates)
+      if (version !== searchVersion.current) return
       setIndependentStage(independentOptIn ? findIndependentResearch(query) : null)
       setResearchStage(researchOptIn ? findAbstractResearch(query) : null)
       setResult(match); setSelected('AA'); setError('')
       setMessage(match ? '計算条件と検証根拠が一致するデータを表示しています。' : 'この条件の検証済みデータはまだありません。')
     } catch (caught) {
+      if (version !== searchVersion.current) return
       setIndependentStage(null); setResearchStage(null); setResult(null); setError(caught instanceof Error ? caught.message : '検索条件を確認してください。')
-    }
+      setMessage('データを確認できませんでした。条件を確認して再検索してください。')
+    } finally { if (version === searchVersion.current) setPending(false) }
   }
   const selectedRow = result?.hands[selected]
   function editHistory(history: PreflopAction[]) {
@@ -69,7 +79,7 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
       if (state.raises > 3) throw new Error('5ベット後のレンジ検索は未対応です。')
       const stage = (['rfi', 'vs_open', 'vs_3bet', 'vs_4bet'] as const)[state.raises]
       change({ history: state.history, seat: state.nextSeat ?? form.seat, stage })
-    } catch (caught) { setResult(null); setResearchStage(null); setIndependentStage(null); setMessage('履歴を確認してください。'); setError(caught instanceof Error ? caught.message : '履歴を確認してください。') }
+    } catch (caught) { searchVersion.current++; setPending(false); setResult(null); setResearchStage(null); setIndependentStage(null); setMessage('履歴を確認してください。'); setError(caught instanceof Error ? caught.message : '履歴を確認してください。') }
   }
   function addHistory() {
     try {
@@ -77,7 +87,7 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
       if (state.nextSeat === null) throw new Error('この履歴ではプリフロップのアクションが終了しています。')
       const action: PreflopAction = historyAction === 'raise' ? { seat: state.nextSeat, action: 'raise', toBb: historyRaise } : { seat: state.nextSeat, action: historyAction }
       editHistory([...state.history, action])
-    } catch (caught) { setResult(null); setResearchStage(null); setIndependentStage(null); setMessage('履歴を確認してください。'); setError(caught instanceof Error ? caught.message : '履歴を確認してください。') }
+    } catch (caught) { searchVersion.current++; setPending(false); setResult(null); setResearchStage(null); setIndependentStage(null); setMessage('履歴を確認してください。'); setError(caught instanceof Error ? caught.message : '履歴を確認してください。') }
   }
   return (
     <main className="app gto-preflop">
@@ -98,9 +108,9 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
           <p>全プリフロップ分岐を学習する研究版です。固定モデル内の計算と実戦GTO精度は別です。対3bet・対4betでは継続方策の独立BR検証も確認できます。通常GTOとしては表示しません。</p>
           <button type="button" onClick={() => { change(independentQuery); setIndependentOptIn(true); setResearchOptIn(false) }}>研究用：独立学習HU50BB</button>
         </aside>
-        <form aria-label="プリフロップ検索条件" onSubmit={search}>
-          <label><input type="checkbox" checked={researchOptIn} onChange={event => { setResearchOptIn(event.target.checked); setResearchStage(null) }} />抽象化モデルの研究結果も確認する（実ゲームGTO未検証）</label>
-          <label><input type="checkbox" checked={independentOptIn} onChange={e => { setIndependentOptIn(e.target.checked); setIndependentStage(null) }} />独立学習の研究結果も確認する（実戦GTO精度未検証）</label>
+        <form aria-label="プリフロップ検索条件" aria-busy={pending} onSubmit={search}>
+          <label><input type="checkbox" checked={researchOptIn} onChange={event => { change({}); setResearchOptIn(event.target.checked) }} />抽象化モデルの研究結果も確認する（実ゲームGTO未検証）</label>
+          <label><input type="checkbox" checked={independentOptIn} onChange={e => { change({}); setIndependentOptIn(e.target.checked) }} />独立学習の研究結果も確認する（実戦GTO精度未検証）</label>
           <fieldset className="gto-fields"><legend>計算条件</legend>
             <label>ゲーム形式<select aria-label="ゲーム形式" disabled={isForced} value={form.format} onChange={event => change({ format: event.target.value as RangeQuery['format'], rakePct: '0', rakeCapBb: null })}>
               <option value="mtt">MTT（chipEV）</option><option value="ring">リングゲーム</option>
@@ -152,7 +162,7 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
               <button type="button" disabled={!form.history.length} onClick={() => editHistory(form.history!.slice(0, -1))}>最後のアクションを戻す</button>
             </>}
           </fieldset>
-          <button className="gto-search" type="submit">検証済みレンジを検索</button>
+          <button className="gto-search" type="submit" disabled={pending}>検証済みレンジを検索</button>
         </form>
         {error && <p role="alert" className="gto-error">{error}</p>}
         <p role="status" className="gto-status">{message}</p>
@@ -179,7 +189,10 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
         </div>
         {result && selectedRow && <section className="gto-detail" aria-live="polite">
           <h2>{selected}の頻度とEV</h2>
-          <ul>{result.actions.map((action, i) => <li key={action}>{action}：{(selectedRow.frequencies[i] * 100).toFixed(1)}%</li>)}</ul>
+          <ul>{result.actions.map((action, i) => <li key={action}>
+            <span>{action}：{(selectedRow.frequencies[i] * 100).toFixed(1)}%</span>
+            {selectedRow.actionEvBb && selectedRow.actionEvIntervalBb && <span> ／行動EV {selectedRow.actionEvBb[i].toFixed(3)} BB、区間 [{selectedRow.actionEvIntervalBb[i].map(v => v.toFixed(3)).join(', ')}] BB</span>}
+          </li>)}</ul>
           <p>EV：{selectedRow.evBb.toFixed(3)} BB{result.certificate.verificationMethod === 'simultaneous_full_game_action_bounds' ? '（推定値）' : ''}</p>
           <p>EV同時区間：[{selectedRow.evIntervalBb[0].toFixed(3)}, {selectedRow.evIntervalBb[1].toFixed(3)}] BB</p>
           <p>検証信頼水準：{(result.certificate.confidence * 100).toFixed(result.certificate.confidence === 1 ? 0 : 7)}%</p>
@@ -192,6 +205,8 @@ export default function GtoPreflop({ catalog = verifiedCatalog, certificates = r
             {result.certificate.policyConstruction && <p>{result.certificate.policyConstruction}</p>}
             {result.certificate.directHeroRepresentatives && <p>直接評価：{result.certificate.directHeroRepresentatives}代表クラス。スート・配布順の対称性による展開：{result.certificate.symmetryExpandedCombinations}コンビネーション／{result.certificate.strategicInformationSets}情報集合。</p>}
             <p>ポリシー：{result.policyDigest}</p><p>計算条件：{result.configDigest}</p>
+            <p>データ：{result.id} ／形式：{result.schema}</p>
+            {result.certificate.rangePayloadSha256 && <p>表示データSHA-256：{result.certificate.rangePayloadSha256}</p>}
             <p>研究用の局所指標やEVサンプリング誤差を、ゲーム全体の収束根拠として使用していません。</p>
           </details>
         </section>}

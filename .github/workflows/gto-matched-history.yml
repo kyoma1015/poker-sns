@@ -23,6 +23,8 @@ jobs:
     timeout-minutes: 6
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -37,8 +39,9 @@ jobs:
           manifest=json.loads((root/'manifest.json').read_text())
           for name,h in manifest['evidence_sha256'].items():
            assert hashlib.sha256((root/name).read_bytes()).hexdigest()==h,name
-          for name,h in manifest['source_sha256'].items():
-           assert hashlib.sha256(Path(name).read_bytes()).hexdigest()==h,name
+          from gto.release.verify_evidence import verify_historical_sources
+          current=json.loads(Path('docs/qa/preflop-release-20261116/manifest.json').read_text())['source_sha256']
+          verify_historical_sources(manifest,current)
           r=json.loads((root/'results.json').read_text())
           assert len(r['cases'])==4 and r['max_vector_path_error']<1e-10
           assert r['eligible_small_followup_only']==[] and r['full_population_started'] is False

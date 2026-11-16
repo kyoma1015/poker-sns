@@ -12,6 +12,11 @@ try {
   const url = `http://127.0.0.1:${port}/tests/gto-browser/index.html`
   browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] })
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } })
+  async function completeSearch() {
+    await page.getByRole('button', { name: '検証済みレンジを検索', exact: true }).click()
+    await page.waitForFunction(() => document.querySelector('form[aria-label="プリフロップ検索条件"]')?.getAttribute('aria-busy') === 'false')
+  }
+
   const errors = []
   page.on('pageerror', error => errors.push(error.message))
   await page.route('**/*', route => {
@@ -32,7 +37,7 @@ try {
     await page.getByLabel('オープンサイズ（BB）', { exact: true }).fill('2.5')
     await page.getByLabel('3ベットサイズ（BB）', { exact: true }).fill('9')
     await page.getByLabel('4ベットサイズ（BB）', { exact: true }).fill('21')
-    await page.getByRole('button', { name: '検証済みレンジを検索', exact: true }).click()
+    await completeSearch()
   }
   await fill()
   await page.getByRole('status').filter({ hasText: 'この条件の検証済みデータはまだありません。' }).waitFor()
@@ -56,7 +61,7 @@ try {
   await page.goto(url)
   await page.getByRole('button', { name: '検証済みテスト条件：HU1BB', exact: true }).click()
   assert.equal(await page.getByLabel('オープンサイズ（BB）', { exact: true }).isDisabled(), true)
-  await page.getByRole('button', { name: '検証済みレンジを検索', exact: true }).click()
+  await completeSearch()
   assert.equal(await page.locator('button[data-hand]:enabled').count(), 169)
   assert.equal(await page.getByText('コール（1BBオールイン）：100.0%', { exact: true }).count(), 1)
   assert.equal(await page.getByText(/99\.9999998%/).count(), 1)
@@ -65,7 +70,7 @@ try {
   await page.goto(url)
   assert.equal(await page.locator('[data-research-hand]').count(), 0)
   await page.getByRole('button', { name: '研究用：HU50BB抽象化モデル', exact: true }).click()
-  await page.getByRole('button', { name: '検証済みレンジを検索', exact: true }).click()
+  await completeSearch()
   assert.equal(await page.locator('[data-research-hand]').count(), 169)
   assert.equal(await page.locator('button[data-hand]:enabled').count(), 0)
   await page.getByRole('note').filter({ hasText: '実ゲームGTO精度は未検証' }).waitFor()
@@ -82,13 +87,13 @@ try {
     await page.getByLabel('対象局面', { exact: true }).selectOption(stage)
     await page.getByLabel('ポジション', { exact: true }).selectOption(seat)
     assert.equal(await page.locator('[data-research-hand]').count(), 0)
-    await page.getByRole('button', { name: '検証済みレンジを検索', exact: true }).click()
+    await completeSearch()
     assert.equal(await page.locator('[data-research-hand]').count(), 169)
   }
   console.log('PASS B09 abstract research covers vs-open vs3bet and vs4bet with exact actor lookup')
   await page.getByLabel('オープンサイズ（BB）', { exact: true }).fill('3')
   assert.equal(await page.locator('[data-research-hand]').count(), 0)
-  await page.getByRole('button', { name: '検証済みレンジを検索', exact: true }).click()
+  await completeSearch()
   assert.equal(await page.locator('[data-research-hand]').count(), 0)
   assert.deepEqual(errors, [])
   console.log('PASS B10 changed conditions clear research and never interpolate unsupported sizes')
@@ -104,7 +109,7 @@ try {
   await page.getByRole('button', { name: '履歴に追加', exact: true }).click()
   assert.equal(await page.getByLabel('対象局面', { exact: true }).inputValue(), 'vs_open')
   assert.equal(await page.getByLabel('ポジション', { exact: true }).inputValue(), '4')
-  await page.getByRole('button', { name: '検証済みレンジを検索', exact: true }).click()
+  await completeSearch()
   await page.getByRole('status').filter({ hasText: 'この条件の検証済みデータはまだありません。' }).waitFor()
   assert.equal(await page.locator('button[data-hand]:enabled').count(), 0)
   await page.getByRole('button', { name: '最後のアクションを戻す', exact: true }).click()
@@ -120,6 +125,37 @@ try {
   assert.equal(await page.getByLabel('指定したアクション履歴').locator('li').count(), 1)
   assert.deepEqual(errors, [])
   console.log('PASS B13 illegal history edits retain the prior history and clear results')
+  await page.goto(`${url}?fixture=1&tamper=1`)
+  await fill()
+  assert.equal(await page.locator('button[data-hand]:enabled').count(), 0)
+  console.log('PASS B14 coherent frequency/EV tampering is rejected by the payload digest')
+  await page.goto(`${url}?fixture=1`)
+  await fill()
+  await page.locator('button[data-hand="AKs"]').click()
+  assert.equal(await page.getByText('／行動EV 0.100 BB、区間 [0.100, 0.100] BB', { exact: false }).count(), 1)
+  await page.evaluate(() => {
+    const original = crypto.subtle.digest.bind(crypto.subtle)
+    crypto.subtle.digest = (...args) => new Promise((resolve, reject) => {
+      setTimeout(() => original(...args).then(resolve, reject), 200)
+    })
+  })
+  await page.getByRole('button', { name: '検証済みレンジを検索', exact: true }).click()
+  await page.getByRole('status').filter({ hasText: 'データの整合性を検証しています。' }).waitFor()
+  await page.getByLabel('有効スタック（BB）', { exact: true }).fill('99')
+  await page.waitForTimeout(250)
+  assert.equal(await page.locator('button[data-hand]:enabled').count(), 0)
+  assert.equal(await page.getByRole('heading', { name: 'AKsの頻度とEV', exact: true }).count(), 0)
+  console.log('PASS B15 async verification cannot restore a strategy after condition edits')
+  await page.goto(`${url}?fixture=1`)
+  await page.getByRole('heading', { name: 'プリフロップレンジ検索', exact: true }).waitFor()
+  await page.evaluate(() => { crypto.subtle.digest = () => Promise.reject(new Error('fixture digest failure')) })
+  await fill()
+  await page.getByRole('alert').filter({ hasText: '表示データの整合性を検証できませんでした。' }).waitFor()
+  assert.equal(await page.locator('button[data-hand]:enabled').count(), 0)
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), true)
+  assert.deepEqual(errors, [])
+  console.log('PASS B16 verification failure shows a recoverable error without strategy or mobile overflow')
+
 
 
 

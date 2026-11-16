@@ -13,6 +13,7 @@ export type RangeQuery = {
 export type ReviewedCertificate = {
   datasetId: string; queryKey: string; policyDigest: string; configDigest: string;
   artifactSha256: string; scope: 'complete_target_game'; continuation: 'full_native_game';
+  rangePayloadSha256?: string;
   metric: 'max_unilateral_deviation_gain'; upperBoundBb: number; acceptedToleranceBb: number;
   reviewReference: string; confidence: number;
   verificationMethod: 'deterministic_full_game' | 'simultaneous_full_game_action_bounds';
@@ -23,7 +24,8 @@ export type VerifiedRange = {
   schema: 'pokerid-verified-preflop-v1'; id: string; query: RangeQuery;
   conditionClass: 'formal' | 'explicit_test'; conditionName: string;
   policyDigest: string; configDigest: string; certificateId: string;
-  actions: string[]; hands: Record<string, { combinations: number; frequencies: number[]; evBb: number; evIntervalBb: [number, number] }>;
+  actions: string[]; hands: Record<string, { combinations: number; frequencies: number[]; evBb: number; evIntervalBb: [number, number];
+    actionEvBb?: number[]; actionEvIntervalBb?: [number, number][] }>;
   coverage: { combinations: 1326; hands: 169 }; equilibriumVerified: true;
   certificate: ReviewedCertificate;
 }
@@ -146,12 +148,26 @@ export function validateVerifiedRange(value: unknown, registry: Readonly<Record<
     if (query.stage === 'forced_blind_allin' && (row.frequencies[0] !== 0 || row.frequencies[1] !== 1 || row.evIntervalBb[0] <= -.5)) return null
     hands[label] = { combinations: expected, frequencies: [...row.frequencies], evBb: row.evBb,
       evIntervalBb: [row.evIntervalBb[0], row.evIntervalBb[1]] }
+    if (row.actionEvBb !== undefined || row.actionEvIntervalBb !== undefined) {
+      const actionEv = row.actionEvBb, actionIntervals = row.actionEvIntervalBb
+      if (!Array.isArray(actionEv) || !Array.isArray(actionIntervals) ||
+          actionEv.length !== value.actions.length || actionIntervals.length !== value.actions.length ||
+          Array.from(actionEv).some(v => typeof v !== 'number' || !Number.isFinite(v)) ||
+          Array.from(actionIntervals).some((interval, i) => !Array.isArray(interval) || interval.length !== 2 ||
+            Array.from(interval).some(v => typeof v !== 'number' || !Number.isFinite(v)) ||
+            interval[0] > actionEv[i] || interval[1] < actionEv[i]) ||
+          Math.abs(row.frequencies.reduce((sum: number, p: number, i: number) => sum + p * actionEv[i], 0) - row.evBb) > 1e-8) return null
+      hands[label].actionEvBb = [...actionEv]
+      hands[label].actionEvIntervalBb = actionIntervals.map(interval => [interval[0], interval[1]])
+    }
   }
   return { schema: 'pokerid-verified-preflop-v1', id: value.id, query,
     conditionClass: value.conditionClass as VerifiedRange['conditionClass'], conditionName: value.conditionName, policyDigest: value.policyDigest,
     configDigest: value.configDigest, certificateId: value.certificateId, actions: [...value.actions], hands,
     coverage: { combinations: 1326, hands: 169 }, equilibriumVerified: true, certificate: { ...certificate } }
 }
+/** Structural lookup only. Ordinary display must also check content binding via
+ * findIntegrityCheckedRange; this function preserves the existing calibration API. */
 export function findVerifiedRange(query: unknown, catalog: readonly unknown[], registry: Readonly<Record<string, ReviewedCertificate>>): VerifiedRange | null {
   const key = queryKey(query)
   for (const candidate of catalog) {

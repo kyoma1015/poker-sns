@@ -1,0 +1,401 @@
+{
+  "source_files": [
+    "src/gto/independentResearchData.json",
+    "docs/qa/suit-exact-preflop-20261106/results.json"
+  ],
+  "candidates": 8,
+  "rows": 1352,
+  "ordinaryCatalogAdded": 0,
+  "formalAcceptance": [
+    0,
+    12
+  ],
+  "items": [
+    {
+      "id": "candidate-learned_small-rfi-09d36d4cbb24",
+      "query": {
+        "format": "mtt",
+        "players": 2,
+        "seat": 0,
+        "stackBb": "50",
+        "anteBb": "0",
+        "rakePct": "0",
+        "rakeCapBb": null,
+        "openBb": "2.5",
+        "threeBetBb": "9",
+        "fourBetBb": "21",
+        "stage": "rfi",
+        "history": []
+      },
+      "sourceActions": [
+        "fold",
+        "call",
+        "raise_to_5"
+      ],
+      "hands": 169,
+      "zero_model_reach_rows": 0,
+      "publishedJsonPolicyDigest": "9d56b60b456241f1899c455a440c510d2694b4d679ed59eff6eb1d55c18707cd",
+      "evaluatedF64lePolicyDigest": "1ecb5a10931e669dace9ef7723a1b3db27d2c43d44ad2e611f39e2dc38bb3bc5",
+      "completePolicyDigest": "8fd4c3d3eb971691ecf79601230c3198bd9bd65f844deb76313c651b237277ca",
+      "independentModelVerification": {
+        "nashconvBb": 0.0015055594310072265,
+        "maxNativePythonDifferenceBb": 7.57380269611474e-15,
+        "scope": "fixed_continuation_model_only"
+      },
+      "blockers": [
+        "FORMAL_CONDITION_NOT_REGISTERED",
+        "FULL_NATIVE_GAME_DEVIATION_BOUND_MISSING",
+        "CONTINUATION_AND_ACTION_SPACE_ERROR_UNBOUNDED",
+        "REAL_GAME_ACTION_EV_NOT_VALIDATED",
+        "NUMERIC_GUARD_IS_NOT_A_FORMAL_PROOF"
+      ],
+      "candidateSha256": "6b4b350b256d5131f9744854fb954f39afa105e7d2470db202b4cf0e7115d1d2"
+    },
+    {
+      "id": "candidate-learned_small-vs_open-09d36d4cbb24",
+      "query": {
+        "format": "mtt",
+        "players": 2,
+        "seat": 1,
+        "stackBb": "50",
+        "anteBb": "0",
+        "rakePct": "0",
+        "rakeCapBb": null,
+        "openBb": "2.5",
+        "threeBetBb": "9",
+        "fourBetBb": "21",
+        "stage": "vs_open",
+        "history": [
+          {
+            "seat": 0,
+            "action": "raise",
+            "toBb": "2.5"
+          }
+        ]
+      },
+      "sourceActions": [
+        "fold",
+        "call",
+        "raise_to_18"
+      ],
+      "hands": 169,
+      "zero_model_reach_rows": 0,
+      "publishedJsonPolicyDigest": "9d56b60b456241f1899c455a440c510d2694b4d679ed59eff6eb1d55c18707cd",
+      "evaluatedF64lePolicyDigest": "1ecb5a10931e669dace9ef7723a1b3db27d2c43d44ad2e611f39e2dc38bb3bc5",
+      "completePolicyDigest": "8fd4c3d3eb971691ecf79601230c3198bd9bd65f844deb76313c651b237277ca",
+      "independentModelVerification": {
+        "nashconvBb": 0.0015055594310072265,
+        "maxNativePythonDifferenceBb": 7.57380269611474e-15,
+        "scope": "fixed_continuation_model_only"
+      },
+      "blockers": [
+        "FORMAL_CONDITION_NOT_REGISTERED",
+        "FULL_NATIVE_GAME_DEVIATION_BOUND_MISSING",
+        "CONTINUATION_AND_ACTION_SPACE_ERROR_UNBOUNDED",
+        "REAL_GAME_ACTION_EV_NOT_VALIDATED",
+        "NUMERIC_GUARD_IS_NOT_A_FORMAL_PROOF"
+      ],
+      "candidateSha256": "02c729b0c1c62b3749fbbdf2bff880cfca8954acc5d2502f9ae5746aaa03c01d"
+    },
+    {
+      "id": "candidate-learned_small-vs_3bet-09d36d4cbb24",
+      "query": {
+        "format": "mtt",
+        "players": 2,
+        "seat": 0,
+        "stackBb": "50",
+        "anteBb": "0",
+        "rakePct": "0",
+        "rakeCapBb": null,
+        "openBb": "2.5",
+        "threeBetBb": "9",
+        "fourBetBb": "21",
+        "stage": "vs_3bet",
+        "history": [
+          {
+            "seat": 0,
+            "action": "raise",
+            "toBb": "2.5"
+          },
+          {
+            "seat": 1,
+            "action": "raise",
+            "toBb": "9"
+          }
+        ]
+      },
+      "sourceActions": [
+        "fold",
+        "call",
+        "raise_to_42"
+      ],
+      "hands": 169,
+      "zero_model_reach_rows": 0,
+      "publishedJsonPolicyDigest": "9d56b60b456241f1899c455a440c510d2694b4d679ed59eff6eb1d55c18707cd",
+      "evaluatedF64lePolicyDigest": "1ecb5a10931e669dace9ef7723a1b3db27d2c43d44ad2e611f39e2dc38bb3bc5",
+      "completePolicyDigest": "8fd4c3d3eb971691ecf79601230c3198bd9bd65f844deb76313c651b237277ca",
+      "independentModelVerification": {
+        "nashconvBb": 0.0015055594310072265,
+        "maxNativePythonDifferenceBb": 7.57380269611474e-15,
+        "scope": "fixed_continuation_model_only"
+      },
+      "blockers": [
+        "FORMAL_CONDITION_NOT_REGISTERED",
+        "FULL_NATIVE_GAME_DEVIATION_BOUND_MISSING",
+        "CONTINUATION_AND_ACTION_SPACE_ERROR_UNBOUNDED",
+        "REAL_GAME_ACTION_EV_NOT_VALIDATED",
+        "NUMERIC_GUARD_IS_NOT_A_FORMAL_PROOF"
+      ],
+      "candidateSha256": "959395c8514c22aeb9b725630ec5d6b132363d760cd55403b56a5e8916928292"
+    },
+    {
+      "id": "candidate-learned_small-vs_4bet-09d36d4cbb24",
+      "query": {
+        "format": "mtt",
+        "players": 2,
+        "seat": 1,
+        "stackBb": "50",
+        "anteBb": "0",
+        "rakePct": "0",
+        "rakeCapBb": null,
+        "openBb": "2.5",
+        "threeBetBb": "9",
+        "fourBetBb": "21",
+        "stage": "vs_4bet",
+        "history": [
+          {
+            "seat": 0,
+            "action": "raise",
+            "toBb": "2.5"
+          },
+          {
+            "seat": 1,
+            "action": "raise",
+            "toBb": "9"
+          },
+          {
+            "seat": 0,
+            "action": "raise",
+            "toBb": "21"
+          }
+        ]
+      },
+      "sourceActions": [
+        "fold",
+        "call",
+        "raise_to_100"
+      ],
+      "hands": 169,
+      "zero_model_reach_rows": 0,
+      "publishedJsonPolicyDigest": "9d56b60b456241f1899c455a440c510d2694b4d679ed59eff6eb1d55c18707cd",
+      "evaluatedF64lePolicyDigest": "1ecb5a10931e669dace9ef7723a1b3db27d2c43d44ad2e611f39e2dc38bb3bc5",
+      "completePolicyDigest": "8fd4c3d3eb971691ecf79601230c3198bd9bd65f844deb76313c651b237277ca",
+      "independentModelVerification": {
+        "nashconvBb": 0.0015055594310072265,
+        "maxNativePythonDifferenceBb": 7.57380269611474e-15,
+        "scope": "fixed_continuation_model_only"
+      },
+      "blockers": [
+        "FORMAL_CONDITION_NOT_REGISTERED",
+        "FULL_NATIVE_GAME_DEVIATION_BOUND_MISSING",
+        "CONTINUATION_AND_ACTION_SPACE_ERROR_UNBOUNDED",
+        "REAL_GAME_ACTION_EV_NOT_VALIDATED",
+        "NUMERIC_GUARD_IS_NOT_A_FORMAL_PROOF"
+      ],
+      "candidateSha256": "0713b91f5bc2c18cd5f754c81c8de2cafa782ed6f63367316c57587dd605d42b"
+    },
+    {
+      "id": "candidate-learned_large-rfi-09d36d4cbb24",
+      "query": {
+        "format": "mtt",
+        "players": 2,
+        "seat": 0,
+        "stackBb": "50",
+        "anteBb": "0",
+        "rakePct": "0",
+        "rakeCapBb": null,
+        "openBb": "2.5",
+        "threeBetBb": "9",
+        "fourBetBb": "21",
+        "stage": "rfi",
+        "history": []
+      },
+      "sourceActions": [
+        "fold",
+        "call",
+        "raise_to_5"
+      ],
+      "hands": 169,
+      "zero_model_reach_rows": 0,
+      "publishedJsonPolicyDigest": "26abde99afb493e4e5a13f0e8e890327e906c2b471d5a2d2745153eb29c82247",
+      "evaluatedF64lePolicyDigest": "1ed6a0b3ea76ae4bd184a93dcbef60db7bf466275bdc0787e95937c9cef7cb96",
+      "completePolicyDigest": "028fa4220ec1938c0f465a8fdae207bd412c1fc1f7a9ad2106aee4b98f5d713c",
+      "independentModelVerification": {
+        "nashconvBb": 0.0014225918581375688,
+        "maxNativePythonDifferenceBb": 5.835609773185979e-15,
+        "scope": "fixed_continuation_model_only"
+      },
+      "blockers": [
+        "FORMAL_CONDITION_NOT_REGISTERED",
+        "FULL_NATIVE_GAME_DEVIATION_BOUND_MISSING",
+        "CONTINUATION_AND_ACTION_SPACE_ERROR_UNBOUNDED",
+        "REAL_GAME_ACTION_EV_NOT_VALIDATED",
+        "NUMERIC_GUARD_IS_NOT_A_FORMAL_PROOF"
+      ],
+      "candidateSha256": "5aa7925056edf754f5cf2883bb56a6d19316e4d9f26974be56ed45f03b2f62a9"
+    },
+    {
+      "id": "candidate-learned_large-vs_open-09d36d4cbb24",
+      "query": {
+        "format": "mtt",
+        "players": 2,
+        "seat": 1,
+        "stackBb": "50",
+        "anteBb": "0",
+        "rakePct": "0",
+        "rakeCapBb": null,
+        "openBb": "2.5",
+        "threeBetBb": "9",
+        "fourBetBb": "21",
+        "stage": "vs_open",
+        "history": [
+          {
+            "seat": 0,
+            "action": "raise",
+            "toBb": "2.5"
+          }
+        ]
+      },
+      "sourceActions": [
+        "fold",
+        "call",
+        "raise_to_18"
+      ],
+      "hands": 169,
+      "zero_model_reach_rows": 0,
+      "publishedJsonPolicyDigest": "26abde99afb493e4e5a13f0e8e890327e906c2b471d5a2d2745153eb29c82247",
+      "evaluatedF64lePolicyDigest": "1ed6a0b3ea76ae4bd184a93dcbef60db7bf466275bdc0787e95937c9cef7cb96",
+      "completePolicyDigest": "028fa4220ec1938c0f465a8fdae207bd412c1fc1f7a9ad2106aee4b98f5d713c",
+      "independentModelVerification": {
+        "nashconvBb": 0.0014225918581375688,
+        "maxNativePythonDifferenceBb": 5.835609773185979e-15,
+        "scope": "fixed_continuation_model_only"
+      },
+      "blockers": [
+        "FORMAL_CONDITION_NOT_REGISTERED",
+        "FULL_NATIVE_GAME_DEVIATION_BOUND_MISSING",
+        "CONTINUATION_AND_ACTION_SPACE_ERROR_UNBOUNDED",
+        "REAL_GAME_ACTION_EV_NOT_VALIDATED",
+        "NUMERIC_GUARD_IS_NOT_A_FORMAL_PROOF"
+      ],
+      "candidateSha256": "4437fda5535b21b50f3d70a316b674762942e303ed101550b875472329d1e8e3"
+    },
+    {
+      "id": "candidate-learned_large-vs_3bet-09d36d4cbb24",
+      "query": {
+        "format": "mtt",
+        "players": 2,
+        "seat": 0,
+        "stackBb": "50",
+        "anteBb": "0",
+        "rakePct": "0",
+        "rakeCapBb": null,
+        "openBb": "2.5",
+        "threeBetBb": "9",
+        "fourBetBb": "21",
+        "stage": "vs_3bet",
+        "history": [
+          {
+            "seat": 0,
+            "action": "raise",
+            "toBb": "2.5"
+          },
+          {
+            "seat": 1,
+            "action": "raise",
+            "toBb": "9"
+          }
+        ]
+      },
+      "sourceActions": [
+        "fold",
+        "call",
+        "raise_to_42"
+      ],
+      "hands": 169,
+      "zero_model_reach_rows": 0,
+      "publishedJsonPolicyDigest": "26abde99afb493e4e5a13f0e8e890327e906c2b471d5a2d2745153eb29c82247",
+      "evaluatedF64lePolicyDigest": "1ed6a0b3ea76ae4bd184a93dcbef60db7bf466275bdc0787e95937c9cef7cb96",
+      "completePolicyDigest": "028fa4220ec1938c0f465a8fdae207bd412c1fc1f7a9ad2106aee4b98f5d713c",
+      "independentModelVerification": {
+        "nashconvBb": 0.0014225918581375688,
+        "maxNativePythonDifferenceBb": 5.835609773185979e-15,
+        "scope": "fixed_continuation_model_only"
+      },
+      "blockers": [
+        "FORMAL_CONDITION_NOT_REGISTERED",
+        "FULL_NATIVE_GAME_DEVIATION_BOUND_MISSING",
+        "CONTINUATION_AND_ACTION_SPACE_ERROR_UNBOUNDED",
+        "REAL_GAME_ACTION_EV_NOT_VALIDATED",
+        "NUMERIC_GUARD_IS_NOT_A_FORMAL_PROOF"
+      ],
+      "candidateSha256": "5348ad8927e5bf854fe0bb124bb4da365314c0d9babfc2c6813139a07b1e4f50"
+    },
+    {
+      "id": "candidate-learned_large-vs_4bet-09d36d4cbb24",
+      "query": {
+        "format": "mtt",
+        "players": 2,
+        "seat": 1,
+        "stackBb": "50",
+        "anteBb": "0",
+        "rakePct": "0",
+        "rakeCapBb": null,
+        "openBb": "2.5",
+        "threeBetBb": "9",
+        "fourBetBb": "21",
+        "stage": "vs_4bet",
+        "history": [
+          {
+            "seat": 0,
+            "action": "raise",
+            "toBb": "2.5"
+          },
+          {
+            "seat": 1,
+            "action": "raise",
+            "toBb": "9"
+          },
+          {
+            "seat": 0,
+            "action": "raise",
+            "toBb": "21"
+          }
+        ]
+      },
+      "sourceActions": [
+        "fold",
+        "call",
+        "raise_to_100"
+      ],
+      "hands": 169,
+      "zero_model_reach_rows": 0,
+      "publishedJsonPolicyDigest": "26abde99afb493e4e5a13f0e8e890327e906c2b471d5a2d2745153eb29c82247",
+      "evaluatedF64lePolicyDigest": "1ed6a0b3ea76ae4bd184a93dcbef60db7bf466275bdc0787e95937c9cef7cb96",
+      "completePolicyDigest": "028fa4220ec1938c0f465a8fdae207bd412c1fc1f7a9ad2106aee4b98f5d713c",
+      "independentModelVerification": {
+        "nashconvBb": 0.0014225918581375688,
+        "maxNativePythonDifferenceBb": 5.835609773185979e-15,
+        "scope": "fixed_continuation_model_only"
+      },
+      "blockers": [
+        "FORMAL_CONDITION_NOT_REGISTERED",
+        "FULL_NATIVE_GAME_DEVIATION_BOUND_MISSING",
+        "CONTINUATION_AND_ACTION_SPACE_ERROR_UNBOUNDED",
+        "REAL_GAME_ACTION_EV_NOT_VALIDATED",
+        "NUMERIC_GUARD_IS_NOT_A_FORMAL_PROOF"
+      ],
+      "candidateSha256": "b567455001d0d4ffd73e74eaa8e662e64d83ae9c2a9e89d2ab3d1d5df322ae15"
+    }
+  ]
+}
