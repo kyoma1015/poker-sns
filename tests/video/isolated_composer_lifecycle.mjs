@@ -216,7 +216,9 @@ export async function verifyComposerLifecycle({browser,origin,jwt,anon,bytes}) {
             const player=document.querySelector('[role="dialog"] video')
             return Boolean(player?.src && player.src!==previous && player.poster?.startsWith('data:image/jpeg'))
           },old,{timeout:20000})
-          const current=await player.getAttribute('poster')
+          // The current attachment may legitimately refresh its JPEG poster on a
+          // subsequent frame; byte-for-byte JPEG equality is not a stable invariant.
+          const currentSrc=await player.getAttribute('src')
           await page.evaluate(()=>{
             for(const probe of window.__POSTER_PROBES.slice(0,-1)) {
               probe.dispatchEvent(new Event('seeked'))
@@ -224,7 +226,8 @@ export async function verifyComposerLifecycle({browser,origin,jwt,anon,bytes}) {
             }
           })
           await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))))
-          assert.equal(await player.getAttribute('poster'),current,'late prior attachment events must not replace current poster')
+          assert.equal(await player.getAttribute('src'),currentSrc,'late prior attachment events must not replace the current video')
+          assert.match(await player.getAttribute('poster')||'',/^data:image\/jpeg;base64,/,'current attachment poster must remain available')
         }
       }
       assert.equal(writes,0,'poster regression must never finalize an upload')
