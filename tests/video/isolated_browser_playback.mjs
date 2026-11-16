@@ -346,7 +346,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
       execFileSync('ffmpeg',[
         '-v','error','-f','lavfi','-i','testsrc2=size=160x120:rate=15',
         '-f','lavfi','-i','sine=frequency=880:sample_rate=44100',
-        '-t','2','-c:v','mpeg4','-q:v','5','-c:a','aac',
+        '-t','2','-c:v','libx264','-pix_fmt','yuv420p','-preset','ultrafast','-c:a','aac',
         '-movflags','+faststart','-y',movPath,
       ])
       audibleMov = readFileSync(movPath)
