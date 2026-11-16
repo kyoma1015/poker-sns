@@ -42,8 +42,11 @@ async function verifyRecordedMp4Audio(blob: Blob, audio: AudioContext, signal?: 
   try {
     probe.playsInline = true
     probe.preload = 'auto'
-    probe.muted = true
-    probe.defaultMuted = true
+    // Chromium suppresses Web Audio samples from a muted media element.
+    // Safari must remain muted to avoid autoplay blocking after the file picker.
+    const safariProbe = /Safari\//.test(navigator.userAgent) && !/Chrome\/|Chromium\/|CriOS|FxiOS|EdgiOS|OPR\/|Edg\/|Android/.test(navigator.userAgent)
+    probe.muted = safariProbe
+    probe.defaultMuted = safariProbe
     probe.src = url
     source = audio.createMediaElementSource(probe)
     source.connect(analyser)
