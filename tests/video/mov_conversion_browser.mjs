@@ -24,6 +24,8 @@ try {
   assert.match(timelineSource, /!canSubmitPost \? '投稿ボタンが無効です。添付の選択状態を確認してください。動画の再送信は行いません。'/)
   assert.match(timelineSource, /if \(!VIDEO_SERVER_ENABLED\) \{/)
   assert.match(timelineSource, /if \(postSubmitInFlightRef\.current\) \{/)
+  // A video blocked by API/recovery safety gates must not look submittable.
+  assert.match(timelineSource, /disabled=\{isPosting \|\| !canSubmitPost \|\| \(Boolean\(videoFile \|\| pendingVideo\) && \(!VIDEO_SERVER_ENABLED \|\| videoRecoveryBlocked \|\| Boolean\(pendingVideo\)\)\)\}/)
   const source = await readFile('src/videoMovConversion.ts', 'utf8')
   // Safari can omit ended for short MOVs: source time must independently stop recording.
   assert.match(source, /video\.currentTime >= duration - 0\.05/)
