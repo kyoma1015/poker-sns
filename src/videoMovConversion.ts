@@ -42,11 +42,11 @@ async function verifyRecordedMp4Audio(blob: Blob, audio: AudioContext, signal?: 
   try {
     probe.playsInline = true
     probe.preload = 'auto'
-    // Chromium suppresses Web Audio samples from a muted media element.
-    // Safari must remain muted to avoid autoplay blocking after the file picker.
-    const safariProbe = /Safari\//.test(navigator.userAgent) && !/Chrome\/|Chromium\/|CriOS|FxiOS|EdgiOS|OPR\/|Edg\/|Android/.test(navigator.userAgent)
-    probe.muted = safariProbe
-    probe.defaultMuted = safariProbe
+    // Muting the media element may also mute its Web Audio source (including
+    // Safari). The source connects only to an analyser, never the speakers.
+    // If audible playback is disallowed, fail closed instead of accepting silence.
+    probe.muted = false
+    probe.defaultMuted = false
     probe.src = url
     source = audio.createMediaElementSource(probe)
     source.connect(analyser)
@@ -98,8 +98,8 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal, prepared
   const resumed = audio.state === 'running' ? Promise.resolve(true) : audio.resume().then(() => true, () => false)
   const video = document.createElement('video')
   video.playsInline = true
-  // Safari blocks script-initiated audible playback after the asynchronous file picker.
-  // Keep the element muted; decoded audio is routed to MediaStreamDestination below.
+  // Start muted while loading. Before recording, route audio exclusively to
+  // MediaStreamDestination, then unmute so Web Audio receives decoded PCM.
   video.muted = true
   video.defaultMuted = true
   video.preload = 'auto'
@@ -208,14 +208,12 @@ export async function convertMovToMp4(file: File, signal?: AbortSignal, prepared
         recorder.onstop = () => finish()
         video.onerror = () => finish(new Error(MOV_CONVERSION_HELP))
         video.onended = stopAtSourceEnd
-        // Chromium must unmute before starting playback to deliver decoded
-        // samples to createMediaElementSource. Safari retains muted playback:
-        // unmuting after its async file picker has been observed to stall it.
-        const safari = /Safari\//.test(navigator.userAgent) && !/Chrome\/|Chromium\/|CriOS|FxiOS|EdgiOS|OPR\/|Edg\/|Android/.test(navigator.userAgent)
-        if (!safari) {
-          video.muted = false
-          video.defaultMuted = false
-        }
+        // Muted media elements can produce silent Web Audio PCM on Safari.
+        // Unmute only after routing the source to MediaStreamDestination (not
+        // audio.destination / speakers). If autoplay refuses, fail closed and
+        // ask for a manually encoded MP4; never upload a silent conversion.
+        video.muted = false
+        video.defaultMuted = false
         recorder.start(250)
         void video.play().then(() => {
           playbackStartedAt = performance.now()
