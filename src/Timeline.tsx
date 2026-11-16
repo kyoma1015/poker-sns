@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { validateVideo, uploadPostVideo, MAX_VIDEO_BYTES } from './videoUpload'
 import { compressOversizedVideo } from './videoCompression'
-import { convertMovToMp4, isMovVideo, prepareMovAudioContext } from './videoMovConversion'
+import { convertMovToMp4, isMovVideo } from './videoMovConversion'
 import { hideVideoPost, finalizeUploadedVideo, inspectCloudVideoRecovery, VIDEO_SERVER_ENABLED } from './videoApi'
 import PostVideo from './PostVideo'
 import { rememberLocalVideoPoster } from './videoPosterCache'
@@ -173,7 +173,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const [resultsLoading, setResultsLoading] = useState(false)
   const imageInputRef = useRef<HTMLInputElement>(null)
   const videoInputRef = useRef<HTMLInputElement>(null)
-  const preparedMovAudioRef = useRef<AudioContext | null>(null)
+  const [movPlayback, setMovPlayback] = useState<{label: string; start: () => void} | null>(null)
   const videoSelectionRef = useRef(0)
   const videoConversionAbortRef = useRef<AbortController | null>(null)
   const composerLifetimeRef = useRef(0)
@@ -1115,7 +1115,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       {attachmentScreen === 'menu' ? <>
         <div style={{ fontSize: 12, color: '#aaa', marginBottom: 10 }}>添付するものを選択</div>
         <button type="button" style={optionStyle} onClick={() => { imageInputRef.current?.click(); setAttachmentsOpen(false) }}>▧　画像を添付（最大4枚・各5MB）</button>
-        <button type="button" style={optionStyle} onClick={() => { void preparedMovAudioRef.current?.close().catch(() => {}); preparedMovAudioRef.current = prepareMovAudioContext(); videoInputRef.current?.click(); setAttachmentsOpen(false) }}>▶　動画を添付（最大30秒・20MB）</button>
+        <button type="button" style={optionStyle} onClick={() => { videoInputRef.current?.click(); setAttachmentsOpen(false) }}>▶　動画を添付（最大30秒・20MB）</button>
         <button type="button" style={optionStyle} onClick={() => { void loadDiagnoses() }}>♧　自己診断を添付　›</button>
         <button type="button" style={optionStyle} onClick={() => { void loadStyleSnapshot() }}>♙　自分への他者評価を添付（3人以上）</button>
         <button type="button" style={optionStyle} onClick={() => setAttachmentScreen('results')}>♠　戦績を添付　›</button>
@@ -1190,28 +1190,31 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
     const selection = beginAttachmentSelection()
     if (pendingVideoRef.current || videoSubmitInFlightRef.current) { setMessage('保留中の動画を先に再試行してください。'); return }
     if (imageFiles.length || selectedResult || selectedDiagnosis || styleSnapshot || interactiveMode !== 'normal') { setMessage('動画は画像・戦績・診断・アンケートと同時に添付できません。'); return }
-    if (!isMovVideo(file) && preparedMovAudioRef.current) {
-      void preparedMovAudioRef.current.close().catch(() => {})
-      preparedMovAudioRef.current = null
-    }
     let selectedFile = file
     const conversion = new AbortController()
     videoConversionAbortRef.current = conversion
     try {
       if (isMovVideo(file)) {
         setMessage('MOVを端末内でMP4へ変換しています。画面を開いたままお待ちください。変換後は音声と映像を確認してください。')
-        selectedFile = await convertMovToMp4(file, conversion.signal, preparedMovAudioRef.current)
-        preparedMovAudioRef.current = null
+        setVideoFile(null)
+        selectedFile = await convertMovToMp4(file, (step, start) => {
+          const action = {
+            label: step === 'source' ? 'MOV変換を開始' : '変換後の音声を確認',
+            start: () => {
+              setMessage(step === 'source' ? 'MOVを変換しています。画面を開いたままお待ちください。' : '変換後の音声を確認しています。')
+              start()
+            },
+          }
+          setMessage(step === 'source' ? 'ボタンをタップして変換を始めてください。' : '音声を確認すると投稿プレビューが表示されます。')
+          setMovPlayback(action)
+          return () => setMovPlayback(current => current === action ? null : current)
+        }, conversion.signal)
       }
       if (selectedFile.size > MAX_VIDEO_BYTES) {
         setMessage('動画を圧縮しています。完了までお待ちください。')
         selectedFile = await compressOversizedVideo(selectedFile)
       }
     } catch (error) {
-      if (preparedMovAudioRef.current) {
-        void preparedMovAudioRef.current.close().catch(() => {})
-        preparedMovAudioRef.current = null
-      }
       if (selection === videoSelectionRef.current) {
         setMessage(error instanceof Error ? `自動変換に失敗しました：${error.message} 動画をMP4形式に変換して選び直してください。` : '動画の圧縮に失敗しました。')
       }
@@ -2981,8 +2984,9 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
           {renderInteractiveFields()}
           <input ref={imageInputRef} type="file" accept="image/jpeg,image/png,image/webp" multiple hidden onChange={e => { chooseImages(e.target.files); e.target.value = '' }} />
-          <input ref={videoInputRef} type="file" accept="video/mp4,video/webm,video/quicktime,.mov" hidden onChange={e => { if (!e.target.files?.[0]) { void preparedMovAudioRef.current?.close().catch(() => {}); preparedMovAudioRef.current = null } void chooseVideo(e.target.files?.[0]); e.target.value = '' }} />
+          <input ref={videoInputRef} type="file" accept="video/mp4,video/webm,video/quicktime,.mov" hidden onChange={e => { void chooseVideo(e.target.files?.[0]); e.target.value = '' }} />
           {attachmentsOpen && renderAttachmentPicker()}
+          {movPlayback && <button type="button" style={{ width: 'auto', background: '#202020', color: '#eee', border: '1px solid #444', marginTop: 8 }} onClick={movPlayback.start}>{movPlayback.label}</button>}
           {renderSelectedResultPreview()}
         </section>
 
@@ -3236,7 +3240,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
             {renderPostModeButtons()}
             {renderInteractiveFields()}
             {attachmentsOpen && renderAttachmentPicker()}
-            {renderSelectedResultPreview()}
+            {movPlayback && <button type="button" style={{ width: 'auto', background: '#202020', color: '#eee', border: '1px solid #444', marginTop: 8 }} onClick={movPlayback.start}>{movPlayback.label}</button>}
+          {renderSelectedResultPreview()}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 18 }}><span style={{ color: '#888', fontSize: 12 }}>{content.length}/500</span><button type="button" disabled={isPosting || !canSubmitPost || (Boolean(videoFile || pendingVideo) && (!VIDEO_SERVER_ENABLED || videoRecoveryBlocked))} onClick={handlePost} style={{ width: 'auto', borderRadius: 99, background: '#fff', color: '#000', padding: '10px 24px', fontWeight: 800 }}>{isPosting ? '投稿中...' : '投稿する'}</button></div>
             {(videoFile || pendingVideo || videoRecoveryBlocked || (videoPreview && !canSubmitPost)) && <div role="status" aria-live="polite" style={{ color: '#e6c27a', marginTop: 10, fontSize: 12 }}>{videoRecoveryBlocked ? '安全停止中：前回の動画転送の確認が必要です。再送信しません。' : isPosting ? '投稿処理中です。完了まで操作せずお待ちください。' : !VIDEO_SERVER_ENABLED ? '動画投稿APIが無効です。動画は送信されません。' : pendingVideo ? '前回の動画を保持中です。新しいファイルは送信しません。' : !canSubmitPost ? '投稿ボタンが無効です。添付の選択状態を確認してください。動画の再送信は行いません。' : '動画を選択済みです。再生して映像・音声を確認してください。'}</div>}
             {message && <div role="alert" style={{ color: '#ccc', marginTop: 10, fontSize: 12 }}>{message}</div>}

@@ -352,7 +352,8 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
       audibleMov = readFileSync(movPath)
     } finally { rmSync(movDir,{recursive:true,force:true}) }
     await movPicker.setInputFiles({name:'phone.mov',mimeType:'video/quicktime',buffer:audibleMov})
-    // MOV selection now starts conversion automatically; no mandatory button.
+    await movComposer.getByRole('button',{name:'MOV変換を開始',exact:true}).click()
+    await movComposer.getByRole('button',{name:'変換後の音声を確認',exact:true}).click({timeout:25000})
     try {
       await movComposer.locator('video').waitFor({timeout:25000})
     } catch (error) {
@@ -375,9 +376,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
       AudioContext.prototype.close=function(...args){window.__MOV_CLOSED++;return close.apply(this,args)}
     })
     await movPicker.setInputFiles({name:'cancel.mov',mimeType:'video/quicktime',buffer:audibleMov})
-    // Cancellation must interrupt the automatic conversion in progress.
-    await movComposer.getByText(/MOVを端末内でMP4へ変換しています/).waitFor()
-    await movComposer.getByText(/MOVを端末内でMP4へ変換しています/).waitFor()
+    await movComposer.getByRole('button',{name:'MOV変換を開始',exact:true}).waitFor()
     await movComposer.getByRole('button',{name:'×',exact:true}).click()
     await movPage.waitForFunction(()=>window.__MOV_CLOSED>0)
     await movPage.evaluate(()=>window.dispatchEvent(new Event('poker-id-open-compose')))

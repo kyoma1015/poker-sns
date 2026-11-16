@@ -30,7 +30,6 @@ try {
   // Safari can omit ended for short MOVs: source time must independently stop recording.
   assert.match(source, /video\.currentTime >= duration - 0\.05/)
   assert.match(source, /performance\.now\(\) - playbackStartedAt > \(duration \+ 4\) \* 1000/)
-  assert.match(source, /video\.paused && !resumeAttempted/)
   assert.match(source, /video\.muted = false/, 'Decoded audio capture requires unmuting in Chrome')
   assert.match(source, /再生位置 /)
   assert.match(source, /video\.onended = stopAtSourceEnd/)
@@ -38,13 +37,24 @@ try {
   const js = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText
   const fixture = join(qa, 'camera.mov')
   execFileSync('ffmpeg', ['-v','error','-f','lavfi','-i','testsrc2=size=320x240:rate=30','-f','lavfi','-i','sine=frequency=440:sample_rate=48000','-t','2','-c:v','libx264','-profile:v','baseline','-pix_fmt','yuv420p','-c:a','aac','-y',fixture])
-  const html = `<!doctype html><input type="file"><button id="convert">変換</button><button id="abort">中止</button><output></output><script type="module">
+  const html = `<!doctype html><input type="file"><button id="convert">変換</button><button id="play" hidden>再生</button><button id="abort">中止</button><output></output><script type="module">
     import {convertMovToMp4} from '/convert.js';
-    let controller;
+    let controller, clickActive = false;
+    const play = document.querySelector('#play');
+    const nativePlay = HTMLMediaElement.prototype.play;
+    HTMLMediaElement.prototype.play = function () {
+      if (!clickActive) return Promise.reject(new DOMException('Requires direct click', 'NotAllowedError'));
+      return nativePlay.call(this);
+    };
+    const gesture = (step, start) => {
+      play.dataset.step=step; play.hidden=false;
+      play.onclick=()=>{ clickActive=true; try { start(); } finally { clickActive=false; } };
+      return ()=>{play.hidden=true;play.onclick=null;delete play.dataset.step;};
+    };
     document.querySelector('#abort').onclick=()=>controller?.abort();
     document.querySelector('#convert').onclick=async()=>{
       controller=new AbortController(); window.result=null;
-      try { const output=await convertMovToMp4(document.querySelector('input').files[0],controller.signal);
+      try { const output=await convertMovToMp4(document.querySelector('input').files[0],gesture,controller.signal);
         window.result={ok:true,type:output.type,size:output.size,bytes:Array.from(new Uint8Array(await output.arrayBuffer()))};
       } catch(e) {window.result={ok:false,error:e.message};}
       document.querySelector('output').textContent=window.result.ok?'MP4変換完了':window.result.error;
@@ -60,7 +70,15 @@ try {
   async function convert(path,abort=false) {
     await page.locator('input').setInputFiles(path)
     await page.locator('#convert').click()
-    if(abort) await page.locator('#abort').click()
+    if(abort) {
+      await page.locator('#play[data-step="source"]').waitFor()
+      await page.locator('#abort').click()
+    } else {
+      for(const step of ['source','output']) {
+        await page.waitForFunction(step=>window.result!==null||document.querySelector('#play').dataset.step===step,step,{timeout:50000})
+        if(await page.locator('#play[data-step="'+step+'"]').isVisible()) await page.locator('#play').click()
+      }
+    }
     await page.waitForFunction(()=>window.result!==null,{},{timeout:60000})
     return page.evaluate(()=>window.result)
   }
