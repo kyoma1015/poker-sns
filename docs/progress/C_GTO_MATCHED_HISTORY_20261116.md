@@ -128,3 +128,14 @@ mismatch. The new projection now uses the unchanged original lift's normalizatio
 all projected rows match the original frozen lift exactly. Old tables not edited.
 The final resulting commit's CI must be observed separately; these precommit
 receipts do not claim its eventual result. Automatic resume:NO.
+
+## CI dispatch observation
+
+0194511eb8cf972d2411c9332aba715ee042c4e4 was normally pushed; PR Draft/open,
+mergeable=true/clean, base remains13c4e7d3ea9250ecfb63044ae3711b0d12a91eae.
+No Actions run existed for that SHA at readback, despite Vercel check SUCCESS.
+Actions settings read returned403 integration permission; root cause UNKNOWN.
+The NEW bounded matched-history workflow now also supports push to this dedicated
+branch (same finite tests, contents:read). Existing five workflows and successful
+runs are unchanged, no manual dispatch/rerun. Observe the follow-up HEAD; do not
+label unstarted CI as SUCCESS or erase this observation.

@@ -1,5 +1,13 @@
 name: GTO matched-history CFR verification
 on:
+  push:
+    branches: ['codex/c-native-hand169-bridge-20261023']
+    paths:
+      - 'gto/abstract/matched_history.py'
+      - 'gto/abstract/matched_frozen.py'
+      - 'tests/test_matched_history.py'
+      - 'docs/qa/matched-history-20261116/**'
+      - '.github/workflows/gto-matched-history.yml'
   pull_request:
     paths:
       - 'gto/abstract/matched_history.py'
