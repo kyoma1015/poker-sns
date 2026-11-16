@@ -28,3 +28,16 @@ Never label default-fold completion or small abstract NC as full-game GTO. Need
 same policy/condition certificate identity before existing registry/search hookup.
 Checkpoint is a progress receipt, not automatic solver resume. No autonomous
 restart available; completed results and git commit are durable restart point.
+
+## Safe recovery / explicit public responses — 2026-11-17 JST
+
+Fresh environment cloned starting1c21e98f513f0058a36fda06bbdaafe808111577;
+remote ref + open/Draft + eight SUCCESS families independently observed.
+Old session disk unavailable; no uncommitted/DB/ZIP recovery claim.
+Added separate exact-public-history provider boundary with missing-row refusal,
+no implicit fold, native action validation and pinned identity inputs.
+6new+10existing Python testsPASS; full169 x98 histories and256native paths.
+This is interface readiness only: actual strategic continuation generator, complete
+BR upper and precision still missing. Formal0/12, verified RFI0/3bet0 unchanged.
+See ../qa/public-response-20261117/README.md for commands, budgets and restart.
+No production/main/Draft/registry change, no manualCI or long training.
