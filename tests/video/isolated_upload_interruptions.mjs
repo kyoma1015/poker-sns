@@ -104,8 +104,9 @@ export async function verifyUploadInterruptions({browser,origin,jwt,anon,bytes})
           // A lost reservation acknowledgement is ambiguous: the UI must not allow
           // another submit or create a second reservation, even if the button is tapped.
           await composer.getByText(/重複を防ぐため動画の再送信を停止/).first().waitFor()
-          await composer.getByRole('button',{name:'投稿する',exact:true}).waitFor({state:'visible'})
-          assert.equal(await composer.getByRole('button',{name:'投稿する',exact:true}).isDisabled(),true,
+          const blockedSubmit = composer.getByRole('button',{name:'前回の投稿を確認してください',exact:true})
+          await blockedSubmit.waitFor({state:'visible'})
+          assert.equal(await blockedSubmit.isDisabled(),true,
             'ambiguous reservation must keep submit disabled')
         } else {
           await page.waitForFunction(()=>[...document.querySelectorAll('[role="dialog"] button')].some(b=>b.textContent==='投稿する'&&!b.disabled))
