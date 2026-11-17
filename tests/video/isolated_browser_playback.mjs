@@ -352,8 +352,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
       audibleMov = readFileSync(movPath)
     } finally { rmSync(movDir,{recursive:true,force:true}) }
     await movPicker.setInputFiles({name:'phone.mov',mimeType:'video/quicktime',buffer:audibleMov})
-    await movComposer.getByRole('button',{name:'MOV変換を開始',exact:true}).click()
-    await movComposer.getByRole('button',{name:'変換後の音声を確認',exact:true}).click({timeout:25000})
+    // The compatible fixture must reach preview with no conversion clicks.
     try {
       await movComposer.locator('video').waitFor({timeout:25000})
     } catch (error) {
@@ -365,6 +364,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
       }))
       throw new Error('MOV conversion did not produce a preview: '+JSON.stringify(diagnostic),{cause:error})
     }
+    assert.equal(await movComposer.getByRole('button',{name:/MOV変換を開始|変換後の音声を確認/}).count(),0)
     const localMp4=await movComposer.locator('video').evaluate(async video=>{
       const blob=await (await fetch(video.src)).blob();return {type:blob.type,size:blob.size}
     })
@@ -372,6 +372,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     assert.equal(prematureMovWrites,0,'conversion selection must not reserve or upload')
     await movComposer.getByRole('button',{name:'添付を解除'}).click()
     await movPage.evaluate(()=>{
+      OfflineAudioContext.prototype.decodeAudioData = async () => { throw new DOMException('unsupported', 'EncodingError') }
       window.__MOV_CLOSED=0;const close=AudioContext.prototype.close
       AudioContext.prototype.close=function(...args){window.__MOV_CLOSED++;return close.apply(this,args)}
     })

@@ -89,6 +89,181 @@ async function verifyRecordedMp4Audio(blob: Blob, audio: AudioContext, gesture: 
   }
 }
 
+
+type MovieBox = { start: number; end: number; type: string }
+
+/** Remux the compatible subset without moving media samples or chunk offsets. */
+function remuxCompatibleMov(buffer: ArrayBuffer): ArrayBuffer {
+  const view = new DataView(buffer)
+  const bytes = new Uint8Array(buffer)
+  const fourcc = (at: number) => String.fromCharCode(...bytes.subarray(at, at + 4))
+  const writeType = (at: number, type: string) => bytes.set(Array.from(type, char => char.charCodeAt(0)), at)
+  const boxes = (start: number, end: number): MovieBox[] => {
+    const result: MovieBox[] = []
+    for (let at = start; at < end;) {
+      if (end - at < 8 || result.length >= 4096) throw new Error('invalid MOV box list')
+      const size = view.getUint32(at)
+      if (size < 8 || size > end - at) throw new Error('unsupported MOV box size')
+      result.push({ start: at, end: at + size, type: fourcc(at + 4) })
+      at += size
+    }
+    return result
+  }
+  const children = (box: MovieBox) => boxes(box.start + 8, box.end)
+  const one = (items: MovieBox[], type: string) => {
+    const matches = items.filter(item => item.type === type)
+    if (matches.length !== 1) throw new Error('unsupported MOV structure')
+    return matches[0]
+  }
+  const top = boxes(0, bytes.length)
+  const brand = one(top, 'ftyp')
+  if (brand.start !== 0 || brand.end < 20 || brand.end % 4 !== 0 ||
+      !['qt  ', 'isom', 'mp41', 'mp42'].includes(fourcc(8)) ||
+      top.some(box => !['ftyp', 'moov', 'mdat', 'free', 'skip', 'wide'].includes(box.type))) {
+    throw new Error('unsupported MOV container')
+  }
+  one(top, 'mdat')
+  const tracks = children(one(top, 'moov')).filter(box => box.type === 'trak')
+  let videoCount = 0
+  let audioCount = 0
+  for (const track of tracks) {
+    const media = children(one(children(track), 'mdia'))
+    const handler = one(media, 'hdlr')
+    if (handler.end < handler.start + 20) throw new Error('invalid handler')
+    const kind = fourcc(handler.start + 16)
+    const info = children(one(media, 'minf'))
+    const dataRef = one(children(one(info, 'dinf')), 'dref')
+    if (dataRef.end < dataRef.start + 16 || view.getUint32(dataRef.start + 12) !== 1) throw new Error('invalid data reference')
+    const refs = boxes(dataRef.start + 16, dataRef.end)
+    const ref = refs[0]
+    if (refs.length !== 1 || !['url ', 'alis'].includes(ref.type) || ref.end - ref.start !== 12 ||
+        view.getUint32(ref.start + 8) !== 1) throw new Error('external media reference')
+    if (ref.type === 'alis') writeType(ref.start + 4, 'url ')
+    const description = one(children(one(info, 'stbl')), 'stsd')
+    if (description.end < description.start + 16 || view.getUint32(description.start + 12) !== 1) throw new Error('multiple sample descriptions')
+    const entries = boxes(description.start + 16, description.end)
+    if (entries.length !== 1) throw new Error('invalid sample description')
+    const sample = entries[0]
+    if (sample.end < sample.start + 16 || view.getUint16(sample.start + 14) !== 1) throw new Error('invalid sample data reference')
+    if (kind === 'vide' && ['avc1', 'hvc1', 'hev1'].includes(sample.type)) {
+      const config = sample.type === 'avc1' ? 'avcC' : 'hvcC'
+      one(boxes(sample.start + 86, sample.end), config)
+      videoCount++
+    } else if (kind === 'soun' && sample.type === 'mp4a' && sample.end >= sample.start + 36) {
+      const header = one(media, 'mdhd')
+      const layout = bytes[header.start + 8]
+      if (layout !== 0 || header.end < header.start + 28) throw new Error('unsupported audio timing')
+      const timescale = view.getUint32(header.start + 20)
+      const duration = view.getUint32(header.start + 24) / timescale
+      if (!timescale || !Number.isFinite(duration) || duration <= 0 || duration > MAX_SECONDS + 0.25) throw new Error('invalid audio duration')
+      const version = view.getUint16(sample.start + 16)
+      if (version > 1) throw new Error('unsupported QuickTime audio entry')
+      const properties = boxes(sample.start + (version === 1 ? 52 : 36), sample.end)
+      const wave = properties.find(box => box.type === 'wave')
+      if (wave || version === 1) {
+        const esds = one(wave ? children(wave) : properties, 'esds')
+        const descriptor = bytes.slice(esds.start, esds.end)
+        const end = sample.start + 36 + descriptor.length
+        if (sample.end - end < 8) throw new Error('missing compatible AAC descriptor space')
+        bytes.fill(0, sample.start + 16, sample.start + 24)
+        view.setUint16(sample.start + 28, 0)
+        view.setUint16(sample.start + 30, 0)
+        bytes.set(descriptor, sample.start + 36)
+        view.setUint32(end, sample.end - end)
+        writeType(end + 4, 'free')
+        bytes.fill(0, end + 8, sample.end)
+      } else one(properties, 'esds')
+      audioCount++
+    } else if (!['mebx', 'mdta'].includes(sample.type)) {
+      throw new Error('unsupported MOV track')
+    }
+  }
+  if (videoCount !== 1 || audioCount !== 1) throw new Error('missing or ambiguous audio/video')
+  writeType(8, 'isom')
+  view.setUint32(12, 0x200)
+  for (let offset = 16; offset < brand.end; offset += 4) writeType(offset, offset === 16 ? 'isom' : 'mp42')
+  for (const box of top) if (box.type === 'wide') writeType(box.start + 4, 'free')
+  return buffer
+}
+
+async function verifyLocalMp4(file: File, signal: AbortSignal): Promise<void> {
+  const video = document.createElement('video')
+  const url = URL.createObjectURL(file)
+  video.preload = 'auto'
+  video.playsInline = true
+  video.muted = true
+  try {
+    await new Promise<void>((resolve, reject) => {
+      const finish = (error?: unknown) => {
+        clearTimeout(timeout)
+        signal.removeEventListener('abort', abort)
+        video.onloadeddata = video.onerror = null
+        if (error) reject(error)
+        else resolve()
+      }
+      const abort = () => finish(signal.reason)
+      const timeout = window.setTimeout(() => finish(new Error('MP4 validation timed out')), 8000)
+      video.onloadeddata = () => {
+        if (video.videoWidth > 0 && video.videoHeight > 0 &&
+            Number.isFinite(video.duration) && video.duration > 0 && video.duration <= MAX_SECONDS) finish()
+        else finish(new Error('invalid decoded video'))
+      }
+      video.onerror = () => finish(new Error('cannot decode MP4 video'))
+      signal.addEventListener('abort', abort, { once: true })
+      if (signal.aborted) abort()
+      else video.src = url
+    })
+    const audio = (async () => {
+      const context = new OfflineAudioContext(1, 1, 48000)
+      const decoded = await context.decodeAudioData(await file.arrayBuffer())
+      if (decoded.duration > MAX_SECONDS + 0.25) throw new Error('decoded audio too long')
+      for (let channel = 0; channel < decoded.numberOfChannels; channel++) {
+        if (decoded.getChannelData(channel).some(sample => Number.isFinite(sample) && Math.abs(sample) > 0.002)) return
+      }
+      throw new Error('no audible PCM in MP4')
+    })()
+    await Promise.race([audio, new Promise<never>((_, reject) => {
+      const timeout = window.setTimeout(() => stop(new Error('MP4 audio validation timed out')), 8000)
+      const abort = () => stop(signal.reason)
+      const stop = (error?: unknown) => {
+        clearTimeout(timeout)
+        signal.removeEventListener('abort', abort)
+        if (error) reject(error)
+      }
+      signal.addEventListener('abort', abort, { once: true })
+      if (signal.aborted) abort()
+      void audio.then(() => stop(), stop)
+    })])
+    signal.throwIfAborted()
+  } finally {
+    video.removeAttribute('src')
+    try { video.load() } finally { URL.revokeObjectURL(url) }
+  }
+}
+
+/** Fast path needs no playback, speakers, microphone, or retained gesture. */
+export async function prepareMovForUpload(file: File, gesture: MovPlaybackGesture, selectionSignal: AbortSignal): Promise<File> {
+  selectionSignal.throwIfAborted()
+  if (!isMovVideo(file) || file.size < 1 || file.size > MAX_BYTES) return convertMovToMp4(file, gesture, selectionSignal)
+  const work = new AbortController()
+  const hide = () => { if (document.hidden) work.abort(new Error('動画の変換を中止しました。')) }
+  const signal = AbortSignal.any([selectionSignal, work.signal])
+  document.addEventListener('visibilitychange', hide)
+  try {
+    const data = remuxCompatibleMov(await file.arrayBuffer())
+    signal.throwIfAborted()
+    const mp4 = new File([data], file.name.replace(/\\.[^.]+$/, '') + '-converted.mp4', { type: 'video/mp4' })
+    await verifyLocalMp4(mp4, signal)
+    return mp4
+  } catch {
+    signal.throwIfAborted()
+  } finally {
+    work.abort()
+    document.removeEventListener('visibilitychange', hide)
+  }
+  return convertMovToMp4(file, gesture, selectionSignal)
+}
+
 export async function convertMovToMp4(file: File, gesture: MovPlaybackGesture, selectionSignal?: AbortSignal): Promise<File> {
   const lifetime = new AbortController()
   const signal = selectionSignal ? AbortSignal.any([selectionSignal, lifetime.signal]) : lifetime.signal

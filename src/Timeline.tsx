@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { validateVideo, uploadPostVideo, MAX_VIDEO_BYTES } from './videoUpload'
 import { compressOversizedVideo } from './videoCompression'
-import { convertMovToMp4, isMovVideo } from './videoMovConversion'
+import { prepareMovForUpload, isMovVideo } from './videoMovConversion'
 import { hideVideoPost, finalizeUploadedVideo, inspectPublishedVideoRecovery, VIDEO_SERVER_ENABLED } from './videoApi'
 import PostVideo from './PostVideo'
 import { rememberLocalVideoPoster } from './videoPosterCache'
@@ -1199,7 +1199,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       if (isMovVideo(file)) {
         setMessage('MOVを端末内でMP4へ変換しています。画面を開いたままお待ちください。変換後は音声と映像を確認してください。')
         setVideoFile(null)
-        selectedFile = await convertMovToMp4(file, (step, start) => {
+        selectedFile = await prepareMovForUpload(file, (step, start) => {
           const action = {
             label: step === 'source' ? 'MOV変換を開始' : '変換後の音声を確認',
             start: () => {

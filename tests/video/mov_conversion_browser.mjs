@@ -39,7 +39,7 @@ try {
   const fixture = join(qa, 'camera.mov')
   execFileSync('ffmpeg', ['-v','error','-f','lavfi','-i','testsrc2=size=320x240:rate=30','-f','lavfi','-i','sine=frequency=440:sample_rate=48000','-t','2','-c:v','libx264','-profile:v','baseline','-pix_fmt','yuv420p','-c:a','aac','-y',fixture])
   const html = `<!doctype html><input type="file"><button id="convert">変換</button><button id="play" hidden>再生</button><button id="abort">中止</button><output></output><script type="module">
-    import {convertMovToMp4} from '/convert.js';
+    import {convertMovToMp4, prepareMovForUpload} from '/convert.js';
     let controller, clickActive = false;
     const play = document.querySelector('#play');
     const nativePlay = HTMLMediaElement.prototype.play;
@@ -51,6 +51,14 @@ try {
       play.dataset.step=step; play.hidden=false;
       play.onclick=()=>{ clickActive=true; try { start(); } finally { clickActive=false; } };
       return ()=>{play.hidden=true;play.onclick=null;delete play.dataset.step;};
+    };
+    document.querySelector('input').onchange=async event=>{
+      if (!window.autoTest) return;
+      controller=new AbortController(); window.autoResult=null;
+      try {
+        const output=await prepareMovForUpload(event.target.files[0],()=>{throw new Error('unexpected playback button')},controller.signal);
+        window.autoResult={ok:true,bytes:Array.from(new Uint8Array(await output.arrayBuffer()))};
+      } catch(e) {window.autoResult={ok:false,error:e.message};}
     };
     document.querySelector('#abort').onclick=()=>controller?.abort();
     document.querySelector('#convert').onclick=async()=>{
@@ -68,6 +76,18 @@ try {
   let external=0
   await page.route('**/*',route=>{if(new URL(route.request().url()).hostname!=='127.0.0.1'){external++;return route.abort()}return route.continue()})
   await page.goto(`http://127.0.0.1:${server.address().port}`)
+  await page.evaluate(()=>{window.autoTest=true})
+  await page.locator('input').setInputFiles(fixture)
+  await page.waitForFunction(()=>!!window.autoResult)
+  const automatic=await page.evaluate(()=>window.autoResult)
+  assert.ok(automatic.ok,automatic.error)
+  const remuxed=join(qa,'automatic.mp4')
+  await writeFile(remuxed,Buffer.from(automatic.bytes))
+  // Remux must preserve actual compressed packets, including audio.
+  const streams=path=>execFileSync('ffmpeg',['-v','error','-i',path,'-map','0:v:0','-map','0:a:0','-c','copy','-f','streamhash','-hash','sha256','-'],{encoding:'utf8'})
+  assert.equal(streams(remuxed),streams(fixture))
+  await page.evaluate(()=>{window.autoTest=false})
+  console.log('PASS compatible MOV automatically remuxes without playback or extra clicks; both media streams preserved')
   async function convert(path,abort=false) {
     await page.locator('input').setInputFiles(path)
     await page.locator('#convert').click()
