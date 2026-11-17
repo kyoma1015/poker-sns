@@ -63,7 +63,8 @@ def evaluate(build,folder,seed=17118090,n=32768):
     for a,b in ((1,0),(2,0),(3,0),(5,4),(4,0)):
         change=interval([x-y for x,y in zip(samples[a],samples[b])],-100,100,delta)
         comparisons.append(dict(candidate=names[a],control=names[b],paired_ev_change_bb=change,
-            stage_gate=change['interval'][0]>.1 and (a,b)!=(4,0)))
+            stage_gate=(change['interval'][0]>.1 and (a,b)!=(4,0)
+                and profiles[a]['fold_gain_interval_bb'][1]<profiles[b]['fold_gain_interval_bb'][1]-.1)))
     atomic(folder/'native-paired.json',dict(status='COMPLETE_UNVERIFIED',seed=seed,profiles=profiles,comparisons=comparisons,
         confidence_family=.999,events=11,method='iid bounded empirical Bernstein; paired CRN differences',
         completed_worlds=n,native_paths=n*len(solvers),elapsed_seconds=time.monotonic()-start,

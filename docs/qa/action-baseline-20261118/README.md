@@ -102,3 +102,7 @@ All six checkpoints are gzip JSON snapshots with R/S/RNG and policy digest;
 automatic. Next work must address the positive fold-deviation evidence and heavy
 importance weights before another predeclared small gate; do not expand any
 failed arm or register it. Full BR/precision/specification gates remain mandatory.
+
+Post-run gate review also made the predeclared fold-gain-upper improvement
+condition explicit in the evaluator, in addition to paired EV significance. Every
+observed gate was already false and remains false; no outcomes were resampled.
