@@ -223,39 +223,83 @@ async function verifyLocalMp4(file: File, audioOnly: ArrayBuffer, signal: AbortS
   video.playsInline = true
   video.muted = true
   try {
+    // Keep the probe in the document for WebKit. It is muted throughout.
+    video.setAttribute('aria-hidden', 'true')
+    video.style.cssText = 'position:fixed;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none'
+    document.body.append(video)
+    const canvas = document.createElement('canvas')
+    canvas.width = canvas.height = 1
+    const frame = canvas.getContext('2d')
+    if (!frame) throw new MovVerificationError('frame canvas unavailable')
     await new Promise<void>((resolve, reject) => {
+      const events = ['loadedmetadata', 'loadeddata', 'canplay', 'playing', 'timeupdate', 'seeking', 'seeked'] as const
+      const observed = new Set<string>()
+      let done = false
+      let playback = 'not-requested'
+      let decodeTimer: number | undefined
+      const diagnostic = () => `readyState=${video.readyState} networkState=${video.networkState} error=${video.error?.code ?? 0} size=${video.videoWidth}x${video.videoHeight} duration=${Number.isFinite(video.duration) ? video.duration.toFixed(2) : 'unknown'} mutedPlay=${playback} events=${[...observed].join(',') || 'none'}`
       const finish = (error?: unknown) => {
+        if (done) return
+        done = true
         clearTimeout(timeout)
+        clearTimeout(decodeTimer)
         signal.removeEventListener('abort', abort)
-        video.onloadedmetadata = video.onloadeddata = video.onseeked = video.onerror = null
+        for (const event of events) video.removeEventListener(event, inspect)
+        video.removeEventListener('error', onError)
         if (error) reject(error)
         else resolve()
       }
       const abort = () => finish(signal.reason)
-      const timeout = window.setTimeout(() => finish(new MovVerificationError('MP4 frame timeout (readyState=' + video.readyState + ')')), 8000)
       const verifyFrame = () => {
-        if (video.readyState < 2) return
-        if (video.videoWidth > 0 && video.videoHeight > 0 &&
-            Number.isFinite(video.duration) && video.duration > 0 && video.duration <= MAX_SECONDS) finish()
-        else finish(new MovVerificationError('invalid decoded video'))
-      }
-      video.onloadeddata = video.onseeked = verifyFrame
-      video.onloadedmetadata = () => {
-        if (!Number.isFinite(video.duration) || video.duration <= 0 || video.duration > MAX_SECONDS) {
-          finish(new MovVerificationError('invalid MP4 video duration'))
-        } else {
-          try {
-            video.currentTime = Math.min(0.1, video.duration / 2)
-          } catch {
-            finish(new MovVerificationError('MP4 video seek rejected'))
-          }
+        if (done || video.readyState < 2 || video.seeking) return
+        if (video.videoWidth <= 0 || video.videoHeight <= 0 ||
+            !Number.isFinite(video.duration) || video.duration <= 0 || video.duration > MAX_SECONDS) {
+          finish(new MovVerificationError('invalid decoded video: ' + diagnostic()))
+          return
         }
+        try {
+          frame.drawImage(video, 0, 0, 1, 1)
+        } catch {
+          finish(new MovVerificationError('cannot draw decoded MP4 frame: ' + diagnostic()))
+          return
+        }
+        finish()
       }
-      video.onerror = () => finish(new MovVerificationError('cannot decode MP4 video (' + (video.error?.code ?? 0) + ')'))
+      const requestDecode = () => {
+        if (done) return
+        playback = 'pending'
+        void video.play().then(() => {
+          playback = 'started'
+          verifyFrame()
+        }, error => {
+          if (done) return
+          playback = error instanceof DOMException && ['NotAllowedError', 'NotSupportedError', 'AbortError'].includes(error.name)
+            ? error.name : 'rejected'
+          // Preloading can still complete if autoplay itself is blocked.
+        })
+      }
+      const inspect = (event: Event) => {
+        observed.add(event.type)
+        if (event.type === 'loadedmetadata') {
+          if (!Number.isFinite(video.duration) || video.duration <= 0 || video.duration > MAX_SECONDS) {
+            finish(new MovVerificationError('invalid MP4 video duration: ' + diagnostic()))
+            return
+          }
+          // A paused seek can leave WebKit at HAVE_METADATA. Start muted inline
+          // decoding only if preload does not already yield a frame.
+          decodeTimer = window.setTimeout(requestDecode, 250)
+        }
+        verifyFrame()
+      }
+      const onError = () => finish(new MovVerificationError('cannot decode MP4 video: ' + diagnostic()))
+      const timeout = window.setTimeout(() => finish(new MovVerificationError('MP4 frame timeout: ' + diagnostic())), 8000)
+      for (const event of events) video.addEventListener(event, inspect)
+      video.addEventListener('error', onError)
       signal.addEventListener('abort', abort, { once: true })
       if (signal.aborted) abort()
       else video.src = url
     })
+    video.pause()
     signal.throwIfAborted()
     onAudioStage()
     const audio = (async () => {
@@ -306,12 +350,14 @@ async function verifyLocalMp4(file: File, audioOnly: ArrayBuffer, signal: AbortS
     })])
     signal.throwIfAborted()
   } finally {
+    video.pause()
+    video.remove()
     video.removeAttribute('src')
     try { video.load() } finally { URL.revokeObjectURL(url) }
   }
 }
 
-/** Fast path needs no playback, speakers, microphone, or retained gesture. */
+/** Fast path can request muted decoding; it never needs audible playback or a retained gesture. */
 export async function prepareMovForUpload(file: File, gesture: MovPlaybackGesture, selectionSignal: AbortSignal, onFallback?: (diagnostic: string) => void): Promise<File> {
   selectionSignal.throwIfAborted()
   if (!isMovVideo(file) || file.size < 1 || file.size > MAX_BYTES) return convertMovToMp4(file, gesture, selectionSignal)

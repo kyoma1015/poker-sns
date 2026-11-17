@@ -43,7 +43,21 @@ try {
     let controller, clickActive = false;
     const play = document.querySelector('#play');
     const nativePlay = HTMLMediaElement.prototype.play;
+    const state = Object.getOwnPropertyDescriptor(HTMLMediaElement.prototype, 'readyState');
+    const resumed = new WeakSet();
+    Object.defineProperty(HTMLMediaElement.prototype, 'readyState', {
+      ...state,
+      get() {
+        const real = state.get.call(this);
+        return window.stallUntilPlay && !resumed.has(this) ? Math.min(real, 1) : real;
+      },
+    });
     HTMLMediaElement.prototype.play = function () {
+      if (window.stallUntilPlay && this.muted && this.playsInline && this.isConnected) {
+        window.mutedDecodeRequests++;
+        resumed.add(this);
+        return nativePlay.call(this);
+      }
       if (!clickActive) return Promise.reject(new DOMException('Requires direct click', 'NotAllowedError'));
       return nativePlay.call(this);
     };
@@ -110,6 +124,22 @@ try {
   const streams=path=>execFileSync('ffmpeg',['-v','error','-i',path,'-map','0:v:0','-map','0:a:0','-c','copy','-f','streamhash','-hash','sha256','-'],{encoding:'utf8'})
   assert.equal(streams(remuxed),streams(fixture))
   assert.deepEqual(await page.evaluate(() => window.decodedTrackCounts), [1])
+  await page.evaluate(() => {
+    window.stallUntilPlay = true
+    window.mutedDecodeRequests = 0
+    document.querySelector('input').dispatchEvent(new Event('change'))
+  })
+  await page.waitForFunction(() => !!window.autoResult)
+  const resumed = await page.evaluate(() => ({
+    result: window.autoResult, requests: window.mutedDecodeRequests,
+    remainingProbes: document.querySelectorAll('video').length,
+  }))
+  assert.ok(resumed.result.ok, resumed.result.error)
+  assert.equal(resumed.requests, 1)
+  assert.equal(resumed.remainingProbes, 0)
+  assert.deepEqual(resumed.result.bytes, automatic.bytes)
+  await page.evaluate(() => { window.stallUntilPlay = false })
+  console.log('PASS metadata-only preload recovers via muted inline decoding without a gesture')
   await page.evaluate(() => {
     window.rejectSingleTrack = true
     document.querySelector('input').dispatchEvent(new Event('change'))
