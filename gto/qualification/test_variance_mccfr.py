@@ -142,6 +142,18 @@ class RevisitAndResume(unittest.TestCase):
         self.assertEqual(a.snapshot(),b.snapshot())
         before=copy.deepcopy(a.rows);self.assertFalse(a.batch(0,1));self.assertEqual(a.rows,before)
 
+    def test_external_branch_randomness_cannot_advance_or_rewind_deal_stream(self):
+        from gto.qualification.external_first import ExternalFirst
+        states=[]
+        for draws in (1,100):
+            s=ExternalFirst(self.rules,self.native)
+            def branch(deck,owner,action,prefix,branch_rng):
+                self.assertIsNot(branch_rng,s.rng)
+                for _ in range(draws):branch_rng.random()
+                return []
+            s.branch=branch;s.batch(0,99);states.append(s.rng.getstate())
+        self.assertEqual(states[0],states[1])
+
     def test_resume_and_explicit_migration(self):
         old=Solver(self.rules,self.native)
         for _ in range(4):old.step()

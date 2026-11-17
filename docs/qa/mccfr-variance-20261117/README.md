@@ -53,7 +53,7 @@ Source checkpoint is identical for each arm; suit pooling is explicitly differen
 initial policy. Same exploration, training seed, target2sec/max1024 terminal paths.
 Checkpoints each32paired iterations (external each64leaves). Wall time checked
 between atomic updates; one update/checkpoint may exceed2sec slightly. Actual
-training0.970–2.075sec. Source migration/setup excluded from training clock.
+training0.992–2.075sec. Source migration/setup excluded from training clock.
 
 | arm | paired iterations added / leaves | total rows | NEW-window updates / distinct | NEW-window repeats |
 |---|---:|---:|---:|---:|
@@ -61,13 +61,13 @@ training0.970–2.075sec. Source migration/setup excluded from training clock.
 | raw-foldCV |416 /832|2533|1632 /1570|62 (3.7990%)|
 | orbit-zero |480 /960|2412|1972 /1624|348 (17.6471%)|
 | orbit-foldCV |480 /960|2408|1976 /1625|351 (17.7632%)|
-| orbit-external |8paired /970leaves,16batches|1776|883 /883|0 (0%)|
+| orbit-external |7paired /954leaves,14batches|1820|920 /920|0 (0%)|
 
 Totals include reused source rows; raw source1022rows vs orbit source905rows, so
 row totals are not directly comparable key-space coverage. Revisit rates above
 exclude visits that occurred only in the source; including warm-source hits:
-raw-zero7.47%, orbit-foldCV23.94%, external1.36%. External combines within-batch
-root updates once, not99fake revisits. Only8new root classes vs raw354 and
+raw-zero7.47%, orbit-foldCV23.94%, external0.54%. External combines within-batch
+root updates once, not99fake revisits. Only7new root classes vs raw354 and
 orbit-CV145, illustrating lost chance coverage under its rollout budget.
 
 Frozen-strategy512-path gradient-variance diagnostics use identical policy/seed
@@ -87,7 +87,7 @@ These are empirical diagnostics, not variance bounds or convergence certificates
 Three final policies measured (raw-zero, orbit-foldCV, orbit-external), each169x4
 worldsx(99+93)actions =129792 rollouts. Same RNG/protocol as previous evaluator,
 source3BB-open posterior includes exact card removal.2world fit class-only pure
-response,2disjoint holdout. Each evaluation<=90s, actual25.84/24.97/25.29sec.
+response,2disjoint holdout. Each evaluation<=90s, actual25.84/24.97/24.41sec.
 All169/action means, frequency samples, intervals and digest stored in compressed
 receipts. Per-class frequency/actionEV covariance caveat from prior study remains.
 Posterior changes with policy; conditional vs3BB comparisons also change range law,
@@ -99,7 +99,7 @@ initial policy; observed point differences cannot be attributed solely to learni
 | prior saved | -4.268624 [-17.532996,8.995747] |1.559057 [-11.705309,14.823423]|
 | raw-zero same budget | -4.212574 [-17.476945,9.051797] |1.808061 [-11.456327,15.072449]|
 | orbit-foldCV | -4.062229 [-17.326600,9.202142] |2.214597 [-11.064432,15.493625]|
-| orbit-external | -4.237280 [-17.501651,9.027091] |1.519677 [-11.744648,14.784002]|
+| orbit-external | -4.232949 [-17.497320,9.031422] |1.060659 [-12.203669,14.324987]|
 
 The RFI interval width26.528742BB is UNCHANGED at4world/class; orbit-CV vsopen
 width26.558056BB is slightly wider. Union-bound Hoeffding at same n cannot infer
@@ -109,7 +109,7 @@ uncertainties. All169 precision still fails. No statistically established EV gai
 Feasible class-only one-decision held-out gain (NOT full BR), BB:
 - raw-zero: RFI0.868946 [-36.648361,38.386253]; vs3BB-0.385236 [-37.902590,37.132119].
 - orbit-CV: RFI0.735323 [-36.781984,38.252630]; vs3BB-0.355368 [-37.914131,37.203395].
-- external: RFI1.108624 [-36.408683,38.625932]; vs3BB-1.955993 [-39.473170,35.561183].
+- external: RFI1.078066 [-36.439241,38.595373]; vs3BB1.733374 [-35.783810,39.250559].
 All include0. Full optimized independentBR, fullBR upper, NashConv and its upper
 remain UNKNOWN/null. NO100BB physical bound substituted. Historical limited-game
 NashConv0.9321071527220774BB is untouched and not an improvement comparator.
@@ -118,13 +118,13 @@ EV/model accuracy are unproved, not assumed0. No quality admission follows.
 
 ## Verification, persistence, and decision
 
-9new focused testsPASS (0.241s): real repeated updates,169exact orbits/24suit
+10new focused testsPASS (0.274s): real repeated updates,169exact orbits/24suit
 permutations, native fold baseline, recursive CV/external expected CF and average,
 full99branch freeze/average normalization, checkpoint exact resume and migration.
 Five saved policies each32native/reference paths,160paths total including3BB,
 10BB3bet,SB responses and HU50 short all-in. Policy digest unchanged by evaluation.
 Old QA/Node/app/build/browser tests not manually repeated; no TS/package changes.
-New automaticCI includes these tests with existing21; observe result separately.
+New automaticCI includes these10 tests with existing21; observe result separately.
 
 Local budget before compute7.2GiB free, total local compute budget5min, saved
 compressed evidence1.2MiB (<20MiB). Short pilot/refactor reruns remained bounded;
@@ -154,3 +154,15 @@ persists. VarianceSolver.restore loads other gzip states after gzip/JSON decodin
 with exact identity/RNG checks (tested). Do not overwrite saved evidence. Legacy
 checkpoint still restores in unchanged legacy solver; no inaccessible-old-session
 DB/ZIP is claimed recovered. Production/main/SSO/DB/Storage/Vercel/fees untouched.
+
+## External RNG correction
+
+Review found branch replay could leave the master RNG at an earlier consumed
+position. Corrected by sampling a shared pre-owner prefix once, reserving a
+branch seed from master, and using independent branch RNG objects (common seed
+within the batch). Branch draws never rewind or advance the next-deal stream.
+New regression proves master state unchanged when branch draw counts vary1→100.
+Corrected external checkpoint, native replay and all169/action EV are the values
+above. Old external artifacts remain accessible at276765ad075fb8b21fa7bbb0754a65538aacd8fe,
+and are superseded. Other arms unchanged; their receipts explicitly pin that
+historical source commit, preserving old source hashes rather than rewriting them.

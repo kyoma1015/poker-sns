@@ -70,11 +70,16 @@ Implemented exact24suit-orbit reuse, recursive unbiased exact-fold CV and first-
 all-action external sampling (policy frozen per batch, correct average1/n).
 Independent CF/average expectation, same-key real R/S accumulation and exact resume
 PASS.2sec budgets: raw new-window revisit3.80%, orbit-CV17.76%; exact root1326→169
-orbits verified. CV variance ratios fail seed robustness; external970leaves give
-only8newroot classes. All169/action EV same4world budgets have no interval shrink
+orbits verified. CV variance ratios fail seed robustness; external954leaves give
+only7newroot classes. All169/action EV same4world budgets have no interval shrink
 or significant held-out response improvement. FullBR/NashConv UNKNOWN/null; no
 trivial100BB substitute. NO expansion/promotion. Formal0/12, RFI0/3bet0 unchanged.
-New9focused testsPASS,5policies160native pathsPASS; no manualoldQA/CI reruns.
+New10focused testsPASS,5policies160native pathsPASS; no manualoldQA/CI reruns.
 Evidence/checkpoints/commands: ../qa/mccfr-variance-20261117/README.md.
 All legacy sources/artifacts untouched, A/B/C PENDING, Draft and production safety
 maintained. Resulting HEAD/automaticCI must be observed and saved in PR separately.
+
+External branch RNG rewind/reuse found in review and fixed using separate seeded
+branch streams and a single sampled prefix.10th regression proves master-stream
+isolation. External data regenerated; old source/receipts remain version-pinned
+at276765ad075fb8b21fa7bbb0754a65538aacd8fe. No production/registry impact.

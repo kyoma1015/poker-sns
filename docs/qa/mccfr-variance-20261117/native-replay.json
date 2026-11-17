@@ -7,9 +7,10 @@
   },
   {
     "checkpoint": "orbit-external-checkpoint.json.gz",
-    "policy_digest": "3ac690142a39c492140f7f1fb7da93813720e08c639f0aba3cecbec369a302f2",
+    "policy_digest": "4bc23c0806e760ccaac87d1a80fb36a923698f12b112006432e730a222f6578c",
     "full_native_paths": 32,
-    "status": "PASS"
+    "status": "PASS",
+    "rng_isolation_fixed": true
   },
   {
     "checkpoint": "orbit-zero-checkpoint.json.gz",

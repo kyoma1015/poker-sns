@@ -1,5 +1,6 @@
 """All-action first-owner external sampling, outcome sampling below. HU50 only."""
 import math
+import random
 from pathlib import Path
 from gto.qualification.native_mccfr import betting, choose
 from gto.qualification.policy import act, sha
@@ -27,21 +28,22 @@ class ExternalFirst(VarianceSolver):
         super().restore(data);self.leaves=data['leaves'];self.batches=data['batches']
 
     def first_actions(self,deck,owner):
-        b=betting(self.rules);holes=[deck[:2],deck[2:4]]
+        b=betting(self.rules);holes=[deck[:2],deck[2:4]];prefix=[]
         while not b.done:
             o=self.observation(observe(b,holes[b.actor],deck[4:4+(0,3,4,5)[b.round]]))
-            if b.actor==owner:return o.actions
-            pi=self.row(o);act(b,choose(o.actions,pi,self.rng))
-        return ()
+            if b.actor==owner:return o.actions,prefix
+            pi=self.row(o);action=choose(o.actions,pi,self.rng);prefix.append(action);act(b,action)
+        return (),prefix
 
-    def branch(self,deck,owner,forced):
+    def branch(self,deck,owner,forced,prefix=(),branch_rng=None):
         b=betting(self.rules);holes=[deck[:2],deck[2:4]]
         records=[];logq=0.;ownq=0.;reach=1.;first=True
+        rng=branch_rng if branch_rng is not None else self.rng
         while not b.done:
             o=self.observation(observe(b,holes[b.actor],deck[4:4+(0,3,4,5)[b.round]]));pi=self.row(o)
             own=b.actor==owner;enumerated=own and first
             q=[.6/len(pi)+.4*p for p in pi] if own else pi
-            a=forced if enumerated else choose(o.actions,q,self.rng);index=o.actions.index(a)
+            a=forced if enumerated else (prefix[len(b.history)] if len(b.history)<len(prefix) else choose(o.actions,q,rng));index=o.actions.index(a)
             sampling=1. if enumerated else q[index]
             if own:
                 # Each enumerated branch contributes one action's value but only
@@ -59,14 +61,17 @@ class ExternalFirst(VarianceSolver):
         # Stop before drawing chance when insufficient worst-case budget;
         # selecting only cheap sampled deals would bias the last update.
         if remaining<99:return False
-        deck=self.rng.sample(range(52),9);state=self.rng.getstate()
-        actions=self.first_actions(deck,owner)
+        deck=self.rng.sample(range(52),9)
+        actions,prefix=self.first_actions(deck,owner)
+        seed=self.rng.getrandbits(128)
         if max(1,len(actions))>remaining:raise RuntimeError('HU50 action bound changed')
         pending=[]
-        # The same chance and pre-owner opponent actions are reused. No policy
+        # The same chance and sampled pre-owner prefix are reused. Branch RNGs
+        # are separate from the master stream, so no later deal reuses branch
+        # uniforms. Common branch seeds reduce comparison noise. No policy
         # update until ALL legal first actions have been traversed.
         for a in actions:
-            self.rng.setstate(state);pending.extend(self.branch(deck,owner,a))
+            pending.extend(self.branch(deck,owner,a,prefix,random.Random(seed)))
         for key,r in combine(pending).items():
             o=r['observation'];row=self.rows.setdefault(key,dict(actions=list(o.actions),R=[0.]*len(r['R']),S=[0.]*len(r['S'])))
             for field in ('R','S'):

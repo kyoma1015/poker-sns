@@ -39,3 +39,11 @@ correction preserved. Budget2seconds/max1024terminal rollouts, checkpoint every
 list. Compare with existing raw-zero arm's2seconds/max1024leaves. Evaluate this
 new arm with the same4worlds/all169/actions protocol; do not select a winner from
 point estimates whose intervals overlap. Retain all failed CV and EV results.
+
+RNG correction: initial external batches rewound the master stream for branch
+replays, potentially reusing branch uniforms in the next deal. Superseded external
+results/source are retained at276765ad075fb8b21fa7bbb0754a65538aacd8fe. Corrected
+implementation samples the pre-owner prefix once and uses separate seeded branch
+RNGs; master deal stream never rewinds. Regression varies branch draw counts and
+proves identical master continuation. External checkpoint/EV rerun; other arms
+unchanged. Prior receipts bind their historical source commit, not modified files.

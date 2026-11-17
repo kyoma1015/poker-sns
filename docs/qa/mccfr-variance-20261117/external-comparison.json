@@ -1,17 +1,17 @@
 {
-  "batches": 16,
+  "batches": 14,
   "coverage": {
-    "distinct_updated_infosets": 883,
+    "distinct_updated_infosets": 920,
     "max_updates_per_infoset": 1,
     "repeated_updates": 0,
     "revisit_rate": 0.0,
-    "root_updated_infosets": 8,
-    "total_infosets": 1776,
-    "updates": 883
+    "root_updated_infosets": 7,
+    "total_infosets": 1820,
+    "updates": 920
   },
   "expanded_learning": false,
-  "leaves": 970,
-  "policy_digest": "3ac690142a39c492140f7f1fb7da93813720e08c639f0aba3cecbec369a302f2",
-  "total_leaves": 970,
-  "training_seconds": 0.9702694690004137
+  "leaves": 954,
+  "policy_digest": "4bc23c0806e760ccaac87d1a80fb36a923698f12b112006432e730a222f6578c",
+  "total_leaves": 954,
+  "training_seconds": 0.9920802599999661
 }
