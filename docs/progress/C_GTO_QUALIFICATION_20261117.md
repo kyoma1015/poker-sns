@@ -61,3 +61,20 @@ source pins and measurements: ../qa/native-mccfr-20261117/README.md.
 Next: sample efficiency with exact infoset identity, independent complete-response
 bound and paired fixed-budget improvement. A/B/C still PENDING. Draft/prod safety
 unchanged; actual resulting HEAD/automaticCI observation recorded in PR comment.
+
+## Convergence-only bounded comparison — 2026-11-17 JST
+
+Starting cd78b228d7cf8eb865ab8e1fcb0f785e411a0b56, unchanged legacy checkpoint reused.
+Actual1040updates/1022infosets,18root revisits1.7308%,0nonroot revisits diagnosed.
+Implemented exact24suit-orbit reuse, recursive unbiased exact-fold CV and first-owner
+all-action external sampling (policy frozen per batch, correct average1/n).
+Independent CF/average expectation, same-key real R/S accumulation and exact resume
+PASS.2sec budgets: raw new-window revisit3.80%, orbit-CV17.76%; exact root1326→169
+orbits verified. CV variance ratios fail seed robustness; external970leaves give
+only8newroot classes. All169/action EV same4world budgets have no interval shrink
+or significant held-out response improvement. FullBR/NashConv UNKNOWN/null; no
+trivial100BB substitute. NO expansion/promotion. Formal0/12, RFI0/3bet0 unchanged.
+New9focused testsPASS,5policies160native pathsPASS; no manualoldQA/CI reruns.
+Evidence/checkpoints/commands: ../qa/mccfr-variance-20261117/README.md.
+All legacy sources/artifacts untouched, A/B/C PENDING, Draft and production safety
+maintained. Resulting HEAD/automaticCI must be observed and saved in PR separately.

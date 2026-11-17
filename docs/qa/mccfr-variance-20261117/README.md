@@ -1,0 +1,156 @@
+# PR120: exact infoset reuse and variance-reduction comparisons
+
+2026-11-17 JST. Starting cd78b228d7cf8eb865ab8e1fcb0f785e411a0b56,
+PR Open/Draft confirmed. Prior successfulCI not manually rerun. Immutable legacy
+solver, evaluator and checkpoint are unchanged; source reused via explicit
+validated migration. Five small ablation checkpoints retained, zero qualified.
+No UI, registry, formal-spec or other-development-line edits.
+
+## Diagnosis in four parts
+
+`diagnosis.json` is computed from the real prior checkpoint, not a progress note.
+1. Cards: 433 distinct own-card pairs across rows; root256 updates split over238
+   actual card pairs. There are1326 combos; exact suit symmetry has169root orbits.
+   All1326 root observations map to exactly169keys in regression, without merging
+   ranks, positions, sizes, histories, flush structure or turn/river order.
+2. Reach: distinct rows preflop709/flop230/turn66/river17,590public betting histories.
+   The broad legal-size policy and full-board chance fragment downstream coverage.
+   River rows are only1.66% of distinct visited rows, not river reach probability.
+3. Key: raw own cards + public board + complete ledger preserve information but
+   needlessly separate global suit relabelings (and unordered flop permutations).
+   New canonical key minimizes own/public cards under all24global suit permutations;
+   no opponent/future cards used. Histories/actors/actions/public amounts untouched.
+4. Update:1040updates/1022rows =>18repeats,1.7308%. RootS mass proves256root
+   updates/238keys =>18root repeats; nonroot repeated updates0. No evidence of R/S
+   being reset. Regression forces the same real deal twice and observes SAME key,
+   changed accumulated R and growing S for both legacy and extended solvers.
+   Independent matched-history expected CF-vector AND average sums match for
+   recursive CV and first-owner external sampling, not just one-step shapes.
+
+## Implemented algorithms
+
+`variance_mccfr.py`: exact suit-orbit pooling plus recursive known-fold control
+variate. Legacy R/S are SUMMED only in exact isomorphic orbits. Pooling changes
+an asymmetric source policy; it is a NEW policy, never tagged as unchanged.
+For each sampled owner action: v_a=b_a+1[a=sample]*(child-b_a)/q_a; v=sum sigma*v_a;
+regret receives inverse own-prefix sampling correction, average sums unchanged.
+The baseline is own public committed chips on fold; native payoff equality tested.
+No clipping, missing-fold fill, sampled-action pruning or surrogate payoff model.
+A perfect known baseline has zero variance in the toy; exact-fold alone is NOT
+universally beneficial. Its variance-increase counterexample is kept in tests.
+
+`external_first.py`: enumerate ALL legal actions at FIRST traverser decision,
+outcome sample below; policy frozen until entire batch completes. First-node q1,
+average weight1/action_count, downstream importance factors retained. Independent
+CF/average oracle proves the normalization; actual99-action batch freeze and
+S-mass1 tested. Stop before drawing chance if remaining budget<99 (worst case),
+so cheap sampled deals are not selectively accepted. No incomplete branch list.
+This implements bounded external sampling, not recursive full-tree enumeration.
+
+## Same-budget warm-start ablations
+
+Source checkpoint is identical for each arm; suit pooling is explicitly different
+initial policy. Same exploration, training seed, target2sec/max1024 terminal paths.
+Checkpoints each32paired iterations (external each64leaves). Wall time checked
+between atomic updates; one update/checkpoint may exceed2sec slightly. Actual
+training0.970–2.075sec. Source migration/setup excluded from training clock.
+
+| arm | paired iterations added / leaves | total rows | NEW-window updates / distinct | NEW-window repeats |
+|---|---:|---:|---:|---:|
+| raw-zero |416 /832|2533|1633 /1571|62 (3.7967%)|
+| raw-foldCV |416 /832|2533|1632 /1570|62 (3.7990%)|
+| orbit-zero |480 /960|2412|1972 /1624|348 (17.6471%)|
+| orbit-foldCV |480 /960|2408|1976 /1625|351 (17.7632%)|
+| orbit-external |8paired /970leaves,16batches|1776|883 /883|0 (0%)|
+
+Totals include reused source rows; raw source1022rows vs orbit source905rows, so
+row totals are not directly comparable key-space coverage. Revisit rates above
+exclude visits that occurred only in the source; including warm-source hits:
+raw-zero7.47%, orbit-foldCV23.94%, external1.36%. External combines within-batch
+root updates once, not99fake revisits. Only8new root classes vs raw354 and
+orbit-CV145, illustrating lost chance coverage under its rollout budget.
+
+Frozen-strategy512-path gradient-variance diagnostics use identical policy/seed
+within each CV pair. Relative trace sample variance CV/zero:
+| seed | raw | orbit |
+|---|---:|---:|
+|17112026|1.228562|0.252817|
+|17112027|0.836382|0.861290|
+|17112028|0.969817|1.343943|
+No consistent CV benefit; do not report the first seed's75% reduction alone.
+Trace magnitudes cannot be compared across raw/orbit target policies as though
+only the CV changed. Sparse inverse-probability updates have severe heavy tails.
+These are empirical diagnostics, not variance bounds or convergence certificates.
+
+## Same-policy all169/action EV and feasible-response holdouts
+
+Three final policies measured (raw-zero, orbit-foldCV, orbit-external), each169x4
+worldsx(99+93)actions =129792 rollouts. Same RNG/protocol as previous evaluator,
+source3BB-open posterior includes exact card removal.2world fit class-only pure
+response,2disjoint holdout. Each evaluation<=90s, actual25.84/24.97/25.29sec.
+All169/action means, frequency samples, intervals and digest stored in compressed
+receipts. Per-class frequency/actionEV covariance caveat from prior study remains.
+Posterior changes with policy; conditional vs3BB comparisons also change range law,
+and are not paired same-range causal estimates. Source suit pooling also changes
+initial policy; observed point differences cannot be attributed solely to learning.
+
+| policy | RFI EV mean and simultaneous interval BB | vs3BB conditional BB EV and interval |
+|---|---|---|
+| prior saved | -4.268624 [-17.532996,8.995747] |1.559057 [-11.705309,14.823423]|
+| raw-zero same budget | -4.212574 [-17.476945,9.051797] |1.808061 [-11.456327,15.072449]|
+| orbit-foldCV | -4.062229 [-17.326600,9.202142] |2.214597 [-11.064432,15.493625]|
+| orbit-external | -4.237280 [-17.501651,9.027091] |1.519677 [-11.744648,14.784002]|
+
+The RFI interval width26.528742BB is UNCHANGED at4world/class; orbit-CV vsopen
+width26.558056BB is slightly wider. Union-bound Hoeffding at same n cannot infer
+narrower widths from a reduced sampled-gradient variance; they measure different
+uncertainties. All169 precision still fails. No statistically established EV gain.
+
+Feasible class-only one-decision held-out gain (NOT full BR), BB:
+- raw-zero: RFI0.868946 [-36.648361,38.386253]; vs3BB-0.385236 [-37.902590,37.132119].
+- orbit-CV: RFI0.735323 [-36.781984,38.252630]; vs3BB-0.355368 [-37.914131,37.203395].
+- external: RFI1.108624 [-36.408683,38.625932]; vs3BB-1.955993 [-39.473170,35.561183].
+All include0. Full optimized independentBR, fullBR upper, NashConv and its upper
+remain UNKNOWN/null. NO100BB physical bound substituted. Historical limited-game
+NashConv0.9321071527220774BB is untouched and not an improvement comparator.
+No surrogate continuation model; uniform execution discrepancy and conditional
+EV/model accuracy are unproved, not assumed0. No quality admission follows.
+
+## Verification, persistence, and decision
+
+9new focused testsPASS (0.241s): real repeated updates,169exact orbits/24suit
+permutations, native fold baseline, recursive CV/external expected CF and average,
+full99branch freeze/average normalization, checkpoint exact resume and migration.
+Five saved policies each32native/reference paths,160paths total including3BB,
+10BB3bet,SB responses and HU50 short all-in. Policy digest unchanged by evaluation.
+Old QA/Node/app/build/browser tests not manually repeated; no TS/package changes.
+New automaticCI includes these tests with existing21; observe result separately.
+
+Local budget before compute7.2GiB free, total local compute budget5min, saved
+compressed evidence1.2MiB (<20MiB). Short pilot/refactor reruns remained bounded;
+all CV seeds/failed gates retained. No long training or automatic restart.
+`comparison.json`,`variance-replicates.json`,`external-comparison.json` retain
+measured costs, coverage, ratios. Five gzip checkpoints include source/RNG/iteration/
+regret/average/origin;3gzip EV receipts bind checkpoint and implementation hashes.
+`native-replay.json`,`diagnosis.json`,`python-tests.txt` are actual results.
+
+Expansion gateFAIL: coverage reuse improves, but robust variance/EV/BR improvement
+is unconfirmed. Do NOT expand any arm or register GTO. Formal0/12→0/12;
+normal verified RFI0/3bet0;8legacy candidates1352rows remain BLOCKED_UNVERIFIED.
+No formal20stack/size/rake/ante specification adopted. A/B/C remain PENDING.
+Next: fit predictable baselines from independent revisits and validate on fresh
+seeds; preserve exact information while improving chance/leaf allocation. Complete
+response bounds still required; more iterations alone are not the next action.
+
+Reproduce limited experiments (does not start an autonomous scheduler):
+```
+QUALIFICATION_BUILD=/tmp/poker-public-response-build python -B -m unittest gto.qualification.test_variance_mccfr -v
+python -B -m gto.qualification.variance_study --build /tmp/poker-public-response-build --source docs/qa/native-mccfr-20261117/checkpoint.json --output /tmp/new-variance-study
+python -B -m gto.qualification.external_first --build /tmp/poker-public-response-build --source docs/qa/native-mccfr-20261117/checkpoint.json --output /tmp/new-external
+python -B -m gto.qualification.variance_evaluate --build /tmp/poker-public-response-build --checkpoint docs/qa/mccfr-variance-20261117/orbit-external-checkpoint.json.gz --output /tmp/new-external-ev.json
+```
+Resume external with --resume <saved gzip checkpoint> and same source; batch parity
+persists. VarianceSolver.restore loads other gzip states after gzip/JSON decoding,
+with exact identity/RNG checks (tested). Do not overwrite saved evidence. Legacy
+checkpoint still restores in unchanged legacy solver; no inaccessible-old-session
+DB/ZIP is claimed recovered. Production/main/SSO/DB/Storage/Vercel/fees untouched.

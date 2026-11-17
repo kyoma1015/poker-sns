@@ -1,0 +1,14 @@
+test_exact_169_orbits_and_global_suit_permutations (gto.qualification.test_variance_mccfr.RevisitAndResume.test_exact_169_orbits_and_global_suit_permutations) ... ok
+test_external_freezes_full_batch_and_restarts_exactly (gto.qualification.test_variance_mccfr.RevisitAndResume.test_external_freezes_full_batch_and_restarts_exactly) ... ok
+test_public_fold_baseline_is_exact_native_payoff (gto.qualification.test_variance_mccfr.RevisitAndResume.test_public_fold_baseline_is_exact_native_payoff) ... ok
+test_resume_and_explicit_migration (gto.qualification.test_variance_mccfr.RevisitAndResume.test_resume_and_explicit_migration) ... ok
+test_same_infoset_real_regret_and_average_accumulate (gto.qualification.test_variance_mccfr.RevisitAndResume.test_same_infoset_real_regret_and_average_accumulate) ... ok
+test_suit_orbit_preserves_history_rank_and_board_information (gto.qualification.test_variance_mccfr.RevisitAndResume.test_suit_orbit_preserves_history_rank_and_board_information) ... ok
+test_expected_cf_and_variance_against_exact_values (gto.qualification.test_variance_mccfr.UnbiasedBaseline.test_expected_cf_and_variance_against_exact_values) ... ok
+test_external_first_expectation_and_average_match_independent_cf (gto.qualification.test_variance_mccfr.UnbiasedBaseline.test_external_first_expectation_and_average_match_independent_cf) ... ok
+test_recursive_cv_expected_cf_matches_independent_oracle (gto.qualification.test_variance_mccfr.UnbiasedBaseline.test_recursive_cv_expected_cf_matches_independent_oracle) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.241s
+
+OK

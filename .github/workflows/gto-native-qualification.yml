@@ -29,4 +29,4 @@ jobs:
       - name: Verify frozen evidence and independent native replay
         env:
           QUALIFICATION_BUILD: '${{ runner.temp }}/native-qualification'
-        run: python -B -m unittest gto.qualification.test_qualification gto.qualification.test_public_response gto.qualification.test_native_mccfr -v
+        run: python -B -m unittest gto.qualification.test_qualification gto.qualification.test_public_response gto.qualification.test_native_mccfr gto.qualification.test_variance_mccfr -v

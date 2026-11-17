@@ -1,0 +1,17 @@
+{
+  "batches": 16,
+  "coverage": {
+    "distinct_updated_infosets": 883,
+    "max_updates_per_infoset": 1,
+    "repeated_updates": 0,
+    "revisit_rate": 0.0,
+    "root_updated_infosets": 8,
+    "total_infosets": 1776,
+    "updates": 883
+  },
+  "expanded_learning": false,
+  "leaves": 970,
+  "policy_digest": "3ac690142a39c492140f7f1fb7da93813720e08c639f0aba3cecbec369a302f2",
+  "total_leaves": 970,
+  "training_seconds": 0.9702694690004137
+}
