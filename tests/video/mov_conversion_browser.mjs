@@ -63,8 +63,10 @@ try {
       if (window.autoTest) {
         const movie = children(0, buffer.byteLength).find(box => box.type === 0x6d6f6f76);
         const tracks = children(movie.start + 8, movie.end).filter(box => box.type === 0x7472616b);
-        if (tracks.length !== 1) throw new Error('expected only the AAC verification track');
-        if (window.failAudioDecode) return Promise.reject(new DOMException('private native text', 'EncodingError'));
+        window.decodedTrackCounts.push(tracks.length);
+        if (window.failAudioDecode || (window.rejectSingleTrack && tracks.length === 1)) {
+          return Promise.reject(new DOMException('private native text', 'EncodingError'));
+        }
       }
       return nativeDecode.call(this, buffer);
     };
@@ -75,7 +77,7 @@ try {
     };
     document.querySelector('input').onchange=async event=>{
       if (!window.autoTest) return;
-      controller=new AbortController(); window.autoResult=null;
+      controller=new AbortController(); window.autoResult=null; window.decodedTrackCounts=[];
       try {
         const output=await prepareMovForUpload(event.target.files[0],step=>{ window.automaticFallbackStep=step; throw new Error('unexpected playback button') },controller.signal, diagnostic=>{window.automaticDiagnostic=diagnostic});
         window.autoResult={ok:true,bytes:Array.from(new Uint8Array(await output.arrayBuffer()))};
@@ -107,7 +109,18 @@ try {
   // Remux must preserve actual compressed packets, including audio.
   const streams=path=>execFileSync('ffmpeg',['-v','error','-i',path,'-map','0:v:0','-map','0:a:0','-c','copy','-f','streamhash','-hash','sha256','-'],{encoding:'utf8'})
   assert.equal(streams(remuxed),streams(fixture))
-  await page.evaluate(()=>{window.autoTest=false})
+  assert.deepEqual(await page.evaluate(() => window.decodedTrackCounts), [1])
+  await page.evaluate(() => {
+    window.rejectSingleTrack = true
+    document.querySelector('input').dispatchEvent(new Event('change'))
+  })
+  await page.waitForFunction(() => !!window.autoResult)
+  const alternate = await page.evaluate(() => window.autoResult)
+  assert.ok(alternate.ok, alternate.error)
+  assert.deepEqual(await page.evaluate(() => window.decodedTrackCounts), [1, 2])
+  assert.deepEqual(alternate.bytes, automatic.bytes)
+  console.log('PASS AAC-only demux rejection uses real PCM from the same upload MP4')
+  await page.evaluate(()=>{window.autoTest=false; window.rejectSingleTrack=false})
   console.log('PASS compatible MOV automatically remuxes without playback or extra clicks; both media streams preserved')
   async function convert(path,abort=false) {
     await page.locator('input').setInputFiles(path)
@@ -134,7 +147,7 @@ try {
   await page.waitForFunction(() => !!window.autoResult)
   assert.deepEqual(await page.evaluate(() => [
     window.autoResult.ok, window.automaticDiagnostic, window.automaticFallbackStep,
-  ]), [false, 'audio: decodeAudioData EncodingError', 'source'])
+  ]), [false, 'audio: AAC-only MP4 EncodingError / video MP4 EncodingError', 'source'])
   await page.evaluate(() => { window.autoTest = false })
   const converted=await convert(fixture)
   assert.equal(converted.ok,true,converted.error)

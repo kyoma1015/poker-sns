@@ -173,7 +173,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const [resultsLoading, setResultsLoading] = useState(false)
   const imageInputRef = useRef<HTMLInputElement>(null)
   const videoInputRef = useRef<HTMLInputElement>(null)
-  const [movPlayback, setMovPlayback] = useState<{label: string; start: () => void} | null>(null)
+  const [movPlayback, setMovPlayback] = useState<{label: string; diagnostic: string; start: () => void} | null>(null)
   const videoSelectionRef = useRef(0)
   const videoConversionAbortRef = useRef<AbortController | null>(null)
   const composerLifetimeRef = useRef(0)
@@ -1203,12 +1203,13 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         selectedFile = await prepareMovForUpload(file, (step, start) => {
           const action = {
             label: step === 'source' ? 'MOV変換を開始' : '変換後の音声を確認',
+            diagnostic: automaticDiagnostic,
             start: () => {
               setMessage(step === 'source' ? 'MOVを変換しています。画面を開いたままお待ちください。' : '変換後の音声を確認しています。')
               start()
             },
           }
-          setMessage(step === 'source' ? `ボタンをタップして変換を始めてください。${automaticDiagnostic ? `（自動変換 ${automaticDiagnostic}）` : ''}` : '音声を確認すると投稿プレビューが表示されます。')
+          setMessage(step === 'source' ? 'ボタンをタップして変換を始めてください。' : '音声を確認すると投稿プレビューが表示されます。')
           setMovPlayback(action)
           return () => setMovPlayback(current => current === action ? null : current)
         }, conversion.signal, diagnostic => { automaticDiagnostic = diagnostic })
@@ -2991,7 +2992,10 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           <input ref={imageInputRef} type="file" accept="image/jpeg,image/png,image/webp" multiple hidden onChange={e => { chooseImages(e.target.files); e.target.value = '' }} />
           <input ref={videoInputRef} type="file" accept="video/mp4,video/webm,video/quicktime,.mov" hidden onChange={e => { void chooseVideo(e.target.files?.[0]); e.target.value = '' }} />
           {attachmentsOpen && renderAttachmentPicker()}
-          {movPlayback && <button type="button" style={{ width: 'auto', background: '#202020', color: '#eee', border: '1px solid #444', marginTop: 8 }} onClick={movPlayback.start}>{movPlayback.label}</button>}
+          {movPlayback && <>
+              <button type="button" style={{ width: 'auto', background: '#202020', color: '#eee', border: '1px solid #444', marginTop: 8 }} onClick={movPlayback.start}>{movPlayback.label}</button>
+              {movPlayback.diagnostic && <p role="status">自動変換の診断：{movPlayback.diagnostic}</p>}
+            </>}
           {renderSelectedResultPreview()}
         </section>
 
@@ -3245,7 +3249,10 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
             {renderPostModeButtons()}
             {renderInteractiveFields()}
             {attachmentsOpen && renderAttachmentPicker()}
-            {movPlayback && <button type="button" style={{ width: 'auto', background: '#202020', color: '#eee', border: '1px solid #444', marginTop: 8 }} onClick={movPlayback.start}>{movPlayback.label}</button>}
+            {movPlayback && <>
+              <button type="button" style={{ width: 'auto', background: '#202020', color: '#eee', border: '1px solid #444', marginTop: 8 }} onClick={movPlayback.start}>{movPlayback.label}</button>
+              {movPlayback.diagnostic && <p role="status">自動変換の診断：{movPlayback.diagnostic}</p>}
+            </>}
           {renderSelectedResultPreview()}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 18 }}><span style={{ color: '#888', fontSize: 12 }}>{content.length}/500</span><button type="button" disabled={submitDisabled} onClick={handlePost} style={{ width: 'auto', borderRadius: 99, background: '#fff', color: '#000', padding: '10px 24px', fontWeight: 800, opacity: submitDisabled ? 0.55 : 1 }}>{submitLabel ?? '投稿する'}</button></div>
             {(videoFile || pendingVideo || videoRecoveryBlocked || (videoPreview && !canSubmitPost)) && <div role="status" aria-live="polite" style={{ color: '#e6c27a', marginTop: 10, fontSize: 12 }}>{videoRecoveryBlocked ? '安全停止中：前回の動画転送の確認が必要です。再送信しません。' : isPosting ? '投稿処理中です。完了まで操作せずお待ちください。' : !VIDEO_SERVER_ENABLED ? '動画投稿APIが無効です。動画は送信されません。' : pendingVideo ? '前回の動画を保持中です。新しいファイルは送信しません。' : !canSubmitPost ? '投稿ボタンが無効です。添付の選択状態を確認してください。動画の再送信は行いません。' : '動画を選択済みです。再生して映像・音声を確認してください。'}</div>}

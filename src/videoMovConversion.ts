@@ -104,9 +104,19 @@ function remuxCompatibleMov(buffer: ArrayBuffer): { buffer: ArrayBuffer; audioOn
     const result: MovieBox[] = []
     for (let at = start; at < end;) {
       if (end - at < 8 || result.length >= 4096) throw new MovVerificationError('invalid MOV box list')
-      const size = view.getUint32(at)
+      const type = fourcc(at + 4)
+      let size = view.getUint32(at)
+      // QuickTime can use an extended size or extend mdat to EOF.
+      // Keep its header and payload in place so stco/co64 offsets stay valid.
+      if (start === 0 && type === 'mdat' && size === 0) {
+        size = end - at
+      } else if (start === 0 && type === 'mdat' && size === 1 && end - at >= 16) {
+        const extended = view.getBigUint64(at + 8)
+        if (extended < 16n || extended > BigInt(end - at)) throw new MovVerificationError('invalid extended mdat size')
+        size = Number(extended)
+      }
       if (size < 8 || size > end - at) throw new MovVerificationError('unsupported MOV box size')
-      result.push({ start: at, end: at + size, type: fourcc(at + 4) })
+      result.push({ start: at, end: at + size, type })
       at += size
     }
     return result
@@ -124,7 +134,7 @@ function remuxCompatibleMov(buffer: ArrayBuffer): { buffer: ArrayBuffer; audioOn
       top.some(box => !['ftyp', 'moov', 'mdat', 'free', 'skip', 'wide'].includes(box.type))) {
     throw new MovVerificationError('unsupported MOV container')
   }
-  one(top, 'mdat')
+  if (!top.some(box => box.type === 'mdat')) throw new MovVerificationError('missing mdat')
   const tracks = children(one(top, 'moov')).filter(box => box.type === 'trak')
   let videoCount = 0
   const audioTracks: MovieBox[] = []
@@ -154,9 +164,13 @@ function remuxCompatibleMov(buffer: ArrayBuffer): { buffer: ArrayBuffer; audioOn
     } else if (kind === 'soun' && sample.type === 'mp4a' && sample.end >= sample.start + 36) {
       const header = one(media, 'mdhd')
       const layout = bytes[header.start + 8]
-      if (layout !== 0 || header.end < header.start + 28) throw new MovVerificationError('unsupported audio timing')
-      const timescale = view.getUint32(header.start + 20)
-      const duration = view.getUint32(header.start + 24) / timescale
+      const versionOne = layout === 1
+      if ((layout !== 0 && !versionOne) || header.end < header.start + (versionOne ? 40 : 28)) {
+        throw new MovVerificationError('unsupported audio timing')
+      }
+      const timescale = view.getUint32(header.start + (versionOne ? 28 : 20))
+      const ticks = versionOne ? Number(view.getBigUint64(header.start + 32)) : view.getUint32(header.start + 24)
+      const duration = ticks / timescale
       if (!timescale || !Number.isFinite(duration) || duration <= 0 || duration > MAX_SECONDS + 0.25) throw new MovVerificationError('invalid audio duration')
       const version = view.getUint16(sample.start + 16)
       if (version > 1) throw new MovVerificationError('unsupported QuickTime audio entry')
@@ -211,7 +225,7 @@ async function verifyLocalMp4(file: File, audioOnly: ArrayBuffer, signal: AbortS
         else resolve()
       }
       const abort = () => finish(signal.reason)
-      const timeout = window.setTimeout(() => finish(new MovVerificationError('MP4 validation timed out')), 8000)
+      const timeout = window.setTimeout(() => finish(new MovVerificationError('MP4 frame timeout (readyState=' + video.readyState + ')')), 8000)
       const verifyFrame = () => {
         if (video.readyState < 2) return
         if (video.videoWidth > 0 && video.videoHeight > 0 &&
@@ -240,11 +254,31 @@ async function verifyLocalMp4(file: File, audioOnly: ArrayBuffer, signal: AbortS
     const audio = (async () => {
       if (typeof OfflineAudioContext === 'undefined') throw new MovVerificationError('OfflineAudioContext unavailable')
       const context = new OfflineAudioContext(1, 1, 48000)
-      const decoded = await context.decodeAudioData(audioOnly).catch(error => {
-        const name = error instanceof DOMException && ['EncodingError', 'NotSupportedError', 'InvalidStateError'].includes(error.name)
-          ? error.name : 'failed'
-        throw new MovVerificationError('decodeAudioData ' + name)
-      })
+      const decode = async (input: ArrayBuffer, container: string) => {
+        try {
+          return await context.decodeAudioData(input)
+        } catch (error) {
+          const name = error instanceof DOMException && ['EncodingError', 'NotSupportedError', 'InvalidStateError'].includes(error.name)
+            ? error.name : 'failed'
+          throw new MovVerificationError(container + ' ' + name)
+        }
+      }
+      let decoded: AudioBuffer
+      try {
+        decoded = await decode(audioOnly, 'AAC-only MP4')
+      } catch (firstError) {
+        signal.throwIfAborted()
+        // WebKit may reject the single-track view while accepting the same AAC
+        // samples through the final MP4 demuxer.
+        try {
+          decoded = await decode(await file.arrayBuffer(), 'video MP4')
+        } catch (secondError) {
+          if (firstError instanceof MovVerificationError && secondError instanceof MovVerificationError) {
+            throw new MovVerificationError(firstError.message + ' / ' + secondError.message)
+          }
+          throw secondError
+        }
+      }
       if (decoded.duration > MAX_SECONDS + 0.25) throw new MovVerificationError('decoded audio too long')
       for (let channel = 0; channel < decoded.numberOfChannels; channel++) {
         if (decoded.getChannelData(channel).some(sample => Number.isFinite(sample) && Math.abs(sample) > 0.002)) return
