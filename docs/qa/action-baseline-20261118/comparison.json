@@ -1,0 +1,153 @@
+{
+  "arms": [
+    {
+      "R_infosets": 1247,
+      "R_revisit_rate": 0.1613987895090787,
+      "R_updates": 1487,
+      "S_infosets": 1258,
+      "S_revisit_rate": 0.16245006657789618,
+      "S_updates": 1502,
+      "baseline": false,
+      "diagnostics": [
+        {
+          "cf_trace_sample_variance": 1616359620282.602,
+          "paths": 256,
+          "seed": 1711801
+        },
+        {
+          "cf_trace_sample_variance": 22342764893071.348,
+          "paths": 256,
+          "seed": 1711802
+        },
+        {
+          "cf_trace_sample_variance": 682348347305.1697,
+          "paths": 256,
+          "seed": 1711803
+        }
+      ],
+      "name": "zero-standard",
+      "new_iterations": 374,
+      "policy_digest": "78a35e13521b0c30e7e195c387c3d2340b08be11c5e8972b9720cf6992058fa6",
+      "positive_average_reach": {
+        "rfi": 374,
+        "vs_3bb_open": 1
+      },
+      "targeted": false,
+      "total_infosets": 3786,
+      "training_seconds": 2.0005004529998587
+    },
+    {
+      "R_infosets": 1160,
+      "R_revisit_rate": 0.15328467153284675,
+      "R_updates": 1370,
+      "S_infosets": 1160,
+      "S_revisit_rate": 0.15636363636363637,
+      "S_updates": 1375,
+      "baseline": true,
+      "diagnostics": [
+        {
+          "cf_trace_sample_variance": 577476926510.7003,
+          "paths": 256,
+          "seed": 1711801
+        },
+        {
+          "cf_trace_sample_variance": 30478264597910.793,
+          "paths": 256,
+          "seed": 1711802
+        },
+        {
+          "cf_trace_sample_variance": 819851472032.083,
+          "paths": 256,
+          "seed": 1711803
+        }
+      ],
+      "name": "baseline-standard",
+      "new_iterations": 343,
+      "policy_digest": "87b0abb8bedbb68c9688dde7778e4fba68a2b19281b12bd553d53761ba1b716d",
+      "positive_average_reach": {
+        "rfi": 343,
+        "vs_3bb_open": 1
+      },
+      "targeted": false,
+      "total_infosets": 3627,
+      "training_seconds": 2.0056632010000612
+    },
+    {
+      "R_infosets": 1188,
+      "R_revisit_rate": 0.15504978662873403,
+      "R_updates": 1406,
+      "S_infosets": 1200,
+      "S_revisit_rate": 0.15848527349228614,
+      "S_updates": 1426,
+      "baseline": false,
+      "diagnostics": [
+        {
+          "cf_trace_sample_variance": 53148005012.35259,
+          "paths": 256,
+          "seed": 1711801
+        },
+        {
+          "cf_trace_sample_variance": 16322392081355.586,
+          "paths": 256,
+          "seed": 1711802
+        },
+        {
+          "cf_trace_sample_variance": 166620054584.7129,
+          "paths": 256,
+          "seed": 1711803
+        }
+      ],
+      "name": "zero-reach",
+      "new_iterations": 320,
+      "policy_digest": "16a73383a9f5ae7a97288c605b052b3de7b39fb97dc1352c1bbcbab3e4c24d3b",
+      "positive_average_reach": {
+        "rfi": 320,
+        "vs_10bb_3bet": 25,
+        "vs_3bb_open": 97
+      },
+      "targeted": true,
+      "total_infosets": 3686,
+      "training_seconds": 2.0363847049998185
+    },
+    {
+      "R_infosets": 1087,
+      "R_revisit_rate": 0.14139020537124802,
+      "R_updates": 1266,
+      "S_infosets": 1086,
+      "S_revisit_rate": 0.14823529411764702,
+      "S_updates": 1275,
+      "baseline": true,
+      "diagnostics": [
+        {
+          "cf_trace_sample_variance": 83991115189.97926,
+          "paths": 256,
+          "seed": 1711801
+        },
+        {
+          "cf_trace_sample_variance": 12486605695288.236,
+          "paths": 256,
+          "seed": 1711802
+        },
+        {
+          "cf_trace_sample_variance": 120038671713.8909,
+          "paths": 256,
+          "seed": 1711803
+        }
+      ],
+      "name": "baseline-reach",
+      "new_iterations": 288,
+      "policy_digest": "a4c0f1f50290d6908157a34d05fb67878c4a6d9ecd61f014ad7a0426d8b344c9",
+      "positive_average_reach": {
+        "rfi": 288,
+        "vs_10bb_3bet": 25,
+        "vs_3bb_open": 88
+      },
+      "targeted": true,
+      "total_infosets": 3493,
+      "training_seconds": 2.000229754999964
+    }
+  ],
+  "expanded_learning": false,
+  "source_sha256": "9f3eb5e0e3e6930d2786161ddeb034e1b979110cdbdb40a17012b04efb2e4878",
+  "status": "STOP_NO_NATIVE_IMPROVEMENT"
+}

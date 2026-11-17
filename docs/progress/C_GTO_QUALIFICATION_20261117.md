@@ -104,3 +104,27 @@ Corrected native rootEV-4.174133BB; legalfold gain and NC LOWER confidence bound
 1.424181BB (latest2-policy family99.9%). Still refuted, no expansion/promotion.
 All169EV intervals unchanged in width; fullBR/NC upper or pointUNKNOWN. Formal0/12.
 Latest restart: average-corrected-checkpoint.json.gz / average_support.py pairedstep.
+
+## 2026-11-18 JST — action baseline / corrected reach-sampling gate
+
+Start78368cb44dbe2c25c83c96666b0ec33b269019bf, Draft/Open remotely verified.
+Reuse corrected average, suit/RNG fixes and original checkpoint unchanged.
+New action_baseline.py provides predictable action control variates and all-actor
+pi/q-corrected public-prefix proposal; four matched 2s/512pair capped arms.
+Combined positive avg samples vs3BB/10BB grow to88/25 vs control1/0; frozen CF
+empirical dispersion lower on3seeds. This is NOT demonstrated convergence.
+Independent native6profiles x32768worlds: combined average SB EV-3.528519BB,
+fold-gain lower2.038686BB (prior1.424181BB uses different confidence design).
+Same-condition paired combined-control EV change-0.022400BB,
+family99.9% interval[-0.551464,0.506664]. No significant gain; all gates failed,
+training expansion stopped. CompleteBR/NC point/upper UNKNOWN, NC lower positive.
+Conditional all169/action integration preserves expectation in independent oracles:
+338fold-cell widths100->0;338allin widths100->about50; max100BB unchanged.
+Fresh independent seed17118091; seed-overlapping pilots retained and marked.
+Full precision stillFAIL, formal0/12 unchanged, verifiedRFI0/3bet0;8legacy blocked.
+Local new8regressions PASS. Automatic qualification suite adds these8 (43total).
+Evidence, all6policy checkpoints/R/S/RNG/digests and pending specification choices:
+../qa/action-baseline-20261118/README.md and SPEC_DECISIONS.md.
+No automatic resume or formal registration. No old QA/CI manually rerun,
+no TS/UI change or prod/merge/deploy/billing/destructive action. Latest resulting
+HEAD/automaticCI to be recorded separately in PR120 after push.
