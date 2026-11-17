@@ -12,14 +12,14 @@ const owner='11111111-1111-4111-8111-111111111111', generation='22222222-2222-42
 const url='https://ephptepeuespnxtzdqby.supabase.co', path=owner+'/'+generation+'.mp4'
 const response=()=>({statusCode:200,body:null,setHeader(){return this},status(n){this.statusCode=n;return this},json(x){this.body=x;return this},end(){return this}})
 test('production adapter composes real ffprobe with attested RPC; stop preserves owner hide; target mismatch performs no I/O',async()=>{
-  const names=['VITE_SUPABASE_URL','VITE_SUPABASE_ANON_KEY','VIDEO_PRODUCTION_FENCED_READY','VIDEO_PRODUCTION_LIMITED_ROLLOUT','VIDEO_ATTESTED_RPC_RELEASE_APPROVED','VIDEO_ALLOWED_USER_IDS','VIDEO_ATTESTATION_KEY_HEX','VIDEO_ATTESTATION_KEY_ID','VIDEO_SERVER_ENABLED','VIDEO_CLOUD_TEST_ENABLED']
+  const names=['VERCEL_ENV','VITE_SUPABASE_URL','VITE_SUPABASE_ANON_KEY','VIDEO_PRODUCTION_FENCED_READY','VIDEO_PRODUCTION_LIMITED_ROLLOUT','VIDEO_ATTESTED_RPC_RELEASE_APPROVED','VIDEO_ALLOWED_USER_IDS','VIDEO_ATTESTATION_KEY_HEX','VIDEO_ATTESTATION_KEY_ID','VIDEO_SERVER_ENABLED','VIDEO_CLOUD_TEST_ENABLED']
   const saved=names.map(n=>process.env[n]), originalFetch=globalThis.fetch
   const key=randomBytes(32)
   try {
     delete process.env.VIDEO_CLOUD_TEST_ENABLED
     Object.assign(process.env,{VITE_SUPABASE_URL:url,VITE_SUPABASE_ANON_KEY:'synthetic-public-key',VIDEO_PRODUCTION_FENCED_READY:'true',VIDEO_PRODUCTION_LIMITED_ROLLOUT:'true',VIDEO_ATTESTED_RPC_RELEASE_APPROVED:'true',VIDEO_ALLOWED_USER_IDS:owner,VIDEO_ATTESTATION_KEY_HEX:key.toString('hex'),VIDEO_ATTESTATION_KEY_ID:'7',VIDEO_SERVER_ENABLED:'true'})
     const bytes=execFileSync(process.env.FFMPEG_BINARY_PATH||'ffmpeg',['-v','error','-f','lavfi','-i','color=c=black:s=32x32:d=1','-c:v','libx264','-movflags','frag_keyframe+empty_moov','-f','mp4','pipe:1'],{stdio:['ignore','pipe','pipe']})
-    let writes=0,calls=0,identity=owner,allowed=true,mediaBytes=bytes
+    let writes=0,calls=0,identity=owner,allowed=true,mediaBytes=bytes,visiblePost=true,objectGeneration=generation
     globalThis.fetch=async(input,options={})=>{
       calls++
       const requestUrl=String(input instanceof Request?input.url:input)
@@ -27,8 +27,8 @@ test('production adapter composes real ffprobe with attested RPC; stop preserves
       const json=x=>new Response(JSON.stringify(x),{headers:{'content-type':'application/json'}})
       if(requestUrl===url+'/auth/v1/user')return json({id:identity,app_metadata:{},user_metadata:{},aud:'authenticated'})
       if(requestUrl.endsWith('/rpc/video_rollout_allowed')||requestUrl.endsWith('/rpc/video_rollout_member'))return json(allowed)
-      if(requestUrl.endsWith('/rpc/video_production_storage_generation'))return json(generation)
-      if(requestUrl.includes('/rest/v1/posts?'))return json({user_id:owner,video_path:path})
+      if(requestUrl.endsWith('/rpc/video_production_storage_generation'))return json(objectGeneration)
+      if(requestUrl.includes('/rest/v1/posts?'))return json(visiblePost ? {id:post,user_id:owner,video_path:path,video_generation:generation,video_sha256:createHash('sha256').update(bytes).digest('hex')} : null)
       if(requestUrl.endsWith('/object/authenticated/post-videos/'+path))return new Response(mediaBytes,{headers:{'content-type':'video/mp4','content-length':String(mediaBytes.length)}})
       if(requestUrl.endsWith('/rpc/video_publish_attested_v1')){
         const p=JSON.parse(options.body)
@@ -42,6 +42,31 @@ test('production adapter composes real ffprobe with attested RPC; stop preserves
     }
     const adapter=()=>createProductionSupabaseVideoAdapters(url,'synthetic-public-key','synthetic.token')
     assert.equal(await finalizeImmutableCandidate('synthetic.token',path,'fixture',adapter()),post);assert.equal(writes,1)
+    const inspect = async () => {
+      const body = {action:'recovery_inspect',object_path:path}
+      const res = response()
+      await handler({method:'POST',headers:{authorization:'Bearer synthetic.token','content-type':'application/json','content-length':String(Buffer.byteLength(JSON.stringify(body)))},body},res)
+      return res
+    }
+    process.env.VERCEL_ENV='preview'
+    assert.equal((await inspect()).statusCode,503)
+    process.env.VERCEL_ENV='production'
+    const proof=await inspect()
+    assert.equal(proof.statusCode,200)
+    assert.deepEqual(proof.body,{state:'published',allow_resume:false,expired:false,storage_present:true,post_id:post,sha256:createHash('sha256').update(bytes).digest('hex'),size:bytes.length})
+    visiblePost=false
+    assert.equal((await inspect()).statusCode,409)
+    visiblePost=true
+    mediaBytes=Buffer.from(bytes.map(byte=>byte^1))
+    assert.equal((await inspect()).statusCode,409)
+    mediaBytes=bytes
+    objectGeneration='55555555-5555-4555-8555-555555555555'
+    assert.equal((await inspect()).statusCode,409)
+    objectGeneration=generation
+    identity='44444444-4444-4444-8444-444444444444'
+    assert.equal((await inspect()).statusCode,403)
+    identity=owner
+    assert.equal(writes,1,'recovery inspection never publishes')
     // Exercise an actual Node Writable/backpressure boundary above buffered-response size.
     mediaBytes=Buffer.alloc(5*1024*1024,7)
     let streamed=0,largest=0;const streamHash=createHash('sha256')

@@ -96,3 +96,26 @@ export function discardProvenExpiredVideoTransfer(owner:string,path:string,expec
     live.delete(owner)
   } catch { throw new VideoTransferRecoveryRequiredError() }
 }
+
+/** Preserve the original records before unlocking a proven, explicit recovery.
+ * Archive entries are evidence only and are never inputs to upload or finalize. */
+export function archiveProvenPublishedVideoTransfer(
+  owner: string, path: string, expectedRaw: string, pendingRaw: string | null, postId: string,
+): void {
+  if (!isVideoTransferBlocked(owner)) throw new VideoTransferRecoveryRequiredError()
+  try {
+    const raw = sessionStorage.getItem(key(owner))
+    if (raw !== expectedRaw || JSON.parse(raw).path !== path ||
+        sessionStorage.getItem('poker-id-pending-video-v1') !== pendingRaw) {
+      throw new VideoTransferRecoveryRequiredError()
+    }
+    const archiveKey = 'poker-id-resolved-video-v1:' + path
+    const archive = JSON.stringify({ transfer: raw, pending: pendingRaw, postId })
+    const saved = sessionStorage.getItem(archiveKey)
+    if (saved !== null && saved !== archive) throw new VideoTransferRecoveryRequiredError()
+    sessionStorage.setItem(archiveKey, archive)
+    if (sessionStorage.getItem(archiveKey) !== archive) throw new VideoTransferRecoveryRequiredError()
+    sessionStorage.removeItem(key(owner))
+    live.delete(owner)
+  } catch { throw new VideoTransferRecoveryRequiredError() }
+}

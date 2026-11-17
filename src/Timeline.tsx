@@ -1,7 +1,7 @@
 import { isProvenPublishedVideoRecovery, matchesPendingVideoRecovery } from './videoRecoveryProof'
 import { withVideoRecoveryDeadline } from './videoRecoveryDeadline'
 import { VIDEO_RECOVERY_CANDIDATE_ENABLED, inspectVideoRecoveryCandidate, finalizeRecoveredVideoCandidate } from './videoRecoveryCandidate'
-import { handOffVideoTransfer, hasVideoTransferJournal, readVideoTransferHint, finishRecoveredVideoTransfer, discardProvenExpiredVideoTransfer, VIDEO_TRANSFER_RECOVERY_MESSAGE, VideoTransferRecoveryRequiredError } from './videoTransferJournal'
+import { handOffVideoTransfer, hasVideoTransferJournal, readVideoTransferHint, finishRecoveredVideoTransfer, archiveProvenPublishedVideoTransfer, VIDEO_TRANSFER_RECOVERY_MESSAGE, VideoTransferRecoveryRequiredError } from './videoTransferJournal'
 import { createPollRequest, pollDisplayResult } from './interactiveRequests'
 import { useEffect, useRef, useState } from 'react'
 
@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { validateVideo, uploadPostVideo, MAX_VIDEO_BYTES } from './videoUpload'
 import { compressOversizedVideo } from './videoCompression'
 import { convertMovToMp4, isMovVideo } from './videoMovConversion'
-import { hideVideoPost, finalizeUploadedVideo, inspectCloudVideoRecovery, VIDEO_SERVER_ENABLED } from './videoApi'
+import { hideVideoPost, finalizeUploadedVideo, inspectPublishedVideoRecovery, VIDEO_SERVER_ENABLED } from './videoApi'
 import PostVideo from './PostVideo'
 import { rememberLocalVideoPoster } from './videoPosterCache'
 
@@ -184,16 +184,18 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
   const [recoveryChecking, setRecoveryChecking] = useState(false)
   const confirmPublishedVideoRecovery = async () => {
     if (recoveryChecking || videoSubmitInFlightRef.current) return
+    const lifetime = composerLifetimeRef.current
     setRecoveryChecking(true)
     try {
       const {data:{user},error}=await supabase.auth.getUser()
       if(error||!user) throw new Error('本人認証を確認できません。')
       const hint=readVideoTransferHint(user.id)
-      const proof=await inspectCloudVideoRecovery(hint.path)
+      const proof=await inspectPublishedVideoRecovery(hint.path)
       if(!isProvenPublishedVideoRecovery(proof,hint))
         throw new Error('投稿完了と元ファイルの一致を証明できません。')
       // Recheck the current account before acting on a response from an earlier session.
       const {data:{user:currentUser},error:currentError}=await supabase.auth.getUser()
+      if (lifetime !== composerLifetimeRef.current) return
       if(currentError||currentUser?.id!==user.id) throw new Error('照合中にログイン状態が変わりました。')
       // Never clear the transfer journal while an unrelated or malformed
       // pending draft exists: it could still require separate server proof.
@@ -204,7 +206,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       if(readVideoTransferHint(user.id).raw!==hint.raw||
         sessionStorage.getItem('poker-id-pending-video-v1')!==pendingRaw)
         throw new VideoTransferRecoveryRequiredError()
-      discardProvenExpiredVideoTransfer(user.id,hint.path,hint.raw)
+      archiveProvenPublishedVideoTransfer(user.id, hint.path, hint.raw, pendingRaw, proof.post_id!)
       if(pendingRaw!==null && sessionStorage.getItem('poker-id-pending-video-v1')===pendingRaw)
         sessionStorage.removeItem('poker-id-pending-video-v1')
       pendingVideoRef.current=null
@@ -1278,6 +1280,11 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
   const canSubmitPost = Boolean(content.trim() || (interactiveMode==='normal' && (selectedResult || selectedDiagnosis || styleSnapshot || imageFiles.length || videoFile || pendingVideo)))
     && (interactiveMode!=='poll'||(pollOptions.every(o=>o.trim()) && new Set(pollOptions.map(o=>o.trim().toLowerCase())).size===pollOptions.length))
+
+  const videoSubmitBlocked = Boolean(videoFile || pendingVideo) && (!VIDEO_SERVER_ENABLED || videoRecoveryBlocked)
+  const submitDisabled = isPosting || !canSubmitPost || videoSubmitBlocked
+  const submitLabel = isPosting ? '投稿中...' : videoSubmitBlocked ?
+    (videoRecoveryBlocked ? '前回の投稿を確認してください' : 'この環境では動画を投稿できません') : null
 
   const handlePost = async () => {
     if (postSubmitInFlightRef.current) {
@@ -2944,7 +2951,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
               onClick={handlePost}
 
-              disabled={isPosting || !canSubmitPost}
+              disabled={submitDisabled}
 
               style={{
 
@@ -2963,6 +2970,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
                 background: '#fff',
 
                 color: '#000',
+                opacity: submitDisabled ? 0.55 : 1,
 
                 fontSize: '14px',
 
@@ -2972,11 +2980,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
 
             >
 
-              {isPosting
-
-                ? '投稿中...'
-
-                : '投稿'}
+              {submitLabel ?? '投稿'}
 
             </button>
 
@@ -3242,7 +3246,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
             {attachmentsOpen && renderAttachmentPicker()}
             {movPlayback && <button type="button" style={{ width: 'auto', background: '#202020', color: '#eee', border: '1px solid #444', marginTop: 8 }} onClick={movPlayback.start}>{movPlayback.label}</button>}
           {renderSelectedResultPreview()}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 18 }}><span style={{ color: '#888', fontSize: 12 }}>{content.length}/500</span><button type="button" disabled={isPosting || !canSubmitPost || (Boolean(videoFile || pendingVideo) && (!VIDEO_SERVER_ENABLED || videoRecoveryBlocked))} onClick={handlePost} style={{ width: 'auto', borderRadius: 99, background: '#fff', color: '#000', padding: '10px 24px', fontWeight: 800 }}>{isPosting ? '投稿中...' : '投稿する'}</button></div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 18 }}><span style={{ color: '#888', fontSize: 12 }}>{content.length}/500</span><button type="button" disabled={submitDisabled} onClick={handlePost} style={{ width: 'auto', borderRadius: 99, background: '#fff', color: '#000', padding: '10px 24px', fontWeight: 800, opacity: submitDisabled ? 0.55 : 1 }}>{submitLabel ?? '投稿する'}</button></div>
             {(videoFile || pendingVideo || videoRecoveryBlocked || (videoPreview && !canSubmitPost)) && <div role="status" aria-live="polite" style={{ color: '#e6c27a', marginTop: 10, fontSize: 12 }}>{videoRecoveryBlocked ? '安全停止中：前回の動画転送の確認が必要です。再送信しません。' : isPosting ? '投稿処理中です。完了まで操作せずお待ちください。' : !VIDEO_SERVER_ENABLED ? '動画投稿APIが無効です。動画は送信されません。' : pendingVideo ? '前回の動画を保持中です。新しいファイルは送信しません。' : !canSubmitPost ? '投稿ボタンが無効です。添付の選択状態を確認してください。動画の再送信は行いません。' : '動画を選択済みです。再生して映像・音声を確認してください。'}</div>}
             {message && <div role="alert" style={{ color: '#ccc', marginTop: 10, fontSize: 12 }}>{message}</div>}
             {videoRecoveryNotice && <div role="status" style={{ color: '#ccc', marginTop: 10, fontSize: 12 }}>{videoRecoveryNotice}</div>}

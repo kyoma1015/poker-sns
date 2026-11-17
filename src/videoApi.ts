@@ -35,13 +35,13 @@ export async function finalizeUploadedVideo(objectPath: string, content: string,
 }
 
 /** Read-only recovery classification. Does not authorize upload, clear journal, or publish.
- * Available only after isolated candidate SQL is deployed and reviewed. */
-export async function inspectCloudVideoRecovery(objectPath: string, signal?: AbortSignal): Promise<{
+ * Production uses the existing owner-scoped generation RPC and posts RLS. */
+export async function inspectPublishedVideoRecovery(objectPath: string, signal?: AbortSignal): Promise<{
   state: 'published' | 'stored_unpublished' | 'expired_empty' | 'reserved_empty' | 'conflict'
   allow_resume: false; expired: boolean; storage_present: boolean; post_id: string | null; sha256: string; size: number
 }> {
   assertCurrentVideoCloudTestClient()
-  if (import.meta.env.VITE_VIDEO_CLOUD_TEST_ENABLED !== 'true') throw new Error('テスト環境以外では復旧照合できません。')
+  if (!VIDEO_SERVER_ENABLED) throw new Error('この環境では動画の復旧照合を利用できません。')
   const response = await fetch(VIDEO_FINALIZE_ROUTE, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: await authHeader(signal) },
