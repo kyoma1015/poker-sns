@@ -120,6 +120,42 @@ try {
   assert.deepEqual(await page.evaluate(() => window.decodedTrackCounts), [1, 2])
   assert.deepEqual(alternate.bytes, automatic.bytes)
   console.log('PASS AAC-only demux rejection uses real PCM from the same upload MP4')
+  // QuickTime allows an optional four-byte zero terminator after the
+  // visual sample entry extensions. Append it within moov, after mdat.
+  const camera = await readFile(fixture)
+  const findBox = (start, end, type, skip = 0) => {
+    for (let at = start + skip; at + 8 <= end;) {
+      const size = camera.readUInt32BE(at)
+      assert.ok(size >= 8 && at + size <= end)
+      if (camera.toString('ascii', at + 4, at + 8) === type) return { at, end: at + size }
+      at += size
+    }
+    assert.fail('missing fixture box ' + type)
+  }
+  const parents = [findBox(0, camera.length, 'moov')]
+  assert.ok(findBox(0, camera.length, 'mdat').end <= parents[0].at)
+  for (const type of ['trak', 'mdia', 'minf', 'stbl', 'stsd', 'avc1']) {
+    const parent = parents.at(-1)
+    parents.push(findBox(parent.at + 8, parent.end, type, type === 'avc1' ? 8 : 0))
+  }
+  const entryEnd = parents.at(-1).end
+  const withTerminator = Buffer.concat([camera.subarray(0, entryEnd), Buffer.alloc(4), camera.subarray(entryEnd)])
+  for (const { at } of parents) withTerminator.writeUInt32BE(camera.readUInt32BE(at) + 4, at)
+  await page.evaluate(() => { window.rejectSingleTrack = false })
+  await page.locator('input').setInputFiles({ name: 'quicktime-terminator.mov', mimeType: 'video/quicktime', buffer: withTerminator })
+  await page.waitForFunction(() => !!window.autoResult)
+  const terminated = await page.evaluate(() => window.autoResult)
+  assert.ok(terminated.ok, terminated.error)
+  const terminatedMp4 = join(qa, 'quicktime-terminator.mp4')
+  await writeFile(terminatedMp4, Buffer.from(terminated.bytes))
+  assert.equal(streams(terminatedMp4), streams(fixture))
+  const malformed = Buffer.from(withTerminator)
+  malformed[entryEnd + 3] = 1
+  await page.locator('input').setInputFiles({ name: 'bad-terminator.mov', mimeType: 'video/quicktime', buffer: malformed })
+  await page.waitForFunction(() => !!window.autoResult)
+  assert.equal(await page.evaluate(() => window.autoResult.ok), false)
+  assert.match(await page.evaluate(() => window.automaticDiagnostic), /^container: truncated MOV box header: file\/moov\/trak\/mdia\/minf\/stbl\/stsd\/avc1 offset=\d+ remaining=4 boxes=\d+$/)
+  console.log('PASS QuickTime video terminator preserves both streams; malformed tail rejected with local diagnostics')
   await page.evaluate(()=>{window.autoTest=false; window.rejectSingleTrack=false})
   console.log('PASS compatible MOV automatically remuxes without playback or extra clicks; both media streams preserved')
   async function convert(path,abort=false) {

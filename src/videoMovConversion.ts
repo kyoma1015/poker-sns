@@ -90,7 +90,7 @@ async function verifyRecordedMp4Audio(blob: Blob, audio: AudioContext, gesture: 
 }
 
 
-type MovieBox = { start: number; end: number; type: string }
+type MovieBox = { start: number; end: number; type: string; path: string }
 
 /** Remux the compatible subset without moving media samples or chunk offsets. */
 class MovVerificationError extends Error {}
@@ -100,10 +100,16 @@ function remuxCompatibleMov(buffer: ArrayBuffer): { buffer: ArrayBuffer; audioOn
   const bytes = new Uint8Array(buffer)
   const fourcc = (at: number) => String.fromCharCode(...bytes.subarray(at, at + 4))
   const writeType = (at: number, type: string) => bytes.set(Array.from(type, char => char.charCodeAt(0)), at)
-  const boxes = (start: number, end: number): MovieBox[] => {
+  const boxes = (start: number, end: number, path: string, videoExtensions = false): MovieBox[] => {
     const result: MovieBox[] = []
     for (let at = start; at < end;) {
-      if (end - at < 8 || result.length >= 4096) throw new MovVerificationError('invalid MOV box list')
+      const remaining = end - at
+      const detail = () => `${path} offset=${at} remaining=${remaining} boxes=${result.length}`
+      if (result.length >= 4096) throw new MovVerificationError('MOV box limit: ' + detail())
+      // QuickTime video sample descriptions allow one final four-byte zero
+      // terminator after the extension atoms. It is outside the atom list.
+      if (videoExtensions && remaining === 4 && view.getUint32(at) === 0) break
+      if (remaining < 8) throw new MovVerificationError('truncated MOV box header: ' + detail())
       const type = fourcc(at + 4)
       let size = view.getUint32(at)
       // QuickTime can use an extended size or extend mdat to EOF.
@@ -115,19 +121,19 @@ function remuxCompatibleMov(buffer: ArrayBuffer): { buffer: ArrayBuffer; audioOn
         if (extended < 16n || extended > BigInt(end - at)) throw new MovVerificationError('invalid extended mdat size')
         size = Number(extended)
       }
-      if (size < 8 || size > end - at) throw new MovVerificationError('unsupported MOV box size')
-      result.push({ start: at, end: at + size, type })
+      if (size < 8 || size > end - at) throw new MovVerificationError('invalid MOV box size: ' + detail())
+      result.push({ start: at, end: at + size, type, path: path + '/' + (['moov', 'trak', 'mdia', 'minf', 'dinf', 'dref', 'stbl', 'stsd', 'avc1', 'hvc1', 'hev1', 'mp4a', 'wave'].includes(type) ? type : 'box') })
       at += size
     }
     return result
   }
-  const children = (box: MovieBox) => boxes(box.start + 8, box.end)
+  const children = (box: MovieBox) => boxes(box.start + 8, box.end, box.path)
   const one = (items: MovieBox[], type: string) => {
     const matches = items.filter(item => item.type === type)
     if (matches.length !== 1) throw new MovVerificationError('unsupported MOV structure')
     return matches[0]
   }
-  const top = boxes(0, bytes.length)
+  const top = boxes(0, bytes.length, 'file')
   const brand = one(top, 'ftyp')
   if (brand.start !== 0 || brand.end < 20 || brand.end % 4 !== 0 ||
       !['qt  ', 'isom', 'mp41', 'mp42'].includes(fourcc(8)) ||
@@ -146,20 +152,21 @@ function remuxCompatibleMov(buffer: ArrayBuffer): { buffer: ArrayBuffer; audioOn
     const info = children(one(media, 'minf'))
     const dataRef = one(children(one(info, 'dinf')), 'dref')
     if (dataRef.end < dataRef.start + 16 || view.getUint32(dataRef.start + 12) !== 1) throw new MovVerificationError('invalid data reference')
-    const refs = boxes(dataRef.start + 16, dataRef.end)
+    const refs = boxes(dataRef.start + 16, dataRef.end, dataRef.path)
     const ref = refs[0]
     if (refs.length !== 1 || !['url ', 'alis'].includes(ref.type) || ref.end - ref.start !== 12 ||
         view.getUint32(ref.start + 8) !== 1) throw new MovVerificationError('external media reference')
     if (ref.type === 'alis') writeType(ref.start + 4, 'url ')
     const description = one(children(one(info, 'stbl')), 'stsd')
     if (description.end < description.start + 16 || view.getUint32(description.start + 12) !== 1) throw new MovVerificationError('multiple sample descriptions')
-    const entries = boxes(description.start + 16, description.end)
+    const entries = boxes(description.start + 16, description.end, description.path)
     if (entries.length !== 1) throw new MovVerificationError('invalid sample description')
     const sample = entries[0]
     if (sample.end < sample.start + 16 || view.getUint16(sample.start + 14) !== 1) throw new MovVerificationError('invalid sample data reference')
     if (kind === 'vide' && ['avc1', 'hvc1', 'hev1'].includes(sample.type)) {
       const config = sample.type === 'avc1' ? 'avcC' : 'hvcC'
-      one(boxes(sample.start + 86, sample.end), config)
+      if (sample.end < sample.start + 86) throw new MovVerificationError('truncated video sample description')
+      one(boxes(sample.start + 86, sample.end, sample.path, true), config)
       videoCount++
     } else if (kind === 'soun' && sample.type === 'mp4a' && sample.end >= sample.start + 36) {
       const header = one(media, 'mdhd')
@@ -174,7 +181,7 @@ function remuxCompatibleMov(buffer: ArrayBuffer): { buffer: ArrayBuffer; audioOn
       if (!timescale || !Number.isFinite(duration) || duration <= 0 || duration > MAX_SECONDS + 0.25) throw new MovVerificationError('invalid audio duration')
       const version = view.getUint16(sample.start + 16)
       if (version > 1) throw new MovVerificationError('unsupported QuickTime audio entry')
-      const properties = boxes(sample.start + (version === 1 ? 52 : 36), sample.end)
+      const properties = boxes(sample.start + (version === 1 ? 52 : 36), sample.end, sample.path)
       const wave = properties.find(box => box.type === 'wave')
       if (wave || version === 1) {
         const esds = one(wave ? children(wave) : properties, 'esds')
