@@ -126,6 +126,7 @@ try {
   }
   console.log('MP4 encoder support', await page.evaluate(()=>['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4;codecs=avc1,mp4a.40.2','video/mp4;codecs=avc1,opus'].map(type=>({type,supported:MediaRecorder.isTypeSupported(type)}))))
   await page.evaluate(() => {
+    window.autoTest = true
     window.failAudioDecode = true
     window.autoResult = null
     document.querySelector('input').dispatchEvent(new Event('change'))
