@@ -201,3 +201,82 @@ PYTHONPATH=. python -B docs/qa/mccfr-variance-20261117/probe_native_fold.py --bu
 ```
 The folder must contain the3saved gzip checkpoints; use a copy to preserve Git
 evidence. Runtime guard30s/policy, incomplete fixed-n runs do not claim confidence.
+
+## Average-support correction (latest solver continuation)
+
+Further boundary review found an additional cause in the average estimator,
+separate from resetting/accumulation. Legacy traverser-average weight is correct
+on the earlier strictly-positive-support fixtures, but not where opponent target
+probability is0. If SB always folds, BB's own realization reach at vs-open infosets
+is still1; legacy BB-traverser paths never visit those rows, giving estimated S0
+instead of the required positive strategy sum. The earlier no-reset diagnosis
+remains true; it did NOT establish average support at this boundary.
+
+`average_support.py` averages the NON-traverser on the exploring traverser's path.
+Every history with positive non-traverser own realization then has sample support;
+histories with own reach0 require zero weight. Both regret strategies are frozen
+through the simultaneous owner pair, sharing one deal but independent action RNG
+streams. Average increment is own_realization*current_policy / action_prefix_q.
+Regret correction unchanged. Independent CF/average oracle and actual native
+zero-target test establish the support fix. Control/corrected runs produce EXACTLY
+identical nonzero R values and master RNG states, isolating the average change.
+
+Original checkpoint/R/S/RNG retained unchanged. Only R and RNG are imported into
+new research states; new average accumulators start0 because old S lacks required
+support. Source S is preserved at origin and fingerprinted, not destroyed or
+retagged as a corrected sum. This is a new policy/digest/averaging phase.
+
+Same phase/migration/seed/budget control vs corrected,128paired updates each:
+| quantity | traverser-average control | corrected non-traverser average |
+|---|---:|---:|
+|training seconds|0.428237|0.564078|
+|total R/S-union infosets including warm source|1309|1668|
+|new regret samples / distinct R infosets|515 /472|515 /472|
+|new average samples / distinct S infosets|515 /472|509 /466|
+|S revisit rate within new window|8.3495%|8.4479%|
+
+R revisit43/515=8.3495% for both. Counts are separate R/S sample windows, not
+lifetime/source/card-deal coverage. Additional S-only rows have zero R until
+visited for regret; row totals are not a count of trained/qualified strategies.
+A different iteration/averaging window from the earlier2sec ablations means its
+8.45% should not be treated as regression from17.76%.
+
+All169/action4world evaluation25.0/26.9sec on each SAME saved policy digest:
+- control RFI-3.996691 [-17.261062,9.267680]; corrected-3.795624 [-17.059996,9.468747].
+- both vs3BB conditional1.490984 [-11.794112,14.776080].
+- RFI class-only heldout response gain control0.791306, corrected0.285717; broad
+  intervals still include0. No complete response upper/NashConv point claimed.
+The root all169 interval width26.528742BB remains unchanged. Correctness repair
+is established; convergence/precision improvement is NOT statistically established.
+No staged expansion, certificate/registry/search registration or formal PASS.
+
+Independent native-only8192world/policy fold stop probe (separate2-policy99.9%
+family, not a joint confidence claim with the earlier3-policy probe):
+| policy | root native SB EV BB | feasible fold gain interval BB | full BR gain/NashConv LOWER BB |
+|---|---:|---|---:|
+|control|-4.184814|[1.434862,5.934767]|1.434862|
+|corrected|-4.174133|[1.424181,5.924086]|1.424181|
+Complete optimized BR/NC point and upper remain null. Corrected policy is still
+refuted by a legal deviation; the lower-bound ordering is not proof of improvement.
+No surrogate model: native-only probe uses actual full-game returns; full uniform
+execution/model/EV error required for admission remains unproved.
+
+Four additional focused tests pass: zero-opponent-target support, independent
+realization-average oracle, identical regret-control comparison, frozen simultaneous
+pair/source preservation/exact checkpoint resume. Final new-module integration:
+14testsPASS in0.334s; automatic qualification now includes existing21+14=35.
+Two additional checkpoint replay suites32paths eachPASS (224across7saved states).
+Old QA/Node/app/browser not manually repeated. Extra CPU evaluation remained within
+5min local budget; compressed evidence remains<20MiB. Native average probe4.35sec.
+
+Latest restart point: `average-corrected-checkpoint.json.gz` plus
+`AverageSupportSolver(...,correct=True).restore(decoded_json)`, then bounded
+`step()` pairs and `snapshot()`; tested exact resume. Use paired `step()` for this
+scheme. Example bounded reproduction (new source-R/new-average experiment):
+```
+PYTHONPATH=. python -B docs/qa/mccfr-variance-20261117/compare_average_support.py --build /tmp/poker-public-response-build --source docs/qa/native-mccfr-20261117/checkpoint.json --output /tmp/new-average-support
+QUALIFICATION_BUILD=/tmp/poker-public-response-build python -B -m unittest gto.qualification.test_average_support -v
+```
+All4baseline/source checkpoints remain reproducible at their version-pinned source;
+old average receipts remain valid frozen behavioral-policy measurements, not proof
+of an unbiased average estimator at zero support. Formal0/12 and RFI0/3bet0 remain.

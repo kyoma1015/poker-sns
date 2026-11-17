@@ -91,3 +91,16 @@ These are also full zero-sum NashConv LOWER bounds, not completeBR/NC point or
 upper estimates. All3assessed policies refuted; no expansion. Profile-onlyEV
 interval narrows by measurement allocation, not demonstrated solver improvement.
 Full all169/action precision, complete response upper and formal0/12 unchanged.
+
+Average estimator boundary defect subsequently found and repaired: legacy owner
+average lacks sample support at opponent target0. New non-traverser averaging on
+exploring-owner paths fixes support; simultaneous pair/frozenR and separate RNG.
+Old checkpoint R/RNG reused; new S accumulator separate, original S preserved and
+fingerprinted. Same128pair control/corrected R updates EXACTLY identical.
+Corrected state1668R/S-union infosets; R515samples/472distinct (8.35%repeat),
+S509/466 (8.45%).4additional tests,14new focused integrationPASS; native replay224
+paths across7states. Corrected policy digestc848ede7d11d0723ec6f558b606d59467f7f31866fe73cfc46c1e1093009ad60.
+Corrected native rootEV-4.174133BB; legalfold gain and NC LOWER confidence bound
+1.424181BB (latest2-policy family99.9%). Still refuted, no expansion/promotion.
+All169EV intervals unchanged in width; fullBR/NC upper or pointUNKNOWN. Formal0/12.
+Latest restart: average-corrected-checkpoint.json.gz / average_support.py pairedstep.

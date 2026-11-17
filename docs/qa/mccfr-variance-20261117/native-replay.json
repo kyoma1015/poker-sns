@@ -29,5 +29,17 @@
     "policy_digest": "07cc88804b3ad7d75cd05dd1ca862ac11f2a13020c7c95ffe64f458d79c82327",
     "full_native_paths": 32,
     "status": "PASS"
+  },
+  {
+    "checkpoint": "average-control-checkpoint.json.gz",
+    "policy_digest": "11eb270d37bd489e767f93846535265b7caf9a0dc35dd5f807240bb556f29a4d",
+    "full_native_paths": 32,
+    "status": "PASS"
+  },
+  {
+    "checkpoint": "average-corrected-checkpoint.json.gz",
+    "policy_digest": "c848ede7d11d0723ec6f558b606d59467f7f31866fe73cfc46c1e1093009ad60",
+    "full_native_paths": 32,
+    "status": "PASS"
   }
 ]

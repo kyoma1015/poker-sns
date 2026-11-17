@@ -90,7 +90,10 @@ if __name__=='__main__':
     p.add_argument('--output',required=True);a=p.parse_args()
     data=json.loads(gzip.decompress(Path(a.checkpoint).read_bytes()))
     rules,native=load(a.build)
-    if 'external_sha256' in data['identity']:
+    if 'average_support_sha256' in data['identity']:
+        from gto.qualification.average_support import AverageSupportSolver
+        s=AverageSupportSolver(rules,native,correct=data['identity']['average_actor']=='nontraverser')
+    elif 'external_sha256' in data['identity']:
         from gto.qualification.external_first import ExternalFirst
         s=ExternalFirst(rules,native)
     else:s=VarianceSolver(rules,native,suits=data['identity']['key']=='exact-suit-orbit',control=data['identity']['baseline']=='exact-fold')

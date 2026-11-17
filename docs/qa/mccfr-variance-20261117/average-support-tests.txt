@@ -1,0 +1,9 @@
+test_control_and_corrected_use_identical_regret_updates (gto.qualification.test_average_support.AverageSupport.test_control_and_corrected_use_identical_regret_updates) ... ok
+test_other_average_expectation_matches_exact_realization_sum_with_zero_target (gto.qualification.test_average_support.AverageSupport.test_other_average_expectation_matches_exact_realization_sum_with_zero_target) ... ok
+test_resume_source_preservation_and_frozen_pair (gto.qualification.test_average_support.AverageSupport.test_resume_source_preservation_and_frozen_pair) ... ok
+test_zero_opponent_support_average_is_reachable_only_via_exploring_opponent (gto.qualification.test_average_support.AverageSupport.test_zero_opponent_support_average_is_reachable_only_via_exploring_opponent) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.094s
+
+OK

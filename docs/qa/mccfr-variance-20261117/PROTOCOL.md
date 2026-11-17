@@ -56,3 +56,13 @@ interval calculation. Completed fixed-n runs only; time-limited partial runs get
 no interval. This yields feasibleBR/NashConv LOWER bounds, never upper/point
 substitution. It reallocates measurement budget to root profile, not all169/action
 precision or demonstrated solver improvement. No training or expansion.
+
+Average-support boundary gate, before compute: opponent target zero can hide
+realization-positive traverser-average rows in the legacy estimator. Correct by
+averaging the NON-traverser on the exploring player's path. Prove zero-support
+fixture and independent CF/average expectation; retain legacy source S, import R
+and RNG only into new explicitly reset average accumulators. Simultaneous pair
+updates freeze R for both owner samples, same deal/independent path RNG streams.
+Compare corrected vs same-phase traverser-average control,128paired iterations,
+<=2seconds each, no extension; evaluate eachall169/action4world <=90seconds. This
+is a correctness fix, not evidence of convergence. No promotion from unit tests.
