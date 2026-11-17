@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto'
 import { assertProductionVideoConfiguration, assertProductionVideoPublisher, assertProductionVideoMember } from '../server/video-production-rollout.mjs'
 import { handleCloudVideo } from '../server/video-cloud-http.mjs'
 import { assertCloudTestRequestConfiguration } from '../server/video-cloud-test-target.mjs'
@@ -80,6 +81,49 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
       if (hidden.error || hidden.data !== true) return res.status(403).end()
       return res.status(200).json({ hidden: true })
     } catch { return res.status(403).end() }
+  }
+  if ((body as Record<string, unknown>).action === 'recovery_inspect') {
+    const path = (body as Record<string, unknown>).object_path
+    const match = typeof path === 'string' ? VIDEO_PATH.exec(path) : null
+    if (Object.keys(body).length !== 2 || typeof path !== 'string' || !match) return res.status(400).end()
+    if (options.isolatedLocalOnly || process.env.VERCEL_ENV !== 'production') return res.status(503).end()
+    try {
+      assertProductionVideoConfiguration()
+      assertServerAttestationAvailable()
+    } catch { return res.status(503).end() }
+    const url = process.env.VITE_SUPABASE_URL
+    const key = process.env.VITE_SUPABASE_ANON_KEY
+    if (!url || !key) return res.status(503).end()
+    const token = authorization.slice(7)
+    const viewer = createClient(url, key, { global: { headers: { Authorization: authorization } }, auth: { persistSession: false, autoRefreshToken: false } })
+    try {
+      const { data, error } = await viewer.auth.getUser(token)
+      if (error || !data.user) return res.status(401).end()
+      const owner = data.user.id
+      if (owner !== match[1]) return res.status(403).end()
+      await assertProductionVideoPublisher(viewer, owner)
+      const readPost = async () => {
+        const result = await viewer.from('posts').select('id,user_id,video_path,video_generation,video_sha256')
+          .eq('user_id', owner).eq('video_path', path).maybeSingle()
+        if (result.error) throw result.error
+        return result.data
+      }
+      const post = await readPost()
+      if (!post || !UUID.test(post.id) || post.user_id !== owner || post.video_path !== path ||
+          !UUID.test(post.video_generation) || !/^[0-9a-f]{64}$/.test(post.video_sha256)) return res.status(409).end()
+      const adapter = createProductionSupabaseVideoAdapters(url, key, token)
+      const snapshot = await adapter.snapshot(owner, path)
+      const sha256 = createHash('sha256').update(snapshot.bytes).digest('hex')
+      if (snapshot.generation !== post.video_generation || sha256 !== post.video_sha256) return res.status(409).end()
+      const current = await readPost()
+      if (current?.id !== post.id || current.user_id !== owner || current.video_path !== path ||
+          current.video_generation !== snapshot.generation || current.video_sha256 !== sha256 ||
+          await adapter.currentGeneration(owner, path) !== snapshot.generation) return res.status(409).end()
+      return res.status(200).json({
+        state: 'published', allow_resume: false, expired: false, storage_present: true,
+        post_id: post.id, sha256, size: snapshot.size,
+      })
+    } catch { return res.status(409).json({ error: 'recovery_inspection_unavailable' }) }
   }
   if (['bind_recovery','recovery_status','recovery_finalize'].includes(String((body as Record<string,unknown>).action))) {
     return handleVideoRecoveryCandidate(req,res,options.isolatedLocalOnly===true)

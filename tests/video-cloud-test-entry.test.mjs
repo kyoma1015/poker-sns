@@ -20,3 +20,12 @@ test('real finalize and media entrypoints guard before all outbound IO',()=>{
  assert.match(source.slice(guard,guard+150),/status\(503\)/)
  }
 })
+
+test('finalize cloud-test dispatch stays behind fail-closed guard and ahead of production mutations',()=>{
+ const source=readFileSync(new URL('../api/video-finalize.ts',import.meta.url),'utf8')
+ const guard=source.indexOf('try { assertCloudTestRequestConfiguration(process.env) }')
+ const dispatch=source.indexOf("if (process.env.VIDEO_CLOUD_TEST_ENABLED === 'true') return handleCloudVideo(req,res)")
+ const normal=source.indexOf("if (req.method !== 'POST') return res.status(405).end()")
+ assert.ok(guard>=0 && dispatch>guard && normal>dispatch,'cloud dispatch must be guarded and precede normal finalize path')
+ assert.match(source,/import \{ handleCloudVideo \} from '\.\.\/server\/video-cloud-http\.mjs'/)
+})

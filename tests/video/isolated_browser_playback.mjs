@@ -1,6 +1,10 @@
 // Actual React PostVideo in headless Chromium, backed by isolated Supabase
 // through the real authorized media API. Never used in production builds.
 import assert from 'node:assert/strict'
+import { execFileSync } from 'node:child_process'
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import { createServer as createHttpServer } from 'node:http'
 import { createServer as createViteServer } from 'vite'
 import { chromium } from 'playwright-core'
@@ -333,9 +337,34 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     const movComposer=movPage.getByRole('dialog',{name:'新しい投稿'})
     await movComposer.waitFor()
     const movPicker=movPage.locator('input[type="file"][accept*="video/mp4"]')
-    await movPicker.setInputFiles({name:'phone.mov',mimeType:'video/quicktime',buffer:bytes})
-    await movComposer.getByRole('button',{name:/MOV変換を開始/}).click()
-    await movComposer.locator('video').waitFor({timeout:25000})
+    // The generic Storage fixture can be silent. The MOV path now fails
+    // closed without decoded PCM, so exercise conversion with audible input.
+    const movDir = mkdtempSync(join(tmpdir(),'poker-audible-mov-'))
+    let audibleMov
+    try {
+      const movPath = join(movDir,'fixture.mov')
+      execFileSync('ffmpeg',[
+        '-v','error','-f','lavfi','-i','testsrc2=size=160x120:rate=15',
+        '-f','lavfi','-i','sine=frequency=880:sample_rate=44100',
+        '-t','2','-c:v','libx264','-pix_fmt','yuv420p','-preset','ultrafast','-c:a','aac',
+        '-movflags','+faststart','-y',movPath,
+      ])
+      audibleMov = readFileSync(movPath)
+    } finally { rmSync(movDir,{recursive:true,force:true}) }
+    await movPicker.setInputFiles({name:'phone.mov',mimeType:'video/quicktime',buffer:audibleMov})
+    // The compatible fixture must reach preview with no conversion clicks.
+    try {
+      await movComposer.locator('video').waitFor({timeout:25000})
+    } catch (error) {
+      // Capture the actual conversion failure instead of masking it as a
+      // generic missing-preview timeout. Do not upload or mutate any media.
+      const diagnostic = await movComposer.evaluate(dialog => ({
+        text: dialog.innerText.slice(0,2500),
+        videoCount: dialog.querySelectorAll('video').length,
+      }))
+      throw new Error('MOV conversion did not produce a preview: '+JSON.stringify(diagnostic),{cause:error})
+    }
+    assert.equal(await movComposer.getByRole('button',{name:/MOV変換を開始|変換後の音声を確認/}).count(),0)
     const localMp4=await movComposer.locator('video').evaluate(async video=>{
       const blob=await (await fetch(video.src)).blob();return {type:blob.type,size:blob.size}
     })
@@ -343,12 +372,12 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     assert.equal(prematureMovWrites,0,'conversion selection must not reserve or upload')
     await movComposer.getByRole('button',{name:'添付を解除'}).click()
     await movPage.evaluate(()=>{
+      OfflineAudioContext.prototype.decodeAudioData = async () => { throw new DOMException('unsupported', 'EncodingError') }
       window.__MOV_CLOSED=0;const close=AudioContext.prototype.close
       AudioContext.prototype.close=function(...args){window.__MOV_CLOSED++;return close.apply(this,args)}
     })
-    await movPicker.setInputFiles({name:'cancel.mov',mimeType:'video/quicktime',buffer:bytes})
-    await movComposer.getByRole('button',{name:/MOV変換を開始/}).click()
-    await movComposer.getByText(/MOVを端末内でMP4へ変換しています/).waitFor()
+    await movPicker.setInputFiles({name:'cancel.mov',mimeType:'video/quicktime',buffer:audibleMov})
+    await movComposer.getByRole('button',{name:'MOV変換を開始',exact:true}).waitFor()
     await movComposer.getByRole('button',{name:'×',exact:true}).click()
     await movPage.waitForFunction(()=>window.__MOV_CLOSED>0)
     await movPage.evaluate(()=>window.dispatchEvent(new Event('poker-id-open-compose')))

@@ -40,3 +40,49 @@ export async function verifyCloudHttp({owner,other,bytes,key,url,signingKey,sql}
  console.log('PASS: dedicated cloud real HTTP + Chromium reservation, actual ffprobe/HMAC publish, concurrent one-post and JWT video playback; foreign finalize rejected')
  }finally{if(browser)await browser.close();await new Promise(r=>server.close(r));delete process.env.VIDEO_CLOUD_TEST_HMAC_HEX;delete process.env.VIDEO_CLOUD_TEST_HMAC_ID;delete process.env.VITE_SUPABASE_URL;delete process.env.VITE_SUPABASE_ANON_KEY}
 }
+
+/**
+ * Read-only recovery inspection over the same cloud HTTP handler used by finalize.
+ * The candidate RPC is installed by the caller before this probe runs.
+ */
+export async function verifyCloudRecoveryHttp({owner,other,key,url,path,postId,sha256,size,sql}) {
+ assert.equal(url,'http://127.0.0.1:56321')
+ const previousUrl=process.env.VITE_SUPABASE_URL,previousKey=process.env.VITE_SUPABASE_ANON_KEY
+ process.env.VITE_SUPABASE_URL=url;process.env.VITE_SUPABASE_ANON_KEY=key
+ const handler=createCloudVideoHandler({isolatedLocalOnly:true})
+ const server=createServer(async(req,res)=>{
+  res.status=code=>{res.statusCode=code;return res};res.json=x=>res.end(JSON.stringify(x))
+  let raw='';for await(const chunk of req)raw+=chunk
+  req.body=raw?JSON.parse(raw):undefined
+  await handler(req,res)
+ })
+ try {
+  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve))
+  const endpoint='http://127.0.0.1:'+server.address().port+'/internal/video/finalize'
+  const request=async(jwt)=>{const headers={'Content-Type':'application/json'};if(jwt)headers.Authorization='Bearer '+jwt
+   const response=await fetch(endpoint,{method:'POST',headers,body:JSON.stringify({action:'recovery_inspect',object_path:path})})
+   return {status:response.status,body:await response.text()}
+  }
+  const ownerToken=(await owner.auth.getSession()).data.session.access_token
+  const otherToken=(await other.auth.getSession()).data.session.access_token
+  const before=sql("select count(*) from public.posts where video_path='"+path+"'")
+  const own=await request(ownerToken)
+  assert.equal(own.status,200)
+  const proof=JSON.parse(own.body)
+  assert.equal(proof.state,'published')
+  assert.equal(proof.allow_resume,false)
+  assert.equal(proof.post_id,postId)
+  assert.equal(proof.sha256,sha256)
+  assert.equal(proof.size,size)
+  assert.equal(proof.storage_present,true)
+  assert.equal(typeof proof.expired,'boolean')
+  assert.notEqual((await request(otherToken)).status,200)
+  assert.equal((await request(null)).status,401)
+  assert.equal(sql("select count(*) from public.posts where video_path='"+path+"'"),before)
+  console.log('PASS: cloud recovery_inspect HTTP owner proof, foreign/anonymous denial and unchanged published post')
+ }finally {
+  await new Promise(resolve=>server.close(resolve))
+  if(previousUrl===undefined)delete process.env.VITE_SUPABASE_URL;else process.env.VITE_SUPABASE_URL=previousUrl
+  if(previousKey===undefined)delete process.env.VITE_SUPABASE_ANON_KEY;else process.env.VITE_SUPABASE_ANON_KEY=previousKey
+ }
+}
