@@ -77,7 +77,7 @@ try {
       if (!window.autoTest) return;
       controller=new AbortController(); window.autoResult=null;
       try {
-        const output=await prepareMovForUpload(event.target.files[0],()=>{throw new Error('unexpected playback button')},controller.signal, diagnostic=>{window.automaticDiagnostic=diagnostic});
+        const output=await prepareMovForUpload(event.target.files[0],step=>{ window.automaticFallbackStep=step; throw new Error('unexpected playback button') },controller.signal, diagnostic=>{window.automaticDiagnostic=diagnostic});
         window.autoResult={ok:true,bytes:Array.from(new Uint8Array(await output.arrayBuffer()))};
       } catch(e) {window.autoResult={ok:false,error:e.message};}
     };
@@ -132,10 +132,9 @@ try {
     document.querySelector('input').dispatchEvent(new Event('change'))
   })
   await page.waitForFunction(() => !!window.autoResult)
-  assert.deepEqual(await page.evaluate(() => [window.autoResult, window.automaticDiagnostic]), [
-    { ok: false, error: 'unexpected playback button' },
-    'audio: decodeAudioData EncodingError',
-  ])
+  assert.deepEqual(await page.evaluate(() => [
+    window.autoResult.ok, window.automaticDiagnostic, window.automaticFallbackStep,
+  ]), [false, 'audio: decodeAudioData EncodingError', 'source'])
   await page.evaluate(() => { window.autoTest = false })
   const converted=await convert(fixture)
   assert.equal(converted.ok,true,converted.error)
