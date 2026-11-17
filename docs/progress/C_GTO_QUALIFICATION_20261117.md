@@ -41,3 +41,23 @@ This is interface readiness only: actual strategic continuation generator, compl
 BR upper and precision still missing. Formal0/12, verified RFI0/3bet0 unchanged.
 See ../qa/public-response-20261117/README.md for commands, budgets and restart.
 No production/main/Draft/registry change, no manualCI or long training.
+
+## Solver-first continuation — 2026-11-17 JST
+
+From d3507b681b186d2e52e8a9217bee786bdf0a1b47, added full-history outcome-sampling
+MCCFR generation (not another interface):512learning paths,256paired iterations,
+1022visited infosets,0.777803s. Uniform-all-legal generative prior makes one
+algorithmically complete policy; fully trained/qualified count0. Exact own/public
+keys, all sizes/streets, no fold completion. Actual regret/average updates and RNG
+checkpoint resume verified; independent matched-history expected CF gradientPASS.
+Same policy digest6bb5c89a082769c27f2b593b41e8c848995cb98c547476a86f5e52f1ba65dba5
+has all169/action EV and exact source3BB-open posterior evaluation22.563812s.
+RFI EV-4.268624471BB, vs3BB conditional1.559057188BB, very wide intervals;
+full optimizedBR/NashConv UNKNOWN, trivial NC upper100BB is NOT convergence.
+No surrogate model; uniform execution error still unproved. Small precision gate
+fails: no promotion or subsequent broad learning. Formal0/12, RFI0/3bet0 unchanged.
+21Python/8NodePASS; frozen evidence/layout retained. Saved actual checkpoint,
+source pins and measurements: ../qa/native-mccfr-20261117/README.md.
+Next: sample efficiency with exact infoset identity, independent complete-response
+bound and paired fixed-budget improvement. A/B/C still PENDING. Draft/prod safety
+unchanged; actual resulting HEAD/automaticCI observation recorded in PR comment.
