@@ -47,6 +47,27 @@ try {
       if (!clickActive) return Promise.reject(new DOMException('Requires direct click', 'NotAllowedError'));
       return nativePlay.call(this);
     };
+    const nativeDecode = OfflineAudioContext.prototype.decodeAudioData;
+    OfflineAudioContext.prototype.decodeAudioData = function (buffer) {
+      const view = new DataView(buffer);
+      const children = (start, end) => {
+        const boxes = [];
+        while (start < end) {
+          const size = view.getUint32(start);
+          if (size < 8 || start + size > end) throw new Error('invalid audio verification box');
+          boxes.push({start, end: start + size, type: view.getUint32(start + 4)});
+          start += size;
+        }
+        return boxes;
+      };
+      if (window.autoTest) {
+        const movie = children(0, buffer.byteLength).find(box => box.type === 0x6d6f6f76);
+        const tracks = children(movie.start + 8, movie.end).filter(box => box.type === 0x7472616b);
+        if (tracks.length !== 1) throw new Error('expected only the AAC verification track');
+        if (window.failAudioDecode) return Promise.reject(new DOMException('private native text', 'EncodingError'));
+      }
+      return nativeDecode.call(this, buffer);
+    };
     const gesture = (step, start) => {
       play.dataset.step=step; play.hidden=false;
       play.onclick=()=>{ clickActive=true; try { start(); } finally { clickActive=false; } };
@@ -56,7 +77,7 @@ try {
       if (!window.autoTest) return;
       controller=new AbortController(); window.autoResult=null;
       try {
-        const output=await prepareMovForUpload(event.target.files[0],()=>{throw new Error('unexpected playback button')},controller.signal);
+        const output=await prepareMovForUpload(event.target.files[0],()=>{throw new Error('unexpected playback button')},controller.signal, diagnostic=>{window.automaticDiagnostic=diagnostic});
         window.autoResult={ok:true,bytes:Array.from(new Uint8Array(await output.arrayBuffer()))};
       } catch(e) {window.autoResult={ok:false,error:e.message};}
     };
@@ -104,6 +125,17 @@ try {
     return page.evaluate(()=>window.result)
   }
   console.log('MP4 encoder support', await page.evaluate(()=>['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4;codecs=avc1,mp4a.40.2','video/mp4;codecs=avc1,opus'].map(type=>({type,supported:MediaRecorder.isTypeSupported(type)}))))
+  await page.evaluate(() => {
+    window.failAudioDecode = true
+    window.autoResult = null
+    document.querySelector('input').dispatchEvent(new Event('change'))
+  })
+  await page.waitForFunction(() => !!window.autoResult)
+  assert.deepEqual(await page.evaluate(() => [window.autoResult, window.automaticDiagnostic]), [
+    { ok: false, error: 'unexpected playback button' },
+    'audio: decodeAudioData EncodingError',
+  ])
+  await page.evaluate(() => { window.autoTest = false })
   const converted=await convert(fixture)
   assert.equal(converted.ok,true,converted.error)
   assert.equal(converted.type,'video/mp4')

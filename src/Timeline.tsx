@@ -1199,6 +1199,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
       if (isMovVideo(file)) {
         setMessage('MOVを端末内でMP4へ変換しています。画面を開いたままお待ちください。変換後は音声と映像を確認してください。')
         setVideoFile(null)
+        let automaticDiagnostic = ''
         selectedFile = await prepareMovForUpload(file, (step, start) => {
           const action = {
             label: step === 'source' ? 'MOV変換を開始' : '変換後の音声を確認',
@@ -1207,10 +1208,10 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
               start()
             },
           }
-          setMessage(step === 'source' ? 'ボタンをタップして変換を始めてください。' : '音声を確認すると投稿プレビューが表示されます。')
+          setMessage(step === 'source' ? `ボタンをタップして変換を始めてください。${automaticDiagnostic ? `（自動変換 ${automaticDiagnostic}）` : ''}` : '音声を確認すると投稿プレビューが表示されます。')
           setMovPlayback(action)
           return () => setMovPlayback(current => current === action ? null : current)
-        }, conversion.signal)
+        }, conversion.signal, diagnostic => { automaticDiagnostic = diagnostic })
       }
       if (selectedFile.size > MAX_VIDEO_BYTES) {
         setMessage('動画を圧縮しています。完了までお待ちください。')
