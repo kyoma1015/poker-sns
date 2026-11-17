@@ -83,3 +83,11 @@ External branch RNG rewind/reuse found in review and fixed using separate seeded
 branch streams and a single sampled prefix.10th regression proves master-stream
 isolation. External data regenerated; old source/receipts remain version-pinned
 at276765ad075fb8b21fa7bbb0754a65538aacd8fe. No production/registry impact.
+
+Native-only fixed-n stop probe added:3same frozen policy digests ×8192worlds,
+24576actual native paths,6.37sec total. Legal SB-fold improves root payoff with
+family99.9% gain LOWER bounds raw1.677092/orbit-CV0.759856/external1.517912BB.
+These are also full zero-sum NashConv LOWER bounds, not completeBR/NC point or
+upper estimates. All3assessed policies refuted; no expansion. Profile-onlyEV
+interval narrows by measurement allocation, not demonstrated solver improvement.
+Full all169/action precision, complete response upper and formal0/12 unchanged.

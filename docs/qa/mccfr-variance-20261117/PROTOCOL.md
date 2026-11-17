@@ -47,3 +47,12 @@ implementation samples the pre-owner prefix once and uses separate seeded branch
 RNGs; master deal stream never rewinds. Regression varies branch draw counts and
 proves identical master continuation. External checkpoint/EV rerun; other arms
 unchanged. Prior receipts bind their historical source commit, not modified files.
+
+Additional fixed native-only stop probe (announced before compute): three frozen
+policy digests,8192iid root worlds each,<=30s/policy, output<1MiB. Compare exact
+legal SB-fold payoff-0.5BB to sampled native profile EV; no Python betting/model.
+Use familywise99.9% Hoeffding across3profile means, payoff range[-50,50] ONLY for
+interval calculation. Completed fixed-n runs only; time-limited partial runs get
+no interval. This yields feasibleBR/NashConv LOWER bounds, never upper/point
+substitution. It reallocates measurement budget to root profile, not all169/action
+precision or demonstrated solver improvement. No training or expansion.

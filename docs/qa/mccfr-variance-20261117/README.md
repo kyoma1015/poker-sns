@@ -166,3 +166,38 @@ Corrected external checkpoint, native replay and all169/action EV are the values
 above. Old external artifacts remain accessible at276765ad075fb8b21fa7bbb0754a65538aacd8fe,
 and are superseded. Other arms unchanged; their receipts explicitly pin that
 historical source commit, preserving old source hashes rather than rewriting them.
+
+## Native-only fold counterexample: stronger stop evidence
+
+`probe_native_fold.py` uses ONLY NativeState observations/legal actions/returns,
+not Python betting or surrogate continuation. Each frozen policy8192fresh iid
+root worlds; master deals and policy-action streams separated. Total24576native
+paths,1.530/2.010/2.826seconds, all completed. Source95faa0c and checkpoint hashes
+are pinned in `native-fold-probe.json`. No policy update during measurement.
+
+| policy | native root SB EV interval BB | exact legal fold gain interval BB | complete BR gain / NashConv LOWER bound BB |
+|---|---|---|---:|
+|raw-zero|[-6.785676,-2.177092]|[1.677092,6.285676]|1.677092|
+|orbit-CV|[-5.868440,-1.259856]|[0.759856,5.368440]|0.759856|
+|orbit-external corrected|[-6.626497,-2.017912]|[1.517912,6.126497]|1.517912|
+
+Three simultaneous99.9% intervals (fixed-n Hoeffding). SB-fold payoff is exactly
+-0.5BB at HU50 root, independent of own/opponent cards. Any complete BR is at
+least this feasible deviation; zero-sum NashConv=sum of nonnegative unilateral
+gains is at least the SB gain. All three evaluated strategies are refuted by
+this deviation. No conclusion is drawn for the two unevaluated ablation arms.
+The lower bounds are NOT optimized BR/NashConv point estimates or upper bounds,
+and their ordering does not prove convergence improvement. All upper/point
+fields remain null. Legacy limited-game0.932107BB remains a different scope.
+
+Root profile interval width4.608584BB is narrower than previous26.528742BB
+because this probe spends8192samples on root EV, not4perclass/allactions. It is
+a different allocation/estimator, NOT evidence that solver variance or all169
+precision improved. This gives a concrete stop reason rather than replacing
+unmeasured fullBR by100BB. No broad learning/registry promotion follows.
+
+```
+PYTHONPATH=. python -B docs/qa/mccfr-variance-20261117/probe_native_fold.py --build /tmp/poker-public-response-build --folder /tmp/copy-of-saved-variance-folder
+```
+The folder must contain the3saved gzip checkpoints; use a copy to preserve Git
+evidence. Runtime guard30s/policy, incomplete fixed-n runs do not claim confidence.
