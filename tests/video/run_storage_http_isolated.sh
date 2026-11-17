@@ -78,6 +78,7 @@ for source in api/video-*.ts server/video-recovery-candidate.ts; do
   ln -s "$(basename "$source")" "${source%.ts}.js"
 done
 trap 'for source in api/video-*.ts server/video-recovery-candidate.ts; do rm -f -- "${source%.ts}.js"; done; npx --yes supabase@2.81.3 stop --workdir tests/video/local-stack --no-backup >/dev/null 2>&1 || true; rm -rf "$qa"' EXIT
+node --test tests/video/production_rollout_runtime.test.mjs
 VIDEO_QA_ENV="$qa/local.env" node tests/video/isolated_fenced_real_e2e.mjs
 # Production attestation candidate is applied ONLY to the disposable local DB.
 # Never reuse these fixture credentials or enable the production release gate.
