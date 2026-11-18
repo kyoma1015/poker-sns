@@ -1,0 +1,21 @@
+name: Video synthetic Supabase restore
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/video-synthetic-supabase-restore.yml'
+      - 'scripts/video_synthetic_supabase_restore.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: python3 scripts/video_synthetic_supabase_restore.py
