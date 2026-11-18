@@ -183,3 +183,11 @@ no TS/UI or production/DB/Storage/main/deploy/SSO/billing/destructive operation.
 No automaticresume. Bstrategy frozen, latentC++R/Snotexported; AresumableR/S/RNG.
 Next: quantify Bcontinuation/omittedsizes error, independentnativeBR/EVprecision,
 then approvedformalprofiles+existingcert/registry/search gates. No gate relaxation.
+
+Additional bounded Bquality gate: fresh8192worlds/16384nativepaths,6.433sec.
+LegalBB rivernutvaluejam (all990possibleopp pairs checked, own/publiconly) improves
+BBmean.314209BB;99.9% exactbinomialBR/NC LOWER.170583BB. Passivecontinuation
+therefore refuted as release shortcut despite resolved SBfoldweakness. Fullpoint/
+upperUNKNOWN. Bdigest unchanged, no registeredstrategy.3newregressionsPASS;
+qualificationconfigured70total. No moretraining/expansion. Nextmustfixrange-
+conditionedpostflopstrategy, notgenerateadditionalcheckdowncandidates.

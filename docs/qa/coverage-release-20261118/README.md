@@ -134,3 +134,30 @@ precision for ONE frozen B digest; approved formal profiles, then existing
 certificate->registry->search acceptance. Do not spend longer on failed A arms or
 substitute sampled abstraction convergence for true-game quality. No production,
 DB/Storage, main, deploy, SSO, billing or destructive operations were performed.
+
+## Additional independent native BR lower: B continuation is refuted
+
+One predeclared B-only fresh gate (seed17118104,8192worlds/16384native paths,
+6.4329sec): BB follows B except river, at matched preflop stakes1/3/10BB, when check
+is legal. Using only BB's own2cards and public5board, enumerate all990compatible
+opponent pairs; jam only if none can beat BB. No actual opponent cards enter the
+provider. B explicitly calls, so gain is never negative; wins add40/47/49BB,
+ties0. This is an information-constrained legal deviation, not clairvoyant BR.
+
+55positive-gain worlds,56jams,5763nut queries. BB improvement mean **0.314209BB**;
+99.9% one-sided exact-binomial lower **0.170583BB** (40*P[positive gain] lower).
+Thus complete native BR improvement and NashConv are **at least0.170583BB** under
+this separate confidence experiment. Their point and upper bounds remainUNKNOWN.
+This bound is not an automatic comparison against old source's different lower.
+No trivial physical upper is treated as convergence. Source B digest unchanged.
+
+This directly refutes the passive continuation as release-quality GTO, even though
+its immediate-SB-fold weakness was resolved. Fast generation alone is NOT a valid
+release shortcut. Need range-conditioned postflop value/bluff/call/fold behavior
+and independent deviations/error bounds, not more checkdown iterations.
+No further B training/ordinary registration after this result. New3testsPASS for
+binomial closed forms (including8192count endpoint), own/public nut oracle and
+invalid-card rejection; qualification adds these too (70configured tests total).
+Native outcomes were not repeated after numerical hardening for large-count
+binomial underflow; actual55/8192 bound is unchanged. B-native-deviation.json and
+deviation-tests.txt preserve evidence. All old/new files and strategy bytes kept.

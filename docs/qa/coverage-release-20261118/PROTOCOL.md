@@ -56,3 +56,14 @@ Use annotated B-all169.json.gz for interpretation: runtime no-surrogate does not
 mean zero training abstraction/omitted-action error; all such quality boundsUNKNOWN.
 Native gate passed for B ONLY; existing all169 evaluator run with fresh17118103,
 4samples/class,90sec cap. No subsequent expansion after precision failure.
+
+Additional B-only independent quality gate, declared after all169 precisionfailure
+and before new outcomes:8192fresh worlds seed17118104, <=25sec, baselineB vsBB
+river-nut value-bet deviation. Preflop/other actions follow B. On river when check
+is legal, same known matched preflop stakes1/3/10BB, jam ONLY if exhaustive all990
+compatible opponent pairs cannot beat own+publicboard rank. Opponent actual hole
+cards are NEVER supplied to the provider. B explicitly alwayscalls postflop.
+Gain is nonnegative structurally, and positive gains>=40BB at these guarded stakes.
+Use exact one-sided binomial lower P(gain>0), confidence99.9%, times40 for a legal
+BR/NC lower bound; no full upper/point claim. This is the one additional bounded
+B study permitted after native stage; no further training. Totalcompute cap300sec.

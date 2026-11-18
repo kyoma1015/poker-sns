@@ -134,3 +134,11 @@ training continuation/omitted-action error remain UNKNOWN. **Verified strategies
 no ordinary registration or search addition. Evidence: sibling
 `../coverage-release-20261118/native.json` and annotated `B-all169.json.gz`.
 No further B learning was run or scheduled after this precision failure.
+
+A further independent native check gives a CONCRETE continuation blocker:
+BB river-known-nuts valuejam, based only on own/public cards and exhaustive990
+compatible opponent pairs, improves by0.314209BB;99.9% lower0.170583BB. Native
+NashConv lower is therefore at least0.170583BB (point/upper stillUNKNOWN). B's
+passive check/call continuation is refuted as a release shortcut. This does not
+invalidate generation/legality, but it requires actual range-conditioned postflop
+strategy before qualification. Evidence is in sibling B-native-deviation.json.
