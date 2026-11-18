@@ -128,3 +128,31 @@ Evidence, all6policy checkpoints/R/S/RNG/digests and pending specification choic
 No automatic resume or formal registration. No old QA/CI manually rerun,
 no TS/UI change or prod/merge/deploy/billing/destructive action. Latest resulting
 HEAD/automaticCI to be recorded separately in PR120 after push.
+
+## 2026-11-18 JST — root cause and bounded first-external native gate
+
+Start c0ca9f2058f05b21c832695034efad0445e4ff25, Open/Draft and8CI familiesSUCCESS
+read-only verified. Source checkpoint untouched. New blind-ledger finite poker
+oracle matches actual production collector, all-actor pi/q/average expectation,
+independent hidden-card BR and native fold/showdown net fixtures; no tested payoff
+or update defect found. This does not prove all native histories correct.
+Frozen native8192worlds x4factorial profiles:99.1333%paths touch untrained-S rows;
+rootS145/169 (89.2911%card mass), all observed postflop decisions use prior.
+Uniform prior itself exploitable (fold-gain lower1.063518BB). Learned/uniform EV
+contrast+.940918BB[-.816401,2.698237] not significant.1024frozen sampling paths:
+max regret increment45,597,322; maxaverageweight1,861,115. Strong undercoverage and
+importance-tail evidence, not exclusive causal proof or proof of no sampling bias.
+Finite equal1sec/3seed external completeNashConv .004078–.006012 vsOS .008718–.038332;
+NOT native HU50. New first-traverser-only external subclass then tested at3sec
+wall target/seed (includes checkpoint writes; complete atomic pair overrun).
+Native7profiles x8192=57344paths: external−OS EV+.029480/−.011108/−.004944BB,
+all simultaneous99.9% intervals cross0. All gatesfail, stop/no expansion.
+Previous sourcefold lower2.038686BB preserved, no significant reduction proved.
+All169/action width26.528742 unchanged; full nativeBR upper/NC point and upper
+UNKNOWN. Formal0/12, verifiedRFI0/3bet0;8legacycandidatesBLOCKED unchanged.
+New10regressionsPASS; qualificationCI adds10 to43existing. No manualoldQA/CI rerun.
+Evidence/manual resume/6newnative+9finite checkpoints:
+../qa/root-cause-20261118/README.md. GitHub PR records resultingHEAD/new automaticCI.
+No new specifications or normalregistry admissions; no prod/merge/deploy/billing/
+destructive operation or automatic resume claim. Next gate must address coverage
+and separate checkpoint overhead from compute before any failed-method expansion.

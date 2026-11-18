@@ -1,0 +1,18 @@
+{
+  "maximum_abs_regret_increment_per_path": {
+    "0.5": 490.5438145668138,
+    "0.9": 34100.000000000015,
+    "0.99": 2135379.9999999963,
+    "1.0": 45597322.29043507
+  },
+  "maximum_average_weight_per_path": {
+    "0.5": 41.21346324180684,
+    "0.9": 1259.3871696367785,
+    "0.99": 68332.33082706759,
+    "1.0": 1861115.1955279587
+  },
+  "note": "mixed infosets: NOT a global effective sample size, regret bound or bias test",
+  "paths": 1024,
+  "seconds": 0.7560411280001063,
+  "seed": 17118035
+}

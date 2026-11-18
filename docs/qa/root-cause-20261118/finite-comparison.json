@@ -1,0 +1,122 @@
+{
+  "initial": {
+    "br0_bb": 1.2111111111111108,
+    "br1_bb": 0.9999999999999998,
+    "ev_bb": -0.3055555555555556,
+    "nashconv_bb": 2.2111111111111104,
+    "sb_fold_gain_bb": -0.19444444444444442,
+    "scope": "six-card restricted diagnostic game ONLY"
+  },
+  "profiles": [
+    {
+      "br0_bb": 0.10954581459935006,
+      "br1_bb": -0.0712138866752344,
+      "ev_bb": 0.08231063807645377,
+      "iterations": 18270,
+      "method": "outcome",
+      "nashconv_bb": 0.03833192792411566,
+      "sb_fold_gain_bb": -0.5823106380764538,
+      "scope": "six-card restricted diagnostic game ONLY",
+      "seconds": 1.0000322830001096,
+      "seed": 17118031
+    },
+    {
+      "br0_bb": 0.10138344001651875,
+      "br1_bb": -0.0953711119033964,
+      "ev_bb": 0.09682112241273523,
+      "iterations": 14457,
+      "method": "external",
+      "nashconv_bb": 0.006012328113122356,
+      "sb_fold_gain_bb": -0.5968211224127352,
+      "scope": "six-card restricted diagnostic game ONLY",
+      "seconds": 1.0000341779996234,
+      "seed": 17118031
+    },
+    {
+      "br0_bb": 0.10141576108400145,
+      "br1_bb": -0.09749492365766464,
+      "ev_bb": 0.09892183508176297,
+      "iterations": 1244,
+      "method": "exact",
+      "nashconv_bb": 0.0039208374263368095,
+      "sb_fold_gain_bb": -0.598921835081763,
+      "scope": "six-card restricted diagnostic game ONLY",
+      "seconds": 1.0003780690003623,
+      "seed": 17118031
+    },
+    {
+      "br0_bb": 0.10296256018635203,
+      "br1_bb": -0.09424410785845931,
+      "ev_bb": 0.09747957693724484,
+      "iterations": 16664,
+      "method": "outcome",
+      "nashconv_bb": 0.008718452327892715,
+      "sb_fold_gain_bb": -0.5974795769372448,
+      "scope": "six-card restricted diagnostic game ONLY",
+      "seconds": 1.0000707520002834,
+      "seed": 17118032
+    },
+    {
+      "br0_bb": 0.1009730708305047,
+      "br1_bb": -0.09689490148125306,
+      "ev_bb": 0.09899832791499594,
+      "iterations": 13378,
+      "method": "external",
+      "nashconv_bb": 0.004078169349251648,
+      "sb_fold_gain_bb": -0.598998327914996,
+      "scope": "six-card restricted diagnostic game ONLY",
+      "seconds": 1.0000118210000437,
+      "seed": 17118032
+    },
+    {
+      "br0_bb": 0.10129882506526397,
+      "br1_bb": -0.09770183261809352,
+      "ev_bb": 0.09901004214785492,
+      "iterations": 1356,
+      "method": "exact",
+      "nashconv_bb": 0.0035969924471704467,
+      "sb_fold_gain_bb": -0.5990100421478549,
+      "scope": "six-card restricted diagnostic game ONLY",
+      "seconds": 1.000115894999908,
+      "seed": 17118032
+    },
+    {
+      "br0_bb": 0.1047892040161165,
+      "br1_bb": -0.09265303559364262,
+      "ev_bb": 0.0986573840007961,
+      "iterations": 17120,
+      "method": "outcome",
+      "nashconv_bb": 0.012136168422473878,
+      "sb_fold_gain_bb": -0.598657384000796,
+      "scope": "six-card restricted diagnostic game ONLY",
+      "seconds": 1.000020491000214,
+      "seed": 17118033
+    },
+    {
+      "br0_bb": 0.10068688547292617,
+      "br1_bb": -0.09531638338235424,
+      "ev_bb": 0.09684162691696868,
+      "iterations": 14665,
+      "method": "external",
+      "nashconv_bb": 0.005370502090571938,
+      "sb_fold_gain_bb": -0.5968416269169687,
+      "scope": "six-card restricted diagnostic game ONLY",
+      "seconds": 1.0000143690003824,
+      "seed": 17118033
+    },
+    {
+      "br0_bb": 0.10147876304659767,
+      "br1_bb": -0.0973834467087615,
+      "ev_bb": 0.09887437456596439,
+      "iterations": 1191,
+      "method": "exact",
+      "nashconv_bb": 0.0040953163378361634,
+      "sb_fold_gain_bb": -0.5988743745659644,
+      "scope": "six-card restricted diagnostic game ONLY",
+      "seconds": 1.0003821559994321,
+      "seed": 17118033
+    }
+  ],
+  "scope": "six-card restricted diagnostic game ONLY",
+  "status": "COMPLETE"
+}
