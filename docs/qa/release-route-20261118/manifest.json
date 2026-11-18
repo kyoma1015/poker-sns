@@ -1,0 +1,23 @@
+{
+  "artifact_sha256": {
+    "LICENSE-open-spiel.txt": "8c6db340475136df3c1201d458fa5755698eace76e510471ecc9d857d6083dac",
+    "LICENSE-poker-hand-evaluator.txt": "857f36f7cd315fb804c5af2e9b6160968ce5103359d2ded6522516eef73be2fb",
+    "LICENSE-postflop-solver.txt": "e9df4c4e4e64b8168a71c3c67668dcffabbe8fca11d4ac4a7d5482562cd1679c",
+    "LICENSE-rlcard.txt": "ef3c51fa890de8554563fe296386e624d1ca1e2f2c6f750d3a633deedaf5ffbe",
+    "PROTOCOL.md": "e7d153ba160d148fedf5d1cff083f3ba833ae20d6a3429540141dd5992e52818",
+    "README.md": "8b6ea6818aff432213412d5adb7b8aa592517a4e1a94fa3f6e5f3cc83682e26f",
+    "focused-tests.txt": "1d6be6fde0807fe6d30fb699666c0a30b8a8649685405647b5937470d1d9cdc6",
+    "generation.json": "e535bb501bb761ddc9a159e5c042a9b050ca0b909076c532b599676e211feda2",
+    "kernel.json.gz": "9a3db71f9d9a7d0fd9524a9f257c846e239d0bfc4d428aa3747fcb98d708fd8c",
+    "license-evidence.json": "04b5f23a7d280cdd6dbf51f0a254ad24e7c05bd0c515aca2e9b2b67137f30b16",
+    "research-export.json.gz": "84184821f46b20b8ada8d9c3f18400e4b6e8ad2f2c0aa8a60fa7d39c1db9218c",
+    "strategy.json.gz": "ca770c472b9f22040d7f1c20b1e4674e8061f8e337874eef30e22e3275199e4f"
+  },
+  "ordinary_registry_admission": false,
+  "source_head": "085a3b3785fe8687ce0d74b118544c4020543d62",
+  "source_sha256": {
+    "gto/qualification/preflop_release_solver.py": "ddd49683ec15c690c6f272606933d4a5bb9225aa826e5f26d91fd91489f94ef2",
+    "gto/qualification/preflop_release_tests.py": "597e875326115df41507abbf9fac78ae9b94c87fd02c6958de233aa71056051c"
+  },
+  "verified_strategies": 0
+}

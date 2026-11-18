@@ -1,0 +1,30 @@
+{
+  "abstract_nashconv_bb": 0.1267997173263105,
+  "adapter_note": "provider/iteration/suit metadata added before native evaluation; unchanged numeric strategy",
+  "br_bb_min_sb_ev_bb": -0.10289187493914509,
+  "br_sb_ev_bb": 0.023907842387165413,
+  "continuation_error_upper_bb": null,
+  "full_native_br_upper_bb": null,
+  "full_native_nashconv_bb": null,
+  "iterations": 100,
+  "kernel_seconds": 1.1395911760000672,
+  "ordinary_registry_admission": false,
+  "policy_digest": "bd46861da4c8c4eb786602315056092c5d253fd3d449b5183b01b96c5b2cc8f4",
+  "profile_sb_ev_bb": -0.04535321168195151,
+  "seconds": 0.251538888000141,
+  "stage_hand_counts": {
+    "rfi": 169,
+    "vs_3bet": 169,
+    "vs_4bet": 169,
+    "vs_open": 169
+  },
+  "stages": [
+    "rfi",
+    "vs_open",
+    "vs_3bet",
+    "vs_4bet"
+  ],
+  "status": "BLOCKED_UNVERIFIED",
+  "total_seconds": 4.440440910000234,
+  "verified_strategy_count": 0
+}

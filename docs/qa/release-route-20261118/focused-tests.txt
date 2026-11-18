@@ -1,0 +1,10 @@
+test_all169_stage_policies_normalized_and_legal (gto.qualification.preflop_release_tests.ReleaseRoute.test_all169_stage_policies_normalized_and_legal) ... ok
+test_every_abstract_action_matches_independent_native_state (gto.qualification.preflop_release_tests.ReleaseRoute.test_every_abstract_action_matches_independent_native_state) ... ok
+test_explicit_postflop_controller_has_no_future_card_input (gto.qualification.preflop_release_tests.ReleaseRoute.test_explicit_postflop_controller_has_no_future_card_input) ... ok
+test_source_identity_and_blocker_are_preserved (gto.qualification.preflop_release_tests.ReleaseRoute.test_source_identity_and_blocker_are_preserved) ... ok
+test_unknown_size_reuses_frozen_full_policy_not_fold_completion (gto.qualification.preflop_release_tests.ReleaseRoute.test_unknown_size_reuses_frozen_full_policy_not_fold_completion) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.489s
+
+OK

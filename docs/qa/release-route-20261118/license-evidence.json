@@ -1,0 +1,72 @@
+{
+  "checked_utc_date": "2026-11-18",
+  "scope": "four primary OSS engine/evaluator sources, not exhaustive dataset discovery",
+  "engines": [
+    {
+      "repository": "google-deepmind/open_spiel",
+      "commit": "4956843d7375e29a4c986425c66f897d7ac15340",
+      "primary_license_url": "https://github.com/google-deepmind/open_spiel/blob/4956843d7375e29a4c986425c66f897d7ac15340/LICENSE",
+      "license": "Apache-2.0",
+      "local_normalized_license_copy": "docs/qa/release-route-20261118/LICENSE-open-spiel.txt",
+      "local_copy_sha256": "8c6db340475136df3c1201d458fa5755698eace76e510471ecc9d857d6083dac",
+      "code_imported": false,
+      "strategy_data_imported": false,
+      "verified_hu50_strategy_dataset_found": false,
+      "scope_primary_urls": [
+        "https://github.com/google-deepmind/open_spiel/blob/4956843d7375e29a4c986425c66f897d7ac15340/open_spiel/algorithms/cfr.h",
+        "https://github.com/google-deepmind/open_spiel/blob/4956843d7375e29a4c986425c66f897d7ac15340/open_spiel/games/universal_poker/universal_poker.cc",
+        "https://github.com/google-deepmind/open_spiel/blob/4956843d7375e29a4c986425c66f897d7ac15340/open_spiel/games/universal_poker/README.md",
+        "https://github.com/google-deepmind/open_spiel/blob/4956843d7375e29a4c986425c66f897d7ac15340/open_spiel/games/universal_poker/CMakeLists.txt"
+      ]
+    },
+    {
+      "repository": "datamllab/rlcard",
+      "commit": "d7d0a957baf4cc7225a50522adb0164bf130a9d0",
+      "primary_license_url": "https://github.com/datamllab/rlcard/blob/d7d0a957baf4cc7225a50522adb0164bf130a9d0/LICENSE.md",
+      "license": "MIT",
+      "local_normalized_license_copy": "docs/qa/release-route-20261118/LICENSE-rlcard.txt",
+      "local_copy_sha256": "ef3c51fa890de8554563fe296386e624d1ca1e2f2c6f750d3a633deedaf5ffbe",
+      "code_imported": false,
+      "strategy_data_imported": false,
+      "verified_hu50_strategy_dataset_found": false,
+      "scope_primary_urls": [
+        "https://github.com/datamllab/rlcard/blob/d7d0a957baf4cc7225a50522adb0164bf130a9d0/README.md",
+        "https://github.com/datamllab/rlcard/blob/d7d0a957baf4cc7225a50522adb0164bf130a9d0/rlcard/games/nolimitholdem/round.py"
+      ]
+    },
+    {
+      "repository": "b-inary/postflop-solver",
+      "commit": "9d1509fe5077d019825f833eed04b16d342dfda1",
+      "primary_license_url": "https://github.com/b-inary/postflop-solver/blob/9d1509fe5077d019825f833eed04b16d342dfda1/LICENSE",
+      "license": "AGPL-3.0-or-later per README",
+      "local_normalized_license_copy": "docs/qa/release-route-20261118/LICENSE-postflop-solver.txt",
+      "local_copy_sha256": "e9df4c4e4e64b8168a71c3c67668dcffabbe8fca11d4ac4a7d5482562cd1679c",
+      "code_imported": false,
+      "strategy_data_imported": false,
+      "verified_hu50_strategy_dataset_found": false,
+      "scope_primary_urls": [
+        "https://github.com/b-inary/postflop-solver/blob/9d1509fe5077d019825f833eed04b16d342dfda1/README.md"
+      ]
+    },
+    {
+      "repository": "HenryRLee/PokerHandEvaluator",
+      "commit": "5203d0fc8f5e06533acad542871eed5a07696623",
+      "primary_license_url": "https://github.com/HenryRLee/PokerHandEvaluator/blob/5203d0fc8f5e06533acad542871eed5a07696623/LICENSE",
+      "license": "Apache-2.0",
+      "local_normalized_license_copy": "docs/qa/release-route-20261118/LICENSE-poker-hand-evaluator.txt",
+      "local_copy_sha256": "857f36f7cd315fb804c5af2e9b6160968ce5103359d2ded6522516eef73be2fb",
+      "code_imported": false,
+      "strategy_data_imported": false,
+      "verified_hu50_strategy_dataset_found": false,
+      "scope_primary_urls": [
+        "https://github.com/HenryRLee/PokerHandEvaluator/blob/5203d0fc8f5e06533acad542871eed5a07696623/README.md"
+      ]
+    }
+  ],
+  "acpc_dependency": {
+    "commit": "6f1c9792fdf51b776562bd6f104989688dbfd298",
+    "primary_copyright_header_url": "https://github.com/ethansbrown/acpc/blob/6f1c9792fdf51b776562bd6f104989688dbfd298/project_acpc_server/game.h",
+    "license_clearance": "UNRESOLVED_NO_LICENSE_IN_CHECKED_LOCATIONS",
+    "no_adoption": true
+  }
+}
