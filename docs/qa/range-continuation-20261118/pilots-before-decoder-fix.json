@@ -1,0 +1,26 @@
+{
+  "profiles": [
+    {
+      "buckets": 8,
+      "n": 64,
+      "new_EV": -0.71875,
+      "old_EV": 0.15625,
+      "policy_digest": "dff1b07a739d6a778bd130013c44c96ae5a39d477c2118181e18b4b6b496aaab",
+      "seconds": 2.961509266999883,
+      "solve_seconds": 0.9762715669996851,
+      "solves": 90,
+      "status": "PILOT_NOT_QUALITY_PASS"
+    },
+    {
+      "buckets": 16,
+      "n": 64,
+      "new_EV": -1.140625,
+      "old_EV": 0.15625,
+      "policy_digest": "cbc7736c0f1b8bba055ea389286c94c09e7d283db501f950037a9b1fb9b46414",
+      "seconds": 3.322671066999874,
+      "solve_seconds": 1.1766069259992946,
+      "solves": 93,
+      "status": "PILOT_NOT_QUALITY_PASS"
+    }
+  ]
+}

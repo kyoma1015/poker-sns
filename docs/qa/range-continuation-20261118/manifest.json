@@ -1,0 +1,37 @@
+{
+  "artifact_sha256": {
+    "PROTOCOL.md": "01f251154060760107626c75ffb7c5d0938d0f7287ea5286264104c990cb4fa0",
+    "README.md": "73a36d3eae8f677a6bc1fe79ee837f8062c710155cf960e433f66d8f8e7970a8",
+    "build.json": "1ab0175c05f155f0eef5232bc20833168ceb82ce1225d4c9077c702acb576f27",
+    "conditional-before-decoder-fix.json": "e0f72035e8455c8d0188004140bc61c236c0e04c4a25a54eeb4618ae3766ad4c",
+    "conditional-final-replay.json": "b6fc3357bd2165add0ce07333afcb3340da07e3b6b082d593f9d00ac3675b8c0",
+    "controller-tests.txt": "dddad9ca3bd04fbcf1a42fcce1e092aa5c1fc94c6c9b4ed449dad1000f7d4b81",
+    "decoder-fix.json": "d4859d70d709f33122d5af7bb88c3a3be0f45f4db007393b0f67c1a42458521b",
+    "evaluation-tests.txt": "29eab2d85eb270925f25dea8a0bec046287b84233620d7b9f689c72a108f90d4",
+    "frozen-policy.json": "102fda107c165ed6bafad3c4e0470d947e4af3c19119ee727aaca16ec38a2d65",
+    "native-EV-checkpoint.json": "f5c473564a7ee7ea1bcff3d1a3cf5bcc9c2fcc6c82b989f3956392d07076afb6",
+    "native-EV.json": "bf8590aa9e6e1094524d9cb93bead24a7b0b008534c9aff0292d99ffeb85ba3b",
+    "new-deviation-probes.json": "053a2f4b737e7f7b61ce891e9e76166d1faba1f5eb96aa49e7f72032c9e51eea",
+    "partial-canonical-action-EV.json": "609424dca2265f3d21840151fa076d7a85387c02f771adce040d4c86740c766f",
+    "pilot-initial.json": "8ced8c4f482938a795963956d13d5f1bed606740bfc3ceea6de3f8e5109de79f",
+    "pilots-before-decoder-fix.json": "dff015e016277b74f625d3d6748bb2ccfea51f78ac018c21ddbb191da07ea714",
+    "pre-fix-source-reconstructed.txt": "4d06b1701a64e7ff0426b027db4e21de668bede8d082c41b0cefd445b32a7e7b",
+    "river-generalized-checkpoint.json": "5c742a4950048e8812834d3e5d13517b43efceae1ae05f7d5b63f820152040b9",
+    "river-generalized.json": "739d461d72441420677da6f317723c9274e9a51dc0931128a1f0eca1fe020514",
+    "size-legality.json": "907b6951eac317560bafb049e16f6ee0582eefc06627f79cc5e38b57d2c435de"
+  },
+  "formal_acceptance_complete": 0,
+  "ordinary_registry_admission": false,
+  "policy_digest": "f290ba1f24d9fb27fc7a8291d507ce892effe1ca0260d1e83194a0b2f32acd6f",
+  "source_head": "76d8a9cec17d1ef9cc6dadeb423b4f99dfafee5e",
+  "source_sha256": {
+    "gto/qualification/range_continuation.py": "4230cb483c9404e4b65716ed1479cd135b70d6b43821f53a7ad54f510098a9a5",
+    "gto/qualification/range_core.cc": "40a1ab2b2315143a93b8e61335a8b3f43f6ce56c4ddb417ed4bb2daa16d2186c",
+    "gto/qualification/range_followup.py": "bd0cd73821557e7a97477f43782cc31622155d47623be4d284eff686a006569b",
+    "gto/qualification/range_preflop_ev.py": "f5d07f73bd2539917ef9966c30dff26b6c9654ee98f7273de21cae03f47d548c",
+    "gto/qualification/range_study.py": "fcd7310407475edfda0f7f150745be48b0afad3eb90ac4bb14f4246eb0dd426a",
+    "gto/qualification/test_range_continuation.py": "c16391183c905425884f0e0da166bbcd98335fb9eb77efcf22a09e8d0c7640a7",
+    "gto/qualification/test_range_evaluation.py": "b005d3ccb866c7ca76c84ebcc060a03086d8ce05307d8a605add5badb5e2cbff"
+  },
+  "verified_strategy_count": 0
+}

@@ -1,0 +1,10 @@
+{
+  "reason": "Native normalized action3 (raise-to-one) logs amount -3; new replay originally interpreted it as an actionID.",
+  "old_policy_digest": "dff1b07a739d6a778bd130013c44c96ae5a39d477c2118181e18b4b6b496aaab",
+  "new_policy_digest": "f290ba1f24d9fb27fc7a8291d507ce892effe1ca0260d1e83194a0b2f32acd6f",
+  "old_source_reconstruction": "Exact inverse of minimal decoder patch; reconstructed text verified against old policy digest, not recovered original ZIP.",
+  "native_final_replay_gains_identical": true,
+  "regression": "test_one_chip_short_allin_marker_matches_actual_native",
+  "failed_probe_seed": 17118203,
+  "fresh_probe_seed": 17118205
+}

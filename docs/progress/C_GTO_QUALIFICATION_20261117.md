@@ -191,3 +191,30 @@ therefore refuted as release shortcut despite resolved SBfoldweakness. Fullpoint
 upperUNKNOWN. Bdigest unchanged, no registeredstrategy.3newregressionsPASS;
 qualificationconfigured70total. No moretraining/expansion. Nextmustfixrange-
 conditionedpostflopstrategy, notgenerateadditionalcheckdowncandidates.
+
+## 2026-11-18 UTC — internal range-conditioned B continuation, verified0
+
+Start76d8a9cec17d1ef9cc6dadeb423b4f99dfafee5e Open/Draft8CI success read-only.
+Frozen preflopB reused. New one-street public-range CFR uses exact physical card
+removal/joint mass and Bayesian public likelihoods; current5/6/7card strength,
+8buckets/32iter, legal halfpot/jam/F/C and positive all-legal tremble. No actual
+opponent/future card access. Flop/turn horizon/private/bet-abstraction errorsUNKNOWN.
+No postflop UI. New replay's native one-chip -3 marker bug found by fresh sizing
+probe, minimally fixed+native regression; finaldigestf290ba1f24d9fb27fc7a8291d507ce892effe1ca0260d1e83194a0b2f32acd6f.
+Known fixed-pot cohort replayed under finaldigest; then independent generalized
+ALLmatchedpots gate512conditionalevents: root old-new nutdeviation reduction
+99.9% LOWER.096377951BB, estimatednewgain~.00314BB (NOT absoluteupper/NashConv).
+Support/conditional law and old56/8192eventmass documented; not rejected-count
+probability. Not merely avoiding oldpotguard.4new finiteprobes inconclusive, all
+wideCIs;3.5BBofftreepoint+2.515625BB remainsrisk. Native2048world oldEV-.170898,
+new+.240723; paired+.411621[-2.696276,3.519518], no significant globalEVproof.
+338canonical169x2actionEVsamples internalmodelconnected; precisionUNKNOWN.
+534nativepublicstates/1602private rows allraise-to legalityPASS, accuracyUNKNOWN.
+FullnativeBRupper/NCpoint/upper and full169/actionprecision UNKNOWN. Old26.528742
+width not relabelled to newdigest. Formal0/12, verifiedRFI0/3bet0,8oldcandidates
+BLOCKED; no registry/certificate/search additions, formalprofiles PENDING.
+New9controller+2sampler regressionPASS; automatic qualification adds11 to70.
+Evidence/config/build/RNG/manualresume: ../qa/range-continuation-20261118/README.md.
+No oldQA/successCI manualrerun or production/DB/Storage/main/deploy/SSO/billing/
+destructive action. No automaticresume. Next: quantify future/private/size error,
+EVprecision then preflopreoptimization, independentBR/full12before admission.

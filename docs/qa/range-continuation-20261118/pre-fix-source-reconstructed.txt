@@ -1,0 +1,140 @@
+"""Internal public-range street CFR. All unproved abstraction errors UNKNOWN."""
+import copy,ctypes as C,hashlib,itertools,json,math,subprocess,time
+from collections import OrderedDict
+from pathlib import Path
+from gto.abstract import model
+from gto.qualification.native_mccfr import betting,digest
+from gto.qualification.policy import act,legal,hand,sha
+from gto.qualification.public_response import observe
+from gto.qualification.preflop_release_solver import load_policy
+
+HOLES=list(itertools.combinations(range(52),2));INDEX={h:i for i,h in enumerate(HOLES)}
+
+
+def build(directory):
+    directory=Path(directory);model.build(directory)
+    out=directory/'range.so';source=Path(__file__).with_name('range_core.cc')
+    cmd=['c++','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off','-shared','-fPIC',str(source),'-I'+str(directory),'-I'+str(Path(model.__file__).parent),'-o',str(out)]
+    subprocess.run(cmd,check=True)
+    return out
+
+def load_kernel(path):
+    lib=model.load(path);lib.range_kernel.argtypes=[C.c_int,model.IP,C.c_int,model.DP,model.DP,model.DP,model.DP,model.IP,model.DP];lib.range_kernel.restype=C.c_int;return lib
+
+def kernel(lib,board,ranges,buckets=8):
+    if len(board) not in (3,4,5) or len(set(board))!=len(board) or any(type(c) is not int or not 0<=c<52 for c in board):raise ValueError('current public board')
+    if len(ranges)!=2 or any(len(r)!=1326 or any(not math.isfinite(x) or x<0 for x in r) for r in ranges):raise ValueError('finite physical ranges')
+    n=buckets*buckets;p=(C.c_double*n)();s=(C.c_double*n)();bs=(C.c_int*1326)();mass=C.c_double()
+    if lib.range_kernel(len(board),model.ints(board),buckets,model.doubles(ranges[0]),model.doubles(ranges[1]),p,s,bs,C.byref(mass)):raise ValueError('empty/invalid public range joint law')
+    return list(p),list(s),list(bs),mass.value
+
+def street_tree(start):
+    nodes=[];states=[];street=start.round
+    def visit(b,depth):
+        i=len(nodes);states.append(b)
+        if b.done or b.round!=street:
+            fold=any(b.folded);value=b.settle([0,0],True)['net'][0] if fold else b.live[0]
+            if not fold and b.live[0]!=b.live[1]:raise ValueError('unmatched terminal')
+            nodes.append(dict(actor=-1,value=value,matched=not fold,actions=[],children=[]));return i
+        available=legal(b);facing=b.street[b.actor]<b.price;raises=[a for a in available if a not in (0,1)]
+        actions=([0,1]+([max(raises)] if raises and depth==0 else [])) if facing else [1]
+        if not facing and raises:
+            target=b.price+max(2,(sum(b.live)+sum(b.dead))//2)
+            actions.extend([min(raises,key=lambda a:abs((a-2)-target)),max(raises)])
+        actions=list(dict.fromkeys(a for a in actions if a in available))
+        node=dict(actor=b.actor,native_actions=actions,actions=list(map(str,actions)),children=[]);nodes.append(node)
+        for a in actions:
+            child=copy.deepcopy(b);act(child,a);node['children'].append(visit(child,depth+1))
+        return i
+    visit(copy.deepcopy(start),0);return nodes,states
+
+class RangePolicy:
+    def __init__(self,base,lib,buckets=8,iterations=32,epsilon=.01):
+        self.base,self.rules,self.native,self.lib=base,base.rules,base.native,lib
+        self.buckets,self.iterations,self.epsilon=buckets,iterations,epsilon
+        self.id=dict(schema='public-range-continuation-v1',preflop_digest=base.policy_digest,buckets=buckets,iterations=iterations,epsilon=epsilon,
+            proxy='current5/6/7card strength; no future card input; flop/turn error UNKNOWN',
+            belief='factorized realization with exact disjoint-card joint; zero-reach preflop action uninformative',
+            source_sha256={str(p):sha(p) for p in (Path(__file__),Path(__file__).with_name('range_core.cc'),Path(model.__file__),Path(model.__file__).with_name('core.cc'))},
+            continuation_error_bb=None,private_abstraction_error_bb=None,omitted_action_error_bb=None)
+        self.id['binary_sha256']=sha(Path(lib._name));self.id['compiler_options']=['-O2','-fno-fast-math','-ffp-contract=off']
+        self._digest=digest(self.id);self.rows={};self.iteration=iterations
+        self.contexts=OrderedDict();self.range_cache=OrderedDict();self.states={():betting(self.rules)};self.preflop={};self.solves=0;self.solve_seconds=0.
+    @property
+    def policy_digest(self):return self._digest
+    def provider(self,o):return dict(zip(o.actions,self.row(o,True)))
+    def state(self,hist):
+        if hist not in self.states:
+            prev=hist[:-1];b=copy.deepcopy(self.state(prev));h=hist[-1]
+            if (b.round,b.actor)!=(h[0],h[1]):raise ValueError('public actor/round mismatch')
+            act(b,h[2] if h[2]<=1 else h[2]+2)
+            if tuple(b.history[-1])!=h:raise ValueError('public ledger mismatch')
+            self.states[hist]=b
+        return self.states[hist]
+    @staticmethod
+    def trim(cache,limit=512):
+        while len(cache)>limit:cache.popitem(last=False)
+    def pre_probs(self,b):
+        key=tuple(b.history)
+        if key not in self.preflop:
+            byclass=[self.base.row(observe(b,g[0],[]),True) for g in model.classes()]
+            self.preflop[key]=[byclass[hand(h)] for h in HOLES]
+        return self.preflop[key]
+    def ranges(self,hist,board):
+        if not hist:return [[1.]*1326,[1.]*1326]
+        last=hist[-1];shown=tuple(board[:(0,3,4,5)[last[0]]]);key=(hist,shown)
+        if key in self.range_cache:return self.range_cache[key]
+        prev=hist[:-1];b=self.state(prev);r=copy.deepcopy(self.ranges(prev,shown));a=last[2] if last[2]<=1 else last[2]+2;available=legal(b);j=available.index(a)
+        if b.round==0:ps=self.pre_probs(b);likelihood=[p[j] for p in ps]
+        else:
+            ctx=self.context(b,shown,r);likelihood=[self.probs(ctx,k)[j] if ctx['bucket'][k]>=0 else 0. for k in range(1326)]
+            r=copy.deepcopy(ctx['ranges'])
+        weighted=[x*p for x,p in zip(r[b.actor],likelihood)]
+        if math.fsum(weighted)>0:r[b.actor]=weighted # explicit noninformative off-path belief otherwise
+        for p in (0,1):
+            total=math.fsum(r[p])
+            if total<=0:raise ValueError('empty public range')
+            r[p]=[x/total for x in r[p]]
+        self.range_cache[key]=r;self.trim(self.range_cache);return r
+    def probs(self,ctx,k):
+        actions=ctx['available'];bucket=ctx['bucket'][k]
+        if bucket<0:return [1/len(actions)]*len(actions)
+        node=ctx['node'];strategy=ctx['strategy'];n=self.buckets;weights={a:strategy[(ctx['index']*3+j)*n+bucket] for j,a in enumerate(node['native_actions'])}
+        return [self.epsilon/len(actions)+(1-self.epsilon)*weights.get(a,0.) for a in actions]
+    def context(self,b,board,r):
+        key=(tuple(board),tuple(b.history))
+        if key in self.contexts:return self.contexts[key]
+        # A modeled child MUST reuse the same deterministic street plan even
+        # after cache eviction. Otherwise identical observations change policy.
+        hist=tuple(b.history)
+        if hist and hist[-1][0]==b.round:
+            parent=self.state(hist[:-1]);parent_ctx=self.context(parent,board,self.ranges(hist[:-1],board))
+            action=hist[-1][2] if hist[-1][2]<=1 else hist[-1][2]+2
+            if action in parent_ctx['node']['native_actions']:
+                child=parent_ctx['node']['children'][parent_ctx['node']['native_actions'].index(action)]
+                if parent_ctx['plan']['nodes'][child]['actor']>=0:
+                    plan=parent_ctx['plan'];ctx=dict(index=child,node=plan['nodes'][child],strategy=plan['strategy'],bucket=plan['bucket'],ranges=r,available=legal(b),plan=plan)
+                    self.contexts[key]=ctx;self.trim(self.contexts);return ctx
+        start=time.monotonic();filtered=[[x if not set(h).intersection(board) else 0. for x,h in zip(rr,HOLES)] for rr in r]
+        p,s,bucket,mass=kernel(self.lib,board,filtered,self.buckets);nodes,states=street_tree(b);leaf=[]
+        for node in nodes:
+            leaf.extend([0.]*(self.buckets**2) if node['actor']>=0 else ([float(node['value'])]*(self.buckets**2) if not node['matched'] else [node['value']*x for x in s]))
+        solved=model.solve(self.lib,leaf,p,nodes,iterations=self.iterations,n=self.buckets)
+        plan=dict(nodes=nodes,strategy=solved['strategy'],bucket=bucket)
+        result=dict(index=0,node=nodes[0],strategy=solved['strategy'],bucket=bucket,ranges=filtered,available=legal(b),plan=plan)
+        self.contexts[key]=result;self.trim(self.contexts);self.solves+=1;self.solve_seconds+=time.monotonic()-start
+        return result
+    def posterior(self,o):
+        r=self.ranges(o.history,o.board)[1-o.actor]
+        weights=[x if not set(h).intersection(o.own+o.board) else 0. for x,h in zip(r,HOLES)];z=math.fsum(weights)
+        if z<=0:raise ValueError('zero compatible conditional mass')
+        return [x/z for x in weights]
+    def row(self,o,average=False):
+        if o.round==0:return self.base.row(o,True)
+        b=self.state(o.history)
+        expected=observe(b,o.own,o.board)
+        if expected!=o:raise ValueError('observation ledger mismatch')
+        ctx=self.context(b,o.board,self.ranges(o.history,o.board));return self.probs(ctx,INDEX[tuple(sorted(o.own))])
+
+def load(build_dir,artifact,library):
+    return RangePolicy(load_policy(build_dir,artifact),load_kernel(library))
