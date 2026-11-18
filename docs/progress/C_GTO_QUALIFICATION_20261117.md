@@ -156,3 +156,30 @@ Evidence/manual resume/6newnative+9finite checkpoints:
 No new specifications or normalregistry admissions; no prod/merge/deploy/billing/
 destructive operation or automatic resume claim. Next gate must address coverage
 and separate checkpoint overhead from compute before any failed-method expansion.
+
+## 2026-11-18 JST — A coverage / B early preflop route, verified strategies0
+
+Start085a3b3785fe8687ce0d74b118544c4020543d62; OpenDraft/8CI success read-only.
+A correct immutable169class batch and predictable adaptive mass/q chance sampling,
+all-legal action-family prior, separated12sec learning vscheckpoint IO. RootS145
+->169/169allarms; native source98.9685% ->adaptiveExtFamily78.2654%untrainedpaths.
+No A significant EV gain; global external revisit remainslow. No A expansion.
+Old gzip9 save1.918sec vscompactgzip1+atomicfsync .486sec onSAMEsnapshot (lossless,
+37%larger). Original measuredrunner preserved; no training repeated for thisbench.
+B existing native Betting/169combo chance/C++CFR reused:3/10/50BB reduced model,
+4x169rows generated4.44sec; no engine/chart import. Four primary OSS sources
+licensed/scope-pinned, no verified applicable HU50dataset in checked sources.
+Sevenprofiles x16384 actual nativepaths: B EV-.125336BB, sourcecontrast+3.374084
+[1.793749,4.954420], family99.9%. B immediatefold gain[-.725361,-.023967]BB,
+so that specific old weakness ruledout. Full nativeBR/NC improvement NOT proven.
+B-only fresh all169/action followup25.302sec: root width26.528742BB unchanged,
+maxactionEV width100BB; precisionFAIL, model/omittedactionerror/fullBRupperUNKNOWN.
+VerifiedRFI0/3bet0 and formal0/12 unchanged;8legacycandidatesBLOCKED. B research
+export registry_ready=false, no catalogaddition. New A9+B5testPASS; CIadds14 to53.
+A/B concrete evidence/checkpoints/licensecomparison/manualresume:
+../qa/coverage-release-20261118/README.md and ../qa/release-route-20261118/README.md.
+Resulting commits/automaticCI recorded in PR120. No oldQA/successCI manualrerun,
+no TS/UI or production/DB/Storage/main/deploy/SSO/billing/destructive operation.
+No automaticresume. Bstrategy frozen, latentC++R/Snotexported; AresumableR/S/RNG.
+Next: quantify Bcontinuation/omittedsizes error, independentnativeBR/EVprecision,
+then approvedformalprofiles+existingcert/registry/search gates. No gate relaxation.
