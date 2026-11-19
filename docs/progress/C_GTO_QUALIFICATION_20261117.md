@@ -260,3 +260,28 @@ INCOMPLETE, no fixed-n bound claimed. All sources/checkpoints/results in
 legacy8BLOCKED unchanged. Pending formal specs untouched. Next: jointoptimization
 small-game information constraints, not another unproven relaxed-method expansion.
 No prod/main/deploy/DB/Storage/SSO/billing/destructive operations or manualCIreruns.
+
+## 2026-11-20 01:40 JST — same-game joint CFR transplant
+Reuse qualified joint_vector and existing2type exact games; new alternatingCFR+
+updates genuine pre/postR/S together, integrates hidden public outcomes before
+preflop updates/BR. No frozen oldrange payoff/newrange policy switch. Complete64
+pureBR oracle:1024iterations NC.000040993/.000035745; gatesPASS. Native tree
+sizes/cashflows win/lose/tie, shortallin, Bayes/ownreach/regret/average/resumePASS.
+HU50 native3/10/50 +flop check/halfpot/jam, turnriverpassive explicit. Eachsampled
+flop all1271256privatepairs x990runouts exact; sampled public/private abstraction
+errorUNKNOWN. Two seeds128jointsteps trainNC.020859/.013372, heldout3.464242/
+5.029725 vs oldB samefinitegame17.037454/17.970489. Not wholepopulation/fullNLHE.
+All169x3stage frequencies/conditional modelEV saved, genuinepreaverage169supported.
+Heldout missingprivate signals78/55 on unpairedboards; no256scale after nativegate.
+Native2048freshworlds22528paths: oldBpaired+.128662[-3.383098,3.640422] and
+-.145508[-3.736047,3.445032], no significantEVdiff. Source/average/digest matched.
+Rivernuts sameprofile legaldev point.091797; monotone cashflow +990opponentoracle,
+100CDFtail lowerbounds establish nativeBR/NC LOWER.002359953575BB jointly99.9%.
+FullnativeBRupper/NCpoint/upper/169alllegalEVprecision/modelerrorsUNKNOWN. Passive
+turnriver remains actualweakness; no admission. Formal0/12,verifiedRFI0/3bet0,
+legacy8BLOCKED protected.99regressionsPASS. ../qa/joint-release-20261119/ has
+actualR/S checkpoints/moments/worlds; compiledlibs local/tmp only; no autoresume.
+Old externalSQLite/cache/ZIP not recovered. Pending specs unchanged. Next jointly
+model turn/river with causal observations and improve signal coverage before
+expansion, independentnative/error gates before registry. No prod/main/DB/Storage/
+Vercel/SSO/billing/destruction or manualSUCCESS-CI rerun.

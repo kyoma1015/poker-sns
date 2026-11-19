@@ -1,0 +1,58 @@
+{
+  "17119201": {
+    "preflop": {
+      "rfi": {
+        "rows": 169,
+        "positive_average_rows": 169
+      },
+      "vs_open": {
+        "rows": 169,
+        "positive_average_rows": 169
+      },
+      "vs_3bet": {
+        "rows": 169,
+        "positive_average_rows": 169
+      }
+    },
+    "postflop": [
+      {
+        "public_bucket": 0,
+        "train_positive_private_signals": 213,
+        "heldout_private_signals_absent_from_train": 78
+      },
+      {
+        "public_bucket": 1,
+        "train_positive_private_signals": 169,
+        "heldout_private_signals_absent_from_train": 0
+      }
+    ]
+  },
+  "17119202": {
+    "preflop": {
+      "rfi": {
+        "rows": 169,
+        "positive_average_rows": 169
+      },
+      "vs_open": {
+        "rows": 169,
+        "positive_average_rows": 169
+      },
+      "vs_3bet": {
+        "rows": 169,
+        "positive_average_rows": 169
+      }
+    },
+    "postflop": [
+      {
+        "public_bucket": 0,
+        "train_positive_private_signals": 212,
+        "heldout_private_signals_absent_from_train": 55
+      },
+      {
+        "public_bucket": 1,
+        "train_positive_private_signals": 169,
+        "heldout_private_signals_absent_from_train": 0
+      }
+    ]
+  }
+}
