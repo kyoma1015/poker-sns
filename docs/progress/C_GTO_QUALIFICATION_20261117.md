@@ -240,3 +240,23 @@ matched range-drift validation and independently significant improvement before
 expansion/admission. No automaticresume, no inaccessible ZIP/DB recovery claim.
 Selected conditional native EV: 169x3contexts x3actions=1,521 entries,
 3,042 paths/84.551421sec,2samples/entry,max CIwidth100BB; precisionFAIL.
+
+## 2026-11-19 23:14 JST — coupled range/payoff cause and rejected pilot
+From6a8afecd: fixed-payoff C++ CFR vs runtime endogenous-range continuation is a
+policy/game mismatch. Five independent oracle tests (2types/7nodes own-reach,
+exhaustive infoset BR, sparse blocker mass/scaling, actual Bayes posterior, cache
+rebuild) pass. No regret/card-removal defect found within this finite scope.
+Implemented alpha.25 epoch range refresh around existing100iteration C++ solver.
+Two seeds4train/4heldout worlds, cumulative0/100/200steps: heldoutNC1.983504→
+2.306844→2.789328 and1.462726→1.978215→2.642746 while trainNC decreases.
+Undamped first-target NC2.954381/4.775522. Reject method, no8world escalation.
+All169 RFI/vsopen/vs3bet frequencies regenerated for2research policies, no admission.
+Native fresh256 worlds/4096paths20family intervals: no significant EV/deviation
+result. Six probes include3.5/10.5/riverjam/fold/2.5open/9threebet. Selectedaction
+referenceEV intervals max100BB, fullnativeBR/NC/errors/alllegalprecisionUNKNOWN.
+Fresh4096 selectedattack confirmation stopped180s at2373, durable2304checkpoint;
+INCOMPLETE, no fixed-n bound claimed. All sources/checkpoints/results in
+../qa/coupled-preflop-20261119/. 90regressionsPASS. Formal0/12, verifiedRFI0/3bet0,
+legacy8BLOCKED unchanged. Pending formal specs untouched. Next: jointoptimization
+small-game information constraints, not another unproven relaxed-method expansion.
+No prod/main/deploy/DB/Storage/SSO/billing/destructive operations or manualCIreruns.

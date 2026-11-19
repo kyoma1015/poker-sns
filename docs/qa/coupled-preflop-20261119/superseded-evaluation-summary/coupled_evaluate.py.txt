@@ -1,0 +1,76 @@
+"""Bounded independent holdout and undamped control; no registry admission."""
+import argparse,gzip,json,random,time
+from pathlib import Path
+import numpy as np
+from gto.abstract import model
+from gto.qualification.coupled_preflop import PRIOR,payoff,evaluate,candidate,worlds
+from gto.qualification.preflop_release_solver import load_policy
+from gto.qualification.range_continuation import RangePolicy,load_kernel
+from gto.qualification.preflop_reopt import ARTIFACT,RATIO
+from gto.qualification.range_followup import Probe
+from gto.qualification.action_native import native_value,interval
+from gto.qualification.variance_study import compressed
+from gto.qualification.evaluate import atomic
+from gto.qualification.policy import sha,act
+from gto.qualification.native_mccfr import betting
+from gto.qualification.public_response import observe
+from gto.native.training import NativeGame
+
+def read(p):return json.loads(gzip.decompress(Path(p).read_bytes()))
+
+class Extra(Probe):
+    def row(self,o,average=False):
+        action=None
+        if self.kind=='fold' and not o.history:action=0
+        if self.kind=='open2p5' and not o.history:action=7
+        if self.kind=='threebet9' and o.actor==1 and len(o.history)==1 and o.history[0][:3]==(0,0,6):action=20
+        if action in o.actions:return [float(a==action) for a in o.actions]
+        return super().row(o,average)
+
+def run(build,library,out):
+    out=Path(out);lib=load_kernel(library);curves=json.loads((out/'curves.json').read_text())['curves'];prior=RangePolicy(load_policy(build,PRIOR),lib);qs=[];raw_reports=[]
+    for seed in (17119101,17119102):
+        folder=out/str(seed);last=max(c['epoch'] for c in curves if c['seed']==seed);q=RangePolicy(load_policy(build,folder/f'epoch{last}-strategy.json.gz'),lib);qs.append(q)
+        # Same100-iteration target as first relaxed step; only reevaluate, no more learning iterations.
+        samples=read(folder/'epoch0-train.json.gz')['samples'];leaf=np.mean(samples,axis=0);_,p=model.chance(model.classes());target=model.solve(lib,leaf.ravel().tolist(),p,prior.base.nodes,iterations=100)
+        raw=candidate(prior,target,1.,dict(schema='undamped-range-control-v1',seed=seed,parent_digest=prior.policy_digest,source_sha256=sha(Path(__file__)),iterations=100,formal_profile=False))
+        held=payoff(raw,worlds(seed+100,4),time.monotonic()+45,folder/'raw-heldout.json.gz');metric=evaluate(lib,held,raw.base.nodes,raw.base.strategy)
+        raw_reports.append(dict(seed=seed,policy_digest=raw.policy_digest,heldout_NC_bb=metric['abstract_nashconv_bb'],heldout_EV_bb=metric['profile_sb_ev_bb']))
+        d=raw.base.artifact;d['abstract_sample_metrics']={k:target[k] for k in ('iterations','seconds','profile_sb_ev_bb','br_sb_ev_bb','br_bb_min_sb_ev_bb','abstract_nashconv_bb')};d['policy_digest']=raw.base.policy_digest;d['combined_policy_digest']=raw.policy_digest;d['raw_current_range_metrics']={k:v for k,v in metric.items() if k not in ('reach','action_ev_chips')};compressed(folder/'raw-strategy.json.gz',d)
+        # Explicit all-legal frequencies; conditional EV intervals for selected actions only.
+        freq={};cis={};perworld=[evaluate(lib,np.asarray(x),q.base.nodes,q.base.strategy) for x in read(folder/f'epoch{last}-heldout.json.gz')['samples']]
+        ranges=[model.ranges(dict(strategy=q.base.strategy,**x),q.base.nodes) for x in perworld]
+        for name,prefix in [('rfi',[]),('vs_open',[8]),('vs_3bet',[8,22])]:
+            b=betting(q.rules)
+            for a in prefix:act(b,a)
+            freq[name]={};cis[name]={}
+            for label,g in zip(model.CLASSES,model.classes()):
+                o=observe(b,g[0],[]);freq[name][label]=dict(actions=o.actions,frequencies=q.row(o,True))
+                cis[name][label]=[interval([r[name]['hands'][label]['action_ev_bb'][j] for r in ranges],-50*RATIO,50*RATIO,.001/(1521*6)) for j in range(3)]
+        compressed(folder/'frequency-and-EV.json.gz',dict(policy_digest=q.policy_digest,frequencies=freq,selected_action_EV_bb=cis,n_worlds=4,
+            method='bounded public-board importance estimator; union across6potential learned policies and1521actions; train-independent boards, also used for selection',
+            max_true_EV_interval_width_bb=max(min(50,x['interval'][1])-max(-50,x['interval'][0]) for s in cis.values() for a in s.values() for x in a),
+            full_legal_action_EV_precision_bb=None,precision_pass=False))
+    atomic(out/'raw-control.json',dict(results=raw_reports,learning_expansion=False))
+    ps=[load_policy(build,ARTIFACT),prior,*qs];names=['old_B','previous_reoptimized','relaxed_seed1','relaxed_seed2'];kinds=['open3p5','threebet10p5','river_jam','fold','open2p5','threebet9']
+    probes=[Extra(q,k) for q in qs for k in kinds];r=random.Random(17119111);ws=[(r.sample(range(52),9),r.getrandbits(128)) for _ in range(256)];values=[[] for _ in ps+probes];start=time.monotonic();game=NativeGame([100,100])
+    identity=dict(seed=17119111,worlds=ws,policy_digests=[q.policy_digest for q in ps],source_sha256=sha(Path(__file__)),native_binary_sha256=sha(Path(prior.native.__file__)),confidence_family=.999,events=20)
+    for i,(deck,tape) in enumerate(ws):
+        if time.monotonic()-start>120:
+            atomic(out/'native.json',dict(status='INCOMPLETE_TIME_LIMIT',completed=i));return
+        for q,v in zip(ps+probes,values):v.append(native_value(q,prior.native,game,deck,tape))
+        if (i+1)%32==0:
+            compressed(out/'native-checkpoint.json.gz',dict(identity=identity,completed=i+1,values=values));print(json.dumps(dict(native_worlds=i+1,seconds=time.monotonic()-start)),flush=True)
+    delta=.001/20;profiles=[dict(name=n,policy_digest=q.policy_digest,SB_EV_bb=interval(v,-50,50,delta)) for n,q,v in zip(names,ps,values)];comparisons=[];dev=[]
+    for qi in range(2):
+        base=values[2+qi]
+        for ci in (0,1):comparisons.append(dict(candidate=names[2+qi],control=names[ci],paired_EV_bb=interval([a-b for a,b in zip(base,values[ci])],-100,100,delta)))
+        for j,k in enumerate(kinds):
+            sign=1 if k in ('fold','open2p5','open3p5') else -1
+            gain=interval([sign*(a-b) for a,b in zip(values[4+qi*6+j],base)],-100,100,delta)
+            dev.append(dict(candidate=names[2+qi],kind=k,gain_bb=gain,BR_gain_lower_bb=max(0,gain['interval'][0])))
+    atomic(out/'native.json',dict(status='COMPLETE_UNVERIFIED',identity=identity,profiles=profiles,comparisons=comparisons,deviations=dev,seconds=time.monotonic()-start,
+        full_native_BR_upper_bb=None,full_native_NashConv_bb=None,uniform_continuation_error_bb=None,omitted_size_error_bb=None,formal_acceptance=0,verified_strategies=0,ordinary_registry_admission=False))
+
+if __name__=='__main__':
+    p=argparse.ArgumentParser();p.add_argument('--build',required=True);p.add_argument('--library',required=True);p.add_argument('--out',required=True);a=p.parse_args();run(a.build,a.library,a.out)

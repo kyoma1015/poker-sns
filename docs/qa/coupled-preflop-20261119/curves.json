@@ -1,0 +1,78 @@
+{
+  "curves": [
+    {
+      "alpha": 0.25,
+      "epoch": 0,
+      "heldout_EV_bb": 0.7547680124499446,
+      "heldout_NC_bb": 1.9835039790454583,
+      "inner_iterations": 100,
+      "policy_digest": "65b9610c35ce044a3c3ba5895ab92a908da686c8eaeca64699efc1ee0fe7fb0d",
+      "seconds": 17.953272189000018,
+      "seed": 17119101,
+      "train_NC_bb": 1.9006594390745921,
+      "worlds": 4
+    },
+    {
+      "alpha": 0.25,
+      "epoch": 1,
+      "heldout_EV_bb": 0.6962868363925688,
+      "heldout_NC_bb": 2.3068440861486144,
+      "inner_iterations": 100,
+      "policy_digest": "c6a3505dc9de9293d76f72cc7f4ee675de9f895142227f2cb48f13126bc344e9",
+      "seconds": 37.4668961440002,
+      "seed": 17119101,
+      "train_NC_bb": 1.8081518927817775,
+      "worlds": 4
+    },
+    {
+      "alpha": 0.25,
+      "epoch": 2,
+      "heldout_EV_bb": 0.472700006420222,
+      "heldout_NC_bb": 2.7893284065746586,
+      "inner_iterations": 100,
+      "policy_digest": "e68de80906ad15e69ca972991d416c3c3382ada9f037c9cde361eab683c9d993",
+      "seconds": 58.28871679800022,
+      "seed": 17119101,
+      "train_NC_bb": 1.6901947522714311,
+      "worlds": 4
+    },
+    {
+      "alpha": 0.25,
+      "epoch": 0,
+      "heldout_EV_bb": 0.16607477610693194,
+      "heldout_NC_bb": 1.4627264369329769,
+      "inner_iterations": 100,
+      "policy_digest": "65b9610c35ce044a3c3ba5895ab92a908da686c8eaeca64699efc1ee0fe7fb0d",
+      "seconds": 22.188160229999994,
+      "seed": 17119102,
+      "train_NC_bb": 3.580521371004056,
+      "worlds": 4
+    },
+    {
+      "alpha": 0.25,
+      "epoch": 1,
+      "heldout_EV_bb": -0.026566444495926975,
+      "heldout_NC_bb": 1.9782147974990922,
+      "inner_iterations": 100,
+      "policy_digest": "5ab99d2cef89af6ecb8d453c195afef66ade36242549bbac8d5a2dd9bea210d8",
+      "seconds": 45.427201445000264,
+      "seed": 17119102,
+      "train_NC_bb": 2.4122980555164175,
+      "worlds": 4
+    },
+    {
+      "alpha": 0.25,
+      "epoch": 2,
+      "heldout_EV_bb": -0.025809167561485526,
+      "heldout_NC_bb": 2.6427459690515187,
+      "inner_iterations": 100,
+      "policy_digest": "879a00a9bdc8c2a4fceec03a6676244482c71027859e6fcb8e26a85a59a9e452",
+      "seconds": 71.57406160300025,
+      "seed": 17119102,
+      "train_NC_bb": 1.7867249365543132,
+      "worlds": 4
+    }
+  ],
+  "formal_acceptance": 0,
+  "verified_strategies": 0
+}
