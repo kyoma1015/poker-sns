@@ -1,0 +1,17 @@
+{
+  "source_head": "ac72bafd5d42a9c75f88eb28a86aec3de362466d",
+  "scope": "known-world offline supplied-policy bridge, not equilibrium EV or native change",
+  "new_tests_pass": 6,
+  "players_fixture_counts": [
+    6,
+    9
+  ],
+  "source_sha256": {
+    "gto/qualification/multiplayer_scope.py": "fc542bab0c4ff896a87b5af1af146e1c6f530cd98a7eb1c5286dc595e4cfdd77",
+    "gto/qualification/test_multiplayer_scope.py": "5bc3e11aed6f653448fad842c9f642daa9bf4c81bac0829ae61ae9ad67f59613"
+  },
+  "training_run": false,
+  "ordinary_registry_admission": false,
+  "verified_multiplayer_strategies": 0,
+  "formal_acceptance_complete": 0
+}

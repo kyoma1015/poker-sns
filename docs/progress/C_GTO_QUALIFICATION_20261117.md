@@ -285,3 +285,31 @@ Old externalSQLite/cache/ZIP not recovered. Pending specs unchanged. Next jointl
 model turn/river with causal observations and improve signal coverage before
 expansion, independentnative/error gates before registry. No prod/main/DB/Storage/
 Vercel/SSO/billing/destruction or manualSUCCESS-CI rerun.
+
+## 2026-11-20 03:15 JST — joint CFR+ through turn/river; native gate remains blocked
+Fromac72bafd, new causal fullstreet same-game CF-vector joint CFR+ optimizes
+pre/flop/turn/river.884nativelegal publicnodes, own/public prefix-only observations;
+future public/private signals summed beforeBR/update. Allcompatible1,070,190
+privatepairs per completeboard exact;4board-strata quadrature/model errorUNKNOWN.
+Three independent pureBR/path-oracle games1024steps NC.000040993/.000035745/
+.000019463, allPASS. Protected oldactualR/S validates average, newgame inherits
+behavioronly,freshR/S0epochs; oldcheckpoints unchanged.2HU50seeds128pilot trainNC
+.181211/.217574; samefullstreetfresholdjoint21.391449/22.025238 vs new16NC
+14.507823/10.296256 worsening64/128. Select16 post-validation (NOTfinalheldout);
+checkpoint16/128 preserved, no256.84.745/100.981sec,peak505368576bytes<512MiB.
+Independentnative2048worlds26624paths5.460sec: SB+.013184[-2.254813,2.281180]/
+-.105713[-2.178017,1.966591]; vsoldB+.229248/+.110352, no significant improvement.
+3.5/10.5/riverjam/nuts legalprobes inconclusive; nuts0pointNOTsolvedproof.
+Zeroaverage pathworld9.375%/4.736328%; turnCF58860/63450,river191516/212344
+visitedrows, supportedrows100%revisited. Oldmissingflopsignals78->15/55->2.
+All169xRFI/vsopen/vs3bet frequencies+conditionalmodelEV2policies saved; fullnative
+BRupper/NC/169actionprecision/continuation+sizeerror UNKNOWN. Formal0/12,
+verifiedRFI0/3bet0 unchanged. Full2..9 release scope preserved, HU50ONLYmilestone.
+New6/9offlineadapter tests all-seatprivacy/unequalstacks/sidepots/refund/ante/rake;
+not multiplayer strategy.114regressionsPASS, actualHUcheckpoint one-step replay
+bitequal, noautoresume. ../qa/fullstreet-joint-20261120/README.md has evidence,
+selection limitation and manualrestore/buildhash instructions. Existing oldDB/ZIP
+bytes inaccessible, not recovered. No ordinaryregistry/prod/main/DB/Storage/
+Vercel/SSO/billing/destruction or manualSUCCESS-CI rerun. Pendingformalprofiles
+unchanged. Next generalization+coverage smallgate, then fullbounds/precision and
+multiwayjointsolver; no blind128+ training or first-release-complete claim.

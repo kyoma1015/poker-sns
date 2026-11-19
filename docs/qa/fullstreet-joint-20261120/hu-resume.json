@@ -1,0 +1,23 @@
+{
+  "automatic_resume": false,
+  "bit_exact": true,
+  "checkpoint_sha256": "3c5c9fffef4bd23855df44b12bbb0e5560d120c294ee26cc479eb6d635f4df6c",
+  "one_additional_step_states": [
+    {
+      "A": "04287a218cf5799765230dce0c987620d3e176b70f937964a465aa4664a3baa7",
+      "R": "93b873f1c92c4db833877809e5bb18d2ee7d040663053b2a1d4dbccbbf8e586e",
+      "iterations": 17,
+      "visits": "d2b95ae423d503845a74cfe535a362e6a9b4968c7d496d25fd71251744c73d8d"
+    },
+    {
+      "A": "04287a218cf5799765230dce0c987620d3e176b70f937964a465aa4664a3baa7",
+      "R": "93b873f1c92c4db833877809e5bb18d2ee7d040663053b2a1d4dbccbbf8e586e",
+      "iterations": 17,
+      "visits": "d2b95ae423d503845a74cfe535a362e6a9b4968c7d496d25fd71251744c73d8d"
+    }
+  ],
+  "restored_epochs": 16,
+  "seconds": 3.6608752449974418,
+  "seed": 17120101,
+  "source_checkpoint_unchanged": true
+}

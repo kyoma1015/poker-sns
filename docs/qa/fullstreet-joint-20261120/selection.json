@@ -1,0 +1,18 @@
+{
+  "learning_escalation": false,
+  "reason": "fresh model-heldout worsened16->64->128; select16 for disjoint native test,do not extend256",
+  "replays": [
+    {
+      "iteration": 16,
+      "original128_preserved": true,
+      "seed": 17120101,
+      "train_NC_equal": true
+    },
+    {
+      "iteration": 16,
+      "original128_preserved": true,
+      "seed": 17120102,
+      "train_NC_equal": true
+    }
+  ]
+}
