@@ -1,0 +1,8 @@
+{
+  "policy_digest": "65b9610c35ce044a3c3ba5895ab92a908da686c8eaeca64699efc1ee0fe7fb0d",
+  "n": 256,
+  "eligible_queries": 34,
+  "nut_jams": 0,
+  "identical_payoffs": true,
+  "note": "same-world replay for trigger coverage only; no new independent samples"
+}

@@ -218,3 +218,25 @@ Evidence/config/build/RNG/manualresume: ../qa/range-continuation-20261118/README
 No oldQA/successCI manualrerun or production/DB/Storage/main/deploy/SSO/billing/
 destructive action. No automaticresume. Next: quantify future/private/size error,
 EVprecision then preflopreoptimization, independentBR/full12before admission.
+
+## 2026-11-19 00:23 JST — actual preflop reoptimization from f4c70535
+Range continuation full three-street payoff kernel connected to existing C++
+169-class CFR. Eight public-board worlds/exhaustive disjoint private pairs,
+correct C(52,5)/C(48,5) chance correction, shared public coins; 39.274989sec.
+100 iterations each matched passive-control and active kernel; active3,074 changed
+strategy elements; RFI166/vsopen169/vs3bet159 changed hands, all169 exported/stage.
+Combined newdigest65b9610c35ce044a3c3ba5895ab92a908da686c8eaeca64699efc1ee0fe7fb0d.
+Native256 root worlds oldB SB-.103516/new+.169922; paired+.273438BB wideCI
+[-21.053944,21.600819], vs priorRange+.039063 likewise not significant.
+3.5/10.5/riverjam/nuts probes inconclusive. Learning expansion gateFALSE; no
+longer learning. Restricted kernelNC.078551924 not fullnative NC. FullBRupper,
+NCpoint/upper, fulllegal169/action precision, omittedsize and range-coupling error
+UNKNOWN. Training anchoredoldchart, runtime posteriornewchart; fixedpoint not
+claimed. Formal0/12 and verifiedRFI0/3bet0, legacy8BLOCKED unchanged.
+85 regressionPASS (4new); checkpoint resume0newworld reproducesbothdigests.
+Details ../qa/preflop-reoptimized-20261118/README.md. Draft stays; no production,
+DB/Storage/main/deploy/SSO/billing/destruction/manualSUCCESS-CI rerun. Next gate:
+matched range-drift validation and independently significant improvement before
+expansion/admission. No automaticresume, no inaccessible ZIP/DB recovery claim.
+Selected conditional native EV: 169x3contexts x3actions=1,521 entries,
+3,042 paths/84.551421sec,2samples/entry,max CIwidth100BB; precisionFAIL.
