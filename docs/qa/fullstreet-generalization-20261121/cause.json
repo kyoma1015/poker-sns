@@ -1,0 +1,615 @@
+{
+  "rows": [
+    {
+      "seed": 17120101,
+      "CF_support_equal_16_128": true,
+      "additional_visited_action_entries": 0,
+      "old16_checkpoint_sha256": "3c5c9fffef4bd23855df44b12bbb0e5560d120c294ee26cc479eb6d635f4df6c",
+      "old128_checkpoint_sha256": "3e28bb4f6c0eb3c211243d5a4b9a1b554eef2d127660efa1ca2bd98f34356ce1",
+      "same_abstract_signal_board_aliasing": [
+        {
+          "stratum": 0,
+          "own_code": 6,
+          "opponent_code": 118,
+          "conditional_showdown_equity_min": 0.0,
+          "max": 1.0,
+          "worlds": [
+            {
+              "board": [
+                21,
+                34,
+                49,
+                47,
+                1
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                20,
+                28,
+                45,
+                15,
+                37
+              ],
+              "equity": 0.0
+            },
+            {
+              "board": [
+                0,
+                14,
+                40,
+                19,
+                28
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                9,
+                22,
+                32,
+                0,
+                16
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                30,
+                43,
+                45,
+                0,
+                15
+              ],
+              "equity": 0.0
+            },
+            {
+              "board": [
+                9,
+                28,
+                42,
+                38,
+                27
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                22,
+                26,
+                51,
+                44,
+                37
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                5,
+                19,
+                43,
+                49,
+                35
+              ],
+              "equity": 1.0
+            }
+          ]
+        },
+        {
+          "stratum": 1,
+          "own_code": 6,
+          "opponent_code": 118,
+          "conditional_showdown_equity_min": 0.0,
+          "max": 1.0,
+          "worlds": [
+            {
+              "board": [
+                10,
+                26,
+                32,
+                42,
+                43
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                10,
+                40,
+                47,
+                39,
+                8
+              ],
+              "equity": 0.0
+            },
+            {
+              "board": [
+                15,
+                23,
+                51,
+                33,
+                32
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                11,
+                30,
+                45,
+                42,
+                43
+              ],
+              "equity": 0.0
+            },
+            {
+              "board": [
+                25,
+                30,
+                49,
+                37,
+                27
+              ],
+              "equity": 1.0
+            }
+          ]
+        },
+        {
+          "stratum": 2,
+          "own_code": 6,
+          "opponent_code": 118,
+          "conditional_showdown_equity_min": 1.0,
+          "max": 1.0,
+          "worlds": [
+            {
+              "board": [
+                19,
+                31,
+                38,
+                37,
+                28
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                6,
+                34,
+                42,
+                35,
+                32
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                12,
+                20,
+                35,
+                32,
+                22
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                1,
+                9,
+                14,
+                12,
+                40
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                5,
+                28,
+                39,
+                37,
+                1
+              ],
+              "equity": 1.0
+            }
+          ]
+        },
+        {
+          "stratum": 3,
+          "own_code": 6,
+          "opponent_code": 118,
+          "conditional_showdown_equity_min": 0.0,
+          "max": 1.0,
+          "worlds": [
+            {
+              "board": [
+                13,
+                21,
+                23,
+                8,
+                16
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                13,
+                14,
+                42,
+                28,
+                44
+              ],
+              "equity": 0.0
+            },
+            {
+              "board": [
+                16,
+                17,
+                34,
+                12,
+                22
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                0,
+                2,
+                29,
+                27,
+                3
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                6,
+                28,
+                29,
+                22,
+                25
+              ],
+              "equity": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "seed": 17120102,
+      "CF_support_equal_16_128": true,
+      "additional_visited_action_entries": 0,
+      "old16_checkpoint_sha256": "959751af9bc31505d028b54ba1cefd95005f621bbdf5c6472c114c7df8177a31",
+      "old128_checkpoint_sha256": "8e13295239ab88023bd1d8411cf2589d088c1a6fc3e293b1faea115d27f591e2",
+      "same_abstract_signal_board_aliasing": [
+        {
+          "stratum": 0,
+          "own_code": 6,
+          "opponent_code": 118,
+          "conditional_showdown_equity_min": 0.0,
+          "max": 1.0,
+          "worlds": [
+            {
+              "board": [
+                9,
+                38,
+                43,
+                18,
+                30
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                21,
+                40,
+                44,
+                19,
+                32
+              ],
+              "equity": 0.0
+            },
+            {
+              "board": [
+                6,
+                13,
+                51,
+                23,
+                41
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                25,
+                35,
+                39,
+                0,
+                14
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                7,
+                33,
+                51,
+                22,
+                3
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                2,
+                13,
+                32,
+                24,
+                20
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                28,
+                39,
+                49,
+                14,
+                47
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                3,
+                15,
+                46,
+                50,
+                9
+              ],
+              "equity": 1.0
+            }
+          ]
+        },
+        {
+          "stratum": 1,
+          "own_code": 6,
+          "opponent_code": 118,
+          "conditional_showdown_equity_min": 1.0,
+          "max": 1.0,
+          "worlds": [
+            {
+              "board": [
+                20,
+                32,
+                51,
+                14,
+                35
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                3,
+                11,
+                21,
+                18,
+                2
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                11,
+                26,
+                34,
+                16,
+                25
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                2,
+                24,
+                49,
+                4,
+                3
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                10,
+                18,
+                49,
+                12,
+                14
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                5,
+                13,
+                35,
+                40,
+                42
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                8,
+                13,
+                30,
+                27,
+                10
+              ],
+              "equity": 1.0
+            }
+          ]
+        },
+        {
+          "stratum": 2,
+          "own_code": 6,
+          "opponent_code": 118,
+          "conditional_showdown_equity_min": 0.0,
+          "max": 1.0,
+          "worlds": [
+            {
+              "board": [
+                7,
+                33,
+                43,
+                40,
+                34
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                4,
+                13,
+                40,
+                12,
+                20
+              ],
+              "equity": 0.75
+            },
+            {
+              "board": [
+                17,
+                38,
+                43,
+                19,
+                25
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                16,
+                22,
+                42,
+                20,
+                15
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                13,
+                29,
+                45,
+                31,
+                4
+              ],
+              "equity": 0.0
+            },
+            {
+              "board": [
+                6,
+                11,
+                44,
+                4,
+                8
+              ],
+              "equity": 0.0
+            },
+            {
+              "board": [
+                0,
+                10,
+                26,
+                3,
+                35
+              ],
+              "equity": 1.0
+            }
+          ]
+        },
+        {
+          "stratum": 3,
+          "own_code": 6,
+          "opponent_code": 118,
+          "conditional_showdown_equity_min": 1.0,
+          "max": 1.0,
+          "worlds": [
+            {
+              "board": [
+                1,
+                21,
+                23,
+                31,
+                30
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                4,
+                7,
+                32,
+                14,
+                48
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                23,
+                36,
+                39,
+                30,
+                43
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                0,
+                34,
+                35,
+                7,
+                41
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                25,
+                28,
+                30,
+                29,
+                11
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                13,
+                42,
+                43,
+                1,
+                22
+              ],
+              "equity": 1.0
+            },
+            {
+              "board": [
+                14,
+                16,
+                19,
+                7,
+                51
+              ],
+              "equity": 1.0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "conclusion": "fixed chance support cannot expand by more iterations; board/private aliasing observable, uniform fullnative error still UNKNOWN"
+}

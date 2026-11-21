@@ -1,0 +1,182 @@
+{
+  "curve": [
+    {
+      "additional_steps": 0,
+      "coverage": {
+        "0": {
+          "CF_revisited": 1352,
+          "CF_visited": 1352,
+          "allocated": 1352,
+          "positive_average": 1352,
+          "revisit_rate": 1.0
+        },
+        "1": {
+          "CF_revisited": 14520,
+          "CF_visited": 14520,
+          "allocated": 20280,
+          "positive_average": 14520,
+          "revisit_rate": 1.0
+        },
+        "2": {
+          "CF_revisited": 63450,
+          "CF_visited": 63450,
+          "allocated": 243360,
+          "positive_average": 63450,
+          "revisit_rate": 1.0
+        },
+        "3": {
+          "CF_revisited": 212344,
+          "CF_visited": 212344,
+          "allocated": 2747264,
+          "positive_average": 198724,
+          "revisit_rate": 1.0
+        }
+      },
+      "selection_NC_bb": 10.895835643483014
+    },
+    {
+      "additional_steps": 16,
+      "coverage": {
+        "0": {
+          "CF_revisited": 1352,
+          "CF_visited": 1352,
+          "allocated": 1352,
+          "positive_average": 1352,
+          "revisit_rate": 1.0
+        },
+        "1": {
+          "CF_revisited": 14818,
+          "CF_visited": 14820,
+          "allocated": 20280,
+          "positive_average": 14799,
+          "revisit_rate": 0.9998650472334683
+        },
+        "2": {
+          "CF_revisited": 78837,
+          "CF_visited": 85776,
+          "allocated": 243360,
+          "positive_average": 81151,
+          "revisit_rate": 0.9191032456631225
+        },
+        "3": {
+          "CF_revisited": 277470,
+          "CF_visited": 310774,
+          "allocated": 2747264,
+          "positive_average": 269259,
+          "revisit_rate": 0.8928353079729965
+        }
+      },
+      "peak_RSS_bytes": 461590528,
+      "seconds": 8.889936851000016,
+      "selection_NC_bb": 10.709110083690053
+    },
+    {
+      "additional_steps": 32,
+      "coverage": {
+        "0": {
+          "CF_revisited": 1352,
+          "CF_visited": 1352,
+          "allocated": 1352,
+          "positive_average": 1352,
+          "revisit_rate": 1.0
+        },
+        "1": {
+          "CF_revisited": 14820,
+          "CF_visited": 14820,
+          "allocated": 20280,
+          "positive_average": 14820,
+          "revisit_rate": 1.0
+        },
+        "2": {
+          "CF_revisited": 85812,
+          "CF_visited": 86838,
+          "allocated": 243360,
+          "positive_average": 84763,
+          "revisit_rate": 0.9881848960132661
+        },
+        "3": {
+          "CF_revisited": 333054,
+          "CF_visited": 364675,
+          "allocated": 2747264,
+          "positive_average": 324386,
+          "revisit_rate": 0.9132899156783437
+        }
+      },
+      "peak_RSS_bytes": 461590528,
+      "seconds": 21.598794193000003,
+      "selection_NC_bb": 10.064381974512866
+    },
+    {
+      "additional_steps": 64,
+      "coverage": {
+        "0": {
+          "CF_revisited": 1352,
+          "CF_visited": 1352,
+          "allocated": 1352,
+          "positive_average": 1352,
+          "revisit_rate": 1.0
+        },
+        "1": {
+          "CF_revisited": 14820,
+          "CF_visited": 14820,
+          "allocated": 20280,
+          "positive_average": 14820,
+          "revisit_rate": 1.0
+        },
+        "2": {
+          "CF_revisited": 86928,
+          "CF_visited": 87120,
+          "allocated": 243360,
+          "positive_average": 86326,
+          "revisit_rate": 0.9977961432506887
+        },
+        "3": {
+          "CF_revisited": 363452,
+          "CF_visited": 379723,
+          "allocated": 2747264,
+          "positive_average": 353277,
+          "revisit_rate": 0.957150343803246
+        }
+      },
+      "peak_RSS_bytes": 461590528,
+      "seconds": 40.871538946999976,
+      "selection_NC_bb": 7.885335641817894
+    },
+    {
+      "additional_steps": 128,
+      "coverage": {
+        "0": {
+          "CF_revisited": 1352,
+          "CF_visited": 1352,
+          "allocated": 1352,
+          "positive_average": 1352,
+          "revisit_rate": 1.0
+        },
+        "1": {
+          "CF_revisited": 14820,
+          "CF_visited": 14820,
+          "allocated": 20280,
+          "positive_average": 14820,
+          "revisit_rate": 1.0
+        },
+        "2": {
+          "CF_revisited": 87120,
+          "CF_visited": 87210,
+          "allocated": 243360,
+          "positive_average": 86913,
+          "revisit_rate": 0.9989680082559339
+        },
+        "3": {
+          "CF_revisited": 379717,
+          "CF_visited": 380492,
+          "allocated": 2747264,
+          "positive_average": 367699,
+          "revisit_rate": 0.9979631634830692
+        }
+      },
+      "peak_RSS_bytes": 461590528,
+      "seconds": 79.306807102,
+      "selection_NC_bb": 6.123955306763429
+    }
+  ]
+}

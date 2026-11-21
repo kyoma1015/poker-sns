@@ -1,0 +1,334 @@
+{
+  "formal_acceptance": 0,
+  "rows": [
+    {
+      "curve": [
+        {
+          "EV_bb": [
+            -1.375,
+            -1.5,
+            2.875
+          ],
+          "full_native_BR_upper": null,
+          "full_native_NashConv": null,
+          "infosets": 11,
+          "iterations": 0,
+          "nodes": 13,
+          "ordinary_registry_admission": false,
+          "players": 3,
+          "restricted_BR_bb": [
+            0.0,
+            -0.375,
+            5.75
+          ],
+          "restricted_gain_bb": [
+            1.375,
+            1.125,
+            2.875
+          ],
+          "sum_restricted_unilateral_gains_bb": 5.375
+        },
+        {
+          "EV_bb": [
+            -0.5545937285665294,
+            -1.0409888331618657,
+            1.5955825617283954
+          ],
+          "full_native_BR_upper": null,
+          "full_native_NashConv": null,
+          "infosets": 11,
+          "iterations": 8,
+          "nodes": 13,
+          "ordinary_registry_admission": false,
+          "players": 3,
+          "restricted_BR_bb": [
+            -0.4928626543209877,
+            -0.9860146604938272,
+            1.6180555555555558
+          ],
+          "restricted_gain_bb": [
+            0.06173107424554175,
+            0.0549741726680385,
+            0.022472993827160392
+          ],
+          "sum_restricted_unilateral_gains_bb": 0.13917824074074064
+        },
+        {
+          "EV_bb": [
+            -0.5037833958790405,
+            -1.002837769611088,
+            1.5066211654901283
+          ],
+          "full_native_BR_upper": null,
+          "full_native_NashConv": null,
+          "infosets": 11,
+          "iterations": 32,
+          "nodes": 13,
+          "ordinary_registry_admission": false,
+          "players": 3,
+          "restricted_BR_bb": [
+            -0.49952561839990817,
+            -0.9990525819272268,
+            1.5080492424242422
+          ],
+          "restricted_gain_bb": [
+            0.004257777479132363,
+            0.0037851876838611576,
+            0.0014280769341139532
+          ],
+          "sum_restricted_unilateral_gains_bb": 0.009471042097107474
+        }
+      ],
+      "players": 3,
+      "scope": "finite2world restrictedallin game; not fullnative solved profile",
+      "seconds": 0.014691545000005135
+    },
+    {
+      "curve": [
+        {
+          "EV_bb": [
+            -0.03125,
+            -1.328125,
+            0.25,
+            0.1953125,
+            0.1484375,
+            0.078125
+          ],
+          "full_native_BR_upper": null,
+          "full_native_NashConv": null,
+          "infosets": 109,
+          "iterations": 0,
+          "nodes": 125,
+          "ordinary_registry_admission": false,
+          "players": 6,
+          "restricted_BR_bb": [
+            0.4375,
+            -0.734375,
+            0.5,
+            0.390625,
+            0.296875,
+            0.203125
+          ],
+          "restricted_gain_bb": [
+            0.46875,
+            0.59375,
+            0.25,
+            0.1953125,
+            0.1484375,
+            0.125
+          ],
+          "sum_restricted_unilateral_gains_bb": 1.78125
+        },
+        {
+          "EV_bb": [
+            -9.122120289246922e-05,
+            -1.007132097386413,
+            0.007036913748125436,
+            0.0002840490385564669,
+            0.0001889563602134541,
+            -0.0066538628388382905
+          ],
+          "full_native_BR_upper": null,
+          "full_native_NashConv": null,
+          "infosets": 109,
+          "iterations": 8,
+          "nodes": 125,
+          "ordinary_registry_admission": false,
+          "players": 6,
+          "restricted_BR_bb": [
+            0.00694974751255975,
+            -0.9931480424382221,
+            0.007136025209366639,
+            0.00028804972924036077,
+            0.00019161771739955907,
+            4.000945503813569e-06
+          ],
+          "restricted_gain_bb": [
+            0.007040968715452219,
+            0.013984054948190994,
+            9.911146124120303e-05,
+            4.000690683893856e-06,
+            2.661357186104987e-06,
+            0.006657863784342104
+          ],
+          "sum_restricted_unilateral_gains_bb": 0.02778866095709652
+        },
+        {
+          "EV_bb": [
+            -4.46680222963408e-07,
+            -1.0004743799041085,
+            0.0004739319512979851,
+            1.343430223137331e-06,
+            8.954794196476132e-07,
+            -0.00047213929888590783
+          ],
+          "full_native_BR_upper": null,
+          "full_native_NashConv": null,
+          "infosets": 109,
+          "iterations": 32,
+          "nodes": 125,
+          "ordinary_registry_admission": false,
+          "players": 6,
+          "restricted_BR_bb": [
+            0.0004734865456725599,
+            -0.9995269622547288,
+            0.0004743811758963718,
+            1.3447036167137644e-06,
+            8.963282153060468e-07,
+            1.2733939568321284e-09
+          ],
+          "restricted_gain_bb": [
+            0.0004739332258955233,
+            0.0009474176493796671,
+            4.492245983867319e-07,
+            1.273393576433486e-09,
+            8.487956584336838e-10,
+            0.0004721405722798647
+          ],
+          "sum_restricted_unilateral_gains_bb": 0.0018939427943426767
+        }
+      ],
+      "players": 6,
+      "scope": "finite2world restrictedallin game; not fullnative solved profile",
+      "seconds": 0.07586303000005046
+    },
+    {
+      "curve": [
+        {
+          "EV_bb": [
+            -1.4228515625,
+            -2.693359375,
+            -1.6572265625,
+            -1.181640625,
+            -1.451171875,
+            -1.720703125,
+            -1.23046875,
+            -1.494140625,
+            11.7109375
+          ],
+          "full_native_BR_upper": null,
+          "full_native_NashConv": null,
+          "infosets": 893,
+          "iterations": 0,
+          "nodes": 1021,
+          "ordinary_registry_admission": false,
+          "players": 9,
+          "restricted_BR_bb": [
+            -0.095703125,
+            -1.396484375,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            23.421875
+          ],
+          "restricted_gain_bb": [
+            1.3271484375,
+            1.296875,
+            1.6572265625,
+            1.181640625,
+            1.451171875,
+            1.720703125,
+            1.23046875,
+            1.494140625,
+            11.7109375
+          ],
+          "sum_restricted_unilateral_gains_bb": 23.0703125
+        },
+        {
+          "EV_bb": [
+            -0.5476850275255266,
+            -2.0408117825997936,
+            -0.0958692009830261,
+            -0.0684772271511003,
+            -0.08217323339690233,
+            -0.09586929168903531,
+            -0.06847730050133038,
+            -0.08217330747300546,
+            3.021260079772582
+          ],
+          "full_native_BR_upper": null,
+          "full_native_NashConv": null,
+          "infosets": 893,
+          "iterations": 8,
+          "nodes": 1021,
+          "ordinary_registry_admission": false,
+          "players": 9,
+          "restricted_BR_bb": [
+            -0.4858566476315198,
+            -1.9858372864493652,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            3.0638130386426194
+          ],
+          "restricted_gain_bb": [
+            0.0618283798940068,
+            0.054974496150428376,
+            0.0958692009830261,
+            0.0684772271511003,
+            0.08217323339690233,
+            0.09586929168903531,
+            0.06847730050133038,
+            0.08217330747300546,
+            0.042552958870037294
+          ],
+          "sum_restricted_unilateral_gains_bb": 0.6523953961088724
+        },
+        {
+          "EV_bb": [
+            -0.503309922880365,
+            -2.002836877949833,
+            -0.006622509767543969,
+            -0.004730363876820808,
+            -0.005676436822585608,
+            -0.00662250976955095,
+            -0.004730363878427609,
+            -0.005676436824193544,
+            2.5359547894889873
+          ],
+          "full_native_BR_upper": null,
+          "full_native_NashConv": null,
+          "infosets": 893,
+          "iterations": 32,
+          "nodes": 1021,
+          "ordinary_registry_admission": false,
+          "players": 9,
+          "restricted_BR_bb": [
+            -0.4990516966116604,
+            -1.9990516902587516,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            2.538358538104617
+          ],
+          "restricted_gain_bb": [
+            0.004258226268704646,
+            0.003785187691081493,
+            0.006622509767543969,
+            0.004730363876820808,
+            0.005676436822585608,
+            0.00662250976955095,
+            0.004730363878427609,
+            0.005676436824193544,
+            0.0024037486156296417
+          ],
+          "sum_restricted_unilateral_gains_bb": 0.044505783514538266
+        }
+      ],
+      "players": 9,
+      "scope": "finite2world restrictedallin game; not fullnative solved profile",
+      "seconds": 0.6748478739999655
+    }
+  ],
+  "verified_3bet": 0,
+  "verified_RFI": 0
+}

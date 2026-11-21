@@ -313,3 +313,38 @@ bytes inaccessible, not recovered. No ordinaryregistry/prod/main/DB/Storage/
 Vercel/SSO/billing/destruction or manualSUCCESS-CI rerun. Pendingformalprofiles
 unchanged. Next generalization+coverage smallgate, then fullbounds/precision and
 multiwayjointsolver; no blind128+ training or first-release-complete claim.
+
+## 2026-11-21 13:00 JST — expanded board support with actual R/S warmstart
+From509e214. Old16/128 CF support masks identical bothseeds, zero new visitedaction
+entries; sameprivate AA/KK codes equity0..1 acrossboards expose abstractionalias.
+Frozen884tree/fullstreet backend/infosets preserved.32board finitechance sampling
+exactallcompatibleprivatepairs, independentpath gradient/average expectationPASS.
+Fresh-R trial fails first16 selection inbothseeds, stops. Same method actual16R/A/
+visits/t retained as finite warmstart, oldprefix NOT new32law samplehistory; no
+unbiasedprefix/convergence claim. Disjoint newselection/finalboards, freeze before
+final evaluation, FIRSTnonimprovementstop;90s/seed/no256. Transfer+128 selectionNC
+11.658358->5.686169 /10.895836->6.123955; independentfinal old16 14.200033->4.158688 /
+13.377105->6.023415BB, samefullstreetfinitegame.80.552/86.772sec,peak461590528bytes.
+Native8192worlds172032paths40.320sec/531542016bytes, all40event family99.9CIs.
+Paired anyunlearnedworld8.959961->.781250% /4.992676->.793457%; bothseedturn/river/
+anyworlddiffCIupper<0. Turnquery old28.3296/21.7566->0/.5721%,river47.8214/44.1690
+->4.0659/3.4291%. Prior2048bench32.48/19.25,53.35/42.12,9.375/4.736 retained,
+not directlypaired. CFturn87660/87210,river391414/380492 visits; newgapnotzero.
+NativeSB+.085510[-.844790,1.015811]/+.030151[-.950937,1.011240], vsold16+.008972/
+-.141235 wideCI: NO significantnativeEVgain. 3.5/10.5/riverjam/nuts and3morelegal
+probes inconclusive. RootEVwidth1.860601/1.962177 is WORSEthan samecohortold16
+1.751447/1.602607; not169precision. FullnativeBR/NCupper/all169EVprecision/abstract+
+sizeerrors UNKNOWN.2researchpolicies all169x3contexts exported, no normalregistry.
+Actual N-owner multiplayer_joint solver now6/9allseatR/S andnativevectorpayoff;
+finite2deck all-in/fold/all-in-call subgame, unequalstacks/BBA/rake, NOTfull6/9GTO.
+3player independentpureBR agrees;32steps sumrestrictedgains6:1.78125->.001894,
+9:23.070313->.044506BB,125/1021nodes. No HUconvergenceguarantee transferred.
+121regressionsPASS20.005sec incl7new; samplednextdraw+R/A/visits restoretwo seeds
+bitequal, oldCPbytesunchanged, noautoresume. QA ../qa/fullstreet-generalization-
+20261121/README.md has splits/hashes/checkpoints/manualrestore/failures/results.
+Formal0/12,verifiedRFI0/3bet0,6/9verified0,old8BLOCKED unchanged. Full2..9release
+scope remains, HU50notfirstrelease. Pendingformal20stack/sizes/MTT-ring/ante-rake
+values untouched. OldexternalDB/ZIPbytes inaccessible, not recovered. Next finer
+causal private/board abstraction withsparsestorage, matchednativeBR/error/169EV
+and enlargedmultiwaychance/actionoracle gates, not blindmoreiterations. No prod/
+DB/Storage/main/Vercel/SSO/paid/destruction or manualSUCCESS-CI reruns.
