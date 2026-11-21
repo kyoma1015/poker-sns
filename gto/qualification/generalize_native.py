@@ -15,7 +15,7 @@ from gto.qualification.evaluate import atomic
 from gto.native.training import NativeGame
 OLD=Path('docs/qa/fullstreet-joint-20261120')
 
-def run(build,folder):
+def run(build,folder,seed=17122201):
     folder=Path(folder);lib=f.load('/tmp/fullstreet-build/fullstreet.so');base=load_policy(build,f.old.ARTIFACT);rank=model.load('/tmp/range-continuation-build/range.so')
     parents=[oldeval.load_parent(build,rank,s) for s in (17119201,17119202)];controls=[f.read_policy(OLD/str(s),lib,base,'policy-selected') for s in (17120101,17120102)]
     for q in controls:q.average_mass=q.average_mass>0 # exact positive-support diagnostic; policy unchanged
@@ -32,7 +32,7 @@ def run(build,folder):
                 o=observe(b,group[0],[]);at=q.bases[k]+c*na;rows[name][label]=dict(native_actions=o.actions,frequencies=q._row(o,False),average_mass=float(q.average_mass[at:at+na].sum()),final_conditional_MODEL_action_EV_bb=m['action_EV_bb'][str(k)][c*na:(c+1)*na],fullnative_EV_interval=None)
         compressed(folder/str(seed)/'169-frequencies-EV.json.gz',dict(policy_digest=q.policy_digest,rows=rows,ordinary_registry_admission=False))
     for q in qs:q.average_mass=q.average_mass>0
-    rng=random.Random(17122201);ws=[(rng.sample(range(52),9),rng.getrandbits(128)) for _ in range(8192)];values=[[] for _ in profiles+probes];bits={i:{r:[] for r in ('any',0,1,2,3)} for i in (3,4,5,6)};counts={i:{r:dict(queries=0,unlearned=0,offtree=0) for r in range(4)} for i in bits};start=time.monotonic();game=NativeGame([100,100]);identity=dict(seed=17122201,n=8192,worlds=ws,source_sha256=sha(Path(__file__)),native_binary_sha256=sha(Path(base.native.__file__)),policy_digests=[q.policy_digest for q in profiles],confidence_family=.999,events=40)
+    rng=random.Random(seed);ws=[(rng.sample(range(52),9),rng.getrandbits(128)) for _ in range(8192)];values=[[] for _ in profiles+probes];bits={i:{r:[] for r in ('any',0,1,2,3)} for i in (3,4,5,6)};counts={i:{r:dict(queries=0,unlearned=0,offtree=0) for r in range(4)} for i in bits};start=time.monotonic();game=NativeGame([100,100]);identity=dict(seed=seed,n=8192,worlds=ws,source_sha256=sha(Path(__file__)),native_binary_sha256=sha(Path(base.native.__file__)),policy_digests=[q.policy_digest for q in profiles],confidence_family=.999,events=40)
     for i,(deck,tape) in enumerate(ws):
         if time.monotonic()-start>90:atomic(folder/'native.json',dict(status='INCOMPLETE',completed=i));return
         for j,(q,v) in enumerate(zip(profiles+probes,values)):
@@ -53,4 +53,4 @@ def run(build,folder):
         coverage.append(dict(seed=(17120101,17120102)[s],old=counts[oldi],new=counts[newi],old_unlearned_world_rate=sum(bits[oldi]['any'])/8192,new_unlearned_world_rate=sum(bits[newi]['any'])/8192,paired_unlearned_world_difference={str(r):interval([a-b for a,b in zip(bits[newi][r],bits[oldi][r])],-1,1,delta) for r in ('any',2,3)}))
     atomic(folder/'native.json',dict(status='COMPLETE_UNVERIFIED',identity=identity,profiles=ev,comparisons=comp,deviations=dev,coverage=coverage,seconds=time.monotonic()-start,peak_RSS_bytes=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024,positive_support_only_diagnostic=True,full_native_BR_upper=None,full_native_NashConv=None,full169_action_precision=None,abstraction_error=None,omitted_size_error=None,ordinary_registry_admission=False,formal_acceptance=0,verified_RFI=0,verified_3bet=0))
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--build',required=True);p.add_argument('--folder',required=True);a=p.parse_args();run(a.build,a.folder)
+    p=argparse.ArgumentParser();p.add_argument('--build',required=True);p.add_argument('--folder',required=True);p.add_argument('--seed',type=int,default=17122201);a=p.parse_args();run(a.build,a.folder,a.seed)

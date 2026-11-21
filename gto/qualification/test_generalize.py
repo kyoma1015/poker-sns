@@ -27,6 +27,17 @@ class ChanceBoard(unittest.TestCase):
                 ev+=weight*m[0];clairvoyant+=weight*m[1]
             for a,b in zip(accum,expected):np.testing.assert_allclose(a,b,atol=2e-12)
             self.assertAlmostEqual(full[0],ev,places=12);self.assertLessEqual(full[1],clairvoyant+1e-12)
+    def test_sampled_both_owner_updates_use_one_fixed_strategy(self):
+        from gto.qualification.sampled_update import step
+        q=oracle.fixture(self.lib,future=True)
+        for _ in range(7):q.step()
+        pi=q.policy(False);R=q.R.copy();A=q.A.copy();t=q.t
+        expected=[oracle.path_oracle(q,pi,p) for p in (0,1)]
+        step(q)
+        for start,types,n,k in q.rows:
+            owner=q.nodes[k]['actor'];sl=slice(start,start+types*n)
+            np.testing.assert_allclose(q.R[sl],np.maximum(0,R[sl]+expected[owner][0][sl]),atol=1e-12)
+            np.testing.assert_allclose(q.A[sl],A[sl]+(t+1)*expected[owner][1][sl],atol=1e-12)
     def test_splits_cannot_share_flops_and_rng_is_reproducible(self):
         train=boards(17120101,3);sel=boards(17120102,1,sum(train,[]));final=boards(17120103,1,sum(train+sel,[]))
         allboards=sum(train+sel+final,[]);flops=[tuple(x[:3]) for x in allboards]
@@ -84,6 +95,13 @@ class MultiJoint(unittest.TestCase):
                 r=replay(self.native,q.game,q.profile(),deck=d,seed=17121)
                 self.assertEqual(len(r['net_chips']),n);self.assertEqual(sum(r['net_chips']),-r['rake_chips'])
             self.assertIsNone(m['full_native_BR_upper']);self.assertIsNone(m['full_native_NashConv'])
+    def test_N_player_BR_cannot_choose_using_hidden_world(self):
+        q=object.__new__(Joint);q.N=3;q.W=2;q.weights=np.array([.5,.5]);q.t=0
+        q.nodes=[dict(actor=2,actions=(0,1),keys=['same','same'],children=[1,2]),dict(actor=-1,children=[],utility=np.array([[0.,0.,1.],[0.,0.,-1.]])),dict(actor=-1,children=[],utility=np.array([[0.,0.,-1.],[0.,0.,1.]]))]
+        q.actions={'same':(0,1)};q.owners={'same':2};q.R={'same':np.zeros(2)};q.A={'same':np.zeros(2)}
+        pi=q.policy();self.assertEqual(q.br(pi,2),0.);self.assertEqual(pure_br(q,pi,2),0.)
+        # A clairvoyant choice would gain1; the legal common infoset response is0.
+        self.assertEqual(sum(q.weights[w]*max(q.nodes[c]['utility'][w,2] for c in (1,2)) for w in range(2)),1.)
     def test_checkpoint_resume_and_config_identity_fail_closed(self):
         q=self.make()
         for _ in range(8):q.step()

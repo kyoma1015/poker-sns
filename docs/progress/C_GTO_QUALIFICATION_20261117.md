@@ -348,3 +348,29 @@ values untouched. OldexternalDB/ZIPbytes inaccessible, not recovered. Next finer
 causal private/board abstraction withsparsestorage, matchednativeBR/error/169EV
 and enlargedmultiwaychance/actionoracle gates, not blindmoreiterations. No prod/
 DB/Storage/main/Vercel/SSO/paid/destruction or manualSUCCESS-CI reruns.
+
+## 2026-11-21 13:20 JST — sampled schedule correction; both-seed gate FAIL
+Supersedes whole-schedule unbiasedness claim above. Same-draw alternating SB->BB
+lets BB opponent strategy depend on currentdraw; fixedpi expectation test alone
+was insufficient. Native/profile measurements remain real, but schedule not
+adopted. Originalsources/data11b90cc preserved. sampled_update fixes one preupdate
+pi for BOTHowners; independentpath bothowner oracle + N-player hiddenworld BR
+regression added. Freshselection+800000/final+900000/native17122301.
+Seed1 selection8.637065->8.639554 at+16:STOP, preserve original16 pi/A bitidentical.
+Seed2 selection15.551498->5.672675(+128), final old16 15.466930->5.281069BB.
+Seed1 final unchanged12.958477; oldjoint21.612878/23.137729 samefinalgame.
+Corrected BOTHseed gateFAIL, NOadoption/scaling.1new researchpolicy,1old retained.
+Native8192worlds172032paths40.160sec,peak534593536<512MiB. SB+.296387[-.572007,
+1.164781] /+.170654[-.889758,1.231066]; seed2 vsold16+.394470[-1.077729,1.866670],
+no significantEVgain. Samecohort seed1 unseenpaths8.1421% unchanged; seed2
+5.2246->.6226%,turn23.77->.4565%,river46.52->3.3691%; seed2worlddiffCIsnegative,
+seed1nochange.3.5/10.5/riverjam/nuts gains inconclusive, allfullboundsUNKNOWN.
+123regressionsPASS21.288sec. Corrected actualCP/RNG nextstep two-seedbitexact;
+seed1 best16 vs last32 handled by replayingbestdrawcount, noautoresume.
+Additionaltrialstorage transient213MiB>200, losslessly SHA-identical duplicate
+best/last CPs shared byrelative symlink, no data lost; QA~167MiB belowcap. This
+budgetdeviation recorded, no morelearning. Old509CP/8candidates/HU1BB/2..9 and
+pastGitprotected. Formal0/12,verifiedRFI0/3bet0 unchanged. Full2..9firstrelease
+scope and pendingprofiles unchanged. Next causalfinerprivate/board+sparsestorage
+and multi-runout chance, NEWfinaldata/2seedgate, nativeBR/EV/error beforeregistry.
+No prod/main/DB/Storage/Vercel/SSO/paid/destruction/manualSUCCESS-CI rerun.

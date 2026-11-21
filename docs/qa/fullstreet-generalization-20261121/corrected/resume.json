@@ -1,0 +1,66 @@
+{
+  "automatic_resume": false,
+  "original_bytes_unchanged": true,
+  "rows": [
+    {
+      "automatic_resume": false,
+      "bit_exact": true,
+      "checkpoint_sha256": "3c5c9fffef4bd23855df44b12bbb0e5560d120c294ee26cc479eb6d635f4df6c",
+      "sampling_draws_before_best": 0,
+      "seconds": 2.4019061789999796,
+      "seed": 17120101,
+      "states": [
+        {
+          "A": "6d8b4eda91cebdeb1105bb0cf1fdfdf1965a1c6c07ecd938a30c422911f9f63a",
+          "R": "6d06007b7f57ba28a07297da37a0d79a4e8c905b1803f7157fef359bd0acf119",
+          "draw": [
+            0,
+            3
+          ],
+          "t": 17,
+          "visits": "b3d2c18bb77852c70b947856d3714aa18a11d67f118a9bcdb022c70e76a1dc58"
+        },
+        {
+          "A": "6d8b4eda91cebdeb1105bb0cf1fdfdf1965a1c6c07ecd938a30c422911f9f63a",
+          "R": "6d06007b7f57ba28a07297da37a0d79a4e8c905b1803f7157fef359bd0acf119",
+          "draw": [
+            0,
+            3
+          ],
+          "t": 17,
+          "visits": "b3d2c18bb77852c70b947856d3714aa18a11d67f118a9bcdb022c70e76a1dc58"
+        }
+      ]
+    },
+    {
+      "automatic_resume": false,
+      "bit_exact": true,
+      "checkpoint_sha256": "28d1201d7e915f8ad0a165ac0c229f42219a2887714c7b4f2538e1f9126c31f9",
+      "sampling_draws_before_best": 128,
+      "seconds": 2.5963055729998814,
+      "seed": 17120102,
+      "states": [
+        {
+          "A": "19435c83ed379d5091633fcfd364d5c09b331305a70f756f6ba8a65ed8e7b676",
+          "R": "eaa7a3294729a70e50bf0af43d1c4c9a382357bb12d1415f813aaa45c0ccbbea",
+          "draw": [
+            2,
+            5
+          ],
+          "t": 145,
+          "visits": "9608e87f606ee595820db40b6589f9d58153c3fb0ce3b4e80f16ef0507a719ea"
+        },
+        {
+          "A": "19435c83ed379d5091633fcfd364d5c09b331305a70f756f6ba8a65ed8e7b676",
+          "R": "eaa7a3294729a70e50bf0af43d1c4c9a382357bb12d1415f813aaa45c0ccbbea",
+          "draw": [
+            2,
+            5
+          ],
+          "t": 145,
+          "visits": "9608e87f606ee595820db40b6589f9d58153c3fb0ce3b4e80f16ef0507a719ea"
+        }
+      ]
+    }
+  ]
+}

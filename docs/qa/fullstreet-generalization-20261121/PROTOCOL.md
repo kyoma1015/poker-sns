@@ -32,3 +32,15 @@ warmstart; no claim oldprefix sampled new32boardlaw. Oldfinite biasedinitialhist
 explicit inmetadata; NObound/qualityPASS inferred. Reuse32trainboards, NEW selection
 seed+600000 and final+700000 (old final is not reused). Targets+16/+32/+64/+128,
 90s/seed firstnonimprovementstop. Compare old16 directly and report allfailed gates.
+
+Schedule correction discovered in review: previous per-board Game.step alternates
+owners with the SAME sampled board. Owner1's opponent strategy then depends on
+that board; fixed-profile expectation test alone does NOT prove whole-schedule
+unbiasedness. Prior transfer measurements remain preserved but method's original
+unbiasedness claim is withdrawn for owner1 schedule. Minimal sampled_update.py
+computes BOTH owner gradients/averages using ONE immutable pre-update pi before
+applying changes. Independent two-owner path regression required. No core/game
+change, same32trainpool/old16 warmstart; olddriver/native source archived.
+Corrected trial NEW selection seed+800000/final+900000, unseen native17122301.
+Same+16/+32/+64/+128/90s firstnonimprovementstop, NO increasedbudget. No corrected
+quality claim before these new gates. Both prior and corrected evidence retained.

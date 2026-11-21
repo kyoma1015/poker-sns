@@ -114,13 +114,15 @@ test_no_flop_no_drop_with_bb_ante (gto.qualification.test_multiplayer_scope.Mult
 test_unequal_six_and_nine_player_sidepots_refund_hand_oracle (gto.qualification.test_multiplayer_scope.MultiplayerScope.test_unequal_six_and_nine_player_sidepots_refund_hand_oracle) ... ok
 test_first_nonimprovement_stops_instead_of_comparing_old_baseline (gto.qualification.test_generalize.ChanceBoard.test_first_nonimprovement_stops_instead_of_comparing_old_baseline) ... ok
 test_sampled_board_expectation_matches_exact_mixture_and_path_oracle (gto.qualification.test_generalize.ChanceBoard.test_sampled_board_expectation_matches_exact_mixture_and_path_oracle) ... ok
+test_sampled_both_owner_updates_use_one_fixed_strategy (gto.qualification.test_generalize.ChanceBoard.test_sampled_both_owner_updates_use_one_fixed_strategy) ... ok
 test_splits_cannot_share_flops_and_rng_is_reproducible (gto.qualification.test_generalize.ChanceBoard.test_splits_cannot_share_flops_and_rng_is_reproducible) ... ok
 test_N_owner_regret_and_average_match_independent_path_products (gto.qualification.test_generalize.MultiJoint.test_N_owner_regret_and_average_match_independent_path_products) ... ok
+test_N_player_BR_cannot_choose_using_hidden_world (gto.qualification.test_generalize.MultiJoint.test_N_player_BR_cannot_choose_using_hidden_world) ... ok
 test_all_players_complete_pure_br_matches_independent_enumeration (gto.qualification.test_generalize.MultiJoint.test_all_players_complete_pure_br_matches_independent_enumeration) ... ok
 test_checkpoint_resume_and_config_identity_fail_closed (gto.qualification.test_generalize.MultiJoint.test_checkpoint_resume_and_config_identity_fail_closed) ... ok
 test_six_nine_native_profile_utilities_and_information_limits (gto.qualification.test_generalize.MultiJoint.test_six_nine_native_profile_utilities_and_information_limits) ... ok
 
 ----------------------------------------------------------------------
-Ran 121 tests in 20.005s
+Ran 123 tests in 21.288s
 
 OK

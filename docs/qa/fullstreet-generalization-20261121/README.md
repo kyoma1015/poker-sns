@@ -1,5 +1,11 @@
 # Fullstreet generalization and N-owner joint solver — quality still BLOCKED
 
+**Latest: see CORRECTED SCHEDULE section below. Earlier transfer/ results are
+HISTORICAL measurements. Their owner1 whole-schedule unbiasedness claim is
+WITHDRAWN; legal-policy native measurements remain valid, but that schedule is
+not adopted. Corrected first-worse gate retains seed1 original16 and improves
+seed2 only. Both-seed adoption gate FAILS; no expanded learning or registry.**
+
 Base509e2141012ceb4048abf33005b9a2b5a932e9c0. PR120 stays Open/Draft. Full first
 release retains ALL12 requirements,2..9 including6/9 players, positions, multiple
 stacks,169 frequencies/EV, RFI+3bet/possible4bet, ante/rake/unequalstacks. HU50 is
@@ -189,3 +195,91 @@ precision; enlarge multiway action/chance support only after independentoracle
 and per-seatgain gates. Approvedformalprofile decisions still needed. No formal
 acceptance relaxation, registry/public/prodDB/Storage/main/Vercel/SSO/billing or
 manualSUCCESS-CI operation. Ordinarycommit/push/newCI confirmation required.
+
+
+## CORRECTED SCHEDULE — authoritative latest results
+
+Review found shared-board alternating updates do not satisfy the fixed-profile
+expectation test for owner1: its opponent's updated strategy depends on the same
+current draw. No claim the previous entire sampling schedule is unbiased.
+Original driver/native source saved byte-for-byte as transfer-alternating-source.py
+and native-alternating-source.py; old outputs/commit remain intact. The previous
+native performance/coverage measurements are still real profile measurements,
+not evidence for an unbiased learning schedule or approved solver method.
+
+Minimal sampled_update.py now fixes ONE pre-update pi and computes both owner
+regret/average contributions against it. R0 may be written before owner1 evaluation,
+but the backend reads only immutable pi, not changedR. New regression checks BOTH
+owners vs independent path oracle; this combined with weighted-block expectation
+proves the intended fixed-profile conditional expectation for finitechance law.
+N-player hidden-world toy also verifies legal common infoset BR0 vs clairvoyant1.
+Native N-owner joint algorithm is already simultaneous and unchanged.
+
+Reproduce current corrected trial ONLY with:
+`python -B -m gto.qualification.fullstreet_transfer --simultaneous --out NEW_DIRECTORY --pool docs/qa/fullstreet-generalization-20261121`
+The no-flag historical alternating mode is RETIRED; do not adopt or scale it.
+Selection seed+800000/final+900000 and native17122301 are NEW; earlier selection/
+final/native sets are not used to select or certify the corrected policies.
+Same32trainpool, source/core/tree and original16 R/S, same90sec/512MiB budget.
+
+|seed|selection initial / first16 / final|best extra steps|final oldjoint|final old16|final corrected|
+|---|---|---|---|---|---|---|
+|1|8.637065 /8.639554 /8.639554|0, stop firstnonimprovement|21.612878|12.958477|12.958477|
+|2|15.551498 /12.930745 /5.672675|128|23.137729|15.466930|5.281069|
+
+Seed1 exact full pi AND average arrays equal original16; not a new improved
+strategy. Seed2 is1new reoptimized research policy. Both169x3contexts exported,
+not fullnative actionEV precision. Corrected BOTHseed gate FAILS, so NO method
+adoption/scaledlearning. Do not replace it with earlier biased-schedule gatePASS.
+10.013/56.087sec including final eval, peak462,671,872bytes. No further trials.
+
+Independent native fresh17122301,8192worlds/172032paths,40.160sec,
+peak534,593,536bytes<512MiB; same40-event family99.9% empirical-Bernstein.
+SB EV seed1+.296387[-.572007,1.164781] (EXACT original16 samepolicy);
+seed2+.170654[-.889758,1.231066]. Seed2 paired vsold16+.394470
+[-1.077729,1.866670], not significant. Seed1 behavior identically unchanged,
+CRN difference0; a conservative generic MC interval is not needed to establish
+identical-policy expectation. Allnative values and intervals recorded unchanged.
+
+Latest samecohort query rates (fractions authoritative):
+seed1 turn692/2421,river763/1577,any667/8192 SAME old/new (28.58%,48.38%,8.1421%).
+seed2 turn425/1788 ->17/3724 (23.77%->.4565%);
+river541/1163 ->69/2048 (46.52%->3.3691%);
+any428/8192 ->51/8192 (5.2246%->.6226%).
+Paired seed2 worlddiff familyCI turn[-.051325,-.018499],river[-.054270,-.018728],
+any[-.064808,-.027233], significant reductions; seed1 no change, so two-seed
+coverage improvement gate NOT met. Prior published2048 rates stay historical.
+Corrected CF visited seed1 turn58,860/river191,516 unchanged; seed2 turn87,210/
+river380,492, revisit99.8968%/99.7955%. Historical array/model support, not all
+physical-board information quality. Native selfplay paths differ by policy.
+
+Corrected legal deviation gains BB (seed1 retained/seed2new), ALL intervals0inside:
+3.5open +2.253601[-.183388,4.690590] /+2.379333[-.038644,4.797311]
+10.5threebet +.542175[-1.276478,2.360829] /-.027649[-1.377774,1.322477]
+riverjam +.107178[-1.060776,1.275131] /-.635132[-1.727761,.457498]
+nuts0[-.643214,.643214] /+.005371[-.663365,.674107].
+Other3probes also measured. No robustness/knownweakness-solved/fullBR certificate.
+Root EV widths1.736788/2.120824BB; full169/action precision and allfullnative
+BR/NC/model/omittedsize error upper bounds UNKNOWN. Formal0/12,RFI0/3bet0.
+
+123 regressionPASS21.288sec: old121 + fixed-profile BOTHowner update oracle and
+3player hidden-world BR information constraint. test_generalize now9focusedtests.
+Corrected actual CP/RNG nextdraw+one simultaneousstep replay bothseeds bit-identical,
+corrected/resume.json. For rejected seed1 best16 vs last32, replay ONLY
+best_iterations-16=0 draws, never lastdrawsequence32. Seed2 best==last144.
+Always call sampled_update.step after restoring; old Game.step is deterministic
+alternating teacher, not corrected sampled schedule. No automaticresume.
+
+Storage budget deviation: corrected extra trial temporarily reached213MiB>200.
+Stopped expansion; SHA256-identical best/last NPZ content is now losslessly shared
+using relative symlinks for3duplicate copies, before/after hashes verified.
+checkpoint-dedup.json: no byte content lost, best originals and oldGit preserved.
+Paths remain readable through links; all original509e214 CP files untouched.
+Current QA~167MiB<200. Do not dereference copies blindly when packaging budgeted
+checkpoints. No old research deletion/reset/clean/forcepush. New CI required for
+this correction; successful CI is not manuallyrerun.
+
+Next: do not scale either schedule on partial seed success. First improve causal
+private/board aliasing with sparse representation and multi-runout chance support,
+then small2seed gate on NEW final data; nativeBR/169EV/error proof before registry.
+Multiway finite2deck diagnostics remain minimal algorithm work, no full6/9claim.

@@ -1,5 +1,7 @@
 {
-  "bytes_before_manifest": 141117770,
+  "bytes": 173915271,
   "cap_bytes": 209715200,
-  "under_cap": true
+  "under_cap": true,
+  "lossless_identical_checkpoint_links": true,
+  "transient_overage_documented": "checkpoint-dedup.json"
 }
