@@ -1,0 +1,16 @@
+{
+  "payload": "same rawOS final snapshot; no training repeated",
+  "results": [
+    {
+      "method": "legacy",
+      "seconds": 1.91798197099979,
+      "bytes": 2208519
+    },
+    {
+      "method": "fast",
+      "seconds": 0.4859271390005233,
+      "bytes": 3031962
+    }
+  ],
+  "lossless": true
+}

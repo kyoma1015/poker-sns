@@ -1,0 +1,5 @@
+UI CI40453919928/job122022706008
+B01PASS:169unknown cells
+B02FAIL:locator.selectOption Timeout30000ms waiting for getByLabel(人数,exact:true)
+At tests/gto-browser.mjs:26. Dependency/Node8/build/typecheck/lint PASS.
+Repair:explicit accessible names matching visible labels; exact assertion retained.

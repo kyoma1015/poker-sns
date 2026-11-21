@@ -1,0 +1,8 @@
+{
+  "same_policy_digests": true,
+  "new_worlds": 0,
+  "policies": {
+    "passive_control": "fa2ba4f7584a62c9d03478b3e2df29e52d3fc02976f13294c02aa5a401cf15f3",
+    "range_reoptimized": "65b9610c35ce044a3c3ba5895ab92a908da686c8eaeca64699efc1ee0fe7fb0d"
+  }
+}

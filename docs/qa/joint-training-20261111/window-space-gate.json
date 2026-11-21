@@ -1,0 +1,12 @@
+{
+  "source_epoch": 4,
+  "cutoff_rows": 1755,
+  "available_bytes": 3374813184,
+  "source_snapshot_bytes": 1043644416,
+  "cutoff_payload_compressed_bytes": 536428624,
+  "cutoff_estimated_upper_bytes": 553205840,
+  "minimum_free_reserve_bytes": 2147483648,
+  "required_before_start_bytes": 3744333904,
+  "space_gate_pass": false,
+  "additional_training_started": false
+}

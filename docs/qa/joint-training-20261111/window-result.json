@@ -1,0 +1,18 @@
+{
+  "candidates_nashconv_bb": {
+    "delayed7": 4.88903996046441,
+    "full7": 3.113677782658094,
+    "immutable_frozen": 0.9321071527220774
+  },
+  "external_GTO": "NOT PERFORMED",
+  "formal_acceptance": [
+    0,
+    12
+  ],
+  "normal_GTO_added": 0,
+  "real_game_error": "UNKNOWN",
+  "selected_same_game_profile": "immutable_frozen",
+  "status": "COMPLETE",
+  "strictly_improves_frozen": false,
+  "target_0_1_pass": false
+}

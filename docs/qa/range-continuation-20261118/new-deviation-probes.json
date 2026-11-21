@@ -1,0 +1,90 @@
+{
+  "EV_change_bb": {
+    "interval": [
+      -19.278779657349357,
+      20.345185907349357
+    ],
+    "mean": 0.533203125,
+    "n": 256,
+    "radius": 19.811982782349357,
+    "variance": 121.47242264093137
+  },
+  "confidence_family": 0.999,
+  "deviations": [
+    {
+      "deviation": "river_jam",
+      "gain_bb": {
+        "interval": [
+          -20.239617862086398,
+          18.716180362086398
+        ],
+        "mean": -0.76171875,
+        "n": 256,
+        "radius": 19.477899112086398,
+        "variance": 95.57045036764706
+      },
+      "independent_BR_gain_lower_bb": 0,
+      "player": 1
+    },
+    {
+      "deviation": "flop_half",
+      "gain_bb": {
+        "interval": [
+          -18.550866646429565,
+          19.656335396429565
+        ],
+        "mean": 0.552734375,
+        "n": 256,
+        "radius": 19.103601021429565,
+        "variance": 70.23544347426471
+      },
+      "independent_BR_gain_lower_bb": 0,
+      "player": 1
+    },
+    {
+      "deviation": "open3p5",
+      "gain_bb": {
+        "interval": [
+          -24.442630711678543,
+          29.473880711678543
+        ],
+        "mean": 2.515625,
+        "n": 256,
+        "radius": 26.958255711678543,
+        "variance": 1418.4428921568629
+      },
+      "independent_BR_gain_lower_bb": 0,
+      "player": 0
+    },
+    {
+      "deviation": "threebet10p5",
+      "gain_bb": {
+        "interval": [
+          -23.40239752121395,
+          22.36724127121395
+        ],
+        "mean": -0.517578125,
+        "n": 256,
+        "radius": 22.88481939621395,
+        "variance": 505.20459175857843
+      },
+      "independent_BR_gain_lower_bb": 0,
+      "player": 1
+    }
+  ],
+  "events": 5,
+  "full_BR_upper_bb": null,
+  "n": 256,
+  "nashconv_bb": null,
+  "nashconv_lower_bb": 0,
+  "nashconv_upper_bb": null,
+  "native_paths": 1536,
+  "new_EV": 0.005859375,
+  "old_EV": -0.52734375,
+  "ordinary_registry_admission": false,
+  "policy_digest": "f290ba1f24d9fb27fc7a8291d507ce892effe1ca0260d1e83194a0b2f32acd6f",
+  "seconds": 20.426670374999958,
+  "seed": 17118205,
+  "status": "COMPLETE_UNVERIFIED",
+  "verified_strategy_count": 0
+}

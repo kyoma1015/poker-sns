@@ -1,0 +1,57 @@
+name: GTO preregistered board generalization verification
+on:
+  push:
+    branches: ['codex/c-native-hand169-bridge-20261023']
+    paths:
+      - 'gto/abstract/generalization*'
+      - 'gto/abstract/continuation_game*'
+      - 'gto/abstract/continuation_learning.py'
+      - 'gto/abstract/flop_exact*'
+      - 'gto/abstract/flop_conditional.py'
+      - 'gto/abstract/precision_native.cc'
+      - 'gto/abstract/frozen_flop_reach.py'
+      - 'gto/abstract/model.py'
+      - 'gto/hand169.py'
+      - 'docs/qa/ev-precision-20261030/frozen-inputs.json'
+      - 'docs/qa/generalization-20261101/**'
+      - 'tests/test_generalization.py'
+      - '.github/workflows/gto-generalization.yml'
+permissions:
+  contents: read
+jobs:
+  generalization:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Verify preregistration, selection lock and unchanged base dependencies
+        run: |
+          python -B - <<'PYCODE'
+          import hashlib,json
+          from pathlib import Path
+          root=Path('docs/qa/generalization-20261101')
+          digest=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+          lock=json.loads((root/'selection-lock.json').read_text())
+          assert digest(root/'protocol.json')==lock['protocol_sha256']
+          assert digest(root/'selection.json')==lock['selection_sha256']
+          dependencies=json.loads((root/'dependency-manifest.json').read_text())
+          assert all(digest(p)==h for p,h in dependencies['preserved_dependency_sha256'].items())
+          print('PASS preregistration, selection lock and preserved base dependencies')
+          PYCODE
+      - name: Information legality, split integrity and final phase isolation
+        run: python -B -m unittest tests.test_generalization -v
+      - name: Reproduce selection on training and validation ONLY
+        run: |
+          python -B -m gto.abstract.generalization_study --phase select --build-dir "$RUNNER_TEMP/selection" --output "$RUNNER_TEMP/selection.json"
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/selection.json" --expected docs/qa/generalization-20261101/selection.json
+      - name: Evaluate previously locked policy on final boards without fitting
+        run: |
+          python -B -m gto.abstract.generalization_study --phase final --selection docs/qa/generalization-20261101/selection.json --build-dir "$RUNNER_TEMP/final" --output "$RUNNER_TEMP/final.json"
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/final.json" --expected docs/qa/generalization-20261101/final-results.json
+      - name: Reproduce read-only training and validation audit of frozen student
+        run: |
+          python -B -m gto.abstract.generalization_audit --selection docs/qa/generalization-20261101/selection.json --build-dir "$RUNNER_TEMP/audit" --output "$RUNNER_TEMP/audit.json"
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/audit.json" --expected docs/qa/generalization-20261101/training-audit.json

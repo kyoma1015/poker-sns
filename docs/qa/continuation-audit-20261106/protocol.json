@@ -1,0 +1,68 @@
+{
+  "base": "8087b6ab6ecbcced84c233fb166f847526a72ce7",
+  "continuation_profiles": [
+    "fixed_small",
+    "fixed_large",
+    "posterior_small",
+    "posterior_large",
+    "posterior_union"
+  ],
+  "criteria": {
+    "br_monotonicity_tolerance_bb": 1e-08,
+    "coarse_research_nashconv_target_bb": 0.1,
+    "independent_BR_tolerance_bb": 1e-08,
+    "mass_tolerance": 1e-10,
+    "published_call_EV_agreement_bb": 1e-08,
+    "same_profile_refinement_tolerance_bb": 1e-08
+  },
+  "external_GTO": "NOT PERFORMED unless legitimate matched reference supplied",
+  "formal_acceptance": 0,
+  "information_levels": [
+    "publictexture_own3flags",
+    "publictexture_own169class_and3flags",
+    "actualflop_own169class_and3flags"
+  ],
+  "normal_GTO_registration": false,
+  "population": "same1755suitorbits represent all22100physicalflops;class-symmetric frozen independent preflop policies;not new unseen research",
+  "preflop_profiles": [
+    "learned_small",
+    "learned_large"
+  ],
+  "private_information": "own hand169class+own/public flags only;opponent concrete cards enter chance/equity evaluation but never action decisions",
+  "real_game_approximation_error": "UNKNOWN",
+  "schema": "pokerid-continuation-audit-v1",
+  "stages": {
+    "vs_3bet": [
+      "raise_to_5",
+      "raise_to_18",
+      "call"
+    ],
+    "vs_4bet": [
+      "raise_to_5",
+      "raise_to_18",
+      "raise_to_42",
+      "call"
+    ]
+  },
+  "training": {
+    "iterations": [
+      512,
+      2048,
+      8192
+    ],
+    "selection": "NONE;allmodelsalwaysreported;newprofiles fit complete publictexture population for fixed preflop ranges;NOT a joint preflop/postflop convergence proof"
+  },
+  "turn_river": "showdown runouts exact990;betting still omitted. Report unresolved nonallin showdown mass and conservative[-50,50]BB futurevalue envelope,NOT measured actual late-street error or GTO bound",
+  "union_fractions": [
+    0.1,
+    0.25,
+    0.3333333333333333,
+    0.5,
+    0.75,
+    1,
+    2,
+    10
+  ],
+  "union_max_flop_raises": 2,
+  "weights": "exact rootprefix joint reach times physical board multiplicity;pool raw M/E,never average normalized boardgames equally"
+}

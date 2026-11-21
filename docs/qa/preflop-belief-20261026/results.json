@@ -1,0 +1,25 @@
+{
+  "suites": [
+    {
+      "variant": "g12_next",
+      "returncode": 0,
+      "suite_methods": 15
+    },
+    {
+      "variant": "g12_p1_cache",
+      "returncode": 0,
+      "suite_methods": 15
+    },
+    {
+      "variant": "g12_p1_packed",
+      "returncode": 0,
+      "suite_methods": 15
+    }
+  ],
+  "action_report_sha256": [
+    "d99fb126624dafeb1a8d017f5d6ca4d81aae8e5889f7e6e79f660465ec58dab2",
+    "d99fb126624dafeb1a8d017f5d6ca4d81aae8e5889f7e6e79f660465ec58dab2",
+    "d99fb126624dafeb1a8d017f5d6ca4d81aae8e5889f7e6e79f660465ec58dab2"
+  ],
+  "identical": true
+}

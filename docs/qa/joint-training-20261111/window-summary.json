@@ -1,0 +1,97 @@
+{
+  "averaging_convexity": {
+    "cutoff_weight": 0.35714285714285715,
+    "delayed_weight": 0.6428571428571428,
+    "lower_bound_delayed_nashconv_bb": 2.3312683036735184,
+    "observed_delayed_nashconv_bb": 4.88903996046441,
+    "pass": true,
+    "scope": "restricted zero-sum game,not realNLHE"
+  },
+  "baseline_frozen_nashconv_bb": 0.9321071527220774,
+  "delayed7": {
+    "action_ev_cells": 2028,
+    "bb_br_gain_bb": 1.19260855748314,
+    "limited_game_equilibrium_value_interval_bb": [
+      -1.5760747277413767,
+      3.312965232723033
+    ],
+    "nashconv_bb": 4.88903996046441,
+    "policy_digest": "d001cf845d1350cc504884a240cdfa6ea40cf966b5f519c2814abaa4d73b17dc",
+    "range_rows": 676,
+    "sb_br_gain_bb": 3.6964314029812697,
+    "sb_policy_ev_bb": -0.3834661702582368,
+    "support": {
+      "rfi": {
+        "rows": 169,
+        "supported": 169,
+        "uniform_extension_rows": 0
+      },
+      "vs_3bet": {
+        "rows": 169,
+        "supported": 168,
+        "uniform_extension_rows": 1
+      },
+      "vs_4bet": {
+        "rows": 169,
+        "supported": 68,
+        "uniform_extension_rows": 101
+      },
+      "vs_open": {
+        "rows": 169,
+        "supported": 169,
+        "uniform_extension_rows": 0
+      }
+    }
+  },
+  "evidence_sha256": {
+    "window-delayed7.json": "7998cefc649ad815a588f5d5d4ab4af5fa7a17f6f004cd3d3f0e220311a258fc",
+    "window-full7.json": "621d36a1d9ce7d634f71751e1b85b01ecfcb13f76f1eede5932ef7ea108860ef",
+    "window-placement.json": "06c11c70f79a7a8c06a8ea57940a60f4f735c6f9ce28cd64b4f11d552d6c8a19",
+    "window-preservation.json": "150cd54d4bf8307a23010c6e92a25aeeb2eab159bddd4e8c0357389433d2ed77",
+    "window-registration.json": "12ac84e4466456233938b30820780dd5be4e8b3ff7ef8742b15f91791545d41d",
+    "window-result.json": "52d58f967478322ab92fe0c23bc66c1c976241aa4f16ca8f23fde788b3584dc9",
+    "window-snapshot-validation.json": "99538770dd06c5651cb40498a3b88fc0d8627955fe92796a9f9e90a134dc69e0",
+    "window-space-gate.json": "71d00546718fdf74c370b56e4a60744bae924cff6a38a79f1f07c2475d6ac29f",
+    "window-training-points.json": "474694fe44e7835727a1c60a0c48aa944661c05447f0201895d9ab1b0dd5a4d6"
+  },
+  "formal_acceptance": [
+    0,
+    12
+  ],
+  "full7": {
+    "action_ev_cells": 2028,
+    "bb_br_gain_bb": 1.0747456318474349,
+    "limited_game_equilibrium_value_interval_bb": [
+      -1.1840461051929851,
+      1.9296316774651088
+    ],
+    "nashconv_bb": 3.113677782658094,
+    "policy_digest": "95618573b30aeaffcd4c263f3c4338cf66ac7a9ec7031dcfd03d2f154f678e50",
+    "range_rows": 676,
+    "sb_br_gain_bb": 2.038932150810659,
+    "sb_policy_ev_bb": -0.10930047334555032,
+    "support": {
+      "rfi": {
+        "rows": 169,
+        "supported": 169,
+        "uniform_extension_rows": 0
+      },
+      "vs_3bet": {
+        "rows": 169,
+        "supported": 169,
+        "uniform_extension_rows": 0
+      },
+      "vs_4bet": {
+        "rows": 169,
+        "supported": 169,
+        "uniform_extension_rows": 0
+      },
+      "vs_open": {
+        "rows": 169,
+        "supported": 169,
+        "uniform_extension_rows": 0
+      }
+    }
+  },
+  "normal_GTO_added": 0
+}

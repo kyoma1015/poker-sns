@@ -1,0 +1,17 @@
+{
+  "all_numeric_packets_checksum_validated": true,
+  "changed_files": [
+    "continuation_audit.py"
+  ],
+  "migrated_flops": 1755,
+  "preserved_original_cache": "/workspace/continuation-audit-cache-before-ffi-fix",
+  "reason": "FFI train declaration18vs17 fixed; generation functions unchanged",
+  "selection_or_fit_performed_during_migration": false,
+  "unchanged_AST": [
+    "moments",
+    "packet_path",
+    "read",
+    "inputs"
+  ],
+  "unchanged_protocol_sha256": "1f5f84395950ba6dac304d3e1a0938f865805f0cf303fb18724089a4c61e0b95"
+}

@@ -1,0 +1,8 @@
+{
+  "cutoff": "/tmp/joint-window-cutoff/cutoff.sqlite",
+  "cutoff_recoverable_from_actual_workspace_snapshot": true,
+  "cutoff_sha256": "0d06f4931892efc2832d4d2617c1c38ec09f5fcd55bee13f1cca2462074fe699",
+  "snapshot": "/workspace/joint-window-parent/vector4.sqlite",
+  "snapshot_exact": true,
+  "vector4_file_sha256": "e64ac9c8b842d67f1b4249c7faf25d3abc84c2bc88869035d093898e7e249f3e"
+}

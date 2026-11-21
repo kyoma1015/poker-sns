@@ -1,0 +1,13 @@
+test_general_pi_q_cf_and_average_with_zero_opponent_targets (gto.qualification.test_action_baseline.GeneralOracle.test_general_pi_q_cf_and_average_with_zero_opponent_targets) ... ok
+test_proposal_has_full_support_and_normalization (gto.qualification.test_action_baseline.GeneralOracle.test_proposal_has_full_support_and_normalization) ... ok
+test_prior_action_predictions_are_used_without_hidden_cards (gto.qualification.test_action_baseline.WarmResume.test_prior_action_predictions_are_used_without_hidden_cards) ... ok
+test_warm_preserves_corrected_R_S_and_exact_resume (gto.qualification.test_action_baseline.WarmResume.test_warm_preserves_corrected_R_S_and_exact_resume) ... ok
+test_mixture_conditioning_preserves_finite_distribution_expectation (gto.qualification.test_conditional_action.IndependentFiniteOracle.test_mixture_conditioning_preserves_finite_distribution_expectation) ... ok
+test_restricted_br_integrates_hidden_worlds_before_max (gto.qualification.test_conditional_action.IndependentFiniteOracle.test_restricted_br_integrates_hidden_worlds_before_max) ... ok
+test_call_posterior_mass_preserves_card_removal_and_source_open_weights (gto.qualification.test_conditional_action.NativeConditionalOracle.test_call_posterior_mass_preserves_card_removal_and_source_open_weights) ... ok
+test_terminal_allin_integral_equals_native_probability_weighted_payoffs (gto.qualification.test_conditional_action.NativeConditionalOracle.test_terminal_allin_integral_equals_native_probability_weighted_payoffs) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.389s
+
+OK

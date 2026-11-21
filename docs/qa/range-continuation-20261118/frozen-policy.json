@@ -1,0 +1,32 @@
+{
+  "formal_acceptance_complete": 0,
+  "identity": {
+    "belief": "factorized realization with exact disjoint-card joint; zero-reach preflop action uninformative",
+    "binary_sha256": "b90ae9952f54618b6bffd01490fd06d563be864feafaaae7b52cf43704969a60",
+    "buckets": 8,
+    "compiler_options": [
+      "-O2",
+      "-fno-fast-math",
+      "-ffp-contract=off"
+    ],
+    "continuation_error_bb": null,
+    "epsilon": 0.01,
+    "iterations": 32,
+    "omitted_action_error_bb": null,
+    "preflop_digest": "bd46861da4c8c4eb786602315056092c5d253fd3d449b5183b01b96c5b2cc8f4",
+    "private_abstraction_error_bb": null,
+    "proxy": "current5/6/7card strength; no future card input; flop/turn error UNKNOWN",
+    "schema": "public-range-continuation-v1",
+    "source_sha256": {
+      "/workspace/poker-sns/gto/abstract/core.cc": "acbe730794f5a763fc2ea30279bba74f3ca5341c43a5bb02b4ce77a3d2322d82",
+      "/workspace/poker-sns/gto/abstract/model.py": "bb879efc21c82af9c650ef4ef67337fcae772c9eebef44dd8eeeec106a3b2fd4",
+      "/workspace/poker-sns/gto/qualification/range_continuation.py": "4230cb483c9404e4b65716ed1479cd135b70d6b43821f53a7ad54f510098a9a5",
+      "/workspace/poker-sns/gto/qualification/range_core.cc": "40a1ab2b2315143a93b8e61335a8b3f43f6ce56c4ddb417ed4bb2daa16d2186c"
+    }
+  },
+  "policy_digest": "f290ba1f24d9fb27fc7a8291d507ce892effe1ca0260d1e83194a0b2f32acd6f",
+  "preflop_artifact": "docs/qa/release-route-20261118/strategy.json.gz",
+  "preflop_artifact_sha256": "ca770c472b9f22040d7f1c20b1e4674e8061f8e337874eef30e22e3275199e4f",
+  "registry_ready": false,
+  "verified_strategy_count": 0
+}

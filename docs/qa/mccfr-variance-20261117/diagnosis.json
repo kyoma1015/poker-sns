@@ -1,0 +1,20 @@
+{
+  "source_sha256": "69bd82ba59c77ac8312873ed70551e0a191bed070d2b0f7f341bdd459e1d2d6e",
+  "source_identity": "65fc08fe1e176fb4dc1458389c5946cab37cb06a402239b6750925f52aee22d5",
+  "updates": 1040,
+  "distinct_infosets": 1022,
+  "repeated_updates": 18,
+  "revisit_rate": 0.01730769230769231,
+  "root_distinct": 238,
+  "root_updates": 256,
+  "root_repeated": 18,
+  "nonroot_repeated": 0,
+  "streets": {
+    "0": 709,
+    "1": 230,
+    "2": 66,
+    "3": 17
+  },
+  "distinct_own_pairs": 433,
+  "distinct_public_histories": 590
+}

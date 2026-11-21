@@ -1,0 +1,23 @@
+{
+  "vanilla_linear": {
+    "contexts": 4,
+    "hands": 676,
+    "action_EV_cells": 2028,
+    "normal": false,
+    "UI_added": 0
+  },
+  "cfr_plus": {
+    "contexts": 4,
+    "hands": 676,
+    "action_EV_cells": 2028,
+    "normal": false,
+    "UI_added": 0
+  },
+  "dcfr": {
+    "contexts": 4,
+    "hands": 676,
+    "action_EV_cells": 2028,
+    "normal": false,
+    "UI_added": 0
+  }
+}

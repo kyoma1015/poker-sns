@@ -1,0 +1,252 @@
+{
+  "accessed_splits": [
+    "validation"
+  ],
+  "build_seconds": 2.019029863000469,
+  "candidate_updated": false,
+  "external_gto_comparison": "NOT PERFORMED",
+  "real_game_approximation_error": "UNKNOWN",
+  "rows": [
+    {
+      "category": "monotone",
+      "cold_neighbor_probability_prediction_seconds": 0.9131247219993384,
+      "control_exact_certification_seconds": 0.029088543000398204,
+      "control_nashconv_bb": 0.37916424635494606,
+      "features_and_game_seconds": 0.2762029370023811,
+      "flop": [
+        2,
+        18,
+        42
+      ],
+      "full_hole_runout_matrix_seconds_shared_between_stages": 1.0417894419988443,
+      "seed": 31,
+      "selected_nashconv_bb": 0.0057621433349372975,
+      "selected_planning_and_exact_certification_seconds": 0.2391562230004638,
+      "stage": "vs_3bet"
+    },
+    {
+      "category": "monotone",
+      "cold_neighbor_probability_prediction_seconds": 0.9106386679995921,
+      "control_exact_certification_seconds": 0.025718699998833472,
+      "control_nashconv_bb": 1.0044975219571803,
+      "features_and_game_seconds": 0.3377355559969146,
+      "flop": [
+        2,
+        18,
+        42
+      ],
+      "full_hole_runout_matrix_seconds_shared_between_stages": 1.0417894419988443,
+      "seed": 31,
+      "selected_nashconv_bb": 0.0157534197785294,
+      "selected_planning_and_exact_certification_seconds": 0.24321128799783764,
+      "stage": "vs_4bet"
+    },
+    {
+      "category": "paired_rainbow_high",
+      "cold_neighbor_probability_prediction_seconds": 0.48352631499801646,
+      "control_exact_certification_seconds": 0.006283119000727311,
+      "control_nashconv_bb": 1.5865597818586359,
+      "features_and_game_seconds": 0.25813629800177296,
+      "flop": [
+        10,
+        44,
+        45
+      ],
+      "full_hole_runout_matrix_seconds_shared_between_stages": 1.009818966002058,
+      "seed": 31,
+      "selected_nashconv_bb": 0.023900502662147716,
+      "selected_planning_and_exact_certification_seconds": 0.06739270099933492,
+      "stage": "vs_3bet"
+    },
+    {
+      "category": "paired_rainbow_high",
+      "cold_neighbor_probability_prediction_seconds": 0.4623832060024142,
+      "control_exact_certification_seconds": 0.006559064000612125,
+      "control_nashconv_bb": 3.0978822181117494,
+      "features_and_game_seconds": 0.263512602999981,
+      "flop": [
+        10,
+        44,
+        45
+      ],
+      "full_hole_runout_matrix_seconds_shared_between_stages": 1.009818966002058,
+      "seed": 31,
+      "selected_nashconv_bb": 0.005425905992549218,
+      "selected_planning_and_exact_certification_seconds": 0.06335497799955192,
+      "stage": "vs_4bet"
+    },
+    {
+      "category": "paired_rainbow_low",
+      "cold_neighbor_probability_prediction_seconds": 0.6026837619974685,
+      "control_exact_certification_seconds": 0.010504354002478067,
+      "control_nashconv_bb": 0.2522474449534666,
+      "features_and_game_seconds": 0.2587209820012504,
+      "flop": [
+        5,
+        6,
+        15
+      ],
+      "full_hole_runout_matrix_seconds_shared_between_stages": 1.0123738110014529,
+      "seed": 31,
+      "selected_nashconv_bb": 0.0030822843685474055,
+      "selected_planning_and_exact_certification_seconds": 0.10144787399985944,
+      "stage": "vs_3bet"
+    },
+    {
+      "category": "paired_rainbow_low",
+      "cold_neighbor_probability_prediction_seconds": 0.5780659310003102,
+      "control_exact_certification_seconds": 0.010138614001334645,
+      "control_nashconv_bb": 0.15463821912855913,
+      "features_and_game_seconds": 0.27730076299849316,
+      "flop": [
+        5,
+        6,
+        15
+      ],
+      "full_hole_runout_matrix_seconds_shared_between_stages": 1.0123738110014529,
+      "seed": 31,
+      "selected_nashconv_bb": 0.0013092857993566298,
+      "selected_planning_and_exact_certification_seconds": 0.09557185900121112,
+      "stage": "vs_4bet"
+    },
+    {
+      "category": "paired_twotone",
+      "cold_neighbor_probability_prediction_seconds": 0.5369864780004718,
+      "control_exact_certification_seconds": 0.008039001997531159,
+      "control_nashconv_bb": 0.9893830360581329,
+      "features_and_game_seconds": 0.2612241510032618,
+      "flop": [
+        44,
+        47,
+        48
+      ],
+      "full_hole_runout_matrix_seconds_shared_between_stages": 1.0072575489975861,
+      "seed": 31,
+      "selected_nashconv_bb": 0.010451148587461434,
+      "selected_planning_and_exact_certification_seconds": 0.08262452799681341,
+      "stage": "vs_3bet"
+    },
+    {
+      "category": "paired_twotone",
+      "cold_neighbor_probability_prediction_seconds": 0.4647199739993084,
+      "control_exact_certification_seconds": 0.006501186999230413,
+      "control_nashconv_bb": 1.3088250527889844,
+      "features_and_game_seconds": 0.2555391329988197,
+      "flop": [
+        44,
+        47,
+        48
+      ],
+      "full_hole_runout_matrix_seconds_shared_between_stages": 1.0072575489975861,
+      "seed": 31,
+      "selected_nashconv_bb": 0.014864383834922279,
+      "selected_planning_and_exact_certification_seconds": 0.06504092599789146,
+      "stage": "vs_4bet"
+    },
+    {
+      "category": "rainbow",
+      "cold_neighbor_probability_prediction_seconds": 0.7095035169986659,
+      "control_exact_certification_seconds": 0.014561843003320973,
+      "control_nashconv_bb": 0.6721047343983679,
+      "features_and_game_seconds": 0.2793012500005716,
+      "flop": [
+        7,
+        9,
+        24
+      ],
+      "full_hole_runout_matrix_seconds_shared_between_stages": 0.9904852250001568,
+      "seed": 31,
+      "selected_nashconv_bb": 0.012341555622853217,
+      "selected_planning_and_exact_certification_seconds": 0.15219911199892522,
+      "stage": "vs_3bet"
+    },
+    {
+      "category": "rainbow",
+      "cold_neighbor_probability_prediction_seconds": 0.666330891999678,
+      "control_exact_certification_seconds": 0.01354278800135944,
+      "control_nashconv_bb": 0.555242988337282,
+      "features_and_game_seconds": 0.27105686900176806,
+      "flop": [
+        7,
+        9,
+        24
+      ],
+      "full_hole_runout_matrix_seconds_shared_between_stages": 0.9904852250001568,
+      "seed": 31,
+      "selected_nashconv_bb": 0.0007201918035910637,
+      "selected_planning_and_exact_certification_seconds": 0.1329528759997629,
+      "stage": "vs_4bet"
+    },
+    {
+      "category": "twotone_connected",
+      "cold_neighbor_probability_prediction_seconds": 0.9415291849982168,
+      "control_exact_certification_seconds": 0.025143122002191376,
+      "control_nashconv_bb": 0.5137637765034073,
+      "features_and_game_seconds": 0.27398683900173637,
+      "flop": [
+        1,
+        14,
+        18
+      ],
+      "full_hole_runout_matrix_seconds_shared_between_stages": 0.9947712390021479,
+      "seed": 31,
+      "selected_nashconv_bb": 0.002003398213632046,
+      "selected_planning_and_exact_certification_seconds": 0.26049617899843724,
+      "stage": "vs_3bet"
+    },
+    {
+      "category": "twotone_connected",
+      "cold_neighbor_probability_prediction_seconds": 1.007855126998038,
+      "control_exact_certification_seconds": 0.02973778999876231,
+      "control_nashconv_bb": 0.6400885467184114,
+      "features_and_game_seconds": 0.30527825799799757,
+      "flop": [
+        1,
+        14,
+        18
+      ],
+      "full_hole_runout_matrix_seconds_shared_between_stages": 0.9947712390021479,
+      "seed": 31,
+      "selected_nashconv_bb": 0.0006699142582853312,
+      "selected_planning_and_exact_certification_seconds": 0.3013675999973202,
+      "stage": "vs_4bet"
+    },
+    {
+      "category": "twotone_disconnected",
+      "cold_neighbor_probability_prediction_seconds": 0.7247728969996388,
+      "control_exact_certification_seconds": 0.015377938998426544,
+      "control_nashconv_bb": 0.03776237781664449,
+      "features_and_game_seconds": 0.2653323269987595,
+      "flop": [
+        8,
+        16,
+        49
+      ],
+      "full_hole_runout_matrix_seconds_shared_between_stages": 0.9890943600003084,
+      "seed": 31,
+      "selected_nashconv_bb": 0.003194104011790433,
+      "selected_planning_and_exact_certification_seconds": 0.16730196199932834,
+      "stage": "vs_3bet"
+    },
+    {
+      "category": "twotone_disconnected",
+      "cold_neighbor_probability_prediction_seconds": 0.760863524999877,
+      "control_exact_certification_seconds": 0.018115920000127517,
+      "control_nashconv_bb": 0.0766937372071359,
+      "features_and_game_seconds": 0.28796040900124353,
+      "flop": [
+        8,
+        16,
+        49
+      ],
+      "full_hole_runout_matrix_seconds_shared_between_stages": 0.9890943600003084,
+      "seed": 31,
+      "selected_nashconv_bb": 0.009001704110186637,
+      "selected_planning_and_exact_certification_seconds": 0.17490982299932512,
+      "stage": "vs_4bet"
+    }
+  ],
+  "scope": "single observed wall-time run; seed31; geometry cold per context; construction shared; not smartphone or cross-machine benchmark; exact metric certification included in planning time",
+  "selection_sha256": "9542c648569487a61bef110d43a225a1004eba4040d896e26db721c51c2deba3",
+  "source_sha256": "1b074d545c59cf1d8246bc5498809e492715a138dacdece170b5c894af348a34"
+}

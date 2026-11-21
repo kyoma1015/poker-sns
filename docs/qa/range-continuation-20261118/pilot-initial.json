@@ -1,0 +1,10 @@
+{
+  "n": 64,
+  "seconds": 7.2311175509998975,
+  "source_EV": 0.15625,
+  "new_EV": -0.71875,
+  "policy_digest": "dff1b07a739d6a778bd130013c44c96ae5a39d477c2118181e18b4b6b496aaab",
+  "solves": 90,
+  "solve_seconds": 2.4029970619999403,
+  "status": "PILOT_NOT_QUALITY_PASS"
+}

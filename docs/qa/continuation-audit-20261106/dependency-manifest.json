@@ -1,0 +1,25 @@
+{
+  "source_and_artifacts_sha256": {
+    ".github/workflows/gto-continuation-audit.yml": "52495e9e6709434f66326ff410e4094584318b60aac8954edf2c396307196426",
+    ".github/workflows/gto-range-ui.yml": "55f0b1e7a9ae675190304d03ee872d3f2a530cb9feb3d000a7232b4c9d05d850",
+    "docs/qa/continuation-audit-20261106/FORMAL_ACCEPTANCE.md": "ba21078ef2d187b4a110f97c12b7dec3e1bd527aabb670248fb7d4830f62e493",
+    "docs/qa/continuation-audit-20261106/README.md": "e4e44dba547a34414c1c1b6ea7fd2f72a4ae3ec9d6dc283fb4294aa6d288d7f8",
+    "docs/qa/continuation-audit-20261106/design-before-ffi-fix.json": "71d086ba8e68c6c856258a07bf7de776e9cdff19817e8ffc8ac3989c220c0b41",
+    "docs/qa/continuation-audit-20261106/design.json": "bf454512cde35fd21e1965c1da1c367875ca1474940846c4e5405cb75dbcb593",
+    "docs/qa/continuation-audit-20261106/ffi-fix-migration.json": "4178072e28dba35b9ce4ffd4d6a16dfc5d7b7c19323877625720b241abeca86e",
+    "docs/qa/continuation-audit-20261106/protocol.json": "1f5f84395950ba6dac304d3e1a0938f865805f0cf303fb18724089a4c61e0b95",
+    "docs/qa/continuation-audit-20261106/results.json": "2832e49ab7f65990601585ef02b9b629d53ad40f81ea4c5fdc1591ea8da481dc",
+    "gto/abstract/continuation_audit.cc": "223895038ec2d160142fcc35ae3ced4d2b0fd6e0de376f513ea3b1fcb27160ee",
+    "gto/abstract/continuation_audit.py": "7f3390418de33893fc312e1725da967f92633b7c9a3fef218f125a5763df7861",
+    "gto/abstract/continuation_audit_br.py": "afce2ca025e78925d41d1c509ddec9daa23a8234faf54754369fa6fa48a42636",
+    "gto/abstract/continuation_audit_export.py": "b4695a0662ca9b3890d20cc8c435aedfd5445676e00eb061a9453ac28155b2a0",
+    "src/ContinuationAudit.css": "72a53571b389d4a8be44437099ae5ca8445d30784f2dfcaf2b0e0b3bed695a3f",
+    "src/ContinuationAudit.tsx": "e5eb69815580fb050771fde8f9c5f59695e3d9001e5cf6f2b2ab150e3574ce5d",
+    "src/GtoPreflop.tsx": "0cff27dd422613b63dfc6d1ff0734960652cceb9294cae7921e50a736d7ffc95",
+    "src/gto/continuationAudit.ts": "1472b91d1c4a50f810b96dd64b1f699d9810c86fccfa9b6eaab6c85675b07578",
+    "src/gto/continuationAuditData.json": "87b18d98f727d878f5004f5fcd00cd22ceb8b339eb2ce385d75c812ad60a1fbd",
+    "tests/gto-continuation-browser.mjs": "d95e8ce90007f09f1764d426b19b7ea4d8e4431a46ab2795563e74772733121a",
+    "tests/gto-continuation.test.mjs": "1f903e0a520551fd7ff1723cd2e20b383e002e1799c20672ee1ca95e9def964e",
+    "tests/test_continuation_audit.py": "4508079273433a50582a67c525885bf45b8f2bf3f0041023a9b68041579d6bde"
+  }
+}

@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: grid has169 unique classes and1326 concrete combinations
+ok 1 - grid has169 unique classes and1326 concrete combinations
+  ---
+  duration_ms: 0.963019
+  type: 'test'
+  ...
+# Subtest: decimal query normalization preserves exact condition lookup
+ok 2 - decimal query normalization preserves exact condition lookup
+  ---
+  duration_ms: 3.058839
+  type: 'test'
+  ...
+# Subtest: all2..9 seats map to unique native seat numbers
+ok 3 - all2..9 seats map to unique native seat numbers
+  ---
+  duration_ms: 0.938554
+  type: 'test'
+  ...
+# Subtest: unreviewed claimed verification cannot enable display
+ok 4 - unreviewed claimed verification cannot enable display
+  ---
+  duration_ms: 0.269968
+  type: 'test'
+  ...
+# Subtest: partial class or combination coverage is rejected
+ok 5 - partial class or combination coverage is rejected
+  ---
+  duration_ms: 0.357948
+  type: 'test'
+  ...
+# Subtest: unknown EV, invalid frequencies and nonfinite EV are rejected
+ok 6 - unknown EV, invalid frequencies and nonfinite EV are rejected
+  ---
+  duration_ms: 0.673573
+  type: 'test'
+  ...
+# Subtest: local drift or sampled confidence cannot substitute for full-game certificate
+ok 7 - local drift or sampled confidence cannot substitute for full-game certificate
+  ---
+  duration_ms: 1.198276
+  type: 'test'
+  ...
+# Subtest: invalid modes, seats and MTT rake are rejected
+ok 8 - invalid modes, seats and MTT rake are rejected
+  ---
+  duration_ms: 0.3661
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 65.917372

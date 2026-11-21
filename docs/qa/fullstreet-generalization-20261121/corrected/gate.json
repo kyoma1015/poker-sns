@@ -1,0 +1,7 @@
+{
+  "seed1_policy_and_average_identical_to_original16": true,
+  "corrected_both_seed_gate": false,
+  "reason": "seed1 first+16 selection nonimprovement; retains original16; seed2 improves but two-seed gate not met",
+  "ordinary_registry_admission": false,
+  "learning_escalation": false
+}

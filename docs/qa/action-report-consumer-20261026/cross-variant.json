@@ -1,0 +1,17 @@
+{
+  "hashes": {
+    "g12_next": [
+      "9ce7e47be33e71f2df2d7e59346fbe66e3ea01155c5b3766993c7fa9cfe4ed38",
+      "5f7c637eb84109327a84ae74499d72358f127b5d15a7d3ae758c541a1d663cc2"
+    ],
+    "g12_p1_cache": [
+      "9ce7e47be33e71f2df2d7e59346fbe66e3ea01155c5b3766993c7fa9cfe4ed38",
+      "5f7c637eb84109327a84ae74499d72358f127b5d15a7d3ae758c541a1d663cc2"
+    ],
+    "g12_p1_packed": [
+      "9ce7e47be33e71f2df2d7e59346fbe66e3ea01155c5b3766993c7fa9cfe4ed38",
+      "5f7c637eb84109327a84ae74499d72358f127b5d15a7d3ae758c541a1d663cc2"
+    ]
+  },
+  "exact_equal": true
+}

@@ -1,0 +1,393 @@
+[
+  {
+    "label": "g12_next-test_history_reach",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_history_reach.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 12
+  },
+  {
+    "label": "g12_next-test_history_ev_integration",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_history_ev_integration.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "label": "g12_next-test_training_batch",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_training_batch.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 8
+  },
+  {
+    "label": "g12_next-test_hand169_bridge",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_hand169_bridge.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 9
+  },
+  {
+    "label": "g12_next-test_hand169_bridge_boundaries",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_hand169_bridge_boundaries.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "label": "g12_next-test_poker_oracle_profiles",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_poker_oracle_profiles.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "label": "g12_next-test_initial_chance_reach",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_initial_chance_reach.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 10
+  },
+  {
+    "label": "g12_next-test_belief_reach",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_belief_reach.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 13
+  },
+  {
+    "label": "g12_next-test_belief_observation",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_belief_observation.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 13
+  },
+  {
+    "label": "g12_next-test_infoset_action_values",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_infoset_action_values.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 13
+  },
+  {
+    "label": "g12_p1_cache-test_history_reach",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_history_reach.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 12
+  },
+  {
+    "label": "g12_p1_cache-test_history_ev_integration",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_history_ev_integration.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "label": "g12_p1_cache-test_training_batch",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_training_batch.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 8
+  },
+  {
+    "label": "g12_p1_cache-test_hand169_bridge",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_hand169_bridge.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 9
+  },
+  {
+    "label": "g12_p1_cache-test_hand169_bridge_boundaries",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_hand169_bridge_boundaries.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "label": "g12_p1_cache-test_poker_oracle_profiles",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_poker_oracle_profiles.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "label": "g12_p1_cache-test_initial_chance_reach",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_initial_chance_reach.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 10
+  },
+  {
+    "label": "g12_p1_cache-test_belief_reach",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_belief_reach.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 13
+  },
+  {
+    "label": "g12_p1_cache-test_belief_observation",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_belief_observation.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 13
+  },
+  {
+    "label": "g12_p1_cache-test_infoset_action_values",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_infoset_action_values.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 13
+  },
+  {
+    "label": "g12_p1_packed-test_history_reach",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_history_reach.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 12
+  },
+  {
+    "label": "g12_p1_packed-test_history_ev_integration",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_history_ev_integration.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "label": "g12_p1_packed-test_training_batch",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_training_batch.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 8
+  },
+  {
+    "label": "g12_p1_packed-test_hand169_bridge",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_hand169_bridge.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 9
+  },
+  {
+    "label": "g12_p1_packed-test_hand169_bridge_boundaries",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_hand169_bridge_boundaries.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "label": "g12_p1_packed-test_poker_oracle_profiles",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_poker_oracle_profiles.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 3
+  },
+  {
+    "label": "g12_p1_packed-test_initial_chance_reach",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_initial_chance_reach.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 10
+  },
+  {
+    "label": "g12_p1_packed-test_belief_reach",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_belief_reach.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 13
+  },
+  {
+    "label": "g12_p1_packed-test_belief_observation",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_belief_observation.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 13
+  },
+  {
+    "label": "g12_p1_packed-test_infoset_action_values",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_infoset_action_values.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 13
+  },
+  {
+    "label": "old18",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "gto/tests",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 18
+  },
+  {
+    "label": "reused33",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests/worker_acceptance",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 33
+  },
+  {
+    "label": "next-backend9",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "handoff/gto/g12_next/g12_p1_live_backend_tests.py",
+      "-v"
+    ],
+    "exit": 0,
+    "tests": 9
+  },
+  {
+    "label": "packed-backend25",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "handoff/gto/tests/run_backend_tests.py"
+    ],
+    "exit": 0,
+    "tests": 25
+  },
+  {
+    "label": "chance-stub3",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "-B",
+      "gto/native/test_poker_oracle_probability_guard.py"
+    ],
+    "exit": 0,
+    "tests": 3
+  }
+]

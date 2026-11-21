@@ -1,0 +1,1 @@
+PASS 8 candidates/1352 rows; all blocked; ordinary registrations0

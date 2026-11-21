@@ -1,0 +1,357 @@
+{
+  "base_head": "2b2f88f945d0a09abb7e5bde0d70d7c60f0b80a4",
+  "candidates": [
+    {
+      "kind": "coarse",
+      "name": "retrained_coarse"
+    },
+    {
+      "board_weight": 0.25,
+      "kind": "knn",
+      "name": "knn1_private1_board0.25",
+      "neighbors": 1,
+      "private_weight": 1
+    },
+    {
+      "board_weight": 1,
+      "kind": "knn",
+      "name": "knn1_private1_board1",
+      "neighbors": 1,
+      "private_weight": 1
+    },
+    {
+      "board_weight": 0.25,
+      "kind": "knn",
+      "name": "knn3_private4_board0.25",
+      "neighbors": 3,
+      "private_weight": 4
+    },
+    {
+      "board_weight": 1,
+      "kind": "knn",
+      "name": "knn3_private4_board1",
+      "neighbors": 3,
+      "private_weight": 4
+    },
+    {
+      "board_weight": 1,
+      "kind": "knn",
+      "name": "knn5_private4_board1",
+      "neighbors": 5,
+      "private_weight": 4
+    },
+    {
+      "board_weight": 0.5,
+      "kind": "knn",
+      "name": "knn9_private8_board0.5",
+      "neighbors": 9,
+      "private_weight": 8
+    }
+  ],
+  "coarse_iterations": 100000,
+  "equal_board_weights_are_real_chance": false,
+  "evaluation": "exact full hole/runout integration; common rich signal game and same4whole-plan arms for ALL compared policies; numeric guard1e-7BB",
+  "excluded_previous_flops": [
+    [
+      48,
+      21,
+      3
+    ],
+    [
+      35,
+      31,
+      27
+    ],
+    [
+      44,
+      25,
+      2
+    ],
+    [
+      40,
+      41,
+      7
+    ],
+    [
+      36,
+      32,
+      29
+    ],
+    [
+      20,
+      12,
+      4
+    ]
+  ],
+  "external_gto_comparison": "NOT PERFORMED",
+  "features": "own/public only: legacy signal,board pairing,suits,straight windows,high/median/low ranks,SPR,position,made5category,pair-vs-board,overcards,straight-draw outs,nut-flush relation,hole-rank bin,own equity vs ALL uniformly unknown compatible opponents (not actual hidden cards)",
+  "final_acceptance": {
+    "absolute_max_nashconv_bb": 0.1,
+    "all_required": true,
+    "mean_reduction_vs_retrained_coarse_at_least": 0.2,
+    "worst_nashconv_must_not_increase": true
+  },
+  "final_test_usage": "once AFTER selection.json is frozen in git; CI reproduction allowed, no selection/update on final results",
+  "formal_acceptance_complete": 0,
+  "learning_initialization_seeds": [
+    17,
+    29
+  ],
+  "schema": "pokerid-generalization-preregistered-v1",
+  "selection": "minimum macro mean exact rich-signal NashConv across validation boards,stages,seeds; predefined candidate order breaks ties",
+  "selection_never_reads_final_test": true,
+  "split": {
+    "final_test": [
+      {
+        "cards": [
+          8,
+          9,
+          11
+        ],
+        "category": "trips"
+      },
+      {
+        "cards": [
+          11,
+          12,
+          13
+        ],
+        "category": "paired_rainbow"
+      },
+      {
+        "cards": [
+          24,
+          26,
+          48
+        ],
+        "category": "paired_twotone"
+      },
+      {
+        "cards": [
+          4,
+          8,
+          40
+        ],
+        "category": "unpaired_monotone"
+      },
+      {
+        "cards": [
+          5,
+          27,
+          29
+        ],
+        "category": "unpaired_twotone"
+      },
+      {
+        "cards": [
+          4,
+          37,
+          51
+        ],
+        "category": "unpaired_rainbow"
+      }
+    ],
+    "train": [
+      {
+        "cards": [
+          12,
+          13,
+          14
+        ],
+        "category": "trips"
+      },
+      {
+        "cards": [
+          24,
+          26,
+          27
+        ],
+        "category": "trips"
+      },
+      {
+        "cards": [
+          20,
+          21,
+          22
+        ],
+        "category": "trips"
+      },
+      {
+        "cards": [
+          12,
+          13,
+          46
+        ],
+        "category": "paired_rainbow"
+      },
+      {
+        "cards": [
+          12,
+          14,
+          39
+        ],
+        "category": "paired_rainbow"
+      },
+      {
+        "cards": [
+          5,
+          6,
+          35
+        ],
+        "category": "paired_rainbow"
+      },
+      {
+        "cards": [
+          12,
+          40,
+          42
+        ],
+        "category": "paired_twotone"
+      },
+      {
+        "cards": [
+          18,
+          30,
+          31
+        ],
+        "category": "paired_twotone"
+      },
+      {
+        "cards": [
+          14,
+          15,
+          19
+        ],
+        "category": "paired_twotone"
+      },
+      {
+        "cards": [
+          8,
+          28,
+          44
+        ],
+        "category": "unpaired_monotone"
+      },
+      {
+        "cards": [
+          6,
+          18,
+          26
+        ],
+        "category": "unpaired_monotone"
+      },
+      {
+        "cards": [
+          21,
+          29,
+          33
+        ],
+        "category": "unpaired_monotone"
+      },
+      {
+        "cards": [
+          25,
+          30,
+          42
+        ],
+        "category": "unpaired_twotone"
+      },
+      {
+        "cards": [
+          9,
+          29,
+          43
+        ],
+        "category": "unpaired_twotone"
+      },
+      {
+        "cards": [
+          9,
+          25,
+          51
+        ],
+        "category": "unpaired_twotone"
+      },
+      {
+        "cards": [
+          5,
+          10,
+          51
+        ],
+        "category": "unpaired_rainbow"
+      },
+      {
+        "cards": [
+          9,
+          16,
+          22
+        ],
+        "category": "unpaired_rainbow"
+      },
+      {
+        "cards": [
+          5,
+          27,
+          30
+        ],
+        "category": "unpaired_rainbow"
+      }
+    ],
+    "validation": [
+      {
+        "cards": [
+          41,
+          42,
+          43
+        ],
+        "category": "trips"
+      },
+      {
+        "cards": [
+          33,
+          34,
+          48
+        ],
+        "category": "paired_rainbow"
+      },
+      {
+        "cards": [
+          27,
+          40,
+          43
+        ],
+        "category": "paired_twotone"
+      },
+      {
+        "cards": [
+          10,
+          26,
+          38
+        ],
+        "category": "unpaired_monotone"
+      },
+      {
+        "cards": [
+          18,
+          25,
+          46
+        ],
+        "category": "unpaired_twotone"
+      },
+      {
+        "cards": [
+          3,
+          46,
+          49
+        ],
+        "category": "unpaired_rainbow"
+      }
+    ]
+  },
+  "split_seeds": {
+    "final_test": 3301,
+    "train": 1103,
+    "validation": 2203
+  },
+  "teacher_iterations": 5000
+}

@@ -1,0 +1,1431 @@
+{
+  "baseline_summary": {
+    "checkdown": {
+      "rfi": {
+        "action_max_radius_bb": 0.2963921930747544,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 0.24475675954521955
+      },
+      "vs_3bet": {
+        "action_max_radius_bb": 1.742569594130681,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 1.7422708854105529
+      },
+      "vs_4bet": {
+        "action_max_radius_bb": 6.448430196734156,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 6.22511267088551
+      },
+      "vs_open": {
+        "action_max_radius_bb": 0.7670225018824554,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 0.7669005261946131
+      }
+    },
+    "flop_controller": {
+      "rfi": {
+        "action_max_radius_bb": 0.3532865226359655,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 0.3405681250175817
+      },
+      "vs_3bet": {
+        "action_max_radius_bb": 2.1859052451631897,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 2.185547243879054
+      },
+      "vs_4bet": {
+        "action_max_radius_bb": 5.056212499328809,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 5.055974554205212
+      },
+      "vs_open": {
+        "action_max_radius_bb": 0.7122642853094946,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 0.7121559503773102
+      }
+    }
+  },
+  "cfr_iterations_added": 0,
+  "confidence": 0.99,
+  "controller_enumeration": {
+    "ablation": [
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            534971,
+            475640
+          ],
+          [
+            -2434899,
+            1902560
+          ]
+        ],
+        "classes": [
+          "AA",
+          "AJs"
+        ],
+        "compatible_hole_assignments": 12,
+        "old_factors": [
+          [
+            534971,
+            475640
+          ],
+          [
+            -534971,
+            475640
+          ]
+        ],
+        "partition_denominator": 205476480
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            4801477,
+            4280760
+          ],
+          [
+            -1854097,
+            1556640
+          ]
+        ],
+        "classes": [
+          "AA",
+          "ATs"
+        ],
+        "compatible_hole_assignments": 12,
+        "old_factors": [
+          [
+            4801477,
+            4280760
+          ],
+          [
+            -4801477,
+            4280760
+          ]
+        ],
+        "partition_denominator": 205476480
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            178699,
+            155664
+          ],
+          [
+            -6721471,
+            5707680
+          ]
+        ],
+        "classes": [
+          "AA",
+          "A9s"
+        ],
+        "compatible_hole_assignments": 12,
+        "old_factors": [
+          [
+            178699,
+            155664
+          ],
+          [
+            -178699,
+            155664
+          ]
+        ],
+        "partition_denominator": 205476480
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            3267307,
+            2853840
+          ],
+          [
+            -9635159,
+            8561520
+          ]
+        ],
+        "classes": [
+          "AA",
+          "A8s"
+        ],
+        "compatible_hole_assignments": 12,
+        "old_factors": [
+          [
+            3267307,
+            2853840
+          ],
+          [
+            -3267307,
+            2853840
+          ]
+        ],
+        "partition_denominator": 205476480
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            320165,
+            285384
+          ],
+          [
+            -1778717,
+            1712304
+          ]
+        ],
+        "classes": [
+          "AA",
+          "A5s"
+        ],
+        "compatible_hole_assignments": 12,
+        "old_factors": [
+          [
+            320165,
+            285384
+          ],
+          [
+            -320165,
+            285384
+          ]
+        ],
+        "partition_denominator": 205476480
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            4815977,
+            4280760
+          ],
+          [
+            -2991859,
+            2853840
+          ]
+        ],
+        "classes": [
+          "AA",
+          "A4s"
+        ],
+        "compatible_hole_assignments": 12,
+        "old_factors": [
+          [
+            4815977,
+            4280760
+          ],
+          [
+            -4815977,
+            4280760
+          ]
+        ],
+        "partition_denominator": 205476480
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            17432221,
+            17123040
+          ],
+          [
+            -987859,
+            778320
+          ]
+        ],
+        "classes": [
+          "AA",
+          "KQs"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            17432221,
+            17123040
+          ],
+          [
+            -17432221,
+            17123040
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            8683891,
+            8561520
+          ],
+          [
+            -8023727,
+            6849216
+          ]
+        ],
+        "classes": [
+          "AA",
+          "KJs"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            8683891,
+            8561520
+          ],
+          [
+            -8683891,
+            8561520
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            288389,
+            285384
+          ],
+          [
+            -4145309,
+            3805120
+          ]
+        ],
+        "classes": [
+          "AA",
+          "KTs"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            288389,
+            285384
+          ],
+          [
+            -288389,
+            285384
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            2801111,
+            2853840
+          ],
+          [
+            -4220209,
+            3805120
+          ]
+        ],
+        "classes": [
+          "AA",
+          "QJs"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            2801111,
+            2853840
+          ],
+          [
+            -2801111,
+            2853840
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -3385907,
+            5707680
+          ],
+          [
+            23069,
+            41360
+          ]
+        ],
+        "classes": [
+          "AJs",
+          "KK"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -23069,
+            41360
+          ],
+          [
+            23069,
+            41360
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -10310677,
+            17123040
+          ],
+          [
+            87233,
+            155664
+          ]
+        ],
+        "classes": [
+          "AJs",
+          "QQ"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -87233,
+            155664
+          ],
+          [
+            87233,
+            155664
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -24457,
+            728640
+          ],
+          [
+            1284143,
+            8561520
+          ]
+        ],
+        "classes": [
+          "AJs",
+          "TT"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -1284143,
+            8561520
+          ],
+          [
+            1284143,
+            8561520
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -17990747,
+            34246080
+          ],
+          [
+            475259,
+            856152
+          ]
+        ],
+        "classes": [
+          "ATs",
+          "KK"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -475259,
+            856152
+          ],
+          [
+            475259,
+            856152
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -18259753,
+            34246080
+          ],
+          [
+            9437,
+            16920
+          ]
+        ],
+        "classes": [
+          "ATs",
+          "QQ"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -9437,
+            16920
+          ],
+          [
+            9437,
+            16920
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -58039,
+            142692
+          ],
+          [
+            1048867,
+            2140380
+          ]
+        ],
+        "classes": [
+          "ATs",
+          "TT"
+        ],
+        "compatible_hole_assignments": 12,
+        "old_factors": [
+          [
+            -1048867,
+            2140380
+          ],
+          [
+            1048867,
+            2140380
+          ]
+        ],
+        "partition_denominator": 205476480
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -16850333,
+            34246080
+          ],
+          [
+            9686641,
+            17123040
+          ]
+        ],
+        "classes": [
+          "A9s",
+          "KK"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -9686641,
+            17123040
+          ],
+          [
+            9686641,
+            17123040
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -8555069,
+            17123040
+          ],
+          [
+            1946341,
+            3424608
+          ]
+        ],
+        "classes": [
+          "A9s",
+          "QQ"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -1946341,
+            3424608
+          ],
+          [
+            1946341,
+            3424608
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -379013,
+            744480
+          ],
+          [
+            1945013,
+            3424608
+          ]
+        ],
+        "classes": [
+          "A9s",
+          "TT"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -1945013,
+            3424608
+          ],
+          [
+            1945013,
+            3424608
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -175437,
+            380512
+          ],
+          [
+            3225097,
+            5707680
+          ]
+        ],
+        "classes": [
+          "A8s",
+          "KK"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -3225097,
+            5707680
+          ],
+          [
+            3225097,
+            5707680
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -3155695,
+            6849216
+          ],
+          [
+            1936727,
+            3424608
+          ]
+        ],
+        "classes": [
+          "A8s",
+          "QQ"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -1936727,
+            3424608
+          ],
+          [
+            1936727,
+            3424608
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -2670973,
+            5707680
+          ],
+          [
+            644917,
+            1141536
+          ]
+        ],
+        "classes": [
+          "A8s",
+          "TT"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -644917,
+            1141536
+          ],
+          [
+            644917,
+            1141536
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -13341073,
+            34246080
+          ],
+          [
+            9237089,
+            17123040
+          ]
+        ],
+        "classes": [
+          "A5s",
+          "KK"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -9237089,
+            17123040
+          ],
+          [
+            9237089,
+            17123040
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -1488133,
+            3805120
+          ],
+          [
+            205593,
+            380512
+          ]
+        ],
+        "classes": [
+          "A5s",
+          "QQ"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -205593,
+            380512
+          ],
+          [
+            205593,
+            380512
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -1504713,
+            3805120
+          ],
+          [
+            615331,
+            1141536
+          ]
+        ],
+        "classes": [
+          "A5s",
+          "TT"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -615331,
+            1141536
+          ],
+          [
+            615331,
+            1141536
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -13626353,
+            34246080
+          ],
+          [
+            1856687,
+            3424608
+          ]
+        ],
+        "classes": [
+          "A4s",
+          "KK"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -1856687,
+            3424608
+          ],
+          [
+            1856687,
+            3424608
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -13678477,
+            34246080
+          ],
+          [
+            9298031,
+            17123040
+          ]
+        ],
+        "classes": [
+          "A4s",
+          "QQ"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -9298031,
+            17123040
+          ],
+          [
+            9298031,
+            17123040
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -13543397,
+            34246080
+          ],
+          [
+            1846091,
+            3424608
+          ]
+        ],
+        "classes": [
+          "A4s",
+          "TT"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -1846091,
+            3424608
+          ],
+          [
+            1846091,
+            3424608
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            9454991,
+            8561520
+          ],
+          [
+            -5708563,
+            4280760
+          ]
+        ],
+        "classes": [
+          "KK",
+          "KQs"
+        ],
+        "compatible_hole_assignments": 12,
+        "old_factors": [
+          [
+            9454991,
+            8561520
+          ],
+          [
+            -9454991,
+            8561520
+          ]
+        ],
+        "partition_denominator": 205476480
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            3142823,
+            2853840
+          ],
+          [
+            -1766939,
+            1426920
+          ]
+        ],
+        "classes": [
+          "KK",
+          "KJs"
+        ],
+        "compatible_hole_assignments": 12,
+        "old_factors": [
+          [
+            3142823,
+            2853840
+          ],
+          [
+            -3142823,
+            2853840
+          ]
+        ],
+        "partition_denominator": 205476480
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            1880389,
+            1712304
+          ],
+          [
+            -329735,
+            285384
+          ]
+        ],
+        "classes": [
+          "KK",
+          "KTs"
+        ],
+        "compatible_hole_assignments": 12,
+        "old_factors": [
+          [
+            1880389,
+            1712304
+          ],
+          [
+            -1880389,
+            1712304
+          ]
+        ],
+        "partition_denominator": 205476480
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            8675651,
+            8561520
+          ],
+          [
+            -9939161,
+            8561520
+          ]
+        ],
+        "classes": [
+          "KK",
+          "QJs"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            8675651,
+            8561520
+          ],
+          [
+            -8675651,
+            8561520
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -24626,
+            48645
+          ],
+          [
+            824111,
+            1712304
+          ]
+        ],
+        "classes": [
+          "KQs",
+          "QQ"
+        ],
+        "compatible_hole_assignments": 12,
+        "old_factors": [
+          [
+            -824111,
+            1712304
+          ],
+          [
+            824111,
+            1712304
+          ]
+        ],
+        "partition_denominator": 205476480
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -1052741,
+            17123040
+          ],
+          [
+            2293649,
+            17123040
+          ]
+        ],
+        "classes": [
+          "KQs",
+          "TT"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -2293649,
+            17123040
+          ],
+          [
+            2293649,
+            17123040
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -691789,
+            1141536
+          ],
+          [
+            3192953,
+            5707680
+          ]
+        ],
+        "classes": [
+          "KJs",
+          "QQ"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -3192953,
+            5707680
+          ],
+          [
+            3192953,
+            5707680
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -10521,
+            380512
+          ],
+          [
+            798929,
+            5707680
+          ]
+        ],
+        "classes": [
+          "KJs",
+          "TT"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -798929,
+            5707680
+          ],
+          [
+            798929,
+            5707680
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -2306527,
+            4280760
+          ],
+          [
+            9533473,
+            17123040
+          ]
+        ],
+        "classes": [
+          "KTs",
+          "QQ"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -9533473,
+            17123040
+          ],
+          [
+            9533473,
+            17123040
+          ]
+        ],
+        "partition_denominator": 410952960
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -139273,
+            364320
+          ],
+          [
+            1353167,
+            2853840
+          ]
+        ],
+        "classes": [
+          "KTs",
+          "TT"
+        ],
+        "compatible_hole_assignments": 12,
+        "old_factors": [
+          [
+            -1353167,
+            2853840
+          ],
+          [
+            1353167,
+            2853840
+          ]
+        ],
+        "partition_denominator": 205476480
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            139457,
+            129720
+          ],
+          [
+            -1346843,
+            1141536
+          ]
+        ],
+        "classes": [
+          "QQ",
+          "QJs"
+        ],
+        "compatible_hole_assignments": 12,
+        "old_factors": [
+          [
+            139457,
+            129720
+          ],
+          [
+            -139457,
+            129720
+          ]
+        ],
+        "partition_denominator": 205476480
+      },
+      {
+        "ablation_is_accuracy_improvement": false,
+        "checkcall_ablation_factors": [
+          [
+            -3029,
+            356730
+          ],
+          [
+            122211,
+            951280
+          ]
+        ],
+        "classes": [
+          "QJs",
+          "TT"
+        ],
+        "compatible_hole_assignments": 24,
+        "old_factors": [
+          [
+            -122211,
+            951280
+          ],
+          [
+            122211,
+            951280
+          ]
+        ],
+        "partition_denominator": 410952960
+      }
+    ],
+    "class_pairs": 40,
+    "concrete_matchups": 67,
+    "method": "all C(48,5) boards and all10 flop partitions; rank once per board; original model retained; checkcall ablation not calibrated"
+  },
+  "exact_cells": {
+    "boards_per_matchup": 1712304,
+    "class_records": 1198,
+    "concrete_matchups_enumerated": 3062,
+    "exact_plane_entries": 3223,
+    "exact_showdown_cells": 2227,
+    "seconds": 367.93259787600033,
+    "targets": [
+      "AA",
+      "KK",
+      "AKo",
+      "AKs",
+      "QQ",
+      "TT"
+    ]
+  },
+  "expected_controller_game_bounds": {
+    "checkdown": {
+      "confidence": 0.9975,
+      "expected_game_convergence_verified": false,
+      "nashconv_interval_bb": [
+        0.0,
+        0.1403170998309509
+      ],
+      "nashconv_point_bb": 0.00474899576647117,
+      "players": [
+        {
+          "best_response_ev_bb": -0.04477034655142028,
+          "hero": 0,
+          "interval_bb": [
+            -0.09519203500852289,
+            0.016915830188973174
+          ],
+          "profile_ev_bb": -0.04739229169836859
+        },
+        {
+          "best_response_ev_bb": 0.04951934231789145,
+          "hero": 1,
+          "interval_bb": [
+            -0.006763712831398005,
+            0.12340126864197772
+          ],
+          "profile_ev_bb": 0.04739229169836859
+        }
+      ],
+      "real_game_gto_verified": false,
+      "scope": "Global information-set best response against fixed opponent in fixed continuation-controller game only; uniform terminal confidence before maximization; not real-game exploitability"
+    },
+    "flop_controller": {
+      "confidence": 0.9975,
+      "expected_game_convergence_verified": false,
+      "nashconv_interval_bb": [
+        0.0,
+        0.2755918441802012
+      ],
+      "nashconv_point_bb": 0.007460603145334189,
+      "players": [
+        {
+          "best_response_ev_bb": 0.023377029485077413,
+          "hero": 0,
+          "interval_bb": [
+            -0.05019344465587109,
+            0.1498348768994147
+          ],
+          "profile_ev_bb": 0.020106461949745875
+        },
+        {
+          "best_response_ev_bb": -0.015916426339743224,
+          "hero": 1,
+          "interval_bb": [
+            -0.10201895948233239,
+            0.1257569662807865
+          ],
+          "profile_ev_bb": -0.020106461949745885
+        }
+      ],
+      "real_game_gto_verified": false,
+      "scope": "Global information-set best response against fixed opponent in fixed continuation-controller game only; uniform terminal confidence before maximization; not real-game exploitability"
+    }
+  },
+  "fixed_policy_digests": {
+    "checkdown": "cc653c5dcb882ddd95dc6d20d77fd82277d877dd0f612c1f45888fb1d6604c1c",
+    "flop_controller": "0146870c1b2f2168940f4b51a31563417c63c236f808b5eb0e27981833616fec"
+  },
+  "formal_acceptance_complete": 0,
+  "full_game_gto_verified": false,
+  "improved_summary": {
+    "checkdown": {
+      "rfi": {
+        "action_max_radius_bb": 0.13077406997661314,
+        "exact_actions": 181,
+        "exact_profiles": 6,
+        "profile_max_radius_bb": 0.11780819805405629
+      },
+      "vs_3bet": {
+        "action_max_radius_bb": 0.9725409142764271,
+        "exact_actions": 181,
+        "exact_profiles": 6,
+        "profile_max_radius_bb": 0.8709113116262754
+      },
+      "vs_4bet": {
+        "action_max_radius_bb": 1.34228113543322,
+        "exact_actions": 181,
+        "exact_profiles": 6,
+        "profile_max_radius_bb": 1.109690768115977
+      },
+      "vs_open": {
+        "action_max_radius_bb": 0.2625588905471364,
+        "exact_actions": 181,
+        "exact_profiles": 6,
+        "profile_max_radius_bb": 0.25892548216413785
+      }
+    },
+    "flop_controller": {
+      "rfi": {
+        "action_max_radius_bb": 0.23237493523943034,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 0.2176103542961563
+      },
+      "vs_3bet": {
+        "action_max_radius_bb": 1.2772903094215742,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 1.1034833127250938
+      },
+      "vs_4bet": {
+        "action_max_radius_bb": 3.4910353870510695,
+        "exact_actions": 175,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 2.944415623338038
+      },
+      "vs_open": {
+        "action_max_radius_bb": 0.4358984838626027,
+        "exact_actions": 169,
+        "exact_profiles": 0,
+        "profile_max_radius_bb": 0.43583330421058203
+      }
+    }
+  },
+  "independent_native_action_ev_checks": 4056,
+  "inputs_sha256": "3cfde9d919a540b4a084764d76b6f65a4ecbf55a67dc712eeae4d122ce1001ab",
+  "rb_seconds": 271.2533952020003,
+  "real_game_approximation_error": null,
+  "reference_difference": null,
+  "reference_solution_comparison": "UNPERFORMED",
+  "refined_table_diagnostics": {
+    "checkdown": {
+      "expected_game_convergence_verified": false,
+      "nashconv_on_refined_table_bb": 0.004748995766470629,
+      "profile_sb_ev_bb": -0.047392291698368554
+    },
+    "flop_controller": {
+      "expected_game_convergence_verified": false,
+      "nashconv_on_refined_table_bb": 0.007460603145341662,
+      "profile_sb_ev_bb": 0.020106461949745726
+    }
+  },
+  "samples_per_class_pair": 256,
+  "schema": "pokerid-ev-precision-study-v1",
+  "scope": "99% simultaneous conditional fixed-policy model EV intervals; opponent/action integration exact in finite model, floating arithmetic; board/holes sampling remains outside exact cells",
+  "source": {
+    "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+    "flags": [
+      "-std=c++17",
+      "-O3",
+      "-ffp-contract=off",
+      "-fno-tree-vectorize",
+      "-shared",
+      "-fPIC"
+    ],
+    "source_sha256": "7b1ac459ea0794c76b64321fe3242eae710c4b1995bcbd1b4030257df328e79a"
+  },
+  "validation_seed": 700017,
+  "variance_comparison": [
+    {
+      "conditional_weighted_variance": 2675.2501118044233,
+      "observed_ratio": 0.3121187312603311,
+      "original_weighted_variance": 8571.257806289936,
+      "plane": 0
+    },
+    {
+      "conditional_weighted_variance": 3.2403961436149413,
+      "observed_ratio": 0.4763981586085165,
+      "original_weighted_variance": 6.8018653831064855,
+      "plane": 1
+    },
+    {
+      "conditional_weighted_variance": 20.25247589759338,
+      "observed_ratio": 0.4763981586085165,
+      "original_weighted_variance": 42.51165864441553,
+      "plane": 2
+    },
+    {
+      "conditional_weighted_variance": 262.4720876328102,
+      "observed_ratio": 0.4763981586085164,
+      "original_weighted_variance": 550.9510960316253,
+      "plane": 3
+    },
+    {
+      "conditional_weighted_variance": 1429.014699334189,
+      "observed_ratio": 0.4763981586085165,
+      "original_weighted_variance": 2999.62263394996,
+      "plane": 4
+    }
+  ]
+}

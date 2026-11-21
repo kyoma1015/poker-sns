@@ -1,0 +1,42 @@
+name: GTO preflop release candidate verification
+on:
+  push:
+    branches: ['codex/c-native-hand169-bridge-20261023']
+    paths:
+      - 'src/gto/range*'
+      - 'src/gto/releaseCandidate.ts'
+      - 'src/GtoPreflop.tsx'
+      - 'gto/release/**'
+      - 'scripts/gto-release/**'
+      - 'tests/gto-release.test.mjs'
+      - 'docs/qa/preflop-release-20261116/**'
+      - '.github/workflows/gto-preflop-release.yml'
+  pull_request:
+    paths:
+      - 'src/gto/range*'
+      - 'src/gto/releaseCandidate.ts'
+      - 'src/GtoPreflop.tsx'
+      - 'gto/release/**'
+      - 'scripts/gto-release/**'
+      - 'tests/gto-release.test.mjs'
+      - 'docs/qa/preflop-release-20261116/**'
+      - '.github/workflows/gto-preflop-release.yml'
+permissions:
+  contents: read
+jobs:
+  candidate-transport:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: python -B -m gto.release.research_layout --check
+      - run: python -B -m gto.release.verify_evidence
+      - run: node --test --test-isolation=none tests/gto-release.test.mjs
+      - name: Package actual existing RFI and3bet rows without registration
+        run: node scripts/gto-release/build.mjs src/gto/independentResearchData.json docs/qa/suit-exact-preflop-20261106/results.json "$RUNNER_TEMP/release-candidates.json"

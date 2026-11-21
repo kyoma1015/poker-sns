@@ -1,0 +1,30 @@
+{
+  "transient_before_dedup_MiB": 213,
+  "reason": "corrected extra trial exceeded200MiB; stop expansion and losslessly share only SHA256-identical best/last bytes",
+  "rows": [
+    {
+      "path": "transfer/17120101/last-checkpoint.npz",
+      "target": "best-checkpoint.npz",
+      "sha256": "22463dc4a4291fe16f61a0b217ddf4d1b3eeb6f5d6d1393886994296d0480ac5",
+      "bytes_referenced": 16040776,
+      "lossless": true
+    },
+    {
+      "path": "transfer/17120102/last-checkpoint.npz",
+      "target": "best-checkpoint.npz",
+      "sha256": "71f06b5c521fb2681b4c193dd1ad72d240b5102a00a5074fb2fb2b9e089d98ae",
+      "bytes_referenced": 16120808,
+      "lossless": true
+    },
+    {
+      "path": "corrected/17120102/last-checkpoint.npz",
+      "target": "best-checkpoint.npz",
+      "sha256": "28d1201d7e915f8ad0a165ac0c229f42219a2887714c7b4f2538e1f9126c31f9",
+      "bytes_referenced": 16107636,
+      "lossless": true
+    }
+  ],
+  "bytes_after": 173907896,
+  "cap_bytes": 209715200,
+  "data_lost": false
+}

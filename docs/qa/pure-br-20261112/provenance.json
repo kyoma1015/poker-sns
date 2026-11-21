@@ -1,0 +1,38 @@
+{
+  "adopted_methods": 0,
+  "approximation_error": "UNKNOWN",
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "external_reference": "UNPERFORMED",
+  "flags": [
+    "-std=c++17",
+    "-O3",
+    "-ffp-contract=off",
+    "-fno-tree-vectorize",
+    "-shared",
+    "-fPIC"
+  ],
+  "formal_acceptance": [
+    0,
+    12
+  ],
+  "local_checks": {
+    "build": "PASS tsc -b and vite build",
+    "lint": "PASS exit0,pre-existing out-of-scope warnings",
+    "protected_hashes": 143,
+    "pure_br_tests_included": 10,
+    "stream_python_tests": 70
+  },
+  "machine": "x86_64",
+  "normal_GTO_added": 0,
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "python": "3.12.14",
+  "source_sha256": {
+    "gto/abstract/pure_br.cc": "249621e2981b1b5a835e535017871e965bb2fc0caceecfcdf11947dbbf9c3b06",
+    "gto/abstract/pure_br.py": "86c492c46f7deefc28cf71664f417819789c774f0530bc1ab1ba490176463b07",
+    "gto/abstract/pure_br_diagnostics.py": "7f64341e8fe3688252b92d51e6b9537fade4b1b1991ce7abed867baec73df0ce",
+    "gto/abstract/pure_br_learner.py": "f7cc8d99765bf44a223d0289d42a16ca6078d2e77082ef7d031d4a0faa838dbe",
+    "gto/abstract/pure_br_report.py": "e730dd4fdca8684ea57d932aff14b191208a846c26e908e8182f6c4e494e72dd",
+    "gto/abstract/pure_br_run.py": "5dd219ba3b1dcb5325ce49b0ae90bcc4ec28f254d588c8ecb0dd7ce10a650028",
+    "gto/abstract/pure_br_small.py": "4ef3cb1a95c890743e9c520f1f719f5d3af51dc480552a7338137b6524b2c4c2"
+  }
+}

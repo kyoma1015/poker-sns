@@ -1,0 +1,59 @@
+{
+  "arms": [
+    {
+      "infosets": 3612,
+      "method": "outcome",
+      "name": "outcome-17118041",
+      "pairs": 16,
+      "policy_digest": "432bd0df371e1613d1135fc196d508457d888abd186a1321ded643491f0b9667",
+      "seconds": 3.114955490000284,
+      "seed": 17118041
+    },
+    {
+      "infosets": 7210,
+      "method": "first-external",
+      "name": "first-external-17118041",
+      "pairs": 8,
+      "policy_digest": "0f1d59bbb84c2953ffe0adf8262334a0932ebb421879ef424a8922c9bfacd087",
+      "seconds": 3.0696382639998774,
+      "seed": 17118041
+    },
+    {
+      "infosets": 3589,
+      "method": "outcome",
+      "name": "outcome-17118042",
+      "pairs": 17,
+      "policy_digest": "f60aa62d58e67a731b797a523d777baa80853702fe9a400bee76ecf133a84bff",
+      "seconds": 3.203616282999974,
+      "seed": 17118042
+    },
+    {
+      "infosets": 7573,
+      "method": "first-external",
+      "name": "first-external-17118042",
+      "pairs": 9,
+      "policy_digest": "6bc2e7d9a68e74d5d4f8884b90c9f968adb2c022c82ec8b906b20edbda541117",
+      "seconds": 3.3703478679999535,
+      "seed": 17118042
+    },
+    {
+      "infosets": 3598,
+      "method": "outcome",
+      "name": "outcome-17118043",
+      "pairs": 17,
+      "policy_digest": "bd4abb013f3b8e53f86d579e703d0fd42ddcfda0f7e2e909f390d4d8d9eefb26",
+      "seconds": 3.18976298600046,
+      "seed": 17118043
+    },
+    {
+      "infosets": 7459,
+      "method": "first-external",
+      "name": "first-external-17118043",
+      "pairs": 9,
+      "policy_digest": "1e055a07da90622b223070b0e45d20cb2df6936660074c731e9139c7318c0b34",
+      "seconds": 3.3868713680003566,
+      "seed": 17118043
+    }
+  ],
+  "status": "COMPLETE"
+}

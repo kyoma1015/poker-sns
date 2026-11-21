@@ -1,0 +1,97 @@
+{
+  "head": "cdb85e03508de8eed2fc1a4e5f28241eb007ed75",
+  "draft": true,
+  "state": "open",
+  "runs": [
+    {
+      "id": 43910346397,
+      "name": "GTO preflop abstraction research verification",
+      "event": "pull_request",
+      "head_sha": "cdb85e03508de8eed2fc1a4e5f28241eb007ed75",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/kyoma1015/poker-sns/actions/runs/43910346397"
+    },
+    {
+      "id": 43910346361,
+      "name": "GTO preflop search verification",
+      "event": "pull_request",
+      "head_sha": "cdb85e03508de8eed2fc1a4e5f28241eb007ed75",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/kyoma1015/poker-sns/actions/runs/43910346361"
+    },
+    {
+      "id": 43910346121,
+      "name": "GTO standalone static demo verification",
+      "event": "pull_request",
+      "head_sha": "cdb85e03508de8eed2fc1a4e5f28241eb007ed75",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/kyoma1015/poker-sns/actions/runs/43910346121"
+    },
+    {
+      "id": 43910346006,
+      "name": "GTO matched-history CFR verification",
+      "event": "pull_request",
+      "head_sha": "cdb85e03508de8eed2fc1a4e5f28241eb007ed75",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/kyoma1015/poker-sns/actions/runs/43910346006"
+    },
+    {
+      "id": 43910346199,
+      "name": "GTO preflop release candidate verification",
+      "event": "pull_request",
+      "head_sha": "cdb85e03508de8eed2fc1a4e5f28241eb007ed75",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/kyoma1015/poker-sns/actions/runs/43910346199"
+    },
+    {
+      "id": 43910346091,
+      "name": "GTO fixed-policy EV precision verification",
+      "event": "pull_request",
+      "head_sha": "cdb85e03508de8eed2fc1a4e5f28241eb007ed75",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/kyoma1015/poker-sns/actions/runs/43910346091"
+    },
+    {
+      "id": 43910346047,
+      "name": "GTO reconstructed native verification",
+      "event": "pull_request",
+      "head_sha": "cdb85e03508de8eed2fc1a4e5f28241eb007ed75",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/kyoma1015/poker-sns/actions/runs/43910346047"
+    },
+    {
+      "id": 43910329158,
+      "name": "GTO matched-history CFR verification",
+      "event": "push",
+      "head_sha": "cdb85e03508de8eed2fc1a4e5f28241eb007ed75",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/kyoma1015/poker-sns/actions/runs/43910329158"
+    },
+    {
+      "id": 43910329269,
+      "name": "GTO preflop release candidate verification",
+      "event": "push",
+      "head_sha": "cdb85e03508de8eed2fc1a4e5f28241eb007ed75",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/kyoma1015/poker-sns/actions/runs/43910329269"
+    }
+  ]
+}

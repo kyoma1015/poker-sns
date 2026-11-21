@@ -1,0 +1,40 @@
+{
+  "evidence_sha256": {
+    "PLAN.md": "fa5efc16bfd28624f5ba71656569b8b7fb352abc9b3dcb6d73df009907fb5e42",
+    "README.md": "b92d314635bff0385a75a48f65c50701d4f2ee5e174328ee4849e0f3e5d78e96",
+    "acceptance-map.json": "1c949977688c9d2c2dbbe75c088ae71730b3b6726b0c2c81a1f5ed8e7e51f2b4",
+    "browser-tests.txt": "2abd508d9af767943b7ed4c5163f41e7aff25865ef370ab3a53c3e4f82845cd1",
+    "candidate-summary.json": "80397e80f18cc54eeb779e48e17bf58f3a704a5ebc34a2849656bd4e82746c23",
+    "dcfr-short.json": "ad18b66588d8ce4eb06835047e9b438d44943002a48715dba59f18f75f9eb657",
+    "generator.txt": "f5880667e2ef362ae861a5ac9bc7f5164affe5ed1cc35cd7e18931eb636754d5",
+    "history-scan.json": "9a3eb4c2df6e27c1182cecbe5559f71097a232327c943c14431a3f83b73e23ec",
+    "matched-tests.txt": "a0d7b1645cca8fc7b070eb3a461810905cf1768844dc291f0b7591d8ff7e7ef4",
+    "node-tests.txt": "a667de7eacf978e243e6263c7aedeb7833601e98dcf67cfa0c488d95d105f011",
+    "spec-provenance.json": "e2f063b9ad9ffa99c013dc66643f8c8cd6e3aea04b8a402681df52176bb3f1ac"
+  },
+  "formal_acceptance_before_after": [
+    0,
+    0
+  ],
+  "ordinary_catalog_added": 0,
+  "source_sha256": {
+    ".github/workflows/gto-matched-history.yml": "2a98a769dd26c9f51ef9b7565b35619ac2d33013f812ad474d8f179acf28030f",
+    ".github/workflows/gto-preflop-release.yml": "ed8b7877fc7bae942554b8147742461f14d05f2589d44236b75d63a9a8384f57",
+    "docs/qa/suit-exact-preflop-20261106/results.json": "cae8d1cf855e5cb2970b0b6fd22edb1342e916b3ac8223783a74650430b5f7c3",
+    "gto/abstract/dcfr_release_diagnostic.py": "4e55495f6f241624ce2cc874c09fa845e06ed8fe3b06f763ac869c0b39122257",
+    "gto/release/researchLayout.json": "e6068b9b8c42f9aa66a67ccf47207b9bbd7b2137cc83414e58c24f34dfd8c1d0",
+    "gto/release/research_layout.py": "0761cfbe0ae226a48c6efcecef7014db5c5f63792cbc8be494ed26224bbebfcd",
+    "gto/release/verify_evidence.py": "376e38aac381882a062bf612882aaf72318e250fa48c4d6bf6b86ea44bdf4a4d",
+    "scripts/gto-release/build.mjs": "2061063345ba975933aa8f891e63ed0a9390bfcc0c83e83e7881067825060296",
+    "src/GtoPreflop.tsx": "3ee8ca48a4dae50868c60eab439f4c57cd20a330139a93c0012f88d9d5d2dd5e",
+    "src/gto/independentResearchData.json": "21b4964d90df893bf1b0268db9303865774cb2beedb5b5ad5b1c51b67b3ad7ac",
+    "src/gto/preflopHistory.ts": "a498388877492cd938d94a469e653be291f3ffbab4fda7c36416efed76576ad5",
+    "src/gto/rangeCatalog.ts": "2311e105c1f63d29e0df7e766e7ffd7e2ac545eb2905779ed7e2b6e595ea712d",
+    "src/gto/rangeIntegrity.ts": "4d9e04ebcd336212800c618fd3d8bacf2ee6e70d48812daf1a0aa9b7c94df18c",
+    "src/gto/releaseCandidate.ts": "797166f6027c8a8ea33ca215ae231a578b494d19d4182bdef6c1ad8738b1d9ba",
+    "src/gto/verifiedCatalog.ts": "92225f8926df3068dac33b78c2294db21d04ed994bcc5ac0b4e2467d52ae64d5",
+    "tests/gto-browser.mjs": "302268652adf588f8cf98181a78b33e0d2e4d29aeb5d528f15d97c32ffa3f573",
+    "tests/gto-browser/entry.tsx": "9ac7d4a93721f00fb1a57509793d011555348f1779f95e1d19ff9725faf52589",
+    "tests/gto-release.test.mjs": "89bed70fffc954985339e999b35a2fb5a9281fe107cb395f6d7e059b236acfb7"
+  }
+}

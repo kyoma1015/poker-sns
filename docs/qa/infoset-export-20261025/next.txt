@@ -1,0 +1,14 @@
+test_corrupt_row (__main__.LiveTests.test_corrupt_row) ... ok
+test_double_commit (__main__.LiveTests.test_double_commit) ... ok
+test_empty_get (__main__.LiveTests.test_empty_get) ... ok
+test_incomplete_meta (__main__.LiveTests.test_incomplete_meta) ... ok
+test_initial_and_resume (__main__.LiveTests.test_initial_and_resume) ... ok
+test_mismatch_rejected (__main__.LiveTests.test_mismatch_rejected) ... ok
+test_no_nested (__main__.LiveTests.test_no_nested) ... ok
+test_no_partial_commit (__main__.LiveTests.test_no_partial_commit) ... ok
+test_rollback (__main__.LiveTests.test_rollback) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.033s
+
+OK

@@ -1,0 +1,11 @@
+{
+  "scope": "all locally reachable unique text blobs under docs/gto/handoff at starting HEAD",
+  "eligible_blobs": 920,
+  "scanned_blobs": 920,
+  "budget_seconds": 60,
+  "elapsed_seconds": 0.9751532360005513,
+  "timed_out": false,
+  "oversize_unscanned": [],
+  "literal20_stack_candidates": [],
+  "formal_registry_recovered": false
+}

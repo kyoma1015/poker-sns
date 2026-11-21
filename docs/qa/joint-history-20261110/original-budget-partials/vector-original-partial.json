@@ -1,0 +1,22 @@
+{
+  "identity": "0509c1c715fbc83ae5bed480aca6642f2dd05ec34e6c990cd67a953b31ae3806",
+  "orbits": 1511,
+  "physical_coverage": 0.8619004524886877,
+  "cpu_seconds": 900.024981574,
+  "wall_seconds": 902.01504196,
+  "max_abs_errors": {
+    "grad": 2.8796409701215e-16,
+    "avg": 1.3010426069826053e-16,
+    "leaf": 2.3592239273284576e-16,
+    "metrics": 1.968925023021484e-12,
+    "action_num": 2.5673907444456745e-16,
+    "action_den": 1.0234868508263162e-16
+  },
+  "backend_cpu": {
+    "original": 619.0360974790008,
+    "vector": 162.88323149100165
+  },
+  "full_population_pass": false,
+  "normal_GTO": false,
+  "real_game_error": "UNKNOWN"
+}

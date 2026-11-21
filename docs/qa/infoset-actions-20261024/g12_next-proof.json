@@ -1,0 +1,248 @@
+{
+  "canonical_sha256": "f1b15935a096438e939b8138457033aed422b508553f2e2b93cfcad8ce00e1c5",
+  "result": {
+    "fold_continuation": {
+      "deals": [
+        [
+          [
+            48,
+            49
+          ],
+          {
+            "numerator": 1,
+            "denominator": 4
+          }
+        ],
+        [
+          [
+            40,
+            45
+          ],
+          {
+            "numerator": 3,
+            "denominator": 4
+          }
+        ]
+      ],
+      "compatible_prior_mass": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "removed_prior_mass": {
+        "numerator": 0,
+        "denominator": 1
+      },
+      "original_support_size": 2,
+      "support_complete": false,
+      "posterior": [
+        {
+          "numerator": 1,
+          "denominator": 4
+        },
+        {
+          "numerator": 3,
+          "denominator": 4
+        }
+      ],
+      "action_values": {
+        "1": [
+          {
+            "numerator": 1,
+            "denominator": 1
+          },
+          {
+            "numerator": -1,
+            "denominator": 1
+          }
+        ],
+        "4": [
+          {
+            "numerator": 2,
+            "denominator": 1
+          },
+          {
+            "numerator": -2,
+            "denominator": 1
+          }
+        ]
+      },
+      "action_nodes": {
+        "1": 2,
+        "4": 4
+      },
+      "nodes": 6,
+      "observation_evidence_mass": {
+        "numerator": 1,
+        "denominator": 205476480
+      },
+      "hero_counterfactual_mass": {
+        "numerator": 1,
+        "denominator": 205476480
+      },
+      "history_validated": true,
+      "hero_information_sha256": "890ab014ee6ae4e59137e47ab5198b6d3e0694264ba9f0d28219b7f3beaafa4d",
+      "legal_actions": [
+        1,
+        4
+      ],
+      "native_infoset_ev": null,
+      "hand169_ev": null,
+      "scope": "explicit observed belief, common hero decision interventions; not equilibrium",
+      "policy_consistency": "queried hero infosets only",
+      "strategy_convergence": "UNKNOWN"
+    },
+    "call_continuation": {
+      "deals": [
+        [
+          [
+            48,
+            49
+          ],
+          {
+            "numerator": 3,
+            "denominator": 4
+          }
+        ],
+        [
+          [
+            40,
+            45
+          ],
+          {
+            "numerator": 1,
+            "denominator": 4
+          }
+        ]
+      ],
+      "compatible_prior_mass": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "removed_prior_mass": {
+        "numerator": 0,
+        "denominator": 1
+      },
+      "original_support_size": 2,
+      "support_complete": false,
+      "posterior": [
+        {
+          "numerator": 3,
+          "denominator": 4
+        },
+        {
+          "numerator": 1,
+          "denominator": 4
+        }
+      ],
+      "action_values": {
+        "1": [
+          {
+            "numerator": -1,
+            "denominator": 1
+          },
+          {
+            "numerator": 1,
+            "denominator": 1
+          }
+        ],
+        "4": [
+          {
+            "numerator": -2,
+            "denominator": 1
+          },
+          {
+            "numerator": 2,
+            "denominator": 1
+          }
+        ]
+      },
+      "action_nodes": {
+        "1": 2,
+        "4": 4
+      },
+      "nodes": 6,
+      "observation_evidence_mass": {
+        "numerator": 1,
+        "denominator": 205476480
+      },
+      "hero_counterfactual_mass": {
+        "numerator": 1,
+        "denominator": 205476480
+      },
+      "history_validated": true,
+      "hero_information_sha256": "890ab014ee6ae4e59137e47ab5198b6d3e0694264ba9f0d28219b7f3beaafa4d",
+      "legal_actions": [
+        1,
+        4
+      ],
+      "native_infoset_ev": null,
+      "hand169_ev": null,
+      "scope": "explicit observed belief, common hero decision interventions; not equilibrium",
+      "policy_consistency": "queried hero infosets only",
+      "strategy_convergence": "UNKNOWN"
+    },
+    "zero_observation": {
+      "deals": [
+        [
+          [
+            48,
+            49
+          ],
+          {
+            "numerator": 1,
+            "denominator": 4
+          }
+        ],
+        [
+          [
+            40,
+            45
+          ],
+          {
+            "numerator": 3,
+            "denominator": 4
+          }
+        ]
+      ],
+      "compatible_prior_mass": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "removed_prior_mass": {
+        "numerator": 0,
+        "denominator": 1
+      },
+      "original_support_size": 2,
+      "support_complete": false,
+      "posterior": null,
+      "action_values": {
+        "1": null,
+        "4": null
+      },
+      "action_nodes": {
+        "1": 0,
+        "4": 0
+      },
+      "nodes": 0,
+      "observation_evidence_mass": {
+        "numerator": 0,
+        "denominator": 1
+      },
+      "hero_counterfactual_mass": {
+        "numerator": 1,
+        "denominator": 205476480
+      },
+      "history_validated": true,
+      "hero_information_sha256": "890ab014ee6ae4e59137e47ab5198b6d3e0694264ba9f0d28219b7f3beaafa4d",
+      "legal_actions": [
+        1,
+        4
+      ],
+      "native_infoset_ev": null,
+      "hand169_ev": null,
+      "scope": "explicit observed belief, common hero decision interventions; not equilibrium",
+      "policy_consistency": "queried hero infosets only",
+      "strategy_convergence": "UNKNOWN"
+    }
+  }
+}

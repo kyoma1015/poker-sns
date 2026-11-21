@@ -1,0 +1,33 @@
+{
+  "base": "00985184bf6ab006f72de7385d069c5e31c38026",
+  "formal_acceptance": 0,
+  "invariance": "private169class,publictexture,own flags,history,pot/stack and class-based reached ranges invariant under simultaneous global suit permutation; test all8textures with nonidentity permutation before integration",
+  "learning": {
+    "expected_game_root_upper_target_bb": 0.1,
+    "iterations": [
+      512,
+      2048,
+      8192
+    ],
+    "sample_game_target_bb": 0.01
+  },
+  "population": "all22100physicalflops,canonical under24global suit permutations;expected1755orbits",
+  "real_game_approximation_error": "UNKNOWN",
+  "reference_comparison": "NOT PERFORMED",
+  "representative": "for each orbit choose lexicographically first physical flop among prior preregistered pilot/train/evaluation draws if any;otherwise canonical. Determined from cards only,not values/cache presence.",
+  "schema": "pokerid-suit-exact-preflop-v1",
+  "scope": "same two FIXED learned continuation profiles and same full preflop tree;not complete NLHE",
+  "selection": "none;both fixed models always reported;not a new unseen board experiment;whole finite population integration",
+  "ui": "research only;no normalGTO admission even if enumerated fixed-game NC<0.1",
+  "validation": {
+    "all169square_mass_tolerance": 1e-10,
+    "allin_diagonal_tolerance_bb": 1e-09,
+    "independent_br_tolerance_bb": 1e-09,
+    "numeric_guard_bb": 1e-07,
+    "numeric_guard_is_formal_rounding_proof": false,
+    "orbits": 1755,
+    "physical_flops": 22100,
+    "suit_payoff_tolerance_bb_per_board": 1e-12
+  },
+  "weight": "orbit multiplicity times exact class-conditional board mass; all concrete compatible privatepairs and990runouts,actual opponent cards never observed by strategy"
+}

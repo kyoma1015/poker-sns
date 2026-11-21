@@ -1,0 +1,11 @@
+test_all_seats_own_cards_and_causal_public_board_only (gto.qualification.test_multiplayer_scope.MultiplayerScope.test_all_seats_own_cards_and_causal_public_board_only) ... ok
+test_ante_rake_sidepot_vector_is_not_zero_sum (gto.qualification.test_multiplayer_scope.MultiplayerScope.test_ante_rake_sidepot_vector_is_not_zero_sum) ... ok
+test_hu_contract_and_mutated_rules_cannot_label_multiplayer (gto.qualification.test_multiplayer_scope.MultiplayerScope.test_hu_contract_and_mutated_rules_cannot_label_multiplayer) ... ok
+test_missing_illegal_and_invalid_inputs_fail_without_partial_ev (gto.qualification.test_multiplayer_scope.MultiplayerScope.test_missing_illegal_and_invalid_inputs_fail_without_partial_ev) ... ok
+test_no_flop_no_drop_with_bb_ante (gto.qualification.test_multiplayer_scope.MultiplayerScope.test_no_flop_no_drop_with_bb_ante) ... ok
+test_unequal_six_and_nine_player_sidepots_refund_hand_oracle (gto.qualification.test_multiplayer_scope.MultiplayerScope.test_unequal_six_and_nine_player_sidepots_refund_hand_oracle) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.016s
+
+OK

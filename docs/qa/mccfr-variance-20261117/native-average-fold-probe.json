@@ -1,0 +1,64 @@
+[
+  {
+    "name": "average-control",
+    "policy_digest": "11eb270d37bd489e767f93846535265b7caf9a0dc35dd5f807240bb556f29a4d",
+    "n": 8192,
+    "elapsed_seconds": 2.146349934999307,
+    "profile_sb_ev_bb": -4.184814453125,
+    "profile_interval_bb": [
+      -6.434766932020684,
+      -1.9348619742293156
+    ],
+    "fixed_legal_deviation": "SB fold at root for every own hand; rest irrelevant",
+    "deviation_ev_bb": -0.5,
+    "feasible_deviation_gain_bb": 3.684814453125,
+    "feasible_deviation_gain_interval_bb": [
+      1.4348619742293156,
+      5.934766932020684
+    ],
+    "full_br_gain_lower_bb": 1.4348619742293156,
+    "full_zero_sum_nashconv_lower_bb": 1.4348619742293156,
+    "full_br_gain_upper_bb": null,
+    "nashconv_bb": null,
+    "nashconv_upper_bb": null,
+    "completed": true,
+    "confidence_family": 0.999,
+    "method": "fixed-n Hoeffding; native payoff range [-50,50]",
+    "scope": "root profile EV and feasible deviation lower bounds only; not optimized BR/upper",
+    "ordinary_registry_admission": false,
+    "probe_script_sha256": "8f9f5335ed4c43ee38b974d65f5970e4ead1a64c9c122c4b3c6e5057576f4247",
+    "implementation_sha256": "4fe8864fb3e163928832128b3bffe483c822fc0e7cb8947b8db1b8752d9bbb4a",
+    "checkpoint_sha256": "eef37a0e3d7d4e9860c08f0c1142456084e84c2ac47efe1a14b77b37a3f45566"
+  },
+  {
+    "name": "average-corrected",
+    "policy_digest": "c848ede7d11d0723ec6f558b606d59467f7f31866fe73cfc46c1e1093009ad60",
+    "n": 8192,
+    "elapsed_seconds": 2.200118814000234,
+    "profile_sb_ev_bb": -4.17413330078125,
+    "profile_interval_bb": [
+      -6.424085779676934,
+      -1.9241808218855656
+    ],
+    "fixed_legal_deviation": "SB fold at root for every own hand; rest irrelevant",
+    "deviation_ev_bb": -0.5,
+    "feasible_deviation_gain_bb": 3.67413330078125,
+    "feasible_deviation_gain_interval_bb": [
+      1.4241808218855656,
+      5.924085779676934
+    ],
+    "full_br_gain_lower_bb": 1.4241808218855656,
+    "full_zero_sum_nashconv_lower_bb": 1.4241808218855656,
+    "full_br_gain_upper_bb": null,
+    "nashconv_bb": null,
+    "nashconv_upper_bb": null,
+    "completed": true,
+    "confidence_family": 0.999,
+    "method": "fixed-n Hoeffding; native payoff range [-50,50]",
+    "scope": "root profile EV and feasible deviation lower bounds only; not optimized BR/upper",
+    "ordinary_registry_admission": false,
+    "probe_script_sha256": "8f9f5335ed4c43ee38b974d65f5970e4ead1a64c9c122c4b3c6e5057576f4247",
+    "implementation_sha256": "4fe8864fb3e163928832128b3bffe483c822fc0e7cb8947b8db1b8752d9bbb4a",
+    "checkpoint_sha256": "f7ad1b5cc26f2a136c301f243b5dcd28d5a44d579f2d8fda7678e01598253121"
+  }
+]

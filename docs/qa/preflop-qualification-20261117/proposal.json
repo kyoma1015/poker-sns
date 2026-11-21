@@ -1,0 +1,83 @@
+{
+  "schema": "pokerid-preflop-spec-proposal-v1",
+  "status": "PENDING_APPROVAL",
+  "proposal_sha256": "4dea28480cf5a9d1887b188b07bbdef8383df4642d8324c2464a4eb10b8cf2b6",
+  "recommended_stacks_bb": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    12,
+    15,
+    20,
+    25,
+    30,
+    40,
+    50,
+    75,
+    100,
+    150,
+    200
+  ],
+  "alternative_stacks_bb": [
+    5,
+    7.5,
+    10,
+    12.5,
+    15,
+    17.5,
+    20,
+    22.5,
+    25,
+    27.5,
+    30,
+    35,
+    40,
+    50,
+    60,
+    75,
+    100,
+    125,
+    150,
+    200
+  ],
+  "players": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "stack_semantics": "equal before_ante; SB0.5/BB1; ante-first; unequal remains an explicit open requirement",
+  "size_scope": "all legal integer-chip targets;0.5BB grid; no raise-count pruning",
+  "first_qualification": {
+    "players": 2,
+    "stack_bb": 50,
+    "format": "mtt_chipEV",
+    "ante_bb": 0,
+    "rake": 0,
+    "contexts": [
+      "rfi",
+      "vs_open_2.5BB"
+    ]
+  },
+  "proposed_quality": {
+    "max_unilateral_gain_upper_bb": 0.05,
+    "hu_nashconv_upper_bb": 0.1,
+    "ev_half_width_bb": 0.05,
+    "familywise_confidence": 0.999
+  },
+  "ordinary_registry_admission": false,
+  "formal_acceptance": [
+    0,
+    12
+  ]
+}

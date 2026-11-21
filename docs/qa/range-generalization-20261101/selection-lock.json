@@ -1,0 +1,30 @@
+{
+  "final_test_evaluated": false,
+  "protocol_sha256": "7ec00f598d04cd2110001d0305dbfad30d27ca504a8142646dc917c4538b2dab",
+  "schema": "reached-range-pre-final-lock-v1",
+  "selected_range": {
+    "board_weight": 0.5,
+    "family": "range",
+    "method": "knn",
+    "name": "range_knn15_r32",
+    "neighbors": 15,
+    "private_weight": 8,
+    "range_weight": 32
+  },
+  "selected_uniform": {
+    "board_weight": 0.5,
+    "family": "uniform",
+    "method": "knn",
+    "name": "uniform_knn9",
+    "neighbors": 9,
+    "private_weight": 8,
+    "range_weight": 0
+  },
+  "selection_sha256": "febbe8a4682df6cce638576ae6cc2dbb79c171474ab448eb6d56dd0d106a4e26",
+  "source_sha256": {
+    "range_features.py": "595ab0bf789744ddac101123c80756e99184a4e1c182cfeef61234aeb429a4ca",
+    "range_game.py": "91e99bd4ce68dba178f118b4503c5e4dcee49d2e633ba0eac1ac9bd7f25a372c",
+    "range_study.py": "c94aa447e0b16fece728566958c8e2f6f7c3f980753fd454235b13cbbf14f705",
+    "reached_range.cc": "95271622c60efaeba182c3841c441aba0e7afe7c7a8c6ad9e69fd4ee399bc169"
+  }
+}

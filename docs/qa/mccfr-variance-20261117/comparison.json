@@ -1,0 +1,118 @@
+{
+  "arms": [
+    {
+      "control": false,
+      "coverage": {
+        "distinct_updated_infosets": 1571,
+        "max_updates_per_infoset": 4,
+        "repeated_updates": 62,
+        "revisit_rate": 0.037966932026944275,
+        "root_updated_infosets": 354,
+        "total_infosets": 2533,
+        "updates": 1633,
+        "hit_rate_including_warm_source": 0.0747091243110839
+      },
+      "diagnostic": {
+        "cf_gradient_trace_sample_variance": 11662344308221.56,
+        "paths": 512,
+        "seconds": 0.170335754000007,
+        "strategy_digest": "01bcc9b4f0497b94ce022e4f555e01a119e1773883a8c1445a6fbe4450bf8a7c"
+      },
+      "migrated_infosets": 1022,
+      "name": "raw-zero",
+      "new_iterations": 416,
+      "policy_digest": "07cc88804b3ad7d75cd05dd1ca862ac11f2a13020c7c95ffe64f458d79c82327",
+      "source_infosets": 1022,
+      "suits": false,
+      "training_seconds": 2.001276384000448
+    },
+    {
+      "control": true,
+      "coverage": {
+        "distinct_updated_infosets": 1570,
+        "max_updates_per_infoset": 4,
+        "repeated_updates": 62,
+        "revisit_rate": 0.03799019607843137,
+        "root_updated_infosets": 354,
+        "total_infosets": 2533,
+        "updates": 1632,
+        "hit_rate_including_warm_source": 0.07414215686274506
+      },
+      "diagnostic": {
+        "cf_gradient_trace_sample_variance": 14327918240583.654,
+        "paths": 512,
+        "seconds": 0.16342748800070694,
+        "strategy_digest": "01bcc9b4f0497b94ce022e4f555e01a119e1773883a8c1445a6fbe4450bf8a7c"
+      },
+      "migrated_infosets": 1022,
+      "name": "raw-cv",
+      "new_iterations": 416,
+      "policy_digest": "8b1b5e54c23bcf7f2170ee5c57a5e3491f6b27e2c95d4a5fd5ae88fcb110011d",
+      "source_infosets": 1022,
+      "suits": false,
+      "training_seconds": 2.0061311009994824
+    },
+    {
+      "control": false,
+      "coverage": {
+        "distinct_updated_infosets": 1624,
+        "max_updates_per_infoset": 10,
+        "repeated_updates": 348,
+        "revisit_rate": 0.17647058823529413,
+        "root_updated_infosets": 143,
+        "total_infosets": 2412,
+        "updates": 1972,
+        "hit_rate_including_warm_source": 0.2358012170385395
+      },
+      "diagnostic": {
+        "cf_gradient_trace_sample_variance": 1298531857183935.5,
+        "paths": 512,
+        "seconds": 0.21949840000070253,
+        "strategy_digest": "a6223d3166bb483dc510f5dc4a77c5b7600ba9bdeb5961ac5ed848a0778ca641"
+      },
+      "migrated_infosets": 905,
+      "name": "orbit-zero",
+      "new_iterations": 480,
+      "policy_digest": "14d255b91b69b1dfb3316a4bbd75d7e729e5d811a4042fb1d322ae06811a0670",
+      "source_infosets": 1022,
+      "suits": true,
+      "training_seconds": 2.0751167280004665
+    },
+    {
+      "control": true,
+      "coverage": {
+        "distinct_updated_infosets": 1625,
+        "max_updates_per_infoset": 11,
+        "repeated_updates": 351,
+        "revisit_rate": 0.17763157894736842,
+        "root_updated_infosets": 145,
+        "total_infosets": 2408,
+        "updates": 1976,
+        "hit_rate_including_warm_source": 0.23937246963562753
+      },
+      "diagnostic": {
+        "cf_gradient_trace_sample_variance": 328290304064699.0,
+        "paths": 512,
+        "seconds": 0.18010739300007117,
+        "strategy_digest": "a6223d3166bb483dc510f5dc4a77c5b7600ba9bdeb5961ac5ed848a0778ca641"
+      },
+      "migrated_infosets": 905,
+      "name": "orbit-cv",
+      "new_iterations": 480,
+      "policy_digest": "388645679e0eefb63272d379555b15c3233341dfbda4969d9175c65c572dc8e1",
+      "source_infosets": 1022,
+      "suits": true,
+      "training_seconds": 2.026211270999738
+    }
+  ],
+  "expanded_learning": false,
+  "full_br_upper_bb": null,
+  "gates": {
+    "orbit_cv_variance_ratio": 0.2528165190930676,
+    "raw_cv_variance_ratio": 1.228562445243788
+  },
+  "nashconv_bb": null,
+  "source_digest": "ce05c2ab1846b1de3426db3daa88bc8e4d7600aa75365dfe86592e4896881609",
+  "status": "BLOCKED_UNVERIFIED",
+  "promotion_gate": "FAIL_NO_ROBUST_VARIANCE_OR_EV_BR_IMPROVEMENT"
+}

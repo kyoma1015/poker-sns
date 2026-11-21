@@ -1,0 +1,11 @@
+{
+  "utc": "2026-11-08T17:20:47Z",
+  "plan_sha256": "4df1909b003ba31f9b7c772b8c098cbbc8d5cbe6cf125b6e02819290da196e6b",
+  "prior_partial_hashes": {
+    "cfr_plus-epoch3.json": "de15569b2a3e53f53df048d33059d3f143ea441b991c2c8b12ccfed0a9ce09c2",
+    "dcfr-epoch3.json": "3aa826db4f70278eae7ec31e34a876e45a4ac7d607f07776e2150dd701c67220",
+    "vanilla_linear-epoch3.json": "a75b5067855295505e6e2f26fff076a5403cd0b42735c2833382f5e932a361b5"
+  },
+  "extra_measurement_seconds": 1800,
+  "extra_training_epochs": 0
+}

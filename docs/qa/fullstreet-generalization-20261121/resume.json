@@ -1,0 +1,64 @@
+{
+  "automatic_resume": false,
+  "original_bytes_unchanged": true,
+  "rows": [
+    {
+      "automatic_resume": false,
+      "bit_exact": true,
+      "checkpoint_sha256": "22463dc4a4291fe16f61a0b217ddf4d1b3eeb6f5d6d1393886994296d0480ac5",
+      "seconds": 2.8597692829999914,
+      "seed": 17120101,
+      "states": [
+        {
+          "A": "ce97be75529ed0d500c2d1987f0cd7dd578f55ae78d13967d728e2daacb7ed70",
+          "R": "0aafe88de188cced12f35f04994cf065ec4073b8bc0e5ca4d763399d7c61005e",
+          "draw": [
+            3,
+            1
+          ],
+          "t": 145,
+          "visits": "840e59123f12db1938b970893b783fdeb62ad0409ad0b48db60d193f7889b362"
+        },
+        {
+          "A": "ce97be75529ed0d500c2d1987f0cd7dd578f55ae78d13967d728e2daacb7ed70",
+          "R": "0aafe88de188cced12f35f04994cf065ec4073b8bc0e5ca4d763399d7c61005e",
+          "draw": [
+            3,
+            1
+          ],
+          "t": 145,
+          "visits": "840e59123f12db1938b970893b783fdeb62ad0409ad0b48db60d193f7889b362"
+        }
+      ]
+    },
+    {
+      "automatic_resume": false,
+      "bit_exact": true,
+      "checkpoint_sha256": "71f06b5c521fb2681b4c193dd1ad72d240b5102a00a5074fb2fb2b9e089d98ae",
+      "seconds": 2.730694218999929,
+      "seed": 17120102,
+      "states": [
+        {
+          "A": "f38f35f7077274c147b74f657c66f4e14fe0c06862ce23c9c8d07d8b054df38a",
+          "R": "ca46cfbb10865ee92accbaaa4bb3e49321847db3ebfe1b5569b539d4f813015d",
+          "draw": [
+            2,
+            5
+          ],
+          "t": 145,
+          "visits": "5f316f776883eda5009644a6702d75a3c669f610db539676e3a788dc4c956507"
+        },
+        {
+          "A": "f38f35f7077274c147b74f657c66f4e14fe0c06862ce23c9c8d07d8b054df38a",
+          "R": "ca46cfbb10865ee92accbaaa4bb3e49321847db3ebfe1b5569b539d4f813015d",
+          "draw": [
+            2,
+            5
+          ],
+          "t": 145,
+          "visits": "5f316f776883eda5009644a6702d75a3c669f610db539676e3a788dc4c956507"
+        }
+      ]
+    }
+  ]
+}

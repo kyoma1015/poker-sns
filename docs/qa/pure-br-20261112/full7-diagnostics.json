@@ -1,0 +1,5197 @@
+{
+  "attributed_gains_bb": [
+    2.038932150808111,
+    1.0747456318471118
+  ],
+  "baseline_sb_ev_bb": -0.10930047334555032,
+  "complete": true,
+  "diagnostic_scope": "Target-profile root improvement,all signed terms;equal-gain private-feature aliases listed explicitly. Root BR attribution uses BR ownreach;single-info changes use BASELINE ownreach and differ. Off-path completion can shift attribution between earlier/later nodes without changing rootNC. Not fullNLHE or a new equilibrium.",
+  "external_GTO": "NOT PERFORMED",
+  "formal_acceptance": [
+    0,
+    12
+  ],
+  "independent_br_gains_bb": [
+    2.038932150810659,
+    1.0747456318474349
+  ],
+  "independent_br_values_bb": [
+    1.9296316774651086,
+    1.1840461051929851
+  ],
+  "max_agreement_error_bb": 2.547295707699959e-12,
+  "meta": {
+    "cursor": 1755,
+    "extract_started": 1794498605.7778547,
+    "identity": "60ce4b43a964a87c6430a80d4767b0b2d777c4456f3682ca5bbb5d8a17317bd0",
+    "max_native_error": 5.77121683775772e-13,
+    "phase": "verify",
+    "verify_started": 1794500214.8582098
+  },
+  "nashconv_bb": 3.113677782658094,
+  "negative_information_sets": [
+    {
+      "action_index": 1,
+      "flop": null,
+      "gain_bb": -0.024725460986815585,
+      "hand": "KQo",
+      "legal_action": "call",
+      "node": 112,
+      "own_preflop_class": "KQo",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021532540681525967,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.013339169217848426,
+      "hand": "75o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "75o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004529480953942594,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.012258621497495658,
+      "hand": "K7o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "K7o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0045063381897526246,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.012136293283139126,
+      "hand": "J3o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "J3o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004538203649450628,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.01187943300475133,
+      "hand": "J6o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "J6o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0045298723455100345,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.011824445281516468,
+      "hand": "Q8o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "Q8o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004515678652454166,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.011774556021580104,
+      "hand": "Q7o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "Q7o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004520813205742033,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.01164876647403997,
+      "hand": "K8o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "K8o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0045012355757819,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.011610778791087734,
+      "hand": "Q6o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "Q6o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004523332330760158,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.011563882100009535,
+      "hand": "Q5o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "Q5o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004525930805557448,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.011509266075150628,
+      "hand": "Q4o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "Q4o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004529941428199041,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.011466714596375311,
+      "hand": "Q3o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "Q3o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004531028693852368,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.01139920168688247,
+      "hand": "T2o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "T2o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004537716618134557,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.011365861011693594,
+      "hand": "85o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "85o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004524694327663771,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.011342724885651778,
+      "hand": "K5o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "K5o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004512091140971297,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.011279293444929353,
+      "hand": "93o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "93o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004536355095782914,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.011269563589222736,
+      "hand": "Q2o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "Q2o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004529066438151125,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.011254261597727905,
+      "hand": "J2o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "J2o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004536230823165739,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.011224044368942072,
+      "hand": "T3o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "T3o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004539693006693718,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.011174939673457722,
+      "hand": "K4o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "K4o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004515536022732633,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.011155088394999318,
+      "hand": "K3o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "K3o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004516554403343224,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.011088288565674533,
+      "hand": "K2o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "K2o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0045145865177150446,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.011073540670270492,
+      "hand": "94o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "94o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004535262273035789,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.010927946994014956,
+      "hand": "84o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "84o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004528331770429362,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.010886080110120499,
+      "hand": "95o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "95o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004531230541291192,
+      "seat": "SB"
+    },
+    {
+      "action_index": 1,
+      "flop": null,
+      "gain_bb": -0.01056467015286103,
+      "hand": "88",
+      "legal_action": "call",
+      "node": 112,
+      "own_preflop_class": "88",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0010862644442441592,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.010427086842265823,
+      "hand": "J8o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "J8o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004522752651169804,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.010349241839985557,
+      "hand": "Q4o",
+      "legal_action": "raise_to_18",
+      "node": 150,
+      "own_preflop_class": "Q4o",
+      "owner": 1,
+      "preflop_history": [
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.003492167573277799,
+      "seat": "BB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.010205385365354808,
+      "hand": "T8o",
+      "legal_action": "raise_to_18",
+      "node": 150,
+      "own_preflop_class": "T8o",
+      "owner": 1,
+      "preflop_history": [
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.003478107873011121,
+      "seat": "BB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.010203982733722885,
+      "hand": "Q5o",
+      "legal_action": "raise_to_18",
+      "node": 150,
+      "own_preflop_class": "Q5o",
+      "owner": 1,
+      "preflop_history": [
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0034808995014032357,
+      "seat": "BB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.01010839351116674,
+      "hand": "Q7o",
+      "legal_action": "raise_to_18",
+      "node": 150,
+      "own_preflop_class": "Q7o",
+      "owner": 1,
+      "preflop_history": [
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.003455383110126946,
+      "seat": "BB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.01004537017134411,
+      "hand": "J6o",
+      "legal_action": "raise_to_18",
+      "node": 150,
+      "own_preflop_class": "J6o",
+      "owner": 1,
+      "preflop_history": [
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.003494187498080612,
+      "seat": "BB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.00990573060613242,
+      "hand": "Q6o",
+      "legal_action": "raise_to_18",
+      "node": 150,
+      "own_preflop_class": "Q6o",
+      "owner": 1,
+      "preflop_history": [
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.003464585858174756,
+      "seat": "BB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.009888473291628473,
+      "hand": "T4o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "T4o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004538597244248271,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.009886521326516105,
+      "hand": "T7o",
+      "legal_action": "raise_to_18",
+      "node": 150,
+      "own_preflop_class": "T7o",
+      "owner": 1,
+      "preflop_history": [
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0034818346166152953,
+      "seat": "BB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.009861629038588013,
+      "hand": "J7o",
+      "legal_action": "raise_to_18",
+      "node": 150,
+      "own_preflop_class": "J7o",
+      "owner": 1,
+      "preflop_history": [
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.003485130782595486,
+      "seat": "BB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.009818481327999918,
+      "hand": "J4o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "J4o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004537109480954546,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.00979874690552554,
+      "hand": "87o",
+      "legal_action": "raise_to_18",
+      "node": 150,
+      "own_preflop_class": "87o",
+      "owner": 1,
+      "preflop_history": [
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.003497008211541169,
+      "seat": "BB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.009707280500250059,
+      "hand": "K2o",
+      "legal_action": "raise_to_18",
+      "node": 150,
+      "own_preflop_class": "K2o",
+      "owner": 1,
+      "preflop_history": [
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.003489903529945436,
+      "seat": "BB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.00964581291442705,
+      "hand": "97o",
+      "legal_action": "raise_to_18",
+      "node": 150,
+      "own_preflop_class": "97o",
+      "owner": 1,
+      "preflop_history": [
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.003485341668429625,
+      "seat": "BB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.009550958015839137,
+      "hand": "T5o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "T5o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004534599302426965,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.009539296858132611,
+      "hand": "K3o",
+      "legal_action": "raise_to_18",
+      "node": 150,
+      "own_preflop_class": "K3o",
+      "owner": 1,
+      "preflop_history": [
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.00348089093271556,
+      "seat": "BB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.009501773877205216,
+      "hand": "K9o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "K9o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004507978086096091,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.009461982546613772,
+      "hand": "T9o",
+      "legal_action": "raise_to_18",
+      "node": 150,
+      "own_preflop_class": "T9o",
+      "owner": 1,
+      "preflop_history": [
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0034671276773420023,
+      "seat": "BB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.00944255216951406,
+      "hand": "98o",
+      "legal_action": "raise_to_18",
+      "node": 150,
+      "own_preflop_class": "98o",
+      "owner": 1,
+      "preflop_history": [
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.003482590455468604,
+      "seat": "BB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.009400592492735785,
+      "hand": "J7o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "J7o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.00452780325870889,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.009322160171956423,
+      "hand": "76o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "76o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004526726953807374,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.009208319898655157,
+      "hand": "T6o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "T6o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.004531322270526914,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.009091514244846213,
+      "hand": "K6o",
+      "legal_action": "raise_to_18",
+      "node": 30,
+      "own_preflop_class": "K6o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0045088611984006426,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.00906652987312657,
+      "hand": "K4o",
+      "legal_action": "raise_to_18",
+      "node": 150,
+      "own_preflop_class": "K4o",
+      "owner": 1,
+      "preflop_history": [
+        "raise_to_5"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0034595380578138035,
+      "seat": "BB"
+    }
+  ],
+  "normal_GTO_added": 0,
+  "oracle_br_values_bb": [
+    1.9296316774651083,
+    1.1840461051929847
+  ],
+  "pass_tolerance": true,
+  "population_orbits": 1755,
+  "real_game_error": "UNKNOWN",
+  "realized_br_gains_bb": [
+    2.038932150810658,
+    1.0747456318474335
+  ],
+  "representation": "PURE_POLICY_ONLY_NOT_CFR_HISTORY",
+  "signed_phase_contributions": [
+    {
+      "negative_bb": -0.06850567033129487,
+      "net_gain_bb": 2.051919847922753,
+      "owner": 0,
+      "positive_bb": 2.120425518254048,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "street": "preflop"
+    },
+    {
+      "negative_bb": -0.6557102288993162,
+      "net_gain_bb": -0.5645423828016677,
+      "owner": 0,
+      "positive_bb": 0.09116784609764841,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "street": "preflop"
+    },
+    {
+      "negative_bb": -0.002756765141808312,
+      "net_gain_bb": 0.4311047960555166,
+      "owner": 1,
+      "positive_bb": 0.433861561197325,
+      "preflop_history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "street": "flop"
+    },
+    {
+      "negative_bb": -0.004116033212556886,
+      "net_gain_bb": 0.31958605371000504,
+      "owner": 1,
+      "positive_bb": 0.3237020869225621,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "call"
+      ],
+      "street": "flop"
+    },
+    {
+      "negative_bb": -0.0005434564507898686,
+      "net_gain_bb": 0.30685402015966257,
+      "owner": 1,
+      "positive_bb": 0.30739747661045247,
+      "preflop_history": [
+        "raise_to_5",
+        "raise_to_18",
+        "call"
+      ],
+      "street": "flop"
+    },
+    {
+      "negative_bb": -0.35792836632123837,
+      "net_gain_bb": -0.2796860988856445,
+      "owner": 1,
+      "positive_bb": 0.07824226743559376,
+      "preflop_history": [
+        "raise_to_5"
+      ],
+      "street": "preflop"
+    },
+    {
+      "negative_bb": -0.008479076198204245,
+      "net_gain_bb": 0.14758800209050552,
+      "owner": 1,
+      "positive_bb": 0.1560670782887098,
+      "preflop_history": [
+        "raise_to_5",
+        "call"
+      ],
+      "street": "flop"
+    },
+    {
+      "negative_bb": -0.0007206850206738601,
+      "net_gain_bb": 0.14148059986129422,
+      "owner": 0,
+      "positive_bb": 0.142201284881968,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "call"
+      ],
+      "street": "flop"
+    },
+    {
+      "negative_bb": -0.0009318975791026024,
+      "net_gain_bb": 0.11978340516904393,
+      "owner": 0,
+      "positive_bb": 0.12071530274814651,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "street": "flop"
+    },
+    {
+      "negative_bb": -0.0010291548427695286,
+      "net_gain_bb": 0.11456818059966332,
+      "owner": 0,
+      "positive_bb": 0.11559733544243285,
+      "preflop_history": [
+        "call",
+        "check"
+      ],
+      "street": "flop"
+    },
+    {
+      "negative_bb": -0.0006521407695262754,
+      "net_gain_bb": 0.06943654542957874,
+      "owner": 1,
+      "positive_bb": 0.07008868619910501,
+      "preflop_history": [
+        "call"
+      ],
+      "street": "preflop"
+    },
+    {
+      "negative_bb": -0.1260786500086075,
+      "net_gain_bb": 0.060535058342627485,
+      "owner": 0,
+      "positive_bb": 0.18661370835123484,
+      "preflop_history": [],
+      "street": "preflop"
+    },
+    {
+      "negative_bb": -3.0781274410851155e-06,
+      "net_gain_bb": 0.05925358878697776,
+      "owner": 1,
+      "positive_bb": 0.059256666914418846,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "call"
+      ],
+      "street": "flop"
+    },
+    {
+      "negative_bb": 0.0,
+      "net_gain_bb": 0.04057388352968552,
+      "owner": 0,
+      "positive_bb": 0.04057388352968552,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "call"
+      ],
+      "street": "flop"
+    },
+    {
+      "negative_bb": 0.0,
+      "net_gain_bb": 0.03681961270064491,
+      "owner": 0,
+      "positive_bb": 0.03681961270064491,
+      "preflop_history": [
+        "raise_to_5",
+        "raise_to_18",
+        "call"
+      ],
+      "street": "flop"
+    },
+    {
+      "negative_bb": 0.0,
+      "net_gain_bb": 0.028874582346559124,
+      "owner": 0,
+      "positive_bb": 0.028874582346559124,
+      "preflop_history": [
+        "raise_to_5",
+        "raise_to_18"
+      ],
+      "street": "preflop"
+    },
+    {
+      "negative_bb": -0.05023920639961784,
+      "net_gain_bb": 0.011095987381938566,
+      "owner": 1,
+      "positive_bb": 0.061335193781556406,
+      "preflop_history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "street": "preflop"
+    },
+    {
+      "negative_bb": -0.034347763736339604,
+      "net_gain_bb": 0.009512737118893177,
+      "owner": 1,
+      "positive_bb": 0.04386050085523279,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18"
+      ],
+      "street": "preflop"
+    },
+    {
+      "negative_bb": -3.859550433447627e-05,
+      "net_gain_bb": 0.00891936314005492,
+      "owner": 0,
+      "positive_bb": 0.008957958644389396,
+      "preflop_history": [
+        "raise_to_5",
+        "call"
+      ],
+      "street": "flop"
+    },
+    {
+      "negative_bb": 0.0,
+      "net_gain_bb": 0.0,
+      "owner": 1,
+      "positive_bb": 0.0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "raise_to_100"
+      ],
+      "street": "preflop"
+    },
+    {
+      "negative_bb": 0.0,
+      "net_gain_bb": 0.0,
+      "owner": 0,
+      "positive_bb": 0.0,
+      "preflop_history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "raise_to_100"
+      ],
+      "street": "preflop"
+    },
+    {
+      "negative_bb": 0.0,
+      "net_gain_bb": 0.0,
+      "owner": 1,
+      "positive_bb": 0.0,
+      "preflop_history": [
+        "call",
+        "check"
+      ],
+      "street": "flop"
+    },
+    {
+      "negative_bb": 0.0,
+      "net_gain_bb": 0.0,
+      "owner": 1,
+      "positive_bb": 0.0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "street": "flop"
+    },
+    {
+      "negative_bb": 0.0,
+      "net_gain_bb": 0.0,
+      "owner": 0,
+      "positive_bb": 0.0,
+      "preflop_history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "street": "flop"
+    }
+  ],
+  "target_profile": "actual_full7",
+  "top_drivers": [
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.00018507651349325383,
+      "hand": "A9o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.0396268750375049,
+      "root_reach": 0.0021454155917386684,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.00341845370231075,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.00019752791805976357,
+      "hand": "A8o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.03742814393402464,
+      "root_reach": 0.002145434427595816,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.003445970314000136,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.00019116241631549356,
+      "hand": "A7o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.03692127875714478,
+      "root_reach": 0.00214404140861103,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0032918957779113243,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.00013486577020476394,
+      "hand": "K9o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.03559532500822794,
+      "root_reach": 0.002153605376243187,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0022290949752817994,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.0002377492518715811,
+      "hand": "A6o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.035441127181577325,
+      "root_reach": 0.002142024564434826,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.003933709077294731,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 1.8940771883995538e-05,
+      "hand": "K8o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.034849267083514386,
+      "root_reach": 0.0021539606971769155,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.00030644571139037155,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 4.699875436417269e-05,
+      "hand": "K7o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.03420560382719731,
+      "root_reach": 0.0021524300652681623,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0007468864136834871,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.0002527582424894129,
+      "hand": "A5o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.033240879523561334,
+      "root_reach": 0.0021400379921441403,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.003926054732682415,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 1.5804526027983013e-05,
+      "hand": "Q8o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.03279891332103831,
+      "root_reach": 0.002169465964212063,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.00023893957675440104,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.0001701237012798024,
+      "hand": "K6o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.032728582638011,
+      "root_reach": 0.002150446666753021,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0025891865639371303,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.000197452287997058,
+      "hand": "ATo",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.03269052600828143,
+      "root_reach": 0.0021452837958084504,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.003008841612831929,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.00024775031345959853,
+      "hand": "A4o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.03251112102117009,
+      "root_reach": 0.002138732838616593,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0037660806803377347,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 6.466084106697417e-05,
+      "hand": "K5o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.031875478060508576,
+      "root_reach": 0.0021484516611604875,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0009593398157680985,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.00023555985126949298,
+      "hand": "A3o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.031593998198780705,
+      "root_reach": 0.002139269173519409,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0034788878411545487,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.00014232530502709522,
+      "hand": "Q9o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.03153472032232824,
+      "root_reach": 0.0021692384143530124,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0020690158624902155,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 4.150426178638722e-05,
+      "hand": "Q7o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.030772447840252293,
+      "root_reach": 0.00216809872476747,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.000589081906824495,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.00015205116448536267,
+      "hand": "T9o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.030751600457752992,
+      "root_reach": 0.0021696511216758767,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.002155100703830333,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.00012236093738367964,
+      "hand": "J8o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.03041202483293332,
+      "root_reach": 0.002166505719300009,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0017176247600656166,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 6.940218835184884e-05,
+      "hand": "K4o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.030127721336355693,
+      "root_reach": 0.00214719248961675,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.000973797086618434,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 4.59736454686827e-05,
+      "hand": "Q6o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.029929197342240157,
+      "root_reach": 0.0021661126600902207,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0006352182567074234,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.00022348268038087038,
+      "hand": "A2o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.029791903224701755,
+      "root_reach": 0.0021369841639392647,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.003115593694447738,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.00014774244954970624,
+      "hand": "J9o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.029598367085649505,
+      "root_reach": 0.0021663237082276293,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.00201859733118231,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.00011657168373764778,
+      "hand": "J7o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.02919642730310265,
+      "root_reach": 0.0021651497511925785,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0015719359309774531,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 4.5593673967512606e-05,
+      "hand": "Q5o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.02869390817851397,
+      "root_reach": 0.002164159877431253,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0006045120362816023,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.00018419456207011345,
+      "hand": "T8o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.028621234270233616,
+      "root_reach": 0.002170179627427488,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0024292347258650844,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 7.222195499764922e-05,
+      "hand": "K3o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.028146281375156682,
+      "root_reach": 0.0021474813337551283,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0009465877234300239,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.00018756132925689146,
+      "hand": "98o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.027534870803005568,
+      "root_reach": 0.002169977689774756,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0023799677725094806,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.00020443212286027298,
+      "hand": "T7o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.02703669134642588,
+      "root_reach": 0.002168956113460177,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0025483079960756873,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 4.701840676466595e-05,
+      "hand": "Q4o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.026993801013926406,
+      "root_reach": 0.0021628657214864044,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0005868166033557539,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 2.8157254987567914e-05,
+      "hand": "J6o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.026929679356888173,
+      "root_reach": 0.002163276591835075,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.00035051728995140594,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 7.819776479897301e-05,
+      "hand": "K2o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.026508227385959576,
+      "root_reach": 0.0021451900646607975,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.000966293926357864,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.00020783972654287182,
+      "hand": "J5o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.02589926876446494,
+      "root_reach": 0.0021612820115373167,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0024906036828751875,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.00017402248917424375,
+      "hand": "97o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.025825271078260117,
+      "root_reach": 0.0021687096333551444,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.00207228200931889,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.00020599851175719886,
+      "hand": "T6o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.02550964503702365,
+      "root_reach": 0.002166986019782798,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0024250036064413566,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 5.557073305723362e-05,
+      "hand": "Q3o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.0250415715591209,
+      "root_reach": 0.0021631715025139725,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0006433047434418725,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.0001866302322568789,
+      "hand": "87o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.024712955436798596,
+      "root_reach": 0.0021687694702402587,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0021266366371399895,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.00018687975737424886,
+      "hand": "QTo",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.024438590226093355,
+      "root_reach": 0.0021689071648043363,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.002105704608354238,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.00016500664812304884,
+      "hand": "J4o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.024246154843971746,
+      "root_reach": 0.002159935568803222,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0018522667057577805,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.0002443038633030654,
+      "hand": "KJo",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.02419345890689831,
+      "root_reach": 0.002149691384135792,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0027494902390351,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_100",
+      "baseline_root_reach": 0.00016867333015535611,
+      "hand": "JTo",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": 0.023927388456545212,
+      "root_reach": 0.002166195280488848,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": 0.0018631340993299174,
+      "street": "preflop"
+    }
+  ],
+  "top_information_sets": [
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.0396268750375049,
+      "hand": "A9o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "A9o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021454155917386684,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.03742814393402464,
+      "hand": "A8o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "A8o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.002145434427595816,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.03692127875714478,
+      "hand": "A7o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "A7o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.00214404140861103,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.03559532500822794,
+      "hand": "K9o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "K9o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.002153605376243187,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.035441127181577325,
+      "hand": "A6o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "A6o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.002142024564434826,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.034849267083514386,
+      "hand": "K8o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "K8o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021539606971769155,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.03420560382719731,
+      "hand": "K7o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "K7o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021524300652681623,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.033240879523561334,
+      "hand": "A5o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "A5o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021400379921441403,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.03279891332103831,
+      "hand": "Q8o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "Q8o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.002169465964212063,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.032728582638011,
+      "hand": "K6o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "K6o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.002150446666753021,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.03269052600828143,
+      "hand": "ATo",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "ATo",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021452837958084504,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.03251112102117009,
+      "hand": "A4o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "A4o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.002138732838616593,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.031875478060508576,
+      "hand": "K5o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "K5o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021484516611604875,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.031593998198780705,
+      "hand": "A3o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "A3o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.002139269173519409,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.03153472032232824,
+      "hand": "Q9o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "Q9o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021692384143530124,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.030772447840252293,
+      "hand": "Q7o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "Q7o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.00216809872476747,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.030751600457752992,
+      "hand": "T9o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "T9o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021696511216758767,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.03041202483293332,
+      "hand": "J8o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "J8o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.002166505719300009,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.030127721336355693,
+      "hand": "K4o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "K4o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.00214719248961675,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.029929197342240157,
+      "hand": "Q6o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "Q6o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021661126600902207,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.029791903224701755,
+      "hand": "A2o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "A2o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021369841639392647,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.029598367085649505,
+      "hand": "J9o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "J9o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021663237082276293,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.02919642730310265,
+      "hand": "J7o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "J7o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021651497511925785,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.02869390817851397,
+      "hand": "Q5o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "Q5o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.002164159877431253,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.028621234270233616,
+      "hand": "T8o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "T8o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.002170179627427488,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.028146281375156682,
+      "hand": "K3o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "K3o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021474813337551283,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.027534870803005568,
+      "hand": "98o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "98o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.002169977689774756,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.02703669134642588,
+      "hand": "T7o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "T7o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.002168956113460177,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.026993801013926406,
+      "hand": "Q4o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "Q4o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021628657214864044,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.026929679356888173,
+      "hand": "J6o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "J6o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.002163276591835075,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.026508227385959576,
+      "hand": "K2o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "K2o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021451900646607975,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.02589926876446494,
+      "hand": "J5o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "J5o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021612820115373167,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.025825271078260117,
+      "hand": "97o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "97o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021687096333551444,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.02550964503702365,
+      "hand": "T6o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "T6o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.002166986019782798,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.0250415715591209,
+      "hand": "Q3o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "Q3o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021631715025139725,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.024712955436798596,
+      "hand": "87o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "87o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021687694702402587,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.024438590226093355,
+      "hand": "QTo",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "QTo",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021689071648043363,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.024246154843971746,
+      "hand": "J4o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "J4o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.002159935568803222,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.02419345890689831,
+      "hand": "KJo",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "KJo",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.002149691384135792,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.023927388456545212,
+      "hand": "JTo",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "JTo",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.002166195280488848,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.023436419345166094,
+      "hand": "Q2o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "Q2o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021608404863856017,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.022922932023178536,
+      "hand": "96o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "96o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021668423836155087,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.022633001448768293,
+      "hand": "T5o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "T5o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021649779797031496,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.022283627090910113,
+      "hand": "J3o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "J3o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.002160241174307817,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.022281056404272855,
+      "hand": "86o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "86o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.002166796766905688,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.021853675577215206,
+      "hand": "76o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "76o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021652776058861904,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.021827531284198624,
+      "hand": "QJo",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "QJo",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.002165238140695803,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.02134202866962564,
+      "hand": "T4o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "T4o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021636587601809635,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.02074977268957417,
+      "hand": "J2o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "J2o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.0021579278534300467,
+      "seat": "SB"
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": 0.02056827351976147,
+      "hand": "95o",
+      "legal_action": "raise_to_100",
+      "node": 112,
+      "own_preflop_class": "95o",
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 0.002164855089318123,
+      "seat": "SB"
+    }
+  ],
+  "top_negative_drivers": [
+    {
+      "action": "call",
+      "baseline_root_reach": 0.00019604601690319966,
+      "hand": "KQo",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": -0.024725460986815585,
+      "root_reach": 0.0021532540681525967,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": -0.0022511640471295892,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "baseline_root_reach": 0.0018937005139726493,
+      "hand": "75o",
+      "history": [
+        "call",
+        "raise_to_5"
+      ],
+      "node": 30,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": -0.013339169217848426,
+      "root_reach": 0.004529480953942594,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": -0.005576884384913975,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "baseline_root_reach": 0.002043838656746935,
+      "hand": "K7o",
+      "history": [
+        "call",
+        "raise_to_5"
+      ],
+      "node": 30,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": -0.012258621497495658,
+      "root_reach": 0.0045063381897526246,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": -0.005559867777341852,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "baseline_root_reach": 0.000788572169400397,
+      "hand": "J3o",
+      "history": [
+        "call",
+        "raise_to_5"
+      ],
+      "node": 30,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": -0.012136293283139126,
+      "root_reach": 0.004538203649450628,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": -0.002108839501709674,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "baseline_root_reach": 0.001996308584265,
+      "hand": "J6o",
+      "history": [
+        "call",
+        "raise_to_5"
+      ],
+      "node": 30,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": -0.01187943300475133,
+      "root_reach": 0.0045298723455100345,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": -0.005235249975000318,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "baseline_root_reach": 0.00196472891390371,
+      "hand": "Q8o",
+      "history": [
+        "call",
+        "raise_to_5"
+      ],
+      "node": 30,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": -0.011824445281516468,
+      "root_reach": 0.004515678652454166,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": -0.005144703891372283,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "baseline_root_reach": 0.0020280671135420106,
+      "hand": "Q7o",
+      "history": [
+        "call",
+        "raise_to_5"
+      ],
+      "node": 30,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": -0.011774556021580104,
+      "root_reach": 0.004520813205742033,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": -0.0052821447728905084,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "baseline_root_reach": 0.0019744292282148066,
+      "hand": "K8o",
+      "history": [
+        "call",
+        "raise_to_5"
+      ],
+      "node": 30,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": -0.01164876647403997,
+      "root_reach": 0.0045012355757819,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": -0.005109633702074798,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "baseline_root_reach": 0.0020387711038943493,
+      "hand": "Q6o",
+      "history": [
+        "call",
+        "raise_to_5"
+      ],
+      "node": 30,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": -0.011610778791087734,
+      "root_reach": 0.004523332330760158,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": -0.005233248092784052,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "baseline_root_reach": 0.002038948807610646,
+      "hand": "Q5o",
+      "history": [
+        "call",
+        "raise_to_5"
+      ],
+      "node": 30,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": -0.011563882100009535,
+      "root_reach": 0.004525930805557448,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": -0.005209572269689277,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "baseline_root_reach": 0.002043707725019185,
+      "hand": "Q4o",
+      "history": [
+        "call",
+        "raise_to_5"
+      ],
+      "node": 30,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": -0.011509266075150628,
+      "root_reach": 0.004529941428199041,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": -0.005192468017503263,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "baseline_root_reach": 0.0020510425608309614,
+      "hand": "Q3o",
+      "history": [
+        "call",
+        "raise_to_5"
+      ],
+      "node": 30,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": -0.011466714596375311,
+      "root_reach": 0.004531028693852368,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": -0.00519059164246239,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "baseline_root_reach": 0.0016024928706486472,
+      "hand": "T2o",
+      "history": [
+        "call",
+        "raise_to_5"
+      ],
+      "node": 30,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": -0.01139920168688247,
+      "root_reach": 0.004537716618134557,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": -0.0040256236718953075,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "baseline_root_reach": 0.001679816939117502,
+      "hand": "85o",
+      "history": [
+        "call",
+        "raise_to_5"
+      ],
+      "node": 30,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": -0.011365861011693594,
+      "root_reach": 0.004524694327663771,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": -0.004219636614647541,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "baseline_root_reach": 0.0020778310962954365,
+      "hand": "K5o",
+      "history": [
+        "call",
+        "raise_to_5"
+      ],
+      "node": 30,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": -0.011342724885651778,
+      "root_reach": 0.004512091140971297,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": -0.005223357806344739,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "baseline_root_reach": 0.0016027390011701408,
+      "hand": "93o",
+      "history": [
+        "call",
+        "raise_to_5"
+      ],
+      "node": 30,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": -0.011279293444929353,
+      "root_reach": 0.004536355095782914,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": -0.003985085631113057,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "baseline_root_reach": 0.001988337185715825,
+      "hand": "Q2o",
+      "history": [
+        "call",
+        "raise_to_5"
+      ],
+      "node": 30,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": -0.011269563589222736,
+      "root_reach": 0.004529066438151125,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": -0.004947530061048967,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "baseline_root_reach": 0.0019248022281809114,
+      "hand": "J2o",
+      "history": [
+        "call",
+        "raise_to_5"
+      ],
+      "node": 30,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": -0.011254261597727905,
+      "root_reach": 0.004536230823165739,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": -0.004775380408160079,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "baseline_root_reach": 0.0016811732365899213,
+      "hand": "T3o",
+      "history": [
+        "call",
+        "raise_to_5"
+      ],
+      "node": 30,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": -0.011224044368942072,
+      "root_reach": 0.004539693006693718,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": -0.004156572475614607,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "baseline_root_reach": 0.0020851539676285157,
+      "hand": "K4o",
+      "history": [
+        "call",
+        "raise_to_5"
+      ],
+      "node": 30,
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5"
+      ],
+      "preflop_leaf": null,
+      "root_gain_bb": -0.011174939673457722,
+      "root_reach": 0.004515536022732633,
+      "seat": "SB",
+      "single_info_deviation_gain_bb": -0.005160288763241557,
+      "street": "preflop"
+    }
+  ],
+  "top_post_information_sets": [
+    {
+      "action_index": 1,
+      "flop": [
+        30,
+        44,
+        49
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 8.209057064841683e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.3795542227209e-09,
+          "signal": 220,
+          "single_info_deviation_gain_bb": 8.514650843351765e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.3300415421263704e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        28,
+        41,
+        50
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 7.065912771595103e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.2326269928463849e-09,
+          "signal": 220,
+          "single_info_deviation_gain_bb": 7.328951384366158e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.1883875816048119e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        24,
+        45,
+        51
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 6.85765679686971e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.1585522950363338e-09,
+          "signal": 220,
+          "single_info_deviation_gain_bb": 7.112942785958052e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.1169714504479596e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        20,
+        45,
+        50
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 6.673817508909505e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.1534908148981444e-09,
+          "signal": 220,
+          "single_info_deviation_gain_bb": 6.922259820069602e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.1120916285913296e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        16,
+        45,
+        50
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 6.558180274467868e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.0811951403186558e-09,
+          "signal": 220,
+          "single_info_deviation_gain_bb": 6.802317825759645e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.042390670902896e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        28,
+        37,
+        50
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 6.351761386288204e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.6925088137695e-09,
+          "signal": 216,
+          "single_info_deviation_gain_bb": 6.588214702046422e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.631764084117399e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        20,
+        41,
+        50
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 6.194609756943283e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.0841405204133382e-09,
+          "signal": 220,
+          "single_info_deviation_gain_bb": 6.425212880671992e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.0452303402821491e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        0,
+        41,
+        50
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 6.037456925128571e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.05701008520631e-09,
+          "signal": 220,
+          "single_info_deviation_gain_bb": 6.262209812064128e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.0190736258253983e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        17,
+        40,
+        51
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 6.021247832584409e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.007314596159964e-09,
+          "signal": 220,
+          "single_info_deviation_gain_bb": 6.245397313087574e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 9.711617251553669e-07,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        1,
+        38,
+        48
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 6.0198178972767144e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.9737667305399066e-09,
+          "signal": 216,
+          "single_info_deviation_gain_bb": 6.243914146412349e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.9029275564880267e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        1,
+        46,
+        48
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 6.015283383992124e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.0414613886634612e-09,
+          "signal": 220,
+          "single_info_deviation_gain_bb": 6.239210829446971e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.00408297740629e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        27,
+        42,
+        49
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.9580560323644344e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.0390370306022704e-09,
+          "signal": 220,
+          "single_info_deviation_gain_bb": 6.179853108584436e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.0017456303986362e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        7,
+        38,
+        49
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.9324486161237776e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.8252959680303489e-09,
+          "signal": 216,
+          "single_info_deviation_gain_bb": 6.153292419997753e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.7597854612542384e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        36,
+        45,
+        50
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.903013950418611e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.0481933540481552e-09,
+          "signal": 220,
+          "single_info_deviation_gain_bb": 6.122762007163413e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.0105733302132568e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        17,
+        30,
+        48
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.768003610678678e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.7359006641919772e-09,
+          "signal": 216,
+          "single_info_deviation_gain_bb": 5.982725716265731e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.6735985859449538e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        23,
+        30,
+        48
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.753033682928191e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.756517090782965e-09,
+          "signal": 216,
+          "single_info_deviation_gain_bb": 5.967198511747748e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.6934750818192012e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        22,
+        39,
+        49
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.673338163977786e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.6072581063570963e-09,
+          "signal": 216,
+          "single_info_deviation_gain_bb": 5.884536214204625e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.5495730542276685e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        34,
+        43,
+        48
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.610920313475868e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.0191437343852706e-09,
+          "signal": 220,
+          "single_info_deviation_gain_bb": 5.8197947707942047e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 9.8256631149789e-07,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        40,
+        46,
+        51
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.605133207793825e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 9.249962882830821e-10,
+          "signal": 220,
+          "single_info_deviation_gain_bb": 5.813792231904907e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 8.917978499625093e-07,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        12,
+        29,
+        50
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.559885344231164e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.7160371275080988e-09,
+          "signal": 216,
+          "single_info_deviation_gain_bb": 5.766859952521233e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.6544479584973408e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        4,
+        41,
+        50
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.559109021749471e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 9.658439898498823e-10,
+          "signal": 220,
+          "single_info_deviation_gain_bb": 5.76605473033539e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 9.311795133211781e-07,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        5,
+        44,
+        51
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.523972673032865e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 9.483700527493357e-10,
+          "signal": 220,
+          "single_info_deviation_gain_bb": 5.729610381262282e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 9.143327218972123e-07,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        0,
+        33,
+        50
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.5025980072962385e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.9889940387016465e-09,
+          "signal": 216,
+          "single_info_deviation_gain_bb": 5.707440013313422e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.9176083512667412e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        16,
+        37,
+        50
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.494544258572423e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.659102658293883e-09,
+          "signal": 216,
+          "single_info_deviation_gain_bb": 5.699086452384107e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.5995568871739758e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        8,
+        31,
+        49
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.44805983020904e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.652014895809515e-09,
+          "signal": 216,
+          "single_info_deviation_gain_bb": 5.650871575323237e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.5927235069489195e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        3,
+        17,
+        50
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.444479478346988e-05,
+      "hand": "QQ",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.95822746347231e-09,
+          "signal": 228,
+          "single_info_deviation_gain_bb": 1.1370568087522381e-07
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 9.37642618798441e-07,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        3,
+        17,
+        50
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.421625288676367e-05,
+      "hand": "KK",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 3.3030710679789958e-09,
+          "signal": 116,
+          "single_info_deviation_gain_bb": 1.91368143583676e-07
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 9.357886478435673e-07,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        20,
+        33,
+        50
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.416419055345514e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.7730189252039064e-09,
+          "signal": 216,
+          "single_info_deviation_gain_bb": 5.6180529277918575e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.7093846596666412e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        6,
+        31,
+        48
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.401894559449701e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.6502471750537493e-09,
+          "signal": 216,
+          "single_info_deviation_gain_bb": 5.602987736960354e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.591019230305548e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        4,
+        33,
+        50
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.383825656372883e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.8309330239881444e-09,
+          "signal": 216,
+          "single_info_deviation_gain_bb": 5.5842461933693864e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.7652202013142352e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        0,
+        22,
+        51
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.38006868379223e-05,
+      "hand": "QQ",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.941646406956426e-09,
+          "signal": 228,
+          "single_info_deviation_gain_bb": 1.1236048832197966e-07
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 9.297032422224275e-07,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        32,
+        45,
+        51
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.379390712194544e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 9.799115058537738e-10,
+          "signal": 220,
+          "single_info_deviation_gain_bb": 5.579646152111294e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 9.447421412857395e-07,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        1,
+        38,
+        48
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.356019336529519e-05,
+      "hand": "QQ",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.9912530239912022e-09,
+          "signal": 228,
+          "single_info_deviation_gain_bb": 1.1185822774482317e-07
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 9.534559875872291e-07,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        0,
+        22,
+        51
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.3515990108275795e-05,
+      "hand": "KK",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 3.2729626387780594e-09,
+          "signal": 116,
+          "single_info_deviation_gain_bb": 1.8889641267634343e-07
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 9.272586690236211e-07,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        0,
+        33,
+        50
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.332037870520136e-05,
+      "hand": "QQ",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 2.006777737204704e-09,
+          "signal": 228,
+          "single_info_deviation_gain_bb": 1.113573848393025e-07
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 9.608895636273644e-07,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        20,
+        25,
+        50
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.3319655208242895e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.7209216783550247e-09,
+          "signal": 216,
+          "single_info_deviation_gain_bb": 5.530455490807899e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.6591572011164721e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        1,
+        38,
+        48
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.319439538912516e-05,
+      "hand": "KK",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 3.3555954901306063e-09,
+          "signal": 116,
+          "single_info_deviation_gain_bb": 1.877612736522816e-07
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 9.506692716546965e-07,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        1,
+        31,
+        50
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.297625032647271e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.7252318207566005e-09,
+          "signal": 216,
+          "single_info_deviation_gain_bb": 5.4948366293104126e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.6633126510090248e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        31,
+        32,
+        50
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.297055536425456e-05,
+      "hand": "KQo",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 1.7886188441070566e-09,
+          "signal": 216,
+          "single_info_deviation_gain_bb": 5.49424593278497e-08
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 1.7244246920577348e-06,
+      "seat": "SB",
+      "unique_signal_identified": true
+    },
+    {
+      "action_index": 1,
+      "flop": [
+        0,
+        33,
+        50
+      ],
+      "flop_history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "gain_bb": 5.2886679863580656e-05,
+      "hand": "KK",
+      "initial_flop_pot_bb": 42,
+      "initial_flop_spr": 0.6904761904761905,
+      "legal_action": {
+        "kind": "call"
+      },
+      "node": 144,
+      "own_private_signal_candidates": [
+        {
+          "baseline_root_reach": 3.380976698577326e-09,
+          "signal": 116,
+          "single_info_deviation_gain_bb": 1.8667512428304505e-07
+        }
+      ],
+      "owner": 0,
+      "preflop_history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "call"
+      ],
+      "preflop_history_amount_unit": "chips;2chips=1BB",
+      "reach": 9.57859987883374e-07,
+      "seat": "SB",
+      "unique_signal_identified": true
+    }
+  ]
+}

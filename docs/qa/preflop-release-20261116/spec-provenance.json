@@ -1,0 +1,95 @@
+{
+  "head": "25142ce7a17f6713787c5e8365ec50073f8ef23b",
+  "reachable_commits": 248,
+  "scope": "current locally reachable target-branch Git history; not proof about unavailable external archives/remotes",
+  "original_roadmap_commit": "d03148b835efb8960e8fd443b78ae981c3ebbd8d",
+  "sources": [
+    {
+      "path": "docs/Poker_ID_全実装予定_完全引継ぎ_20261017.txt",
+      "line": 241,
+      "text": "O06 ★【中・新規確定】NLHプリフロップGTOオープンレンジ表を実装。RFI（自分まで全員フォールド）に限定して開始。MTTとキャッシュ、候補6/8/9MAX、MTT 10/15/20/25/30/40BB・キャッシュ100BB、ポジション、BBアンティ、レーキ前提、オープンサイズ等の条件を明示し、169ハンドマトリクスにフォールド／レイズ／オールイン頻度とサイズを表示。まず6MAXキャッシュ100BBの1設定でデータ取得・商用利用権限・精度を検証する。未検証・未対応条件のGTO解を捏造しない。SNS基盤完成後の中優先度。G章に関連。"
+    },
+    {
+      "path": "docs/Poker_ID_全実装予定_完全引継ぎ_20261017.txt",
+      "line": 263,
+      "text": "Q05 【GTO別プロジェクト進行中・2026-10-13】独自無料GTOソルバーはOpenSpielベースでG5→G6→G7へ検証・高速化・メモリ制御を進めている。目標仕様は2〜9人、20スタック、キャッシュ7レーキ、BBアンティ、MTT chipEV、指定サイズ、RFI〜VS5BET、169ハンド。G7報告では数時間連続運転や9人木の完全列挙・均衡収束は未実証。SNSのO06（RFIレンジ表）と関連するが、ソルバーの研究成果を完成済みGTO表・クイズとして扱わない。G7報告書と成果物を次チャットで別途確認する。"
+    }
+  ],
+  "matching_history_commits": [
+    "d03148b835efb8960e8fd443b78ae981c3ebbd8d Save updated Poker ID master roadmap with timeline poll request",
+    "57d6e1e5e38b694860b402eaa82f441178701f88 feat(gto): reconstruct pinned native builds and verify checkpoint integrity",
+    "370375ba622f036b2223b9e2a1b794ba9e0c368c feat(gto): verify native hand169 context output and exact river oracle boundaries",
+    "9214f73a0315b6c9860f713861a027e60b9dde72 ci(gto): resume three native variants and preserve interrupted reach evidence",
+    "1100e9740e529bcfab9125eb703a08f11ca4d493 feat(gto): evaluate bounded conditional card belief with immutable policy rows",
+    "a9e62b37d65d6f8e9883bdf74709fa5167172b1b feat(gto): compare bounded action values at a common hero information set",
+    "fa5e7553acf50241214a5a975f6b90d951c94bbb Add bounded provenance-checked GTO report consumer and offline coverage viewer",
+    "9427f6bf3c57c9f90a64c8c4ca31762489a83360 feat(gto): query native four-bet decisions and evaluate bounded policy EV",
+    "8916b7e9ed3383cdcbeae778b807a150eb8fe94b feat(gto): sample conditional belief EV through four-bet responses",
+    "4f26d53a2f93e328bfcf30a5c2390e4d94a4ff89 feat(gto): bind sampled preflop EV reports to frozen policy and configuration",
+    "6888cd5ee41d3ee407bd80b8b810259ba2063aef feat(gto): integrate multiway joint support history reach and policy EV",
+    "0aa2b6c38279950b1727691831daad982bad12a3 feat(gto): connect verified-only preflop range search and uncertainty-safe UI",
+    "c7283d5fff73cafea8dbfefe4a05a91fc2f6ff76 fix(gto): preserve native rake caps in initial reach verification",
+    "53864b708ef0aad5eca651b99aaf242e276607a6 feat(gto): evaluate complete native one-blind game and global strategy bounds",
+    "69364245f8dd5e6d1f343f54609bbef556ee34bc feat(gto): publish reproducible full-game one-BB reference range",
+    "e88cb23f30f6069bc86482b1e4b5791ca3e5cb18 feat(gto): ordinary HU50BB study and full-continuation response bounds",
+    "7aefafa97a7440b5a0bf03ea7662e622fd853156 Pin observed partial-policy evidence and require exact independent-build replay",
+    "11921e1217abd480b7b11dff98692dd543916bd8 Refine frozen HU50BB EVs with exact runouts and global response bounds",
+    "e50a570dcb78e102b179052755f327ecdc2fc23e Report locked factorial gains, stage regressions and certified own-information floor diagnostics",
+    "e7f6bba782cb91a3ea8726bd063798484564c2a3 Report bounded response criteria success and failed zero-shot utility transfer with measured costs",
+    "75f4e46dbbf534fce609ab26f371fbf03501f07c Report omitted-action gap, independent EV errors and sparse true-chance coverage without GTO claims",
+    "4e59ac2a092d06f923e4c070b8e41b7c45d7f9c8 Preregister new-only coverage, minimal response checkpoints and conservative preflop BR bounds",
+    "85f68ed1885e49740ec00419f11e9132f34fb2fa Report new coverage and bounded preflop responses with source-matched MVP acceptance path",
+    "541fb6ecb9aa1417ad420e3f26bba0a53de1b5dd Preregister integrated full-support preflop learning, evaluation and guarded UI delivery",
+    "81b795d1420adfac2ccfd075d1c681aea9ec1931 Implement full-support continuation oracle and independent coherent preflop training with heldout bounds",
+    "f02ead430630e438fcfdb04159e65edce1f8a57d Preserve independent HU50 preflop results and connect guarded research search with CI replay",
+    "79769ee25b4644e76dad9dddffb6aeb514da4f0f Preregister and implement suit-orbit exact continuation integration with independent private BR",
+    "94231187fcc6e455b6f68004a16fc56e0c88a0d5 Freeze same-policy precision comparison and finite-population research UI guardrails",
+    "8087b6ab6ecbcced84c233fb166f847526a72ce7 Deliver enumerated HU50 preflop EVs and guarded ranges with same-policy BR evidence",
+    "2b957d1a3b2e756fb88a6dae7a076ef371fb46e3 Connect research-only continuation precision diagnostics and complete audit CI/mobile paths",
+    "f7b9e54ffbdc1dde4a8fecec6018dc8d78e45b52 Publish full-population continuation deviation evidence and guarded mobile diagnostics",
+    "c1855e86128eeaf5a7446c699dce91d4dd4836ea Verify joint reach on exact private chance and preserve failed convergence criterion",
+    "1653de4612c89af9116fc2e9e9eef0b9203616ea Implement resumable full-population joint CFR and chance-integrated independent BR",
+    "c03400f2c147e69e3dfada55daaa7b54e1102252 Publish full-population joint evidence and guarded preflop research exports",
+    "239f2d40ab59ea34c63089af38b236260f545796 Audit counterfactual updates independently and compare bounded CFR schedules",
+    "85929ad1d0922dc8f7bc8d0da8baf1f28efe768f Preserve negative full-population CFR comparisons and harden evidence admission",
+    "8c9d2387158603b04b75071d1e69052f64ffb3f3 Validate genuine CFR history and full-population alternating owner sweeps",
+    "45dce3692ca85282f19e514448e842c9357f6776 Publish complete inherited-history BR results and full exact-kernel qualification",
+    "92ef2880e694172fcbb3d16261ed8cd5586c12d4 Integrate switchable exact vector training with genuine-state overlays and parity gates",
+    "aae7e745e026be542bff3c37aab2832171351552 Verify full-population vector training parity and record 2.15x measured loop speedup",
+    "d0dd15fe20ea361e11e913beb471ea911b2d3e65 Publish independent training BR parity and preserve history in delayed-output research interface",
+    "2d946fb9c2930a25660c89d9c370bc504f88117b Preserve failed full-population averaging outcomes and disclose unsupported research rows",
+    "9a92f42d0653b9bdeaa79b6cc1ec58315e608658 Extract legal pure best responses with shared preflop information and independent realization checks",
+    "e3151279355336ab5768e5c5c57602278f0b2ba4 Verify realized frozen pure BR gains and retain failed matched-history candidate gates",
+    "73f17fa13d0b7d611e228af7009aaf198d25ef89 Qualify full-population learned-policy pure responses and diagnose limped four-bet weaknesses",
+    "8c8d66d52dd5f93873e7e93fc704c953e7f3c955 Recover PR120 evidence and reject incomplete verified range arrays",
+    "0194511eb8cf972d2411c9332aba715ee042c4e4 Audit actual-action CFR histories and bind preflop search to explicit public actions"
+  ],
+  "formal_stack_values": null,
+  "formal_sizing_by_stack_position_stage": null,
+  "historical_candidates_only": {
+    "mtt_stack_bb": [
+      10,
+      15,
+      20,
+      25,
+      30,
+      40
+    ],
+    "cash_stack_bb": [
+      100
+    ],
+    "status": "O06 candidates, not recovered formal20-profile registry"
+  },
+  "rejected_substitutions": [
+    "synthetic smoke20 equal-stack2..40BB",
+    "research HU50 sizes2.5/9/21/50"
+  ],
+  "missing_values": [
+    "complete20 stack values and per-format/seat equal-or-unequal assignment",
+    "RFI open and versus-open3bet (and4bet) size sets per stack/position/history; raise-to semantics and all-in inclusion"
+  ],
+  "formal_acceptance": [
+    0,
+    12
+  ]
+}

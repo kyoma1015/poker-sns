@@ -1,0 +1,14 @@
+{
+  "baseline_digest": "4c3f13ed152dbe8c539c4f409a00e8cefab5dd333f4332ec928e5feebbaacc69",
+  "compare_all_variants": true,
+  "external_gto": "NOT PERFORMED",
+  "metrics": [
+    "same-policy preflopNashConv beforeMCinterval vs exactguard interval",
+    "same-policy rootSB EV beforeMC vs exactguard",
+    "independent Python vs native privateBR",
+    "relearned exacttensor profile vs sampled profile;not external GTO"
+  ],
+  "real_game_approximation": "UNKNOWN",
+  "retune": false,
+  "scope": "READONLY same fixed continuation models and same older sampled policies;separate integration uncertainty from subsequent learning"
+}

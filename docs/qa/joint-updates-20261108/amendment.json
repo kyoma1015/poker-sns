@@ -1,0 +1,8 @@
+{
+  "registered_utc": "2026-11-08T15:11:20Z",
+  "original_protocol_sha256": "c5eec793850abc0fdd3ba3b4e88ff08a57b88c511cb3e5a533e9c322a6d2d2f7",
+  "amendment_sha256": "1efc4ab884439765cf67920107956cdcf0a769732abae2c13bea61c0c43c099f",
+  "new_max_epoch": 3,
+  "time_budget_change": false,
+  "outcome_files_at_registration": []
+}

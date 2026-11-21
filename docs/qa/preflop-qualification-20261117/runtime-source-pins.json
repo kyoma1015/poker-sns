@@ -1,0 +1,16 @@
+{
+  "scope": "unchanged existing runtime dependencies at fixed measurement; additional to policy identity and original receipt pins",
+  "sha256": {
+    "gto/abstract/model.py": "bb879efc21c82af9c650ef4ef67337fcae772c9eebef44dd8eeeec106a3b2fd4",
+    "gto/abstract/street_tree.py": "c27f253585e3694cabf533b324df84afebc4ab929b633e3580590af0f4c2a38f",
+    "gto/abstract/fullsupport.py": "055a3b6bcdaab64d32c17c6747e2a6316bdbab123facebb454d10ada7ce959cb",
+    "gto/abstract/factorial_transfer.py": "4811c5c7c065a20eda2be8c3c110ac1613a93ee2de50c1e4abcc9d1fd3c387c2",
+    "gto/abstract/continuation_learning.py": "586ae8153f447af36876cb85d9559828baff59c4bccea3bbcccdd808e40da914",
+    "gto/abstract/flop_conditional.py": "2f0177b57b2f9a9ffa77a94b25185e115cb7b5a2647cb621224b88819dcb047a",
+    "gto/hand169.py": "11f19f9d6486f1368474b3a512128a07035ad4731ac8df116c74ad5569463ae0",
+    "gto/native/hand169_bridge.py": "69e666bafc8fb56ee6c5bedea3b4fc471bacd9e18ed37a9b70f6a1adaa0fb5b6",
+    "gto/native/training.py": "dd671e2ff5c817c8ae31cc07618159ead9d97cc9b6323fd8f71d1c920e73e50a",
+    "gto/native/build_reconstructed.py": "bf4abe824c275e56b9ac37aec6b4ef135c482b1b3a450cea7814362b8193b68d",
+    "handoff/gto/compressed/pokerid_rules.py.zlib.b64": "99d4034970b3fb125e6c6ed376d20ff67937d9d2c64a4efe4adf926d2fcf2b9c"
+  }
+}

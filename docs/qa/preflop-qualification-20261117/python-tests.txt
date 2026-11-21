@@ -1,0 +1,15 @@
+test_all_legal_sizes_and_fold_refund (gto.qualification.test_qualification.IndependentNativeReplay.test_all_legal_sizes_and_fold_refund) ... ok
+test_every_flop_teacher_is_seat_oriented (gto.qualification.test_qualification.IndependentNativeReplay.test_every_flop_teacher_is_seat_oriented) ... ok
+test_independent_real_paths_both_contexts_and_arms (gto.qualification.test_qualification.IndependentNativeReplay.test_independent_real_paths_both_contexts_and_arms) ... ok
+test_own_public_only_policy_interface (gto.qualification.test_qualification.IndependentNativeReplay.test_own_public_only_policy_interface) ... ok
+test_short_one_chip_allin_has_unambiguous_id (gto.qualification.test_qualification.IndependentNativeReplay.test_short_one_chip_allin_has_unambiguous_id) ... ok
+test_absence_of_exploit_does_not_certify (gto.qualification.test_qualification.StatisticsAndEvidence.test_absence_of_exploit_does_not_certify) ... ok
+test_conditional_posterior_is_not_uniform_or_unconditional (gto.qualification.test_qualification.StatisticsAndEvidence.test_conditional_posterior_is_not_uniform_or_unconditional) ... ok
+test_interval_covers_constant_and_is_bounded (gto.qualification.test_qualification.StatisticsAndEvidence.test_interval_covers_constant_and_is_bounded) ... ok
+test_missing_and_single_samples_are_unknown (gto.qualification.test_qualification.StatisticsAndEvidence.test_missing_and_single_samples_are_unknown) ... ok
+test_receipt_and_frozen_proposal (gto.qualification.test_qualification.StatisticsAndEvidence.test_receipt_and_frozen_proposal) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.516s
+
+OK

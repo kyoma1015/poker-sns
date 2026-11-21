@@ -1,0 +1,13 @@
+{
+  "method": "dcfr",
+  "policy_hash_before": "e6f71d4dcfa34c3835ffa01316d2d096d7586206a60099a0b802aa0efb0a4b8d",
+  "policy_hash_after": "e6f71d4dcfa34c3835ffa01316d2d096d7586206a60099a0b802aa0efb0a4b8d",
+  "policy_unchanged": true,
+  "additional_measurement_seconds": 397.9925708570008,
+  "additional_measurement_budget_seconds": 1800,
+  "coverage": 1.0,
+  "nc": [
+    3.726963290928028,
+    3.726963290928028
+  ]
+}

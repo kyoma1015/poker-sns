@@ -1,0 +1,26 @@
+{
+  "note": "Local commits froze protocol/code/validation before their respective computations. GitHub API creates public objects later with different timestamps/SHAs; this is a local ledger, not an external trusted timestamp.",
+  "phases": [
+    {
+      "local_commit_sha": "303ef81d5612a8ec3135f7bae59768957c4bac1c",
+      "local_committer_date": "2026-11-05T05:08:33Z",
+      "message": "Preregister full legal-response action trees and probability-stratified EV intervals",
+      "parent": "75f4e46dbbf534fce609ab26f371fbf03501f07c",
+      "tree": "74c6b874f5909481e6399749a4994a390a3de0fc"
+    },
+    {
+      "local_commit_sha": "b80110a6a9a39b59cf0fd4ea32e01d00092ba203",
+      "local_committer_date": "2026-11-05T05:22:46Z",
+      "message": "Implement behavioral street CFR, private-information best responses and true-chance EV intervals",
+      "parent": "303ef81d5612a8ec3135f7bae59768957c4bac1c",
+      "tree": "a1edb0c3ff1ab9bbee94989ea9ec9d25fe86f154"
+    },
+    {
+      "local_commit_sha": "98e0605a9457ae27d40c21eaec8477bb05d13885",
+      "local_committer_date": "2026-11-05T05:53:37Z",
+      "message": "Freeze validation-only 2048-sweep behavioral response selection before final boards",
+      "parent": "b80110a6a9a39b59cf0fd4ea32e01d00092ba203",
+      "tree": "c0dda94aafaaade38ce8088bbfef00b0c556713e"
+    }
+  ]
+}

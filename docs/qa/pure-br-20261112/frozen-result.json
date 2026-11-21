@@ -1,0 +1,1830 @@
+{
+  "attributed_gains_bb": [
+    0.49080281963033306,
+    0.44130433309166245
+  ],
+  "baseline_sb_ev_bb": 0.030880258444870145,
+  "complete": true,
+  "external_GTO": "NOT PERFORMED",
+  "formal_acceptance": [
+    0,
+    12
+  ],
+  "independent_br_gains_bb": [
+    0.49080281963036515,
+    0.44130433309171235
+  ],
+  "independent_br_values_bb": [
+    0.5216830780752353,
+    0.4104240746468422
+  ],
+  "max_agreement_error_bb": 4.934941344458821e-14,
+  "meta": {
+    "cursor": 1755,
+    "extract_started": 1794495435.4711092,
+    "identity": "f48904517509fcaec6023e1b658869801e7c681245a3d9d0ef80aa7a28b0d0eb",
+    "max_native_error": 1.968925023021484e-12,
+    "phase": "verify",
+    "verify_started": 1794497023.6681798
+  },
+  "nashconv_bb": 0.9321071527220774,
+  "negative_information_sets": [
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.00717586900743295,
+      "hand": "72o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004824264713297352
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.007170088549494957,
+      "hand": "Q7o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.0045990227724415165
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.006723320970308655,
+      "hand": "Q6o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004640664516082007
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.0066492953438032866,
+      "hand": "62o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004865906559738017
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.006572027660235929,
+      "hand": "Q5o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004692680120570664
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.00654399003180199,
+      "hand": "82o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004868250713046665
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.00652197288716339,
+      "hand": "Q4o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004715096380212828
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.006490500343335565,
+      "hand": "83o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004862866235515359
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.006403573098182258,
+      "hand": "32o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.00495545486135624
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.006301712188920709,
+      "hand": "73o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004818888630918138
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.006170515589178324,
+      "hand": "42o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004940345439240476
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.006084755044917299,
+      "hand": "92o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.0048533673731875355
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.005969578116475592,
+      "hand": "52o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004917928252468553
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.005946243204252175,
+      "hand": "K5o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004654465484554591
+    },
+    {
+      "action_index": 1,
+      "flop": null,
+      "gain_bb": -0.005897246737024396,
+      "hand": "AKo",
+      "node": 112,
+      "owner": 0,
+      "reach": 0.0005602848833305569
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.005866869786295862,
+      "hand": "K2o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004697385289632148
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.0058479552099658764,
+      "hand": "93o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004847980565218837
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.005802314779719042,
+      "hand": "94o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004832840354834055
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.005798018512627978,
+      "hand": "J8o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.0047730410444412775
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.005797136841308498,
+      "hand": "K4o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.0046768802600832314
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.005789144641569771,
+      "hand": "K3o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004691989762075274
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.005748480361949241,
+      "hand": "63o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004860532310313144
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.005634548786809569,
+      "hand": "83o",
+      "node": 30,
+      "owner": 0,
+      "reach": 0.0049353293247436664
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.005616008022000057,
+      "hand": "84o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.00484777336906121
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.005408265148916917,
+      "hand": "74o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004803795422339247
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.00540012726667411,
+      "hand": "T2o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004906198341189736
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.005283007340964891,
+      "hand": "92o",
+      "node": 30,
+      "owner": 0,
+      "reach": 0.004973322120958337
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.0052701878859302016,
+      "hand": "43o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004934964743409545
+    },
+    {
+      "action_index": 1,
+      "flop": null,
+      "gain_bb": -0.005171024155446633,
+      "hand": "63o",
+      "node": 191,
+      "owner": 0,
+      "reach": 0.0017677349590941047
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.00507497819141711,
+      "hand": "53o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004912555113507902
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.005060764497715821,
+      "hand": "82o",
+      "node": 30,
+      "owner": 0,
+      "reach": 0.004938207708752948
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.005050157252520608,
+      "hand": "J9o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004757834684880809
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.005040757177365891,
+      "hand": "93o",
+      "node": 30,
+      "owner": 0,
+      "reach": 0.004970410980808781
+    },
+    {
+      "action_index": 1,
+      "flop": null,
+      "gain_bb": -0.004808350859731428,
+      "hand": "32o",
+      "node": 0,
+      "owner": 0,
+      "reach": 0.009049773755655991
+    },
+    {
+      "action_index": 1,
+      "flop": null,
+      "gain_bb": -0.004719998377046868,
+      "hand": "84o",
+      "node": 191,
+      "owner": 0,
+      "reach": 0.0017524417361841505
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.004587189372695925,
+      "hand": "73o",
+      "node": 30,
+      "owner": 0,
+      "reach": 0.004961536575634529
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.00457401417551448,
+      "hand": "T3o",
+      "node": 30,
+      "owner": 0,
+      "reach": 0.0049967837788691336
+    },
+    {
+      "action_index": 1,
+      "flop": null,
+      "gain_bb": -0.004492916082377954,
+      "hand": "42o",
+      "node": 0,
+      "owner": 0,
+      "reach": 0.00904977375565601
+    },
+    {
+      "action_index": 1,
+      "flop": null,
+      "gain_bb": -0.004439816357657417,
+      "hand": "72o",
+      "node": 0,
+      "owner": 0,
+      "reach": 0.009049773755656014
+    },
+    {
+      "action_index": 1,
+      "flop": null,
+      "gain_bb": -0.004359164686118764,
+      "hand": "62o",
+      "node": 0,
+      "owner": 0,
+      "reach": 0.009049773755656009
+    },
+    {
+      "action_index": 1,
+      "flop": null,
+      "gain_bb": -0.004336531007792166,
+      "hand": "74o",
+      "node": 191,
+      "owner": 0,
+      "reach": 0.001789460775647624
+    },
+    {
+      "action_index": 1,
+      "flop": null,
+      "gain_bb": -0.004136942110534934,
+      "hand": "52o",
+      "node": 0,
+      "owner": 0,
+      "reach": 0.009049773755656009
+    },
+    {
+      "action_index": 1,
+      "flop": null,
+      "gain_bb": -0.00397218647910467,
+      "hand": "64o",
+      "node": 191,
+      "owner": 0,
+      "reach": 0.0017820836290611982
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.003970456477599518,
+      "hand": "94o",
+      "node": 0,
+      "owner": 0,
+      "reach": 0.009049773755655997
+    },
+    {
+      "action_index": 1,
+      "flop": null,
+      "gain_bb": -0.003793632427985207,
+      "hand": "54o",
+      "node": 191,
+      "owner": 0,
+      "reach": 0.0017702882769646817
+    },
+    {
+      "action_index": 1,
+      "flop": null,
+      "gain_bb": -0.003643442289788006,
+      "hand": "43o",
+      "node": 0,
+      "owner": 0,
+      "reach": 0.009049773755655952
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.00356237384766196,
+      "hand": "J7o",
+      "node": 150,
+      "owner": 1,
+      "reach": 0.004735767292124143
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.003502119379597489,
+      "hand": "K3o",
+      "node": 30,
+      "owner": 0,
+      "reach": 0.004890996805201274
+    },
+    {
+      "action_index": 2,
+      "flop": null,
+      "gain_bb": -0.0034528144489990287,
+      "hand": "72o",
+      "node": 30,
+      "owner": 0,
+      "reach": 0.004964401520632756
+    },
+    {
+      "action_index": 1,
+      "flop": null,
+      "gain_bb": -0.0032775887110382627,
+      "hand": "T5o",
+      "node": 191,
+      "owner": 0,
+      "reach": 0.0017385707316048902
+    }
+  ],
+  "normal_GTO_added": 0,
+  "oracle_br_values_bb": [
+    0.5216830780752353,
+    0.4104240746468417
+  ],
+  "pass_tolerance": true,
+  "population_orbits": 1755,
+  "real_game_error": "UNKNOWN",
+  "realized_br_gains_bb": [
+    0.4908028196303655,
+    0.4413043330917118
+  ],
+  "representation": "PURE_POLICY_ONLY_NOT_CFR_HISTORY",
+  "top_drivers": [
+    {
+      "action": "fold",
+      "hand": "Q4o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.005984429139691903,
+      "root_reach": 0.0005695520917498256,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "Q5o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.005851210451877375,
+      "root_reach": 0.000568814018632288,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "Q7o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.005806695931577733,
+      "root_reach": 0.0005608934908148688,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "Q6o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.005727684975552228,
+      "root_reach": 0.0005604372689449452,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "K2o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.005503723147379757,
+      "root_reach": 0.0005498846524657023,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "K3o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.005359052547099431,
+      "root_reach": 0.000549863619840352,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "K4o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.005237114177254707,
+      "root_reach": 0.0005498911102601339,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "J8o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.00518611098241591,
+      "root_reach": 0.0005986477580682818,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "K5o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.005183848869938206,
+      "root_reach": 0.0005491530388210493,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "J9o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.004745585084615916,
+      "root_reach": 0.0005857064499085122,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "72o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.00474012352104242,
+      "root_reach": 0.0006259622062696671,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "82o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.004602543781594041,
+      "root_reach": 0.000633557434572797,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "83o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.004561427533939463,
+      "root_reach": 0.0006335364038102229,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "92o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.004526180114217338,
+      "root_reach": 0.0006206161289798284,
+      "street": "preflop"
+    },
+    {
+      "action": {
+        "kind": "call"
+      },
+      "hand": "AKo",
+      "history": [
+        [
+          0,
+          3
+        ]
+      ],
+      "node": 144,
+      "owner": 0,
+      "preflop_leaf": 12,
+      "root_gain_bb": 0.004524126426967562,
+      "root_reach": 0.0003679991766773155,
+      "street": "flop"
+    },
+    {
+      "action": "fold",
+      "hand": "32o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.004461841142763251,
+      "root_reach": 0.0006345933310957811,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "62o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.004432581412465935,
+      "root_reach": 0.0006255059906100009,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "T2o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.004418981689943658,
+      "root_reach": 0.0006039169562000264,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "93o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.0043802079310074375,
+      "root_reach": 0.000620595098217255,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "72o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.004375478969015531,
+      "root_reach": 0.0007139876985380739,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "94o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.004345613852874023,
+      "root_reach": 0.0006206225873504409,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "42o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.004331120916646877,
+      "root_reach": 0.0006346208202289665,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "73o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.004300867142169615,
+      "root_reach": 0.0006259411755070911,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "82o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.004271251174780957,
+      "root_reach": 0.0007127489017990442,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "52o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.004195348120137607,
+      "root_reach": 0.00063388274275667,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "83o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.0041557719230906395,
+      "root_reach": 0.0007160776303206451,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "92o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.004140818106181855,
+      "root_reach": 0.0006969742315482704,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "84o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.004122558052547451,
+      "root_reach": 0.0006335638929434067,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "32o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.0041091802944823305,
+      "root_reach": 0.0007111950570227201,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "62o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.0040192410734200225,
+      "root_reach": 0.0007106155645461335,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "63o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.0039903329141329005,
+      "root_reach": 0.0006254849598474262,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "42o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.003976727918569862,
+      "root_reach": 0.0007107565151393474,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "93o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.003916979261607254,
+      "root_reach": 0.0007003029600698704,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "43o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.0038834942427339878,
+      "root_reach": 0.0006345997894663924,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "74o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.0038610982986418013,
+      "root_reach": 0.0006259686646402768,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "73o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.003829873818265641,
+      "root_reach": 0.0007173164270596768,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "52o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.0037956779761629316,
+      "root_reach": 0.0007077821477205697,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "53o",
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 232,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.0037562109794313098,
+      "root_reach": 0.0006338617119940944,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "T3o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.0037451050952556826,
+      "root_reach": 0.0006946473372588852,
+      "street": "preflop"
+    },
+    {
+      "action": "fold",
+      "hand": "43o",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_leaf": null,
+      "root_gain_bb": 0.003420952889211239,
+      "root_reach": 0.0007140852436609481,
+      "street": "preflop"
+    }
+  ],
+  "top_information_sets": [
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.005984429139691903,
+      "hand": "Q4o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0005695520917498256
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.005851210451877375,
+      "hand": "Q5o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.000568814018632288
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.005806695931577733,
+      "hand": "Q7o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0005608934908148688
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.005727684975552228,
+      "hand": "Q6o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0005604372689449452
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.005503723147379757,
+      "hand": "K2o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0005498846524657023
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.005359052547099431,
+      "hand": "K3o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.000549863619840352
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.005237114177254707,
+      "hand": "K4o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0005498911102601339
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.00518611098241591,
+      "hand": "J8o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0005986477580682818
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.005183848869938206,
+      "hand": "K5o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0005491530388210493
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.004745585084615916,
+      "hand": "J9o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0005857064499085122
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.00474012352104242,
+      "hand": "72o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0006259622062696671
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.004602543781594041,
+      "hand": "82o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.000633557434572797
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.004561427533939463,
+      "hand": "83o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0006335364038102229
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.004526180114217338,
+      "hand": "92o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0006206161289798284
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.004461841142763251,
+      "hand": "32o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0006345933310957811
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.004432581412465935,
+      "hand": "62o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0006255059906100009
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.004418981689943658,
+      "hand": "T2o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0006039169562000264
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.0043802079310074375,
+      "hand": "93o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.000620595098217255
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.004375478969015531,
+      "hand": "72o",
+      "node": 112,
+      "owner": 0,
+      "reach": 0.0007139876985380739
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.004345613852874023,
+      "hand": "94o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0006206225873504409
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.004331120916646877,
+      "hand": "42o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0006346208202289665
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.004300867142169615,
+      "hand": "73o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0006259411755070911
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.004271251174780957,
+      "hand": "82o",
+      "node": 112,
+      "owner": 0,
+      "reach": 0.0007127489017990442
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.004195348120137607,
+      "hand": "52o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.00063388274275667
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.0041557719230906395,
+      "hand": "83o",
+      "node": 112,
+      "owner": 0,
+      "reach": 0.0007160776303206451
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.004140818106181855,
+      "hand": "92o",
+      "node": 112,
+      "owner": 0,
+      "reach": 0.0006969742315482704
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.004122558052547451,
+      "hand": "84o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0006335638929434067
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.0041091802944823305,
+      "hand": "32o",
+      "node": 112,
+      "owner": 0,
+      "reach": 0.0007111950570227201
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.0040192410734200225,
+      "hand": "62o",
+      "node": 112,
+      "owner": 0,
+      "reach": 0.0007106155645461335
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.0039903329141329005,
+      "hand": "63o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0006254849598474262
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.003976727918569862,
+      "hand": "42o",
+      "node": 112,
+      "owner": 0,
+      "reach": 0.0007107565151393474
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.003916979261607254,
+      "hand": "93o",
+      "node": 112,
+      "owner": 0,
+      "reach": 0.0007003029600698704
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.0038834942427339878,
+      "hand": "43o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0006345997894663924
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.0038610982986418013,
+      "hand": "74o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0006259686646402768
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.003829873818265641,
+      "hand": "73o",
+      "node": 112,
+      "owner": 0,
+      "reach": 0.0007173164270596768
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.0037956779761629316,
+      "hand": "52o",
+      "node": 112,
+      "owner": 0,
+      "reach": 0.0007077821477205697
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.0037562109794313098,
+      "hand": "53o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0006338617119940944
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.0037451050952556826,
+      "hand": "T3o",
+      "node": 112,
+      "owner": 0,
+      "reach": 0.0006946473372588852
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.003420952889211239,
+      "hand": "43o",
+      "node": 112,
+      "owner": 0,
+      "reach": 0.0007140852436609481
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.0034200422035894217,
+      "hand": "K3o",
+      "node": 112,
+      "owner": 0,
+      "reach": 0.0006470865660277534
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.0032497288474774423,
+      "hand": "53o",
+      "node": 112,
+      "owner": 0,
+      "reach": 0.0007111108762421728
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.0031650876836358394,
+      "hand": "K2o",
+      "node": 112,
+      "owner": 0,
+      "reach": 0.000643757813884175
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.0027984316739893093,
+      "hand": "J7o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.000591052532533584
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.001488465560110806,
+      "hand": "J6s",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0001968654248363663
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.0014716586822807849,
+      "hand": "Q3s",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0001898415217001749
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.0014208820335526475,
+      "hand": "Q4s",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.00018985068479409063
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.0013781413830755657,
+      "hand": "Q5s",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.00018960465999455015
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.0013223740393994937,
+      "hand": "J7s",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.00019701749582995063
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.0013025510107438024,
+      "hand": "T8o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0006028604761554892
+    },
+    {
+      "action_index": 0,
+      "flop": null,
+      "gain_bb": 0.0012281321356973818,
+      "hand": "J4o",
+      "node": 232,
+      "owner": 1,
+      "reach": 0.0005997111596330269
+    }
+  ],
+  "top_negative_drivers": [
+    {
+      "action": "raise_to_18",
+      "hand": "72o",
+      "history": [
+        "raise_to_5"
+      ],
+      "node": 150,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": -0.00717586900743295,
+      "root_reach": 0.004824264713297352,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "hand": "Q7o",
+      "history": [
+        "raise_to_5"
+      ],
+      "node": 150,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": -0.007170088549494957,
+      "root_reach": 0.0045990227724415165,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "hand": "Q6o",
+      "history": [
+        "raise_to_5"
+      ],
+      "node": 150,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": -0.006723320970308655,
+      "root_reach": 0.004640664516082007,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "hand": "62o",
+      "history": [
+        "raise_to_5"
+      ],
+      "node": 150,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": -0.0066492953438032866,
+      "root_reach": 0.004865906559738017,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "hand": "Q5o",
+      "history": [
+        "raise_to_5"
+      ],
+      "node": 150,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": -0.006572027660235929,
+      "root_reach": 0.004692680120570664,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "hand": "82o",
+      "history": [
+        "raise_to_5"
+      ],
+      "node": 150,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": -0.00654399003180199,
+      "root_reach": 0.004868250713046665,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "hand": "Q4o",
+      "history": [
+        "raise_to_5"
+      ],
+      "node": 150,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": -0.00652197288716339,
+      "root_reach": 0.004715096380212828,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "hand": "83o",
+      "history": [
+        "raise_to_5"
+      ],
+      "node": 150,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": -0.006490500343335565,
+      "root_reach": 0.004862866235515359,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "hand": "32o",
+      "history": [
+        "raise_to_5"
+      ],
+      "node": 150,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": -0.006403573098182258,
+      "root_reach": 0.00495545486135624,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "hand": "73o",
+      "history": [
+        "raise_to_5"
+      ],
+      "node": 150,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": -0.006301712188920709,
+      "root_reach": 0.004818888630918138,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "hand": "42o",
+      "history": [
+        "raise_to_5"
+      ],
+      "node": 150,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": -0.006170515589178324,
+      "root_reach": 0.004940345439240476,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "hand": "92o",
+      "history": [
+        "raise_to_5"
+      ],
+      "node": 150,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": -0.006084755044917299,
+      "root_reach": 0.0048533673731875355,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "hand": "52o",
+      "history": [
+        "raise_to_5"
+      ],
+      "node": 150,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": -0.005969578116475592,
+      "root_reach": 0.004917928252468553,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "hand": "K5o",
+      "history": [
+        "raise_to_5"
+      ],
+      "node": 150,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": -0.005946243204252175,
+      "root_reach": 0.004654465484554591,
+      "street": "preflop"
+    },
+    {
+      "action": "call",
+      "hand": "AKo",
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "node": 112,
+      "owner": 0,
+      "preflop_leaf": null,
+      "root_gain_bb": -0.005897246737024396,
+      "root_reach": 0.0005602848833305569,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "hand": "K2o",
+      "history": [
+        "raise_to_5"
+      ],
+      "node": 150,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": -0.005866869786295862,
+      "root_reach": 0.004697385289632148,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "hand": "93o",
+      "history": [
+        "raise_to_5"
+      ],
+      "node": 150,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": -0.0058479552099658764,
+      "root_reach": 0.004847980565218837,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "hand": "94o",
+      "history": [
+        "raise_to_5"
+      ],
+      "node": 150,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": -0.005802314779719042,
+      "root_reach": 0.004832840354834055,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "hand": "J8o",
+      "history": [
+        "raise_to_5"
+      ],
+      "node": 150,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": -0.005798018512627978,
+      "root_reach": 0.0047730410444412775,
+      "street": "preflop"
+    },
+    {
+      "action": "raise_to_18",
+      "hand": "K4o",
+      "history": [
+        "raise_to_5"
+      ],
+      "node": 150,
+      "owner": 1,
+      "preflop_leaf": null,
+      "root_gain_bb": -0.005797136841308498,
+      "root_reach": 0.0046768802600832314,
+      "street": "preflop"
+    }
+  ]
+}

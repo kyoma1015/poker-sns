@@ -1,0 +1,13 @@
+{
+  "meta": {
+    "identity": "7a912250e9c1ae65a1a328ed32bd08a9ef029afc9a474c2e26920d35c5b4daf5",
+    "epoch": 4,
+    "cursor": 0,
+    "owner": 0,
+    "backend": "vector",
+    "parent_numeric_digest": "8f1341058c0290b1dfa8a55084a1964dced46a4bad678bdb70b8479070250c27",
+    "inherited_actual_epochs": 3
+  },
+  "logical_digest": "534ad38aff1690fbed687d0d797dd1bfb89293323a49f76a46cef72c28f68620",
+  "matches_measured_original_vector4": true
+}
