@@ -1,0 +1,44 @@
+{
+  "full_native_BR_upper": null,
+  "full_native_NashConv": null,
+  "rows": [
+    {
+      "EV_bb": [
+        -0.9501741298250921,
+        1.222263764425405,
+        -0.272089634600313
+      ],
+      "initial_sum_restricted_gains_bb": 7.243827160493828,
+      "iterations": 64,
+      "restricted_BR_bb": [
+        0.16232590201733255,
+        2.010580086160135,
+        0.0
+      ],
+      "scope": "same exact4world3playerfinitegame; independent privateplan pathBR",
+      "seconds": 1.1194578319991706,
+      "seed": 17124101,
+      "status": "COMPLETE",
+      "sum_restricted_gains_bb": 2.1729059881774675
+    },
+    {
+      "EV_bb": [
+        -0.564263635007757,
+        1.1410248502371325,
+        -0.5767612152293755
+      ],
+      "initial_sum_restricted_gains_bb": 7.243827160493828,
+      "iterations": 64,
+      "restricted_BR_bb": [
+        0.39800264958408804,
+        2.3764517055962684,
+        0.15646756009649687
+      ],
+      "scope": "same exact4world3playerfinitegame; independent privateplan pathBR",
+      "seconds": 1.0962776420019509,
+      "seed": 17124102,
+      "status": "COMPLETE",
+      "sum_restricted_gains_bb": 2.9309219152768535
+    }
+  ]
+}

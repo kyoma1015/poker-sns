@@ -1,0 +1,100 @@
+{
+  "identity": {
+    "all_native_actions": false,
+    "binary_sha256": "fd86b0db735f9de6eaeeb19afb487cbfea8039477c80b7ef76670482ae0da5c9",
+    "bootstrap": {
+      "checkpoint_sha256": "78414efcbcf16ac990c0191fb07a87e912d7f94d98b08cb2c6a27043a153501f",
+      "imported_preflop_rows": 1349,
+      "postflop_rows_not_imported": 52505,
+      "scope": "finitewarm; no inherited current visits, iteration or RNG",
+      "source_identity": {
+        "all_native_actions": false,
+        "binary_sha256": "f6257bdb849c3dfd6672081a9a90cd1e3591e63c57a9ce44ef59ee13a9209482",
+        "formal_profile": false,
+        "game": {
+          "bb": 2,
+          "bba": 0,
+          "rake": 0,
+          "stacks": [
+            100,
+            100
+          ]
+        },
+        "node_cap": 1000000,
+        "ordinary_registry_admission": false,
+        "origin": {
+          "parent_checkpoint_sha256": "3c5c9fffef4bd23855df44b12bbb0e5560d120c294ee26cc479eb6d635f4df6c",
+          "parent_iterations": 16,
+          "parent_policy_array_sha256": "9522992075e439896ddd78ea25919efe4e41ff21de5c9799a2ff493744376bcc",
+          "parent_seed": 17120101,
+          "warm": "matching preflop finite R/A; postflop average behavior; not new-game prefix history"
+        },
+        "prior_tables_digest": "ae340393590d527be4684ccc7f664a2ad80e9e01115146cb307eb3e28d972846",
+        "refined": true,
+        "rows": 400000,
+        "schema": "sparse-native-external-v1",
+        "seed": 18220101,
+        "sources": {
+          "gto/qualification/fullstreet_core.cc": "36c4359d39a49f8c764c1b49e9203ebf46287af1eedd0e0b79221e3851f25492",
+          "gto/qualification/sparse_native.cc": "3a81aa074f15cb25b2808e7b591333ad3374730362f4d17616fb7854a8c8920b",
+          "gto/qualification/sparse_solver.py": "ce1a3376bab042047e2451b95154fab98c6b64624d8d10bc436c0a2b2415562e",
+          "handoff/gto/g12_next/g11_native_state.h": "9eaee82e4a42aca63ea30f2f80dae31ec4b4e28d58b72e0da355a048e6ca6988"
+        }
+      },
+      "source_iterations": 64
+    },
+    "extra_support": [
+      {
+        "actions": [
+          18,
+          19
+        ],
+        "history": [],
+        "round": 0
+      }
+    ],
+    "formal_profile": false,
+    "game": {
+      "bb": 2,
+      "bba": 0,
+      "rake": 0,
+      "stacks": [
+        100,
+        100
+      ]
+    },
+    "node_cap": 1000000,
+    "ordinary_registry_admission": false,
+    "origin": {
+      "parent_checkpoint_sha256": "3c5c9fffef4bd23855df44b12bbb0e5560d120c294ee26cc479eb6d635f4df6c",
+      "parent_iterations": 16,
+      "parent_policy_array_sha256": "9522992075e439896ddd78ea25919efe4e41ff21de5c9799a2ff493744376bcc",
+      "parent_seed": 17120101,
+      "warm": "matching preflop finite R/A; postflop average behavior; not new-game prefix history"
+    },
+    "prior_tables_digest": "ae340393590d527be4684ccc7f664a2ad80e9e01115146cb307eb3e28d972846",
+    "refined": true,
+    "rows": 250000,
+    "schema": "sparse-native-external-v1",
+    "seed": 18620101,
+    "sharing": true,
+    "sources": {
+      "gto/qualification/fullstreet_core.cc": "36c4359d39a49f8c764c1b49e9203ebf46287af1eedd0e0b79221e3851f25492",
+      "gto/qualification/sparse_native.cc": "c95ec17b4f0a94f1b61b4428e6cf4dff9232fa5db3cf8f1d37d71635afcc72af",
+      "gto/qualification/sparse_solver.py": "4ca2201eb881d67f4fe5c4d75def8c1a6508881bef7c380852c75431fc7aaebb",
+      "handoff/gto/g12_next/g11_native_state.h": "9eaee82e4a42aca63ea30f2f80dae31ec4b4e28d58b72e0da355a048e6ca6988"
+    }
+  },
+  "iterations": 128,
+  "peak_RSS_bytes": 378281984,
+  "policy_digest": "ebd39e02cbe8470656882283287d6f6ee0a333b2446f813b7d0ab2a7b5917017",
+  "sha256": "b6f23b57f1003823de604f0a1b49ef05368455f00a5552cfed53ec9fc3f2e782",
+  "stats": {
+    "action_entries": 753791,
+    "average_visited": 120252,
+    "estimated_row_bytes": 66437116,
+    "iterations": 128,
+    "regret_visited": 23078,
+    "rows": 143788
+  }
+}

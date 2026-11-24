@@ -3,7 +3,7 @@
 Utilities remain N-dimensional, including rake. Restricted unilateral gains are
 NOT fullnative NashConv, and multiplayer CFR has no HU minimax guarantee.
 """
-import argparse,itertools,json,math,time
+import argparse,copy,itertools,json,math,random,time
 from pathlib import Path
 import numpy as np
 from gto.qualification.public_response import Observation,MissingResponse
@@ -15,6 +15,31 @@ from gto.qualification.evaluate import atomic
 def observation(s):
     a=s.audit();p=s.current_player()
     return Observation(p,tuple(sorted(a['holes'][p])),tuple(a['board']),a['round'],a['price'],a['last_full'],tuple(a['remaining']),tuple(a['street']),tuple(a['live']),tuple(a['dead']),tuple(a['folded']),tuple(tuple(h) for h in a['history']),tuple(s.legal_actions()))
+
+def scoped_actions(o,scope):
+    """Shared finite action law; legalofftree states never become implicitfold."""
+    legal=o.actions
+    if scope=='allin':return tuple(a for a in legal if a==0 or a==max(legal))
+    if scope!='preflop':raise ValueError('explicit multiplayer action scope')
+    if o.round>0:
+        if 1 not in legal:raise ValueError('explicit native check/call unavailable')
+        return (1,)
+    raises=sum(h[0]==0 and h[2] not in (0,1) for h in o.history)
+    targets=[a for a in legal if a not in (0,1)]
+    wanted=(6,20)[raises]+2 if raises<2 else (max(targets) if targets else None)
+    selected=wanted if wanted in targets else (max(targets) if targets else None)
+    return tuple(a for a in legal if a in (0,1) or a==selected)
+
+def clone_native(native,game,deck,state):
+    """Thinbinding-compatible clone; replaysactualpublichistory, no fakeboards."""
+    from gto.qualification.range_continuation import history_action
+    n=game.num_players();result=native.NativeState(game)
+    for c in deck[:2*n]:result.apply_action(c)
+    for entry in state.audit()['history']:
+        while result.is_chance_node() and not result.is_terminal():result.apply_action(deck[2*n+len(result.audit()['board'])])
+        result.apply_action(history_action(entry))
+    while result.is_chance_node() and not result.is_terminal():result.apply_action(deck[2*n+len(result.audit()['board'])])
+    return result
 
 class Joint:
     def __init__(self,native,game,decks,weights,max_nodes=10000,*,action_scope="allin",max_seconds=30):
@@ -47,16 +72,7 @@ class Joint:
                 self.nodes.append(dict(actor=-1,children=[],utility=np.array([s.returns() for s in states])/config['rules']['bb']));return k
             obs=[observation(s) for s in states];p=obs[0].actor;legal=obs[0].actions
             if any(o.actor!=p or o.actions!=legal or o.history!=obs[0].history for o in obs):raise ValueError('world public tree mismatch')
-            if action_scope=='allin':acts=tuple(a for a in legal if a==0 or a==max(legal))
-            elif obs[0].round>0:
-                if 1 not in legal:raise ValueError('explicit native check/call unavailable')
-                acts=(1,)
-            else:
-                raises=sum(h[0]==0 and h[2] not in (0,1) for h in obs[0].history)
-                targets=[a for a in legal if a not in (0,1)]
-                wanted=(6,20)[raises]+2 if raises<2 else (max(targets) if targets else None)
-                selected=wanted if wanted in targets else (max(targets) if targets else None)
-                acts=tuple(a for a in legal if a in (0,1) or a==selected)
+            acts=scoped_actions(obs[0],action_scope)
             keys=[o.key for o in obs]
             for key in keys:
                 if key in self.actions and self.actions[key]!=acts:raise ValueError('infoset legal actions changed')
@@ -243,6 +259,366 @@ def run_expanded(build,out):
             seconds=time.monotonic()-start,curve=curve,full_native_BR_upper=None,full_native_NashConv=None,
             scope=q.identity['action_scope'],continuation_error_upper=None,omitted_action_error_upper=None))
         atomic(out/'results.json',dict(records=records,seconds=time.monotonic()-began,verified_strategies=0,formal_acceptance=0))
+    return records
+
+def sparse_key(o):
+    """Exact global-suit orbit for preflop; real cards still drive chance/utility."""
+    if o.round:return o.key
+    from dataclasses import replace
+    low,high=sorted(c//4 for c in o.own);suited=o.own[0]%4==o.own[1]%4
+    canonical=(4*low,4*high+(0 if low!=high and suited else 1))
+    return replace(o,own=canonical).key
+
+class SparseJoint:
+    """SameN-owner CFR+ objective, sampled chance/opponents and sparseR/A.
+
+    Finitepreflop actions/explicit postflopcheckcall only. Not a fullnativeNE
+    certificate. Full-support opponentproposals also protect N-player averages.
+    """
+    def __init__(self,native,game,*,seed=17124101,decks=None,weights=None,epsilon=.2,
+                 action_scope='preflop',max_nodes=20000,max_seconds=2,max_infosets=8000,proposal='node',average_mode='sampled'):
+        config=checked_config(game)
+        if (average_mode not in ('sampled','lazy') or (average_mode=='lazy' and action_scope!='preflop') or proposal not in ('node','trajectory') or type(seed) is not int or type(epsilon) not in (int,float) or not 0<epsilon<=1
+                or action_scope not in ('allin','preflop') or type(max_nodes) is not int or not 1<=max_nodes<=100000
+                or type(max_seconds) not in (int,float) or not 0<max_seconds<=30
+                or type(max_infosets) is not int or not 1<=max_infosets<=100000):raise ValueError('finite sparse N-owner budgets/proposal')
+        if decks is None:
+            if weights is not None:raise ValueError('full52law has no finiteweights')
+            law=dict(kind='uniform52permutation-without-replacement')
+            self.decks=None;self.weights=None
+        else:
+            w=np.array(weights,dtype=float)
+            if (not decks or w.ndim!=1 or len(w)!=len(decks) or not np.all(np.isfinite(w))
+                    or np.any(w<=0) or abs(w.sum()-1)>1e-12
+                    or any(len(d)!=52 or any(type(c) is not int for c in d) or set(d)!=set(range(52)) for d in decks)):raise ValueError('normalized finite wholedecklaw')
+            self.decks=tuple(tuple(d) for d in decks);self.weights=w.copy()
+            law=dict(kind='explicitfiniteworlds',decks=[list(d) for d in decks],weights=w.tolist())
+        self.native,self.game,self.N=native,game,game.num_players();self.epsilon=float(epsilon);self.action_scope=action_scope;self.proposal=proposal;self.average_mode=average_mode;self.lazy_info={};self.behavior_history={}
+        self.max_nodes,self.max_seconds,self.max_infosets=max_nodes,max_seconds,max_infosets
+        self.rng=random.Random(seed);self.R={};self.A={};self.actions={};self.owners={};self.R_visits={};self.A_visits={};self.t=0;self.total_nodes=0
+        self.identity=dict(schema='native-sparse-N-owner-external-v2',config=config,chance=law,epsilon=self.epsilon,proposal=proposal,average_mode=average_mode,
+            action_scope=action_scope,seed=seed,schedule='onefrozenpi-for-allNowners/samechance/independentactionstreams',
+            average=('analytic chanceownmass*ownreach; retro pre-discovery, linear-time-weight' if average_mode=='lazy' else 'nonownerownreach/qprefix/(N-1),linear-time-weight'),source_sha256=sha(Path(__file__)),
+            native_binary_sha256=sha(Path(native.__file__)),formal_profile=False,ordinary_registry_admission=False)
+    def policy(self,average=True):
+        data=self.A if average else self.R
+        return {k:(v/v.sum() if v.sum()>0 else np.ones(len(v))/len(v)) for k,v in data.items()}
+    def _draw(self):
+        if self.decks is None:return self.rng.sample(range(52),52)
+        u=self.rng.random();total=0.
+        for d,w in zip(self.decks,self.weights):
+            total+=w
+            if u<total:return list(d)
+        return list(self.decks[-1])
+    def collect(self,owner,deck,stream,pi,*,audit=False,budget=None):
+        """Rawlinear estimators; audit enumeratesqchoices with their samplingmass."""
+        if type(owner) is not int or not 0<=owner<self.N:raise ValueError('updating owner')
+        if budget is None:budget=dict(nodes=0,start=time.monotonic())
+        grads={};avgs={};acts={};owners={};info={};maxavg=0.;maxscale=0.
+        def add(dst,k,v):
+            if k not in dst:dst[k]=np.zeros(len(v))
+            dst[k]+=v
+        def walk(state,logreach,logq,loguniform,eventmass,stream,memory):
+            nonlocal maxavg,maxscale
+            budget['nodes']+=1
+            if budget['nodes']>self.max_nodes or time.monotonic()-budget['start']>self.max_seconds:raise ValueError('sparse node/timecap; incompletebatch')
+            while state.is_chance_node() and not state.is_terminal():state.apply_action(deck[2*self.N+len(state.audit()['board'])])
+            if state.is_terminal():
+                values=np.array(state.returns(),dtype=float)/self.identity['config']['rules']['bb']
+                if values.shape!=(self.N,) or not np.all(np.isfinite(values)):raise ValueError('finite N-dimensional nativeutility')
+                return float(values[owner])
+            o=observation(state);key=sparse_key(o);p=o.actor;actions=scoped_actions(o,self.action_scope)
+            if key in self.actions and self.actions[key]!=actions:raise ValueError('sparse actionidentity changed')
+            acts[key]=actions;owners[key]=p
+            if self.average_mode=='lazy' and len(actions)>1:
+                entry=dict(parent=memory[p],mass=self.own_chance_mass(o))
+                if key in info and info[key]!=entry:raise ValueError('own perfectrecall/mass changed')
+                info[key]=entry
+            target=np.asarray(pi.get(key,np.ones(len(actions))/len(actions)),dtype=float)
+            if target.shape!=(len(actions),) or not np.all(np.isfinite(target)) or np.any(target<0) or abs(target.sum()-1)>1e-12:raise ValueError('fixed normalized targetpolicy')
+            if p==owner:
+                values=[]
+                for action_index,(a,prob) in enumerate(zip(actions,target)):
+                    child=clone_native(self.native,self.game,deck,state);child.apply_action(a);r=logreach[:]
+                    r[p]=r[p]+math.log(prob) if prob else -math.inf
+                    m=memory[:]
+                    if len(actions)>1:m[p]=(key,action_index)
+                    values.append(walk(child,r,logq,loguniform,eventmass,random.Random(stream.getrandbits(128)),m))
+                value=float(target@values)
+                scale=math.exp(math.fsum(logreach[i] for i in range(self.N) if i!=owner)-logq) if all(logreach[i]!=-math.inf for i in range(self.N) if i!=owner) else 0.
+                maxscale=max(maxscale,scale);add(grads,key,eventmass*scale*(np.array(values)-value));return value
+            weight=math.exp(logreach[p]-logq) if logreach[p]!=-math.inf else 0.
+            maxavg=max(maxavg,weight);add(avgs,key,eventmass*weight*target)
+            if self.proposal=='node':mix=1-self.epsilon;uniform=self.epsilon
+            else:
+                # Posterior of a once-per-trajectory target/uniform mixture.
+                # q(prefix)=(1-eps)*product(target)+eps*product(uniform).
+                lp=math.fsum(logreach[i] for i in range(self.N) if i!=owner) if all(logreach[i]!=-math.inf for i in range(self.N) if i!=owner) else -math.inf
+                a=math.log1p(-self.epsilon)+lp if self.epsilon<1 else -math.inf;b=math.log(self.epsilon)+loguniform
+                top=max(a,b);den=math.exp(a-top)+math.exp(b-top);mix=math.exp(a-top)/den;uniform=math.exp(b-top)/den
+            q=mix*target+uniform/len(target)
+            if audit:choices=[(j,float(q[j])) for j in range(len(q))]
+            else:
+                u=stream.random();j=int(np.searchsorted(np.cumsum(q),u,side='right'));j=min(j,len(q)-1);choices=[(j,1.)]
+            value=0.
+            for j,samplingmass in choices:
+                child=clone_native(self.native,self.game,deck,state);child.apply_action(actions[j]);r=logreach[:]
+                r[p]=r[p]+math.log(target[j]) if target[j] else -math.inf
+                m=memory[:]
+                if len(actions)>1:m[p]=(key,j)
+                childvalue=walk(child,r,logq+math.log(q[j]),loguniform-math.log(len(q)),eventmass*samplingmass,
+                    random.Random(stream.getrandbits(128)) if audit else stream,m)
+                value+=samplingmass*target[j]/q[j]*childvalue
+            return float(value)
+        state=self.native.NativeState(self.game)
+        for c in deck[:2*self.N]:state.apply_action(c)
+        walk(state,[0.]*self.N,0.,0.,1.,stream,[None]*self.N)
+        if any(not np.all(np.isfinite(v)) for d in (grads,avgs) for v in d.values()):raise ArithmeticError('nonfinite sparse estimates; no clipping')
+        return dict(grad=grads,avg=avgs,actions=acts,owners=owners,info=info,max_average_weight=maxavg,max_CF_scale=maxscale)
+    def own_chance_mass(self,o):
+        if o.round:raise ValueError('lazy average prefloponly')
+        def canonical(cards):
+            low,high=sorted(c//4 for c in cards);suited=cards[0]%4==cards[1]%4
+            return (low,high,suited)
+        own=canonical(o.own)
+        if self.decks is None:return (6 if own[0]==own[1] else 4 if own[2] else 12)/1326
+        return math.fsum(float(w) for d,w in zip(self.decks,self.weights) if canonical(d[2*o.actor:2*o.actor+2])==own)
+    def lazy_averages(self,actions,info,pi):
+        """Exact discovered-row CFR average, including all pre-discovery times.
+
+        Only preflop strategic rows: chance(ownclass) is known, independent of
+        opponents' target reach. Old unseen rows used uniform regret matching.
+        Parent pointers preserve all own past decisions. No sampled q weights.
+        """
+        import bisect
+        T=self.t+1;allactions={**self.actions,**actions};known={**self.lazy_info,**info};cache={}
+        if set(known)!=set(allactions):raise ValueError('lazy infoset metadata incomplete')
+        def policy_at(key,t):
+            if t==T:return pi.get(key,np.ones(len(allactions[key]))/len(allactions[key]))
+            history=self.behavior_history.get(key,());i=bisect.bisect_right([h[0] for h in history],t)-1
+            return history[i][1] if i>=0 else np.ones(len(allactions[key]))/len(allactions[key])
+        def reach(key,t):
+            if (key,t) not in cache:
+                parent=known[key]['parent'];cache[key,t]=1. if parent is None else reach(parent[0],t)*policy_at(parent[0],t)[parent[1]]
+            return cache[key,t]
+        output={}
+        for key in allactions:
+            mass=known[key]['mass']
+            if key in self.A:output[key]=self.A[key]+T*mass*reach(key,T)*policy_at(key,T)
+            else:output[key]=np.ones(len(allactions[key]))/len(allactions[key])*mass*math.fsum(t*reach(key,t) for t in range(1,T+1))
+        return output,known
+    def step(self):
+        if checked_config(self.game)!=self.identity['config'] or self.epsilon!=self.identity['epsilon'] or self.proposal!=self.identity['proposal'] or self.average_mode!=self.identity['average_mode']:raise ValueError('sparse game/proposal config changed')
+        if self.decks is not None and (self.weights.tolist()!=self.identity['chance']['weights'] or [list(d) for d in self.decks]!=self.identity['chance']['decks']):raise ValueError('sparse chance law changed')
+        rngbefore=self.rng.getstate();pi=self.policy(False);budget=dict(nodes=0,start=time.monotonic());batches=[]
+        try:
+            deck=self._draw();seeds=[self.rng.getrandbits(128) for _ in range(self.N)]
+            for owner in range(self.N):batches.append(self.collect(owner,deck,random.Random(seeds[owner]),pi,budget=budget))
+            actions={};owners={};g={};avg={}
+            for b in batches:
+                for key,a in b['actions'].items():
+                    if key in actions and actions[key]!=a:raise ValueError('batchinfoset actions changed')
+                    actions[key]=a;owners[key]=b['owners'][key]
+                for src,dst,scale in ((b['grad'],g,1.),(b['avg'],avg,1/(self.N-1))):
+                    for key,v in src.items():
+                        if key not in dst:dst[key]=np.zeros(len(v))
+                        dst[key]+=scale*v
+            # Fixed one-action continuations have no strategy parameters. Keep
+            # any explicitly restored legacy rows, but never allocate new ones.
+            keep={k for k,a in actions.items() if len(a)>1 or k in self.actions}
+            actions={k:v for k,v in actions.items() if k in keep};owners={k:v for k,v in owners.items() if k in keep}
+            g={k:v for k,v in g.items() if k in keep};avg={k:v for k,v in avg.items() if k in keep}
+            if len(set(self.actions)|set(actions))>self.max_infosets:raise ValueError('sparse infosetcap; incompletebatch')
+            newR={k:np.maximum(0,self.R.get(k,np.zeros(len(v)))+v) for k,v in g.items()}
+            newA={k:self.A.get(k,np.zeros(len(v)))+(self.t+1)*v for k,v in avg.items()};newinfo=None
+            if self.average_mode=='lazy':
+                info={}
+                for batch in batches:
+                    for key,v in batch['info'].items():
+                        if key in info and info[key]!=v:raise ValueError('batch ownparent inconsistent')
+                        info[key]=v
+                newA,newinfo=self.lazy_averages(actions,info,pi)
+            if any(not np.all(np.isfinite(v)) for d in (newR,newA) for v in d.values()):raise ArithmeticError('sparse overflow; incompletebatch')
+        except Exception:
+            self.rng.setstate(rngbefore);raise
+        for key,a in actions.items():
+            if key not in self.actions:
+                self.actions[key]=a;self.owners[key]=owners[key];self.R[key]=np.zeros(len(a));self.A[key]=np.zeros(len(a));self.R_visits[key]=0;self.A_visits[key]=0
+        for key,v in newR.items():
+            oldpi=pi.get(key,np.ones(len(v))/len(v));self.R[key]=v;self.R_visits[key]+=1
+            newpi=v/v.sum() if v.sum()>0 else np.ones(len(v))/len(v)
+            if self.average_mode=='lazy' and not np.array_equal(oldpi,newpi):self.behavior_history.setdefault(key,[]).append((self.t+2,newpi.tolist()))
+        if newinfo is not None:self.lazy_info=newinfo
+        for key,v in newA.items():self.A[key]=v;self.A_visits[key]+=int(np.sum(v)>0) if self.average_mode=='lazy' else int(np.sum(avg[key])>0)
+        self.t+=1;self.total_nodes+=budget['nodes']
+        return dict(iteration=self.t,nodes=budget['nodes'],infosets=len(self.actions),max_average_weight=(max((v['mass'] for v in self.lazy_info.values()),default=0.) if self.average_mode=='lazy' else max(b['max_average_weight'] for b in batches)),sampled_average_weight_diagnostic=max(b['max_average_weight'] for b in batches),max_CF_scale=max(b['max_CF_scale'] for b in batches))
+    def state(self):
+        raw=dict(identity=self.identity,t=self.t,rng=self.rng.getstate(),total_nodes=self.total_nodes,
+            actions={k:list(v) for k,v in self.actions.items()},owners=self.owners,
+            R={k:v.tolist() for k,v in self.R.items()},A={k:v.tolist() for k,v in self.A.items()},R_visits=self.R_visits,A_visits=self.A_visits,lazy_info=self.lazy_info,behavior_history=self.behavior_history)
+        return {**copy.deepcopy(raw),'digest':digest(raw)}
+    def restore(self,state):
+        raw={k:v for k,v in state.items() if k!='digest'}
+        if digest(raw)!=state['digest'] or state['identity']!=self.identity:raise ValueError('sparse checkpoint identity/digest mismatch')
+        actions={k:tuple(v) for k,v in state['actions'].items()}
+        if len(actions)>self.max_infosets or set(actions)!=set(state['owners']) or type(state['t']) is not int or not 0<=state['t']<=1000000:raise ValueError('sparse statebounds')
+        if (type(state['total_nodes']) is not int or state['total_nodes']<0
+                or any(type(v) is not int or not 0<=v<self.N or json.loads(k).get('actor')!=v for k,v in state['owners'].items())
+                or any(set(state[f])!=set(actions) or any(type(v) is not int or v<0 for v in state[f].values()) for f in ('R_visits','A_visits'))):raise ValueError('sparse owner/visit bounds')
+        arrays={}
+        for field in ('R','A'):
+            if set(state[field])!=set(actions):raise ValueError('sparse rowset mismatch')
+            arrays[field]={k:np.asarray(v,dtype=float) for k,v in state[field].items()}
+            if any(v.shape!=(len(actions[k]),) or not np.all(np.isfinite(v)) or np.any(v<0) for k,v in arrays[field].items()):raise ValueError('sparse nonnegative finite rows')
+        info=copy.deepcopy(state.get('lazy_info',{}));history=copy.deepcopy(state.get('behavior_history',{}))
+        if self.average_mode=='lazy':
+            if set(info)!=set(actions) or not set(history)<=set(actions):raise ValueError('lazy checkpoint metadata')
+            for key,v in info.items():
+                parent=v.get('parent');mass=v.get('mass')
+                if type(mass) not in (int,float) or not 0<mass<=1:raise ValueError('lazy chance mass')
+                if parent is not None and (len(parent)!=2 or parent[0] not in actions or type(parent[1]) is not int or not 0<=parent[1]<len(actions[parent[0]]) or state['owners'][parent[0]]!=state['owners'][key] or len(json.loads(parent[0])['history'])>=len(json.loads(key)['history'])):raise ValueError('lazy ownparent')
+                times=[]
+                for t,v in history.get(key,[]):
+                    if type(t) is not int or not 1<=t<=state['t']+1 or len(v)!=len(actions[key]) or any(not math.isfinite(x) or x<0 for x in v) or abs(sum(v)-1)>1e-12:raise ValueError('lazy behavior timeline')
+                    times.append(t)
+                if times!=sorted(set(times)):raise ValueError('lazy behavior order')
+            for v in info.values():
+                if v['parent'] is not None:v['parent']=tuple(v['parent'])
+            history={k:[(t,list(v)) for t,v in rows] for k,rows in history.items()}
+        elif info or history:raise ValueError('unexpected lazy metadata')
+        def tuples(v):return tuple(tuples(x) for x in v) if isinstance(v,list) else v
+        rng=random.Random();rng.setstate(tuples(state['rng']))
+        self.actions=actions;self.owners=dict(state['owners']);self.R=arrays['R'];self.A=arrays['A'];self.rng=rng;self.t=state['t'];self.total_nodes=state['total_nodes'];self.R_visits=dict(state['R_visits']);self.A_visits=dict(state['A_visits']);self.lazy_info=info;self.behavior_history=history
+    def export(self,path):
+        from gto.qualification.variance_study import compressed
+        path=Path(path)
+        if path.exists():raise FileExistsError('fresh sparse checkpoint path required')
+        state=self.state();compressed(path,state);return state
+    @property
+    def policy_digest(self):return digest(dict(identity=self.identity,average={k:v.tolist() for k,v in self.policy().items()}))
+    def profile(self):
+        pi=self.policy();identity=self.policy_digest
+        def provider(o):
+            actions=scoped_actions(o,self.action_scope);p=pi.get(sparse_key(o),np.ones(len(actions))/len(actions))
+            if len(p)!=len(actions):raise ValueError('sparse frozen rowshape')
+            return dict(zip(actions,p.tolist()))
+        return OfflineProfile(self.game,provider,players=self.N,provider_digest=identity)
+
+def run_sparse(build,out,reuse_dir=None,average_mode='sampled',evaluation_seed=17124200,baseline_dir=None):
+    """Shortoperational pilots and fixed-policy evaluation, not NEadoption."""
+    import gzip,resource
+    from gto.qualification.build import load
+    from gto.qualification.multiplayer_scope import replay
+    from gto.native.training import NativeGame
+    _,native=load(build);out=Path(out);out.mkdir(parents=True,exist_ok=True)
+    if (out/'training.json').exists():raise FileExistsError('fresh sparse study directory required')
+    began=time.monotonic();seeds=(17124101,17124102);finite=[];ds=expanded_decks(3);g3=NativeGame([24,22,20])
+    reuse=Path(reuse_dir) if reuse_dir else None
+    if reuse:
+        import ast,hashlib,shutil
+        old_source=(reuse/'source-before-controller-fix.py').read_text();new_source=Path(__file__).read_text()
+        def class_source(text):return next(ast.get_source_segment(text,n) for n in ast.parse(text).body if isinstance(n,ast.ClassDef) and n.name=='SparseJoint')
+        if class_source(old_source)!=class_source(new_source):raise ValueError('recovery class changed')
+        atomic(out/'recovery.json',dict(source_sha256=sha(reuse/'source-before-controller-fix.py'),current_source_sha256=sha(Path(__file__)),same_SparseJoint_class_sha256=hashlib.sha256(class_source(new_source).encode()).hexdigest(),scope='only runcontroller NumPy scalar serialization fixed; R/A/RNG source class unchanged'))
+    exact=Joint(native,g3,ds,[.25]*4,action_scope='preflop');prior3=exact.measure()
+    for seed in (() if reuse and (reuse/'finite-three-player.json').exists() else seeds):
+        s=SparseJoint(native,g3,seed=seed,decks=ds,weights=[.25]*4,average_mode=average_mode);start=time.monotonic();status='COMPLETE'
+        try:
+            while s.t<64 and time.monotonic()-start<5:s.step()
+        except (ValueError,ArithmeticError) as error:status='STOP_CAP:'+str(error)
+        pi={k:s.policy().get(k,np.ones(len(a))/len(a)) for k,a in exact.actions.items()}
+        ev=exact.weights@exact.values(pi)[0];br=[path_br(exact,pi,p) for p in range(3)]
+        finite.append(dict(seed=seed,iterations=s.t,status=status,seconds=time.monotonic()-start,EV_bb=ev.tolist(),restricted_BR_bb=br,
+            sum_restricted_gains_bb=float(sum(br)-sum(ev)),initial_sum_restricted_gains_bb=prior3['sum_restricted_unilateral_gains_bb'],
+            scope='same exact4world3playerfinitegame; independent privateplan pathBR'))
+        s.export(out/f'finite-3max-{seed}.json.gz')
+    if reuse and (reuse/'finite-three-player.json').exists():
+        finite=json.loads((reuse/'finite-three-player.json').read_text())['rows']
+        shutil.copyfile(reuse/'finite-three-player.json',out/'finite-three-player.json')
+    else:atomic(out/'finite-three-player.json',dict(rows=finite,full_native_BR_upper=None,full_native_NashConv=None))
+    trained={};records=[]
+    for n in (6,9):
+        game=NativeGame([100-20*(p%3) for p in range(n)],bba=2,rake_num=1,rake_den=20);trained[n]=[]
+        for seed in seeds:
+            s=SparseJoint(native,game,seed=seed,average_mode=average_mode);compute=0.;io=0.;start=time.monotonic();stats=[];status='COMPLETE_BUDGET';recovered=False
+            previous=reuse/f'{n}max-{seed}-final.json.gz' if reuse else None
+            if previous and previous.exists():
+                state=json.loads(gzip.decompress(previous.read_bytes()));raw={k:v for k,v in state.items() if k!='digest'}
+                if digest(raw)!=state['digest'] or {k:v for k,v in state['identity'].items() if k!='source_sha256'}!={k:v for k,v in s.identity.items() if k!='source_sha256'}:raise ValueError('recovery policy identity')
+                raw['identity']=s.identity;raw['digest']=digest(raw);s.restore(raw);recovered=True;status='RECOVERED_PREVIOUS_STOP_CAP'
+            while not recovered and s.t<64 and compute<3.:
+                tick=time.monotonic()
+                try:row=s.step()
+                except (ValueError,ArithmeticError) as error:
+                    compute+=time.monotonic()-tick;status='STOP_CAP_ROLLEDBACK:'+str(error);break
+                compute+=time.monotonic()-tick;stats.append(row)
+                if s.t==8:
+                    tick=time.monotonic();s.export(out/f'{n}max-{seed}-step8.json.gz');io+=time.monotonic()-tick
+            tick=time.monotonic();s.export(out/f'{n}max-{seed}-final.json.gz');io+=time.monotonic()-tick
+            trained[n].append(s)
+            records.append(dict(players=n,seed=seed,status=status,iterations=s.t,infosets=len(s.R),total_sampled_nodes=s.total_nodes,
+                compute_seconds=compute,checkpoint_seconds=io,wall_seconds=time.monotonic()-start,
+                positive_average_infosets=int(sum(v.sum()>0 for v in s.A.values())),R_revisit_rate=1-len([v for v in s.R_visits.values() if v])/max(1,sum(s.R_visits.values())),
+                A_revisit_rate=1-len([v for v in s.A_visits.values() if v])/max(1,sum(s.A_visits.values())),
+                max_average_weight=max((x['max_average_weight'] for x in stats),default=0),max_CF_scale=max((x['max_CF_scale'] for x in stats),default=0),
+                peak_sampled_batch_nodes=max((x['nodes'] for x in stats),default=0),policy_digest=s.policy_digest,expanded_training=False,recovered_checkpoint=str(previous) if recovered else None,previous_compute_seconds=None if recovered else 0))
+            atomic(out/'training.json',dict(rows=records,ordinary_registry_admission=False,verified_strategies=0))
+            if sum(p.stat().st_size for p in out.iterdir() if p.is_file())>20*1024*1024:raise ValueError('QA20MiB cap')
+    evaluations=[];E=160 if baseline_dir else 80;delta=.001/E;nworld=256
+    def interval(values,lo,hi):
+        mean=math.fsum(values)/len(values);radius=(hi-lo)*math.sqrt(math.log(2/delta)/(2*len(values)))
+        return dict(mean=mean,interval=[max(lo,mean-radius),min(hi,mean+radius)],n=len(values))
+    for n,solvers in trained.items():
+        game=solvers[0].game;prior=SparseJoint(native,game,seed=0,average_mode=average_mode);profiles=[prior]+solvers;names=['prior']+['learned-'+str(seed) for seed in seeds]
+        if baseline_dir:
+            import importlib.util
+            path=Path(baseline_dir)/'source-node-proposal.py';spec=importlib.util.spec_from_file_location('preserved_sampled_N',path);old=importlib.util.module_from_spec(spec);spec.loader.exec_module(old)
+            for seed in seeds:
+                baseline=old.SparseJoint(native,game,seed=seed);baseline.restore(json.loads(gzip.decompress((Path(baseline_dir)/f'{n}max-{seed}-final.json.gz').read_bytes())));profiles.append(baseline);names.append('sampled-baseline-'+str(seed))
+        before=[s.state()['digest'] for s in profiles]
+        frozen=[s.profile() for s in profiles];positive=[set(k for k,v in s.A.items() if v.sum()>0) for s in profiles]
+        usage=[dict(paths_untrained=0,strategic_preflop_decisions=0,untrained_strategic_preflop_decisions=0,first_untrained_seats=[0]*n) for _ in profiles]
+        samples=[[] for _ in profiles];rakes=[[] for _ in profiles];master=random.Random(evaluation_seed+n);start=time.monotonic();worlds=[]
+        for _ in range(nworld):
+            if time.monotonic()-began>120:raise ValueError('sparse study120sec cap')
+            deck=master.sample(range(52),52);tape=master.getrandbits(128);worlds.append((deck,tape))
+            for i,base in enumerate(frozen):
+                seen=[False]
+                def provider(o):
+                    if o.round==0 and len(scoped_actions(o,'preflop'))>1:
+                        usage[i]['strategic_preflop_decisions']+=1
+                        if sparse_key(o) not in positive[i]:
+                            usage[i]['untrained_strategic_preflop_decisions']+=1
+                            if not seen[0]:usage[i]['first_untrained_seats'][o.actor]+=1
+                            seen[0]=True
+                    return base.response.provider(o)
+                profile=OfflineProfile(game,provider,players=n,provider_digest=base.identity['provider_digest'])
+                result=replay(native,game,profile,deck=deck,seed=tape)
+                samples[i].append(np.array(result['net_chips'])/2);rakes[i].append(result['rake_chips']/2);usage[i]['paths_untrained']+=int(seen[0])
+        total=sum(game.stacks)/2;measure=[]
+        for i,s in enumerate(profiles):
+            vector=[interval([v[p] for v in samples[i]],-game.stacks[p]/2,total-game.stacks[p]/2) for p in range(n)]
+            usage[i]['untrained_path_rate']=usage[i]['paths_untrained']/nworld
+            usage[i]['untrained_strategic_preflop_rate']=usage[i]['untrained_strategic_preflop_decisions']/max(1,usage[i]['strategic_preflop_decisions'])
+            fold=[-vector[2]['interval'][1],-vector[2]['interval'][0]]
+            measure.append(dict(name=names[i],policy_digest=s.policy_digest,seat_EV_bb=vector,
+                mean_rake_bb=sum(rakes[i])/nworld,coverage=usage[i],root_UTG_fold_gain_interval_bb=fold,
+                unilateral_probe_scope='seat2rootfoldhasexactutility0; loweronly, notBR',full_native_BR_upper=None,full_native_NashConv=None))
+        differences=[]
+        for i in (1,2):
+            differences.append(dict(seed=seeds[i-1],seat_EV_change_bb=[interval([a[p]-b[p] for a,b in zip(samples[i],samples[0])],-total,total) for p in range(n)],
+                scope='all-seat profile sensitivity, not unilateraldeviation or BR'))
+        if baseline_dir:
+            for i in (1,2):differences.append(dict(seed=seeds[i-1],baseline=names[i+2],seat_EV_change_bb=[interval([a[p]-b[p] for a,b in zip(samples[i],samples[i+2])],-total,total) for p in range(n)],scope='paired all-seat profile sensitivity, not unilateralBR'))
+        from gto.qualification.variance_study import compressed
+        compressed(out/f'{n}max-native-values.json.gz',dict(seed=evaluation_seed+n,worlds=worlds,profile_names=names,values=[[v.tolist() for v in row] for row in samples]))
+        if before!=[s.state()['digest'] for s in profiles]:raise ValueError('evaluation mutated sampledstate')
+        evaluations.append(dict(players=n,worlds_per_profile=nworld,seed=evaluation_seed+n,seconds=time.monotonic()-start,profiles=measure,paired_vs_prior=differences,
+            confidence_family=.999,events_budget=E,method='fixed-n Hoeffding, simultaneous seats/profile differences',
+            any_significant_seat_EV_change=any(x['interval'][0]>0 or x['interval'][1]<0 for d in differences for x in d['seat_EV_change_bb']),ordinary_adoption=False,expanded_training=False))
+        atomic(out/'native-evaluation.json',dict(rows=evaluations,ordinary_registry_admission=False,verified_strategies=0,formal_acceptance=0))
+    atomic(out/'resources.json',dict(seconds=time.monotonic()-began,peak_rss_bytes=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024,
+        QA_bytes=sum(p.stat().st_size for p in out.iterdir() if p.is_file()),no_automatic_restart=True))
     return records
 
 def run(build,out):

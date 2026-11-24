@@ -52,7 +52,11 @@ def archive_restore(q,folder):
     folder=Path(folder)
     with tempfile.TemporaryDirectory(prefix='sparse-restore-') as stage:
         raw=Path(stage)/'checkpoint.bin'
-        with gzip.open(folder/'checkpoint.bin.gz','rb') as inp,raw.open('wb') as out:shutil.copyfileobj(inp,out)
+        if (folder/'checkpoint.bin.zst').exists():
+            import subprocess
+            with raw.open('wb') as output:subprocess.run(['zstd','-d','-q','-c',str(folder/'checkpoint.bin.zst')],stdout=output,check=True)
+        else:
+            with gzip.open(folder/'checkpoint.bin.gz','rb') as inp,raw.open('wb') as out:shutil.copyfileobj(inp,out)
         shutil.copyfile(folder/'checkpoint.json',Path(stage)/'checkpoint.json');q.restore(stage)
 
 
@@ -173,13 +177,13 @@ class Coverage:
         else:c['default']+=1
         self.flags[0]|=not r['trained'];self.flags[1]|=not r['trained'] and not r['warm'];return r['probabilities']
 
-def jam_certificate(q,rules,module,folder,seed):
+def jam_certificate(q,rules,module,folder,seed,allocated_delta=.0004):
     # Exact private-opponent enumeration, no dependence on a guessed range.
     b=betting(rules);act(b,102);call=[]
     for group in model.classes():
         o=observe(b,group[0],[]);p=q.row(o,True);assert set(o.actions)=={0,1};call.append(p[o.actions.index(1)])
         assert p==q.row(observe(b,group[-1],[]),True) # preflop suit-orbit invariance
-    classes={tuple(sorted(pair)):c for c,g in enumerate(model.classes()) for pair in g};rng=random.Random(17126401+seed);rows={};start=time.monotonic();K=32;delta=.0004/(169*2)
+    classes={tuple(sorted(pair)):c for c,g in enumerate(model.classes()) for pair in g};rng=random.Random(17126401+seed);rows={};start=time.monotonic();K=32;delta=allocated_delta/(169*2)
     for label,group in zip(model.CLASSES,model.classes()):
         if time.monotonic()-start>90:break
         own=list(group[0]);available=[c for c in range(52) if c not in own];mean=weight2=0.;count=0
@@ -188,7 +192,165 @@ def jam_certificate(q,rules,module,folder,seed):
             p=call[classes[other]];eq=module.equity_prefix(own+list(other),[],K,rng.getrandbits(64));mean+=(1-p)+p*50*(2*eq-1);weight2+=p*p;count+=1
         assert count==1225;mean/=1225;radius=100*math.sqrt(math.log(2/delta)*weight2/(2*1225**2*K))
         rows[label]=dict(fold=dict(native_action=0,mean=-.5,interval=[-.5,-.5],exact=True),jam=dict(native_action=102,mean=mean,interval=[max(-50,mean-radius),min(50,mean+radius)],radius=radius,opponent_pairs=1225,boards_per_pair=K))
-    atomic(folder/'169-fold-jam-EV.json',dict(policy_digest=q.policy_digest,source_sha256=sha(Path(__file__)),rng_seed=17126401+seed,bb_call_probabilities=call,rows=rows,completed_classes=len(rows),other_native_action_EV=None,full169_action_precision=None,confidence_family=.999,allocated_delta=.0004,method='exact opponentprivate enumeration and mixed fold/call integration; independent uniform conditionalboards; weighted Hoeffding perhero suit-orbit',max_jam_width=max((v['jam']['interval'][1]-v['jam']['interval'][0] for v in rows.values()),default=None),seconds=time.monotonic()-start,ordinary_registry_admission=False))
+    atomic(folder/'169-fold-jam-EV.json',dict(policy_digest=q.policy_digest,source_sha256=sha(Path(__file__)),rng_seed=17126401+seed,bb_call_probabilities=call,rows=rows,completed_classes=len(rows),other_native_action_EV=None,full169_action_precision=None,confidence_family=.999,allocated_delta=allocated_delta,method='exact opponentprivate enumeration and mixed fold/call integration; independent uniform conditionalboards; weighted Hoeffding perhero suit-orbit',max_jam_width=max((v['jam']['interval'][1]-v['jam']['interval'][0] for v in rows.values()),default=None),seconds=time.monotonic()-start,ordinary_registry_admission=False))
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--library',required=True);p.add_argument('--native-build',required=True);p.add_argument('--out',required=True);p.add_argument('--evaluate',action='store_true');a=p.parse_args();(evaluate if a.evaluate else train)(s.load(a.library),a.native_build,a.out)
+
+
+def generalization_pilot(module,native_build,out):
+    """Two-seed fixed-budget key ablation, with independent historical discovery."""
+    from gto.qualification.build import load
+    out=Path(out)
+    if out.exists() and any(out.iterdir()):raise FileExistsError('fresh pilot output required; resume explicit checkpoint instead')
+    rules,native=load(native_build);out.mkdir(parents=True,exist_ok=True);records=[]
+    for seed in (17120101,17120102):
+        w,origin=s.warm(module,seed);source=Path('docs/qa/legal-size-20261124/hu-final')/str(seed);(out/str(seed)).mkdir(parents=True,exist_ok=True)
+        probe=s.Solver(module,w,origin,seed+1500000);b=betting(rules);o=observe(b,[48,49],[]);r=probe.core.query(o.own,o.board,o.actor,o.round,o.history,o.actions,o.live,o.street,o.remaining,o.price,True);base_actions=r['actions'];del probe
+        discovery=json.loads((source/'all-root-discovery.json').read_text());ranked=sorted([r for r in discovery['rows'] if r['native_action']>1 and r['native_action'] not in base_actions],key=lambda r:(-r['gain_bb']['mean'],r['native_action']))
+        extra=[dict(round=0,history=[],actions=[r['native_action'] for r in ranked[:2]])];atomic(out/str(seed)/'support-selection.json',dict(source=str(source/'all-root-discovery.json'),source_sha256=sha(source/'all-root-discovery.json'),scope='old independent discovery now selection only; top2 omitted root means, no fixed-size special case',selected=ranked[:2],extra_support=extra))
+        worlds=samples(seed+2000000,512)
+        for sharing in (False,True):
+            folder=out/str(seed)/('compact' if sharing else 'detailed');folder.mkdir(parents=True,exist_ok=True);q=s.Solver(module,w,origin,seed+1500000,sharing=sharing,extra_support=extra,rows=250000);q.native=native;imported=s.bootstrap_preflop(q,source/'best',rules);curve=[];start=time.monotonic();pure=0.;best=math.inf;previous=None;reason='STAGE_LIMIT'
+            for target in (0,64,128):
+                while q.iteration<target and pure<10:
+                    at=time.monotonic();step=q.step(min(1.,10-pure));pure+=time.monotonic()-at
+                    if not step['complete']:reason=step['error'];break
+                if q.iteration<target:
+                    if reason=='STAGE_LIMIT':reason='INCOMPLETE_BUDGET'
+                    atomic(folder/'incomplete-update.json',step);break
+                monitor=Coverage(q);values=[];attack=[]
+                for deck,tape in worlds:
+                    monitor.begin_world();v=rb_value(monitor,native,NativeGame([100,100]),deck,tape,module);monitor.end_world();values.append(v);attack.append(rb_value(Extra(q,'open3p5'),native,NativeGame([100,100]),deck,tape,module)-v)
+                score=float(np.mean(attack));row=dict(iterations=q.iteration,selection_EV_bb=float(np.mean(values)),selection_open3p5_gain_bb=score,coverage=monitor.counts,path_coverage=monitor.world_counts,stats=q.core.stats(),pure_training_seconds=pure,elapsed_seconds=time.monotonic()-start);curve.append(row);atomic(folder/'selection.json',dict(curve=curve,source_sha256=sha(Path(__file__))));print(json.dumps(dict(seed=seed,sharing=sharing,**row)),flush=True)
+                if previous is not None:
+                    worsening=interval([a-b for a,b in zip(attack,previous)],-200,200,.01)
+                    if worsening['interval'][0]>0:reason='SIGNIFICANT_SELECTION_WORSENING';break
+                previous=attack
+                # t0 is a control, never an eligible learned-coverage candidate.
+                if target and score<best:best=score;archive_save(q,folder/'best')
+            archive_restore(q,folder/'best');result=dict(seed=seed,sharing=sharing,extra_support=extra,bootstrap=imported,curve=curve,selected_iterations=q.iteration,policy_digest=q.policy_digest,stop_reason=reason,pure_training_seconds=pure,elapsed_seconds=time.monotonic()-start,peak_RSS_bytes=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024,formal_pass=False);atomic(folder/'pilot.json',result);records.append(result);del q;gc.collect()
+        del w;gc.collect()
+    atomic(out/'pilot-summary.json',dict(records=records,scope='selection only, not independent final or GTO PASS'))
+    return records
+
+
+def finite_sharing_oracle(module,native_build,out):
+    """Finite native full-action counterexample and full-information lawful BR."""
+    from gto.qualification.build import load
+    from gto.qualification.multiplayer_joint import Joint,observation,clone_native,path_oracle,path_br
+    rules,native=load(native_build);game=NativeGame([6,6]);decks=[]
+    for own in ([44,37],[40,33]):
+        for other in ([41,36],[45,32]):
+            for board in ([4,5,16,31,50],[6,7,20,30,49]):
+                shown=list(own)+list(other)+list(board);assert len(set(shown))==9;decks.append(shown+[c for c in range(52) if c not in shown])
+    classes=[-1]*2704
+    for c,g in enumerate(model.classes()):
+        for a,b in g:classes[52*a+b]=classes[52*b+a]=c
+    data=dict(classes=classes,pi=np.array([]),support=np.array([],dtype=np.uint8),nodes=[],equity=[.5]*169,sharing=True)
+    core=module.Sparse(game,data,1,True,True,10000,1000000);nodes=[];start=time.monotonic()
+    def build(states):
+        if len(nodes)>2000 or time.monotonic()-start>10:raise ValueError('finite oracle build cap')
+        for w,state in enumerate(states):
+            while state.is_chance_node() and not state.is_terminal():state.apply_action(decks[w][4+len(state.audit()['board'])])
+        k=len(nodes)
+        if states[0].is_terminal():nodes.append(dict(actor=-1,children=[],utility=np.array([s.returns() for s in states])/2));return k
+        obs=[observation(s) for s in states];p=obs[0].actor;acts=obs[0].actions;shared=[]
+        for o in obs:
+            r=core.query(o.own,o.board,o.actor,o.round,o.history,o.actions,o.live,o.street,o.remaining,o.price,True);shared.append(r['key'].hex())
+        n=dict(actor=p,actions=acts,keys=[o.key for o in obs],compact=shared,children=[]);nodes.append(n)
+        for action in acts:
+            children=[clone_native(native,game,decks[w],s) for w,s in enumerate(states)]
+            for s in children:s.apply_action(action)
+            n['children'].append(build(children))
+        return k
+    states=[]
+    for deck in decks:
+        state=native.NativeState(game)
+        for c in deck[:4]:state.apply_action(c)
+        states.append(state)
+    build(states)
+    import copy
+    def trainer(compact):
+        q=Joint.__new__(Joint);q.N=2;q.W=len(decks);q.weights=np.full(q.W,1/q.W);q.nodes=copy.deepcopy(nodes);q.actions={};q.owners={};q.t=0
+        for n in q.nodes:
+            if n['actor']<0:continue
+            if compact:n['keys']=n['compact']
+            for key in n['keys']:q.actions[key]=n['actions'];q.owners[key]=n['actor']
+        q.R={k:np.zeros(len(v)) for k,v in q.actions.items()};q.A={k:v.copy() for k,v in q.R.items()};return q
+    full=trainer(False);compact=trainer(True);pi=full.policy();oracle=path_oracle(full,pi);max_error=max(abs(oracle['EV']-full.weights@full.values(pi)[0]));full.step()
+    max_error=max(max_error,max(float(np.max(abs(full.R[k]-np.maximum(0,v)))) for k,v in oracle['grad'].items()),max(float(np.max(abs(full.A[k]-v))) for k,v in oracle['avg'].items()))
+    curves=[];began=time.monotonic()
+    for target in (0,16,64,256):
+        while compact.t<target:
+            if time.monotonic()-began>15:raise ValueError('finite oracle training cap')
+            compact.step()
+        cpi=compact.policy();projected={}
+        for n in nodes:
+            if n['actor']>=0:
+                for actual,coarse in zip(n['keys'],n['compact']):projected[actual]=cpi[coarse]
+        ev=full.weights@full.values(projected)[0];br=[full.br(projected,p) for p in (0,1)];ind=[path_br(full,projected,p) for p in (0,1)];max_error=max(max_error,max(abs(a-b) for a,b in zip(br,ind)))
+        curves.append(dict(iterations=compact.t,EV_bb=ev.tolist(),full_finite_BR_bb=br,full_finite_NashConv_bb=float(sum(br)),scope='all native actions in6chipHU /8 explicit worlds; not HU50 or uniform52 bound'))
+    collisions=sum(len(set(n['keys']))>len(set(n['compact'])) for n in nodes if n['actor']>=0)
+    atomic(out,dict(decks=decks,stacks=[6,6],nodes=len(nodes),full_infosets=len(full.actions),compact_infosets=len(compact.actions),colliding_public_nodes=collisions,independent_path_max_error=max_error,curve=curves,seconds=time.monotonic()-start,source_sha256=sha(Path(__file__)),native_binary_sha256=sha(Path(native.__file__)),abstraction_global_error_upper=None,formal_pass=False))
+
+
+def generalized_evaluate_one(module,native_build,root,seed,mode,*,confirm=False):
+    """Frozen policy; fresh final data, conditional EV, same worlds across modes."""
+    from gto.qualification.build import load
+    from gto.qualification.variance_study import compressed
+    rules,native=load(native_build);root=Path(root);folder=root/'final'/str(seed)/mode;folder.mkdir(parents=True,exist_ok=True)
+    w,origin=s.warm(module,seed)
+    if mode=='legacy':
+        source=Path('docs/qa/legal-size-20261124/hu-final')/str(seed)/'best';meta=json.loads((source/'checkpoint.json').read_text());q=s.Solver(module,w,origin,seed+1100000)
+        if sha(Path(module.__file__))!=meta['identity']['binary_sha256'] or q.identity['prior_tables_digest']!=meta['identity']['prior_tables_digest']:raise ValueError('legacy exact native/prior identity')
+        q.identity=meta['identity'];archive_restore(q,source)
+    else:
+        source=root/'hu-final'/str(seed)/mode;meta=json.loads((source/'pilot.json').read_text());q=s.Solver(module,w,origin,seed+1500000,sharing=mode=='compact',extra_support=meta['extra_support'],rows=250000)
+        s.bootstrap_preflop(q,Path('docs/qa/legal-size-20261124/hu-final')/str(seed)/'best',rules);archive_restore(q,source/'best')
+    q.native=native;del w;gc.collect();frozen=q.policy_digest;game=NativeGame([100,100]);monitor=Coverage(q)
+    probes=[Extra(q,'open3p5'),Force(q,18),Extra(q,'threebet10p5'),Extra(q,'river_jam'),GeneralNuts(q)] if mode=='compact' else [Extra(q,'open3p5')]
+    values=[[] for _ in range(1+len(probes))];worlds=samples(17129501,8192);start=time.monotonic();status='COMPLETE_UNVERIFIED'
+    for i,(deck,tape) in enumerate(worlds):
+        if time.monotonic()-start>90:status='INCOMPLETE_TIME_LIMIT';break
+        monitor.begin_world();values[0].append(rb_value(monitor,native,game,deck,tape,module));monitor.end_world()
+        for probe,v in zip(probes,values[1:]):v.append(rb_value(probe,native,game,deck,tape,module))
+    n=len(values[0]);delta=.0002/60;record=dict(mode=mode,seed=seed,final_seed=17129501,status=status,n=n,policy_digest=frozen,checkpoint_source=str(source),iteration=q.iteration,source_sha256=sha(Path(__file__)),binary_sha256=sha(Path(module.__file__)),query_coverage=monitor.counts,path_coverage=monitor.world_counts,seconds=time.monotonic()-start,peak_RSS_bytes=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024,full_native_BR_upper=None,full_native_NashConv=None,abstraction_error_upper=None,continuation_error_upper=None,omitted_action_error_upper=None,formal_pass=False)
+    if n==8192:
+        record['SB_EV_bb']=interval(values[0],-50,50,delta);names=['open3p5','open8','threebet10p5','river_jam','river_nuts'][:len(probes)]
+        record['deviations']={name:interval([(1 if j<2 else -1)*(a-b) for a,b in zip(values[j+1],values[0])],-100,100,delta) for j,name in enumerate(names)}
+    compressed(folder/'world-values.json.gz',dict(seed=17129501,worlds=worlds[:n],values=values,policy_digest=frozen));atomic(folder/'native.json',record)
+    if confirm:
+        start=time.monotonic();base=[];gain=[]
+        for deck,tape in samples(17129701,32768):
+            if time.monotonic()-start>90:break
+            v=rb_value(q,native,game,deck,tape,module);base.append(v);gain.append(rb_value(Extra(q,'open3p5'),native,game,deck,tape,module)-v)
+        result=dict(seed=17129701,policy_digest=frozen,n=len(base),seconds=time.monotonic()-start,formal_pass=False)
+        if len(base)==32768:result['open3p5_gain_bb']=interval(gain,-100,100,.0002/6)
+        compressed(folder/'confirmation-values.json.gz',dict(base=base,gain=gain,**result));atomic(folder/'confirmation.json',result)
+    if mode=='compact':
+        freq={}
+        for name,prefix in [('rfi',[]),('vs_open3',[8]),('vs_open3p5',[9]),('vs_3bet10',[8,22]),('vs_3bet10p5',[8,23])]:
+            b=betting(rules)
+            for action in prefix:act(b,action)
+            freq[name]={label:dict(actions=observe(b,g[0],[]).actions,frequencies=q.row(observe(b,g[0],[]),True),EV=None) for label,g in zip(model.CLASSES,model.classes())}
+        compressed(folder/'169-frequencies.json.gz',dict(policy_digest=frozen,rows=freq,formal_pass=False))
+        # All-cell root EV: opponent/future worlds and all-in suffix cache shared
+        # across99 actions, own-class stratification, no inverse rarehand weights.
+        begin=time.monotonic();batch=q.core.root_ev([list(g[0]) for g in model.classes()],64,17129601+seed,90.)
+        cells={};delta=.0003/(2*169*99);width=[]
+        rootobs=observe(betting(rules),[0,1],[])
+        for label,group,row in zip(model.CLASSES,model.classes(),batch['rows']):
+            n=row['samples']
+            if n<2:break
+            o=observe(betting(rules),group[0],[]);p=q.row(o,True);mass=len(group)/1326;rs=[]
+            for j,a in enumerate(batch['actions']):
+                mean=row['sum'][j]/n;var=max(0.,(row['square'][j]-n*mean*mean)/max(1,n-1));radius=math.sqrt(2*var*math.log(2/delta)/n)+7*100*math.log(2/delta)/(3*max(1,n-1));ci=[max(-50,mean-radius),min(50,mean+radius)]
+                if a==0:mean=-.5;ci=[-.5,-.5]
+                root_ci=[x*mass*p[o.actions.index(a)] for x in ci];width.append(root_ci[1]-root_ci[0]);rs.append(dict(action=a,conditional_EV=mean,conditional_interval=ci,root_weight=mass*p[o.actions.index(a)],root_contribution_interval=root_ci,n=n))
+            cells[label]=rs
+        compressed(folder/'169-all-root-EV.json.gz',dict(policy_digest=frozen,rows=cells,actions=batch['actions'],completed_classes=len(cells),measured_cells=sum(map(len,cells.values())),formal_precision_cells=0,method='ownclass stratification, CRN all99actions; native allin conditionalcache16preflop/exact990flop/44turn; fixed-n empiricalBernstein',max_root_contribution_width=max(width,default=None),seconds=time.monotonic()-begin,native_seconds=batch['seconds'],overall_delta=.0003,formal_pass=False,full_native_BR_upper=None))
+        # Better jam intervals via exact opponentprivate/action integration.
+        jam_certificate(q,rules,module,folder,seed,allocated_delta=.0003)
+    assert frozen==q.policy_digest
+    return record

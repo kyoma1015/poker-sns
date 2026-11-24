@@ -1,0 +1,186 @@
+{
+  "rows": [
+    {
+      "previous": "hu-v2/17120101/detailed/best/checkpoint.bin.gz",
+      "current": "hu-v2/17120101/detailed/best/checkpoint.bin.zst",
+      "previous_archive_sha256": "77a838b5c6c9852f2b2e0474f244e62075bba69081c7355fb3896dbca021fb47",
+      "raw_sha256": "5a47bf1740ac3d3f4a18226ba30eccbcca2acd9c1e8865f5943f83bcea3b7e89",
+      "raw_bytes": 19472393,
+      "previous_bytes": 5450134,
+      "current_bytes": 2830108
+    },
+    {
+      "previous": "hu-v2/17120101/compact/best/checkpoint.bin.gz",
+      "current": "hu-v2/17120101/compact/best/checkpoint.bin.zst",
+      "previous_archive_sha256": "b16ff3b04de325f50e62417d26b891eea9328087c19e63a25aa63e62a06f87ac",
+      "raw_sha256": "b6da9bbd16740097d70164f6b90b35cdf7ebcf34e4a033ba4c31bc3ebb18eb12",
+      "raw_bytes": 16838404,
+      "previous_bytes": 5168461,
+      "current_bytes": 2650497
+    },
+    {
+      "previous": "hu-v2/17120102/detailed/best/checkpoint.bin.gz",
+      "current": "hu-v2/17120102/detailed/best/checkpoint.bin.zst",
+      "previous_archive_sha256": "0f0e6883348df00cb0cab23a03382fa24f95889686eeb02877a54824bee86415",
+      "raw_sha256": "9d886794018b0ed6a5d85478c138475add631ae2dbf306d52f14c840d59c73b2",
+      "raw_bytes": 16700680,
+      "previous_bytes": 4740601,
+      "current_bytes": 2384984
+    },
+    {
+      "previous": "hu-v2/17120102/compact/best/checkpoint.bin.gz",
+      "current": "hu-v2/17120102/compact/best/checkpoint.bin.zst",
+      "previous_archive_sha256": "ae4465e630f89d350b0ba37b3d33f582b1eb6fb9cd39fcb8d25cf771931e09ea",
+      "raw_sha256": "f5a5ca956b2e11e036452d291742005776345b495f0b0dd34bc76fb14a106f13",
+      "raw_bytes": 13968084,
+      "previous_bytes": 4340574,
+      "current_bytes": 2166529
+    },
+    {
+      "previous": "hu-v4/17120101/detailed/best/checkpoint.bin.gz",
+      "current": "hu-v4/17120101/detailed/best/checkpoint.bin.zst",
+      "previous_archive_sha256": "41d5db6ac4770f9eb2bd28730642f9a3e220a955890b66392d4b2fed8cf459ce",
+      "raw_sha256": "4e8cd5c7f6ae732d9e61cdfd276a87cfb37db326fbc613f3993738a79aca34af",
+      "raw_bytes": 39445584,
+      "previous_bytes": 10689624,
+      "current_bytes": 5947796
+    },
+    {
+      "previous": "hu-v4/17120101/compact/best/checkpoint.bin.gz",
+      "current": "hu-v4/17120101/compact/best/checkpoint.bin.zst",
+      "previous_archive_sha256": "d0817d810d0a6f82796f5cb9b56352a87094103889a291386044c76a031227fe",
+      "raw_sha256": "88d55917f1eab6d6820b09ae9a327087af8f58a5a7486c7be8468a22485946e4",
+      "raw_bytes": 17644762,
+      "previous_bytes": 5292801,
+      "current_bytes": 2741693
+    },
+    {
+      "previous": "hu-v4/17120102/detailed/best/checkpoint.bin.gz",
+      "current": "hu-v4/17120102/detailed/best/checkpoint.bin.zst",
+      "previous_archive_sha256": "0d23442789a607f33d974020a2d781ff450f66e856ee82d9b73d3550a5a1aaae",
+      "raw_sha256": "39519ae7514159c27ce24b4897d415aa53c4cd8095ca99bf8f09e85d0ea668aa",
+      "raw_bytes": 16700680,
+      "previous_bytes": 4740610,
+      "current_bytes": 2384988
+    },
+    {
+      "previous": "hu-v4/17120102/compact/best/checkpoint.bin.gz",
+      "current": "hu-v4/17120102/compact/best/checkpoint.bin.zst",
+      "previous_archive_sha256": "c2a678b1177c0a5c04f312e7e1aa63657b06dde24d568663a119c02c1e632a1e",
+      "raw_sha256": "269b3fc449bb49664675976faa64b14d8fe648a092a15b20ccb6fe03382746c9",
+      "raw_bytes": 15290156,
+      "previous_bytes": 4645275,
+      "current_bytes": 2339820
+    },
+    {
+      "previous": "hu/17120101/detailed/best/checkpoint.bin.gz",
+      "current": "hu/17120101/detailed/best/checkpoint.bin.zst",
+      "previous_archive_sha256": "6f8a90d83099cd0f1f7bc16f7bdf1ceb3a3e36792aefeb05af537cb14e867fb4",
+      "raw_sha256": "fb72f9e150d8136358670dccb171a4a74855b840be2de12cc6580c5359c5fd24",
+      "raw_bytes": 19472393,
+      "previous_bytes": 5450148,
+      "current_bytes": 2830109
+    },
+    {
+      "previous": "hu/17120101/compact/best/checkpoint.bin.gz",
+      "current": "hu/17120101/compact/best/checkpoint.bin.zst",
+      "previous_archive_sha256": "81ca64f8c8de33e22bf30338ba9a34d75395df1937a5b8b4024c53dae8f95fef",
+      "raw_sha256": "793db9b27e398d4fb8a7856c78a505b8cd2f742cfadf7bed073602c7967f9057",
+      "raw_bytes": 407299,
+      "previous_bytes": 159865,
+      "current_bytes": 148560
+    },
+    {
+      "previous": "hu/17120102/detailed/best/checkpoint.bin.gz",
+      "current": "hu/17120102/detailed/best/checkpoint.bin.zst",
+      "previous_archive_sha256": "daf92bc13c900c31b04c095c52b94f0436bfc3baef363acc170abc92eef2aad0",
+      "raw_sha256": "6f9fc985441443884a93b6b513c3b550511cf0a879632c8b6c638daa34abd7e7",
+      "raw_bytes": 16700680,
+      "previous_bytes": 4740610,
+      "current_bytes": 2384988
+    },
+    {
+      "previous": "hu/17120102/compact/best/checkpoint.bin.gz",
+      "current": "hu/17120102/compact/best/checkpoint.bin.zst",
+      "previous_archive_sha256": "91e767efb3aa59bb5c6b5fe8633b7e7e31f5ee249d53e26c7bb436e86fe6965b",
+      "raw_sha256": "d892c24e1eca4606b4b4f8ce3a08be60c7760e4a6f520db7adf1b1116cb33fa9",
+      "raw_bytes": 329551,
+      "previous_bytes": 140836,
+      "current_bytes": 126419
+    },
+    {
+      "previous": "hu-v3/17120101/detailed/best/checkpoint.bin.gz",
+      "current": "hu-v3/17120101/detailed/best/checkpoint.bin.zst",
+      "previous_archive_sha256": "27e8f07307ddb186e67d5bdfb072d361b54dfe1205d71dcb104da1b81f6afec0",
+      "raw_sha256": "634953166de5efa1aee4cba298df03727ba453b65bd1323b95c987fdf178ec03",
+      "raw_bytes": 39445584,
+      "previous_bytes": 10689604,
+      "current_bytes": 5947799
+    },
+    {
+      "previous": "hu-v3/17120101/compact/best/checkpoint.bin.gz",
+      "current": "hu-v3/17120101/compact/best/checkpoint.bin.zst",
+      "previous_archive_sha256": "5aae99fba46c92e1e10b5828328eacf0c690c64364880879e53ec9dc651e7e80",
+      "raw_sha256": "b6f23b57f1003823de604f0a1b49ef05368455f00a5552cfed53ec9fc3f2e782",
+      "raw_bytes": 36535700,
+      "previous_bytes": 10489791,
+      "current_bytes": 5816627
+    },
+    {
+      "previous": "hu-v3/17120102/detailed/best/checkpoint.bin.gz",
+      "current": "hu-v3/17120102/detailed/best/checkpoint.bin.zst",
+      "previous_archive_sha256": "817d935a730c2c2bc333ff8f9e2610ac203c2a04f989f761d4e7d1f2c6fe04b1",
+      "raw_sha256": "ce7471912d59c48063102259cd6e3d8cd7cf6e511e4905fcce860a7c328a2d9d",
+      "raw_bytes": 35345119,
+      "previous_bytes": 9665460,
+      "current_bytes": 5334197
+    },
+    {
+      "previous": "hu-v3/17120102/compact/best/checkpoint.bin.gz",
+      "current": "hu-v3/17120102/compact/best/checkpoint.bin.zst",
+      "previous_archive_sha256": "a1edc09f477ca866b18b1aaccb2dbb72f082f97a66b56a7eaa3902914e4dc32c",
+      "raw_sha256": "2478b0a3e40aa3fa1535f45b54f542d4a362ef311ae52c1df36dc24ddf594036",
+      "raw_bytes": 32730171,
+      "previous_bytes": 9486186,
+      "current_bytes": 5214688
+    },
+    {
+      "previous": "hu-final/17120101/detailed/best/checkpoint.bin.gz",
+      "current": "hu-final/17120101/detailed/best/checkpoint.bin.zst",
+      "previous_archive_sha256": "1e5c3770a8c1076804caef316bc89d86bdbdcca7fec1336f67ed27815f759d8e",
+      "raw_sha256": "13c1982170674304d16592b0e443c769474a8d4a41eaafa7021b26ad91cd6f94",
+      "raw_bytes": 19472393,
+      "previous_bytes": 5450142,
+      "current_bytes": 2830106
+    },
+    {
+      "previous": "hu-final/17120101/compact/best/checkpoint.bin.gz",
+      "current": "hu-final/17120101/compact/best/checkpoint.bin.zst",
+      "previous_archive_sha256": "a07a86619affd5d0a4500d9e4aa29f91a97abdd2b8c012641bb14f7850e882dd",
+      "raw_sha256": "fff3848c6689dd8c75df408672a5de31a45f1f88817bf1a5ebdc48dec352fee2",
+      "raw_bytes": 17807663,
+      "previous_bytes": 5343027,
+      "current_bytes": 2745863
+    },
+    {
+      "previous": "hu-final/17120102/detailed/best/checkpoint.bin.gz",
+      "current": "hu-final/17120102/detailed/best/checkpoint.bin.zst",
+      "previous_archive_sha256": "5341fd4dc12a6cb50215f357f679ae4eb981ee579470a521b1ad50f32b944faa",
+      "raw_sha256": "7fdabd9908bbcffe99e995d5f3ddaaaa84ac2e05dd23ce296ed2dda8e498b07b",
+      "raw_bytes": 16700680,
+      "previous_bytes": 4740592,
+      "current_bytes": 2384986
+    },
+    {
+      "previous": "hu-final/17120102/compact/best/checkpoint.bin.gz",
+      "current": "hu-final/17120102/compact/best/checkpoint.bin.zst",
+      "previous_archive_sha256": "2a472ed35fb5f0ce7c3512aa5e633e85e48038c4fa760e577fed4cf73fd7c8c0",
+      "raw_sha256": "d8f2f3b7d1e3534726f7ec070cb897713b3f25fcb9e902d3338a55afc3802e2c",
+      "raw_bytes": 15260497,
+      "previous_bytes": 4633698,
+      "current_bytes": 2338063
+    }
+  ],
+  "seconds": 1.854833969999163,
+  "scope": "lossless raw-byte checked; no previous-commit files touched"
+}

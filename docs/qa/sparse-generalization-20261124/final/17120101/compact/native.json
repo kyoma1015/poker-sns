@@ -1,0 +1,112 @@
+{
+  "SB_EV_bb": {
+    "interval": [
+      -0.8389157326646896,
+      0.886164650061312
+    ],
+    "mean": 0.023624458698311236,
+    "n": 8192,
+    "radius": 0.8625401913630008,
+    "variance": 71.98007402125513
+  },
+  "abstraction_error_upper": null,
+  "binary_sha256": "f23625a462eb87a0339123bb6ac2ab99daf8d6f4e3d006895237ee0ffe4728cc",
+  "checkpoint_source": "docs/qa/sparse-generalization-20261124/hu-final/17120101/compact",
+  "continuation_error_upper": null,
+  "deviations": {
+    "open3p5": {
+      "interval": [
+        -0.8138493800188045,
+        1.6725218592051998
+      ],
+      "mean": 0.4293362395931976,
+      "n": 8192,
+      "radius": 1.2431856196120021,
+      "variance": 72.46942387342531
+    },
+    "open8": {
+      "interval": [
+        -0.9430219362624523,
+        1.6134564449232793
+      ],
+      "mean": 0.3352172543304135,
+      "n": 8192,
+      "radius": 1.2782391905928658,
+      "variance": 83.3194132064077
+    },
+    "river_jam": {
+      "interval": [
+        -1.1106655531063623,
+        1.6715786390438623
+      ],
+      "mean": 0.28045654296875,
+      "n": 8192,
+      "radius": 1.3911220960751123,
+      "variance": 123.40073264467456
+    },
+    "river_nuts": {
+      "interval": [
+        -0.7698202535486819,
+        0.7751913472986819
+      ],
+      "mean": 0.002685546875,
+      "n": 8192,
+      "radius": 0.7725058004236819,
+      "variance": 0.06469795116209864
+    },
+    "threebet10p5": {
+      "interval": [
+        -0.6812065344621195,
+        1.6645103366440956
+      ],
+      "mean": 0.491651901090988,
+      "n": 8192,
+      "radius": 1.1728584355531075,
+      "variance": 52.9829384653658
+    }
+  },
+  "final_seed": 17129501,
+  "formal_pass": false,
+  "full_native_BR_upper": null,
+  "full_native_NashConv": null,
+  "iteration": 64,
+  "mode": "compact",
+  "n": 8192,
+  "omitted_action_error_upper": null,
+  "path_coverage": {
+    "current_untrained": 7175,
+    "no_parent_or_current": 1505
+  },
+  "peak_RSS_bytes": 218107904,
+  "policy_digest": "df24ef6adecd2e18bbd92a68005c18c6d65c35c1dbf6d68a7a2a786ffa3390ff",
+  "query_coverage": {
+    "0": {
+      "default": 698,
+      "queries": 15143,
+      "trained": 4888,
+      "warm_only": 9557
+    },
+    "1": {
+      "default": 902,
+      "queries": 5739,
+      "trained": 130,
+      "warm_only": 4707
+    },
+    "2": {
+      "default": 1453,
+      "queries": 3162,
+      "trained": 12,
+      "warm_only": 1697
+    },
+    "3": {
+      "default": 1570,
+      "queries": 2430,
+      "trained": 0,
+      "warm_only": 860
+    }
+  },
+  "seconds": 7.698185358000046,
+  "seed": 17120101,
+  "source_sha256": "65932655b8eb9448e68c0843b87b2d773d2503e41c340648f76ede27dad719de",
+  "status": "COMPLETE_UNVERIFIED"
+}

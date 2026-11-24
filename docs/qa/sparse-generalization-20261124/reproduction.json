@@ -1,0 +1,18 @@
+{
+  "rows": [
+    {
+      "exact_reproduced_sha256": "fff3848c6689dd8c75df408672a5de31a45f1f88817bf1a5ebdc48dec352fee2",
+      "iterations": 64,
+      "scope": "same pinned build/warm/RNG, entire selected R/A/prior/RNG binary reproduced without selection callbacks",
+      "seconds": 6.259806046000449,
+      "seed": 17120101
+    },
+    {
+      "exact_reproduced_sha256": "d8f2f3b7d1e3534726f7ec070cb897713b3f25fcb9e902d3338a55afc3802e2c",
+      "iterations": 64,
+      "scope": "same pinned build/warm/RNG, entire selected R/A/prior/RNG binary reproduced without selection callbacks",
+      "seconds": 4.7328367510017415,
+      "seed": 17120102
+    }
+  ]
+}

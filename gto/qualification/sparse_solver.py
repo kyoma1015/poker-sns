@@ -37,9 +37,11 @@ def warm(module,seed):
     return dict(pi=pi,support=support,classes=classes.tolist(),equity=eq,nodes=nodes),dict(parent_seed=seed,parent_checkpoint_sha256=sha(folder/'best-checkpoint.npz'),parent_policy_array_sha256=sha(array),parent_iterations=meta['iterations'],warm='matching preflop finite R/A; postflop average behavior; not new-game prefix history')
 
 class Solver:
-    def __init__(self,module,warm_data,origin,seed,*,full=False,refined=True,rows=400000,node_cap=1000000):
+    def __init__(self,module,warm_data,origin,seed,*,full=False,refined=True,rows=400000,node_cap=1000000,sharing=False,extra_support=()):
+        warm_data=dict(warm_data,sharing=sharing,extra_support=list(extra_support))
         self.module=module;self.rules=None;self.iteration=0;self.core=module.Sparse(NativeGame([100,100]),warm_data,seed,full,refined,rows,node_cap);self.stats={r:dict(queries=0,untrained=0,warm=0) for r in range(4)}
         self.identity=dict(schema='sparse-native-external-v1',origin=origin,seed=seed,all_native_actions=full,refined=refined,rows=rows,node_cap=node_cap,game=dict(stacks=[100,100],bb=2,bba=0,rake=0),sources={str(p.relative_to(ROOT)):sha(p) for p in (Path(__file__),Path(__file__).with_name('sparse_native.cc'),Path(__file__).with_name('fullstreet_core.cc'),ROOT/'handoff/gto/g12_next/g11_native_state.h')},binary_sha256=sha(Path(module.__file__)),formal_profile=False,ordinary_registry_admission=False)
+        self.identity.update(sharing=sharing,extra_support=list(extra_support))
         self.identity['prior_tables_digest']=digest(dict(classes=warm_data['classes'],equity=warm_data['equity']))
         self.checkpoint_hash=None
     def step(self,seconds=2.):
@@ -66,3 +68,42 @@ class Solver:
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--build',required=True);p.add_argument('--native-build',required=True);a=p.parse_args();build(a.build,a.native_build)
+
+
+def bootstrap_preflop(q,folder,rules):
+    """Import verified old finite R/A, not old-game iteration/RNG history."""
+    import struct
+    from gto.qualification.native_mccfr import betting
+    from gto.qualification.policy import act
+    from gto.qualification.public_response import observe
+    folder=Path(folder);meta=json.loads((folder/'checkpoint.json').read_text());raw=gzip.decompress((folder/'checkpoint.bin.gz').read_bytes())
+    if hashlib.sha256(raw).hexdigest()!=meta['sha256']:raise ValueError('bootstrap archive hash')
+    at=0
+    def number():
+        nonlocal at
+        v=struct.unpack_from('=Q',raw,at)[0];at+=8;return v
+    def blob():
+        nonlocal at
+        n=number();v=raw[at:at+n];at+=n;return v
+    if blob()!=b'sparse-native-v1' or blob().decode()!=digest(meta['identity']):raise ValueError('bootstrap identity')
+    old_iterations=number();blob();n=number();rows=[];post=0
+    for _ in range(n):
+        key=blob();count=number();actions=list(struct.unpack_from('='+str(count)+'q',raw,at));at+=8*count
+        vectors=[]
+        for __ in range(3):vectors.append(list(struct.unpack_from('='+str(count)+'d',raw,at)));at+=8*count
+        number();number();number()
+        if key[0]!=0:post+=1;continue
+        nh=(len(key)-4)//4;h=struct.unpack_from('=h',key,len(key)-2)[0];own=list(model.classes()[h][0]);b=betting(rules)
+        for j in range(nh):
+            rnd,p,a=struct.unpack_from('=bbh',key,1+4*j)
+            if rnd!=0 or b.actor!=p:raise ValueError('bootstrap publichistory')
+            act(b,a if a in (0,1) else 3 if a==-3 else a+2)
+        o=observe(b,own,[]);r=q.core.query(o.own,o.board,o.actor,o.round,o.history,o.actions,o.live,o.street,o.remaining,o.price,True)
+        if r['key']!=key:raise ValueError('bootstrap preflop key')
+        new=r['actions'];prior=[r['probabilities'][o.actions.index(a)] for a in new];R=[1e-6*p for p in prior];A=[1e-3*p for p in prior]
+        for j,a in enumerate(new):
+            if a in actions:R[j]+=vectors[0][actions.index(a)];A[j]+=vectors[1][actions.index(a)]
+        rows.append(dict(key=key,actions=new,R=R,A=A,prior=prior))
+    if at!=len(raw):raise ValueError('bootstrap trailing bytes')
+    q.core.seed_preflop(rows);q.identity['bootstrap']=dict(checkpoint_sha256=meta['sha256'],source_identity=meta['identity'],source_iterations=old_iterations,imported_preflop_rows=len(rows),postflop_rows_not_imported=post,scope='finitewarm; no inherited current visits, iteration or RNG')
+    return dict(preflop_rows=len(rows),postflop_rows=post,old_iterations=old_iterations)

@@ -1,0 +1,85 @@
+{
+  "records": [
+    {
+      "seed": 17120101,
+      "paired_native_EV_change": {
+        "legacy": {
+          "n": 8192,
+          "mean": -0.0229339599609375,
+          "variance": 27.311996496479754,
+          "radius": 1.0558601422152847,
+          "interval": [
+            -1.0787941021762222,
+            1.0329261822543472
+          ]
+        },
+        "detailed": {
+          "n": 8192,
+          "mean": 0.0,
+          "variance": 0.0,
+          "radius": 0.7580091526422331,
+          "interval": [
+            -0.7580091526422331,
+            0.7580091526422331
+          ]
+        }
+      },
+      "formal_pass": false,
+      "paired_3p5_gain_reduction_bb": {
+        "n": 32768,
+        "mean": -0.003709773824672507,
+        "variance": 26.062163931768485,
+        "radius": 0.44567501582168867,
+        "interval": [
+          -0.4493847896463612,
+          0.44196524199701614
+        ]
+      }
+    },
+    {
+      "seed": 17120102,
+      "paired_native_EV_change": {
+        "legacy": {
+          "n": 8192,
+          "mean": 0.10126348938604797,
+          "variance": 18.205484618373838,
+          "radius": 1.0011866839819936,
+          "interval": [
+            -0.8999231945959456,
+            1.1024501733680416
+          ]
+        },
+        "detailed": {
+          "n": 8192,
+          "mean": 0.0,
+          "variance": 0.0,
+          "radius": 0.7580091526422331,
+          "interval": [
+            -0.7580091526422331,
+            0.7580091526422331
+          ]
+        }
+      },
+      "formal_pass": false,
+      "paired_3p5_gain_reduction_bb": {
+        "n": 32768,
+        "mean": 0.024410556061099275,
+        "variance": 17.84523805017962,
+        "radius": 0.42285163207585674,
+        "interval": [
+          -0.3984410760147575,
+          0.447262188136956
+        ]
+      }
+    }
+  ],
+  "confidence_family": 0.999,
+  "allocation": {
+    "native": 0.0002,
+    "confirmation": 0.0002,
+    "allrootEV": 0.0003,
+    "jamEV": 0.0003
+  },
+  "full_native_BR_upper": null,
+  "formal_pass": false
+}

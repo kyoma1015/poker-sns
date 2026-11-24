@@ -21,7 +21,7 @@ class SparseNative(unittest.TestCase):
         cls.data=dict(classes=classes,pi=np.array([],dtype=float),support=np.array([],dtype=np.uint8),nodes=[],equity=[.5]*169)
     @classmethod
     def tearDownClass(cls):cls.temp.cleanup()
-    def core(self,stacks=(100,100),full=False,fine=True,cap=1000000):return self.module.Sparse(NativeGame(list(stacks)),self.data,17124001,full,fine,400000,cap)
+    def core(self,stacks=(100,100),full=False,fine=True,cap=1000000,sharing=False,extra=()):return self.module.Sparse(NativeGame(list(stacks)),dict(self.data,sharing=sharing,extra_support=list(extra)),17124001,full,fine,400000,cap)
     def query(self,q,b,own=(48,49),board=(),average=False):
         o=observe(b,own,board)
         return q.query(o.own,o.board,o.actor,o.round,o.history,o.actions,o.live,o.street,o.remaining,o.price,average)
@@ -45,6 +45,39 @@ class SparseNative(unittest.TestCase):
         self.assertEqual(set(r['actions']),set(legal(b)))
         self.assertAlmostEqual(sum(r['probabilities']),1.)
         self.assertGreater(r['probabilities'][legal(b).index(1)],0.)
+    def test_compact_shares_suit_isomorphs_and_keeps_category_draw_and_public_history(self):
+        q=self.core(sharing=True);b=betting(self.rules);act(b,8);act(b,1)
+        own=(44,45);board=(0,5,10)
+        k=self.query(q,b,own,board)['key']
+        perm=lambda c:4*(c//4)+(c%4+1)%4
+        self.assertEqual(k,self.query(q,b,tuple(map(perm,own)),tuple(map(perm,board)))['key'])
+        self.assertNotEqual(k,self.query(q,b,own,(46,5,10))['key'])
+        self.assertNotEqual(self.query(q,b,(48,20),(0,4,9))['key'],self.query(q,b,(49,21),(0,4,9))['key'])
+        other=betting(self.rules);act(other,9);act(other,1)
+        self.assertNotEqual(k,self.query(q,other,own,board)['key'])
+    def test_adaptive_public_node_support_is_not_a_fixed_size_patch(self):
+        for action in (10,18,37,73):
+            q=self.core(extra=[dict(round=0,history=[],actions=[action])]);r=self.query(q,betting(self.rules))
+            self.assertIn(action,r['actions']);self.assertAlmostEqual(sum(r['probabilities']),1.)
+        q=self.core(extra=[dict(round=0,history=[[0,0,7,7,5]],actions=[24])]);b=betting(self.rules);act(b,9)
+        self.assertIn(24,self.query(q,b)['actions'])
+    def test_batched_root_EV_matches_independent_fold_settlement_oracle(self):
+        q=self.core();b=betting(self.rules);act(b,102);seed=[]
+        for group in model.classes():
+            row=self.query(q,b,group[0]);seed.append(dict(key=row['key'],actions=[0,1],R=[1.,0.],A=[1.,0.],prior=[1.,0.]))
+        q.seed_preflop(seed);before=q.stats();r=q.root_ev([list(g[0]) for g in model.classes()[:3]],4,17127001,10.)
+        self.assertEqual(before,q.stats());self.assertEqual(len(r['actions']),99)
+        for row in r['rows']:
+            self.assertEqual(row['samples'],4)
+            for action,expected in ((0,-.5),(102,1.)):
+                k=r['actions'].index(action);self.assertEqual(row['sum'][k]/4,expected)
+                self.assertEqual(row['square'][k]/4,expected**2)
+    def test_shared_rank_memory_prevents_known_paired_board_information_loss(self):
+        q=self.core(sharing=True);b=betting(self.rules);act(b,8);act(b,1)
+        for _ in range(4):act(b,1)
+        board=(4,5,16,31,50)
+        self.assertNotEqual(self.query(q,b,(44,37),board)['key'],self.query(q,b,(40,33),board)['key'])
+        self.assertNotEqual(self.query(q,b,(48,28),board)['key'],self.query(q,b,(48,8),board)['key'])
     def test_refinement_splits_pair_and_set_aliased_by_old_flag(self):
         b=betting(self.rules);act(b,8);act(b,1)
         weak=(0,5,10);strong=(46,5,10)

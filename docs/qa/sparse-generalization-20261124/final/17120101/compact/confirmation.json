@@ -1,0 +1,17 @@
+{
+  "formal_pass": false,
+  "n": 32768,
+  "open3p5_gain_bb": {
+    "interval": [
+      -0.015964436013905625,
+      0.7387660298329555
+    ],
+    "mean": 0.3614007969095249,
+    "n": 32768,
+    "radius": 0.37736523292343055,
+    "variance": 72.5179126614712
+  },
+  "policy_digest": "df24ef6adecd2e18bbd92a68005c18c6d65c35c1dbf6d68a7a2a786ffa3390ff",
+  "seconds": 10.429612912001176,
+  "seed": 17129701
+}

@@ -1,0 +1,118 @@
+{
+  "bootstrap": {
+    "old_iterations": 64,
+    "postflop_rows": 58180,
+    "preflop_rows": 1060
+  },
+  "curve": [
+    {
+      "coverage": {
+        "0": {
+          "default": 10,
+          "queries": 888,
+          "trained": 0,
+          "warm_only": 878
+        },
+        "1": {
+          "default": 8,
+          "queries": 439,
+          "trained": 0,
+          "warm_only": 431
+        },
+        "2": {
+          "default": 10,
+          "queries": 242,
+          "trained": 0,
+          "warm_only": 232
+        },
+        "3": {
+          "default": 14,
+          "queries": 134,
+          "trained": 0,
+          "warm_only": 120
+        }
+      },
+      "elapsed_seconds": 0.2582838910002465,
+      "iterations": 0,
+      "path_coverage": {
+        "current_untrained": 512,
+        "no_parent_or_current": 17
+      },
+      "pure_training_seconds": 0.0,
+      "selection_EV_bb": 0.4779533617424243,
+      "selection_open3p5_gain_bb": -0.11223070549242431,
+      "stats": {
+        "action_entries": 8371,
+        "average_visited": 0,
+        "estimated_row_bytes": 543536,
+        "iterations": 0,
+        "regret_visited": 0,
+        "rows": 1060
+      }
+    },
+    {
+      "coverage": {
+        "0": {
+          "default": 27,
+          "queries": 905,
+          "trained": 316,
+          "warm_only": 562
+        },
+        "1": {
+          "default": 56,
+          "queries": 450,
+          "trained": 178,
+          "warm_only": 216
+        },
+        "2": {
+          "default": 52,
+          "queries": 217,
+          "trained": 14,
+          "warm_only": 151
+        },
+        "3": {
+          "default": 59,
+          "queries": 140,
+          "trained": 1,
+          "warm_only": 80
+        }
+      },
+      "elapsed_seconds": 1.0203361490002862,
+      "iterations": 64,
+      "path_coverage": {
+        "current_untrained": 417,
+        "no_parent_or_current": 65
+      },
+      "pure_training_seconds": 0.5480227410007501,
+      "selection_EV_bb": -0.05418688841540409,
+      "selection_open3p5_gain_bb": 0.2646361071654041,
+      "stats": {
+        "action_entries": 301593,
+        "average_visited": 46092,
+        "estimated_row_bytes": 25358952,
+        "iterations": 64,
+        "regret_visited": 8067,
+        "rows": 54795
+      }
+    }
+  ],
+  "elapsed_seconds": 4.923048509000182,
+  "extra_support": [
+    {
+      "actions": [
+        18,
+        19
+      ],
+      "history": [],
+      "round": 0
+    }
+  ],
+  "formal_pass": false,
+  "peak_RSS_bytes": 438968320,
+  "policy_digest": "1c4e487b78e3f62534aef6c6c28112e8c76063411e1798dc483a73ef5ac31bb2",
+  "pure_training_seconds": 2.5682298089986944,
+  "seed": 17120102,
+  "selected_iterations": 64,
+  "sharing": true,
+  "stop_reason": "row budget; incomplete pair discarded"
+}
