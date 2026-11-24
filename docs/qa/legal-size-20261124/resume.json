@@ -1,0 +1,24 @@
+[
+  {
+    "seed": 17120101,
+    "policy_digest": "4864081d387096007ed3db55b56bf50c496293e3f744dfc79e93142eed1e2984",
+    "resume_complete": [
+      true,
+      true
+    ],
+    "identical_next_checkpoint_sha256": "2d2798768b58965dbaf0dc6234d25156585c26f9d77f2dfadc7ec262c0cddd19",
+    "original_archive_unchanged": true,
+    "seconds": 1.7332873489995109
+  },
+  {
+    "seed": 17120102,
+    "policy_digest": "fd8d2219e1435433e6d8890baaea652c77f2972adff30848d82282bd86e012a7",
+    "resume_complete": [
+      true,
+      true
+    ],
+    "identical_next_checkpoint_sha256": "4fea0180f67682fc1878e9de430b8df1424bd7b8955ae1a116895d53fc02fb64",
+    "original_archive_unchanged": true,
+    "seconds": 1.618488494000303
+  }
+]

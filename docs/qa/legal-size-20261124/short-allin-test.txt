@@ -1,0 +1,3 @@
+QUALIFICATION_BUILD=/tmp/poker-public-response-build python -B -m unittest gto.qualification.test_sparse_solver.SparseNative.test_short_allin_after_actual_raise_history_uses_native_legal_response -v
+Ran 1 test in 17.949s: OK
+137 prior full-suite tests passed separately; total138 distinct cases. Automatic new CI will run all138 together.

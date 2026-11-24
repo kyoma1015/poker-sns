@@ -1,0 +1,114 @@
+{
+  "formal_acceptance": 0,
+  "records": [
+    {
+      "build_seconds": 0.1365052390000301,
+      "continuation_error_upper": null,
+      "curve": [
+        {
+          "EV_bb": [
+            -0.6162122770919066,
+            1.6272290809327843,
+            -1.011016803840878
+          ],
+          "action_scope": "native preflop fold/call/3BB/10BB/shove; explicit postflop check/call",
+          "full_native_BR_upper": null,
+          "full_native_NashConv": null,
+          "independent_path_error_max": 3.552713678800501e-15,
+          "infosets": 673,
+          "iterations": 0,
+          "nodes": 327,
+          "ordinary_registry_admission": false,
+          "players": 3,
+          "restricted_BR_bb": [
+            2.2962962962962967,
+            4.947530864197531,
+            0.0
+          ],
+          "restricted_gain_bb": [
+            2.9125085733882035,
+            3.3203017832647466,
+            1.011016803840878
+          ],
+          "sum_restricted_unilateral_gains_bb": 7.243827160493828
+        },
+        {
+          "EV_bb": [
+            -0.671822936873208,
+            0.7882883943017149,
+            -0.11646545742850692
+          ],
+          "action_scope": "native preflop fold/call/3BB/10BB/shove; explicit postflop check/call",
+          "full_native_BR_upper": null,
+          "full_native_NashConv": null,
+          "independent_path_error_max": 4.440892098500626e-16,
+          "infosets": 673,
+          "iterations": 8,
+          "nodes": 327,
+          "ordinary_registry_admission": false,
+          "players": 3,
+          "restricted_BR_bb": [
+            -0.47115946646754153,
+            0.8160977978099334,
+            0.0
+          ],
+          "restricted_gain_bb": [
+            0.2006634704056665,
+            0.027809403508218478,
+            0.11646545742850692
+          ],
+          "sum_restricted_unilateral_gains_bb": 0.34493833134239194
+        },
+        {
+          "EV_bb": [
+            -0.512505142909263,
+            0.5205691311274215,
+            -0.008063988218158546
+          ],
+          "action_scope": "native preflop fold/call/3BB/10BB/shove; explicit postflop check/call",
+          "full_native_BR_upper": null,
+          "full_native_NashConv": null,
+          "independent_path_error_max": 6.661338147750939e-16,
+          "infosets": 673,
+          "iterations": 32,
+          "nodes": 327,
+          "ordinary_registry_admission": false,
+          "players": 3,
+          "restricted_BR_bb": [
+            -0.49803626847374227,
+            0.5217752140995878,
+            0.0
+          ],
+          "restricted_gain_bb": [
+            0.014468874435520696,
+            0.0012060829721662891,
+            0.008063988218158546
+          ],
+          "sum_restricted_unilateral_gains_bb": 0.023738945625845533
+        }
+      ],
+      "full_native_BR_upper": null,
+      "full_native_NashConv": null,
+      "omitted_action_error_upper": null,
+      "players": 3,
+      "scope": "native preflop fold/call/3BB/10BB/shove; explicit postflop check/call",
+      "seconds": 0.7735532220000323,
+      "status": "COMPLETE_FINITE_SCOPE_ONLY"
+    },
+    {
+      "no_partial_policy_or_BR": true,
+      "players": 6,
+      "reason": "finite tree/time cap; nodes=2000",
+      "seconds": 0.8549210889999586,
+      "status": "BLOCKED_INCOMPLETE_TREE"
+    },
+    {
+      "no_partial_policy_or_BR": true,
+      "players": 9,
+      "reason": "finite tree/time cap; nodes=2000",
+      "seconds": 1.0428757790000418,
+      "status": "BLOCKED_INCOMPLETE_TREE"
+    }
+  ],
+  "verified_strategies": 0
+}

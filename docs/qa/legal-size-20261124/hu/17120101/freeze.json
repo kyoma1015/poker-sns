@@ -1,0 +1,8 @@
+{
+  "final_evaluations": 0,
+  "iterations": 256,
+  "policy_digest": "a6f917993067d09d718afc8c0fdc80fce107d45291cdb8e3acaf7deee41258ab",
+  "selection_finished": true,
+  "source_sha256": "b338d101f487362b71a5c59471897f0c2e73e376732483734a92fb5204462fce",
+  "stop_reason": "128MiB sparse row budget; incomplete pair discarded"
+}

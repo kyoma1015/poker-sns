@@ -1,0 +1,102 @@
+{
+  "base": "d1ce78882afa9624d78cd48cdcfee3dc9f522e10",
+  "formal_pass": 0,
+  "previous_formal_pass": 0,
+  "verified_RFI": 0,
+  "verified_3bet": 0,
+  "items": [
+    {
+      "id": 1,
+      "requirement": "RFI",
+      "formal_pass": false,
+      "current": "HU50 two policies; quality not accepted",
+      "missing_next": "Generalize trained continuation and bound independent BR"
+    },
+    {
+      "id": 2,
+      "requirement": "vs-open/3bet",
+      "formal_pass": false,
+      "current": "169 rows at3/3.5BB; off-tree legal response",
+      "missing_next": "Adaptive raise support + downstream learning; certify error"
+    },
+    {
+      "id": 3,
+      "requirement": "vs3bet/4bet",
+      "formal_pass": false,
+      "current": "169 rows10/10.5BB; quality unknown",
+      "missing_next": "Learn further raise responses and evaluate all legal sizes"
+    },
+    {
+      "id": 4,
+      "requirement": "169 frequencies",
+      "formal_pass": false,
+      "current": "5 contexts x169 x2 saved; warm/prior included",
+      "missing_next": "Train/validate all required profiles, retain exact frequencies"
+    },
+    {
+      "id": 5,
+      "requirement": "Verified EV",
+      "formal_pass": false,
+      "current": "676 root cells measured;32786 unknown; max jam width.634139BB",
+      "missing_next": "Conditional action estimators for remaining97 root actions and later contexts"
+    },
+    {
+      "id": 6,
+      "requirement": "MTT/ring",
+      "formal_pass": false,
+      "current": "ResearchHU50 zero-rake only",
+      "missing_next": "Owner-approved mode profiles; condition-specific engine validation"
+    },
+    {
+      "id": 7,
+      "requirement": "2\u20139 players",
+      "formal_pass": false,
+      "current": "3-player restricted joint game;6/9 >20000nodes incomplete",
+      "missing_next": "Bounded multiway sampling + independent unilateral BR"
+    },
+    {
+      "id": 8,
+      "requirement": "Formal stacks",
+      "formal_pass": false,
+      "current": "Formal20 values PENDING",
+      "missing_next": "Owner approves source/list; generate and qualify all profiles"
+    },
+    {
+      "id": 9,
+      "requirement": "Positions",
+      "formal_pass": false,
+      "current": "HU SB/BB;3-player finite shared infosets",
+      "missing_next": "All seat information constraints + qualified positional data"
+    },
+    {
+      "id": 10,
+      "requirement": "BB ante/rake/unequal stacks",
+      "formal_pass": false,
+      "current": "Native settlement/oracles replayed; no qualified strategy",
+      "missing_next": "Approved profile values + condition-matched multiway training"
+    },
+    {
+      "id": 11,
+      "requirement": "Formal sizing",
+      "formal_pass": false,
+      "current": "Native99 root actions,10 trained support;89 omitted raises",
+      "missing_next": "Adaptive sparse sizing + omitted-size error bound; formal list approval separate"
+    },
+    {
+      "id": 12,
+      "requirement": "Poker ID search",
+      "formal_pass": false,
+      "current": "Existing connection preserved;ordinary verified registry0",
+      "missing_next": "Only accepted certificate/digest enters registry/search"
+    }
+  ],
+  "approval_pending": [
+    "formal20 stack values",
+    "MTT/ring profiles",
+    "formal size profiles",
+    "ante type/amount",
+    "rake/cap",
+    "unequal-stack profile matrix"
+  ],
+  "scope": "2..9 players; HU50 is not initial release"
+}

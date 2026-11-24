@@ -1,0 +1,22 @@
+{
+  "artifacts_sha256": {
+    "6max-build-probe.json": "ee78dec2069c2e23e67df2c81a2bda4885637a6238b1dd4dba70f5402874198c",
+    "PROTOCOL.md": "88191fa63709887259c2859d9c34769024eca89a141309b44c8209a7f4ae8bf1",
+    "README.md": "99950735ac7a4d33ed9c5cc32ea59c37a24c16d6098bb31f760199b9f37ca24d",
+    "compatibility-tests.txt": "58436815ffe587e38fa236eea6adfcd177435fd61841ab011b68d11d371bcde6",
+    "expanded-3max-checkpoint.json": "b1b4a3beadf112b81b13b9a966fab23220c8caf2765a1f2964a15ed6f01f3c91",
+    "focused-tests.txt": "5b2d627d0fd7409af4c212e905b6296e451241f048b5bce83ab7d8974328ee96",
+    "resource-usage.json": "98d98431e15f24838148a326c2a6dc453dc1c38fa911c34f255d06ee333c8f9e",
+    "results.json": "ffb10cc6a46113987fce82948dc6bb54bc00a43f79a376283296cd36306ce978"
+  },
+  "legacy_identity_requires_matching_native_binary": true,
+  "legacy_source_git_ref": "d1ce78882afa9624d78cd48cdcfee3dc9f522e10:gto/qualification/multiplayer_joint.py",
+  "legacy_source_sha256": "d8c2cf2f43dba1cb41d00a9e504ed8d9587534bc290d34c6a2cd76e97e88db4f",
+  "ordinary_registry_admission": false,
+  "source_head": "d1ce78882afa9624d78cd48cdcfee3dc9f522e10",
+  "source_sha256": {
+    "gto/qualification/multiplayer_joint.py": "b2f070ce653862c7a4769d04be6e9fd5ea47ae3ec223e0b9838a1a107fa268b8",
+    "gto/qualification/test_multiplayer_expanded.py": "48ec954b8f1d2514692b786e114f580a77a26580d30742c1083b0c5b2a4550e1"
+  },
+  "verified_strategies": 0
+}

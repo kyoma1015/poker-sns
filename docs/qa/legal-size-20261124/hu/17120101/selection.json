@@ -1,0 +1,46 @@
+{
+  "curve": [
+    {
+      "iterations": 0,
+      "selection": {
+        "SB_EV_bb": 0.13724155618686862,
+        "n": 256,
+        "open3p5_gain_bb": 0.13424281881313135
+      }
+    },
+    {
+      "iterations": 64,
+      "seconds": 0.8732289869999477,
+      "selection": {
+        "SB_EV_bb": 0.7095071811868686,
+        "n": 256,
+        "open3p5_gain_bb": -0.4380228061868686
+      },
+      "stats": {
+        "action_entries": 292873,
+        "average_visited": 45847,
+        "estimated_row_bytes": 26239800,
+        "iterations": 64,
+        "regret_visited": 8202,
+        "rows": 53854
+      }
+    },
+    {
+      "iterations": 256,
+      "seconds": 4.181018083000026,
+      "selection": {
+        "SB_EV_bb": 0.7441356928661617,
+        "n": 256,
+        "open3p5_gain_bb": -0.5078075678661617
+      },
+      "stats": {
+        "action_entries": 1341828,
+        "average_visited": 214524,
+        "estimated_row_bytes": 123254640,
+        "iterations": 256,
+        "regret_visited": 41330,
+        "rows": 254983
+      }
+    }
+  ]
+}

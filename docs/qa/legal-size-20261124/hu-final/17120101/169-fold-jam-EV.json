@@ -1,0 +1,3905 @@
+{
+  "allocated_delta": 0.0004,
+  "bb_call_probabilities": [
+    0.7346685082872977,
+    0.42935523868568326,
+    0.2655995343422626,
+    0.40466830466830905,
+    0.44606986899563766,
+    0.28775689958896483,
+    0.31030805687204205,
+    0.3804321363359751,
+    0.42107540173053587,
+    0.3566344993968679,
+    0.3566344993968679,
+    0.15025510204082035,
+    0.24382573571841146,
+    0.4629943502824903,
+    0.7243977976600187,
+    0.4376865671641834,
+    0.3255661501787885,
+    0.38846153846154274,
+    0.24382573571841146,
+    0.1630102040816367,
+    0.2510416666666707,
+    0.40466830466830905,
+    0.18214285714286116,
+    0.2655995343422626,
+    0.18214285714286116,
+    0.175765306122453,
+    0.5328718609143639,
+    0.42107540173053587,
+    0.8194602272727322,
+    0.3804321363359751,
+    0.22951807228916069,
+    0.25829947765525657,
+    0.1630102040816367,
+    0.3487973541791985,
+    0.20138967668746854,
+    0.0816326530612245,
+    0.16938775510204482,
+    0.36451905626134723,
+    0.0816326530612245,
+    0.3965401102265811,
+    0.18852040816326932,
+    0.38846153846154274,
+    0.60644415069399,
+    0.16938775510204482,
+    0.1630102040816367,
+    0.20138967668746854,
+    0.2510416666666707,
+    0.15025510204082035,
+    0.0816326530612245,
+    0.15025510204082035,
+    0.15025510204082032,
+    0.08163265306122448,
+    0.31030805687204216,
+    0.3255661501787885,
+    0.11198979591837135,
+    0.21537364517969596,
+    0.5691780821917853,
+    0.1630102040816367,
+    0.10561224489796318,
+    0.11836734693877952,
+    0.0816326530612245,
+    0.1566326530612285,
+    0.09923469387755503,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.3027466036621424,
+    0.24382573571841143,
+    0.2510416666666707,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.5691780821917853,
+    0.13112244897959585,
+    0.0816326530612245,
+    0.08647959183673871,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.08163265306122448,
+    0.0816326530612245,
+    0.27294220665499536,
+    0.1948979591836775,
+    0.18852040816326932,
+    0.16938775510204482,
+    0.2295180722891607,
+    0.0816326530612245,
+    0.44606986899563766,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.34100719424460857,
+    0.28775689958896483,
+    0.15025510204082032,
+    0.16301020408163672,
+    0.09923469387755501,
+    0.0816326530612245,
+    0.11836734693877952,
+    0.5328718609143639,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.30274660366214234,
+    0.08163265306122448,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.08163265306122448,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.28032786885246314,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.3103080568720421,
+    0.21537364517969596,
+    0.08163265306122451,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.08163265306122448,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.08647959183673871,
+    0.36451905626134723,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.08163265306122448,
+    0.21537364517969598,
+    0.16938775510204482,
+    0.09285714285714686,
+    0.0816326530612245,
+    0.1630102040816367,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.08163265306122451,
+    0.0816326530612245,
+    0.19489795918367747,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.13112244897959585,
+    0.22951807228916069,
+    0.11198979591837135,
+    0.0816326530612245,
+    0.08163265306122448,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.08163265306122448,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.11198979591837134,
+    0.0816326530612245,
+    0.21537364517969596,
+    0.11836734693877951,
+    0.08163265306122448,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.08163265306122448,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.0816326530612245,
+    0.17576530612245303
+  ],
+  "completed_classes": 169,
+  "confidence_family": 0.999,
+  "full169_action_precision": null,
+  "max_jam_width": 0.6341387000159497,
+  "method": "exact opponentprivate enumeration and mixed fold/call integration; independent uniform conditionalboards; weighted Hoeffding perhero suit-orbit",
+  "ordinary_registry_admission": false,
+  "other_native_action_EV": null,
+  "policy_digest": "4864081d387096007ed3db55b56bf50c496293e3f744dfc79e93142eed1e2984",
+  "rng_seed": 34246502,
+  "rows": {
+    "22": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.07296224110053767,
+          0.561176458915412
+        ],
+        "mean": 0.2441071089074372,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31706935000797487
+      }
+    },
+    "32o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -3.2567266725458106,
+          -2.6231663603178434
+        ],
+        "mean": -2.939946516431827,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3167801561139838
+      }
+    },
+    "32s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.413788838445022,
+          -1.7802285262170547
+        ],
+        "mean": -2.0970086823310385,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3167801561139838
+      }
+    },
+    "33": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.22237465082026325,
+          0.8554980726391748
+        ],
+        "mean": 0.538936361729719,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3165617109094558
+      }
+    },
+    "42o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -3.0073318030691647,
+          -2.3746247312193107
+        ],
+        "mean": -2.6909782671442377,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31635353592492677
+      }
+    },
+    "42s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.323869691230266,
+          -1.6911626193804128
+        ],
+        "mean": -2.0075161553053396,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31635353592492677
+      }
+    },
+    "43o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.788860723630765,
+          -2.156618894236676
+        ],
+        "mean": -2.4727398089337207,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3161209146970445
+      }
+    },
+    "43s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.167990759525405,
+          -1.535748930131316
+        ],
+        "mean": -1.8518698448283606,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3161209146970445
+      }
+    },
+    "44": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.7369588946892407,
+          1.3684938267887439
+        ],
+        "mean": 1.0527263607389923,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3157674660497516
+      }
+    },
+    "52o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.9138182099723453,
+          -2.2828300251937117
+        ],
+        "mean": -2.5983241175830285,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.315494092389317
+      }
+    },
+    "52s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.350004535517826,
+          -1.7190163507391916
+        ],
+        "mean": -2.0345104431285086,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.315494092389317
+      }
+    },
+    "53o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.6338797806937406,
+          -2.00335810668324
+        ],
+        "mean": -2.3186189436884903,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3152608370052504
+      }
+    },
+    "53s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.8636497427443772,
+          -1.2331280687338766
+        ],
+        "mean": -1.548388905739127,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3152608370052504
+      }
+    },
+    "54o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.2693955731454993,
+          -1.6397312570727045
+        ],
+        "mean": -1.9545634151091018,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31483215803639736
+      }
+    },
+    "54s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.7178423952140267,
+          -1.088178079141232
+        ],
+        "mean": -1.4030102371776294,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31483215803639736
+      }
+    },
+    "55": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          1.182592464805791,
+          1.8111295012978499
+        ],
+        "mean": 1.4968609830518205,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31426851824602947
+      }
+    },
+    "62o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -3.0432107529301615,
+          -2.4118322588134835
+        ],
+        "mean": -2.7275215058718225,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31568924705833906
+      }
+    },
+    "62s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.3806684352834715,
+          -1.7492899411667935
+        ],
+        "mean": -2.0649791882251325,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31568924705833906
+      }
+    },
+    "63o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.762736465578124,
+          -2.1318241936259827
+        ],
+        "mean": -2.4472803296020533,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31545613597607064
+      }
+    },
+    "63s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.025258918898962,
+          -1.3943466469468206
+        ],
+        "mean": -1.7098027829228912,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31545613597607064
+      }
+    },
+    "64o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.395408361510749,
+          -1.7653529159837473
+        ],
+        "mean": -2.0803806387472483,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31502772276350094
+      }
+    },
+    "64s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.6926043609270482,
+          -1.0625489154000463
+        ],
+        "mean": -1.3775766381635473,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31502772276350094
+      }
+    },
+    "65o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.0767620654076437,
+          -1.4484288881355436
+        ],
+        "mean": -1.7625954767715937,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3141665886360502
+      }
+    },
+    "65s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.4338364990448245,
+          -0.8055071944603186
+        ],
+        "mean": -1.1196718467525715,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3141646522922529
+      }
+    },
+    "66": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          1.5892556756990577,
+          2.2183184528816913
+        ],
+        "mean": 1.9037870642903745,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3145313885913169
+      }
+    },
+    "72o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -3.0242708107768506,
+          -2.3978773463118017
+        ],
+        "mean": -2.711074078544326,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3131967322325243
+      }
+    },
+    "72s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.371274478991018,
+          -1.7448810145259692
+        ],
+        "mean": -2.0580777467584936,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3131967322325243
+      }
+    },
+    "73o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.746116946669532,
+          -2.120193417481425
+        ],
+        "mean": -2.4331551820754784,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31296176459405334
+      }
+    },
+    "73s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.1683538008548036,
+          -1.5424302716666967
+        ],
+        "mean": -1.85539203626075,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31296176459405334
+      }
+    },
+    "74o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.379701972585721,
+          -1.7546421083089376
+        ],
+        "mean": -2.0671720404473293,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3125299321383917
+      }
+    },
+    "74s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.7461712980300288,
+          -1.1211114337532455
+        ],
+        "mean": -1.4336413658916372,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3125299321383917
+      }
+    },
+    "75o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.147125624451475,
+          -1.5238057350759389
+        ],
+        "mean": -1.835465679763707,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3116599446877681
+      }
+    },
+    "75s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.4296413056527968,
+          -0.8063214162772605
+        ],
+        "mean": -1.1179813609650286,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3116599446877681
+      }
+    },
+    "76o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.796237573902108,
+          -1.172522576492282
+        ],
+        "mean": -1.484380075197195,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31185749870491297
+      }
+    },
+    "76s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.105329378924532,
+          -0.4816143815147059
+        ],
+        "mean": -0.7934718802196189,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31185749870491297
+      }
+    },
+    "77": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          2.010173364136199,
+          2.6301786092908563
+        ],
+        "mean": 2.3201759867135276,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3100026225773288
+      }
+    },
+    "82o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.752723325590563,
+          -2.1237807977698386
+        ],
+        "mean": -2.438252061680201,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.314471263910362
+      }
+    },
+    "82s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.1200728245110696,
+          -1.4911302966903455
+        ],
+        "mean": -1.8056015606007074,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.314471263910362
+      }
+    },
+    "83o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.695015289848981,
+          -2.066540791266667
+        ],
+        "mean": -2.380778040557824,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31423724929115693
+      }
+    },
+    "83s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.151357680252632,
+          -1.5228831816703183
+        ],
+        "mean": -1.8371204309614753,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31423724929115693
+      }
+    },
+    "84o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.4383901271866244,
+          -1.8107757830972733
+        ],
+        "mean": -2.124582955141949,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3138071720446757
+      }
+    },
+    "84s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.7751603532236735,
+          -1.147546009134322
+        ],
+        "mean": -1.4613531811789977,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3138071720446757
+      }
+    },
+    "85o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.0667208137531805,
+          -1.4408393429712707
+        ],
+        "mean": -1.7537800783622255,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31294073539095485
+      }
+    },
+    "85s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.428751191839772,
+          -0.8028697210578624
+        ],
+        "mean": -1.1158104564488172,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31294073539095485
+      }
+    },
+    "86o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.7872451875758621,
+          -1.1609702248231308
+        ],
+        "mean": -1.4741077061994965,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31313748137636566
+      }
+    },
+    "86s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.1376835128089262,
+          -0.5114085500561949
+        ],
+        "mean": -0.8245460314325606,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31313748137636566
+      }
+    },
+    "87o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.527795632055745,
+          -0.9065113341131716
+        ],
+        "mean": -1.2171534830844584,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3106421489712867
+      }
+    },
+    "87s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.9239386866854606,
+          -0.3026897040203644
+        ],
+        "mean": -0.6133141953529125,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31062449133254816
+      }
+    },
+    "88": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          2.5917181277629298,
+          3.2164571522949585
+        ],
+        "mean": 2.904087640028944,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3123695122660142
+      }
+    },
+    "92o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.620604760308131,
+          -1.9936067012897953
+        ],
+        "mean": -2.307105730798963,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31349902950916786
+      }
+    },
+    "92s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.8196807675494489,
+          -1.192682708531113
+        ],
+        "mean": -1.5061817380402809,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31349902950916786
+      }
+    },
+    "93o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.3976761141325307,
+          -1.7711475369075735
+        ],
+        "mean": -2.084411825520052,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31326428861247857
+      }
+    },
+    "93s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.761036891710735,
+          -1.134508314485778
+        ],
+        "mean": -1.4477726030982565,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31326428861247857
+      }
+    },
+    "94o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.3876007093084963,
+          -1.7619349617899471
+        ],
+        "mean": -2.074767835549222,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31283287375927465
+      }
+    },
+    "94s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.6883193939905312,
+          -1.0626536464719818
+        ],
+        "mean": -1.3754865202312565,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31283287375927465
+      }
+    },
+    "95o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.9919087228792627,
+          -1.3679812606055104
+        ],
+        "mean": -1.6799449917423865,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31196373113687625
+      }
+    },
+    "95s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.4093444766985224,
+          -0.78541701442477
+        ],
+        "mean": -1.0973807455616462,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31196373113687625
+      }
+    },
+    "96o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.654776480776428,
+          -1.0304542949763609
+        ],
+        "mean": -1.3426153878763945,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31216109290003347
+      }
+    },
+    "96s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.1200151546884045,
+          -0.4956890713446301
+        ],
+        "mean": -0.8078521130165173,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3121630416718872
+      }
+    },
+    "97o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.4292722059256882,
+          -0.8099918484351121
+        ],
+        "mean": -1.1196320271804001,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.309640178745288
+      }
+    },
+    "97s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.8641943604754478,
+          -0.24491400298487181
+        ],
+        "mean": -0.5545541817301598,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.309640178745288
+      }
+    },
+    "98o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.143250008803819,
+          -0.5213914299045235
+        ],
+        "mean": -0.8323207193541713,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31092928944964776
+      }
+    },
+    "98s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.6504642336144577,
+          -0.028555093139718546
+        ],
+        "mean": -0.3395096633770881,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31095457023736955
+      }
+    },
+    "99": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          3.0042198575086663,
+          3.6256384468209997
+        ],
+        "mean": 3.314929152164833,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31070929465616653
+      }
+    },
+    "A2o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.2611137459406353,
+          0.864238599858223
+        ],
+        "mean": 0.5626761728994292,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30156242695879387
+      }
+    },
+    "A2s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.7669217998722111,
+          1.370111341115599
+        ],
+        "mean": 1.068516570493905,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30159477062169393
+      }
+    },
+    "A3o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.4525344564722373,
+          1.05502655166987
+        ],
+        "mean": 0.7537805040710537,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3012460475988164
+      }
+    },
+    "A3s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.9522415168104812,
+          1.5547602952079058
+        ],
+        "mean": 1.2535009060091935,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30125938919871237
+      }
+    },
+    "A4o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.5733982742915106,
+          1.1751379613807837
+        ],
+        "mean": 0.8742681178361471,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30086984354463653
+      }
+    },
+    "A4s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.923096356250775,
+          1.5252369146586677
+        ],
+        "mean": 1.2241666354547214,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30107027920394636
+      }
+    },
+    "A5o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.6572867299130232,
+          1.2574671747995791
+        ],
+        "mean": 0.9573769523563012,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30009022244327804
+      }
+    },
+    "A5s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          1.111056151160936,
+          1.7113903103099795
+        ],
+        "mean": 1.4112232307354577,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30016707957452166
+      }
+    },
+    "A6o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.6699471901873403,
+          1.2705149160818605
+        ],
+        "mean": 0.9702310531346005,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30028386294726017
+      }
+    },
+    "A6s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          1.0921752625504275,
+          1.693168724641468
+        ],
+        "mean": 1.3926719935959477,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30049673104552016
+      }
+    },
+    "A7o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.8992472335148535,
+          1.4946955273904199
+        ],
+        "mean": 1.1969713804526367,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.29772414693778326
+      }
+    },
+    "A7s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          1.3839192451138733,
+          1.97951016838755
+        ],
+        "mean": 1.6817147067507117,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.2977954616368383
+      }
+    },
+    "A8o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          1.144940493472327,
+          1.7428610696770321
+        ],
+        "mean": 1.4439007815746796,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.2989602881023525
+      }
+    },
+    "A8s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          1.640207699084737,
+          2.2382371134077377
+        ],
+        "mean": 1.9392224062462373,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.2990147071615003
+      }
+    },
+    "A9o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          1.4585927129417124,
+          2.054553581259283
+        ],
+        "mean": 1.7565731471004975,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.29798043415878506
+      }
+    },
+    "A9s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          1.7849889494394493,
+          2.380905462184257
+        ],
+        "mean": 2.082947205811853,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.29795825637240386
+      }
+    },
+    "AA": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          6.344842841328649,
+          6.917766359575673
+        ],
+        "mean": 6.631304600452161,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.28646175912351163
+      }
+    },
+    "AJo": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          2.177116651766714,
+          2.7678747103266232
+        ],
+        "mean": 2.4724956810466687,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.2953790292799543
+      }
+    },
+    "AJs": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          2.520327720424496,
+          3.111118698396292
+        ],
+        "mean": 2.815723209410394,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.29539548898589785
+      }
+    },
+    "AKo": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          2.9059205616667843,
+          3.486467690888645
+        ],
+        "mean": 3.1961941262777147,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.2902735646109304
+      }
+    },
+    "AKs": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          3.059926241760339,
+          3.640318940130311
+        ],
+        "mean": 3.350122590945325,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.2901963491849862
+      }
+    },
+    "AQo": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          2.417496722039433,
+          2.998441920154336
+        ],
+        "mean": 2.7079693210968845,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.2904725990574514
+      }
+    },
+    "AQs": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          2.7160207910473657,
+          3.295867936792235
+        ],
+        "mean": 3.0059443639198005,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.2899235728724347
+      }
+    },
+    "ATo": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          1.9171593254162327,
+          2.510402114392453
+        ],
+        "mean": 2.2137807199043427,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.29662139448811004
+      }
+    },
+    "ATs": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          2.3371747260632185,
+          2.930934203968177
+        ],
+        "mean": 2.634054465015698,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.29687973895247916
+      }
+    },
+    "J2o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.9879581428221222,
+          -1.3662181985646635
+        ],
+        "mean": -1.6770881706933929,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3108699721287294
+      }
+    },
+    "J2s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.2380305206519728,
+          -0.6162905763945141
+        ],
+        "mean": -0.9271605485232435,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3108699721287294
+      }
+    },
+    "J3o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.7516214919956872,
+          -1.130355002997579
+        ],
+        "mean": -1.4409882474966331,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3106332444990541
+      }
+    },
+    "J3s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.1651128874685783,
+          -0.5437699139400243
+        ],
+        "mean": -0.8544414007043013,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3106714867642771
+      }
+    },
+    "J4o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.6845433820400288,
+          -1.0641470410688296
+        ],
+        "mean": -1.3743452115544292,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31019817048559967
+      }
+    },
+    "J4s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.004036144363357,
+          -0.3835632116001932
+        ],
+        "mean": -0.6937996779817751,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3102364663815819
+      }
+    },
+    "J5o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.511416013216714,
+          -0.8927727634742859
+        ],
+        "mean": -1.2020943883455,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3093216248712141
+      }
+    },
+    "J5s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.9929890394707293,
+          -0.37434578972830096
+        ],
+        "mean": -0.6836674145995151,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3093216248712141
+      }
+    },
+    "J6o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.4673076433634122,
+          -0.8482663006772547
+        ],
+        "mean": -1.1577869720203335,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3095206713430788
+      }
+    },
+    "J6s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.9054108378990764,
+          -0.28629273579258
+        ],
+        "mean": -0.5958517868458282,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30955905105324816
+      }
+    },
+    "J7o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.1259062514704024,
+          -0.5118532742818245
+        ],
+        "mean": -0.8188797628761134,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.307026488594289
+      }
+    },
+    "J7s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.6069028444462943,
+          0.007327371375141667
+        ],
+        "mean": -0.29978773653557633,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.307115107910718
+      }
+    },
+    "J8o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.8016041254480566,
+          -0.18494080481081204
+        ],
+        "mean": -0.4932724651294343,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30833166031862225
+      }
+    },
+    "J8s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.2912704486944035,
+          0.3254503305686776
+        ],
+        "mean": 0.017089940937137064,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30836038963154055
+      }
+    },
+    "J9o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.4301828764293961,
+          0.18439010307295509
+        ],
+        "mean": -0.12289638667822053,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3072864897511756
+      }
+    },
+    "J9s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.0029372156396456073,
+          0.617606925713593
+        ],
+        "mean": 0.31027207067661927,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30733485503697366
+      }
+    },
+    "JJ": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          4.2866950813492535,
+          4.897670295794813
+        ],
+        "mean": 4.592182688572033,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30548760722278
+      }
+    },
+    "JTo": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.0938933293244987,
+          0.5182154471683368
+        ],
+        "mean": 0.21216105892191903,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30605438824641773
+      }
+    },
+    "JTs": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.3277934229928373,
+          0.9398158713524755
+        ],
+        "mean": 0.6338046471726564,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3060112241798191
+      }
+    },
+    "K2o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.859425863698024,
+          -0.24762265156132457
+        ],
+        "mean": -0.5535242576296743,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3059016060683497
+      }
+    },
+    "K2s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.2863126141977346,
+          0.3255729990237985
+        ],
+        "mean": 0.019630192413031922,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30594280661076656
+      }
+    },
+    "K3o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.6570503599064555,
+          -0.045539436309175896
+        ],
+        "mean": -0.3512948981078157,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3057554617986398
+      }
+    },
+    "K3s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.19382104810284542,
+          0.4175946277529887
+        ],
+        "mean": 0.11188678982507164,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30570783792791706
+      }
+    },
+    "K4o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.5811026506559545,
+          0.029406905513793657
+        ],
+        "mean": -0.2758478725710804,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30525477808487406
+      }
+    },
+    "K4s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.08387339909304029,
+          0.5268408363133095
+        ],
+        "mean": 0.22148371861013458,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30535711770317486
+      }
+    },
+    "K5o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.3100407517627822,
+          0.298774035918523
+        ],
+        "mean": -0.0056333579221296065,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3044073938406526
+      }
+    },
+    "K5s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.04945247074560377,
+          0.65820245947832
+        ],
+        "mean": 0.3538274651119619,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3043749943663581
+      }
+    },
+    "K6o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.33484690622612034,
+          0.27417765456155185
+        ],
+        "mean": -0.03033462583228423,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3045122803938361
+      }
+    },
+    "K6s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.21991950770620744,
+          0.8297138733085503
+        ],
+        "mean": 0.5248166905073789,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30489718280117145
+      }
+    },
+    "K7o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.08365614982968766,
+          0.5205752963839425
+        ],
+        "mean": 0.2184595732771274,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30211572310681506
+      }
+    },
+    "K7s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.357864447757086,
+          0.9619981165059679
+        ],
+        "mean": 0.659931282131527,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.302066834374441
+      }
+    },
+    "K8o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.09256628864887068,
+          0.6992193082564704
+        ],
+        "mean": 0.3958927984526705,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3033265098037998
+      }
+    },
+    "K8s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.5922500800144654,
+          1.1988469160259039
+        ],
+        "mean": 0.8955484980201847,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3032984180057193
+      }
+    },
+    "K9o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.39107336374522966,
+          0.9958162476506582
+        ],
+        "mean": 0.693444805697944,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3023714419527143
+      }
+    },
+    "K9s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.9360602495313837,
+          1.5408031334368124
+        ],
+        "mean": 1.238431691484098,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3023714419527143
+      }
+    },
+    "KJo": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          1.0284382212843532,
+          1.6276085948301364
+        ],
+        "mean": 1.3280234080572448,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.29958518677289153
+      }
+    },
+    "KJs": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          1.5266733953257092,
+          2.1261948104001442
+        ],
+        "mean": 1.8264341028629267,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.2997607075372176
+      }
+    },
+    "KK": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          5.540310870019412,
+          6.1316024584548705
+        ],
+        "mean": 5.835956664237141,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.2956457942177295
+      }
+    },
+    "KQo": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          1.3433102839691196,
+          1.932884113741006
+        ],
+        "mean": 1.6380971988550628,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.29478691488594316
+      }
+    },
+    "KQs": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          1.834023707647675,
+          2.4236697881655047
+        ],
+        "mean": 2.12884674790659,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.29482304025891476
+      }
+    },
+    "KTo": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.8022519790951901,
+          1.4045242584057027
+        ],
+        "mean": 1.1033881187504464,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3011361396552564
+      }
+    },
+    "KTs": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          1.3434464757964226,
+          1.9459413908834253
+        ],
+        "mean": 1.644693933339924,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30124745754350135
+      }
+    },
+    "Q2o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.5046983513991803,
+          -0.8928928120412549
+        ],
+        "mean": -1.1987955817202176,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3059027696789627
+      }
+    },
+    "Q2s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.9097567329163561,
+          -0.2979511935584307
+        ],
+        "mean": -0.6038539632373934,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3059027696789627
+      }
+    },
+    "Q3o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.2637635630049324,
+          -0.652410460441177
+        ],
+        "mean": -0.9580870117230547,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30567655128187765
+      }
+    },
+    "Q3s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.7819969842167684,
+          -0.17005637043043847
+        ],
+        "mean": -0.47602667732360343,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30597030689316496
+      }
+    },
+    "Q4o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.1497151174131295,
+          -0.5392654656768702
+        ],
+        "mean": -0.8444902915449999,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3052248258681297
+      }
+    },
+    "Q4s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.6116424991528625,
+          -0.0010946744982981427
+        ],
+        "mean": -0.3063685868255803,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3052739123272822
+      }
+    },
+    "Q5o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.0298824658127232,
+          -0.42122416252947176
+        ],
+        "mean": -0.7255533141710975,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3043291516416257
+      }
+    },
+    "Q5s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.5115275867862278,
+          0.09713071649702362
+        ],
+        "mean": -0.2071984351446021,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3043291516416257
+      }
+    },
+    "Q6o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.8613439351764451,
+          -0.25228101259910196
+        ],
+        "mean": -0.5568124738877736,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3045314612886716
+      }
+    },
+    "Q6s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.3956009488586426,
+          0.21362813679810602
+        ],
+        "mean": -0.09098640603026828,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3046145428283743
+      }
+    },
+    "Q7o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.8088911931986753,
+          -0.20491879850566774
+        ],
+        "mean": -0.5069049958521715,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3019861973465038
+      }
+    },
+    "Q7s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.2036014649500204,
+          0.40086064119200115
+        ],
+        "mean": 0.09862958812099037,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3022310530710108
+      }
+    },
+    "Q8o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.47673155916421794,
+          0.1299479357645997
+        ],
+        "mean": -0.17339181169980913,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30333974746440884
+      }
+    },
+    "Q8s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.07870101365005755,
+          0.6853363649731782
+        ],
+        "mean": 0.38201868931161787,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3033176756615603
+      }
+    },
+    "Q9o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.11012515149583041,
+          0.49467399815639584
+        ],
+        "mean": 0.19227442333028272,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3023995748261131
+      }
+    },
+    "Q9s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.31048568725821724,
+          0.915303089770524
+        ],
+        "mean": 0.6128943885143706,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3024087012561534
+      }
+    },
+    "QJo": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.44489769836509924,
+          1.0446817256853551
+        ],
+        "mean": 0.7447897120252271,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.2998920136601279
+      }
+    },
+    "QJs": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.8456277454527408,
+          1.4453810330488044
+        ],
+        "mean": 1.1455043892507726,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.2998766437980318
+      }
+    },
+    "QQ": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          4.853240491999101,
+          5.445351762176321
+        ],
+        "mean": 5.149296127087711,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.29605563508860977
+      }
+    },
+    "QTo": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.2313516407543732,
+          0.8331991931812521
+        ],
+        "mean": 0.5322754169678127,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30092377621343946
+      }
+    },
+    "QTs": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          0.7230849386072778,
+          1.3251316129129593
+        ],
+        "mean": 1.0241082757601185,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3010233371528407
+      }
+    },
+    "T2o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.2385948428321876,
+          -1.6142019139978716
+        ],
+        "mean": -1.9263983784150296,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3121964644171579
+      }
+    },
+    "T2s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.6356154239351635,
+          -1.0112224951008475
+        ],
+        "mean": -1.3234189595180055,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3121964644171579
+      }
+    },
+    "T3o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -2.1013973824170664,
+          -1.4774758956536567
+        ],
+        "mean": -1.7894366390353615,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3119607433817048
+      }
+    },
+    "T3s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.6549194031056613,
+          -1.0309979163422516
+        ],
+        "mean": -1.3429586597239564,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3119607433817048
+      }
+    },
+    "T4o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.9717105407628208,
+          -1.3485600801744708
+        ],
+        "mean": -1.6601353104686458,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31157523029417505
+      }
+    },
+    "T4s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.2457658715294864,
+          -0.6226955658708423
+        ],
+        "mean": -0.9342307187001643,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.311535152829322
+      }
+    },
+    "T5o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.8898959708018477,
+          -1.268586513490196
+        ],
+        "mean": -1.5792412421460218,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.31065472865582594
+      }
+    },
+    "T5s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.2648628518106602,
+          -0.643467509299482
+        ],
+        "mean": -0.954165180555071,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.310697671255589
+      }
+    },
+    "T6o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.6051936663268076,
+          -0.9834878233047977
+        ],
+        "mean": -1.2943407448158026,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3108529215110049
+      }
+    },
+    "T6s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.1579301122227275,
+          -0.5362242692007178
+        ],
+        "mean": -0.8470771907117226,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3108529215110049
+      }
+    },
+    "T7o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.2854730118739381,
+          -0.6688149710204465
+        ],
+        "mean": -0.9771439914471923,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30832902042674576
+      }
+    },
+    "T7s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.703325385469537,
+          -0.08664718320617737
+        ],
+        "mean": -0.3949862843378572,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30833910113167984
+      }
+    },
+    "T8o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -1.0317405690910266,
+          -0.4122868715840933
+        ],
+        "mean": -0.72201372033756,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3097268487534667
+      }
+    },
+    "T8s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.35906295624088447,
+          0.2601905242301884
+        ],
+        "mean": -0.04943621600534805,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30962674023553644
+      }
+    },
+    "T9o": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.6952773871932119,
+          -0.0780206185568329
+        ],
+        "mean": -0.3866490028750224,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3086283843181895
+      }
+    },
+    "T9s": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          -0.12122653219334742,
+          0.49612654650264276
+        ],
+        "mean": 0.18745000715464769,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.3086765393479951
+      }
+    },
+    "TT": {
+      "fold": {
+        "exact": true,
+        "interval": [
+          -0.5,
+          -0.5
+        ],
+        "mean": -0.5,
+        "native_action": 0
+      },
+      "jam": {
+        "boards_per_pair": 32,
+        "interval": [
+          3.623729335861714,
+          4.23987947200874
+        ],
+        "mean": 3.931804403935227,
+        "native_action": 102,
+        "opponent_pairs": 1225,
+        "radius": 0.30807506807351315
+      }
+    }
+  },
+  "seconds": 2.5204974270000093,
+  "source_sha256": "de9d61a102036e5deefa5993b63f70128fc87b3dbf2ffc0e083bce77b0517d7e"
+}
