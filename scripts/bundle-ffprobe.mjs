@@ -9,15 +9,11 @@ import { Readable } from 'node:stream'
 import { pipeline } from 'node:stream/promises'
 import { createReadStream } from 'node:fs'
 
-// Download the release asset bytes directly: the GitHub API endpoint may return JSON
-// metadata to unauthenticated build runners despite Accept: application/octet-stream.
-// The release URL may move; SHA256 and byte length below pin the actual bytes.
-const url = 'https://github.com/FFmpeg-Builds/FFmpeg-Builds/releases/download/autobuild-2026-11-09-12-42/ffmpeg-N-128718-gb2b543c079-linux64-gpl.tar.xz'
-// GitHub official release asset metadata (asset id 727451300):
-// size=157235444, digest=sha256:143adb601603057053bf52f157daf36728e716b86fae764952271cdb4b3d56bc
-// Downloaded bytes must independently match BOTH values before extraction.
-const sha256 = '143adb601603057053bf52f157daf36728e716b86fae764952271cdb4b3d56bc'
-const expectedBytes = 157235444
+// Use the October month-end release, retained under the upstream monthly policy.
+// The digest and size match the upstream checksums file and GitHub asset metadata.
+const url = 'https://github.com/FFmpeg-Builds/FFmpeg-Builds/releases/download/autobuild-2026-10-31-12-59/ffmpeg-n8.1.3-27-g8dca1586f4-linux64-gpl-8.1.tar.xz'
+const sha256 = '41e9c565594c390622cf968d82fa4135d9e9a11d06c1515644288cbc844e3380'
+const expectedBytes = 152246308
 if (process.platform !== 'linux' || process.arch !== 'x64') {
   console.log('ffprobe bundle: skipped non-Linux-x64 build')
   process.exit(0)
