@@ -1374,6 +1374,7 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         if (pendingVideoRef.current && (pendingVideoRef.current.owner !== user.id || pendingVideoRef.current.content !== content.trim())) {
           throw new Error('前回の投稿内容またはアカウントが異なります。元の内容で再試行してください。')
         }
+        const wasPending = pendingVideoRef.current !== null
         const path = pendingVideoRef.current?.path ?? (videoFile ? await uploadPostVideo(user.id, videoFile, requestController.signal, content.trim()) : '')
         // An abandoned upload stays quarantined; never finalize it for a new screen/account.
         if (!isCurrent()) return
@@ -1388,7 +1389,21 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
           handOffVideoTransfer(user.id, path)
         } catch { throw new VideoTransferRecoveryRequiredError() }
         if (VIDEO_RECOVERY_CANDIDATE_ENABLED) await finalizeRecoveredVideoCandidate(path, content.trim(), requestController.signal)
-        else await finalizeUploadedVideo(path, content.trim(), requestController.signal)
+        else if (import.meta.env.VITE_VIDEO_CLOUD_TEST_ENABLED === 'true') await finalizeUploadedVideo(path, content.trim(), requestController.signal)
+        else {
+          try {
+            if (wasPending) throw new VideoTransferRecoveryRequiredError()
+            await finalizeUploadedVideo(path, content.trim(), requestController.signal)
+          } catch {
+            if (!isCurrent() || requestController.signal.aborted) return
+            const proof = await inspectPublishedVideoRecovery(path, requestController.signal, content.trim())
+            if (proof.state !== 'published' || !proof.post_id || proof.expired || !proof.storage_present) {
+              throw new Error('投稿結果を確認できません。動画は再送信していません。')
+            }
+            const { data: { user: currentUser }, error: currentError } = await supabase.auth.getUser()
+            if (currentError || currentUser?.id !== user.id) throw new Error('照合中にログイン状態が変わりました。')
+          }
+        }
         if (!isCurrent()) return
         // Persist the already verified pre-post thumbnail for this viewer/device.
         // No new Storage writes or public URLs; the cache is scoped by JWT user and object path.
@@ -2768,8 +2783,8 @@ function Timeline({ profileUserId }: { profileUserId?: string }) {
         {(!videoPreviewPoster || videoPreviewNotice.startsWith("動画を再生できません")) && <span role="status" style={{ position: 'absolute', right: 8, top: 8, background: '#222', color: '#ddd', padding: '4px 7px', borderRadius: 6, fontSize: 11, pointerEvents: 'none' }}>{videoPreviewNotice || 'プレビューを準備中'}</span>}
       </div>}
       {pendingVideo && <div style={{ padding: 12, border: '1px solid #675331', borderRadius: 10, background: '#211c15' }}>
-        <p role="status" style={{ fontSize: 12, color: '#e6c27a', margin: '0 0 8px' }}>動画はアップロード済みです。前回と同じ内容で投稿を再試行できます。動画の再選択は不要です。</p>
-        <button type="button" disabled={isPosting} onClick={() => { if (videoSubmitInFlightRef.current) return; setContent(pendingVideo.content); setMessage('投稿内容を元に戻しました。「投稿する」から再試行してください。') }} style={{ width: 'auto', padding: '7px 10px', borderRadius: 8, border: '1px solid #675331', background: '#30271b', color: '#f0d8ac', fontSize: 12 }}>投稿内容を元に戻す</button>
+        <p role="status" style={{ fontSize: 12, color: '#e6c27a', margin: '0 0 8px' }}>動画はアップロード済みです。「投稿」から前回の投稿結果を照合できます。動画は再送信されません。</p>
+        <button type="button" disabled={isPosting} onClick={() => { if (videoSubmitInFlightRef.current) return; setContent(pendingVideo.content); setMessage('投稿内容を元に戻しました。「投稿」から投稿結果を照合してください。') }} style={{ width: 'auto', padding: '7px 10px', borderRadius: 8, border: '1px solid #675331', background: '#30271b', color: '#f0d8ac', fontSize: 12 }}>投稿内容を元に戻す</button>
       </div>}
       {imagePreviews.length > 0 && <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,minmax(0,1fr))', gap: 8, marginTop: 8 }}>{imagePreviews.map((url, i) => <div key={url} style={{ position: 'relative' }}><img src={url} alt={`添付画像${i+1}`} style={{ width: '100%', maxHeight: 220, objectFit: 'cover', borderRadius: 8 }}/><button type="button" onClick={() => setImageFiles(files => files.filter((_, index) => index !== i))} style={{ position: 'absolute', right: 4, top: 4, width: 'auto', background: '#222', color: '#fff' }}>×</button></div>)}</div>}
     </div>

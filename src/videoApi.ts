@@ -36,7 +36,7 @@ export async function finalizeUploadedVideo(objectPath: string, content: string,
 
 /** Read-only recovery classification. Does not authorize upload, clear journal, or publish.
  * Production uses the existing owner-scoped generation RPC and posts RLS. */
-export async function inspectPublishedVideoRecovery(objectPath: string, signal?: AbortSignal): Promise<{
+export async function inspectPublishedVideoRecovery(objectPath: string, signal?: AbortSignal, expectedContent?: string): Promise<{
   state: 'published' | 'stored_unpublished' | 'expired_empty' | 'reserved_empty' | 'conflict'
   allow_resume: false; expired: boolean; storage_present: boolean; post_id: string | null; sha256: string; size: number
 }> {
@@ -45,7 +45,7 @@ export async function inspectPublishedVideoRecovery(objectPath: string, signal?:
   const response = await fetch(VIDEO_FINALIZE_ROUTE, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: await authHeader(signal) },
-    body: JSON.stringify({action:'recovery_inspect',object_path:objectPath}),
+    body: JSON.stringify({action:'recovery_inspect',object_path:objectPath,expected_content:expectedContent}),
     redirect:'error',cache:'no-store',
     signal:signal ? AbortSignal.any([signal,AbortSignal.timeout(30000)]) : AbortSignal.timeout(30000),
   })

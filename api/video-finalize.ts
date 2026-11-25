@@ -83,9 +83,13 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
     } catch { return res.status(403).end() }
   }
   if ((body as Record<string, unknown>).action === 'recovery_inspect') {
-    const path = (body as Record<string, unknown>).object_path
+    const request = body as Record<string, unknown>
+    const path = request.object_path
     const match = typeof path === 'string' ? VIDEO_PATH.exec(path) : null
-    if (Object.keys(body).length !== 2 || typeof path !== 'string' || !match) return res.status(400).end()
+    const hasContent = Object.hasOwn(request, 'expected_content')
+    const expectedContent = request.expected_content
+    if (Object.keys(request).length !== (hasContent ? 3 : 2) || typeof path !== 'string' || !match ||
+        (hasContent && (typeof expectedContent !== 'string' || expectedContent.length > 10000))) return res.status(400).end()
     if (options.isolatedLocalOnly || process.env.VERCEL_ENV !== 'production') return res.status(503).end()
     try {
       assertProductionVideoConfiguration()
@@ -103,20 +107,20 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
       if (owner !== match[1]) return res.status(403).end()
       await assertProductionVideoPublisher(viewer, owner)
       const readPost = async () => {
-        const result = await viewer.from('posts').select('id,user_id,video_path,video_generation,video_sha256')
+        const result = await viewer.from('posts').select('id,user_id,video_path,video_generation,video_sha256,content')
           .eq('user_id', owner).eq('video_path', path).maybeSingle()
         if (result.error) throw result.error
         return result.data
       }
       const post = await readPost()
       if (!post || !UUID.test(post.id) || post.user_id !== owner || post.video_path !== path ||
-          !UUID.test(post.video_generation) || !/^[0-9a-f]{64}$/.test(post.video_sha256)) return res.status(409).end()
+          (hasContent && post.content !== expectedContent) || !UUID.test(post.video_generation) || !/^[0-9a-f]{64}$/.test(post.video_sha256)) return res.status(409).end()
       const adapter = createProductionSupabaseVideoAdapters(url, key, token)
       const snapshot = await adapter.snapshot(owner, path)
       const sha256 = createHash('sha256').update(snapshot.bytes).digest('hex')
       if (snapshot.generation !== post.video_generation || sha256 !== post.video_sha256) return res.status(409).end()
       const current = await readPost()
-      if (current?.id !== post.id || current.user_id !== owner || current.video_path !== path ||
+      if (!current || current.id !== post.id || (hasContent && current.content !== expectedContent) || current.user_id !== owner || current.video_path !== path ||
           current.video_generation !== snapshot.generation || current.video_sha256 !== sha256 ||
           await adapter.currentGeneration(owner, path) !== snapshot.generation) return res.status(409).end()
       return res.status(200).json({
