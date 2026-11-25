@@ -1,4 +1,4 @@
-import {verifyCloudHttp} from './cloud_http_browser_e2e.mjs'
+import {verifyCloudHttp,verifyCloudRecoveryHttp} from './cloud_http_browser_e2e.mjs'
 import assert from 'node:assert/strict'
 import {readFileSync} from 'node:fs'
 import {execFileSync} from 'node:child_process'
@@ -72,5 +72,68 @@ assert.ok((await owner.rpc('video_cloud_publish_v1',params({...claims,nonce:rand
 assert.equal(sql("select count(*) from video_cloud.consumed_nonces"),count)
 assert.equal(sql("select count(*) from public.posts"),'1')
 await verifyCloudHttp({owner,other,bytes,key,url:env.API_URL,signingKey,sql})
+// Exercise the cloud-only candidate definitions against this disposable local stack.
+// Keep the original cloud foundation assertions above unchanged.
+sql(readFileSync('tests/video/candidate_live_reservation_quota.sql','utf8'))
+sql(readFileSync('tests/video/candidate_cloud_recovery_inspect.sql','utf8'))
+sql("notify pgrst,'reload schema'")
+await new Promise(r=>setTimeout(r,1000))
+const quotaOwner=client()
+assert.ifError((await quotaOwner.auth.signUp({email:randomUUID()+'@example.invalid',password:randomUUID()+'Aa1!'})).error)
+const quotaUid=(await quotaOwner.auth.getUser()).data.user.id
+sql("insert into video_cloud.allowed_users(user_id,enabled) values('"+quotaUid+"',true)")
+// Ten immutable, expired rows must remain in the ledger without consuming live quota.
+sql("insert into video_cloud.reservations(path,owner_id,sha256,size,mime,content,expires_at) select '"+quotaUid+"/'||gen_random_uuid()::text||'.mp4','"+quotaUid+"'::uuid,repeat('a',64),1,'video/mp4','expired quota fixture',clock_timestamp()-interval '2 hours' from generate_series(1,10)")
+assert.equal(sql("select count(*) from video_cloud.reservations where owner_id='"+quotaUid+"'"),'10')
+const fresh={...manifest,p_path:quotaUid+'/'+randomUUID()+'.mp4'}
+assert.ok((await anon.rpc('video_cloud_recovery_inspect_v1',{p_path:fresh.p_path})).error)
+assert.ok((await other.rpc('video_cloud_recovery_inspect_v1',{p_path:fresh.p_path})).error)
+assert.ok((await quotaOwner.rpc('video_cloud_recovery_inspect_v1',{p_path:fresh.p_path})).error)
+const newReservation=await Promise.all([quotaOwner.rpc('video_cloud_reserve',fresh),quotaOwner.rpc('video_cloud_reserve',fresh)])
+for(const result of newReservation)assert.ifError(result.error)
+assert.equal(newReservation[0].data,newReservation[1].data)
+assert.equal(sql("select count(*) from video_cloud.reservations where owner_id='"+quotaUid+"'"),'11')
+assert.equal(sql("select count(*) from video_cloud.reservations where owner_id='"+quotaUid+"' and expires_at<=clock_timestamp()"),'10')
+assert.ok((await quotaOwner.rpc('video_cloud_reserve',{...fresh,p_sha256:'b'.repeat(64)})).error)
+assert.ok((await other.rpc('video_cloud_reserve',fresh)).error)
+assert.ok((await anon.rpc('video_cloud_reserve',fresh)).error)
+const liveInspect=await quotaOwner.rpc('video_cloud_recovery_inspect_v1',{p_path:fresh.p_path})
+assert.ifError(liveInspect.error)
+assert.equal(liveInspect.data.state,'reserved_empty')
+assert.equal(liveInspect.data.allow_resume,false)
+const expiredPath=sql("select path from video_cloud.reservations where owner_id='"+quotaUid+"' and expires_at<=clock_timestamp() order by path limit 1")
+const expiredInspect=await quotaOwner.rpc('video_cloud_recovery_inspect_v1',{p_path:expiredPath})
+assert.ifError(expiredInspect.error)
+assert.equal(expiredInspect.data.state,'expired_empty')
+assert.ok((await quotaOwner.rpc('video_cloud_reserve',{...fresh,p_path:expiredPath})).error)
+const publishedInspect=await owner.rpc('video_cloud_recovery_inspect_v1',{p_path:path})
+assert.ifError(publishedInspect.error)
+assert.equal(publishedInspect.data.state,'published')
+assert.equal(publishedInspect.data.allow_resume,false)
+// Never classify a transfer as safely published without matching immutable proof.
+assert.equal(publishedInspect.data.post_id,results[0].data)
+assert.equal(publishedInspect.data.sha256,digest)
+assert.equal(publishedInspect.data.size,bytes.length)
+assert.equal(publishedInspect.data.storage_present,true)
+// Published posts remain valid even after the original reservation expires.
+assert.equal(typeof publishedInspect.data.expired,'boolean')
+await verifyCloudRecoveryHttp({owner,other,key,url:env.API_URL,path,postId:results[0].data,sha256:digest,size:bytes.length,sql})
+assert.ok((await other.rpc('video_cloud_recovery_inspect_v1',{p_path:path})).error)
+assert.ok((await anon.rpc('video_cloud_recovery_inspect_v1',{p_path:path})).error)
+assert.ifError((await quotaOwner.storage.from('post-videos').upload(fresh.p_path,bytes,{contentType:'video/mp4',upsert:false})).error)
+const storedInspect=await quotaOwner.rpc('video_cloud_recovery_inspect_v1',{p_path:fresh.p_path})
+assert.ifError(storedInspect.error)
+assert.equal(storedInspect.data.state,'stored_unpublished')
+assert.equal(storedInspect.data.allow_resume,false)
+// Deliberately introduce a published SHA mismatch only inside this throwaway DB.
+sql("update public.posts set video_sha256=repeat('b',64) where video_path='"+path+"'")
+const conflictInspect=await owner.rpc('video_cloud_recovery_inspect_v1',{p_path:path})
+assert.ifError(conflictInspect.error)
+assert.equal(conflictInspect.data.state,'conflict')
+assert.equal(conflictInspect.data.allow_resume,false)
+sql("update public.posts set video_sha256='"+digest+"' where video_path='"+path+"'")
+const concurrentInspect=await Promise.all(Array.from({length:3},()=>quotaOwner.rpc('video_cloud_recovery_inspect_v1',{p_path:fresh.p_path})))
+for(const result of concurrentInspect){assert.ifError(result.error);assert.equal(result.data.state,'stored_unpublished');assert.equal(result.data.allow_resume,false)}
+console.log('PASS: candidate cloud RPC real local HTTP: expired 10 retained, 11th live reservation, same-key concurrency, owner/foreign/anon denial, published/stored/expired/reserved/conflict classification')
 signingKey.fill(0)
 console.log('PASS: cloud publication real ffprobe/SHA256/HMAC/Auth/Storage/RPC: owner-only posts, direct INSERT denied, tamper/nonce rejected, concurrent one-post convergence and expiry nonce rollback')

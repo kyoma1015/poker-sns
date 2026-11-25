@@ -12,17 +12,95 @@ const qa = await mkdtemp(join(tmpdir(), 'poker-mov-'))
 let browser
 let server
 try {
+  // Guard the Safari composer poster fallback even when no new frame callback fires.
+  const timelineSource = await readFile('src/Timeline.tsx', 'utf8')
+  assert.match(timelineSource, /onSeeked=\{event => captureVideoPreviewPoster\(event\.currentTarget\)\}/)
+  assert.match(timelineSource, /onLoadedData=\{event => captureVideoPreviewPoster\(event\.currentTarget\)\}/)
+  assert.match(timelineSource, /onCanPlay=\{event => captureVideoPreviewPoster\(event\.currentTarget\)\}/)
+  assert.match(timelineSource, /requestVideoFrameCallback/)
+  assert.match(timelineSource, /expectedUrl !== videoPreviewUrlRef\.current/)
+  // Keep click receipt and disabled-state diagnostics visible without altering upload logic.
+  assert.match(timelineSource, /if \(videoFile \|\| pendingVideoRef\.current\) setMessage\('投稿操作を受け付けました。安全条件を確認しています。'\)/)
+  assert.match(timelineSource, /!canSubmitPost \? '投稿ボタンが無効です。添付の選択状態を確認してください。動画の再送信は行いません。'/)
+  assert.match(timelineSource, /if \(!VIDEO_SERVER_ENABLED\) \{/)
+  assert.match(timelineSource, /if \(postSubmitInFlightRef\.current\) \{/)
+  // A video blocked by API/recovery safety gates must not look submittable.
+  assert.match(timelineSource, /const submitDisabled = isPosting \|\| !canSubmitPost \|\| videoSubmitBlocked/)
+  assert.match(timelineSource, /この環境では動画を投稿できません/)
   const source = await readFile('src/videoMovConversion.ts', 'utf8')
+  // Safari can omit ended for short MOVs: source time must independently stop recording.
+  assert.match(source, /video\.currentTime >= duration - 0\.05/)
+  assert.match(source, /performance\.now\(\) - playbackStartedAt > \(duration \+ 4\) \* 1000/)
+  assert.match(source, /video\.muted = false/, 'Decoded audio capture requires unmuting in Chrome')
+  assert.match(source, /再生位置 /)
+  assert.match(source, /video\.onended = stopAtSourceEnd/)
+  assert.match(source, /window\.clearInterval\(playbackWatchdog\)/)
   const js = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText
   const fixture = join(qa, 'camera.mov')
   execFileSync('ffmpeg', ['-v','error','-f','lavfi','-i','testsrc2=size=320x240:rate=30','-f','lavfi','-i','sine=frequency=440:sample_rate=48000','-t','2','-c:v','libx264','-profile:v','baseline','-pix_fmt','yuv420p','-c:a','aac','-y',fixture])
-  const html = `<!doctype html><input type="file"><button id="convert">変換</button><button id="abort">中止</button><output></output><script type="module">
-    import {convertMovToMp4} from '/convert.js';
-    let controller;
+  const html = `<!doctype html><input type="file"><button id="convert">変換</button><button id="play" hidden>再生</button><button id="abort">中止</button><output></output><script type="module">
+    import {convertMovToMp4, prepareMovForUpload} from '/convert.js';
+    let controller, clickActive = false;
+    const play = document.querySelector('#play');
+    const nativePlay = HTMLMediaElement.prototype.play;
+    const state = Object.getOwnPropertyDescriptor(HTMLMediaElement.prototype, 'readyState');
+    const resumed = new WeakSet();
+    Object.defineProperty(HTMLMediaElement.prototype, 'readyState', {
+      ...state,
+      get() {
+        const real = state.get.call(this);
+        return window.stallUntilPlay && !resumed.has(this) ? Math.min(real, 1) : real;
+      },
+    });
+    HTMLMediaElement.prototype.play = function () {
+      if (window.stallUntilPlay && this.muted && this.playsInline && this.isConnected) {
+        window.mutedDecodeRequests++;
+        resumed.add(this);
+        return nativePlay.call(this);
+      }
+      if (!clickActive) return Promise.reject(new DOMException('Requires direct click', 'NotAllowedError'));
+      return nativePlay.call(this);
+    };
+    const nativeDecode = OfflineAudioContext.prototype.decodeAudioData;
+    OfflineAudioContext.prototype.decodeAudioData = function (buffer) {
+      const view = new DataView(buffer);
+      const children = (start, end) => {
+        const boxes = [];
+        while (start < end) {
+          const size = view.getUint32(start);
+          if (size < 8 || start + size > end) throw new Error('invalid audio verification box');
+          boxes.push({start, end: start + size, type: view.getUint32(start + 4)});
+          start += size;
+        }
+        return boxes;
+      };
+      if (window.autoTest) {
+        const movie = children(0, buffer.byteLength).find(box => box.type === 0x6d6f6f76);
+        const tracks = children(movie.start + 8, movie.end).filter(box => box.type === 0x7472616b);
+        window.decodedTrackCounts.push(tracks.length);
+        if (window.failAudioDecode || (window.rejectSingleTrack && tracks.length === 1)) {
+          return Promise.reject(new DOMException('private native text', 'EncodingError'));
+        }
+      }
+      return nativeDecode.call(this, buffer);
+    };
+    const gesture = (step, start) => {
+      play.dataset.step=step; play.hidden=false;
+      play.onclick=()=>{ clickActive=true; try { start(); } finally { clickActive=false; } };
+      return ()=>{play.hidden=true;play.onclick=null;delete play.dataset.step;};
+    };
+    document.querySelector('input').onchange=async event=>{
+      if (!window.autoTest) return;
+      controller=new AbortController(); window.autoResult=null; window.decodedTrackCounts=[];
+      try {
+        const output=await prepareMovForUpload(event.target.files[0],step=>{ window.automaticFallbackStep=step; throw new Error('unexpected playback button') },controller.signal, diagnostic=>{window.automaticDiagnostic=diagnostic});
+        window.autoResult={ok:true,bytes:Array.from(new Uint8Array(await output.arrayBuffer()))};
+      } catch(e) {window.autoResult={ok:false,error:e.message};}
+    };
     document.querySelector('#abort').onclick=()=>controller?.abort();
     document.querySelector('#convert').onclick=async()=>{
       controller=new AbortController(); window.result=null;
-      try { const output=await convertMovToMp4(document.querySelector('input').files[0],controller.signal);
+      try { const output=await convertMovToMp4(document.querySelector('input').files[0],gesture,controller.signal);
         window.result={ok:true,type:output.type,size:output.size,bytes:Array.from(new Uint8Array(await output.arrayBuffer()))};
       } catch(e) {window.result={ok:false,error:e.message};}
       document.querySelector('output').textContent=window.result.ok?'MP4変換完了':window.result.error;
@@ -35,14 +113,109 @@ try {
   let external=0
   await page.route('**/*',route=>{if(new URL(route.request().url()).hostname!=='127.0.0.1'){external++;return route.abort()}return route.continue()})
   await page.goto(`http://127.0.0.1:${server.address().port}`)
+  await page.evaluate(()=>{window.autoTest=true})
+  await page.locator('input').setInputFiles(fixture)
+  await page.waitForFunction(()=>!!window.autoResult)
+  const automatic=await page.evaluate(()=>window.autoResult)
+  assert.ok(automatic.ok,automatic.error)
+  const remuxed=join(qa,'automatic.mp4')
+  await writeFile(remuxed,Buffer.from(automatic.bytes))
+  // Remux must preserve actual compressed packets, including audio.
+  const streams=path=>execFileSync('ffmpeg',['-v','error','-i',path,'-map','0:v:0','-map','0:a:0','-c','copy','-f','streamhash','-hash','sha256','-'],{encoding:'utf8'})
+  assert.equal(streams(remuxed),streams(fixture))
+  assert.deepEqual(await page.evaluate(() => window.decodedTrackCounts), [1])
+  await page.evaluate(() => {
+    window.stallUntilPlay = true
+    window.mutedDecodeRequests = 0
+    document.querySelector('input').dispatchEvent(new Event('change'))
+  })
+  await page.waitForFunction(() => !!window.autoResult)
+  const resumed = await page.evaluate(() => ({
+    result: window.autoResult, requests: window.mutedDecodeRequests,
+    remainingProbes: document.querySelectorAll('video').length,
+  }))
+  assert.ok(resumed.result.ok, resumed.result.error)
+  assert.equal(resumed.requests, 1)
+  assert.equal(resumed.remainingProbes, 0)
+  assert.deepEqual(resumed.result.bytes, automatic.bytes)
+  await page.evaluate(() => { window.stallUntilPlay = false })
+  console.log('PASS metadata-only preload recovers via muted inline decoding without a gesture')
+  await page.evaluate(() => {
+    window.rejectSingleTrack = true
+    document.querySelector('input').dispatchEvent(new Event('change'))
+  })
+  await page.waitForFunction(() => !!window.autoResult)
+  const alternate = await page.evaluate(() => window.autoResult)
+  assert.ok(alternate.ok, alternate.error)
+  assert.deepEqual(await page.evaluate(() => window.decodedTrackCounts), [1, 2])
+  assert.deepEqual(alternate.bytes, automatic.bytes)
+  console.log('PASS AAC-only demux rejection uses real PCM from the same upload MP4')
+  // QuickTime allows an optional four-byte zero terminator after the
+  // visual sample entry extensions. Append it within moov, after mdat.
+  const camera = await readFile(fixture)
+  const findBox = (start, end, type, skip = 0) => {
+    for (let at = start + skip; at + 8 <= end;) {
+      const size = camera.readUInt32BE(at)
+      assert.ok(size >= 8 && at + size <= end)
+      if (camera.toString('ascii', at + 4, at + 8) === type) return { at, end: at + size }
+      at += size
+    }
+    assert.fail('missing fixture box ' + type)
+  }
+  const parents = [findBox(0, camera.length, 'moov')]
+  assert.ok(findBox(0, camera.length, 'mdat').end <= parents[0].at)
+  for (const type of ['trak', 'mdia', 'minf', 'stbl', 'stsd', 'avc1']) {
+    const parent = parents.at(-1)
+    parents.push(findBox(parent.at + 8, parent.end, type, type === 'avc1' ? 8 : 0))
+  }
+  const entryEnd = parents.at(-1).end
+  const withTerminator = Buffer.concat([camera.subarray(0, entryEnd), Buffer.alloc(4), camera.subarray(entryEnd)])
+  for (const { at } of parents) withTerminator.writeUInt32BE(camera.readUInt32BE(at) + 4, at)
+  await page.evaluate(() => { window.rejectSingleTrack = false })
+  await page.locator('input').setInputFiles({ name: 'quicktime-terminator.mov', mimeType: 'video/quicktime', buffer: withTerminator })
+  await page.waitForFunction(() => !!window.autoResult)
+  const terminated = await page.evaluate(() => window.autoResult)
+  assert.ok(terminated.ok, terminated.error)
+  const terminatedMp4 = join(qa, 'quicktime-terminator.mp4')
+  await writeFile(terminatedMp4, Buffer.from(terminated.bytes))
+  assert.equal(streams(terminatedMp4), streams(fixture))
+  const malformed = Buffer.from(withTerminator)
+  malformed[entryEnd + 3] = 1
+  await page.locator('input').setInputFiles({ name: 'bad-terminator.mov', mimeType: 'video/quicktime', buffer: malformed })
+  await page.waitForFunction(() => !!window.autoResult)
+  assert.equal(await page.evaluate(() => window.autoResult.ok), false)
+  assert.match(await page.evaluate(() => window.automaticDiagnostic), /^container: truncated MOV box header: file\/moov\/trak\/mdia\/minf\/stbl\/stsd\/avc1 offset=\d+ remaining=4 boxes=\d+$/)
+  console.log('PASS QuickTime video terminator preserves both streams; malformed tail rejected with local diagnostics')
+  await page.evaluate(()=>{window.autoTest=false; window.rejectSingleTrack=false})
+  console.log('PASS compatible MOV automatically remuxes without playback or extra clicks; both media streams preserved')
   async function convert(path,abort=false) {
     await page.locator('input').setInputFiles(path)
     await page.locator('#convert').click()
-    if(abort) await page.locator('#abort').click()
+    if(abort) {
+      await page.locator('#play[data-step="source"]').waitFor()
+      await page.locator('#abort').click()
+    } else {
+      for(const step of ['source','output']) {
+        await page.waitForFunction(step=>window.result!==null||document.querySelector('#play').dataset.step===step,step,{timeout:50000})
+        if(await page.locator('#play[data-step="'+step+'"]').isVisible()) await page.locator('#play').click()
+      }
+    }
     await page.waitForFunction(()=>window.result!==null,{},{timeout:60000})
     return page.evaluate(()=>window.result)
   }
   console.log('MP4 encoder support', await page.evaluate(()=>['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4;codecs=avc1,mp4a.40.2','video/mp4;codecs=avc1,opus'].map(type=>({type,supported:MediaRecorder.isTypeSupported(type)}))))
+  await page.locator('input').setInputFiles(fixture)
+  await page.evaluate(() => {
+    window.autoTest = true
+    window.failAudioDecode = true
+    window.autoResult = null
+    document.querySelector('input').dispatchEvent(new Event('change'))
+  })
+  await page.waitForFunction(() => !!window.autoResult)
+  assert.deepEqual(await page.evaluate(() => [
+    window.autoResult.ok, window.automaticDiagnostic, window.automaticFallbackStep,
+  ]), [false, 'audio: AAC-only MP4 EncodingError / video MP4 EncodingError', 'source'])
+  await page.evaluate(() => { window.autoTest = false })
   const converted=await convert(fixture)
   assert.equal(converted.ok,true,converted.error)
   assert.equal(converted.type,'video/mp4')
@@ -54,12 +227,53 @@ try {
   assert.ok(probe.streams.some(s=>s.codec_type==='video'&&s.codec_name==='h264'))
   assert.ok(probe.streams.some(s=>s.codec_type==='audio'&&['aac','opus'].includes(s.codec_name)))
   assert.ok(Math.abs(Number(probe.format.duration)-2)<0.4)
-  // Verify decoded audio samples, not merely an advertised/silent audio track.
-  const pcm=execFileSync('ffmpeg',['-v','error','-i',output,'-vn','-ac','1','-ar','48000','-f','f32le','pipe:1'])
-  let energy=0
-  for(let i=0;i<pcm.length;i+=4) energy+=pcm.readFloatLE(i)**2
-  assert.ok(Math.sqrt(energy/(pcm.length/4))>0.02,'source audio must remain audible')
-  console.log('PASS MOV -> H264/audio MP4, duration/size and decoded audible audio')
+  // Compare decoded PCM of the known-audible source with the output, not just track metadata.
+  // This runs locally in Chrome CI and does not claim to validate Safari's Web Audio path.
+  const pcmRms=path=>{
+    const pcm=execFileSync('ffmpeg',['-v','error','-i',path,'-vn','-ac','1','-ar','48000','-f','f32le','pipe:1'])
+    assert.ok(pcm.length>0 && pcm.length%4===0,'PCM decode must return complete samples')
+    let energy=0
+    for(let i=0;i<pcm.length;i+=4) energy+=pcm.readFloatLE(i)**2
+    return Math.sqrt(energy/(pcm.length/4))
+  }
+  const sourceRms=pcmRms(fixture)
+  const convertedRms=pcmRms(output)
+  assert.ok(sourceRms>0.02,'test source must contain audible PCM')
+  assert.ok(convertedRms>0.02,'converted MP4 must contain audible PCM')
+  assert.ok(convertedRms/sourceRms>0.05,'converted audio unexpectedly attenuated relative to source')
+  console.log('PASS MOV -> H264/audio MP4, duration/size and source/output decoded PCM RMS')
+  // Simulate the Safari muted-media Web Audio path in Chrome. Chromium is not
+  // Safari: this only proves that silent decoded PCM cannot be published.
+  await page.evaluate(() => {
+    Object.defineProperty(navigator, 'userAgent', {
+      configurable: true,
+      value: 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1'
+    })
+  })
+  // Safari UA alone must no longer force the capture source into mute.
+  // This uses Chrome's decoder and is NOT evidence of Safari device success.
+  const safariLike=await convert(fixture)
+  assert.equal(safariLike.ok,true,safariLike.error)
+  console.log('PASS Safari-like UA captures non-muted Web Audio in Chrome (not Safari validation)')
+  // Deliberately force a muted media element to simulate Safari returning
+  // silence; the conversion must still fail closed without publishing bytes.
+  await page.evaluate(() => {
+    const originalPlay = HTMLMediaElement.prototype.play
+    HTMLMediaElement.prototype.play = function (...args) {
+      this.muted = true
+      this.defaultMuted = true
+      return originalPlay.apply(this, args)
+    }
+    window.restoreMediaPlay = () => { HTMLMediaElement.prototype.play = originalPlay }
+  })
+  const mutedAudio=await convert(fixture)
+  assert.equal(mutedAudio.ok,false,'Silent Web Audio must never produce a publishable MP4')
+  assert.match(mutedAudio.error,/音声|再生|変換/)
+  await page.evaluate(() => window.restoreMediaPlay())
+  console.log('PASS forced-muted Web Audio fails closed without upload (not Safari device validation)')
+  await page.evaluate(() => {
+    Object.defineProperty(navigator, 'userAgent', { configurable: true, value: 'Chrome/130.0.0.0' })
+  })
   const aborted=await convert(fixture,true)
   assert.equal(aborted.ok,false)
   assert.match(aborted.error,/中止/)

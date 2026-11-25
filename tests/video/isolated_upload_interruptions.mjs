@@ -100,7 +100,17 @@ export async function verifyUploadInterruptions({browser,origin,jwt,anon,bytes})
         }
       } else {
         await composer.getByText(/動画を投稿できませんでした/).waitFor()
-        await page.waitForFunction(()=>[...document.querySelectorAll('[role="dialog"] button')].some(b=>b.textContent==='投稿する'&&!b.disabled))
+        if(scenario==='lost-reservation-response') {
+          // A lost reservation acknowledgement is ambiguous: the UI must not allow
+          // another submit or create a second reservation, even if the button is tapped.
+          await composer.getByText(/重複を防ぐため動画の再送信を停止/).first().waitFor()
+          const blockedSubmit = composer.getByRole('button',{name:'前回の投稿を確認してください',exact:true})
+          await blockedSubmit.waitFor({state:'visible'})
+          assert.equal(await blockedSubmit.isDisabled(),true,
+            'ambiguous reservation must keep submit disabled')
+        } else {
+          await page.waitForFunction(()=>[...document.querySelectorAll('[role="dialog"] button')].some(b=>b.textContent==='投稿する'&&!b.disabled))
+        }
       }
       assert.equal(finalizations.length,0,'no finalize before upload confirmation/reconciliation')
       if(scenario==='lost-upload-response') assert.ok(committed)
@@ -113,8 +123,6 @@ export async function verifyUploadInterruptions({browser,origin,jwt,anon,bytes})
         await page.evaluate(()=>{delete window.__VIDEO_QA_GET_USER})
       }
       if(scenario==='lost-reservation-response') {
-        await composer.getByText(/重複を防ぐため動画の再送信を停止/).first().waitFor()
-        await composer.getByRole('button',{name:'投稿する',exact:true}).click()
         assert.equal(reservations.length,1,'ambiguous reservation remains blocked instead of creating another key')
         assert.equal(uploads.length,0)
         assert.equal(finalizations.length,0)

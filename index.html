@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -7,7 +7,12 @@
     <title>poker-sns</title>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <div id="root">
+      <main style="color:#f5f5f5;background:#151515;padding:24px;font:16px system-ui" aria-live="polite">
+        <h1>Poker ID</h1>
+        <p id="startup-status">読み込み中です。この表示が続く場合は、ページを再読み込みしてください。</p>
+      </main>
+    </div>
+    <script type="module" src="/src/startup.ts"></script>
   </body>
 </html>

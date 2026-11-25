@@ -12,10 +12,12 @@ import { createReadStream } from 'node:fs'
 // Download the release asset bytes directly: the GitHub API endpoint may return JSON
 // metadata to unauthenticated build runners despite Accept: application/octet-stream.
 // The release URL may move; SHA256 and byte length below pin the actual bytes.
-const url = 'https://github.com/yt-dlp/FFmpeg-Builds/releases/download/autobuild-2026-10-26-21-44/ffmpeg-N-128104-gd31915e9dc-linux64-gpl.tar.xz'
-// GitHub release asset metadata: size=157385884, digest=sha256:5ec39d02c8a0317b3185d4d043f38c6f53e0a543873b5038674648e590772b2f
-const sha256 = '5ec39d02c8a0317b3185d4d043f38c6f53e0a543873b5038674648e590772b2f'
-const expectedBytes = 157385884
+const url = 'https://github.com/FFmpeg-Builds/FFmpeg-Builds/releases/download/autobuild-2026-11-09-12-42/ffmpeg-N-128718-gb2b543c079-linux64-gpl.tar.xz'
+// GitHub official release asset metadata (asset id 727451300):
+// size=157235444, digest=sha256:143adb601603057053bf52f157daf36728e716b86fae764952271cdb4b3d56bc
+// Downloaded bytes must independently match BOTH values before extraction.
+const sha256 = '143adb601603057053bf52f157daf36728e716b86fae764952271cdb4b3d56bc'
+const expectedBytes = 157235444
 if (process.platform !== 'linux' || process.arch !== 'x64') {
   console.log('ffprobe bundle: skipped non-Linux-x64 build')
   process.exit(0)
