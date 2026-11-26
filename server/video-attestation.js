@@ -33,6 +33,13 @@ export function createVideoAttestationNonce() {
 }
 
 /** Fixed-width byte encoding shared with pgcrypto decode(...,'hex') on the DB side. */
+// One immutable publication generation can consume at most one nonce.
+export function videoPublicationNonce(owner, path, generation) {
+  return videoAttestationDigest(
+    JSON.stringify(['poker-id/video-publication-nonce/v1', owner, path, generation]),
+  ).slice(0, 32)
+}
+
 export function videoAttestationDigest(content) {
   return createHash('sha256').update(content,'utf8').digest('hex')
 }

@@ -21,7 +21,7 @@ import { createVideoMediaHandler } from '../../api/video-media.ts'
 import { createVideoFinalizeHandler } from '../../api/video-finalize.ts'
 import { createIsolatedSupabaseVideoAdapters } from '../../api/video-isolated-supabase-adapters.ts'
 
-export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, service, bytes, expectedContent = 'real isolated end-to-end', recoveryOnly=false, recoveryFixtures }) {
+export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, service, bytes, expectedContent = 'real isolated end-to-end', recoveryOnly=false, recoveryFixtures, attestedPublication }) {
   assert.ok(service && bytes?.length,'isolated full upload test credentials and media required')
   assert.ok(anon,'isolated anon key required')
   assert.equal(process.env.VITE_SUPABASE_URL, 'http://127.0.0.1:56321')
@@ -99,7 +99,12 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     }],
   })
   const handler = createVideoMediaHandler({ isolatedLocalOnly: true })
-  const finalize = createVideoFinalizeHandler(createIsolatedSupabaseVideoAdapters('http://127.0.0.1:56321',anon,service,jwt),{isolatedLocalOnly:true})
+  const adapters = createIsolatedSupabaseVideoAdapters('http://127.0.0.1:56321',anon,service,jwt)
+  const finalize = createVideoFinalizeHandler(attestedPublication
+    ? { ...adapters, publish: (...args) => args[5].startsWith('isolated timeline browser upload ')
+      ? attestedPublication.publish(...args)
+      : adapters.publish(...args) }
+    : adapters,{isolatedLocalOnly:true})
   let interruptedPublication
   const finalizeRequests = []
   const server = createHttpServer((req, res) => {
@@ -609,6 +614,12 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     assert.equal(finalizeRequests.indexOf(publications.at(-1)) < finalizeRequests.findIndex(
       request => request.path === pendingBeforeRetry.path && request.action === 'recovery_inspect'),
       true,'the application must never publish again after starting recovery inspection')
+    const foreignProof = await fetch(origin+'/internal/video/finalize',{
+      method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+deniedJwt},
+      body:JSON.stringify({action:'recovery_inspect',object_path:pendingBeforeRetry.path}),
+    })
+    assert.equal(foreignProof.status,403,'foreign JWT must not obtain the publication proof')
+    await attestedPublication?.verify(pendingBeforeRetry.path)
     await timelinePage.evaluate(()=>window.__VIDEO_LATE_SELECTION.onloadedmetadata())
     await timelinePage.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))))
     assert.equal(await timelinePage.locator('video:not(article video)').count(),0,
