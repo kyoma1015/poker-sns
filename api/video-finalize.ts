@@ -232,7 +232,7 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
       return res.status(503).json({ error: 'video_finalize_not_enabled' })
     }
     try {
-      if (production || isolated) {
+      if (production || (isolated && options.isolatedReplayInspection === true)) {
         if (production) await assertProductionVideoPublisher(viewer, data.user.id)
         const prior = await viewer.from('posts').select('id').eq('user_id', data.user.id)
           .eq('video_path', object_path).maybeSingle()

@@ -104,7 +104,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     ? { ...adapters, publish: (...args) => args[5].startsWith('isolated timeline browser upload ')
       ? attestedPublication.publish(...args)
       : adapters.publish(...args) }
-    : adapters,{isolatedLocalOnly:true})
+    : adapters,{isolatedLocalOnly:true,isolatedReplayInspection:true})
   let interruptedPublication
   let interruptedInspection = false
   const finalizeRequests = []
