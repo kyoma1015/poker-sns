@@ -1,0 +1,103 @@
+{
+  "base": "1e91f2c1a8b34a4d03cd1e30420e9856076fb8ea",
+  "formal_pass": 0,
+  "previous_formal_pass": 0,
+  "verified_RFI": 0,
+  "verified_3bet": 0,
+  "items": [
+    {
+      "id": 1,
+      "requirement": "RFI",
+      "formal_pass": false,
+      "current": "2 selected integrated policies remain t0 after 43/33 failed pilot updates; no certified RFI",
+      "missing_next": "Retain warm data; improve information reuse AND independent BR quality before scaling. Dependencies #4,5,6..11; full BR cost UNKNOWN."
+    },
+    {
+      "id": 2,
+      "requirement": "vs-open/3bet",
+      "formal_pass": false,
+      "current": "All inherited preflop R/A (2631 rows/477 histories per seed) exact, arbitrary native size insertion and continuation joint training implemented",
+      "missing_next": "Certify off-tree responses and omitted-size errors; full game legal responses alone are insufficient."
+    },
+    {
+      "id": 3,
+      "requirement": "vs3bet/4bet",
+      "formal_pass": false,
+      "current": "169 frequencies each vs3bet10.5 saved; quality UNKNOWN",
+      "missing_next": "Extend qualified downstream 4bet responses across approved profiles; omitted sizes/error UNKNOWN."
+    },
+    {
+      "id": 4,
+      "requirement": "169 frequencies",
+      "formal_pass": false,
+      "current": "3 contexts x169 x2 frequencies saved with digest; selected t0, not newly trained accepted frequencies",
+      "missing_next": "Generate qualified mixed frequencies for all positions/profiles, preserving learned/prior distinction."
+    },
+    {
+      "id": 5,
+      "requirement": "Verified EV",
+      "formal_pass": false,
+      "current": "Old33462 root measurements protected. New exact Fold1014 cells + stratified Jam493 cells over root/vs-open/vs3bet; proposed halfwidth<=.05 for493 Jam; formal0",
+      "missing_next": "Qualify every required action cell on same accepted digest, family confidence and approved thresholds; other native actions UNKNOWN. Estimated full solve/BR cost UNKNOWN."
+    },
+    {
+      "id": 6,
+      "requirement": "MTT/ring",
+      "formal_pass": false,
+      "current": "HU50 zeroante/rake research only",
+      "missing_next": "Owner-approved MTT/ring and ICM scope/config; then train/qualify. No profile adopted."
+    },
+    {
+      "id": 7,
+      "requirement": "2–9 players",
+      "formal_pass": false,
+      "current": "3-person exact reference .023738946 preserved; K4 expectation oracle passes; 6/9 K1/K2 warm joint sampling generated, no significant EV gain",
+      "missing_next": "Reduce multiway sampling variance without fulltree; independent allseat deviations/BR evidence. No general N Nash guarantee."
+    },
+    {
+      "id": 8,
+      "requirement": "Formal stacks",
+      "formal_pass": false,
+      "current": "Formal20 values pending; HU50 research only",
+      "missing_next": "Approval list maintained in GTO_PREFLOP_RELEASE_APPROVAL_AND_EXECUTION_20261125.md; no blind all-vector precompute."
+    },
+    {
+      "id": 9,
+      "requirement": "Positions",
+      "formal_pass": false,
+      "current": "HU both seats and 6/9 allseat information constraints/settlement tested; qualified positions0",
+      "missing_next": "Approve and qualify all2..9 seat profiles; 44 seat positions per equal-stack mode combination."
+    },
+    {
+      "id": 10,
+      "requirement": "BB ante/rake/unequal stacks",
+      "formal_pass": false,
+      "current": "Sidepot/refund/ante/rake/unequal regression protected; no certified strategy",
+      "missing_next": "Approved exact profile, real range/deal reach, condition-matched independent quality tests."
+    },
+    {
+      "id": 11,
+      "requirement": "Formal sizing",
+      "formal_pass": false,
+      "current": "Actual original stored root support11/99 (prior12 count corrected); integrated12/99 after generic discovery action16;87 omitted raises",
+      "missing_next": "Adaptive arbitrary support and continuation implemented; no omitted-size error bound/native BR upper. Formal size approval separate."
+    },
+    {
+      "id": 12,
+      "requirement": "Poker ID search",
+      "formal_pass": false,
+      "current": "Registry/search unchanged; normal accepted strategies0",
+      "missing_next": "Only complete formal evidence enters registry/search; no UI changes or unverified publication."
+    }
+  ],
+  "approval_pending": [
+    "formal20 stack values",
+    "MTT/ring profiles",
+    "formal size profiles",
+    "ante type/amount",
+    "rake/cap",
+    "unequal-stack profile matrix"
+  ],
+  "scope": "2..9 players; HU50 is not initial release",
+  "evidence": "support-preserved/*/final.json +169-context-EV.json; numerical proposal precision is NOT formal acceptance"
+}

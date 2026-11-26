@@ -1,0 +1,3 @@
+{"seed": 17120102, "context": "rfi", "complete_jams": 113, "boards": 112177420, "seconds": 29.811746975000005}
+{"seed": 17120102, "context": "vs_open3p5", "complete_jams": 94, "boards": 95491028, "seconds": 29.82068399600007}
+{"seed": 17120102, "context": "vs_3bet10p5", "complete_jams": 9, "boards": 51783392, "seconds": 28.02949306100004}

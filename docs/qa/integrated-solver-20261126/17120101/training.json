@@ -1,0 +1,92 @@
+{
+  "best": {
+    "EV": 0.32531121764520204,
+    "gains": {
+      "fold": -0.825311217645202,
+      "open3p5": 1.106329407354798,
+      "open8": -0.8623416785037881,
+      "river_jam": 0.6064453125,
+      "river_nuts": 0.0,
+      "threebet10p5": -0.09205087989267675
+    },
+    "score": 1.106329407354798
+  },
+  "bootstrap": {
+    "old_iterations": 64,
+    "postflop_rows": 68378,
+    "preflop_rows": 2631
+  },
+  "curve": [
+    {
+      "iterations": 204,
+      "max_inverse_proposal": 58384735.829776965,
+      "pure_seconds": 5.02024345800919,
+      "selection": {
+        "EV": 0.32531121764520204,
+        "gains": {
+          "fold": -0.825311217645202,
+          "open3p5": 1.106329407354798,
+          "open8": -0.8623416785037881,
+          "river_jam": 0.6064453125,
+          "river_nuts": 0.0,
+          "threebet10p5": -0.09205087989267675
+        },
+        "score": 1.106329407354798
+      },
+      "stats": {
+        "average_visited": 82890,
+        "halted": false,
+        "iterations": 204,
+        "regret_visited": 95500,
+        "rows": 177154
+      }
+    },
+    {
+      "iterations": 231,
+      "max_inverse_proposal": 58384735.829776965,
+      "pure_seconds": 5.684444102008001,
+      "selection": {
+        "EV": 1.1739982836174243,
+        "gains": {
+          "fold": -1.6739982836174243,
+          "open3p5": -0.9567131273674243,
+          "open8": -1.3787533538510102,
+          "river_jam": 1.1962890625,
+          "river_nuts": 0.0,
+          "threebet10p5": 0.2674918126578283
+        },
+        "score": 1.1962890625
+      },
+      "stats": {
+        "average_visited": 92442,
+        "halted": true,
+        "iterations": 231,
+        "regret_visited": 107621,
+        "rows": 200000
+      }
+    }
+  ],
+  "formal_acceptance": 0,
+  "full_native_BR_upper": null,
+  "full_native_NashConv": null,
+  "initial": {
+    "EV": 0.2063851404671717,
+    "gains": {
+      "fold": -0.7063851404671717,
+      "open3p5": 0.3131461095328283,
+      "open8": 0.2135367345328283,
+      "river_jam": -0.134765625,
+      "river_nuts": 0.0,
+      "threebet10p5": 1.1570144807449494
+    },
+    "score": 1.1570144807449494
+  },
+  "last_iterations": 231,
+  "peak_RSS_bytes": 273694720,
+  "policy_digest": "3e6fbe8e7cd08c4568b1e35146b3988fcf101221aa293b5b10762ffb56ddacdf",
+  "pure_training_seconds": 5.684444102008001,
+  "seed": 17120101,
+  "selected_iterations": 204,
+  "stop_reason": "INCOMPLETE_PAIR_HALT",
+  "timed_best_IO_seconds": 1.9715095749998
+}

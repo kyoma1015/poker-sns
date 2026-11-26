@@ -1,0 +1,53 @@
+{
+  "curve": [
+    {
+      "iterations": 102,
+      "max_effective_inverse_proposal": 56713387.02019981,
+      "pure_seconds": 15.344445699999973,
+      "selection": {
+        "EV": 0.7051274463383838,
+        "gains": {
+          "fold": -1.2051274463383839,
+          "open3p5": -0.06681068497474743,
+          "open8": 0.38154247553661613,
+          "river_jam": 0.283203125,
+          "river_nuts": 0.0390625,
+          "threebet10p5": 0.04916844223484851
+        },
+        "score": 0.38154247553661613
+      },
+      "stats": {
+        "average_visited": 381064,
+        "halted": false,
+        "iterations": 102,
+        "regret_visited": 476553,
+        "rows": 876290
+      }
+    },
+    {
+      "iterations": 170,
+      "max_effective_inverse_proposal": 83187061.96707924,
+      "pure_seconds": 29.58824170000004,
+      "selection": {
+        "EV": 0.8874536379419191,
+        "gains": {
+          "fold": -1.3874536379419191,
+          "open3p5": -0.4044103140782829,
+          "open8": -0.8988419349747474,
+          "river_jam": 1.470703125,
+          "river_nuts": 0.0,
+          "threebet10p5": 0.032470703125
+        },
+        "score": 1.470703125
+      },
+      "stats": {
+        "average_visited": 656509,
+        "halted": true,
+        "iterations": 170,
+        "regret_visited": 811460,
+        "rows": 1500000
+      }
+    }
+  ],
+  "formal_pass": false
+}

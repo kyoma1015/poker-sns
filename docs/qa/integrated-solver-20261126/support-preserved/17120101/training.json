@@ -1,0 +1,83 @@
+{
+  "best": {
+    "EV": -0.12424784958964638,
+    "gains": {
+      "fold": -0.3757521504103536,
+      "open3p5": 0.5275681620896463,
+      "open8": 0.48362284958964635,
+      "river_jam": 0.5009765625,
+      "river_nuts": 0.0,
+      "threebet10p5": 0.3586623066603536
+    },
+    "score": 0.5275681620896463
+  },
+  "curve": [
+    {
+      "iterations": 22,
+      "pure_seconds": 5.20253486300021,
+      "selection": {
+        "EV": 0.7333096590909092,
+        "gains": {
+          "fold": -1.2333096590909092,
+          "open3p5": 0.6912508877840909,
+          "open8": 0.232510653409091,
+          "river_jam": -0.068359375,
+          "river_nuts": 0.0,
+          "threebet10p5": 0.075259430239899
+        },
+        "score": 0.6912508877840909
+      },
+      "stats": {
+        "average_visited": 102814,
+        "halted": false,
+        "iterations": 22,
+        "regret_visited": 129410,
+        "rows": 233369
+      }
+    },
+    {
+      "iterations": 43,
+      "pure_seconds": 10.119572251000022,
+      "selection": {
+        "EV": 0.6520009666982324,
+        "gains": {
+          "fold": -1.1520009666982323,
+          "open3p5": -1.0075387665719697,
+          "open8": 2.0264658301767677,
+          "river_jam": 1.0478515625,
+          "river_nuts": 0.0,
+          "threebet10p5": 0.12310606060606061
+        },
+        "score": 2.0264658301767677
+      },
+      "stats": {
+        "average_visited": 189496,
+        "halted": false,
+        "iterations": 43,
+        "regret_visited": 234390,
+        "rows": 428879
+      }
+    }
+  ],
+  "formal_acceptance": 0,
+  "full_native_BR_upper": null,
+  "initial": {
+    "EV": -0.12424784958964638,
+    "gains": {
+      "fold": -0.3757521504103536,
+      "open3p5": 0.5275681620896463,
+      "open8": 0.48362284958964635,
+      "river_jam": 0.5009765625,
+      "river_nuts": 0.0,
+      "threebet10p5": 0.3586623066603536
+    },
+    "score": 0.5275681620896463
+  },
+  "last_iterations": 43,
+  "peak_RSS_bytes": 485224448,
+  "policy_digest": "d76222048403b3c037aade576512f4e70d8cb8769105872cc76fa62ca5a93dbe",
+  "pure_seconds": 10.119572251000022,
+  "seed": 17120101,
+  "selected_iterations": 0,
+  "stop_reason": "NO_REPEATED_SELECTION_TREND"
+}

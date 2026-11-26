@@ -1,0 +1,152 @@
+{
+  "identity": {
+    "abstraction": "own169 and all causal strategic-prefix signals; exact native public history",
+    "binary_sha256": "48ebd7ff4e4767ae79bc6387cb26779df34c7f7b83dfd33ce1dbe9c5f96dd89c",
+    "bootstrap": {
+      "checkpoint_sha256": "fff3848c6689dd8c75df408672a5de31a45f1f88817bf1a5ebdc48dec352fee2",
+      "imported_preflop_rows": 2631,
+      "postflop_rows_not_imported": 68378,
+      "scope": "finitewarm; no inherited current visits, iteration or RNG",
+      "source_identity": {
+        "all_native_actions": false,
+        "binary_sha256": "f23625a462eb87a0339123bb6ac2ab99daf8d6f4e3d006895237ee0ffe4728cc",
+        "bootstrap": {
+          "checkpoint_sha256": "78414efcbcf16ac990c0191fb07a87e912d7f94d98b08cb2c6a27043a153501f",
+          "imported_preflop_rows": 1349,
+          "postflop_rows_not_imported": 52505,
+          "scope": "finitewarm; no inherited current visits, iteration or RNG",
+          "source_identity": {
+            "all_native_actions": false,
+            "binary_sha256": "f6257bdb849c3dfd6672081a9a90cd1e3591e63c57a9ce44ef59ee13a9209482",
+            "formal_profile": false,
+            "game": {
+              "bb": 2,
+              "bba": 0,
+              "rake": 0,
+              "stacks": [
+                100,
+                100
+              ]
+            },
+            "node_cap": 1000000,
+            "ordinary_registry_admission": false,
+            "origin": {
+              "parent_checkpoint_sha256": "3c5c9fffef4bd23855df44b12bbb0e5560d120c294ee26cc479eb6d635f4df6c",
+              "parent_iterations": 16,
+              "parent_policy_array_sha256": "9522992075e439896ddd78ea25919efe4e41ff21de5c9799a2ff493744376bcc",
+              "parent_seed": 17120101,
+              "warm": "matching preflop finite R/A; postflop average behavior; not new-game prefix history"
+            },
+            "prior_tables_digest": "ae340393590d527be4684ccc7f664a2ad80e9e01115146cb307eb3e28d972846",
+            "refined": true,
+            "rows": 400000,
+            "schema": "sparse-native-external-v1",
+            "seed": 18220101,
+            "sources": {
+              "gto/qualification/fullstreet_core.cc": "36c4359d39a49f8c764c1b49e9203ebf46287af1eedd0e0b79221e3851f25492",
+              "gto/qualification/sparse_native.cc": "3a81aa074f15cb25b2808e7b591333ad3374730362f4d17616fb7854a8c8920b",
+              "gto/qualification/sparse_solver.py": "ce1a3376bab042047e2451b95154fab98c6b64624d8d10bc436c0a2b2415562e",
+              "handoff/gto/g12_next/g11_native_state.h": "9eaee82e4a42aca63ea30f2f80dae31ec4b4e28d58b72e0da355a048e6ca6988"
+            }
+          },
+          "source_iterations": 64
+        },
+        "extra_support": [
+          {
+            "actions": [
+              18,
+              19
+            ],
+            "history": [],
+            "round": 0
+          }
+        ],
+        "formal_profile": false,
+        "game": {
+          "bb": 2,
+          "bba": 0,
+          "rake": 0,
+          "stacks": [
+            100,
+            100
+          ]
+        },
+        "node_cap": 1000000,
+        "ordinary_registry_admission": false,
+        "origin": {
+          "parent_checkpoint_sha256": "3c5c9fffef4bd23855df44b12bbb0e5560d120c294ee26cc479eb6d635f4df6c",
+          "parent_iterations": 16,
+          "parent_policy_array_sha256": "9522992075e439896ddd78ea25919efe4e41ff21de5c9799a2ff493744376bcc",
+          "parent_seed": 17120101,
+          "warm": "matching preflop finite R/A; postflop average behavior; not new-game prefix history"
+        },
+        "prior_tables_digest": "ae340393590d527be4684ccc7f664a2ad80e9e01115146cb307eb3e28d972846",
+        "refined": true,
+        "rows": 250000,
+        "schema": "sparse-native-external-v1",
+        "seed": 18620101,
+        "sharing": true,
+        "sources": {
+          "gto/qualification/fullstreet_core.cc": "36c4359d39a49f8c764c1b49e9203ebf46287af1eedd0e0b79221e3851f25492",
+          "gto/qualification/sparse_native.cc": "37e8fd99453314dae49737dbfa4ad1832b83696d492a9214083f30dc36bc9c89",
+          "gto/qualification/sparse_solver.py": "4ca2201eb881d67f4fe5c4d75def8c1a6508881bef7c380852c75431fc7aaebb",
+          "handoff/gto/g12_next/g11_native_state.h": "9eaee82e4a42aca63ea30f2f80dae31ec4b4e28d58b72e0da355a048e6ca6988"
+        }
+      },
+      "source_iterations": 64
+    },
+    "epsilon": 0.2,
+    "estimator": "uniform public board/exact private pairs/public action outcome sampling with full-support proposal; integrate BEFOREclip",
+    "extra_support": [
+      {
+        "actions": [
+          18,
+          19
+        ],
+        "history": [],
+        "round": 0
+      }
+    ],
+    "formal_profile": false,
+    "game": {
+      "bb": 2,
+      "bba": 0,
+      "rake": 0,
+      "stacks": [
+        100,
+        100
+      ]
+    },
+    "ordinary_registry_admission": false,
+    "origin": {
+      "parent_checkpoint_sha256": "3c5c9fffef4bd23855df44b12bbb0e5560d120c294ee26cc479eb6d635f4df6c",
+      "parent_iterations": 16,
+      "parent_policy_array_sha256": "9522992075e439896ddd78ea25919efe4e41ff21de5c9799a2ff493744376bcc",
+      "parent_seed": 17120101,
+      "warm": "matching preflop finite R/A; postflop average behavior; not new-game prefix history"
+    },
+    "prior_tables_digest": "ae340393590d527be4684ccc7f664a2ad80e9e01115146cb307eb3e28d972846",
+    "rank_binary_sha256": "cb8572c9b5f13c9250d38d151b40fb26d3c6e30f454dd7f9d74dc9dd31d7f7f0",
+    "rows": 200000,
+    "schema": "sparse-private-integrated-v1",
+    "seed": 19120101,
+    "sources": {
+      "/workspace/poker-sns/gto/qualification/integrated_native.cc": "22858ab8919348da046a6000929a6dcc20e65cfeeeea2c7f009ab19f20a17831",
+      "/workspace/poker-sns/gto/qualification/integrated_solver.py": "be8d2a44285d4fe945f83f9606854c3ac72f9e151597e6607642ffed1e270a73",
+      "/workspace/poker-sns/gto/qualification/public_chance_core.cc": "35cea018c44cc578fd02ea5d4cb6f0d4b127d447ff2ec0ea81ed5d31cc7e9af8",
+      "/workspace/poker-sns/gto/qualification/sparse_native.cc": "37e8fd99453314dae49737dbfa4ad1832b83696d492a9214083f30dc36bc9c89"
+    },
+    "study_source_sha256": "a4ffaafb8fe303b2732ef18c90e09b78ae98710846caeeebdd7075b2186d3984"
+  },
+  "iterations": 231,
+  "peak_RSS_bytes": 273694720,
+  "policy_digest": "dde12d46a7971f1b1078ee0b28b0f2df03026cfe434d754d6b23a7b385232b79",
+  "sha256": "0ee3e0458b849badffd80d38bb1471ea57b0f9c055130486795970789fd4318e",
+  "stats": {
+    "average_visited": 92442,
+    "halted": true,
+    "iterations": 231,
+    "regret_visited": 107621,
+    "rows": 200000
+  }
+}

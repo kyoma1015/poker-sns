@@ -1,0 +1,462 @@
+{
+  "added": 11,
+  "before": [
+    0,
+    1,
+    6,
+    7,
+    8,
+    9,
+    10,
+    12,
+    18,
+    19,
+    102
+  ],
+  "discovery_seed": 17136601,
+  "migration_value_max_error": 0.0,
+  "n": 32,
+  "ranking": [
+    {
+      "action": 11,
+      "error_upper": null,
+      "mean": 1.412286931818182
+    },
+    {
+      "action": 13,
+      "error_upper": null,
+      "mean": 1.287286931818182
+    },
+    {
+      "action": 14,
+      "error_upper": null,
+      "mean": 1.224786931818182
+    },
+    {
+      "action": 15,
+      "error_upper": null,
+      "mean": 1.162286931818182
+    },
+    {
+      "action": 16,
+      "error_upper": null,
+      "mean": 1.099786931818182
+    },
+    {
+      "action": 17,
+      "error_upper": null,
+      "mean": 1.037286931818182
+    },
+    {
+      "action": 20,
+      "error_upper": null,
+      "mean": 0.9122869318181821
+    },
+    {
+      "action": 21,
+      "error_upper": null,
+      "mean": 0.8497869318181821
+    },
+    {
+      "action": 22,
+      "error_upper": null,
+      "mean": 1.131036931818182
+    },
+    {
+      "action": 23,
+      "error_upper": null,
+      "mean": 1.084161931818182
+    },
+    {
+      "action": 24,
+      "error_upper": null,
+      "mean": 1.037286931818182
+    },
+    {
+      "action": 25,
+      "error_upper": null,
+      "mean": 0.9904119318181821
+    },
+    {
+      "action": 26,
+      "error_upper": null,
+      "mean": 0.9435369318181821
+    },
+    {
+      "action": 27,
+      "error_upper": null,
+      "mean": 1.318536931818182
+    },
+    {
+      "action": 28,
+      "error_upper": null,
+      "mean": 1.287286931818182
+    },
+    {
+      "action": 29,
+      "error_upper": null,
+      "mean": 1.256036931818182
+    },
+    {
+      "action": 30,
+      "error_upper": null,
+      "mean": 1.224786931818182
+    },
+    {
+      "action": 31,
+      "error_upper": null,
+      "mean": 1.193536931818182
+    },
+    {
+      "action": 32,
+      "error_upper": null,
+      "mean": 1.162286931818182
+    },
+    {
+      "action": 33,
+      "error_upper": null,
+      "mean": 1.131036931818182
+    },
+    {
+      "action": 34,
+      "error_upper": null,
+      "mean": 1.099786931818182
+    },
+    {
+      "action": 35,
+      "error_upper": null,
+      "mean": 1.068536931818182
+    },
+    {
+      "action": 36,
+      "error_upper": null,
+      "mean": 1.037286931818182
+    },
+    {
+      "action": 37,
+      "error_upper": null,
+      "mean": 1.006036931818182
+    },
+    {
+      "action": 38,
+      "error_upper": null,
+      "mean": 0.9747869318181821
+    },
+    {
+      "action": 39,
+      "error_upper": null,
+      "mean": 0.9435369318181821
+    },
+    {
+      "action": 40,
+      "error_upper": null,
+      "mean": 0.9122869318181821
+    },
+    {
+      "action": 41,
+      "error_upper": null,
+      "mean": 0.8810369318181821
+    },
+    {
+      "action": 42,
+      "error_upper": null,
+      "mean": 0.8497869318181821
+    },
+    {
+      "action": 43,
+      "error_upper": null,
+      "mean": 0.8185369318181821
+    },
+    {
+      "action": 44,
+      "error_upper": null,
+      "mean": 0.7872869318181821
+    },
+    {
+      "action": 45,
+      "error_upper": null,
+      "mean": 0.7560369318181821
+    },
+    {
+      "action": 46,
+      "error_upper": null,
+      "mean": 0.7247869318181821
+    },
+    {
+      "action": 47,
+      "error_upper": null,
+      "mean": 0.6935369318181821
+    },
+    {
+      "action": 48,
+      "error_upper": null,
+      "mean": 0.6622869318181821
+    },
+    {
+      "action": 49,
+      "error_upper": null,
+      "mean": 0.6310369318181821
+    },
+    {
+      "action": 50,
+      "error_upper": null,
+      "mean": 0.5997869318181821
+    },
+    {
+      "action": 51,
+      "error_upper": null,
+      "mean": 0.5685369318181821
+    },
+    {
+      "action": 52,
+      "error_upper": null,
+      "mean": 0.5372869318181821
+    },
+    {
+      "action": 53,
+      "error_upper": null,
+      "mean": 0.5060369318181821
+    },
+    {
+      "action": 54,
+      "error_upper": null,
+      "mean": 0.4747869318181821
+    },
+    {
+      "action": 55,
+      "error_upper": null,
+      "mean": 0.4435369318181821
+    },
+    {
+      "action": 56,
+      "error_upper": null,
+      "mean": 0.4122869318181821
+    },
+    {
+      "action": 57,
+      "error_upper": null,
+      "mean": 0.3810369318181821
+    },
+    {
+      "action": 58,
+      "error_upper": null,
+      "mean": 0.3497869318181821
+    },
+    {
+      "action": 59,
+      "error_upper": null,
+      "mean": 0.3185369318181821
+    },
+    {
+      "action": 60,
+      "error_upper": null,
+      "mean": 0.2872869318181821
+    },
+    {
+      "action": 61,
+      "error_upper": null,
+      "mean": 0.2560369318181821
+    },
+    {
+      "action": 62,
+      "error_upper": null,
+      "mean": 0.2247869318181821
+    },
+    {
+      "action": 63,
+      "error_upper": null,
+      "mean": 0.1935369318181821
+    },
+    {
+      "action": 64,
+      "error_upper": null,
+      "mean": 0.1622869318181821
+    },
+    {
+      "action": 65,
+      "error_upper": null,
+      "mean": 0.1310369318181821
+    },
+    {
+      "action": 66,
+      "error_upper": null,
+      "mean": 0.0997869318181821
+    },
+    {
+      "action": 67,
+      "error_upper": null,
+      "mean": 0.0685369318181821
+    },
+    {
+      "action": 68,
+      "error_upper": null,
+      "mean": 0.0372869318181821
+    },
+    {
+      "action": 69,
+      "error_upper": null,
+      "mean": 0.006036931818182101
+    },
+    {
+      "action": 70,
+      "error_upper": null,
+      "mean": -0.0252130681818179
+    },
+    {
+      "action": 71,
+      "error_upper": null,
+      "mean": -0.0564630681818179
+    },
+    {
+      "action": 72,
+      "error_upper": null,
+      "mean": -0.0877130681818179
+    },
+    {
+      "action": 73,
+      "error_upper": null,
+      "mean": -0.1189630681818179
+    },
+    {
+      "action": 74,
+      "error_upper": null,
+      "mean": -0.1502130681818179
+    },
+    {
+      "action": 75,
+      "error_upper": null,
+      "mean": -0.1814630681818179
+    },
+    {
+      "action": 76,
+      "error_upper": null,
+      "mean": -0.2127130681818179
+    },
+    {
+      "action": 77,
+      "error_upper": null,
+      "mean": -0.2439630681818179
+    },
+    {
+      "action": 78,
+      "error_upper": null,
+      "mean": -0.2752130681818179
+    },
+    {
+      "action": 79,
+      "error_upper": null,
+      "mean": -0.3064630681818179
+    },
+    {
+      "action": 80,
+      "error_upper": null,
+      "mean": -0.3377130681818179
+    },
+    {
+      "action": 81,
+      "error_upper": null,
+      "mean": -0.3689630681818179
+    },
+    {
+      "action": 82,
+      "error_upper": null,
+      "mean": -0.4002130681818179
+    },
+    {
+      "action": 83,
+      "error_upper": null,
+      "mean": -0.4314630681818179
+    },
+    {
+      "action": 84,
+      "error_upper": null,
+      "mean": -0.4627130681818179
+    },
+    {
+      "action": 85,
+      "error_upper": null,
+      "mean": -0.4939630681818179
+    },
+    {
+      "action": 86,
+      "error_upper": null,
+      "mean": -0.5252130681818179
+    },
+    {
+      "action": 87,
+      "error_upper": null,
+      "mean": -0.5564630681818179
+    },
+    {
+      "action": 88,
+      "error_upper": null,
+      "mean": -0.5877130681818179
+    },
+    {
+      "action": 89,
+      "error_upper": null,
+      "mean": -0.6189630681818179
+    },
+    {
+      "action": 90,
+      "error_upper": null,
+      "mean": 0.5294744318181821
+    },
+    {
+      "action": 91,
+      "error_upper": null,
+      "mean": 0.5138494318181821
+    },
+    {
+      "action": 92,
+      "error_upper": null,
+      "mean": 0.4982244318181821
+    },
+    {
+      "action": 93,
+      "error_upper": null,
+      "mean": 0.4825994318181821
+    },
+    {
+      "action": 94,
+      "error_upper": null,
+      "mean": 0.4669744318181821
+    },
+    {
+      "action": 95,
+      "error_upper": null,
+      "mean": 0.4513494318181821
+    },
+    {
+      "action": 96,
+      "error_upper": null,
+      "mean": 0.4357244318181821
+    },
+    {
+      "action": 97,
+      "error_upper": null,
+      "mean": 0.4200994318181821
+    },
+    {
+      "action": 98,
+      "error_upper": null,
+      "mean": 0.4044744318181821
+    },
+    {
+      "action": 99,
+      "error_upper": null,
+      "mean": 0.3888494318181821
+    },
+    {
+      "action": 100,
+      "error_upper": null,
+      "mean": 0.3732244318181821
+    },
+    {
+      "action": 101,
+      "error_upper": null,
+      "mean": 0.3575994318181821
+    }
+  ],
+  "scope": "exploration only; no safety/exploit confidence proof"
+}

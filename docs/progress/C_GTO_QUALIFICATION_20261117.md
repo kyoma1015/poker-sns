@@ -447,3 +447,65 @@ none formally adopted. No npm/browser applicable; no prod/SQL/DB/Storage/main/
 Vercel/SSO/fees/forcepush/destruction. Next richer sparse causal indexes/current
 range integration+adaptive actualsize continuation, independent BR/error/EV gates;
 no more hours on failed bothseed model. NewHEAD/automaticCI receipt in PRcomment.
+
+## 2026-11-26 integrated sparse/private solver — quality adoption FAIL
+
+Base1e91f2c1a8b34a4d03cd1e30420e9856076fb8ea, Draft PR120. Environment
+restored, shell/native build/old real Git checkpoints usable. Old-session-only
+DB/ZIP/unpushed bytes unavailable, not claimed recovered. No old source,8 blocked
+candidates,HU1BB/frozen policies removed. Full2..9/20stack release scope unchanged.
+Implemented integrated_native.cc/solver.py: original Sparse native generic support
++PCS1081hand/1070190privatepair integration, exact public history, causal own169/
+strategic-prefix keys, all-root-support integration/common RNG, positive future
+proposal, fixed preupdate bothowners, mean rawregret BEFORE CFR+clip. Generic
+adaptive size registry and downstream joint learning, no fixed4action array.
+Imported all2631 old preflop rows/477histories per seed, exact oldR/A/allaction
+preservation and allrow average verification1e-14. Actual rootstoredsupport11,
+not previously reported12; auditmissingactions0. Added synthetic omitted14 codec
+regression, not a claim actual old data lost14. Discovery adds16 =>12/99 support,
+87omittedraises. Legal response capability is not a quality/error certificate.
+Final active support-preserved/: t43/t33 after10.120/10.089s, selectedt0/t0,
+RSS485224448/338251776B. Bothseeds failed independent selection trend, no expanded
+blindtraining/no adopted learned policy. Native16384world heldout17137501:
+SB_EV .007702[-.488604,.504007]/.215097[-.336465,.766659]BB;
+pairedoldSparse EV0/.000244 with intervals crossing0. 3.5 gain .411763/.186896,
+8BB .312961/.105566,10.5 .483701/.118987,riverjam .376190/-.630798, nuts
+.002411/0; intervals in final.json, no proof of allsize safety. Fresh32768world
+PCS-minusSparse3.5 gain regression +1.535355[.453785,2.616926] and
++1.710111[.664979,2.755243], confirms failed PCS resistance in bothseeds.
+Last(t43/t33) fresh2048world coverage turn CF/avg1.833/1.500% and .626/.521%;
+river .173/.087% and0/0%. Selectedt0 newrowcoverage0. Do not transfer oldPCS
+85.78/87.76% to integrated model. No bothseed quality/generation breakthrough.
+Earlier root-stage seed2 showed selectiontrend, so extended30s rather than
+arbitrary10sstop: t26→102→170,29.588s,RSS1221664768B,row1.5mcap, selection
+.157→.382→1.471 worse; keep26, no90s. Prototypes/source snapshots preserved;
+active final sources/CPs separated. No convergence impossibility claim.
+New same-digest conditional EV integrates all1225 opponent hands/Bayes prehistory
+and Fold/Call after Jam, optimal preassigned board strata a_i=posterior_i*call_i.
+Root EV and CF decision EV/reach weights separate. Fold1014 exactcells,Jam493
+proposalhalfwidth<=.05BB cells(277/216 across3contexts), ~30s/context;
+formalprecision0, allotheractionEVUNKNOWN. Old33462 root measured preserved,
+not added across incompatible digests. Formal12 unchanged0/12,RFI0/3bet0.
+PrototypefirstEVsource edited midrun; executed snapshot + reconciliation receipt
+saved, not counted as finalproof. FinalbothEVruns source frozen/SHA matches.
+Multiplayer Kchance batch on existing external sampling: K1 bitexact old,
+K4finite3 expected CF/average equals independent pathoracle. Actual6/9 K1/K2
+oldCPwarmstarts bothseeds ~3s each,512freshworld allseatnative evaluation;
+allpairedseatEV CIs include0, no significantgain, actual8CPnextstep reproducible.
+Old3exact .023738946BB preserved; no N-person generalNash guarantee.
+Full native BR/NashConvupper, model/abstraction/omittedsize error UNKNOWN.
+QA~177MiB, explicit256MiB preservationbudget, freeenvironment no fees. Complete
+release cachemiss/quality/time/storage UNKNOWN; no all-stack brute force or
+Python lookup declared appSLA. Approval list stays PENDING, no concrete values
+adopted. evidence README/acceptance/summary/replay + ledger under
+ docs/qa/integrated-solver-20261126/. New code5 regression cases plus existing
+32targeted=37 PASS74.712s. Full qualification initial missing RANGE_BUILD caused
+4environment errors; compiled unchanged range library, affected27 PASS12.399s;
+final same-workflow fullsuite163 PASS86.279s, log in verification.txt/PRreceipt. No npm/
+browser applicable. No prod/SQL/DB/Storage/merge/deploy/SSO/fees/forcepush/delete,
+no SUCCESS manual CI reruns. Normal newHEAD/autoCI receipt stored in PRcomment.
+Next: improve shared continuation/index quality within same integrated solver,
+retain native sizes and information, independent allsize/BR/EV qualitygates;
+do not extend failedbothseed trial blindly. Reopen best/last via strictsource/
+build/SHA/RNG manualrestore; no automaticrestart. Formal specs/BR/error proof
+remain blockers despite numeric conditional EV progress.

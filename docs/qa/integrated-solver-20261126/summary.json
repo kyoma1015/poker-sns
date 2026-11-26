@@ -1,0 +1,276 @@
+{
+  "records": [
+    {
+      "seed": 17120101,
+      "selected_iterations": 0,
+      "last_iterations": 43,
+      "training_seconds": 10.119572251000022,
+      "peak_RSS": 485224448,
+      "policy_digest": "d76222048403b3c037aade576512f4e70d8cb8769105872cc76fa62ca5a93dbe",
+      "native_EV": {
+        "interval": [
+          -0.48860355850261866,
+          0.5040067666090738
+        ],
+        "mean": 0.007701604053227584,
+        "n": 16384,
+        "radius": 0.4963051625558462,
+        "variance": 69.78615283524405
+      },
+      "deviations": {
+        "fold": {
+          "interval": [
+            -1.1778506057893445,
+            0.1624473976828893
+          ],
+          "mean": -0.5077016040532276,
+          "n": 16384,
+          "radius": 0.6701490017361169,
+          "variance": 69.78615283524405
+        },
+        "open3p5": {
+          "interval": [
+            -0.2592364936290214,
+            1.0827615081788162
+          ],
+          "mean": 0.41176250727489744,
+          "n": 16384,
+          "radius": 0.6709990009039188,
+          "variance": 70.15454648782818
+        },
+        "open8": {
+          "interval": [
+            -0.38475533155689784,
+            1.0106771781971282
+          ],
+          "mean": 0.3129609233201152,
+          "n": 16384,
+          "radius": 0.697716254877013,
+          "variance": 82.22824040239762
+        },
+        "river_jam": {
+          "interval": [
+            -0.41352718619223006,
+            1.16590755728598
+          ],
+          "mean": 0.376190185546875,
+          "n": 16384,
+          "radius": 0.7897173717391051,
+          "variance": 131.13447486976634
+        },
+        "river_nuts": {
+          "interval": [
+            -0.3577990985592783,
+            0.3626208759030283
+          ],
+          "mean": 0.002410888671875,
+          "n": 16384,
+          "radius": 0.3602099872311533,
+          "variance": 0.105240479148963
+        },
+        "threebet10p5": {
+          "interval": [
+            -0.14792669110274242,
+            1.1153288314022216
+          ],
+          "mean": 0.48370107014973956,
+          "n": 16384,
+          "radius": 0.631627761252482,
+          "variance": 54.10873775132485
+        }
+      },
+      "paired": {
+        "EV": {
+          "interval": [
+            -0.3476876783605413,
+            0.3476876783605413
+          ],
+          "mean": 0.0,
+          "n": 16384,
+          "radius": 0.3476876783605413,
+          "variance": 0.0
+        },
+        "candidate": "integrated",
+        "control": "old_sparse",
+        "open3p5_gain_change": {
+          "interval": [
+            -0.6953753567210826,
+            0.6953753567210826
+          ],
+          "mean": 0.0,
+          "n": 16384,
+          "radius": 0.6953753567210826,
+          "variance": 0.0
+        }
+      },
+      "coverage": {
+        "0": {
+          "average": 0,
+          "both": 0,
+          "queries": 30537,
+          "regret": 0
+        },
+        "1": {
+          "average": 0,
+          "both": 0,
+          "queries": 11790,
+          "regret": 0
+        },
+        "2": {
+          "average": 0,
+          "both": 0,
+          "queries": 6375,
+          "regret": 0
+        },
+        "3": {
+          "average": 0,
+          "both": 0,
+          "queries": 4962,
+          "regret": 0
+        }
+      },
+      "measured_jam_cells": 277,
+      "proposed_precision_jam_cells": 277,
+      "exact_fold_cells": 507,
+      "formal_precision_cells": 0
+    },
+    {
+      "seed": 17120102,
+      "selected_iterations": 0,
+      "last_iterations": 33,
+      "training_seconds": 10.08923434500116,
+      "peak_RSS": 338251776,
+      "policy_digest": "6cf7c106a06135cd6fcf61a67f6cba75d462fc808fb42b39a393c573c50ee3d9",
+      "native_EV": {
+        "interval": [
+          -0.3364654051533379,
+          0.766659065388502
+        ],
+        "mean": 0.21509683011758207,
+        "n": 16384,
+        "radius": 0.55156223527092,
+        "variance": 95.75253201900568
+      },
+      "deviations": {
+        "fold": {
+          "interval": [
+            -1.4405029045687727,
+            0.01030924433360858
+          ],
+          "mean": -0.7150968301175821,
+          "n": 16384,
+          "radius": 0.7254060744511907,
+          "variance": 95.75253201900568
+        },
+        "open3p5": {
+          "interval": [
+            -0.5359364080224166,
+            0.9097283434903775
+          ],
+          "mean": 0.18689596773398043,
+          "n": 16384,
+          "radius": 0.722832375756397,
+          "variance": 94.45209985219785
+        },
+        "open8": {
+          "interval": [
+            -0.6385435187269085,
+            0.8496749132384299
+          ],
+          "mean": 0.10556569725576073,
+          "n": 16384,
+          "radius": 0.7441092159826692,
+          "variance": 105.46988602523044
+        },
+        "river_jam": {
+          "interval": [
+            -1.3182765757032118,
+            0.05667989601571177
+          ],
+          "mean": -0.63079833984375,
+          "n": 16384,
+          "radius": 0.6874782358594618,
+          "variance": 77.48838424938747
+        },
+        "river_nuts": {
+          "interval": [
+            -0.3476876783605413,
+            0.3476876783605413
+          ],
+          "mean": 0.0,
+          "n": 16384,
+          "radius": 0.3476876783605413,
+          "variance": 0.0
+        },
+        "threebet10p5": {
+          "interval": [
+            -0.41702383606150645,
+            0.6549988313759794
+          ],
+          "mean": 0.11898749765723643,
+          "n": 16384,
+          "radius": 0.5360113337187429,
+          "variance": 23.802564118471462
+        }
+      },
+      "paired": {
+        "EV": {
+          "interval": [
+            -0.3486498035637396,
+            0.3491380848137396
+          ],
+          "mean": 0.000244140625,
+          "n": 16384,
+          "radius": 0.3488939441887396,
+          "variance": 0.0009765625
+        },
+        "candidate": "integrated",
+        "control": "old_sparse",
+        "open3p5_gain_change": {
+          "interval": [
+            -0.6968257631742809,
+            0.6963374819242809
+          ],
+          "mean": -0.000244140625,
+          "n": 16384,
+          "radius": 0.6965816225492809,
+          "variance": 0.0009765625
+        }
+      },
+      "coverage": {
+        "0": {
+          "average": 0,
+          "both": 0,
+          "queries": 27765,
+          "regret": 0
+        },
+        "1": {
+          "average": 0,
+          "both": 0,
+          "queries": 13468,
+          "regret": 0
+        },
+        "2": {
+          "average": 0,
+          "both": 0,
+          "queries": 7693,
+          "regret": 0
+        },
+        "3": {
+          "average": 0,
+          "both": 0,
+          "queries": 4431,
+          "regret": 0
+        }
+      },
+      "measured_jam_cells": 216,
+      "proposed_precision_jam_cells": 216,
+      "exact_fold_cells": 507,
+      "formal_precision_cells": 0
+    }
+  ],
+  "formal_pass": 0,
+  "formal_strategy_count": 0,
+  "full_native_BR_upper": "UNKNOWN",
+  "full_native_NashConv": "UNKNOWN"
+}
