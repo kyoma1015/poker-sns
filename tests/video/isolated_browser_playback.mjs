@@ -106,6 +106,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
       : adapters.publish(...args) }
     : adapters,{isolatedLocalOnly:true})
   let interruptedPublication
+  let interruptedInspection = false
   const finalizeRequests = []
   const server = createHttpServer((req, res) => {
     if (req.url === '/internal/video/finalize') {
@@ -120,6 +121,15 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
         try {body=JSON.parse(raw.toString('utf8'))} catch {res.writeHead(400);res.end();return}
         const request = { action: body.action ?? 'publish', path: body.object_path }
         finalizeRequests.push(request)
+        if (!interruptedInspection && interruptedPublication !== undefined &&
+            request.path === interruptedPublication && request.action === 'recovery_inspect') {
+          // Simulate temporary proof unavailability after the real TCP loss.
+          // Manual retry still has to pass the genuine proof handler.
+          interruptedInspection = true
+          request.status = 503
+          res.writeHead(503).end()
+          return
+        }
         const response={
           setHeader:(name,value)=>{res.setHeader(name,value);return response},
           status:code=>{res.statusCode=code;return response},
@@ -580,6 +590,7 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     await composer.getByRole('button',{name:'投稿する'}).waitFor({state:'visible'})
     await composer.getByText(/動画を投稿できませんでした：/).waitFor()
     assert.ok(interruptedPublication,'the committed response must have been disconnected before headers')
+    assert.ok(interruptedInspection,'the first automatic proof must have failed before manual retry')
     const pendingBeforeRetry=await timelinePage.evaluate(()=>JSON.parse(sessionStorage.getItem('poker-id-pending-video-v1')))
     assert.equal(pendingBeforeRetry.content,uploadText)
     const requestsBeforeEdit=videoReservationResponses.length
