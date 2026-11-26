@@ -1,0 +1,102 @@
+{
+  "base": "af804c7a8173099fb737c2822fc872f8df6e737c",
+  "formal_pass": 0,
+  "previous_formal_pass": 0,
+  "verified_RFI": 0,
+  "verified_3bet": 0,
+  "items": [
+    {
+      "id": 1,
+      "requirement": "RFI",
+      "formal_pass": false,
+      "current": "PCS HU50 pilot: both-seed native EV gain not significant; no quality admission",
+      "missing_next": "Generalize trained continuation and bound independent BR"
+    },
+    {
+      "id": 2,
+      "requirement": "vs-open/3bet",
+      "formal_pass": false,
+      "current": "Existing sparse12/99 support protected; new PCS uses old reduced preflop tree, not arbitrary-size certification",
+      "missing_next": "Adaptive raise support + downstream learning; certify error"
+    },
+    {
+      "id": 3,
+      "requirement": "vs3bet/4bet",
+      "formal_pass": false,
+      "current": "8 preflop contexts x169 x2 exported; conditional model actionEV only, native precision UNKNOWN",
+      "missing_next": "Learn further raise responses and evaluate all legal sizes"
+    },
+    {
+      "id": 4,
+      "requirement": "169 frequencies",
+      "formal_pass": false,
+      "current": "2704 research frequency rows from warm PCS pair; some priors, not formal coverage",
+      "missing_next": "Train/validate all required profiles, retain exact frequencies"
+    },
+    {
+      "id": 5,
+      "requirement": "Verified EV",
+      "formal_pass": false,
+      "current": "Existing33462 measured root cells protected, formal precision0; new all169/action confidence UNKNOWN",
+      "missing_next": "Conditional action estimators for remaining97 root actions and later contexts"
+    },
+    {
+      "id": 6,
+      "requirement": "MTT/ring",
+      "formal_pass": false,
+      "current": "No formal profile approved; BBante0.5 and realistic caps still blocked by pinned rules contract",
+      "missing_next": "Owner-approved mode profiles; condition-specific engine validation"
+    },
+    {
+      "id": 7,
+      "requirement": "2–9 players",
+      "formal_pass": false,
+      "current": "Finite3 integrated external engine gain.023738946 at32; 6/9 checkpoints restored under new-build migration, no new quality proof",
+      "missing_next": "Bounded multiway sampling + independent unilateral BR"
+    },
+    {
+      "id": 8,
+      "requirement": "Formal stacks",
+      "formal_pass": false,
+      "current": "20 recommended values remain PENDING_USER_APPROVAL",
+      "missing_next": "Owner approves source/list; generate and qualify all profiles"
+    },
+    {
+      "id": 9,
+      "requirement": "Positions",
+      "formal_pass": false,
+      "current": "Existing position bases protected; HU isolated pilot only, all required positions not qualified",
+      "missing_next": "All seat information constraints + qualified positional data"
+    },
+    {
+      "id": 10,
+      "requirement": "BB ante/rake/unequal stacks",
+      "formal_pass": false,
+      "current": "Off-grid minraise/allin/shortallin native regression and existing sidepot/refund tests pass; strategy quality over input domain UNKNOWN",
+      "missing_next": "Approved profile values + condition-matched multiway training"
+    },
+    {
+      "id": 11,
+      "requirement": "Formal sizing",
+      "formal_pass": false,
+      "current": "CSR7-action regression; existing sparse12/99 preserved; full omitted-size error upper UNKNOWN",
+      "missing_next": "Adaptive sparse sizing + omitted-size error bound; formal list approval separate"
+    },
+    {
+      "id": 12,
+      "requirement": "Poker ID search",
+      "formal_pass": false,
+      "current": "No normal registry changes; qualified strategy count0",
+      "missing_next": "Only accepted certificate/digest enters registry/search"
+    }
+  ],
+  "approval_pending": [
+    "formal20 stack values",
+    "MTT/ring profiles",
+    "formal size profiles",
+    "ante type/amount",
+    "rake/cap",
+    "unequal-stack profile matrix"
+  ],
+  "scope": "2..9 players; HU50 is not initial release"
+}

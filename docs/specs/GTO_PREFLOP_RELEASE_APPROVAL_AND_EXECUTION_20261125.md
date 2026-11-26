@@ -189,3 +189,26 @@ workflow変更を行わない。docs-only新HEADでworkflowが起動しなけれ
 
 参考:既存APPROVALS.md、GTO_PREFLOP_RELEASE_PROPOSAL_20261117.md、
 sparse-generalization-20261124/acceptance.json。いずれも本書で既存承認や品質PASSへ昇格しない。
+
+
+## 6. 2026-11-25 レビュー案への調整（全て承認待ち）
+
+- A1の20stack・A2の2〜9人全位置・A7品質数値は維持。
+- MTT chipEV＋ringを推奨、ICMは将来拡張というレビュー意見を記録する。
+  ユーザー承認ではなく、既存にICM必須要件がある場合の除外許可ではない。
+- BB anteの候補を0 / **0.5** / 1BBに拡張。stackは支払前、個別ante等の既定要件は削除しない。
+- ringの通常候補G1：rakeなし、および5%・whole-hand capをHU 1BB／3〜5人2BB／6〜9人3BB。
+  no-flop-no-drop、floor、rake対象ante等はA5の別承認が必要。
+  旧7profileはG2（比較・stressを含む代替候補）として残し、正式採用とは扱わない。
+  10%やcapなしを現実的な標準値と決めつけない。house rule差をconfigに含める。
+- 0.5BBのサイズ格子は離散supportの候補であり、**格子外でもnative上合法な最小raise、
+  all-in、short all-inを除外しない**。BBをより細かいchip単位で表した場合も同様。
+- 不均等stackは入力vectorを保持し、共通の事前計算・cache・オンデマンド再解法の組合せを検討。
+  代表stackへの黙示的な丸めや、有限テストから入力全域の品質保証を行わない。
+
+実装/測定はdocs/qa/public-chance-20261125/を参照。private-vector積分の実装と
+3人有限ゲームの改善は得たが、HU50の独立品質gateは未達。全profile向けに
+事前計算＋exact config/digest cache＋必要時の局所再解法を組み合わせる構成が候補。
+現状の秒数を初回版全体へ外挿しない。新規configの精度保証付き計算時間、完全BR上界、
+cache miss時のGTO検索SLA、全不均等stackの誤差保証はUNKNOWN。無料環境で正式品質を
+提供できる実現可能性はまだ証明されていない。未承認仕様で正式配布しない。

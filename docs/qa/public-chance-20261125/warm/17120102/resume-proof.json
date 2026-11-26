@@ -1,0 +1,7 @@
+{
+  "automatic_restart": false,
+  "checkpoint_sha256": "4640f15ba80d1f9c07af5c2124bb93fdd4ead8a3782dc2e105313066add94fc5",
+  "next_step_R_A_visits_RNG_bit_exact": true,
+  "seed": 17120102,
+  "source_build_checkpoint_RNG_verified": true
+}

@@ -1,0 +1,10 @@
+{
+  "build_seconds": 2.423609012,
+  "cache_miss_certified_solve_seconds": null,
+  "compressed_policy_bytes": 12332227,
+  "full_release_compute_seconds": null,
+  "load_seconds": 0.5774696619999986,
+  "root_cached_row_median_us": 12.0735,
+  "root_cached_row_p95_us": 15.918,
+  "scope": "isolated Python in-process frozen policy lookup, NOT app/network/on-demand solve/GTO accuracy SLA"
+}

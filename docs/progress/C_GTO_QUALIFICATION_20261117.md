@@ -395,3 +395,55 @@ Formal0/12 unchanged, RFI0/3bet0, ordinaryregistry0, existing8BLOCKED. All2..9/m
 ## 2026-11-25 — recovery channel blocked; concrete approval/implementation package
 Base402ae5efe1bdf5c10ffe4b7ae76a183c088c7066 confirmedOpen/Draft,8CI families9runsSUCCESS attempt1 read-only. Provider now reports running/connected but exec tool has no usableenvironment; one state-change retry failed. No infinite retries, setting/SSO/fee changes or recoveryclaim. GitHubAPI usable, so engineering/design/spec work continued without pretending to execute solvers. New docs/specs/GTO_PREFLOP_RELEASE_APPROVAL_AND_EXECUTION_20261125.md provides A1..A7 batch decision sheet: exact20values/all2..9positions/native legal sizing/mode-ICM choices/ante-rake/unequalinput/qualitynumbers allPENDING. None adopted;12 unchanged. Current bounds/quality still402baseline:riverR+Average0both,formal0/12,RFI0/3bet0,33462measuredrootEV/formalprecision0,complete nativeBR/errorUNKNOWN. No new experimental measurements or algorithm implementation.
 Source review selects public-chance/private-vector integration as first implementation candidate, reusing fs_world/fs_eval and exactCFR+; existingfs_eval actioncount<=4 requires protected newCSR adapter. Compare same-budget exact/private-integrated estimators and hierarchical information with BR/EV/info-loss oracle, not key hits. SparseN gap hypotheses separate un-clipped expectation, chance/action variance and CFR+clip before choosing expansion. Futureproof memory/confidence/model-error requirements and12-item dependencies/cost limits documented. M1 proposal equalstack lowerbound2560profiles/1946880RFIrows is a calculation, not achievedcoverage. Worstcase Hoeffding36m/cell example explicitlynot measuredruntime or recommendedbruteforce. Existingsource/checkpoints/research8/HU1BB untouched. Docs-only source/build identity unchanged; pastCI is not relabeled as newHEAD CI. NormalGitHubAPI commit/fastforward only, expectedHEAD lease, noforce. NewCI observations and head inPRcomment.
+
+## 2026-11-26 JST — executable PCS/private-vector kernel, quality gate not met
+Base af804c7a8173099fb737c2822fc872f8df6e737c, PR120 Open/Draft read-only confirmed.
+Runtime pwd/git restored, new branch clone; permitted network route used after
+sandbox proxy failure. Actual compact HU2 +lazy6/9 both-seed CP raw/source hashes
+verified, R/A/RNG/parents/history loaded, duplicate new-build next batches match.
+Old binary differs: explicit migration, not strict original-binary recovery.
+Old non-Git DB/ZIP not recovered. No existing artifact/core/8candidate/HU1BB edits.
+New public_chance_core/solver implements CSR and all1081 hand/1070190 disjoint-pair
+terminal integration using rank-prefix card-removal totals, reusing frozen
+fs_world rank/feature code and fs_eval recurrence. One fixed pre-update pi for
+both owners. Independent dense chance/regret/average/EV/BR/actionEV oracle PASS;
+no own-rank/hidden/future information enters policy beyond causal existing keys.
+Tiny physical finitegame NC1.296018->.000155166 at256 (not fullnative proof).
+Warm actual old finite R/A, new t/visits: 24/22selected new draws,10.0785/10.1817s
+puretrain, timed selected-CP updates4.6501/5.0757s (not allIO),peak543MB. Preserve
+all failed early gates+exact driver snapshots. Selection improves both, independent
+2board final NC8.396243->9.382136 /4.365948->4.247004: bothseedgateFAIL,no expansion.
+Same frozen digests fresh4096nativeworlds/seed; conditional all-in estimator reused.
+New-CF+new-average turn94.37/93.59%,river85.78/87.76% vs prior sparse both0river.
+Different abstraction/trajectories: coverage gain is NOT quality proof. NativeSB
+-.001360[-1.376024,1.373305]/.112659[-1.225227,1.450545]; paired vs old causal warm
+-.116526[-2.187949,1.954897]/.026010[-1.354092,1.406113], not significant. Separate
+raw/conditional families >=99.9%; no global full-profile confidence claim.
+3.5/8/10.5/riverjam/nuts/fold legal probes inconclusive, fullboundsUNKNOWN. New
+prototype still reduced preflop tree; existing sparse12/99 preserved, CSR!=support.
+New8preflopcontexts*169*2frequency/modelEV rows stored; native169precision0. Existing
+33462root measured cells/formalprecision0 unchanged. No ordinary registry.
+FiniteIntegratedJoint reuses SparseJoint.collect to integrate chance/opponent
+proposals BEFOREclip; independent path regret/average at2e-11, actualresumePASS.
+Finite3gain7.243827->.023738946 at32/22.8176s; samebudget sampled2518/2685steps
+.123053225/.093164709. Limited3finite oracle gate, not fulltree6/9 solution or
+multiplayer Nash theorem. Existing6/9 restored, no newfullnativequality admission.
+884node owner eval physicaldense.6336s vs integrated.1021s; alreadyaggregated
+.0843s is faster, so no general speedupclaim. Cached Python rootrowmedian12.07us/
+p9515.92us,compressedpolicy12.3/17.3MB,load.577s; not web/certifiedsolve SLA. Whole
+release certified cachemiss time/storage/quality feasibility UNKNOWN, no blind
+all-stack enumeration. QA initial102MiB exceeded100, SHA-identical relative-link
+new duplicates reduce~81MiB, old research unchanged. Actual newCP+bestRNG restore
+bothseeds source/build/byte/nextstep exact, manual only, no autorestart.
+32targeted regressions PASS19.737s (8new) incl offgrid minraise/allin/shortallin,
+sidepot/refund/unequal/native/exact old tests. Test shorthand expectation3 corrected
+to returned encodedraise9; no native rule change. Fresh-output guards+py_compile
+PASS. Added tests to existing qualificationCI; no successfulCI manualreruns.
+Evidence: docs/qa/public-chance-20261125/README.md,acceptance.json,sha256.json.
+All12 remainfalse, RFI0/3bet0. Full2..9/20stack/positions/MTT-ring/ante-rake/unequal
+scope maintained. Approval appendix records review candidates, including ante.5
+and realistic cap; pinned rules reject those currently, research version needed,
+none formally adopted. No npm/browser applicable; no prod/SQL/DB/Storage/main/
+Vercel/SSO/fees/forcepush/destruction. Next richer sparse causal indexes/current
+range integration+adaptive actualsize continuation, independent BR/error/EV gates;
+no more hours on failed bothseed model. NewHEAD/automaticCI receipt in PRcomment.
