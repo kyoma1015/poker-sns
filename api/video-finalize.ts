@@ -90,14 +90,19 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
     const expectedContent = request.expected_content
     if (Object.keys(request).length !== (hasContent ? 3 : 2) || typeof path !== 'string' || !match ||
         (hasContent && (typeof expectedContent !== 'string' || expectedContent.length > 10000))) return res.status(400).end()
-    if (options.isolatedLocalOnly || process.env.VERCEL_ENV !== 'production') return res.status(503).end()
-    try {
-      assertProductionVideoConfiguration()
-      assertServerAttestationAvailable()
-    } catch { return res.status(503).end() }
     const url = process.env.VITE_SUPABASE_URL
     const key = process.env.VITE_SUPABASE_ANON_KEY
+    const isolated = options.isolatedLocalOnly === true
     if (!url || !key) return res.status(503).end()
+    if (isolated) {
+      if (url !== 'http://127.0.0.1:56321' || !adapters) return res.status(503).end()
+    } else {
+      if (process.env.VERCEL_ENV !== 'production') return res.status(503).end()
+      try {
+        assertProductionVideoConfiguration()
+        assertServerAttestationAvailable()
+      } catch { return res.status(503).end() }
+    }
     const token = authorization.slice(7)
     const viewer = createClient(url, key, { global: { headers: { Authorization: authorization } }, auth: { persistSession: false, autoRefreshToken: false } })
     try {
@@ -105,7 +110,7 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
       if (error || !data.user) return res.status(401).end()
       const owner = data.user.id
       if (owner !== match[1]) return res.status(403).end()
-      await assertProductionVideoPublisher(viewer, owner)
+      if (!isolated) await assertProductionVideoPublisher(viewer, owner)
       const readPost = async () => {
         const result = await viewer.from('posts').select('id,user_id,video_path,video_generation,video_sha256,content')
           .eq('user_id', owner).eq('video_path', path).maybeSingle()
@@ -115,7 +120,7 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
       const post = await readPost()
       if (!post || !UUID.test(post.id) || post.user_id !== owner || post.video_path !== path ||
           (hasContent && post.content !== expectedContent) || !UUID.test(post.video_generation) || !/^[0-9a-f]{64}$/.test(post.video_sha256)) return res.status(409).end()
-      const adapter = createProductionSupabaseVideoAdapters(url, key, token)
+      const adapter = isolated ? adapters! : createProductionSupabaseVideoAdapters(url, key, token)
       const snapshot = await adapter.snapshot(owner, path)
       const sha256 = createHash('sha256').update(snapshot.bytes).digest('hex')
       if (snapshot.generation !== post.video_generation || sha256 !== post.video_sha256) return res.status(409).end()
@@ -227,8 +232,8 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
       return res.status(503).json({ error: 'video_finalize_not_enabled' })
     }
     try {
-      if (production) {
-        await assertProductionVideoPublisher(viewer, data.user.id)
+      if (production || isolated) {
+        if (production) await assertProductionVideoPublisher(viewer, data.user.id)
         const prior = await viewer.from('posts').select('id').eq('user_id', data.user.id)
           .eq('video_path', object_path).maybeSingle()
         if (prior.error) throw prior.error
