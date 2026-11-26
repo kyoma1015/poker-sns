@@ -3,7 +3,7 @@ import { DefinitivePublishRejection } from './video-finalize-core.js'
 import { createClient } from '@supabase/supabase-js'
 import type { FinalizeCandidateAdapters, ImmutableStagedSnapshot } from './video-finalize-core.js'
 import { MAX_VIDEO_BYTES } from './video-ffprobe.js'
-import { createVideoAttestationNonce, signBinaryVideoAttestation, videoAttestationDigest } from '../server/video-attestation.js'
+import { signBinaryVideoAttestation, videoAttestationDigest } from '../server/video-attestation.js'
 
 const UUID = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
 const PATH = new RegExp('^(' + UUID + ')/(' + UUID + ')\\.(mp4|webm)$')
@@ -136,7 +136,12 @@ export function createProductionSupabaseVideoAdapters(
         throw new DefinitivePublishRejection('media duration precision mismatch')
       }
       const expiresAt = Math.floor(Date.now() / 1000) + 120
-      const nonce = createVideoAttestationNonce()
+      // Duplicate requests for one immutable generation compete for the same
+      // nonce, including concurrent requests that passed the initial post read.
+      // The signature still binds the full draft and a short expiration.
+      const nonce = videoAttestationDigest(
+        JSON.stringify(['poker-id/video-publication-nonce/v1', ownerId, path, generation]),
+      ).slice(0, 32)
       // Materialize the secret only for the signing operation. Never persist it
       // in adapter state or retain the decoded key beyond the HMAC call.
       const signingKey = Buffer.from(secretHex, 'hex')

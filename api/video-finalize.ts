@@ -227,6 +227,15 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
       return res.status(503).json({ error: 'video_finalize_not_enabled' })
     }
     try {
+      if (production) {
+        await assertProductionVideoPublisher(viewer, data.user.id)
+        const prior = await viewer.from('posts').select('id').eq('user_id', data.user.id)
+          .eq('video_path', object_path).maybeSingle()
+        if (prior.error) throw prior.error
+        // Route a committed replay to the caller's existing read-only proof.
+        // A matching path alone cannot establish that this draft was published.
+        if (prior.data) return res.status(409).json({ error: 'video_publication_requires_inspection' })
+      }
       // Preserve the adapter's live authentication callback. Replacing it with
       // the identity captured above would let a revoked token pass the core's
       // post-ffprobe authorization recheck.
