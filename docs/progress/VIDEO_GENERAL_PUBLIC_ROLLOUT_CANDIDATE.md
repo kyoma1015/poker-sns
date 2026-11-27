@@ -55,3 +55,26 @@ This is a read/negative-access check, not a way to create or modify someone else
 - Rollback order: first stop the global DB switch `video_private.rollout_settings.enabled=false`; then `video_private.general_public_rollout.enabled=false`; then disable `VIDEO_PUBLIC_ROLLOUT_ENABLED` and `VIDEO_GENERAL_PUBLIC_RELEASE_APPROVED` on Vercel and redeploy reviewed flags; if the application itself regresses, build/deploy a known-safe previous SHA normally (a one-click rollback might be plan-gated). Never DROP, DELETE, overwrite Storage, or remove other users' posts. Database restoration is **not** guaranteed without a verified full backup.
 
 **Release approval must authorize only this exact final HEAD, the above new migration, reviewed Vercel env changes, the controlled main merge + production deployment, and separately the public ON flip after iPhone + negative JWT acceptance. No general public enablement may occur on a CI result alone.**
+
+## Initial video usage budget candidate
+
+The review-only migration adds private administrator settings and a monthly UTC counter.
+Set thresholds in the singleton row. Default allowances are 3 reservations per account
+per hour, 5 per account and globally per rolling day, 24 total ledger rows, 1 GB each
+of Storage-read and delivery allowance, and 1,000 metered operations per UTC month.
+Each operation pessimistically reserves 20 MiB before video I/O. Range uses a full
+200 response and pays the same allowance. Cloud Usage is measured separately.
+
+Enable only after provisioning a dedicated non-human Auth reader and a separate
+random 32-byte hexadecimal meter credential. Put only the credential SHA-256 in
+the database. Configure VIDEO_USAGE_METER_KEY, VIDEO_STORAGE_READER_EMAIL and
+VIDEO_STORAGE_READER_PASSWORD as server-side secrets. Turn on VIDEO_USAGE_BUDGET_ENABLED,
+then enable the matching database settings before switching to general rollout.
+No service-role key is needed in runtime. The reader credential stays server-side.
+Confirm previously issued signed URLs have expired before general rollout.
+
+For a delivery stop, keep budget enforcement enabled and set reads_enabled=false.
+Direct authenticated Storage reads stay denied. Also turn off rollout_settings.enabled
+for an upload and finalize stop. Requests already in flight can finish. This limits
+application operations and does not bound provider-wide usage or rejected invocations.
+Retain official Usage monitoring and 70% warning / 80% stop thresholds.

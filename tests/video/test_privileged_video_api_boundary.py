@@ -46,7 +46,14 @@ class PrivilegedVideoApiBoundary(unittest.TestCase):
         text = (ROOT / 'api/video-media.ts').read_text()
         self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY', text)
         self.assertNotIn("apikey: service", text)
-        self.assertIn("apikey: anon, Authorization: rawAuth", text)
+        self.assertIn("headers: { Authorization: rawAuth }", text)
+        self.assertIn("apikey: anon, Authorization: storageAuthorization", text)
+        self.assertIn("videoBudgetCredential(viewer, url, anon, rawAuth, 'media')", text)
+        helper = (ROOT / 'server/video-budget.mjs').read_text()
+        self.assertIn('reader.auth.signInWithPassword', helper)
+        self.assertIn("viewer.rpc('video_meter_operation'", helper)
+        self.assertNotIn('SUPABASE_SERVICE_ROLE_KEY', helper)
+        self.assertNotIn('SUPABASE_SECRET_KEY', helper)
 
     def test_privileged_rpc_allowlist(self):
         allowed = {'video_reserve_object_key', 'video_production_storage_generation',

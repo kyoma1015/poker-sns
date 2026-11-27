@@ -1,3 +1,4 @@
+import { videoBudgetCredential } from '../server/video-budget.mjs'
 import { assertProductionVideoPublisher } from '../server/video-production-rollout.mjs'
 import { DefinitivePublishRejection } from './video-finalize-core.js'
 import { createClient } from '@supabase/supabase-js'
@@ -25,7 +26,7 @@ export function assertServerAttestationAvailable(): void {
 
 /** Production candidate: disabled until the audited production migration and runtime preflight pass. No Storage deletion. */
 export function createProductionSupabaseVideoAdapters(
-  url: string, anonKey: string, accessToken: string,
+  url: string, anonKey: string, accessToken: string, operation: 'finalize' | 'inspect' = 'finalize',
 ): FinalizeCandidateAdapters {
   if (!PRODUCTION_URL.test(url) || !anonKey || !accessToken || process.env.VIDEO_PRODUCTION_FENCED_READY !== 'true') {
     throw new Error('production video fenced release gate disabled')
@@ -72,9 +73,10 @@ export function createProductionSupabaseVideoAdapters(
       const generation = await metadata(ownerId, path)
       // Bounded HTTP stream: SDK .download() materializes a Blob before a
       // size check, so it cannot enforce a strict 20 MiB receive cap.
+      const storageAuthorization = await videoBudgetCredential(viewer, url, anonKey, 'Bearer ' + accessToken, operation)
       const response = await fetch((url.endsWith('/') ? url.slice(0, -1) : url) +
         '/storage/v1/object/authenticated/post-videos/' + path, {
-        headers: { apikey: anonKey, Authorization: 'Bearer ' + accessToken },
+        headers: { apikey: anonKey, Authorization: storageAuthorization },
         redirect: 'error', // Never forward owner JWT to a redirected host.
         signal: AbortSignal.timeout(30000),
       })

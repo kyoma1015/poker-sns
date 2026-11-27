@@ -106,3 +106,5 @@ if psql "$dburl" -v ON_ERROR_STOP=1 -f tests/video/production_storage_insert_sto
 fi
 psql "$dburl" -v ON_ERROR_STOP=1 -Atqc "select 1 from pg_policies where schemaname='storage' and tablename='objects' and policyname='video_recovery_restrict_video_bucket_insert' and with_check='true'" | grep -qx 1
 echo 'PASS: drifted restrictive Storage policy rejected without overwrite'
+
+VIDEO_QA_ENV="$qa/local.env" node tests/video/isolated_usage_budget_http_e2e.mjs

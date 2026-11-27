@@ -1,3 +1,4 @@
+import { videoBudgetRequired } from '../server/video-budget.mjs'
 import { createHash } from 'node:crypto'
 import { assertProductionVideoConfiguration, assertProductionVideoPublisher, assertProductionVideoMember } from '../server/video-production-rollout.mjs'
 import { handleCloudVideo } from '../server/video-cloud-http.mjs'
@@ -120,7 +121,7 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
       const post = await readPost()
       if (!post || !UUID.test(post.id) || post.user_id !== owner || post.video_path !== path ||
           (hasContent && post.content !== expectedContent) || !UUID.test(post.video_generation) || !/^[0-9a-f]{64}$/.test(post.video_sha256)) return res.status(409).end()
-      const adapter = isolated ? adapters! : createProductionSupabaseVideoAdapters(url, key, token)
+      const adapter = isolated ? adapters! : createProductionSupabaseVideoAdapters(url, key, token, 'inspect')
       const snapshot = await adapter.snapshot(owner, path)
       const sha256 = createHash('sha256').update(snapshot.bytes).digest('hex')
       if (snapshot.generation !== post.video_generation || sha256 !== post.video_sha256) return res.status(409).end()
@@ -135,6 +136,7 @@ export function createVideoFinalizeHandler(adapters?: FinalizeCandidateAdapters,
     } catch { return res.status(409).json({ error: 'recovery_inspection_unavailable' }) }
   }
   if (['bind_recovery','recovery_status','recovery_finalize'].includes(String((body as Record<string,unknown>).action))) {
+    if (options.isolatedLocalOnly !== true && videoBudgetRequired()) return res.status(503).end()
     return handleVideoRecoveryCandidate(req,res,options.isolatedLocalOnly===true)
   }
   // Reservation shares the existing serverless function (Hobby function cap).
