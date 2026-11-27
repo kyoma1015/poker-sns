@@ -1,3 +1,4 @@
+import { videoBudgetCredential } from '../server/video-budget.mjs'
 import { Readable } from 'node:stream'
 import { pipeline } from 'node:stream/promises'
 import { assertProductionVideoConfiguration, assertProductionVideoPublisher } from '../server/video-production-rollout.mjs'
@@ -68,12 +69,16 @@ return async function handler(req: VercelRequest, res: VercelResponse) {
     }
     const path = await visible()
     if (!path) return res.status(404).end()
+    const storageAuthorization = options.isolatedLocalOnly === true || process.env.VIDEO_CLOUD_TEST_ENABLED === 'true'
+      ? rawAuth
+      : await videoBudgetCredential(viewer, url, anon, rawAuth, 'media')
+    // Range requests use a full authorized response and consume a full budget slot.
     // Bound storage fetch and response processing to reduce resource exhaustion.
     // Stream from the private bucket through a bounded trusted-server read.
     // The Storage SDK's download() would buffer an unbounded Blob first.
     const media = await fetch((url.endsWith('/') ? url.slice(0, -1) : url) +
       '/storage/v1/object/authenticated/post-videos/' + path, {
-      headers: { apikey: anon, Authorization: rawAuth },
+      headers: { apikey: anon, Authorization: storageAuthorization },
       redirect: 'error', // Never forward viewer Authorization to a redirected host.
       signal: AbortSignal.timeout(30000),
     })

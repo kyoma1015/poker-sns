@@ -7,6 +7,7 @@ const runtime=[
  'server/video-recovery-candidate.ts',
  'src/videoRecoveryCandidate.ts',
  'api/video-media.ts',
+ 'server/video-budget.mjs',
  'api/video-production-supabase-adapters.ts',
  'src/Timeline.tsx',
  'src/PostVideo.tsx',
