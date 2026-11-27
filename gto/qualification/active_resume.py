@@ -10,9 +10,9 @@ from gto.qualification import active_chance as ac,public_chance_solver as pcs
 
 def restore_prior(q,initial):
     with np.load(initial) as data:
-        q.initial_average=data['A'].copy();q.initial_regret=data['R'].copy()
+        average=data['A'];q.initial_average=average.copy();q.initial_regret=data['R'].copy()
         for st,t,n,k in q.rows:
-            a=data['A'][st:st+t*n].reshape(t,n);z=a.sum(axis=1)[:,None]
+            a=average[st:st+t*n].reshape(t,n);z=a.sum(axis=1)[:,None]
             if np.any(z<=0):raise ValueError('initial warm average must cover every indexed row')
             q.prior[st:st+t*n]=(a/z).ravel()
 

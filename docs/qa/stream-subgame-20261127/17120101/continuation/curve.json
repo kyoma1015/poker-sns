@@ -1,0 +1,282 @@
+{
+  "best": {
+    "CPU_seconds": 724.0403654859998,
+    "NC": {
+      "BR_BB_bb": 0.10508223740921924,
+      "BR_SB_bb": 0.29406773987081314,
+      "EV_bb": 0.09611350450604085,
+      "NashConv_bb": 0.3991499772800324,
+      "full_native_BR_upper": null,
+      "physical_infosets": false
+    },
+    "checkpoint": "docs/qa/stream-subgame-20261127/17120101/continuation/t720",
+    "gate": {
+      "detected_harm": false,
+      "formal_pass": false,
+      "paired_gain_differences": {
+        "fold": {
+          "interval": [
+            -9.030861896630569,
+            9.097692310140669
+          ],
+          "mean": 0.033415206755050525,
+          "n": 1024,
+          "radius": 9.064277103385619,
+          "variance": 183.50582943864674
+        },
+        "open3p5": {
+          "interval": [
+            -8.391957294337152,
+            9.86675655648993
+          ],
+          "mean": 0.737399631076389,
+          "n": 1024,
+          "radius": 9.129356925413541,
+          "variance": 197.81800478684133
+        },
+        "open7": {
+          "interval": [
+            -9.125901538385968,
+            9.632096298486978
+          ],
+          "mean": 0.2530973800505051,
+          "n": 1024,
+          "radius": 9.378998918436473,
+          "variance": 257.7027468939914
+        },
+        "open8": {
+          "interval": [
+            -8.827293738889939,
+            10.168343395613423
+          ],
+          "mean": 0.6705248283617424,
+          "n": 1024,
+          "radius": 9.49781856725168,
+          "variance": 288.98283440014444
+        },
+        "river_jam": {
+          "interval": [
+            -8.576206285543698,
+            9.270542223043698
+          ],
+          "mean": 0.34716796875,
+          "n": 1024,
+          "radius": 8.923374254293698,
+          "variance": 154.3600506227853
+        },
+        "river_nuts": {
+          "interval": [
+            -7.363485516000617,
+            7.363485516000617
+          ],
+          "mean": 0.0,
+          "n": 1024,
+          "radius": 7.363485516000617,
+          "variance": 0.0
+        },
+        "threebet10p5": {
+          "interval": [
+            -7.910785794538719,
+            8.149190347884678
+          ],
+          "mean": 0.11920227667297979,
+          "n": 1024,
+          "radius": 8.029988071211699,
+          "variance": 28.1806693601171
+        }
+      },
+      "safety_proof": false,
+      "selection_only": true
+    },
+    "policy_digest": "b2e302ac6f8af826b4fb7fdff8b31a028339b1b82be7d57c705b5bd2541d11a6",
+    "t": 123
+  },
+  "curve": [
+    {
+      "CPU_seconds": 361.9925823019999,
+      "NC": {
+        "BR_BB_bb": 0.2558482747183036,
+        "BR_SB_bb": 0.39384585054568877,
+        "EV_bb": 0.06145021162250383,
+        "NashConv_bb": 0.6496941252639924,
+        "full_native_BR_upper": null,
+        "physical_infosets": false
+      },
+      "checkpoint": "docs/qa/stream-subgame-20261127/17120101/continuation/t360",
+      "gate": {
+        "detected_harm": false,
+        "formal_pass": false,
+        "paired_gain_differences": {
+          "fold": {
+            "interval": [
+              -9.554220721967608,
+              8.48107224501054
+            ],
+            "mean": -0.5365742384785354,
+            "n": 1024,
+            "radius": 9.017646483489074,
+            "variance": 173.58140707444826
+          },
+          "open3p5": {
+            "interval": [
+              -9.150899705771964,
+              9.03536940274166
+            ],
+            "mean": -0.05776515151515149,
+            "n": 1024,
+            "radius": 9.093134554256812,
+            "variance": 189.78577008158842
+          },
+          "open7": {
+            "interval": [
+              -9.642009412659934,
+              9.05669089545665
+            ],
+            "mean": -0.2926592586016414,
+            "n": 1024,
+            "radius": 9.349350154058293,
+            "variance": 250.1767531996504
+          },
+          "open8": {
+            "interval": [
+              -9.228666477615489,
+              9.71752971940842
+            ],
+            "mean": 0.24443162089646467,
+            "n": 1024,
+            "radius": 9.473098098511954,
+            "variance": 282.3274341266421
+          },
+          "river_jam": {
+            "interval": [
+              -8.830734474268928,
+              8.976242286768928
+            ],
+            "mean": 0.07275390625,
+            "n": 1024,
+            "radius": 8.903488380518928,
+            "variance": 150.44949152882148
+          },
+          "river_nuts": {
+            "interval": [
+              -7.402686198942872,
+              7.387061198942872
+            ],
+            "mean": -0.0078125,
+            "n": 1024,
+            "radius": 7.394873698942872,
+            "variance": 0.0625
+          },
+          "threebet10p5": {
+            "interval": [
+              -8.001720661947935,
+              8.036304784422683
+            ],
+            "mean": 0.01729206123737373,
+            "n": 1024,
+            "radius": 8.019012723185309,
+            "variance": 27.260204528663756
+          }
+        },
+        "safety_proof": false,
+        "selection_only": true
+      },
+      "policy_digest": "684755621204608ffb5e202d54d24fccb2a946a18e2298c68b2958737cd08ae7",
+      "t": 63
+    },
+    {
+      "CPU_seconds": 724.0403654859998,
+      "NC": {
+        "BR_BB_bb": 0.10508223740921924,
+        "BR_SB_bb": 0.29406773987081314,
+        "EV_bb": 0.09611350450604085,
+        "NashConv_bb": 0.3991499772800324,
+        "full_native_BR_upper": null,
+        "physical_infosets": false
+      },
+      "checkpoint": "docs/qa/stream-subgame-20261127/17120101/continuation/t720",
+      "gate": {
+        "detected_harm": false,
+        "formal_pass": false,
+        "paired_gain_differences": {
+          "fold": {
+            "interval": [
+              -9.030861896630569,
+              9.097692310140669
+            ],
+            "mean": 0.033415206755050525,
+            "n": 1024,
+            "radius": 9.064277103385619,
+            "variance": 183.50582943864674
+          },
+          "open3p5": {
+            "interval": [
+              -8.391957294337152,
+              9.86675655648993
+            ],
+            "mean": 0.737399631076389,
+            "n": 1024,
+            "radius": 9.129356925413541,
+            "variance": 197.81800478684133
+          },
+          "open7": {
+            "interval": [
+              -9.125901538385968,
+              9.632096298486978
+            ],
+            "mean": 0.2530973800505051,
+            "n": 1024,
+            "radius": 9.378998918436473,
+            "variance": 257.7027468939914
+          },
+          "open8": {
+            "interval": [
+              -8.827293738889939,
+              10.168343395613423
+            ],
+            "mean": 0.6705248283617424,
+            "n": 1024,
+            "radius": 9.49781856725168,
+            "variance": 288.98283440014444
+          },
+          "river_jam": {
+            "interval": [
+              -8.576206285543698,
+              9.270542223043698
+            ],
+            "mean": 0.34716796875,
+            "n": 1024,
+            "radius": 8.923374254293698,
+            "variance": 154.3600506227853
+          },
+          "river_nuts": {
+            "interval": [
+              -7.363485516000617,
+              7.363485516000617
+            ],
+            "mean": 0.0,
+            "n": 1024,
+            "radius": 7.363485516000617,
+            "variance": 0.0
+          },
+          "threebet10p5": {
+            "interval": [
+              -7.910785794538719,
+              8.149190347884678
+            ],
+            "mean": 0.11920227667297979,
+            "n": 1024,
+            "radius": 8.029988071211699,
+            "variance": 28.1806693601171
+          }
+        },
+        "safety_proof": false,
+        "selection_only": true
+      },
+      "policy_digest": "b2e302ac6f8af826b4fb7fdff8b31a028339b1b82be7d57c705b5bd2541d11a6",
+      "t": 123
+    }
+  ],
+  "selection_rule": "minimum finite NC among stages without detected paired harm; NOT safety/noninferiority",
+  "stop": "CPU720"
+}

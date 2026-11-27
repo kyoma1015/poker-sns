@@ -1,0 +1,20 @@
+{
+  "CPU_seconds": {
+    "one_per_stratum": 74.000482569,
+    "target_CDF": 85.472907474
+  },
+  "adopt_proposal_for_research": true,
+  "boards_per_batch": 13,
+  "expectation_proof": "exact CDF stratum mass plus independent weighted private-vector oracle; finite variance sample is not a bias proof",
+  "formal_pass": 0,
+  "mean_difference_L2": 0.1679424144847832,
+  "ratio": 0.4715991098692164,
+  "repeats": 8,
+  "root_CF_variance_trace": {
+    "one_per_stratum": 0.18326098892748727,
+    "target_CDF": 0.08642571925195532
+  },
+  "same_frozen_current_policy": true,
+  "seed": 17120101,
+  "source_sha256": "cf5868a46fce50c4c22f73786504a8622af9f067c99cae2b5fdad276c87cef87"
+}
