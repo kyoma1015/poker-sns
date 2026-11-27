@@ -15,3 +15,4 @@ export declare function createVideoAttestationNonce(): string
 export declare function videoAttestationDigest(content: string): string
 export declare function binaryVideoAttestation(c: VideoAttestationClaims): Buffer
 export declare function signBinaryVideoAttestation(key: Buffer, c: VideoAttestationClaims): string
+export declare function videoPublicationNonce(owner: string, path: string, generation: string): string

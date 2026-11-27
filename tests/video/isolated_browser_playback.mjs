@@ -21,7 +21,7 @@ import { createVideoMediaHandler } from '../../api/video-media.ts'
 import { createVideoFinalizeHandler } from '../../api/video-finalize.ts'
 import { createIsolatedSupabaseVideoAdapters } from '../../api/video-isolated-supabase-adapters.ts'
 
-export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, service, bytes, expectedContent = 'real isolated end-to-end', recoveryOnly=false, recoveryFixtures }) {
+export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, service, bytes, expectedContent = 'real isolated end-to-end', recoveryOnly=false, recoveryFixtures, attestedPublication }) {
   assert.ok(service && bytes?.length,'isolated full upload test credentials and media required')
   assert.ok(anon,'isolated anon key required')
   assert.equal(process.env.VITE_SUPABASE_URL, 'http://127.0.0.1:56321')
@@ -99,7 +99,15 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
     }],
   })
   const handler = createVideoMediaHandler({ isolatedLocalOnly: true })
-  const finalize = createVideoFinalizeHandler(createIsolatedSupabaseVideoAdapters('http://127.0.0.1:56321',anon,service,jwt),{isolatedLocalOnly:true})
+  const adapters = createIsolatedSupabaseVideoAdapters('http://127.0.0.1:56321',anon,service,jwt)
+  const finalize = createVideoFinalizeHandler(attestedPublication
+    ? { ...adapters, publish: (...args) => args[5].startsWith('isolated timeline browser upload ')
+      ? attestedPublication.publish(...args)
+      : adapters.publish(...args) }
+    : adapters,{isolatedLocalOnly:true,isolatedReplayInspection:true})
+  let interruptedPublication
+  let interruptedInspection = false
+  const finalizeRequests = []
   const server = createHttpServer((req, res) => {
     if (req.url === '/internal/video/finalize') {
       void (async () => {
@@ -111,10 +119,31 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
         const raw=Buffer.concat(chunks)
         let body
         try {body=JSON.parse(raw.toString('utf8'))} catch {res.writeHead(400);res.end();return}
+        const request = { action: body.action ?? 'publish', path: body.object_path }
+        finalizeRequests.push(request)
+        if (!interruptedInspection && interruptedPublication !== undefined &&
+            request.path === interruptedPublication && request.action === 'recovery_inspect') {
+          // Simulate temporary proof unavailability after the real TCP loss.
+          // Manual retry still has to pass the genuine proof handler.
+          interruptedInspection = true
+          request.status = 503
+          res.writeHead(503).end()
+          return
+        }
         const response={
           setHeader:(name,value)=>{res.setHeader(name,value);return response},
           status:code=>{res.statusCode=code;return response},
-          json:value=>{res.setHeader('Content-Type','application/json');res.end(JSON.stringify(value));return response},
+          json:value=>{
+            request.status = res.statusCode
+            if (interruptedPublication === undefined && res.statusCode === 201 &&
+                request.action === 'publish' && body.content?.startsWith('isolated timeline browser upload ')) {
+              assert.equal(res.headersSent, false, 'disconnect must precede response headers')
+              interruptedPublication = request.path
+              res.destroy()
+              return response
+            }
+            res.setHeader('Content-Type','application/json');res.end(JSON.stringify(value));return response
+          },
           end:()=>{res.end();return response},
         }
         await finalize({method:req.method,headers:{...req.headers,'content-length':String(raw.length)},body},response)
@@ -554,26 +583,14 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
       name:'deferred-unposted.webm',mimeType:'video/webm',buffer:bytes,
     })
     await timelinePage.waitForFunction(()=>Boolean(window.__VIDEO_LATE_SELECTION?.onloadedmetadata))
-    // Commit the actual finalization but suppress its successful response once.
-    // A retry must reuse the existing object, not reserve/upload a second one.
-    let committedButLost=false
-    const reservedPaths=[]
-    const finalizedPaths=[]
-    await timelinePage.route('**/internal/video/finalize',async route=>{
-      const body=route.request().postDataJSON()
-      if(body.action==='reserve') { reservedPaths.push(body.object_path); return route.continue() }
-      finalizedPaths.push(body.object_path)
-      if(committedButLost) return route.continue()
-      const response=await route.fetch()
-      assert.equal(response.status(),201,'first real finalize must commit before response loss')
-      committedButLost=true
-      await route.fulfill({status:503,contentType:'application/json',body:'{"error":"isolated_lost_commit_response"}'})
-    })
+    // Commit through the actual HTTP handler, then drop its TCP connection
+    // before headers. Chromium may replay the transport request on its own.
     await composer.getByRole('button',{name:'投稿する'}).click({timeout:20000})
     await composer.getByRole('status').filter({hasText:'動画はアップロード済みです。'}).waitFor()
     await composer.getByRole('button',{name:'投稿する'}).waitFor({state:'visible'})
     await composer.getByText(/動画を投稿できませんでした：/).waitFor()
-    assert.ok(committedButLost,'real publication must have committed before retry')
+    assert.ok(interruptedPublication,'the committed response must have been disconnected before headers')
+    assert.ok(interruptedInspection,'the first automatic proof must have failed before manual retry')
     const pendingBeforeRetry=await timelinePage.evaluate(()=>JSON.parse(sessionStorage.getItem('poker-id-pending-video-v1')))
     assert.equal(pendingBeforeRetry.content,uploadText)
     const requestsBeforeEdit=videoReservationResponses.length
@@ -596,19 +613,30 @@ export async function verifyRealBrowserPlayback({ postId, jwt, deniedJwt, anon, 
       'confirmed retry clears pending recovery pointer')
     assert.equal(await timelinePage.locator('article').filter({hasText:uploadText}).count(),1,
       'ambiguous finalize retry must show exactly one post')
-    assert.deepEqual(reservedPaths,[pendingBeforeRetry.path],'retry must not reserve/upload another object')
-    assert.deepEqual(finalizedPaths,[pendingBeforeRetry.path,pendingBeforeRetry.path],'both finalizations use the exact immutable object path')
+    assert.equal(interruptedPublication,pendingBeforeRetry.path)
+    const requests = finalizeRequests.filter(request => request.path === pendingBeforeRetry.path)
+    assert.equal(requests.filter(request => request.action === 'reserve' && request.status === 201).length,1)
+    const publications = requests.filter(request => request.action === 'publish')
+    assert.equal(publications.filter(request => request.status === 201).length,1)
+    assert.ok(publications.slice(1).every(request => request.status === 409),
+      'any browser transport replay must take the read-only conflict path')
+    assert.ok(requests.some(request => request.action === 'recovery_inspect' && request.status === 200),
+      'the browser must recover through a real JWT-backed read-only inspection')
+    assert.equal(finalizeRequests.indexOf(publications.at(-1)) < finalizeRequests.findIndex(
+      request => request.path === pendingBeforeRetry.path && request.action === 'recovery_inspect'),
+      true,'the application must never publish again after starting recovery inspection')
+    const foreignProof = await fetch(origin+'/internal/video/finalize',{
+      method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+deniedJwt},
+      body:JSON.stringify({action:'recovery_inspect',object_path:pendingBeforeRetry.path}),
+    })
+    assert.equal(foreignProof.status,403,'foreign JWT must not obtain the publication proof')
+    await attestedPublication?.verify(pendingBeforeRetry.path)
     await timelinePage.evaluate(()=>window.__VIDEO_LATE_SELECTION.onloadedmetadata())
     await timelinePage.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))))
     assert.equal(await timelinePage.locator('video:not(article video)').count(),0,
       'late pre-submit metadata cannot resurrect an already cleared attachment')
     console.log('PASS: pending pre-submit metadata cannot resurrect attachment after successful retry')
     console.log('PASS: REAL Timeline committed-but-lost finalize response recovers same draft without duplicate publication')
-    assert.ok(videoReservationResponses.filter(x=>x.status===201&&x.method==='POST').length >= 2,
-      'real browser must receive distinct trusted reservation AND finalize successes')
-    // Reservation ledger is the durable authority, not the HTTP success alone.
-    // The key is verified through the local service-role RPC-backed database.
-
     const uploadedArticle=timelinePage.locator('article').filter({hasText:uploadText})
     const uploadedVideo=uploadedArticle.locator('video')
     await uploadedVideo.waitFor({timeout:20000})

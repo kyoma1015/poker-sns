@@ -9,7 +9,7 @@ import { mkdtempSync, readFileSync, rmSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { signBinaryVideoAttestation, videoAttestationDigest } from '../../server/video-attestation.js'
+import { signBinaryVideoAttestation, videoAttestationDigest, videoPublicationNonce } from '../../server/video-attestation.js'
 import { probeVideoBytes } from '../../api/video-ffprobe.ts'
 import { verifyRealBrowserPlayback } from './isolated_browser_playback.mjs'
 const env=Object.fromEntries(readFileSync(process.env.VIDEO_QA_ENV,'utf8').split('\n')
@@ -200,9 +200,64 @@ process.env.VITE_SUPABASE_URL=url
 process.env.VITE_SUPABASE_ANON_KEY=anon
 process.env.SUPABASE_SERVICE_ROLE_KEY=env.SERVICE_ROLE_KEY
 process.env.VIDEO_PRODUCTION_FENCED_READY='true'
+const dbUrl = new URL(env.DB_URL)
+assert.equal(dbUrl.hostname, '127.0.0.1')
+assert.equal(dbUrl.port, '56322')
+function publicationState(objectPath) {
+ assert.match(objectPath, /^[0-9a-f-]{36}\/[0-9a-f-]{36}\.webm$/)
+ const target = "'"+objectPath+"'"
+ return JSON.parse(execFileSync('psql',[env.DB_URL,'-XAt','-v','ON_ERROR_STOP=1','-c',`
+  select jsonb_build_array(
+   (select count(*) from public.posts where video_path=${target}),
+   (select count(*) from video_private.consumed_nonces where object_path=${target}),
+   (select count(*) from storage.objects where bucket_id='post-videos' and name=${target}),
+   (select count(*) from public.video_reserved_object_keys where bucket_id='post-videos' and object_path=${target}),
+   (select jsonb_agg(to_jsonb(o)) from storage.objects o where bucket_id='post-videos' and name=${target}),
+   (select jsonb_agg(to_jsonb(r)) from public.video_reserved_object_keys r where bucket_id='post-videos' and object_path=${target})
+  )
+ `],{encoding:'utf8',timeout:10000}))
+}
+let attestedBrowserPath
+let originalStorageAndReservation
+const attestedPublication = {
+ async publish(ownerId, objectPath, generation, digest, duration, draft) {
+  assert.equal(ownerId,owner)
+  assert.equal(attestedBrowserPath,undefined,'only one handler publication may reach the signed RPC')
+  attestedBrowserPath = objectPath
+  const before = publicationState(objectPath)
+  assert.deepEqual(before.slice(0,4),[0,0,1,1])
+  originalStorageAndReservation = before.slice(4)
+  const durationMs = Math.round(duration*1000)
+  const nonce = videoPublicationNonce(ownerId,objectPath,generation)
+  const results = await Promise.all(Array.from({length:4},async (_,index)=>{
+   const expiresAt = Math.floor(Date.now()/1000)+120+index
+   const signature = signBinaryVideoAttestation(Buffer.alloc(32,0x41),{
+    owner:ownerId,path:objectPath,generation,sha256:digest,durationMs,
+    contentSha256:videoAttestationDigest(draft),expiresAt,nonce,
+   })
+   return ownerClient.rpc('video_publish_attested_v1',{
+    p_owner:ownerId,p_path:objectPath,p_generation:generation,p_sha256:digest,
+    p_duration_ms:durationMs,p_content:draft,p_expires_at:expiresAt,p_nonce:nonce,
+    p_signature:signature,p_key_id:1,
+   })
+  }))
+  const winners = results.filter(result=>!result.error)
+  assert.equal(winners.length,1,'exactly one independently signed RPC can publish')
+  assert.equal(typeof winners[0].data,'string')
+  for (const result of results.filter(result=>result.error)) assert.equal(result.error.code,'23505')
+  return winners[0].data
+ },
+ verify(objectPath) {
+  assert.equal(objectPath,attestedBrowserPath)
+  const after = publicationState(objectPath)
+  assert.deepEqual(after.slice(0,4),[1,1,1,1])
+  assert.deepEqual(after.slice(4),originalStorageAndReservation)
+  console.log('PASS: header-loss recovery with four concurrent attested RPCs; one post, nonce, Storage object and reservation')
+ },
+}
 await verifyRealBrowserPlayback({postId,jwt:ownerSession.session.access_token,
  deniedJwt:attackerSession.session.access_token,anon,service:env.SERVICE_ROLE_KEY,
- bytes,expectedContent:content})
+ bytes,expectedContent:content,attestedPublication})
 // Live key rotation: the independent active key 2 must successfully sign a
 // NEW object, while key 1 signatures cannot be replayed under key ID 2.
 const rotatedPath=`${owner}/${randomUUID()}.webm`

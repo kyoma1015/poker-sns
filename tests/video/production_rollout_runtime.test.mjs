@@ -19,7 +19,8 @@ test('production adapter composes real ffprobe with attested RPC; stop preserves
     delete process.env.VIDEO_CLOUD_TEST_ENABLED
     Object.assign(process.env,{VITE_SUPABASE_URL:url,VITE_SUPABASE_ANON_KEY:'synthetic-public-key',VIDEO_PRODUCTION_FENCED_READY:'true',VIDEO_PRODUCTION_LIMITED_ROLLOUT:'true',VIDEO_ATTESTED_RPC_RELEASE_APPROVED:'true',VIDEO_ALLOWED_USER_IDS:owner,VIDEO_ATTESTATION_KEY_HEX:key.toString('hex'),VIDEO_ATTESTATION_KEY_ID:'7',VIDEO_SERVER_ENABLED:'true'})
     const bytes=execFileSync(process.env.FFMPEG_BINARY_PATH||'ffmpeg',['-v','error','-f','lavfi','-i','color=c=black:s=32x32:d=1','-c:v','libx264','-movflags','frag_keyframe+empty_moov','-f','mp4','pipe:1'],{stdio:['ignore','pipe','pipe']})
-    let writes=0,calls=0,identity=owner,allowed=true,mediaBytes=bytes,visiblePost=true,objectGeneration=generation
+    const nonces=[]
+    let writes=0,downloads=0,calls=0,identity=owner,allowed=true,mediaBytes=bytes,visiblePost=true,objectGeneration=generation
     globalThis.fetch=async(input,options={})=>{
       calls++
       const requestUrl=String(input instanceof Request?input.url:input)
@@ -29,19 +30,36 @@ test('production adapter composes real ffprobe with attested RPC; stop preserves
       if(requestUrl.endsWith('/rpc/video_rollout_allowed')||requestUrl.endsWith('/rpc/video_rollout_member'))return json(allowed)
       if(requestUrl.endsWith('/rpc/video_production_storage_generation'))return json(objectGeneration)
       if(requestUrl.includes('/rest/v1/posts?'))return json(visiblePost ? {id:post,user_id:owner,video_path:path,video_generation:generation,video_sha256:createHash('sha256').update(bytes).digest('hex')} : null)
-      if(requestUrl.endsWith('/object/authenticated/post-videos/'+path))return new Response(mediaBytes,{headers:{'content-type':'video/mp4','content-length':String(mediaBytes.length)}})
+      if(requestUrl.endsWith('/object/authenticated/post-videos/'+path)){
+        downloads++;return new Response(mediaBytes,{headers:{'content-type':'video/mp4','content-length':String(mediaBytes.length)}})
+      }
       if(requestUrl.endsWith('/rpc/video_publish_attested_v1')){
         const p=JSON.parse(options.body)
         assert.equal(p.p_owner,owner);assert.equal(p.p_path,path);assert.equal(p.p_generation,generation)
         assert.equal(p.p_sha256,createHash('sha256').update(bytes).digest('hex'));assert.ok(p.p_duration_ms>0&&p.p_duration_ms<=30000)
         assert.equal(p.p_signature,signBinaryVideoAttestation(key,{owner,path,generation,sha256:p.p_sha256,durationMs:p.p_duration_ms,contentSha256:videoAttestationDigest(p.p_content),expiresAt:p.p_expires_at,nonce:p.p_nonce}))
-        writes++;return json(post)
+        nonces.push(p.p_nonce);writes++;return json(post)
       }
       if(requestUrl.endsWith('/rpc/video_hide_own'))return json(true)
       throw Error('unexpected RPC; no network fallback permitted')
     }
     const adapter=()=>createProductionSupabaseVideoAdapters(url,'synthetic-public-key','synthetic.token')
-    assert.equal(await finalizeImmutableCandidate('synthetic.token',path,'fixture',adapter()),post);assert.equal(writes,1)
+    const finalize = async () => {
+      const body = {object_path:path,content:'fixture'}
+      const res = response()
+      await handler({method:'POST',headers:{authorization:'Bearer synthetic.token','content-type':'application/json','content-length':String(Buffer.byteLength(JSON.stringify(body)))},body},res)
+      return res
+    }
+    visiblePost=false
+    const [fresh, competingPost] = await Promise.all([finalize(), finalizeImmutableCandidate('synthetic.token',path,'fixture',adapter())])
+    assert.equal(fresh.statusCode,201)
+    assert.equal(competingPost,post)
+    assert.equal(nonces[0],nonces[1],'parallel publication attempts sign the same generation nonce')
+    visiblePost=true
+    const beforeReplay=downloads
+    for(let attempt=0;attempt<6;attempt++) assert.equal((await finalize()).statusCode,409)
+    assert.equal(downloads,beforeReplay,'a committed replay does not download or probe Storage')
+    assert.equal(writes,2,'a committed replay cannot call the publication RPC')
     const inspect = async () => {
       const body = {action:'recovery_inspect',object_path:path}
       const res = response()
@@ -66,7 +84,7 @@ test('production adapter composes real ffprobe with attested RPC; stop preserves
     identity='44444444-4444-4444-8444-444444444444'
     assert.equal((await inspect()).statusCode,403)
     identity=owner
-    assert.equal(writes,1,'recovery inspection never publishes')
+    assert.equal(writes,2,'recovery inspection never publishes')
     // Exercise an actual Node Writable/backpressure boundary above buffered-response size.
     mediaBytes=Buffer.alloc(5*1024*1024,7)
     let streamed=0,largest=0;const streamHash=createHash('sha256')
@@ -77,11 +95,11 @@ test('production adapter composes real ffprobe with attested RPC; stop preserves
     assert.equal(output.headers['Content-Length'],undefined);assert.equal(streamHash.digest('hex'),createHash('sha256').update(mediaBytes).digest('hex'))
     mediaBytes=bytes
     identity='44444444-4444-4444-8444-444444444444'
-    await assert.rejects(finalizeImmutableCandidate('synthetic.token',path,'fixture',adapter()));assert.equal(writes,1)
+    await assert.rejects(finalizeImmutableCandidate('synthetic.token',path,'fixture',adapter()));assert.equal(writes,2)
     identity=owner;allowed=false
-    await assert.rejects(finalizeImmutableCandidate('synthetic.token',path,'fixture',adapter()));assert.equal(writes,1)
+    await assert.rejects(finalizeImmutableCandidate('synthetic.token',path,'fixture',adapter()));assert.equal(writes,2)
     allowed=true;process.env.VIDEO_SERVER_ENABLED='false'
-    await assert.rejects(finalizeImmutableCandidate('synthetic.token',path,'fixture',adapter()));assert.equal(writes,1)
+    await assert.rejects(finalizeImmutableCandidate('synthetic.token',path,'fixture',adapter()));assert.equal(writes,2)
     const body={action:'hide',post_id:post},req={method:'POST',headers:{authorization:'Bearer synthetic.token','content-type':'application/json','content-length':String(JSON.stringify(body).length)},body}
     const hidden=response();await handler(req,hidden);assert.equal(hidden.statusCode,200);assert.deepEqual(hidden.body,{hidden:true})
     process.env.VITE_SUPABASE_URL='https://hbhyuotzginwysrineyo.supabase.co'
