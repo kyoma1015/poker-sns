@@ -20,12 +20,12 @@ def build(directory,native_build):
 
 
 class Solver(s.Solver):
-    def __init__(self,module,warm_data,origin,seed,*,extra_support=(),rows=200000,epsilon=.2,stacks=(100,100),root_integration=True):
+    def __init__(self,module,warm_data,origin,seed,*,extra_support=(),rows=200000,epsilon=.2,stacks=(100,100),root_integration=True,coarse=False,signed_regret=False,linear_average=True,baseline=False,lazy_rows=False):
         self.module=module;self.ranklib=pcs.build('/tmp/integrated-ranks');self.iteration=0;self.checkpoint_hash=None
-        data=dict(warm_data,extra_support=list(extra_support));ptr=lambda name:C.cast(getattr(self.ranklib,name),C.c_void_p).value
+        data=dict(warm_data,extra_support=list(extra_support),coarse=coarse,signed_regret=signed_regret,linear_average=linear_average,baseline=baseline,lazy_rows=lazy_rows);ptr=lambda name:C.cast(getattr(self.ranklib,name),C.c_void_p).value
         self.core=module.Integrated(NativeGame(list(stacks)),data,seed,rows,ptr('pcs_terminal'),ptr('pcs_world'),epsilon,root_integration)
         self.stats={r:dict(queries=0,untrained=0,warm=0) for r in range(4)}
-        self.identity=dict(schema='sparse-private-integrated-v2',root_integration=root_integration,origin=origin,seed=seed,rows=rows,epsilon=epsilon,
+        self.identity=dict(schema='sparse-private-integrated-v2',root_integration=root_integration,coarse=coarse,signed_regret=signed_regret,linear_average=linear_average,baseline=baseline,lazy_rows=lazy_rows,origin=origin,seed=seed,rows=rows,epsilon=epsilon,
           game=dict(stacks=list(stacks),bb=2,bba=0,rake=0),extra_support=list(extra_support),
           sources={str(p):sha(p) for p in (Path(__file__),Path(__file__).with_name('integrated_native.cc'),Path(s.__file__).with_name('sparse_native.cc'),Path(pcs.__file__).with_name('public_chance_core.cc'))},
           binary_sha256=sha(Path(module.__file__)),rank_binary_sha256=sha(Path(self.ranklib._name)),
@@ -35,6 +35,11 @@ class Solver(s.Solver):
           formal_profile=False,ordinary_registry_admission=False)
     def step(self,seconds=10.):
         r=self.core.step(seconds);self.iteration=r['iterations'];self.checkpoint_hash=None;return r
+
+    def rebase_warm(self):
+        """New-game behavioral warm start, not resumed old regret/average history."""
+        self.core.rebase_warm();self.checkpoint_hash=None
+        self.identity['warm_initialization']='same average behavior, uniform per-row pseudomass R1e-6/A1e-3; old checkpoints intact'
 
     def add_support(self,round,history,actions):
         history=[list(h[:3])+[0,0] for h in history]
@@ -113,12 +118,22 @@ class Multiplayer(SparseJoint):
     This reduces chance variance, not full private/action enumeration or a
     multiplayer Nash guarantee. Existing lazy average is retained unchanged.
     """
-    def __init__(self,*args,chance_batch=2,**kwargs):
+    def __init__(self,*args,chance_batch=2,chance_mode="iid",**kwargs):
         if type(chance_batch) is not int or not 1<=chance_batch<=8:raise ValueError('bounded chance batch')
-        super().__init__(*args,**kwargs);self.chance_batch=chance_batch;self.batch=[]
-        self.identity.update(chance_batch=chance_batch,integration_source_sha256=sha(Path(__file__)))
+        super().__init__(*args,**kwargs);self.chance_batch=chance_batch;self.batch=[];self.chance_mode=chance_mode
+        if chance_mode not in ('iid','seat_rotation'):raise ValueError('chance mode')
+        if chance_mode=='seat_rotation' and self.decks is not None:raise ValueError('rotation requires uniform full-deck law, not arbitrary finite support')
+        self.identity.update(chance_batch=chance_batch,chance_mode=chance_mode,integration_source_sha256=sha(Path(__file__)))
     def _draw(self):
-        self.batch=[super(Multiplayer,self)._draw() for _ in range(self.chance_batch)]
+        if self.chance_mode=='iid':self.batch=[super(Multiplayer,self)._draw() for _ in range(self.chance_batch)]
+        else:
+            first=super()._draw();self.batch=[first]
+            for j in range(1,self.chance_batch):
+                # Uniform deck law is invariant under a fixed permutation of
+                # private deal slots. Seats/stack/strategy stay unchanged.
+                rotated=first.copy()
+                for p in range(self.N):rotated[2*p:2*p+2]=first[2*((p+j)%self.N):2*((p+j)%self.N)+2]
+                self.batch.append(rotated)
         return self.batch[0]
     def collect(self,owner,deck,stream,pi,*,audit=False,budget=None):
         if self.chance_batch==1:return super().collect(owner,deck,stream,pi,audit=audit,budget=budget)
@@ -134,5 +149,5 @@ class Multiplayer(SparseJoint):
             for key in ('max_average_weight','max_CF_scale'):out[key]=max(out[key],part[key])
         return out
     def step(self):
-        if self.chance_batch!=self.identity['chance_batch']:raise ValueError('chance batch changed')
+        if self.chance_batch!=self.identity['chance_batch'] or self.chance_mode!=self.identity['chance_mode']:raise ValueError('chance law changed')
         return super().step()

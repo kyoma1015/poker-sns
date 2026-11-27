@@ -1,0 +1,6 @@
+{"seed": 17120101, "context": "rfi", "complete_jams": 10, "boards": 49376078, "seconds": 27.829527418999533}
+{"seed": 17120101, "context": "vs_open3p5", "complete_jams": 9, "boards": 94116380, "seconds": 29.140177858000243}
+{"seed": 17120101, "context": "vs_3bet10p5", "complete_jams": 30, "boards": 101514148, "seconds": 29.447825078999813}
+{"seed": 17120102, "context": "rfi", "complete_jams": 18, "boards": 110308633, "seconds": 29.093398293000064}
+{"seed": 17120102, "context": "vs_open3p5", "complete_jams": 46, "boards": 112819979, "seconds": 29.84803278599975}
+{"seed": 17120102, "context": "vs_3bet10p5", "complete_jams": 83, "boards": 95267626, "seconds": 29.75059452000005}

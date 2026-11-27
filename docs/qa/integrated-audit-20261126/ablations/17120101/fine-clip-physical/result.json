@@ -1,0 +1,184 @@
+{
+  "curve": [
+    {
+      "metric": {
+        "BR_BB_bb": 5.086835017386829,
+        "BR_SB_bb": 7.269843085321652,
+        "EV_bb": 0.13672619730966823,
+        "NashConv_bb": 12.35667810270848,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "projection": {
+          "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+          "max_removed_mass": 0.9738409076418878,
+          "zero_mass_projected_rows": 0
+        }
+      },
+      "pure_seconds": 0.0,
+      "t": 0
+    },
+    {
+      "metric": {
+        "BR_BB_bb": 5.205899678540586,
+        "BR_SB_bb": 7.367578817976492,
+        "EV_bb": 0.22588246481246316,
+        "NashConv_bb": 12.573478496517078,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "projection": {
+          "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+          "max_removed_mass": 0.9738409076418878,
+          "zero_mass_projected_rows": 0
+        }
+      },
+      "pure_seconds": 1.331750894999999,
+      "stats": {
+        "average_visited": 12512,
+        "halted": false,
+        "iterations": 4,
+        "regret_visited": 20859,
+        "rows": 22467
+      },
+      "t": 4
+    },
+    {
+      "metric": {
+        "BR_BB_bb": 5.416433971085864,
+        "BR_SB_bb": 7.556621733784423,
+        "EV_bb": 0.13988969624565717,
+        "NashConv_bb": 12.973055704870287,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "projection": {
+          "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+          "max_removed_mass": 0.9860722377710761,
+          "zero_mass_projected_rows": 0
+        }
+      },
+      "pure_seconds": 6.1616990379999805,
+      "stats": {
+        "average_visited": 71901,
+        "halted": false,
+        "iterations": 16,
+        "regret_visited": 95588,
+        "rows": 96797
+      },
+      "t": 16
+    },
+    {
+      "metric": {
+        "BR_BB_bb": 5.746703654961127,
+        "BR_SB_bb": 7.875480403582341,
+        "EV_bb": 0.24415043740932607,
+        "NashConv_bb": 13.622184058543468,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "projection": {
+          "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+          "max_removed_mass": 0.9776403729055996,
+          "zero_mass_projected_rows": 0
+        }
+      },
+      "pure_seconds": 21.27226542299995,
+      "stats": {
+        "average_visited": 266559,
+        "halted": false,
+        "iterations": 64,
+        "regret_visited": 330212,
+        "rows": 330921
+      },
+      "t": 64
+    },
+    {
+      "metric": {
+        "BR_BB_bb": 5.7130158771891155,
+        "BR_SB_bb": 7.8729295645364425,
+        "EV_bb": 0.34126867254260895,
+        "NashConv_bb": 13.585945441725558,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "projection": {
+          "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+          "max_removed_mass": 0.9783674000455364,
+          "zero_mass_projected_rows": 0
+        }
+      },
+      "pure_seconds": 30.452008020999997,
+      "stats": {
+        "average_visited": 355653,
+        "halted": false,
+        "iterations": 87,
+        "regret_visited": 440624,
+        "rows": 441218
+      },
+      "t": 87
+    }
+  ],
+  "final": {
+    "BR_BB_bb": 4.00402724930473,
+    "BR_SB_bb": 4.950753904426078,
+    "EV_bb": 0.1170091094447796,
+    "NashConv_bb": 8.954781153730808,
+    "full_native_BR_upper": null,
+    "physical_infosets": true,
+    "projection": {
+      "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+      "max_removed_mass": 0.9738409076418878,
+      "zero_mass_projected_rows": 0
+    }
+  },
+  "final_boards": [
+    [
+      4,
+      28,
+      20,
+      30,
+      10
+    ],
+    [
+      2,
+      0,
+      49,
+      11,
+      19
+    ]
+  ],
+  "formal_acceptance": 0,
+  "full_native_BR_upper": null,
+  "initial": {
+    "BR_BB_bb": 5.086835017386829,
+    "BR_SB_bb": 7.269843085321652,
+    "EV_bb": 0.13672619730966823,
+    "NashConv_bb": 12.35667810270848,
+    "full_native_BR_upper": null,
+    "physical_infosets": true,
+    "projection": {
+      "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+      "max_removed_mass": 0.9738409076418878,
+      "zero_mass_projected_rows": 0
+    }
+  },
+  "peak_RSS_bytes": 690814976,
+  "policy_digest": "c80dd4cba394f0b139c2ccd20e0082fe6715b5a4bc4a6d3445d74f03eb5aeff4",
+  "pure_seconds": 30.452008020999997,
+  "reason": "BUDGET",
+  "seed": 17120101,
+  "selected": 0,
+  "selection_boards": [
+    [
+      34,
+      46,
+      24,
+      14,
+      2
+    ],
+    [
+      51,
+      36,
+      4,
+      47,
+      26
+    ]
+  ],
+  "tag": "fine-clip-physical"
+}

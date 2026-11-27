@@ -1,0 +1,71 @@
+{
+  "boards": [
+    [
+      0,
+      5,
+      10,
+      15,
+      20
+    ],
+    [
+      0,
+      5,
+      10,
+      16,
+      21
+    ]
+  ],
+  "records": [
+    {
+      "metric": {
+        "BR_BB_bb": 8.051274044890754,
+        "BR_SB_bb": 10.10366367744588,
+        "EV_bb": 0.04962933021291732,
+        "NashConv_bb": 18.154937722336633,
+        "full_native_BR_upper": null,
+        "physical_infosets": false,
+        "projection": {
+          "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+          "max_removed_mass": 0.9738409076418878,
+          "zero_mass_projected_rows": 0
+        }
+      },
+      "seconds": 15.041550491999715,
+      "stats": {
+        "average_visited": 0,
+        "halted": false,
+        "iterations": 0,
+        "regret_visited": 0,
+        "rows": 2631
+      },
+      "t": 0,
+      "which": "best"
+    },
+    {
+      "metric": {
+        "BR_BB_bb": 8.18981561444085,
+        "BR_SB_bb": 10.360024007955968,
+        "EV_bb": 0.07123344582883484,
+        "NashConv_bb": 18.549839622396817,
+        "full_native_BR_upper": null,
+        "physical_infosets": false,
+        "projection": {
+          "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+          "max_removed_mass": 0.9963082522650546,
+          "zero_mass_projected_rows": 0
+        }
+      },
+      "seconds": 14.351272882000103,
+      "stats": {
+        "average_visited": 189496,
+        "halted": false,
+        "iterations": 43,
+        "regret_visited": 234390,
+        "rows": 428879
+      },
+      "t": 43,
+      "which": "last"
+    }
+  ],
+  "scope": "explicit projected884-public-node/2board game, not full native NC"
+}

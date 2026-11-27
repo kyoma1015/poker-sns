@@ -509,3 +509,76 @@ retain native sizes and information, independent allsize/BR/EV qualitygates;
 do not extend failedbothseed trial blindly. Reopen best/last via strictsource/
 build/SHA/RNG manualrestore; no automaticrestart. Formal specs/BR/error proof
 remain blockers despite numeric conditional EV progress.
+
+## 2026-11-27 integrated audit — formal quality FAIL, controlled solver progress
+
+Base cdeb899d68eb70dabb7291501d4db1674aa4836b. Environment restarted, actual files/
+native binaries/newCPs retained; no old nonGit DB/ZIP recovery claim. Draft120.
+Added optional private-vector control-variate baseline, signed/uniform-average
+control, causal coarse index, behavioral warm reset and lazy opponent allocation
+in SAME integrated core. Default legacy source preserves actual old nextstep
+bytes for seed1last43→44 / seed2last33→34 on old vs new binaries. No old CP or
+frozen/HU1BB/research8 modifications. Baseline future board is evaluator-only,
+not policy input/passive served continuation. Independent all-path dense oracle
+matches rawCF/average/EV with baseline/fine/coarse; native ledger/card removal
+preserved. Tiny root-gradient mean matches; variance4.383648→2.236406 (~49%).
+Lazy lookup keeps read-only/unupdated opponent rows transient; updatedR/A/RNG
+exact with25317→15117 storedrows (~40%). Old43updates428879rows only234390R
+visited explains excessmemory; no unconditional capincrease. Oldwarm root86/169
+and81/169, mixed R/A magnitudes and Rpolicy vs average policy; warm-mass receipt.
+Rebase alone did not improve, not a claimed unique arithmetic defect. Old2631
+prefloprows appliedseed1; seed2has2384 (prior bothseed count corrected).
+
+Independent projected884/2board old NC18.154938→18.549840 and7.063374→9.492192.
+Projection removes high actionmass (~.97-.99), not native NC. Newprimary BR has
+same physical own/private+visible public information for allcandidatekeys.
+Same-game existingCSR/PCS full-action control converges: exact90CPU sec seed1
+10.400928→.124835(t244),seed2 3.427254→.117465(t260); publicchance sampling same
+CPU .191199(t280)/.165834(t338). Independent kernel match. Finer-infoBR onexact
+samegame policy1.057948/1.058656BB: abstraction gap remains, no native errorbound.
+Published CFR+/MCCFR/PCS/VR/DCFR/DeepCFR/depthlimited/resolving and OpenSpielApache
+compared in RESEARCH.md; no external code/commercial data copied/fees. Chosen
+implementation improvement is unbiased VR+memory neutral lazy storage; all new
+trained strategies remain REJECTED. No single full-native arithmetic cause proved.
+
+Fullnative fine/coarse/baseline/signed/warm matched pilot primary best all t0;
+failed ways not blindly extended. Predeclared learnedlast signed/coarse/uniform/
+baseline t127/t16 compared four ways with oldSparse/PCS/integratedt0 on fresh
+16384worldseed17138701 each. SB_EV1.244643[.433010,2.056277] and
+-.098373[-.747291,.550545]. PairedoldSparse delta+1.156684[.132032,2.181335] and
+-.331729[-1.233970,.570512]. SB gain alone is NOT quality: independent BB riverjam
+gain2.223816[1.380606,3.067026]/1.586517[.807779,2.365255] proves failures.
+3.5 gain .053742[-.968031,1.075514]/-.237393[-1.085712,.610927];7/8/10.5/river
+nuts/fold also saved. 200event family99.9% bothseed allocation, no finalreselection.
+Native riverCF/avg425/6969 &315/6969;68/7091 &49/7091. Different priorstudy
+conditions not mislabeled paired coverage improvement. Complete native BR/NC
+upper/chance/continuation/info/omitted-size bounds UNKNOWN. Transfer lemma rejects
+missing uniformbounds; finite-game convergence/EV point not fullnative PASS.
+
+Original33462root,1014exactFold,493proposalJam protected; newdigest1014exactFold
+and196proposalJam(49/147), formalprecision0. All3contexts169frequency retained.
+6/9 bothseeds chance-slot rotation vs iid, same6CPUbudget/allseat1024pairedworlds,
+no significantgain; eightCPnextstep exact. Original N timing included export/
+replay, annotation keeps it separate from pureCPU; future driver corrected.
+3-personexact .023738946 and K4 reach/average/oracle intact; no general N Nash.
+167localregressions PASS200.249s (concurrent boundedexperiments), new4PASS114.135s.
+Gzip9 vs zstd1 same124094587rawbytes: CPU3.803/.543sec, stored19.329/19.643MB,
+SHA identical. Current research driver separates trainingCPU/checkpointwall and
+uses fastlossless zstd; historical gzip source images/CPs preserved.
+
+Newtrained2+samegame4 CP strict source/build/SHA/RNG nextstep replay confirmed,
+with source/build sidecars; actual replaydrivers/receipts in QA. No automatic
+restart. Hardware display3logicalCPU/host~9968MiB; currentcgroup2CPU/8GiB after restart,
+oldquota not recorded.5.9GiB initialfree disk,no fees.Samegame
+RSS659-713MB, learnedlast662/512MB. QA~385MiB within512budget. Fullrelease solver/
+cachemiss/time/storage cost UNKNOWN; conservative uniform-proof example2e11
+samples not feasible for that route, not all-method impossibility assertion.
+Formal12allfalse,0/12 unchanged,RFI0/3bet0. Approval document unchanged; full2..9/
+20stacks/allpositions/RFI+3bet/optional4bet/169EV/MTT-ring/ante-rake/unequal scope
+maintained. Percondition dependencies/resources/nextimplementation inacceptance.
+No prodDB/Storage/SQL/Vercel/merge/SSO/fees/forcepush/delete/normalregistry writes.
+QA: docs/qa/integrated-audit-20261126/{README,RESEARCH,summary,acceptance,sha256}.
+Next reuse positive full-action same-game integration with active sparse indexes
+and adaptive native support in bounded subgames, but uniformCF/chance/size/info
+transfer bounds and all required profiles must be proved before qualification.
+Newcommit/automaticCI receipt in PR120; no previous SUCCESS manualreruns.

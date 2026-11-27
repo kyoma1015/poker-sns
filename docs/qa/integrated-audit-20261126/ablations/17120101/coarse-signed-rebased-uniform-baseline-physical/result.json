@@ -1,0 +1,184 @@
+{
+  "curve": [
+    {
+      "metric": {
+        "BR_BB_bb": 5.083993083049691,
+        "BR_SB_bb": 7.272026479319506,
+        "EV_bb": 0.13663968115999642,
+        "NashConv_bb": 12.356019562369198,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "projection": {
+          "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+          "max_removed_mass": 0.9738409076418878,
+          "zero_mass_projected_rows": 0
+        }
+      },
+      "pure_seconds": 0.0,
+      "t": 0
+    },
+    {
+      "metric": {
+        "BR_BB_bb": 4.939418091612946,
+        "BR_SB_bb": 7.435249781350546,
+        "EV_bb": 0.24406014933962822,
+        "NashConv_bb": 12.374667872963492,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "projection": {
+          "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+          "max_removed_mass": 0.9738409076418878,
+          "zero_mass_projected_rows": 0
+        }
+      },
+      "pure_seconds": 0.7398209690000002,
+      "stats": {
+        "average_visited": 9691,
+        "halted": false,
+        "iterations": 4,
+        "regret_visited": 12724,
+        "rows": 14357
+      },
+      "t": 4
+    },
+    {
+      "metric": {
+        "BR_BB_bb": 5.475269797648798,
+        "BR_SB_bb": 8.052194088543594,
+        "EV_bb": 0.14384231325703645,
+        "NashConv_bb": 13.527463886192391,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "projection": {
+          "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+          "max_removed_mass": 0.9738409076418878,
+          "zero_mass_projected_rows": 0
+        }
+      },
+      "pure_seconds": 3.6455519679999995,
+      "stats": {
+        "average_visited": 34244,
+        "halted": false,
+        "iterations": 16,
+        "regret_visited": 54174,
+        "rows": 55346
+      },
+      "t": 16
+    },
+    {
+      "metric": {
+        "BR_BB_bb": 6.353509546031767,
+        "BR_SB_bb": 8.848198700505206,
+        "EV_bb": 0.15274258525180806,
+        "NashConv_bb": 15.201708246536974,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "projection": {
+          "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+          "max_removed_mass": 0.9985190424193986,
+          "zero_mass_projected_rows": 0
+        }
+      },
+      "pure_seconds": 14.939322389000019,
+      "stats": {
+        "average_visited": 113034,
+        "halted": false,
+        "iterations": 64,
+        "regret_visited": 209077,
+        "rows": 209741
+      },
+      "t": 64
+    },
+    {
+      "metric": {
+        "BR_BB_bb": 7.048444658668757,
+        "BR_SB_bb": 9.732340565891878,
+        "EV_bb": 0.3588693877539626,
+        "NashConv_bb": 16.780785224560635,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "projection": {
+          "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+          "max_removed_mass": 0.9985190424193986,
+          "zero_mass_projected_rows": 0
+        }
+      },
+      "pure_seconds": 30.100760653999934,
+      "stats": {
+        "average_visited": 199828,
+        "halted": false,
+        "iterations": 127,
+        "regret_visited": 422117,
+        "rows": 422554
+      },
+      "t": 127
+    }
+  ],
+  "final": {
+    "BR_BB_bb": 4.019010013077402,
+    "BR_SB_bb": 4.97355674714741,
+    "EV_bb": 0.11868984865817328,
+    "NashConv_bb": 8.992566760224811,
+    "full_native_BR_upper": null,
+    "physical_infosets": true,
+    "projection": {
+      "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+      "max_removed_mass": 0.9738409076418878,
+      "zero_mass_projected_rows": 0
+    }
+  },
+  "final_boards": [
+    [
+      4,
+      28,
+      20,
+      30,
+      10
+    ],
+    [
+      2,
+      0,
+      49,
+      11,
+      19
+    ]
+  ],
+  "formal_acceptance": 0,
+  "full_native_BR_upper": null,
+  "initial": {
+    "BR_BB_bb": 5.083993083049691,
+    "BR_SB_bb": 7.272026479319506,
+    "EV_bb": 0.13663968115999642,
+    "NashConv_bb": 12.356019562369198,
+    "full_native_BR_upper": null,
+    "physical_infosets": true,
+    "projection": {
+      "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+      "max_removed_mass": 0.9738409076418878,
+      "zero_mass_projected_rows": 0
+    }
+  },
+  "peak_RSS_bytes": 661745664,
+  "policy_digest": "75996e66a0be9f41fc0e9df734d6258bb2ee0318864c81dff974659f86fc29c4",
+  "pure_seconds": 30.100760653999934,
+  "reason": "EARLY_REGRESSION",
+  "seed": 17120101,
+  "selected": 0,
+  "selection_boards": [
+    [
+      34,
+      46,
+      24,
+      14,
+      2
+    ],
+    [
+      51,
+      36,
+      4,
+      47,
+      26
+    ]
+  ],
+  "tag": "coarse-signed-rebased-uniform-baseline-physical"
+}

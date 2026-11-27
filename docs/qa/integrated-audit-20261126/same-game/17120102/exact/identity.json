@@ -1,0 +1,33 @@
+{
+  "source_sha256": "a247d3a3274183b0c0da9d32bf9f1692d393375c4bc4201e17a327dbd0169324",
+  "native_tree_metadata_sha256": "6a8110bbdab105f81383f3feac6ed805e448a30b794c4ab260fc6c3e3518028e",
+  "sources": {
+    "gto/qualification/public_chance_solver.py": "751551c26a12f362aba13c7ee257b247d774bed56ac7839c74f4f27720fac5ce",
+    "gto/qualification/public_chance_core.cc": "35cea018c44cc578fd02ea5d4cb6f0d4b127d447ff2ec0ea81ed5d31cc7e9af8",
+    "gto/qualification/fullstreet_solver.py": "e24cff363f3962612ba06a72e680778aa23a3c54d617fe82255192015b3a760b",
+    "gto/qualification/integrated_br.py": "05d810a8baa6ef03b4378e0d6d24338c8a56a18555ea5d285e2f053ee9ef391f"
+  },
+  "binary_sha256": "cb8572c9b5f13c9250d38d151b40fb26d3c6e30f454dd7f9d74dc9dd31d7f7f0",
+  "checkpoint_sha256": "24cf43f0d6f64febb4b5f0e69ba99295e9d5c35e95552127f84f9d0e8cfbdda7",
+  "initial_sha256": "20bc291adfb4c3c9f36539129acc94f0a0408695f1beb77984ff60f96300ced1",
+  "rng_sha256": "2e4fc2c055b24b42191e33646e7d810067e36f38e71d658332fe2e9e3e40e6ba",
+  "boards": [
+    [
+      34,
+      46,
+      24,
+      14,
+      2
+    ],
+    [
+      51,
+      36,
+      4,
+      47,
+      26
+    ]
+  ],
+  "native_certificate": false,
+  "nextstep_exact": true,
+  "nextstep_SHA256": "55183b4f5bee2a77af05d67f4ec84c5b4ffa16880975c0588be0f2f2bea538c5"
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "seed": 17120101,
+    "nextstep_raw_sha256": "ea8e266e542e7721e93d1886c3baeb44d16562fc966688e1251e9b2f8c26bb63",
+    "exact_old_new": true
+  },
+  {
+    "seed": 17120102,
+    "nextstep_raw_sha256": "a900bc38a4e6b78551390573df4bdf9e9b50c73edfa30f9fe61a609bd5639ebd",
+    "exact_old_new": true
+  }
+]

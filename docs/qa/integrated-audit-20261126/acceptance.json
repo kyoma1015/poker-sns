@@ -1,0 +1,202 @@
+{
+  "base": "cdeb899d68eb70dabb7291501d4db1674aa4836b",
+  "formal_pass": 0,
+  "previous_formal_pass": 0,
+  "verified_RFI": 0,
+  "verified_3bet": 0,
+  "items": [
+    {
+      "id": 1,
+      "requirement": "RFI",
+      "formal_pass": false,
+      "current": "Both physical primary selectiont0; trained last native riverjam gain lower1.380606/.807779BB, unqualified",
+      "missing_next": "Same-game native joint continuation with legal-size support; independent native BR upper and quality certificate",
+      "dependencies": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "compute_evidence_or_limit": "Full-native certified solve/BR cost UNKNOWN; 90CPU same-game reduced control is not a release cost estimate."
+    },
+    {
+      "id": 2,
+      "requirement": "vs-open/3bet",
+      "formal_pass": false,
+      "current": "Native legal prior/responses and12/99root support maintained; trained3.5 gains .053742/-.237393BB with broadCI",
+      "missing_next": "Qualify all required vs-open/3bet contexts, generic size responses and omitted-size error",
+      "dependencies": [
+        1,
+        4,
+        5,
+        11
+      ],
+      "compute_evidence_or_limit": "Unknown; no all-size prior declared safe."
+    },
+    {
+      "id": 3,
+      "requirement": "vs3bet/4bet",
+      "formal_pass": false,
+      "current": "169 vs3bet10.5 frequencies/conditionalEV saved, no certified strategy",
+      "missing_next": "Same-digest deeper raise responses and independent action EV/BR evidence",
+      "dependencies": [
+        2,
+        4,
+        5,
+        11
+      ],
+      "compute_evidence_or_limit": "Unknown all required4bet configurations; optional4bet not used to relax mandatory3bet."
+    },
+    {
+      "id": 4,
+      "requirement": "169 frequencies",
+      "formal_pass": false,
+      "current": "Each seed3contexts*169 frequency rows saved for trainedlast; ordinary qualified rows0",
+      "missing_next": "Qualified full profile/position mixed frequencies with prior/learned distinction",
+      "dependencies": [
+        1,
+        2,
+        3,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "compute_evidence_or_limit": "Approval proposal equal-stack RFI alone1946880rows; actual whole qualification cost UNKNOWN."
+    },
+    {
+      "id": 5,
+      "requirement": "Verified EV",
+      "formal_pass": false,
+      "current": "Old33462root/1014Fold/493Jam preserved. New1014exactFold+196proposedprecisionJam on newdigest; formal0",
+      "missing_next": "All169/native action precision plus uniform continuation/chance/info/size error envelopes",
+      "dependencies": [
+        1,
+        2,
+        3,
+        11
+      ],
+      "compute_evidence_or_limit": "New3*30wallsec/seed conditional budget; all-action certified cost UNKNOWN."
+    },
+    {
+      "id": 6,
+      "requirement": "MTT/ring",
+      "formal_pass": false,
+      "current": "Only offline research profiles; MTT/ring/ICM concrete values pending",
+      "missing_next": "Approve modes/units/profile and qualify condition-matched engine/strategies",
+      "dependencies": [
+        8,
+        10
+      ],
+      "compute_evidence_or_limit": "Approved proposal2560equal-stack games only; full matrix cost UNKNOWN."
+    },
+    {
+      "id": 7,
+      "requirement": "2–9 players",
+      "formal_pass": false,
+      "current": "3exact .023738946 protected;6/9 chance rotation/iid bothseeds1024world allseat evaluation, no significant gain",
+      "missing_next": "Multiway reach/chance/variance improvements and independent unilateral BR evidence",
+      "dependencies": [
+        1,
+        4,
+        5,
+        8,
+        9,
+        10,
+        11
+      ],
+      "compute_evidence_or_limit": "6CPU budget perarm; exported timing includes replay (see timing scope); generalN Nash not guaranteed."
+    },
+    {
+      "id": 8,
+      "requirement": "Formal stacks",
+      "formal_pass": false,
+      "current": "Formal20list pending unchanged; HU50 milestone only",
+      "missing_next": "Approve existing20stack list; shared cache/local solve without enumerating all unequal vectors",
+      "dependencies": [
+        6,
+        10
+      ],
+      "compute_evidence_or_limit": "All-stack certified time/storage UNKNOWN."
+    },
+    {
+      "id": 9,
+      "requirement": "Positions",
+      "formal_pass": false,
+      "current": "Allseat information constraints preserved; formal qualified positions0",
+      "missing_next": "Generate/certify every required position and distinct history",
+      "dependencies": [
+        1,
+        2,
+        3,
+        7,
+        8
+      ],
+      "compute_evidence_or_limit": "44seat positions per equal-stack mode/stack group in proposal; whole cost UNKNOWN."
+    },
+    {
+      "id": 10,
+      "requirement": "BB ante/rake/unequal stacks",
+      "formal_pass": false,
+      "current": "Native sidepot/refund/ante/rake/unequal regressions protected; no qualified strategy",
+      "missing_next": "Approved exact cashflow profile plus condition-matched multiway training/BR",
+      "dependencies": [
+        6,
+        7,
+        8
+      ],
+      "compute_evidence_or_limit": "Profile input acceptance is not full-domain quality proof; cost UNKNOWN."
+    },
+    {
+      "id": 11,
+      "requirement": "Formal sizing",
+      "formal_pass": false,
+      "current": "Root12/99,87raise omitted; reduced884 action projection maximumremovedmass near1",
+      "missing_next": "Adaptive legal support/downstream learning and proved omitted-size/abstraction transfer bounds",
+      "dependencies": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "compute_evidence_or_limit": "Uniform finite-strategy Hoeffding example n~2e11, not feasible here; alternative certified route not implemented."
+    },
+    {
+      "id": 12,
+      "requirement": "Poker ID search",
+      "formal_pass": false,
+      "current": "Search/registry preserved, ordinary accepted strategies0",
+      "missing_next": "Only complete accepted evidence/digest enters existing registry/search",
+      "dependencies": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "compute_evidence_or_limit": "Python lookup not app SLA; certified cache miss latency UNKNOWN."
+    }
+  ],
+  "approval_pending": [
+    "formal20 stack values",
+    "MTT/ring profiles",
+    "formal size profiles",
+    "ante type/amount",
+    "rake/cap",
+    "unequal-stack profile matrix"
+  ],
+  "scope": "2..9 players; HU50 is not initial release",
+  "evidence": "native-final, same-game, RESEARCH, final-checkpoint-replay; all partial proofs scoped"
+}
