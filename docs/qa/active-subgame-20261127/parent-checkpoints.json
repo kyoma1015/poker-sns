@@ -1,0 +1,50 @@
+{
+  "old_files_modified": false,
+  "records": [
+    {
+      "hashes": {
+        "checkpoint_sha256": true,
+        "initial_sha256": true,
+        "rng_sha256": true
+      },
+      "mode": "exact",
+      "nextstep_prior_receipt": true,
+      "seed": 17120101,
+      "sources_match": true
+    },
+    {
+      "hashes": {
+        "checkpoint_sha256": true,
+        "initial_sha256": true,
+        "rng_sha256": true
+      },
+      "mode": "sample",
+      "nextstep_prior_receipt": true,
+      "seed": 17120101,
+      "sources_match": true
+    },
+    {
+      "hashes": {
+        "checkpoint_sha256": true,
+        "initial_sha256": true,
+        "rng_sha256": true
+      },
+      "mode": "exact",
+      "nextstep_prior_receipt": true,
+      "seed": 17120102,
+      "sources_match": true
+    },
+    {
+      "hashes": {
+        "checkpoint_sha256": true,
+        "initial_sha256": true,
+        "rng_sha256": true
+      },
+      "mode": "sample",
+      "nextstep_prior_receipt": true,
+      "seed": 17120102,
+      "sources_match": true
+    }
+  ],
+  "scope": "actual NPZ/RNG bytes, not a hash ledger alone"
+}

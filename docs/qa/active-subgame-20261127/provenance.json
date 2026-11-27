@@ -1,0 +1,38 @@
+{
+  "adapter_source_sha256": "e2843af7f18249f51fbbfb9252f3f62883d843f5e20fab31bb0ad0a1cbbd5bec",
+  "board_control_reference_is_not_bounded_initialization": true,
+  "bounded_imports": {
+    "17120101": {
+      "archive_sha256": "d0ec5e7d025a194437944cfd29f5bb5ba3d0ded27f488051c47e620f5fb5ad71",
+      "meta_sha256": "6b912641dfd8d9ff564ba438c49092d8c9703b16f1c0f6886fdada4a757383e8",
+      "raw_sha256": "fff3848c6689dd8c75df408672a5de31a45f1f88817bf1a5ebdc48dec352fee2"
+    },
+    "17120102": {
+      "archive_sha256": "8f35741db642585858a4ebda1bcb302373b013ba53ec815da6176d3afb960360",
+      "meta_sha256": "b59518c82a091f48be6aceb5b10a610d85a8c417bf658581f485dfa8ee46b7a7",
+      "raw_sha256": "d8f2f3b7d1e3534726f7ec070cb897713b3f25fcb9e902d3338a55afc3802e2c"
+    }
+  },
+  "bounded_initialization": "integrated_audit.make(seed, coarse=True): import preserved Sparse preflop R/A, root support+18/19/16, constant coarse postflop prior",
+  "current_driver_sha256": "41005368330afb1bc985b1728d8eb9ecb28495c4bdd47dcc190ba2dcac1468bc",
+  "driver_change": "vectorized initializer; regression bitwise R/A equality, no retraining or change to existing policy",
+  "executed_driver_sha256": "f04686cb7bd74afc17f44fe28707e6068e29a5f035a7f65c6a92ee3c92f0ae6a",
+  "protected_sources_match_base": {
+    "gto/abstract/precision_native.cc": "7b1ac459ea0794c76b64321fe3242eae710c4b1995bcbd1b4030257df328e79a",
+    "gto/qualification/fullstreet_core.cc": "36c4359d39a49f8c764c1b49e9203ebf46287af1eedd0e0b79221e3851f25492",
+    "gto/qualification/fullstreet_solver.py": "e24cff363f3962612ba06a72e680778aa23a3c54d617fe82255192015b3a760b",
+    "gto/qualification/integrated_audit.py": "a188b14a1305569a686bf777343ed4df2858edc6daa37e66b76cdde4f046134d",
+    "gto/qualification/integrated_br.py": "05d810a8baa6ef03b4378e0d6d24338c8a56a18555ea5d285e2f053ee9ef391f",
+    "gto/qualification/integrated_native.cc": "4491655ef68fd21fadb8ba89333a585479c24b118c23350ea31d08aad2a262c4",
+    "gto/qualification/integrated_solver.py": "30621e2a5904ba40d3e9657ce3a9b7adabbdc03f4fb2072cd4e199c93e8c41df",
+    "gto/qualification/multiplayer_joint.py": "fece246fa944b78729849528dafe8ef90d75428f9bd6ae2d099027ae053deb5c",
+    "gto/qualification/public_response.py": "b52122ef05cdd1bb1448d9b7a6a6f5a4a7ff99ef1fd3d93a275496ceb1071556",
+    "gto/qualification/range_continuation.py": "4230cb483c9404e4b65716ed1479cd135b70d6b43821f53a7ad54f510098a9a5",
+    "gto/qualification/sparse_native.cc": "37e8fd99453314dae49737dbfa4ad1832b83696d492a9214083f30dc36bc9c89",
+    "handoff/gto/g12_next/g11_native_state.h": "9eaee82e4a42aca63ea30f2f80dae31ec4b4e28d58b72e0da355a048e6ca6988"
+  },
+  "resume_current_sha256": "70ef3d9d764b525ac1c0359820a401a780b4bad414b753b94a24f7d80701bb9f",
+  "resume_intermediate_scope": "archive-aware loader used for precision/initializer benchmark; same R/A/prior reconstruction, no policy changes",
+  "resume_intermediate_sha256": "dae9949985cdb316d605bf070f98a08e5962dae835a01074e0ca597d92df43e8",
+  "resume_source_v1_sha256": "ab39aa0ec18fd604f428de969493c0cc9628f8157dd1d96e89bd94a28f835639"
+}

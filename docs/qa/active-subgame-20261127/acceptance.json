@@ -1,0 +1,202 @@
+{
+  "approval_pending": [
+    "formal20 stack values",
+    "MTT/ring profiles",
+    "formal size profiles",
+    "ante type/amount",
+    "rake/cap",
+    "unequal-stack profile matrix"
+  ],
+  "base": "20057f4d4ef5e69ad76e53132eb8651768981cb2",
+  "evidence": "active-subgame-20261127/summary.json, artifact-identities.json, per-seed receipts; all partial proofs remain scoped",
+  "formal_pass": 0,
+  "items": [
+    {
+      "compute_evidence_or_limit": "2CPU/8GiB. Four90CPU training gates;2939node maximumRSS2.44GB incl finer oracle. Full-native certified solve/cachemiss resources UNKNOWN.",
+      "current": "Joint CFR full private integration connected to2939 native nodes/root12; qualifiedRFI0",
+      "dependencies": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "formal_pass": false,
+      "id": 1,
+      "missing_next": "Same-game native joint continuation with legal-size support; independent native BR upper and quality certificate",
+      "requirement": "RFI"
+    },
+    {
+      "compute_evidence_or_limit": "2CPU/8GiB. Four90CPU training gates;2939node maximumRSS2.44GB incl finer oracle. Full-native certified solve/cachemiss resources UNKNOWN.",
+      "current": "All169 frequency rows at facing3BB and native12support generated;3.5/8/10.5 probes nonsignificant, no bound",
+      "dependencies": [
+        1,
+        4,
+        5,
+        11
+      ],
+      "formal_pass": false,
+      "id": 2,
+      "missing_next": "Qualify all required vs-open/3bet contexts, generic size responses and omitted-size error",
+      "requirement": "vs-open/3bet"
+    },
+    {
+      "compute_evidence_or_limit": "2CPU/8GiB. Four90CPU training gates;2939node maximumRSS2.44GB incl finer oracle. Full-native certified solve/cachemiss resources UNKNOWN.",
+      "current": "All169 vs10BB frequencies saved; native10.5BB history has ZERO same-policy range in both seeds (169/169 EV UNKNOWN), no fabricated beliefs",
+      "dependencies": [
+        2,
+        4,
+        5,
+        11
+      ],
+      "formal_pass": false,
+      "id": 3,
+      "missing_next": "Same-digest deeper raise responses and independent action EV/BR evidence",
+      "requirement": "vs3bet/4bet"
+    },
+    {
+      "compute_evidence_or_limit": "2CPU/8GiB. Four90CPU training gates;2939node maximumRSS2.44GB incl finer oracle. Full-native certified solve/cachemiss resources UNKNOWN.",
+      "current": "Both seeds x RFI/vs-open/vs3bet x169 frequency rows regenerated; all formal0",
+      "dependencies": [
+        1,
+        2,
+        3,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "formal_pass": false,
+      "id": 4,
+      "missing_next": "Qualified full profile/position mixed frequencies with prior/learned distinction",
+      "requirement": "169 frequencies"
+    },
+    {
+      "compute_evidence_or_limit": "2CPU/8GiB. Four90CPU training gates;2939node maximumRSS2.44GB incl finer oracle. Full-native certified solve/cachemiss resources UNKNOWN.",
+      "current": "Per new bounded digest: seed1 Fold338+Jam203 proposalprecision; seed2 Fold338+Jam210. Both formal0; olddigest counts separate",
+      "dependencies": [
+        1,
+        2,
+        3,
+        11
+      ],
+      "formal_pass": false,
+      "id": 5,
+      "missing_next": "All169/native action precision plus uniform continuation/chance/info/size error envelopes",
+      "requirement": "Verified EV"
+    },
+    {
+      "compute_evidence_or_limit": "Approved proposal2560equal-stack games only; full matrix cost UNKNOWN.",
+      "current": "Only offline research profiles; MTT/ring/ICM concrete values pending",
+      "dependencies": [
+        8,
+        10
+      ],
+      "formal_pass": false,
+      "id": 6,
+      "missing_next": "Approve modes/units/profile and qualify condition-matched engine/strategies",
+      "requirement": "MTT/ring"
+    },
+    {
+      "compute_evidence_or_limit": "6CPU budget perarm; exported timing includes replay (see timing scope); generalN Nash not guaranteed.",
+      "current": "3exact .023738946 protected;6/9 previous2seed policies protected;15 native multiway regressionsPASS, no new multiway quality improvement",
+      "dependencies": [
+        1,
+        4,
+        5,
+        8,
+        9,
+        10,
+        11
+      ],
+      "formal_pass": false,
+      "id": 7,
+      "missing_next": "Multiway reach/chance/variance improvements and independent unilateral BR evidence",
+      "requirement": "2\u20139 players"
+    },
+    {
+      "compute_evidence_or_limit": "All-stack certified time/storage UNKNOWN.",
+      "current": "Formal20list pending unchanged; HU50 milestone only",
+      "dependencies": [
+        6,
+        10
+      ],
+      "formal_pass": false,
+      "id": 8,
+      "missing_next": "Approve existing20stack list; shared cache/local solve without enumerating all unequal vectors",
+      "requirement": "Formal stacks"
+    },
+    {
+      "compute_evidence_or_limit": "44seat positions per equal-stack mode/stack group in proposal; whole cost UNKNOWN.",
+      "current": "Allseat information constraints preserved; formal qualified positions0",
+      "dependencies": [
+        1,
+        2,
+        3,
+        7,
+        8
+      ],
+      "formal_pass": false,
+      "id": 9,
+      "missing_next": "Generate/certify every required position and distinct history",
+      "requirement": "Positions"
+    },
+    {
+      "compute_evidence_or_limit": "Profile input acceptance is not full-domain quality proof; cost UNKNOWN.",
+      "current": "Native sidepot/refund/ante/rake/unequal regressions protected; no qualified strategy",
+      "dependencies": [
+        6,
+        7,
+        8
+      ],
+      "formal_pass": false,
+      "id": 10,
+      "missing_next": "Approved exact cashflow profile plus condition-matched multiway training/BR",
+      "requirement": "BB ante/rake/unequal stacks"
+    },
+    {
+      "compute_evidence_or_limit": "2CPU/8GiB. Four90CPU training gates;2939node maximumRSS2.44GB incl finer oracle. Full-native certified solve/cachemiss resources UNKNOWN.",
+      "current": "Joint private-vector public tree root3->12/99, existingSparse12/99 maintained;87raise omitted, downstream gaps UNKNOWN",
+      "dependencies": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "formal_pass": false,
+      "id": 11,
+      "missing_next": "Adaptive legal support/downstream learning and proved omitted-size/abstraction transfer bounds",
+      "requirement": "Formal sizing"
+    },
+    {
+      "compute_evidence_or_limit": "Python lookup not app SLA; certified cache miss latency UNKNOWN.",
+      "current": "Registry/search unchanged, accepted strategies0",
+      "dependencies": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "formal_pass": false,
+      "id": 12,
+      "missing_next": "Only complete accepted evidence/digest enters existing registry/search",
+      "requirement": "Poker ID search"
+    }
+  ],
+  "previous_formal_pass": 0,
+  "scope": "2..9 players; HU50 is not initial release",
+  "verified_3bet": 0,
+  "verified_RFI": 0
+}

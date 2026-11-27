@@ -1,0 +1,20 @@
+{
+  "active": {
+    "command": "QUALIFICATION_BUILD=/tmp/native-qualification python -B -m unittest gto.qualification.test_active_chance -v",
+    "passed": 7,
+    "seconds": 9.95
+  },
+  "app_build_lint": "not run: solver/QA/workflow only, no application changes",
+  "multiplayer": {
+    "command": "QUALIFICATION_BUILD=/tmp/native-qualification python -B -m unittest gto.qualification.test_multiplayer_expanded -v",
+    "passed": 15,
+    "seconds": 7.969
+  },
+  "new_CI": "pending normal commit/push; no successful run manually rerun",
+  "public_chance": {
+    "command": "python -B -m unittest gto.qualification.test_active_chance gto.qualification.test_public_chance -v",
+    "passed": 10,
+    "scope": "earlier active test revision plus existing PCS oracle",
+    "seconds": 19.616
+  }
+}

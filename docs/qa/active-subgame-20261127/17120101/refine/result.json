@@ -1,0 +1,80 @@
+{
+  "CPU_seconds": 90.01141574900014,
+  "abstraction_error_full_native": null,
+  "active_cells": 325100,
+  "curve": [
+    {
+      "BR_BB_bb": -0.012377537046284163,
+      "BR_SB_bb": 0.11252300954442232,
+      "CPU_seconds": 30.077724868000168,
+      "EV_bb": 0.059675477029671825,
+      "estimated_working_bytes": 101648552,
+      "iterations": 279,
+      "peak_RSS_bytes": 637095936,
+      "restricted_NC_bb": 0.10014547249813815
+    },
+    {
+      "BR_BB_bb": -0.050722380451503506,
+      "BR_SB_bb": 0.0805577427584711,
+      "CPU_seconds": 90.01141574900014,
+      "EV_bb": 0.06551708341851167,
+      "estimated_working_bytes": 101648552,
+      "iterations": 789,
+      "peak_RSS_bytes": 637095936,
+      "restricted_NC_bb": 0.029835362306967587
+    }
+  ],
+  "exact_private_same_board_BR": {
+    "BR_BB_bb": 0.28212321509308225,
+    "BR_SB_bb": 0.44412676716595834,
+    "EV_bb": 0.06551708341851137,
+    "NashConv_bb": 0.7262499822590406,
+    "full_native_BR_upper": null,
+    "physical_infosets": true
+  },
+  "fine_suit_orbit_BR": {
+    "BR_BB_bb": 0.1764167338495106,
+    "BR_SB_bb": 0.33011878923632193,
+    "EV_bb": 0.0655170834185117,
+    "estimated_working_bytes": 158964962,
+    "iterations": 789,
+    "peak_RSS_bytes": 676077568,
+    "restricted_NC_bb": 0.5065355230858325
+  },
+  "formal_acceptance": 0,
+  "full_native_BR_upper": null,
+  "independent": {
+    "BR_BB_bb": -0.05072238045150318,
+    "BR_SB_bb": 0.08055774275847072,
+    "EV_bb": 0.06551708341851137,
+    "NashConv_bb": 0.02983536230696754,
+    "full_native_BR_upper": null,
+    "physical_infosets": false
+  },
+  "initial_coarse": {
+    "BR_BB_bb": -0.005632360650503947,
+    "BR_SB_bb": 0.13046741575941195,
+    "EV_bb": 0.0673014192316023,
+    "estimated_working_bytes": 101550650,
+    "iterations": 0,
+    "peak_RSS_bytes": 336654336,
+    "restricted_NC_bb": 0.12483505510890801
+  },
+  "initial_refined": {
+    "BR_BB_bb": 0.007034681445077533,
+    "BR_SB_bb": 0.29561479938832913,
+    "EV_bb": 0.0673014192316023,
+    "estimated_working_bytes": 101648552,
+    "iterations": 0,
+    "peak_RSS_bytes": 637095936,
+    "restricted_NC_bb": 0.30264948083340665
+  },
+  "mode": "refine",
+  "nextstep_exact": true,
+  "node_count": 884,
+  "peak_RSS_bytes": 676696064,
+  "refined_parent_cells": 64,
+  "seed": 17120101,
+  "verified_3bet": 0,
+  "verified_RFI": 0
+}

@@ -582,3 +582,59 @@ Next reuse positive full-action same-game integration with active sparse indexes
 and adaptive native support in bounded subgames, but uniformCF/chance/size/info
 transfer bounds and all required profiles must be proved before qualification.
 Newcommit/automaticCI receipt in PR120; no previous SUCCESS manualreruns.
+
+## 2026-11-27 — active private-vector / native bounded integration (PR120)
+
+Base20057f4d4ef5e69ad76e53132eb8651768981cb2, remote Open/Draft and prior8families
+SUCCESS read-only checked. Normal local execution restored (2CPU/8GiB); actual
+four prior same-game NPZ/RNG bundles and protected sources SHA-verified. No old
+unsaved session/ZIP recovery claim and no automatic future restart claim.
+
+Implemented active CSR row indexing of existing PCS private integration, CF-gap
+prioritized64-cell strategic refinement with owner-observation recall, and native
+2939-node joint tree retaining existing12/99root sizes (old PCS884tree had3).
+Old Sparse/PCS/CFR/native sources and all prior checkpoint bytes remain unchanged.
+Separate native adapter counts indexed, changed-regret, updated-average, parent
+and off-tree fallback rows. Unknown histories reuse preserved legal Sparse;
+backoff is not a quality certificate. Driver warm initialization vectorized:
+2939nodes/1075859action cells0.170626CPU seconds, excluding construction/training.
+
+Four90CPU gates (30/90 curves) on the same2board law. Refined884 NC .029835/.035427;
+previous physical BR NC1.057948/1.058656 -> .726250/.750544. New2939 jointNC
+11.379261/5.790538 -> .167217/.141411; finer physical BR1.188915/1.241698.
+Different trees/info/chance scopes are not pooled. Maximum per-processRSS2.44GB
+includes the finer oracle/Python indexes, not just numeric kernel memory.
+
+Fresh32768worlds perseed confirm prior signed-last BB river-jam gain significantly
+decreased: candidate .208572[-.353565,.770710]/-.202789[-.642024,.236446]BB;
+paired differences -2.117310[-2.980137,-1.254482]/-1.767273[-2.500838,-1.033708].
+Native SB EV .057045[-.217939,.332028]/.068189[-.229410,.365787]BB. Family99.9%.
+No significant EV/resistance improvement over protected Sparse is established.
+Independent8192baseline river updatedR/A reuse36.77%/40.27%; most remaining paths
+back off. Both training boards are unpaired; more same-law learning is not a
+proof of native chance coverage. No native BR/NC upper or uniform error bound.
+
+Each bounded digest exports RFI/vs-open3BB/vs3bet10BB169 frequencies and finite-law
+conditional EVs. Reused conditional EV cert separately on each same digest:
+Fold338 + Jam203/210 proposedprecision cells, formal0. All169 vs3bet10.5 cells
+UNKNOWN_ZERO_RANGE in both seeds; no invented beliefs/EVs. Old33462root, Fold1014,
+Jam493 and previousdigest196 remain separate and protected. All4new bundles
+replay a nextstep exactly across independent instances, warm prior from initialA.
+Executed source versions, source/build/adapter pins and nextstep proofs saved.
+
+Local tests: new active7PASS; original PCS-related gate10PASS (earlier active
+revision); native multiplayer15PASS including6/9, all-seat/sidepot/refund/ante/
+rake/unequal/CF-reach. No new multiway quality gain claimed; 3exact .023738946BB,
+K4oracle and existing6/9two-seed policies preserved. N-player Nash not guaranteed.
+
+Formal acceptance0/12 ->0/12, qualifiedRFI0/3bet0. Full initial release remains
+2–9players/20stacks/allpositions/MTT-ring/ante-rake/unequal; A1–A7 proposals pending.
+Next direct-quality gate: streamed stratified public-board batches into this
+same active kernel, aggregate raw CF before clip, paired/nut/blocker coverage,
+adaptive downstream support and independent native BR/EV evidence. All omitted
+87rootraises, full-native BR/NC, uniform chance/continuation/abstraction errors,
+qualified-profile compute/cache-miss cost remain UNKNOWN. No registry/publication.
+QA: docs/qa/active-subgame-20261127/{README,summary,acceptance,artifact-identities,
+provenance,parent-checkpoints,manifest,sha256}. New normal-commit automaticCI
+receipt/fullHEAD is recorded in PR120 after push; no SUCCESS manual reruns.
+No production/SQL/main/deploy/SSO/billing/force/destructive operations.
