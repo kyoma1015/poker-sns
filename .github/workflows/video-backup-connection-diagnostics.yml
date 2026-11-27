@@ -1,0 +1,19 @@
+name: Video production backup connection diagnostics
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  connect:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production-backup
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check backup connection without exporting data
+        env:
+          PROD_DB_URL: ${{ secrets.PROD_DB_URL }}
+        run: python3 scripts/video_backup_connection_diagnostics.py
