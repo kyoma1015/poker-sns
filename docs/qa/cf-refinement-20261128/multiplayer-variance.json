@@ -1,0 +1,41 @@
+{
+  "records": [
+    {
+      "seed": 17150201,
+      "mode": "chance_only",
+      "variance_trace": 44.571724598032745,
+      "mean_squared_error_to_exact_oracle": 1.2921403675037368,
+      "CPU_seconds": 1.1560148469999998,
+      "trials": 32,
+      "formal_pass": 0
+    },
+    {
+      "seed": 17150201,
+      "mode": "root_quantiles",
+      "variance_trace": 38.38035858211536,
+      "mean_squared_error_to_exact_oracle": 1.9133467896513152,
+      "CPU_seconds": 1.7942505840000003,
+      "trials": 32,
+      "formal_pass": 0
+    },
+    {
+      "seed": 17150202,
+      "mode": "chance_only",
+      "variance_trace": 48.36026051841117,
+      "mean_squared_error_to_exact_oracle": 2.5169052628039488,
+      "CPU_seconds": 1.0694271400000002,
+      "trials": 32,
+      "formal_pass": 0
+    },
+    {
+      "seed": 17150202,
+      "mode": "root_quantiles",
+      "variance_trace": 49.36729281831933,
+      "mean_squared_error_to_exact_oracle": 1.634990396327858,
+      "CPU_seconds": 1.643875693,
+      "trials": 32,
+      "formal_pass": 0
+    }
+  ],
+  "scope": "fixed-policy raw-gradient pilot; no strategy quality or Nash claim"
+}

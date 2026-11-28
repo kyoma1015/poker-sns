@@ -1,0 +1,77 @@
+{
+  "curve": [
+    {
+      "CPU": 0,
+      "NC": {
+        "BR_BB_bb": 1.396678533981692,
+        "BR_SB_bb": 1.6748711224061315,
+        "EV_bb": 0.05346740880703222,
+        "NashConv_bb": 3.0715496563878233,
+        "full_native_BR_upper": null,
+        "physical_infosets": false,
+        "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+      },
+      "cells": 7367769,
+      "fine": {
+        "BR_BB_bb": 1.7533045372050715,
+        "BR_SB_bb": 2.1267086429226265,
+        "EV_bb": 0.05346740880703222,
+        "NashConv_bb": 3.880013180127698,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+      },
+      "t": 64,
+      "updates": 0
+    },
+    {
+      "CPU": 93.80064507199998,
+      "NC": {
+        "BR_BB_bb": 1.362355124331176,
+        "BR_SB_bb": 1.605970648935616,
+        "EV_bb": 0.055180038668989996,
+        "NashConv_bb": 2.968325773266792,
+        "full_native_BR_upper": null,
+        "physical_infosets": false,
+        "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+      },
+      "cells": 7609541,
+      "fine": {
+        "BR_BB_bb": 1.7141453116970244,
+        "BR_SB_bb": 2.049649862232061,
+        "EV_bb": 0.055180038668989996,
+        "NashConv_bb": 3.7637951739290854,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+      },
+      "t": 74,
+      "updates": 10
+    },
+    {
+      "CPU": 188.61723326399996,
+      "NC": {
+        "BR_BB_bb": 1.318212010399141,
+        "BR_SB_bb": 1.5425073678846504,
+        "EV_bb": 0.05082123594861217,
+        "NashConv_bb": 2.8607193782837914,
+        "full_native_BR_upper": null,
+        "physical_infosets": false,
+        "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+      },
+      "cells": 7744090,
+      "fine": {
+        "BR_BB_bb": 1.670320765065197,
+        "BR_SB_bb": 1.979441577168979,
+        "EV_bb": 0.05082123594861217,
+        "NashConv_bb": 3.649762342234176,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+      },
+      "t": 84,
+      "updates": 20
+    }
+  ],
+  "selection_only": true
+}

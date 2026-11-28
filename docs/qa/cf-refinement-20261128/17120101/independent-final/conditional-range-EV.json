@@ -1,0 +1,197 @@
+{
+  "combined_with_prior_method_family_at_least": 0.999,
+  "confidence_family": 0.9995,
+  "context": "vs3bet10p5",
+  "delta_per_cell": 4.930966469428008e-07,
+  "formal_precision_cells": 0,
+  "full_native_BR_upper": null,
+  "kernel_sha256": "be455cecb743b4ebedd39b5a9eb578a1a5b0c3b60270350db4e05504795c8883",
+  "policy_digest": "b9325e59a195a164c27ef8051c32b7c57464020d9cfa31e1c1a38ac8ce88239b",
+  "prefix": [
+    8,
+    23
+  ],
+  "rows": {
+    "AA": {
+      "CDF_bias_upper": 8.640312578571875e-12,
+      "CPU_seconds": 5.361343432000012,
+      "EV": 24.61247523079756,
+      "call_mass": 0.610877265701364,
+      "confidence_spending": "delta/(2*k(k+1)) per EB/Hoeffding bound; min radius, union-valid; CDF error included",
+      "exact": false,
+      "formal_precision_pass": false,
+      "halfwidth": 0.035643090048153345,
+      "interval": [
+        24.576832140749406,
+        24.648118320845715
+      ],
+      "n": 16777216,
+      "proposal_precision_pass": true,
+      "trace": [
+        {
+          "EB_halfwidth": 0.2690866324252391,
+          "Hoeffding_halfwidth": 0.34375516913295023,
+          "halfwidth": 0.2690866324252391,
+          "n": 262144
+        },
+        {
+          "EB_halfwidth": 0.19443252348162818,
+          "Hoeffding_halfwidth": 0.2509852375503287,
+          "halfwidth": 0.19443252348162818,
+          "n": 524288
+        },
+        {
+          "EB_halfwidth": 0.13903060986653723,
+          "Hoeffding_halfwidth": 0.18091487893933378,
+          "halfwidth": 0.13903060986653723,
+          "n": 1048576
+        },
+        {
+          "EB_halfwidth": 0.0991289502864625,
+          "Hoeffding_halfwidth": 0.12969033469463376,
+          "halfwidth": 0.0991289502864625,
+          "n": 2097152
+        },
+        {
+          "EB_halfwidth": 0.07053280795938413,
+          "Hoeffding_halfwidth": 0.09268314008519843,
+          "halfwidth": 0.07053280795938413,
+          "n": 4194304
+        },
+        {
+          "EB_halfwidth": 0.0501533819711382,
+          "Hoeffding_halfwidth": 0.06610539186050327,
+          "halfwidth": 0.0501533819711382,
+          "n": 8388608
+        },
+        {
+          "EB_halfwidth": 0.035643090048153345,
+          "Hoeffding_halfwidth": 0.04708455785533491,
+          "halfwidth": 0.035643090048153345,
+          "n": 16777216
+        }
+      ]
+    },
+    "KK": {
+      "CDF_bias_upper": 8.986437828662391e-12,
+      "CPU_seconds": 4.630390191000004,
+      "EV": 19.55333332697042,
+      "call_mass": 0.631316144539482,
+      "confidence_spending": "delta/(2*k(k+1)) per EB/Hoeffding bound; min radius, union-valid; CDF error included",
+      "exact": false,
+      "formal_precision_pass": false,
+      "halfwidth": 0.04313906411355415,
+      "interval": [
+        19.510194262856867,
+        19.596472391083974
+      ],
+      "n": 16777216,
+      "proposal_precision_pass": true,
+      "trace": [
+        {
+          "EB_halfwidth": 0.3240204551288249,
+          "Hoeffding_halfwidth": 0.35525661245775525,
+          "halfwidth": 0.3240204551288249,
+          "n": 262144
+        },
+        {
+          "EB_halfwidth": 0.2342514499506139,
+          "Hoeffding_halfwidth": 0.2593827621374463,
+          "halfwidth": 0.2342514499506139,
+          "n": 524288
+        },
+        {
+          "EB_halfwidth": 0.1677792970263108,
+          "Hoeffding_halfwidth": 0.18696797257410727,
+          "halfwidth": 0.1677792970263108,
+          "n": 1048576
+        },
+        {
+          "EB_halfwidth": 0.11976182421822318,
+          "Hoeffding_halfwidth": 0.1340295451778495,
+          "halfwidth": 0.11976182421822318,
+          "n": 2097152
+        },
+        {
+          "EB_halfwidth": 0.08527722033333837,
+          "Hoeffding_halfwidth": 0.09578415492875084,
+          "halfwidth": 0.08527722033333837,
+          "n": 4194304
+        },
+        {
+          "EB_halfwidth": 0.06066865997564847,
+          "Hoeffding_halfwidth": 0.06831716199606859,
+          "halfwidth": 0.06066865997564847,
+          "n": 8388608
+        },
+        {
+          "EB_halfwidth": 0.04313906411355415,
+          "Hoeffding_halfwidth": 0.04865992434083932,
+          "halfwidth": 0.04313906411355415,
+          "n": 16777216
+        }
+      ]
+    },
+    "QQ": {
+      "CDF_bias_upper": 9.041644697907787e-12,
+      "CPU_seconds": 4.607629938000002,
+      "EV": 15.45465753419538,
+      "call_mass": 0.6393221651333687,
+      "confidence_spending": "delta/(2*k(k+1)) per EB/Hoeffding bound; min radius, union-valid; CDF error included",
+      "exact": false,
+      "formal_precision_pass": false,
+      "halfwidth": 0.046851526915530184,
+      "interval": [
+        15.40780600727985,
+        15.50150906111091
+      ],
+      "n": 16777216,
+      "proposal_precision_pass": true,
+      "trace": [
+        {
+          "EB_halfwidth": 0.35188143929588694,
+          "Hoeffding_halfwidth": 0.35976179069407016,
+          "halfwidth": 0.35188143929588694,
+          "n": 262144
+        },
+        {
+          "EB_halfwidth": 0.2546025892773161,
+          "Hoeffding_halfwidth": 0.2626721184330131,
+          "halfwidth": 0.2546025892773161,
+          "n": 524288
+        },
+        {
+          "EB_halfwidth": 0.18244783612820267,
+          "Hoeffding_halfwidth": 0.18933900244707172,
+          "halfwidth": 0.18244783612820267,
+          "n": 1048576
+        },
+        {
+          "EB_halfwidth": 0.13007151430994274,
+          "Hoeffding_halfwidth": 0.13572923764940537,
+          "halfwidth": 0.13007151430994274,
+          "n": 2097152
+        },
+        {
+          "EB_halfwidth": 0.09263813564143537,
+          "Hoeffding_halfwidth": 0.09699883939820837,
+          "halfwidth": 0.09263813564143537,
+          "n": 4194304
+        },
+        {
+          "EB_halfwidth": 0.06590942795983888,
+          "Hoeffding_halfwidth": 0.06918352445131311,
+          "halfwidth": 0.06590942795983888,
+          "n": 8388608
+        },
+        {
+          "EB_halfwidth": 0.046851526915530184,
+          "Hoeffding_halfwidth": 0.04927700400671134,
+          "halfwidth": 0.046851526915530184,
+          "n": 16777216
+        }
+      ]
+    }
+  },
+  "source_sha256": "f6e266382d7ec1cd27d629b7108902866dadcb8fe7d011c1c16c24232c3215cb"
+}

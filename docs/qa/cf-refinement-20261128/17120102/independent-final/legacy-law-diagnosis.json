@@ -1,0 +1,68 @@
+{
+  "finite_suit_law_premium": 0.16546599024752684,
+  "full_target_chance_error_upper": null,
+  "old_raw": {
+    "coarse": {
+      "BR_BB_bb": 1.2376050181608762,
+      "BR_SB_bb": 1.3823938781777454,
+      "EV_bb": 0.01012608982553203,
+      "NashConv_bb": 2.619998896338622,
+      "full_native_BR_upper": null,
+      "physical_infosets": false,
+      "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+    },
+    "envelope": {
+      "chance_error_upper": null,
+      "coarse": {
+        "BR_BB_bb": 1.2376050181608762,
+        "BR_SB_bb": 1.3823938781777454,
+        "EV_bb": 0.01012608982553203,
+        "NashConv_bb": 2.619998896338622,
+        "full_native_BR_upper": null,
+        "physical_infosets": false,
+        "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+      },
+      "continuation_error_upper": null,
+      "exact_same_policy_finite_information_gains": [
+        1.733564748371499,
+        1.4375279695126988
+      ],
+      "fine": {
+        "BR_BB_bb": 2.675132987673575,
+        "BR_SB_bb": 3.1159586265492445,
+        "EV_bb": 0.01012608982553203,
+        "NashConv_bb": 5.79109161422282,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+      },
+      "finite_fine_NC_upper": 5.79109161422282,
+      "full_native_NC_upper": null,
+      "omitted_size_error_upper": null
+    },
+    "fine": {
+      "BR_BB_bb": 2.675132987673575,
+      "BR_SB_bb": 3.1159586265492445,
+      "EV_bb": 0.01012608982553203,
+      "NashConv_bb": 5.79109161422282,
+      "full_native_BR_upper": null,
+      "physical_infosets": true,
+      "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+    },
+    "full_native_BR_upper": null,
+    "policy_digest": "258ccdb2e911f8c1f5ae1c150ae0327b310e3965b02e0311efad678937afcae0",
+    "selection": false
+  },
+  "parent_policy_digest": "258ccdb2e911f8c1f5ae1c150ae0327b310e3965b02e0311efad678937afcae0",
+  "scope": "diagnosis of OLD policy/final law only, not candidate selection",
+  "symmetric_information_gap": 3.0056267276366713,
+  "symmetrized": {
+    "BR_BB_bb": 2.5975451918071872,
+    "BR_SB_bb": 3.028080432168106,
+    "EV_bb": 0.01012608982553203,
+    "NashConv_bb": 5.625625623975293,
+    "full_native_BR_upper": null,
+    "physical_infosets": true,
+    "scope": "exact suit/flop-symmetrized finite-catalog BR under invariant sigma; uniform52 error UNKNOWN"
+  }
+}

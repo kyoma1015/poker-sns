@@ -1,0 +1,203 @@
+{
+  "approval_pending": [
+    "formal20 stack values",
+    "MTT/ring profiles",
+    "formal size profiles",
+    "ante type/amount",
+    "rake/cap",
+    "unequal-stack profile matrix",
+    "A7 numerical quality values (thresholds unchanged; pending, not formally accepted)"
+  ],
+  "base": "5ca70afcb80e8b5348bffbe1b5d8471a90aabc55",
+  "evidence": "cf-refinement-20261128/summary.json; artifact-manifest.json; per-digest independent-final receipts",
+  "formal_pass": 0,
+  "items": [
+    {
+      "compute_evidence_or_limit": "2CPU/8GiB; refined186.48/183.46CPU seconds,22/23 updates; peak4.29/4.19GB training. Full-release certified compute/storage/cachemiss UNKNOWN; cannot extrapolate convergence from pilot.",
+      "current": "Unchanged active/private-vector kernel plus causal refinement implemented; no independent refinement adoption; native complete BR upper UNKNOWN",
+      "dependencies": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "formal_pass": false,
+      "id": 1,
+      "missing_next": "Same-game native joint continuation with legal-size support; independent native BR upper and quality certificate",
+      "requirement": "RFI"
+    },
+    {
+      "compute_evidence_or_limit": "2CPU/8GiB; refined186.48/183.46CPU seconds,22/23 updates; peak4.29/4.19GB training. Full-release certified compute/storage/cachemiss UNKNOWN; cannot extrapolate convergence from pilot.",
+      "current": "32768 independent worlds/seed: tested river jam negative upper both seeds; 3.5/10.5 uncertainty remains; no all-size proof",
+      "dependencies": [
+        1,
+        4,
+        5,
+        11
+      ],
+      "formal_pass": false,
+      "id": 2,
+      "missing_next": "Qualify all required vs-open/3bet contexts, generic size responses and omitted-size error",
+      "requirement": "vs-open/3bet"
+    },
+    {
+      "compute_evidence_or_limit": "2CPU/8GiB; refined186.48/183.46CPU seconds,22/23 updates; peak4.29/4.19GB training. Full-release certified compute/storage/cachemiss UNKNOWN; cannot extrapolate convergence from pilot.",
+      "current": "All169 positive posterior at10.5 history;507 exact Fold cells per new digest; no undefined ranges in three measured contexts",
+      "dependencies": [
+        2,
+        4,
+        5,
+        11
+      ],
+      "formal_pass": false,
+      "id": 3,
+      "missing_next": "Same-digest deeper raise responses and independent action EV/BR evidence",
+      "requirement": "vs3bet/4bet"
+    },
+    {
+      "compute_evidence_or_limit": "2CPU/8GiB; refined186.48/183.46CPU seconds,22/23 updates; peak4.29/4.19GB training. Full-release certified compute/storage/cachemiss UNKNOWN; cannot extrapolate convergence from pilot.",
+      "current": "Three HU50 contexts x169 frequency rows/digest saved; full profile/position quality unqualified",
+      "dependencies": [
+        1,
+        2,
+        3,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "formal_pass": false,
+      "id": 4,
+      "missing_next": "Qualified full profile/position mixed frequencies with prior/learned distinction",
+      "requirement": "169 frequencies"
+    },
+    {
+      "compute_evidence_or_limit": "2CPU/8GiB; refined186.48/183.46CPU seconds,22/23 updates; peak4.29/4.19GB training. Full-release certified compute/storage/cachemiss UNKNOWN; cannot extrapolate convergence from pilot.",
+      "current": "Per new digest Fold507 exact; deduplicated Jam proposal136/145 incl conditional caller-range estimator; formal precision0",
+      "dependencies": [
+        1,
+        2,
+        3,
+        11
+      ],
+      "formal_pass": false,
+      "id": 5,
+      "missing_next": "All169/native action precision plus uniform continuation/chance/info/size error envelopes",
+      "requirement": "Verified EV"
+    },
+    {
+      "compute_evidence_or_limit": "2CPU/8GiB; refined186.48/183.46CPU seconds,22/23 updates; peak4.29/4.19GB training. Full-release certified compute/storage/cachemiss UNKNOWN; cannot extrapolate convergence from pilot.",
+      "current": "Existing unapproved MTT/ring/ICM mode proposals unchanged",
+      "dependencies": [
+        8,
+        10
+      ],
+      "formal_pass": false,
+      "id": 6,
+      "missing_next": "Approve modes/units/profile and qualify condition-matched engine/strategies",
+      "requirement": "MTT/ring"
+    },
+    {
+      "compute_evidence_or_limit": "2CPU/8GiB; refined186.48/183.46CPU seconds,22/23 updates; peak4.29/4.19GB training. Full-release certified compute/storage/cachemiss UNKNOWN; cannot extrapolate convergence from pilot.",
+      "current": "3exact .023738946 preserved; root-stratified external sampling oracle passes but variance*time gate fails both seeds; not adopted; old6/9 policy preserved",
+      "dependencies": [
+        1,
+        4,
+        5,
+        8,
+        9,
+        10,
+        11
+      ],
+      "formal_pass": false,
+      "id": 7,
+      "missing_next": "Multiway reach/chance/variance improvements and independent unilateral BR evidence",
+      "requirement": "2–9 players"
+    },
+    {
+      "compute_evidence_or_limit": "2CPU/8GiB; refined186.48/183.46CPU seconds,22/23 updates; peak4.29/4.19GB training. Full-release certified compute/storage/cachemiss UNKNOWN; cannot extrapolate convergence from pilot.",
+      "current": "20 concrete values pendingA1; no formal profile adopted; HU50 research only",
+      "dependencies": [
+        6,
+        10
+      ],
+      "formal_pass": false,
+      "id": 8,
+      "missing_next": "Approve existing20stack list; shared cache/local solve without enumerating all unequal vectors",
+      "requirement": "Formal stacks"
+    },
+    {
+      "compute_evidence_or_limit": "2CPU/8GiB; refined186.48/183.46CPU seconds,22/23 updates; peak4.29/4.19GB training. Full-release certified compute/storage/cachemiss UNKNOWN; cannot extrapolate convergence from pilot.",
+      "current": "All seats/positions remain required; no full qualified position matrix",
+      "dependencies": [
+        1,
+        2,
+        3,
+        7,
+        8
+      ],
+      "formal_pass": false,
+      "id": 9,
+      "missing_next": "Generate/certify every required position and distinct history",
+      "requirement": "Positions"
+    },
+    {
+      "compute_evidence_or_limit": "2CPU/8GiB; refined186.48/183.46CPU seconds,22/23 updates; peak4.29/4.19GB training. Full-release certified compute/storage/cachemiss UNKNOWN; cannot extrapolate convergence from pilot.",
+      "current": "Existing native ledgers/independentN oracles retained; no full strategy quality across ante/rake/unequal inputs",
+      "dependencies": [
+        6,
+        7,
+        8
+      ],
+      "formal_pass": false,
+      "id": 10,
+      "missing_next": "Approved exact cashflow profile plus condition-matched multiway training/BR",
+      "requirement": "BB ante/rake/unequal stacks"
+    },
+    {
+      "compute_evidence_or_limit": "2CPU/8GiB; refined186.48/183.46CPU seconds,22/23 updates; peak4.29/4.19GB training. Full-release certified compute/storage/cachemiss UNKNOWN; cannot extrapolate convergence from pilot.",
+      "current": "Actual root12/99 support and87 omitted raises; generic residual-ranked support/downstream joint-learning test13/99; not adopted into final policies; omitted-size bound UNKNOWN",
+      "dependencies": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "formal_pass": false,
+      "id": 11,
+      "missing_next": "Adaptive legal support/downstream learning and proved omitted-size/abstraction transfer bounds",
+      "requirement": "Formal sizing"
+    },
+    {
+      "compute_evidence_or_limit": "2CPU/8GiB; refined186.48/183.46CPU seconds,22/23 updates; peak4.29/4.19GB training. Full-release certified compute/storage/cachemiss UNKNOWN; cannot extrapolate convergence from pilot.",
+      "current": "Existing registry/search boundary retained; zero unverified additions; full application accepted strategy count0",
+      "dependencies": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "formal_pass": false,
+      "id": 12,
+      "missing_next": "Only complete accepted evidence/digest enters existing registry/search",
+      "requirement": "Poker ID search"
+    }
+  ],
+  "previous_formal_pass": 0,
+  "scope": "2..9 players; HU50 is not initial release",
+  "verified_3bet": 0,
+  "verified_RFI": 0
+}

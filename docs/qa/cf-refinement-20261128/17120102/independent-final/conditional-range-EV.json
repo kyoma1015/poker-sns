@@ -1,0 +1,191 @@
+{
+  "combined_with_prior_method_family_at_least": 0.999,
+  "confidence_family": 0.9995,
+  "context": "vs3bet10p5",
+  "delta_per_cell": 4.930966469428008e-07,
+  "formal_precision_cells": 0,
+  "full_native_BR_upper": null,
+  "kernel_sha256": "be455cecb743b4ebedd39b5a9eb578a1a5b0c3b60270350db4e05504795c8883",
+  "policy_digest": "4837fc3032fca2e4468033a51df31a1ee5dbabda8a5b2f13ac9fb81cd58f902e",
+  "prefix": [
+    8,
+    23
+  ],
+  "rows": {
+    "AA": {
+      "CDF_bias_upper": 8.046885144849061e-12,
+      "CPU_seconds": 2.175144768999985,
+      "EV": 23.53787888095374,
+      "call_mass": 0.5650074276925866,
+      "confidence_spending": "delta/(2*k(k+1)) per EB/Hoeffding bound; min radius, union-valid; CDF error included",
+      "exact": false,
+      "formal_precision_pass": false,
+      "halfwidth": 0.046417524860250386,
+      "interval": [
+        23.49146135609349,
+        23.58429640581399
+      ],
+      "n": 8388608,
+      "proposal_precision_pass": true,
+      "trace": [
+        {
+          "EB_halfwidth": 0.24970598465535207,
+          "Hoeffding_halfwidth": 0.3179431201281737,
+          "halfwidth": 0.24970598465535207,
+          "n": 262144
+        },
+        {
+          "EB_halfwidth": 0.18037396896673896,
+          "Hoeffding_halfwidth": 0.23213914058322463,
+          "halfwidth": 0.18037396896673896,
+          "n": 524288
+        },
+        {
+          "EB_halfwidth": 0.12879494135118555,
+          "Hoeffding_halfwidth": 0.1673302578515343,
+          "halfwidth": 0.12879494135118555,
+          "n": 1048576
+        },
+        {
+          "EB_halfwidth": 0.09170616227074553,
+          "Hoeffding_halfwidth": 0.11995208615743187,
+          "halfwidth": 0.09170616227074553,
+          "n": 2097152
+        },
+        {
+          "EB_halfwidth": 0.0652806752857579,
+          "Hoeffding_halfwidth": 0.08572370509566582,
+          "halfwidth": 0.0652806752857579,
+          "n": 4194304
+        },
+        {
+          "EB_halfwidth": 0.046417524860250386,
+          "Hoeffding_halfwidth": 0.061141639267671306,
+          "halfwidth": 0.046417524860250386,
+          "n": 8388608
+        }
+      ]
+    },
+    "KK": {
+      "CDF_bias_upper": 8.21985336742189e-12,
+      "CPU_seconds": 4.375093063000008,
+      "EV": 18.625970384005686,
+      "call_mass": 0.5788322394902459,
+      "confidence_spending": "delta/(2*k(k+1)) per EB/Hoeffding bound; min radius, union-valid; CDF error included",
+      "exact": false,
+      "formal_precision_pass": false,
+      "halfwidth": 0.03970831872166349,
+      "interval": [
+        18.58626206528402,
+        18.66567870272735
+      ],
+      "n": 16777216,
+      "proposal_precision_pass": true,
+      "trace": [
+        {
+          "EB_halfwidth": 0.2986454866882942,
+          "Hoeffding_halfwidth": 0.32572267059300075,
+          "halfwidth": 0.2986454866882942,
+          "n": 262144
+        },
+        {
+          "EB_halfwidth": 0.2158288072742046,
+          "Hoeffding_halfwidth": 0.23781920737658296,
+          "halfwidth": 0.2158288072742046,
+          "n": 524288
+        },
+        {
+          "EB_halfwidth": 0.154538164486835,
+          "Hoeffding_halfwidth": 0.17142455680774893,
+          "halfwidth": 0.154538164486835,
+          "n": 1048576
+        },
+        {
+          "EB_halfwidth": 0.1102707526727942,
+          "Hoeffding_halfwidth": 0.12288711839451139,
+          "halfwidth": 0.1102707526727942,
+          "n": 2097152
+        },
+        {
+          "EB_halfwidth": 0.07850090406153594,
+          "Hoeffding_halfwidth": 0.0878212245795945,
+          "halfwidth": 0.07850090406153594,
+          "n": 4194304
+        },
+        {
+          "EB_halfwidth": 0.05585541729609275,
+          "Hoeffding_halfwidth": 0.06263767562586912,
+          "halfwidth": 0.05585541729609275,
+          "n": 8388608
+        },
+        {
+          "EB_halfwidth": 0.03970831872166349,
+          "Hoeffding_halfwidth": 0.044614624904636115,
+          "halfwidth": 0.03970831872166349,
+          "n": 16777216
+        }
+      ]
+    },
+    "QQ": {
+      "CDF_bias_upper": 8.427386370948377e-12,
+      "CPU_seconds": 4.390752094999982,
+      "EV": 14.467053942414914,
+      "call_mass": 0.5978473337998172,
+      "confidence_spending": "delta/(2*k(k+1)) per EB/Hoeffding bound; min radius, union-valid; CDF error included",
+      "exact": false,
+      "formal_precision_pass": false,
+      "halfwidth": 0.0442073758121161,
+      "interval": [
+        14.422846566602798,
+        14.51126131822703
+      ],
+      "n": 16777216,
+      "proposal_precision_pass": true,
+      "trace": [
+        {
+          "EB_halfwidth": 0.3313563907707715,
+          "Hoeffding_halfwidth": 0.33642291649431433,
+          "halfwidth": 0.3313563907707715,
+          "n": 262144
+        },
+        {
+          "EB_halfwidth": 0.23990660950159434,
+          "Hoeffding_halfwidth": 0.24563175537656654,
+          "halfwidth": 0.23990660950159434,
+          "n": 524288
+        },
+        {
+          "EB_halfwidth": 0.17193526821689792,
+          "Hoeffding_halfwidth": 0.17705598831821348,
+          "halfwidth": 0.17193526821689792,
+          "n": 1048576
+        },
+        {
+          "EB_halfwidth": 0.12271141994165168,
+          "Hoeffding_halfwidth": 0.12692405687918057,
+          "halfwidth": 0.12271141994165168,
+          "n": 2097152
+        },
+        {
+          "EB_halfwidth": 0.08739989725525835,
+          "Hoeffding_halfwidth": 0.0907062208736779,
+          "halfwidth": 0.08739989725525835,
+          "n": 4194304
+        },
+        {
+          "EB_halfwidth": 0.06218059464116383,
+          "Hoeffding_halfwidth": 0.06469537253036337,
+          "halfwidth": 0.06218059464116383,
+          "n": 8388608
+        },
+        {
+          "EB_halfwidth": 0.0442073758121161,
+          "Hoeffding_halfwidth": 0.04608025041809617,
+          "halfwidth": 0.0442073758121161,
+          "n": 16777216
+        }
+      ]
+    }
+  },
+  "source_sha256": "f6e266382d7ec1cd27d629b7108902866dadcb8fe7d011c1c16c24232c3215cb"
+}
