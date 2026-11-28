@@ -2804,13 +2804,13 @@
     },
     {
       "path": "docs/qa/cf-refinement-20261128/README.md",
-      "bytes": 10636,
-      "sha256": "ded0189c5225384586d17240d8350ac703d3f9b269dbf3f8b3ffd9e3b9130c2b"
+      "bytes": 10803,
+      "sha256": "77addf375ada052dd1f9e53aa45c5be0182325931e5cc79275dc9acab03078b7"
     },
     {
       "path": "docs/qa/cf-refinement-20261128/acceptance.json",
       "bytes": 8408,
-      "sha256": "d69d20a823cbf424f748ce2a8e823069fa5b72adf16b5902b55bae0c63454e37"
+      "sha256": "31675ca40e7f0d4fd4e2a6ebb724895b698101cc43f26f82e8a304eb4828c91e"
     },
     {
       "path": "docs/qa/cf-refinement-20261128/multiplayer-cap.json",

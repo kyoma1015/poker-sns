@@ -55,3 +55,5 @@ All A1–A7 approvals remain pending, independent of technical blockers. Full
 on free resources remains UNKNOWN; no completion date or cachemiss claim.
 
 Evidence: ../qa/cf-refinement-20261128/summary.json and README.md.
+
+Independent seed2 refined minus oldlast8BB gain +1.361353BB,99.9% interval[+.453991,+2.268716]: significant unresolved regression. Seed1 +.710477[-.269683,1.690638].

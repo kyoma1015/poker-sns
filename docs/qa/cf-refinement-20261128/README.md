@@ -176,3 +176,5 @@ Next solver change must improve this failed gate rather than increasing volume.
 All A1–A7 approvals remain pending, independent of technical blockers. Full
 2–9player/20stack/all-position/mode/ante/rake/unequal-stack completion feasibility
 on free resources remains UNKNOWN; no completion date or cachemiss claim.
+
+Independent seed2 refined minus oldlast8BB gain +1.361353BB,99.9% interval[+.453991,+2.268716]: significant unresolved regression. Seed1 +.710477[-.269683,1.690638].
