@@ -98,3 +98,43 @@ No general multiway Nash convergence claim. See multiplayer*/results.json.
 Full release target remains2–9players/20stacks/allpositions/modes/ante/rake/unequal
 stacks. Existing approval proposal A1–A7 is unchanged and pending; no HU milestone
 is called initial release. See acceptance.json and the existing20261125 proposal.
+
+Fresh-environment prerequisites (read-only checks before any continued learning):
+```
+python -B -m gto.qualification.build --directory /tmp/native-qualification
+python -B -c "from gto.qualification.sparse_solver import build; build('/tmp/sparse','/tmp/native-qualification')"
+```
+Python3.12/NumPy2.3.5, C++20 compiler andzstd are required. Restore strictly checks
+build hashes; a different compiler/ABI build must not be silently substituted.
+The original Sparse warm checkpoints remain required for legal off-tree serving.
+A hash ledger alone is not a restored checkpoint: actual compressed arrays must
+be present and verified. Original ZIP bytes from inaccessible sessions were not
+recovered or claimed. No old session was waited on indefinitely.
+
+## Completed final diagnostics
+
+Both seeds completed64 fresh updates /832 unique training boards each. Pure
+learning CPU839.352449 /758.217924 seconds. Selection NC4.487045→2.711073 and
+6.667945→4.999185BB. These selection results are NOT heldout safety evidence.
+Fresh final catalog NC3.792407/2.619999; fine-information BR/NC5.501572/5.791092BB.
+These catalog values use a different chance law; no cross-game convergence claim.
+
+Native fresh32768worlds perseed (same four policies, paired worlds/tapes):
+SB EV−.060616[−.402383,.281151] /+.044123[−.296957,.385203]BB.
+River-jam gain−.464249[−.884154,−.044343] /−.649384[−1.091424,−.207343].
+Relative previous signed-last jam gain changes−2.811768 /−2.290909BB,
+simultaneous intervals strictly negative. Relative previous active candidate,
+jam change is NOT significant;8BB gain change−.772923[−1.529440,−.016407] /
+−.905150[−1.678281,−.132019]BB is significantly lower. No global safety proof.
+
+River true-trained regret/average query reuse98.7421/99.6251% and99.3252/99.5706%.
+This is baseline-path queries only, not all forced-probe queries or a quality PASS.
+Both seeds have507 exact Fold cells, versus338 under their old separate digests;
+Jam proposal precision97/111 (old203/210 retained separately). Formal precision0.
+All169 vs10.5BB posterior ranges are now nonzero in both seeds, so the old
+169/169 UNKNOWN_ZERO_RANGE due omitted support is resolved. The missing Jam
+precision here is sampling/work budget, NOT zero posterior. Other action EV and
+full native BR/chance/continuation/size bounds remain UNKNOWN.
+
+See ../public-stream-final-20261127/summary.json, same-digest per-seed native/EV/
+range/BR receipts. Final data were not used to retrain, select or promote a policy.

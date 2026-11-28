@@ -1,0 +1,9 @@
+{
+  "checkpoint": "docs/qa/public-stream-final-20261127/17120102/t64",
+  "final_catalog_seed": 34273403,
+  "n": 32768,
+  "native_world_seed": 17154101,
+  "policy": "predeclared last iterate diagnostic; no adoption from final data",
+  "selected_before_final_data": true,
+  "selection_best": "docs/qa/public-stream-final-20261127/17120102/t64"
+}

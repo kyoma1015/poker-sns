@@ -1,0 +1,7 @@
+{
+  "checkpoint_restore_seconds": 21.903767618998245,
+  "policy_index_seconds": 9.101106267000432,
+  "public_nodes": 3923,
+  "scalar_cells": 7367769,
+  "scope": "offline Python/native only; not app SLA; certified cache miss solve latency UNKNOWN"
+}

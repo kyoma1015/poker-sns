@@ -1,0 +1,1188 @@
+{
+  "base": "7ff7687119976300f7775e88fdd3bb5e8b9522c7",
+  "code_commit": "6910b6c184154cbc1dd314facaf043d8570c5d96",
+  "generated_UTC": "2026-11-28T02:44:22.261518+00:00",
+  "records": [
+    {
+      "seed": 17120101,
+      "checkpoint": "docs/qa/public-stream-final-20261127/17120101/t64",
+      "selected_best_checkpoint": "docs/qa/public-stream-final-20261127/17120101/t64",
+      "policy_digest": "5278c533c86cd9549b50f2500e2a28e0fcc32a1e5ec9a0c405445db2db9f29a2",
+      "training_CPU_seconds": 839.3524492999998,
+      "index_CPU_seconds": 431.37700975899963,
+      "CF_CPU_seconds": 407.9754395410001,
+      "iterations": 64,
+      "board_count": 832,
+      "unique_boards": 832,
+      "nodes": 3923,
+      "cells": 7367769,
+      "RSS_bytes": 3297783808,
+      "selection_curve": [
+        {
+          "t": 0,
+          "CPU": 0.0,
+          "NC": 4.4870451472408375
+        },
+        {
+          "t": 16,
+          "CPU": 181.371935096,
+          "NC": 5.361869992668492
+        },
+        {
+          "t": 32,
+          "CPU": 431.4988052959999,
+          "NC": 3.69718387787828
+        },
+        {
+          "t": 64,
+          "CPU": 839.3524492999998,
+          "NC": 2.711072512236344
+        }
+      ],
+      "independent_finite": {
+        "coarse": {
+          "BR_BB_bb": 1.773743380211918,
+          "BR_SB_bb": 2.0186640058271674,
+          "EV_bb": -0.014841860814356678,
+          "NashConv_bb": 3.7924073860390854,
+          "full_native_BR_upper": null,
+          "physical_infosets": false,
+          "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+        },
+        "envelope": {
+          "chance_error_upper": null,
+          "coarse": {
+            "BR_BB_bb": 1.773743380211918,
+            "BR_SB_bb": 2.0186640058271674,
+            "EV_bb": -0.014841860814356678,
+            "NashConv_bb": 3.7924073860390854,
+            "full_native_BR_upper": null,
+            "physical_infosets": false,
+            "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+          },
+          "continuation_error_upper": null,
+          "exact_same_policy_finite_information_gains": [
+            0.9211325170838576,
+            0.7880323298814145
+          ],
+          "fine": {
+            "BR_BB_bb": 2.5617757100933325,
+            "BR_SB_bb": 2.939796522911025,
+            "EV_bb": -0.014841860814356678,
+            "NashConv_bb": 5.5015722330043575,
+            "full_native_BR_upper": null,
+            "physical_infosets": true,
+            "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+          },
+          "finite_fine_NC_upper": 5.5015722330043575,
+          "full_native_NC_upper": null,
+          "omitted_size_error_upper": null
+        },
+        "fine": {
+          "BR_BB_bb": 2.5617757100933325,
+          "BR_SB_bb": 2.939796522911025,
+          "EV_bb": -0.014841860814356678,
+          "NashConv_bb": 5.5015722330043575,
+          "full_native_BR_upper": null,
+          "physical_infosets": true,
+          "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+        },
+        "full_native_BR_upper": null,
+        "policy_digest": "5278c533c86cd9549b50f2500e2a28e0fcc32a1e5ec9a0c405445db2db9f29a2",
+        "selection": false
+      },
+      "native": {
+        "EV": {
+          "interval": [
+            -0.4023833777695614,
+            0.2811513738929042
+          ],
+          "mean": -0.06061600193832859,
+          "n": 32768,
+          "radius": 0.3417673758312328,
+          "variance": 82.47414929709174
+        },
+        "baseline_coverage": {
+          "0": {
+            "CF_reached_row": 55256,
+            "average_updated_row": 55256,
+            "indexed_row": 55256,
+            "offtree": 0,
+            "queries": 55256,
+            "regret_changed_row": 55241
+          },
+          "1": {
+            "CF_reached_row": 28729,
+            "average_updated_row": 28729,
+            "indexed_row": 28730,
+            "queries": 28744,
+            "regret_changed_row": 28723,
+            "unseen_refinement": 14
+          },
+          "2": {
+            "CF_reached_row": 20407,
+            "average_updated_row": 20405,
+            "indexed_row": 20409,
+            "queries": 20445,
+            "regret_changed_row": 20363,
+            "unseen_parent": 3,
+            "unseen_refinement": 36
+          },
+          "3": {
+            "CF_reached_row": 11963,
+            "average_updated_row": 11959,
+            "indexed_row": 11966,
+            "queries": 12004,
+            "regret_changed_row": 11853,
+            "unseen_parent": 19,
+            "unseen_refinement": 38
+          }
+        },
+        "deviations": {
+          "fold": {
+            "interval": [
+              -0.8709579519292093,
+              -0.0078100441941334475
+            ],
+            "mean": -0.4393839980616714,
+            "n": 32768,
+            "radius": 0.43157395386753794,
+            "variance": 82.47414929709174
+          },
+          "open3p5": {
+            "interval": [
+              -0.49764586122145915,
+              0.43790269284334205
+            ],
+            "mean": -0.029871584189058557,
+            "n": 32768,
+            "radius": 0.4677742770324006,
+            "variance": 107.87546103006787
+          },
+          "open7": {
+            "interval": [
+              -1.0772194005012061,
+              -0.09899125340109816
+            ],
+            "mean": -0.5881053269511521,
+            "n": 32768,
+            "radius": 0.489114073550054,
+            "variance": 124.44451988722315
+          },
+          "open8": {
+            "interval": [
+              -1.3078485970791396,
+              -0.3044477674450081
+            ],
+            "mean": -0.8061481822620739,
+            "n": 32768,
+            "radius": 0.5017004148170657,
+            "variance": 134.7717865016276
+          },
+          "river_jam": {
+            "interval": [
+              -0.8841543725236809,
+              -0.04434294192944416
+            ],
+            "mean": -0.4642486572265625,
+            "n": 32768,
+            "radius": 0.41990571529711834,
+            "variance": 75.01231016882659
+          },
+          "river_nuts": {
+            "interval": [
+              -0.18765879393579596,
+              0.19470835448267096
+            ],
+            "mean": 0.0035247802734375,
+            "n": 32768,
+            "radius": 0.19118357420923346,
+            "variance": 0.1739201906759367
+          },
+          "threebet10p5": {
+            "interval": [
+              -0.3256896049247108,
+              0.20555584853759745
+            ],
+            "mean": -0.06006687819355666,
+            "n": 32768,
+            "radius": 0.2656227267311541,
+            "variance": 9.610488303929083
+          }
+        },
+        "digest": "5278c533c86cd9549b50f2500e2a28e0fcc32a1e5ec9a0c405445db2db9f29a2",
+        "name": "public52_CDF_last"
+      },
+      "paired_native": [
+        {
+          "EV": {
+            "interval": [
+              -0.693151278763782,
+              0.3068406628389083
+            ],
+            "mean": -0.19315530796243685,
+            "n": 32768,
+            "radius": 0.49999597080134517,
+            "variance": 133.34917099326492
+          },
+          "control": "protected_sparse",
+          "deviation_gain_difference": {
+            "fold": {
+              "interval": [
+                -0.4864538189115186,
+                0.8727644348363923
+              ],
+              "mean": 0.19315530796243685,
+              "n": 32768,
+              "radius": 0.6796091268739555,
+              "variance": 133.34917099326492
+            },
+            "open3p5": {
+              "interval": [
+                -1.0983488572417062,
+                0.3675708470371212
+              ],
+              "mean": -0.36538900510229244,
+              "n": 32768,
+              "radius": 0.7329598521394136,
+              "variance": 181.45796831391317
+            },
+            "open7": {
+              "interval": [
+                -1.6022197500728457,
+                -0.08488683518895201
+              ],
+              "mean": -0.8435532926308988,
+              "n": 32768,
+              "radius": 0.7586664574419468,
+              "variance": 207.2790058480882
+            },
+            "open8": {
+              "interval": [
+                -1.7997573323667042,
+                -0.256294210897974
+              ],
+              "mean": -1.028025771632339,
+              "n": 32768,
+              "radius": 0.7717315607343651,
+              "variance": 221.0603495816198
+            },
+            "river_jam": {
+              "interval": [
+                -1.461874474783276,
+                0.024282922048900923
+              ],
+              "mean": -0.7187957763671875,
+              "n": 32768,
+              "radius": 0.7430786984160884,
+              "variance": 191.4169467354758
+            },
+            "river_nuts": {
+              "interval": [
+                -0.37983603622864087,
+                0.37513632919739087
+              ],
+              "mean": -0.002349853515625,
+              "n": 32768,
+              "radius": 0.37748618271301587,
+              "variance": 0.4331589422675038
+            },
+            "threebet10p5": {
+              "interval": [
+                -1.1650070870214286,
+                -0.009601702287677982
+              ],
+              "mean": -0.5873043946545533,
+              "n": 32768,
+              "radius": 0.5777026923668753,
+              "variance": 62.00987820354939
+            }
+          }
+        },
+        {
+          "EV": {
+            "interval": [
+              -2.0733411273943285,
+              -0.7902225643325099
+            ],
+            "mean": -1.4317818458634193,
+            "n": 32768,
+            "radius": 0.6415592815309094,
+            "variance": 277.22637913615785
+          },
+          "control": "previous_signed_last",
+          "deviation_gain_difference": {
+            "fold": {
+              "interval": [
+                0.6106094082598996,
+                2.2529542834669387
+              ],
+              "mean": 1.4317818458634193,
+              "n": 32768,
+              "radius": 0.8211724376035197,
+              "variance": 277.22637913615785
+            },
+            "open3p5": {
+              "interval": [
+                -1.0110092913654938,
+                0.7839985837029306
+              ],
+              "mean": -0.11350535383128157,
+              "n": 32768,
+              "radius": 0.8975039375342122,
+              "variance": 376.4129450833162
+            },
+            "open7": {
+              "interval": [
+                -0.147597575464133,
+                1.7330462547619945
+              ],
+              "mean": 0.7927243396489307,
+              "n": 32768,
+              "radius": 0.9403219151130637,
+              "variance": 438.6792309557746
+            },
+            "open8": {
+              "interval": [
+                -0.30941155369470097,
+                1.6308668445179726
+              ],
+              "mean": 0.6607276454116359,
+              "n": 32768,
+              "radius": 0.9701391991063368,
+              "variance": 484.853425175163
+            },
+            "river_jam": {
+              "interval": [
+                -3.587642331845062,
+                -2.035892824404938
+              ],
+              "mean": -2.811767578125,
+              "n": 32768,
+              "radius": 0.7758747537200618,
+              "variance": 225.52330034552676
+            },
+            "river_nuts": {
+              "interval": [
+                -0.3771539389679716,
+                0.3731866538117216
+              ],
+              "mean": -0.001983642578125,
+              "n": 32768,
+              "radius": 0.3751702963898466,
+              "variance": 0.3302521153365405
+            },
+            "threebet10p5": {
+              "interval": [
+                -0.3446781636389115,
+                0.7496505868455876
+              ],
+              "mean": 0.20248621160333807,
+              "n": 32768,
+              "radius": 0.5471643752422496,
+              "variance": 45.88612547101561
+            }
+          }
+        },
+        {
+          "EV": {
+            "interval": [
+              -0.611091126337237,
+              0.3408451022536274
+            ],
+            "mean": -0.13512301204180477,
+            "n": 32768,
+            "radius": 0.4759681142954322,
+            "variance": 114.09754247629081
+          },
+          "control": "active_2board_2939",
+          "deviation_gain_difference": {
+            "fold": {
+              "interval": [
+                -0.5204582583262378,
+                0.7907042824098474
+              ],
+              "mean": 0.13512301204180477,
+              "n": 32768,
+              "radius": 0.6555812703680426,
+              "variance": 114.09754247629081
+            },
+            "open3p5": {
+              "interval": [
+                -0.7518508157174875,
+                0.6741253956229878
+              ],
+              "mean": -0.038862710047249845,
+              "n": 32768,
+              "radius": 0.7129881056702376,
+              "variance": 162.58248193844105
+            },
+            "open7": {
+              "interval": [
+                -1.5004147520513729,
+                0.001479476443734029
+              ],
+              "mean": -0.7494676378038194,
+              "n": 32768,
+              "radius": 0.7509471142475534,
+              "variance": 199.3449165071815
+            },
+            "open8": {
+              "interval": [
+                -1.5294404083099873,
+                -0.016406550043074564
+              ],
+              "mean": -0.7729234791765309,
+              "n": 32768,
+              "radius": 0.7565169291334564,
+              "variance": 205.05412555209114
+            },
+            "river_jam": {
+              "interval": [
+                -1.2369321236588908,
+                0.3793576607682658
+              ],
+              "mean": -0.4287872314453125,
+              "n": 32768,
+              "radius": 0.8081448922135783,
+              "variance": 261.8104976044367
+            },
+            "river_nuts": {
+              "interval": [
+                -0.3763941980223603,
+                0.3765467859129853
+              ],
+              "mean": 7.62939453125e-05,
+              "n": 32768,
+              "radius": 0.3764704919676728,
+              "variance": 0.38631091675359774
+            },
+            "threebet10p5": {
+              "interval": [
+                -0.5932176958815655,
+                0.34470103513345945
+              ],
+              "mean": -0.12425833037405302,
+              "n": 32768,
+              "radius": 0.4689593655075125,
+              "variance": 15.643244112602424
+            }
+          }
+        }
+      ],
+      "reuse_new": {
+        "0": {
+          "queries": 55256,
+          "indexed": 55256,
+          "regret_reuse_percent": 99.97285362675547,
+          "average_reuse_percent": 100.0,
+          "offtree": 0,
+          "unseen_parent": 0,
+          "unseen_refinement": 0
+        },
+        "1": {
+          "queries": 28744,
+          "indexed": 28730,
+          "regret_reuse_percent": 99.92694127470081,
+          "average_reuse_percent": 99.94781519621486,
+          "offtree": 0,
+          "unseen_parent": 0,
+          "unseen_refinement": 14
+        },
+        "2": {
+          "queries": 20445,
+          "indexed": 20409,
+          "regret_reuse_percent": 99.59892394228417,
+          "average_reuse_percent": 99.80435314257765,
+          "offtree": 0,
+          "unseen_parent": 3,
+          "unseen_refinement": 36
+        },
+        "3": {
+          "queries": 12004,
+          "indexed": 11966,
+          "regret_reuse_percent": 98.74208597134289,
+          "average_reuse_percent": 99.62512495834721,
+          "offtree": 0,
+          "unseen_parent": 19,
+          "unseen_refinement": 38
+        }
+      },
+      "reuse_old_active_same_worlds": {
+        "0": {
+          "queries": 60191,
+          "indexed": 60191,
+          "regret_reuse_percent": 100.0,
+          "average_reuse_percent": 100.0,
+          "offtree": 0,
+          "unseen_parent": 0,
+          "unseen_refinement": 0
+        },
+        "1": {
+          "queries": 41183,
+          "indexed": 29127,
+          "regret_reuse_percent": 70.72578491124979,
+          "average_reuse_percent": 70.72578491124979,
+          "offtree": 50,
+          "unseen_parent": 11530,
+          "unseen_refinement": 12006
+        },
+        "2": {
+          "queries": 24624,
+          "indexed": 12607,
+          "regret_reuse_percent": 51.19801819363223,
+          "average_reuse_percent": 51.19801819363223,
+          "offtree": 135,
+          "unseen_parent": 11604,
+          "unseen_refinement": 11882
+        },
+        "3": {
+          "queries": 18355,
+          "indexed": 6450,
+          "regret_reuse_percent": 35.14028874965949,
+          "average_reuse_percent": 35.14028874965949,
+          "offtree": 271,
+          "unseen_parent": 11505,
+          "unseen_refinement": 11634
+        }
+      },
+      "precision": {
+        "exact_fold_cells": 507,
+        "jam_proposal_cells": 97,
+        "formal_precision_cells": 0,
+        "other_action_EV": "UNKNOWN"
+      },
+      "range_diagnosis": {
+        "rfi": {
+          "interpretation": "Zero opponent posterior: conditional EV undefined, not a fabricated0. Zero own reach with nonzero opponent posterior: counterfactual decision EV remains defined.",
+          "max_opponent_history_likelihood": 1.0,
+          "positive_opponent_hand_classes": 169,
+          "prefix": [],
+          "undefined_zero_posterior_cells": 0,
+          "zero_hero_reach_but_defined_counterfactual_cells": 0
+        },
+        "vs_3bet10p5": {
+          "interpretation": "Zero opponent posterior: conditional EV undefined, not a fabricated0. Zero own reach with nonzero opponent posterior: counterfactual decision EV remains defined.",
+          "max_opponent_history_likelihood": 0.5026164428657597,
+          "positive_opponent_hand_classes": 169,
+          "prefix": [
+            8,
+            23
+          ],
+          "undefined_zero_posterior_cells": 0,
+          "zero_hero_reach_but_defined_counterfactual_cells": 0
+        },
+        "vs_open3p5": {
+          "interpretation": "Zero opponent posterior: conditional EV undefined, not a fabricated0. Zero own reach with nonzero opponent posterior: counterfactual decision EV remains defined.",
+          "max_opponent_history_likelihood": 0.14486079783211187,
+          "positive_opponent_hand_classes": 169,
+          "prefix": [
+            9
+          ],
+          "undefined_zero_posterior_cells": 0,
+          "zero_hero_reach_but_defined_counterfactual_cells": 0
+        }
+      },
+      "formal_strategy_count": 0,
+      "native_evaluation_seconds": 353.9890583870001
+    },
+    {
+      "seed": 17120102,
+      "checkpoint": "docs/qa/public-stream-final-20261127/17120102/t64",
+      "selected_best_checkpoint": "docs/qa/public-stream-final-20261127/17120102/t64",
+      "policy_digest": "258ccdb2e911f8c1f5ae1c150ae0327b310e3965b02e0311efad678937afcae0",
+      "training_CPU_seconds": 758.2179244759998,
+      "index_CPU_seconds": 384.5837372309999,
+      "CF_CPU_seconds": 373.63418724499996,
+      "iterations": 64,
+      "board_count": 832,
+      "unique_boards": 832,
+      "nodes": 3923,
+      "cells": 7181139,
+      "RSS_bytes": 3250221056,
+      "selection_curve": [
+        {
+          "t": 0,
+          "CPU": 0.0,
+          "NC": 6.667945410834467
+        },
+        {
+          "t": 16,
+          "CPU": 182.413714524,
+          "NC": 7.575901789104163
+        },
+        {
+          "t": 32,
+          "CPU": 391.98711720800003,
+          "NC": 6.086356485799417
+        },
+        {
+          "t": 64,
+          "CPU": 758.2179244759998,
+          "NC": 4.999185340627643
+        }
+      ],
+      "independent_finite": {
+        "coarse": {
+          "BR_BB_bb": 1.2376050181608762,
+          "BR_SB_bb": 1.3823938781777454,
+          "EV_bb": 0.01012608982553203,
+          "NashConv_bb": 2.619998896338622,
+          "full_native_BR_upper": null,
+          "physical_infosets": false,
+          "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+        },
+        "envelope": {
+          "chance_error_upper": null,
+          "coarse": {
+            "BR_BB_bb": 1.2376050181608762,
+            "BR_SB_bb": 1.3823938781777454,
+            "EV_bb": 0.01012608982553203,
+            "NashConv_bb": 2.619998896338622,
+            "full_native_BR_upper": null,
+            "physical_infosets": false,
+            "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+          },
+          "continuation_error_upper": null,
+          "exact_same_policy_finite_information_gains": [
+            1.733564748371499,
+            1.4375279695126988
+          ],
+          "fine": {
+            "BR_BB_bb": 2.675132987673575,
+            "BR_SB_bb": 3.1159586265492445,
+            "EV_bb": 0.01012608982553203,
+            "NashConv_bb": 5.79109161422282,
+            "full_native_BR_upper": null,
+            "physical_infosets": true,
+            "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+          },
+          "finite_fine_NC_upper": 5.79109161422282,
+          "full_native_NC_upper": null,
+          "omitted_size_error_upper": null
+        },
+        "fine": {
+          "BR_BB_bb": 2.675132987673575,
+          "BR_SB_bb": 3.1159586265492445,
+          "EV_bb": 0.01012608982553203,
+          "NashConv_bb": 5.79109161422282,
+          "full_native_BR_upper": null,
+          "physical_infosets": true,
+          "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+        },
+        "full_native_BR_upper": null,
+        "policy_digest": "258ccdb2e911f8c1f5ae1c150ae0327b310e3965b02e0311efad678937afcae0",
+        "selection": false
+      },
+      "native": {
+        "EV": {
+          "interval": [
+            -0.29695701684186226,
+            0.38520329493036454
+          ],
+          "mean": 0.04412313904425111,
+          "n": 32768,
+          "radius": 0.3410801558861134,
+          "variance": 82.02486840306481
+        },
+        "baseline_coverage": {
+          "0": {
+            "CF_reached_row": 55417,
+            "average_updated_row": 55417,
+            "indexed_row": 55417,
+            "offtree": 0,
+            "queries": 55417,
+            "regret_changed_row": 55416
+          },
+          "1": {
+            "CF_reached_row": 31344,
+            "average_updated_row": 31342,
+            "indexed_row": 31348,
+            "queries": 31394,
+            "regret_changed_row": 31320,
+            "unseen_refinement": 46
+          },
+          "2": {
+            "CF_reached_row": 23115,
+            "average_updated_row": 23109,
+            "indexed_row": 23115,
+            "queries": 23159,
+            "regret_changed_row": 23083,
+            "unseen_refinement": 44
+          },
+          "3": {
+            "CF_reached_row": 12998,
+            "average_updated_row": 12985,
+            "indexed_row": 12998,
+            "queries": 13041,
+            "regret_changed_row": 12953,
+            "unseen_parent": 18,
+            "unseen_refinement": 43
+          }
+        },
+        "deviations": {
+          "fold": {
+            "interval": [
+              -0.9750098729666697,
+              -0.11323640512183253
+            ],
+            "mean": -0.5441231390442511,
+            "n": 32768,
+            "radius": 0.4308867339224186,
+            "variance": 82.02486840306481
+          },
+          "open3p5": {
+            "interval": [
+              -0.6782728383475138,
+              0.27331374731511954
+            ],
+            "mean": -0.20247954551619712,
+            "n": 32768,
+            "radius": 0.47579329283131666,
+            "variance": 113.96296861113984
+          },
+          "open7": {
+            "interval": [
+              -1.0843653763187953,
+              -0.09312593696048188
+            ],
+            "mean": -0.5887456566396386,
+            "n": 32768,
+            "radius": 0.49561971967915674,
+            "variance": 129.73110026426198
+          },
+          "open8": {
+            "interval": [
+              -1.3488312687195938,
+              -0.3124396435278808
+            ],
+            "mean": -0.8306354561237373,
+            "n": 32768,
+            "radius": 0.5181958125958566,
+            "variance": 148.92969883122467
+          },
+          "river_jam": {
+            "interval": [
+              -1.0914243602476668,
+              -0.20734272959608335
+            ],
+            "mean": -0.649383544921875,
+            "n": 32768,
+            "radius": 0.44204081532579165,
+            "variance": 89.46869617443181
+          },
+          "river_nuts": {
+            "interval": [
+              -0.186759162161217,
+              0.190787482473717
+            ],
+            "mean": 0.00201416015625,
+            "n": 32768,
+            "radius": 0.188773322317467,
+            "variance": 0.1090080588833182
+          },
+          "threebet10p5": {
+            "interval": [
+              -0.330196194978852,
+              0.1922341619286231
+            ],
+            "mean": -0.06898101652511443,
+            "n": 32768,
+            "radius": 0.26121517845373754,
+            "variance": 8.650749561236832
+          }
+        },
+        "digest": "258ccdb2e911f8c1f5ae1c150ae0327b310e3965b02e0311efad678937afcae0",
+        "name": "public52_CDF_last"
+      },
+      "paired_native": [
+        {
+          "EV": {
+            "interval": [
+              -0.6505219663045172,
+              0.3167944475870692
+            ],
+            "mean": -0.16686375935872397,
+            "n": 32768,
+            "radius": 0.4836582069457932,
+            "variance": 120.09578687797173
+          },
+          "control": "protected_sparse",
+          "deviation_gain_difference": {
+            "fold": {
+              "interval": [
+                -0.4964076036596796,
+                0.8301351223771276
+              ],
+              "mean": 0.16686375935872397,
+              "n": 32768,
+              "radius": 0.6632713630184036,
+              "variance": 120.09578687797173
+            },
+            "open3p5": {
+              "interval": [
+                -1.193899233423566,
+                0.3136112153029063
+              ],
+              "mean": -0.44014400906032985,
+              "n": 32768,
+              "radius": 0.7537552243632362,
+              "variance": 202.2132294301958
+            },
+            "open7": {
+              "interval": [
+                -1.5308324914763354,
+                -0.0006595684047016048
+              ],
+              "mean": -0.7657460299405184,
+              "n": 32768,
+              "radius": 0.7650864615358168,
+              "variance": 213.99553738057458
+            },
+            "open8": {
+              "interval": [
+                -1.7580009816517217,
+                -0.19012992457854982
+              ],
+              "mean": -0.9740654531151357,
+              "n": 32768,
+              "radius": 0.7839355285365859,
+              "variance": 234.33397847546337
+            },
+            "river_jam": {
+              "interval": [
+                -0.805914467816518,
+                0.565039223675893
+              ],
+              "mean": -0.1204376220703125,
+              "n": 32768,
+              "radius": 0.6854768457462055,
+              "variance": 138.27840336083557
+            },
+            "river_nuts": {
+              "interval": [
+                -0.37666471987888384,
+                0.37263639956638384
+              ],
+              "mean": -0.00201416015625,
+              "n": 32768,
+              "radius": 0.37465055972263384,
+              "variance": 0.3090721477532178
+            },
+            "threebet10p5": {
+              "interval": [
+                -0.7075830810661784,
+                0.32339682766300604
+              ],
+              "mean": -0.19209312670158618,
+              "n": 32768,
+              "radius": 0.5154899543645922,
+              "variance": 31.722527341837708
+            }
+          }
+        },
+        {
+          "EV": {
+            "interval": [
+              -0.6447932515461707,
+              0.4517373569064138
+            ],
+            "mean": -0.09652794731987847,
+            "n": 32768,
+            "radius": 0.5482653042262923,
+            "variance": 176.5571999976552
+          },
+          "control": "previous_signed_last",
+          "deviation_gain_difference": {
+            "fold": {
+              "interval": [
+                -0.6313505129790241,
+                0.824406407618781
+              ],
+              "mean": 0.09652794731987847,
+              "n": 32768,
+              "radius": 0.7278784602989026,
+              "variance": 176.5571999976552
+            },
+            "open3p5": {
+              "interval": [
+                -0.746835762165176,
+                0.8661658119304063
+              ],
+              "mean": 0.059665024882615214,
+              "n": 32768,
+              "radius": 0.8065007870477912,
+              "variance": 259.89631633221643
+            },
+            "open7": {
+              "interval": [
+                0.15826655998089056,
+                1.905412142941892
+              ],
+              "mean": 1.0318393514613913,
+              "n": 32768,
+              "radius": 0.8735727914805007,
+              "variance": 343.6872632865152
+            },
+            "open8": {
+              "interval": [
+                0.4998446992454757,
+                2.3111555467446996
+              ],
+              "mean": 1.4055001229950876,
+              "n": 32768,
+              "radius": 0.9056554237496119,
+              "variance": 387.89979722720824
+            },
+            "river_jam": {
+              "interval": [
+                -3.0456537532264765,
+                -1.5361638737266488
+              ],
+              "mean": -2.2909088134765625,
+              "n": 32768,
+              "radius": 0.7547449397499137,
+              "variance": 203.2290463495448
+            },
+            "river_nuts": {
+              "interval": [
+                -0.38854293498414066,
+                0.37023238810914066
+              ],
+              "mean": -0.0091552734375,
+              "n": 32768,
+              "radius": 0.37938766154664066,
+              "variance": 0.5280695034018601
+            },
+            "threebet10p5": {
+              "interval": [
+                -0.5028073708362086,
+                0.46548745537298264
+              ],
+              "mean": -0.018659957731613004,
+              "n": 32768,
+              "radius": 0.48414741310459564,
+              "variance": 20.273255848375737
+            }
+          }
+        },
+        {
+          "EV": {
+            "interval": [
+              -0.5398653018152836,
+              0.4032776386849569
+            ],
+            "mean": -0.06829383156516335,
+            "n": 32768,
+            "radius": 0.47157147025012025,
+            "variance": 110.73721310841331
+          },
+          "control": "active_2board_2939",
+          "deviation_gain_difference": {
+            "fold": {
+              "interval": [
+                -0.5828907947575673,
+                0.719478457887894
+              ],
+              "mean": 0.06829383156516335,
+              "n": 32768,
+              "radius": 0.6511846263227307,
+              "variance": 110.73721310841331
+            },
+            "open3p5": {
+              "interval": [
+                -0.9385291333219847,
+                0.513403625928716
+              ],
+              "mean": -0.2125627536966343,
+              "n": 32768,
+              "radius": 0.7259663796253504,
+              "variance": 174.73045832925158
+            },
+            "open7": {
+              "interval": [
+                -1.5069887501649035,
+                0.01950658291131302
+              ],
+              "mean": -0.7437410836267953,
+              "n": 32768,
+              "radius": 0.7632476665381083,
+              "variance": 212.0608683077652
+            },
+            "open8": {
+              "interval": [
+                -1.678280677339092,
+                -0.1320188973876678
+              ],
+              "mean": -0.9051497873633799,
+              "n": 32768,
+              "radius": 0.7731308899757121,
+              "variance": 222.56268628317494
+            },
+            "river_jam": {
+              "interval": [
+                -1.1651118596044099,
+                0.26646073655753477
+              ],
+              "mean": -0.4493255615234375,
+              "n": 32768,
+              "radius": 0.7157862980809723,
+              "variance": 165.164650565963
+            },
+            "river_nuts": {
+              "interval": [
+                -0.37517229178799794,
+                0.37575212577237294
+              ],
+              "mean": 0.0002899169921875,
+              "n": 32768,
+              "radius": 0.37546220878018544,
+              "variance": 0.342455740403106
+            },
+            "threebet10p5": {
+              "interval": [
+                -0.5899327146743159,
+                0.33874168141693733
+              ],
+              "mean": -0.12559551662868923,
+              "n": 32768,
+              "radius": 0.46433719804562656,
+              "variance": 14.353152125688977
+            }
+          }
+        }
+      ],
+      "reuse_new": {
+        "0": {
+          "queries": 55417,
+          "indexed": 55417,
+          "regret_reuse_percent": 99.99819549957594,
+          "average_reuse_percent": 100.0,
+          "offtree": 0,
+          "unseen_parent": 0,
+          "unseen_refinement": 0
+        },
+        "1": {
+          "queries": 31394,
+          "indexed": 31348,
+          "regret_reuse_percent": 99.76428616933173,
+          "average_reuse_percent": 99.834363254125,
+          "offtree": 0,
+          "unseen_parent": 0,
+          "unseen_refinement": 46
+        },
+        "2": {
+          "queries": 23159,
+          "indexed": 23115,
+          "regret_reuse_percent": 99.6718338442938,
+          "average_reuse_percent": 99.78410121335118,
+          "offtree": 0,
+          "unseen_parent": 0,
+          "unseen_refinement": 44
+        },
+        "3": {
+          "queries": 13041,
+          "indexed": 12998,
+          "regret_reuse_percent": 99.32520512230657,
+          "average_reuse_percent": 99.57058507783145,
+          "offtree": 0,
+          "unseen_parent": 18,
+          "unseen_refinement": 43
+        }
+      },
+      "reuse_old_active_same_worlds": {
+        "0": {
+          "queries": 60555,
+          "indexed": 60555,
+          "regret_reuse_percent": 100.0,
+          "average_reuse_percent": 100.0,
+          "offtree": 0,
+          "unseen_parent": 0,
+          "unseen_refinement": 0
+        },
+        "1": {
+          "queries": 37740,
+          "indexed": 26363,
+          "regret_reuse_percent": 69.85426603073662,
+          "average_reuse_percent": 69.85426603073662,
+          "offtree": 56,
+          "unseen_parent": 10366,
+          "unseen_refinement": 11321
+        },
+        "2": {
+          "queries": 24880,
+          "indexed": 12928,
+          "regret_reuse_percent": 51.961414790996784,
+          "average_reuse_percent": 51.961414790996784,
+          "offtree": 158,
+          "unseen_parent": 11250,
+          "unseen_refinement": 11794
+        },
+        "3": {
+          "queries": 16150,
+          "indexed": 6421,
+          "regret_reuse_percent": 39.758513931888544,
+          "average_reuse_percent": 39.758513931888544,
+          "offtree": 326,
+          "unseen_parent": 9133,
+          "unseen_refinement": 9403
+        }
+      },
+      "precision": {
+        "exact_fold_cells": 507,
+        "jam_proposal_cells": 111,
+        "formal_precision_cells": 0,
+        "other_action_EV": "UNKNOWN"
+      },
+      "range_diagnosis": {
+        "rfi": {
+          "interpretation": "Zero opponent posterior: conditional EV undefined, not a fabricated0. Zero own reach with nonzero opponent posterior: counterfactual decision EV remains defined.",
+          "max_opponent_history_likelihood": 1.0,
+          "positive_opponent_hand_classes": 169,
+          "prefix": [],
+          "undefined_zero_posterior_cells": 0,
+          "zero_hero_reach_but_defined_counterfactual_cells": 0
+        },
+        "vs_3bet10p5": {
+          "interpretation": "Zero opponent posterior: conditional EV undefined, not a fabricated0. Zero own reach with nonzero opponent posterior: counterfactual decision EV remains defined.",
+          "max_opponent_history_likelihood": 0.4733812931278012,
+          "positive_opponent_hand_classes": 169,
+          "prefix": [
+            8,
+            23
+          ],
+          "undefined_zero_posterior_cells": 0,
+          "zero_hero_reach_but_defined_counterfactual_cells": 0
+        },
+        "vs_open3p5": {
+          "interpretation": "Zero opponent posterior: conditional EV undefined, not a fabricated0. Zero own reach with nonzero opponent posterior: counterfactual decision EV remains defined.",
+          "max_opponent_history_likelihood": 0.09799286804576683,
+          "positive_opponent_hand_classes": 169,
+          "prefix": [
+            9
+          ],
+          "undefined_zero_posterior_cells": 0,
+          "zero_hero_reach_but_defined_counterfactual_cells": 0
+        }
+      },
+      "formal_strategy_count": 0,
+      "native_evaluation_seconds": 315.9967496390018
+    }
+  ],
+  "formal_acceptance": 0,
+  "previous_formal_acceptance": 0,
+  "formal_RFI": 0,
+  "formal_3bet": 0,
+  "full_native_BR_upper": null,
+  "full_native_NC_upper": null,
+  "continuation_error_upper": null,
+  "full_chance_abstraction_error_upper": null,
+  "omitted_size_error_upper": null,
+  "root_support": 12,
+  "root_legal_actions": 99,
+  "omitted_root_raises": 87,
+  "validation": "independent final diagnostics only, never reused for selection",
+  "native_world_seed": 17154101,
+  "native_worlds": 32768,
+  "production_operations": false
+}

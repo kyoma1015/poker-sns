@@ -1,0 +1,52 @@
+{
+  "coarse": {
+    "BR_BB_bb": 1.773743380211918,
+    "BR_SB_bb": 2.0186640058271674,
+    "EV_bb": -0.014841860814356678,
+    "NashConv_bb": 3.7924073860390854,
+    "full_native_BR_upper": null,
+    "physical_infosets": false,
+    "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+  },
+  "envelope": {
+    "chance_error_upper": null,
+    "coarse": {
+      "BR_BB_bb": 1.773743380211918,
+      "BR_SB_bb": 2.0186640058271674,
+      "EV_bb": -0.014841860814356678,
+      "NashConv_bb": 3.7924073860390854,
+      "full_native_BR_upper": null,
+      "physical_infosets": false,
+      "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+    },
+    "continuation_error_upper": null,
+    "exact_same_policy_finite_information_gains": [
+      0.9211325170838576,
+      0.7880323298814145
+    ],
+    "fine": {
+      "BR_BB_bb": 2.5617757100933325,
+      "BR_SB_bb": 2.939796522911025,
+      "EV_bb": -0.014841860814356678,
+      "NashConv_bb": 5.5015722330043575,
+      "full_native_BR_upper": null,
+      "physical_infosets": true,
+      "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+    },
+    "finite_fine_NC_upper": 5.5015722330043575,
+    "full_native_NC_upper": null,
+    "omitted_size_error_upper": null
+  },
+  "fine": {
+    "BR_BB_bb": 2.5617757100933325,
+    "BR_SB_bb": 2.939796522911025,
+    "EV_bb": -0.014841860814356678,
+    "NashConv_bb": 5.5015722330043575,
+    "full_native_BR_upper": null,
+    "physical_infosets": true,
+    "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+  },
+  "full_native_BR_upper": null,
+  "policy_digest": "5278c533c86cd9549b50f2500e2a28e0fcc32a1e5ec9a0c405445db2db9f29a2",
+  "selection": false
+}

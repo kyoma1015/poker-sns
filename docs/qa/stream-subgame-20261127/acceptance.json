@@ -9,7 +9,7 @@
     "A7 numerical quality values (thresholds unchanged; pending, not formally accepted)"
   ],
   "base": "7ff7687119976300f7775e88fdd3bb5e8b9522c7",
-  "evidence": "stream-subgame-20261127 and public-stream-final-20261127 per-digest receipts; no cross-digest sums",
+  "evidence": "public-stream-final-20261127/summary.json; per-seed same-digest final receipts, source/build/RNG replay; stream-subgame artifact ledger",
   "formal_pass": 0,
   "items": [
     {
@@ -32,7 +32,7 @@
     },
     {
       "compute_evidence_or_limit": "CPU2/RAM8GiB; per-run timing/RSS in saved receipts. Full native BR upper and certified whole-release profile compute/cachemiss cost UNKNOWN.",
-      "current": "12/99 root support retained; generic10.5BB legal downstream response jointly trained; new native comparison pending",
+      "current": "Native independent32768worlds:8BB gain reduction vs previous active significant both seeds;3.5/10.5 gains nonsignificant, no safety proof",
       "dependencies": [
         1,
         4,
@@ -46,7 +46,7 @@
     },
     {
       "compute_evidence_or_limit": "CPU2/RAM8GiB; per-run timing/RSS in saved receipts. Full native BR upper and certified whole-release profile compute/cachemiss cost UNKNOWN.",
-      "current": "10.5BB public prefix now structurally present; separate posterior mass audit required, not arbitrary EV at zero reach",
+      "current": "Both seeds vs10.5 posterior positive169/169; structural zero-range fixed; all169 exact Fold EV now defined, Jam/other actions precision not qualified",
       "dependencies": [
         2,
         4,
@@ -60,7 +60,7 @@
     },
     {
       "compute_evidence_or_limit": "CPU2/RAM8GiB; per-run timing/RSS in saved receipts. Full native BR upper and certified whole-release profile compute/cachemiss cost UNKNOWN.",
-      "current": "Final evaluator implemented for169 mixed frequency rows/3 contexts/both seeds; final execution pending; research only",
+      "current": "Both seeds x RFI/vs3.5open/vs10.5threebet x169 frequencies saved,507 rows per digest; required full profile/position quality not qualified",
       "dependencies": [
         1,
         2,
@@ -79,7 +79,7 @@
     },
     {
       "compute_evidence_or_limit": "CPU2/RAM8GiB; per-run timing/RSS in saved receipts. Full native BR upper and certified whole-release profile compute/cachemiss cost UNKNOWN.",
-      "current": "New same-digest final Fold/Jam precision evaluation pending; historical33462 root cells and old per-digest proofs preserved; formal precision0",
+      "current": "Per final digest: Fold507 exact; Jam proposal97/111; formal precision0. Old Fold338+Jam203/210 and33462root measurements remain separate",
       "dependencies": [
         1,
         2,
@@ -105,7 +105,7 @@
     },
     {
       "compute_evidence_or_limit": "CPU2/RAM8GiB; per-run timing/RSS in saved receipts. Full native BR upper and certified whole-release profile compute/cachemiss cost UNKNOWN.",
-      "current": "3person exact .023738946 preserved; newK4 stratified/IID mixed seed results;6/9 external sampling resumed without cap increase; native uncertainty too wide",
+      "current": "3exact .023738946 preserved; new12CPU K4 IID/strat sumgain .298375/.112391 and .170206/.214564; mixed, no adoption;6/9 two seeds resumed with paired256world native uncertainty inadequate",
       "dependencies": [
         1,
         4,

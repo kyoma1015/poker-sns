@@ -1,0 +1,19 @@
+{"seed": 17120101, "context": "rfi", "complete_jams": 63, "boards": 88451652, "seconds": 29.56683588899614}
+{"seed": 17120101, "context": "vs_open3p5", "complete_jams": 34, "boards": 69975738, "seconds": 30.486365008000575}
+{"seed": 17120101, "context": "vs_3bet10p5", "complete_jams": 0, "boards": 0, "seconds": 0.1953791550040478}
+{"seed": 17120101, "model": "public52_CDF_last", "worlds": 8192, "seconds": 14.190580098002101}
+{"seed": 17120101, "model": "public52_CDF_last", "worlds": 16384, "seconds": 28.66322275600396}
+{"seed": 17120101, "model": "public52_CDF_last", "worlds": 24576, "seconds": 45.89336928400007}
+{"seed": 17120101, "model": "public52_CDF_last", "worlds": 32768, "seconds": 60.767856530001154}
+{"seed": 17120101, "model": "protected_sparse", "worlds": 8192, "seconds": 80.00568243900489}
+{"seed": 17120101, "model": "protected_sparse", "worlds": 16384, "seconds": 93.62171556700196}
+{"seed": 17120101, "model": "protected_sparse", "worlds": 24576, "seconds": 113.90607141500368}
+{"seed": 17120101, "model": "protected_sparse", "worlds": 32768, "seconds": 129.45897335000336}
+{"seed": 17120101, "model": "previous_signed_last", "worlds": 8192, "seconds": 151.44221778000065}
+{"seed": 17120101, "model": "previous_signed_last", "worlds": 16384, "seconds": 174.38612094600103}
+{"seed": 17120101, "model": "previous_signed_last", "worlds": 24576, "seconds": 192.74575285100582}
+{"seed": 17120101, "model": "previous_signed_last", "worlds": 32768, "seconds": 213.79668441100512}
+{"seed": 17120101, "model": "active_2board_2939", "worlds": 8192, "seconds": 262.0442435320001}
+{"seed": 17120101, "model": "active_2board_2939", "worlds": 16384, "seconds": 291.44399626300583}
+{"seed": 17120101, "model": "active_2board_2939", "worlds": 24576, "seconds": 317.73412624200137}
+{"seed": 17120101, "model": "active_2board_2939", "worlds": 32768, "seconds": 344.12249032000545}
