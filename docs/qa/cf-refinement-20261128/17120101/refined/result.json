@@ -1,0 +1,143 @@
+{
+  "CPU": 186.48456446900005,
+  "curve": [
+    {
+      "CPU": 0,
+      "NC": {
+        "BR_BB_bb": 1.406269986543044,
+        "BR_SB_bb": 1.6765346439555757,
+        "EV_bb": 0.05346740880703222,
+        "NashConv_bb": 3.08280463049862,
+        "full_native_BR_upper": null,
+        "physical_infosets": false,
+        "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+      },
+      "cells": 7369854,
+      "fine": {
+        "BR_BB_bb": 1.7533045372050715,
+        "BR_SB_bb": 2.1267086429226265,
+        "EV_bb": 0.05346740880703222,
+        "NashConv_bb": 3.880013180127698,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+      },
+      "t": 64,
+      "updates": 0
+    },
+    {
+      "CPU": 94.432329255,
+      "NC": {
+        "BR_BB_bb": 1.3664173801041692,
+        "BR_SB_bb": 1.5970554360786022,
+        "EV_bb": 0.053996191633312374,
+        "NashConv_bb": 2.9634728161827715,
+        "full_native_BR_upper": null,
+        "physical_infosets": false,
+        "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+      },
+      "cells": 7626904,
+      "fine": {
+        "BR_BB_bb": 1.7084048187353518,
+        "BR_SB_bb": 2.037033017821408,
+        "EV_bb": 0.053996191633312374,
+        "NashConv_bb": 3.7454378365567598,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+      },
+      "t": 75,
+      "updates": 11
+    },
+    {
+      "CPU": 186.48456446900005,
+      "NC": {
+        "BR_BB_bb": 1.3201069413314939,
+        "BR_SB_bb": 1.5335538286289945,
+        "EV_bb": 0.050481064492591106,
+        "NashConv_bb": 2.8536607699604883,
+        "full_native_BR_upper": null,
+        "physical_infosets": false,
+        "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+      },
+      "cells": 7776265,
+      "fine": {
+        "BR_BB_bb": 1.6617459779869845,
+        "BR_SB_bb": 1.9670775968507872,
+        "EV_bb": 0.050481064492591106,
+        "NashConv_bb": 3.6288235748377717,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+      },
+      "t": 86,
+      "updates": 22
+    }
+  ],
+  "draw_seeds": [
+    18305395061039659315,
+    5582357007773142612,
+    3581333126381270459,
+    10719233287048275681,
+    17763610962155324356,
+    9912773639906875679,
+    16947594787536811419,
+    12546694232973313663,
+    14777920233246797095,
+    16713668703004972079,
+    7515638947143469309,
+    11225141785157035169,
+    14596423112478297863,
+    1813289651984066413,
+    15321533635498975694,
+    5937184928714598547,
+    12979660742313923005,
+    9271967486358650887,
+    10668160096527701669,
+    3172764721078807850,
+    6980029153085719304,
+    17093449451285365413
+  ],
+  "formal_pass": 0,
+  "full_native_BR_upper": null,
+  "initial_native_equal": true,
+  "mode": "refined",
+  "peak_RSS_bytes": 4292870144,
+  "policy_digest": "80c6e64d628e91b469d0566bdfd01c28b3c4ef6e68129bc53a386b937e8ea9e1",
+  "seconds": 279.9939173120001,
+  "seed": 17120101,
+  "selected_splits": [
+    [
+      126,
+      555
+    ],
+    [
+      126,
+      384
+    ],
+    [
+      160,
+      384
+    ],
+    [
+      126,
+      667
+    ],
+    [
+      126,
+      659
+    ],
+    [
+      59,
+      384
+    ],
+    [
+      126,
+      503
+    ],
+    [
+      126,
+      663
+    ]
+  ]
+}

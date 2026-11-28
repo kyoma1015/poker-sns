@@ -1,0 +1,35 @@
+{
+  "rows": [
+    {
+      "path": "hu/17120102/initial/checkpoint.bin.gz",
+      "target": "../best/checkpoint.bin.gz",
+      "compressed_sha256": "9a991195fe65b101332f2e3e09defd63bc8fbb06c79dde7b2a2bf5ddee046179",
+      "lossless": true
+    },
+    {
+      "path": "hu-final/17120101/initial/checkpoint.bin.gz",
+      "target": "../../../hu/17120101/initial/checkpoint.bin.gz",
+      "compressed_sha256": "c77f6b594b3f1f349359cbd860c2cd56c2020729e95ee518502cb810cba31ce2",
+      "lossless": true
+    },
+    {
+      "path": "hu-final/17120101/last/checkpoint.bin.gz",
+      "target": "../../../hu/17120101/best/checkpoint.bin.gz",
+      "compressed_sha256": "62c288c32704f76953494f0b774e59b8c87c921db586a717a68fab5000699466",
+      "lossless": true
+    },
+    {
+      "path": "hu-final/17120102/best/checkpoint.bin.gz",
+      "target": "../../../hu/17120102/last/checkpoint.bin.gz",
+      "compressed_sha256": "1a190840ded138b4b80e09bdcc2f28020d9e81a084fc2537117bd09c23b085a8",
+      "lossless": true
+    },
+    {
+      "path": "hu-final/17120102/initial/checkpoint.bin.gz",
+      "target": "../../../hu/17120102/best/checkpoint.bin.gz",
+      "compressed_sha256": "9a991195fe65b101332f2e3e09defd63bc8fbb06c79dde7b2a2bf5ddee046179",
+      "lossless": true
+    }
+  ],
+  "lossless": true
+}

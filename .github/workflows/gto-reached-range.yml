@@ -1,0 +1,110 @@
+name: GTO independent preflop learning and conservative EV
+on:
+  push:
+    branches: ['codex/c-native-hand169-bridge-20261023']
+    paths:
+      - 'gto/abstract/fullsupport*'
+      - 'gto/abstract/independent_*'
+      - 'tests/test_independent_preflop.py'
+      - 'docs/qa/independent-preflop-20261105/**'
+      - 'gto/abstract/range_*'
+      - 'gto/abstract/factorial_*'
+      - 'gto/abstract/value_*'
+      - 'gto/abstract/gap_*'
+      - 'gto/abstract/street_*'
+      - 'gto/abstract/call_*'
+      - 'gto/abstract/root_*'
+      - 'tests/test_root_interval.py'
+      - 'docs/qa/root-br-20261105/**'
+      - 'tests/test_call_coverage.py'
+      - 'docs/qa/call-coverage-20261105/**'
+      - 'gto/abstract/chance_coverage.py'
+      - 'tests/test_street_coverage.py'
+      - 'docs/qa/street-coverage-20261105/**'
+      - 'tests/test_gap_decomposition.py'
+      - 'docs/qa/model-gap-20261105/**'
+      - 'tests/test_value_response.py'
+      - 'docs/qa/value-response-20261104/**'
+      - 'tests/test_factorial_generalization.py'
+      - 'docs/qa/factorial-generalization-20261104/**'
+      - 'gto/abstract/reached_range.cc'
+      - 'gto/abstract/generalization_features.py'
+      - 'gto/abstract/continuation_game*'
+      - 'gto/abstract/continuation_learning.py'
+      - 'gto/abstract/flop_exact*'
+      - 'gto/abstract/flop_conditional.py'
+      - 'gto/abstract/frozen_flop_reach.py'
+      - 'gto/abstract/precision_native.cc'
+      - 'gto/abstract/model.py'
+      - 'gto/hand169.py'
+      - 'docs/qa/ev-precision-20261030/frozen-inputs.json'
+      - 'docs/qa/range-generalization-20261101/**'
+      - 'tests/test_reached_range.py'
+      - '.github/workflows/gto-reached-range.yml'
+permissions:
+  contents: read
+jobs:
+  reached_range:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Check preregistration, immutable selection and preserved base
+        run: |
+          python -B - <<'PYCODE'
+          import hashlib,json
+          from pathlib import Path
+          root=Path('docs/qa/range-generalization-20261101')
+          digest=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+          lock=json.loads((root/'selection-lock.json').read_text())
+          assert digest(root/'protocol.json')==lock['protocol_sha256']
+          assert digest(root/'selection.json')==lock['selection_sha256']
+          dep=json.loads((root/'dependency-manifest.json').read_text())
+          assert all(digest(p)==h for p,h in dep['preserved_dependency_sha256'].items())
+          new=json.loads(Path('docs/qa/factorial-generalization-20261104/dependency-manifest.json').read_text())
+          assert all(digest(p)==h for p,h in new['preserved_and_research_source_sha256'].items())
+          current=json.loads(Path('docs/qa/value-response-20261104/dependency-manifest.json').read_text())
+          assert all(digest(p)==h for p,h in current['preserved_and_research_source_sha256'].items())
+          gap=json.loads(Path('docs/qa/model-gap-20261105/dependency-manifest.json').read_text())
+          assert all(digest(p)==h for p,h in gap['preserved_and_research_source_sha256'].items())
+          street=json.loads(Path('docs/qa/street-coverage-20261105/dependency-manifest.json').read_text())
+          assert all(digest(p)==h for k in ('preserved_dependency_sha256','research_source_sha256','artifacts_sha256') for p,h in street[k].items())
+          call=json.loads(Path('docs/qa/call-coverage-20261105/dependency-manifest.json').read_text())
+          assert all(digest(p)==h for k in ('preserved_dependency_sha256','research_source_sha256','artifacts_sha256') for p,h in call[k].items())
+          rootbr=json.loads(Path('docs/qa/root-br-20261105/dependency-manifest.json').read_text())
+          assert all(digest(p)==h for k in ('preserved_dependency_sha256','research_source_sha256','artifacts_sha256') for p,h in rootbr[k].items())
+          print('PASS preregistered source/selection/base')
+          PYCODE
+      - name: Public history posterior, own-information and phase-isolation tests
+        run: python -B -m unittest tests.test_reached_range -v
+      - name: Matched-factorial projection, leakage and floor tests
+        run: python -B -m unittest tests.test_factorial_generalization -v
+      - name: Conditional posterior EV and independent response update tests
+        run: python -B -m unittest tests.test_value_response -v
+      - name: Independent cash ledger, chance moments and readonly adapter tests
+        run: python -B -m unittest tests.test_gap_decomposition -v
+      - name: Behavioral CFR, legal actions, private BR and probability intervals
+        run: python -B -m unittest tests.test_street_coverage -v
+      - name: New CALL-prefix reach, legal sizing and root attribution tests
+        run: python -B -m unittest tests.test_call_coverage -v
+      - name: Private-information BR, conservative cells and class-pair oracle tests
+        run: python -B -m unittest tests.test_root_interval -v
+      - name: Full-support oracle, conditional payoffs and independent evaluation tests
+        run: python -B -m unittest tests.test_independent_preflop -v
+      - name: Reproduce fixed independent learning design
+        run: |
+          python -B -m gto.abstract.independent_preflop --phase design --output "$RUNNER_TEMP/independent-design.json"
+          python -B -m gto.abstract.independent_verify --actual "$RUNNER_TEMP/independent-design.json" --expected docs/qa/independent-preflop-20261105/design.json
+      - name: Reproduce frozen learned continuation policies
+        run: |
+          python -B -m gto.abstract.independent_preflop --phase teacher --build-dir "$RUNNER_TEMP/independent-teacher" --output "$RUNNER_TEMP/independent-teacher.json"
+          python -B -m gto.abstract.independent_verify --actual "$RUNNER_TEMP/independent-teacher.json" --expected docs/qa/independent-preflop-20261105/teacher.json
+      - name: Replay complete payoff oracle, preflop CFR and independent evaluation
+        run: |
+          python -B -m gto.abstract.independent_preflop --phase train --build-dir "$RUNNER_TEMP/independent-train" --cache-dir "$RUNNER_TEMP/independent-cache" --output "$RUNNER_TEMP/independent-results.json"
+          python -B -m gto.abstract.independent_verify --actual "$RUNNER_TEMP/independent-results.json" --expected docs/qa/independent-preflop-20261105/results.json
+          python -B -m gto.abstract.independent_preflop --phase export --input "$RUNNER_TEMP/independent-results.json" --output "$RUNNER_TEMP/independent-ui.json"
+          python -B -m gto.abstract.independent_verify --actual "$RUNNER_TEMP/independent-ui.json" --expected src/gto/independentResearchData.json

@@ -1,0 +1,2889 @@
+{
+  "base": "5ca70afcb80e8b5348bffbe1b5d8471a90aabc55",
+  "code_commit": "0e6a9e6a8a34d4dc2e9ccd4839af3b872d8179f4",
+  "files": [
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/curve.json",
+      "bytes": 2515,
+      "sha256": "7390c6e692b7e9bde49ce4a99b47af26b452753609fab8e5eb896a7d940c31d8"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/A-0.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/A-12000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/A-16000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/A-20000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/A-24000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/A-28000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/A-32000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/A-36000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/A-4000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/A-40000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/A-44000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/A-48000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/A-52000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/A-56000000.xor.zst",
+      "bytes": 118,
+      "sha256": "89c9d04963870d74de22845343b02996eda52f183d09216d812e5147f742db25"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/A-8000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/R-0.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/R-12000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/R-16000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/R-20000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/R-24000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/R-28000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/R-32000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/R-36000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/R-4000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/R-40000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/R-44000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/R-48000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/R-52000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/R-56000000.xor.zst",
+      "bytes": 118,
+      "sha256": "89c9d04963870d74de22845343b02996eda52f183d09216d812e5147f742db25"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/R-8000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/identity.json.zst",
+      "bytes": 1011401,
+      "sha256": "fb32650bb6c7f98daffb957a946ccbe3d107d1a33a34e3cd17d1b0348ef70dba"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/prior-0.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/prior-12000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/prior-16000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/prior-20000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/prior-24000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/prior-28000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/prior-32000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/prior-36000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/prior-4000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/prior-40000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/prior-44000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/prior-48000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/prior-52000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/prior-56000000.xor.zst",
+      "bytes": 118,
+      "sha256": "89c9d04963870d74de22845343b02996eda52f183d09216d812e5147f742db25"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/prior-8000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/receipt.json",
+      "bytes": 189,
+      "sha256": "12631d02025a1789103288ffb7083f005a8b1a2600ad697c8f4c0377d0209ab5"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/visits-0.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/visits-12000000.xor.zst",
+      "bytes": 110,
+      "sha256": "6f86e0ec82972e8f8a930ab1dacf4e391b1a5780a2c9ee97c5210beaaf2a88b0"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/visits-4000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/initial/visits-8000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/A-0.xor.zst",
+      "bytes": 918635,
+      "sha256": "6c6e83504b49a41ddb31334f3c8435769c631d071d31c38808b1906b6d11d550"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/A-12000000.xor.zst",
+      "bytes": 2218907,
+      "sha256": "1fe75e0b3f8f8ca992e31b077117bff0b9df00fe0d6f3cb960fc72bb1fc82951"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/A-16000000.xor.zst",
+      "bytes": 2255217,
+      "sha256": "6b84b84685702f3c0652ec1cf58e8338c669b78b487d4ba8a5532daebd5113d1"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/A-20000000.xor.zst",
+      "bytes": 2300489,
+      "sha256": "1e55d6beadf08c351709f5d68e3633ab07c1bb50bb22c2fbf43ffd91b1941643"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/A-24000000.xor.zst",
+      "bytes": 2129727,
+      "sha256": "0fc38f0a42f223f353793dbacb2d809e9f8eed85b9e6cb28b3291346648360c5"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/A-28000000.xor.zst",
+      "bytes": 2193891,
+      "sha256": "3eef5b954701880c8ed11f048a8454d87d8b3cabd1c2626d14e5497b93d725f6"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/A-32000000.xor.zst",
+      "bytes": 2349774,
+      "sha256": "ee140a638edd30f0aedcacd68521ddcddbf15742166ffe483ddf668d044f7ee6"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/A-36000000.xor.zst",
+      "bytes": 2301613,
+      "sha256": "5962d494e630262938907b7357b334d83c22a70a9000bbe57197ad03b087fd98"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/A-4000000.xor.zst",
+      "bytes": 1701822,
+      "sha256": "0cee52286260cca5a9115c2dc7eb9bd0e6420c6ada697050b42b0031a4af701f"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/A-40000000.xor.zst",
+      "bytes": 2305500,
+      "sha256": "5f3610d041338daff2a93a67105ae6ac1a36df235bc485cc96189d26d1ac317a"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/A-44000000.xor.zst",
+      "bytes": 2196980,
+      "sha256": "cfcfb36a6b27d23b57af095baca99b1f281c14216766313a2ef6d362cd0275d0"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/A-48000000.xor.zst",
+      "bytes": 2313667,
+      "sha256": "79f9c20147ed4a4f3cf0f36eb6ad97663c2dc4aacc198522c1d755bb50fd59d2"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/A-52000000.xor.zst",
+      "bytes": 2142850,
+      "sha256": "5c5e097194912134e7e3b4bedbaccd9ed033d91e09b90dd707b42336f4b47633"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/A-56000000.xor.zst",
+      "bytes": 1835781,
+      "sha256": "ef57982df71ba6fb34210e2f6edc222da303de6f0a962fb45a5af25c3f4e8618"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/A-60000000.xor.zst",
+      "bytes": 768104,
+      "sha256": "eeb0153275a99c66318919f07fbac58cf56c795770e4d62b720cbebbac314012"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/A-8000000.xor.zst",
+      "bytes": 1994966,
+      "sha256": "99f38ced1253e2e26587c122ff1065fba9ac7dc6e9980243f287bfca589f5236"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/R-0.xor.zst",
+      "bytes": 945495,
+      "sha256": "98c2c4fc67a1289713803bc056a966a02bec8b6a7780334d1ef8d1401a8149a6"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/R-12000000.xor.zst",
+      "bytes": 2178577,
+      "sha256": "14b79aa801e20216802ce42c985941347c3c495d617a10016aa855c8deb6abcc"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/R-16000000.xor.zst",
+      "bytes": 2223630,
+      "sha256": "3e9ab271d75ffd94684df0bed88557df22e2c07fbdbb803e0ff5fe2d561bbdc4"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/R-20000000.xor.zst",
+      "bytes": 2275250,
+      "sha256": "e850a3b3fb128cb728fb16b3fae10eec702cb733902786b91d0a3bb67bdf5458"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/R-24000000.xor.zst",
+      "bytes": 2082199,
+      "sha256": "30264f6065e72b8802e677b0b7f95263b91550202ceb26695367e049bb364e67"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/R-28000000.xor.zst",
+      "bytes": 2249671,
+      "sha256": "a8ba668d6c5926c3a8ee7aa500a0c7a1f76419bf0ee898d04b6891d13b4902cb"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/R-32000000.xor.zst",
+      "bytes": 2262419,
+      "sha256": "c1b0c3e68c298802cc8ec2cc4a0d15d53f2ed58b5cd85fce306e45e56d2c5019"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/R-36000000.xor.zst",
+      "bytes": 2346447,
+      "sha256": "31976dfeb423bc849833163ef7a13c40926aa5f1214c0a0a23d1171bac5e940f"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/R-4000000.xor.zst",
+      "bytes": 1521296,
+      "sha256": "5990d9dd26e9f8908281083e8da5a4fc48c64d7b48b0b09c71acfd06bae042d0"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/R-40000000.xor.zst",
+      "bytes": 2283090,
+      "sha256": "0d56f7328710c4837aa3a9debdf962c5e67bd37777ec22dfde68956b836ed797"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/R-44000000.xor.zst",
+      "bytes": 2295856,
+      "sha256": "e9a0455e3f7c6ff5470deeaf912b64bf156e921a499064070b61e7d393bf5e3a"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/R-48000000.xor.zst",
+      "bytes": 2317353,
+      "sha256": "4e3008ddd4c979feeb380838ed8d677bd8fcf977abce68d296ffbdd1788724a0"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/R-52000000.xor.zst",
+      "bytes": 2274218,
+      "sha256": "62b758c9cf9e0db0ebbe60cb5d098b50a975fa873dfcb6d0f9c4ac2b5f506ee3"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/R-56000000.xor.zst",
+      "bytes": 2317203,
+      "sha256": "e9bb696390cb678fd89770551b548e0976951f63a9ea14a5362547f6c8569afd"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/R-60000000.xor.zst",
+      "bytes": 1123729,
+      "sha256": "45451235f63778dcbfafee10d1058387b24103219677b024fea1a38e1eedf381"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/R-8000000.xor.zst",
+      "bytes": 2178337,
+      "sha256": "bbf667a7d05414088520e4c24b1300d350dc96c724966816f9eca1074f4d3799"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/identity.json.zst",
+      "bytes": 1206307,
+      "sha256": "6ca8543c8df97d5e522ed9ddc3700b8d21ee818723fe02e3d8fcf1664eb0598b"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/prior-0.xor.zst",
+      "bytes": 40714,
+      "sha256": "ea4d50bfdb8238925f22b3d09c7348fa332540c7d260a21539e8d0d1929bf501"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/prior-12000000.xor.zst",
+      "bytes": 7803,
+      "sha256": "68f5ca45fd1e841cd3003062034bfa5a8efc88ab789615965fc457dd0ab3dbce"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/prior-16000000.xor.zst",
+      "bytes": 2377,
+      "sha256": "06e3598e3f4d5074042849ed3af0a14533b2b391f76c8f66f0d02729079fa241"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/prior-20000000.xor.zst",
+      "bytes": 1308,
+      "sha256": "6ce6330c339fe9884751a9164768cfdf2c62c120a10d065145f4272b727310f8"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/prior-24000000.xor.zst",
+      "bytes": 11458,
+      "sha256": "483e9e471df7509ec6ff05088aa04b390269d041dd530945090536b7337464fa"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/prior-28000000.xor.zst",
+      "bytes": 6958,
+      "sha256": "0c6655a4af6cfd53c3c61f729fdab1fcf17c2ff5e90769d717ea8882bcdc7e14"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/prior-32000000.xor.zst",
+      "bytes": 1326,
+      "sha256": "b7b0c95bc5b99e8123e0ed8877b7480528c388511c1a55a613e931bc4d26cc14"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/prior-36000000.xor.zst",
+      "bytes": 1936,
+      "sha256": "d92de094cdb4d03b01cb64ccebd325185112377fa9964bff4e2e729588c971d7"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/prior-4000000.xor.zst",
+      "bytes": 37176,
+      "sha256": "7628c310c009ed7bdaf8e371923df7aad717ab8262393783b1b175fa34528d3b"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/prior-40000000.xor.zst",
+      "bytes": 3501,
+      "sha256": "42e5eeac9b346d472d430b32a9a13d7dc13eeb9c551cd6bb0d217856180efe78"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/prior-44000000.xor.zst",
+      "bytes": 1698,
+      "sha256": "bc8d01b8fc3e09ef6b0a87fe547341be77b5f1ea54fed32f152cff91b82bbdb8"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/prior-48000000.xor.zst",
+      "bytes": 1865,
+      "sha256": "800aa0671d5ec2431d3eeae67438cc476691eefffbff276a5af8b5a00c0be0d0"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/prior-52000000.xor.zst",
+      "bytes": 1866,
+      "sha256": "26275ca67bc27dc5b1dfa4da7efe28e0e9b85c9e7943c1cebe9937185150549a"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/prior-56000000.xor.zst",
+      "bytes": 3874,
+      "sha256": "cd730ae63f6a0804908bf72c7422402a89ac7260b2990d8cfc6ff9d606a699f2"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/prior-60000000.xor.zst",
+      "bytes": 755,
+      "sha256": "eb9dd031f5afcd420a1075426b8efd857b1802af808dd54cd9b434fc2e8f95f6"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/prior-8000000.xor.zst",
+      "bytes": 8155,
+      "sha256": "dabe1c31f4b2074f41e9dc0fe7b94b46618e7a7e53941444857deb51a34fd816"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/receipt.json",
+      "bytes": 193,
+      "sha256": "b95fabcff944ddb59aa5362563aa4a9bb579b16e38961871b968e9c1f5e1da13"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/visits-0.xor.zst",
+      "bytes": 151288,
+      "sha256": "735dcf6cd30bd7b02d1afd5d73d2289799433c9327f40b971f5e88d68c5e3fa3"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/visits-12000000.xor.zst",
+      "bytes": 89905,
+      "sha256": "e515468356758593cd2e604d174fca43f7cf04bc9dfc561edfeda588e3cabadd"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/visits-4000000.xor.zst",
+      "bytes": 101768,
+      "sha256": "5cc86fd62ab4c32382e840fb7ef623ae9687dab745ba35390ef84d347c1a8dc3"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/last/visits-8000000.xor.zst",
+      "bytes": 110595,
+      "sha256": "507c440b753f5161a667fec5090c5fd40812c2949cf25addaf48f8a64ddb1f9c"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/replay.json",
+      "bytes": 320,
+      "sha256": "0e3466865557b59045956b5eb571e37275aa113590094f8cf919575efc6a35ab"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/control/result.json",
+      "bytes": 3354,
+      "sha256": "beb2c86f3939de94fec670d3e1cfc09d24c0b61c5b54a4214bc06b53ec25b792"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/independent-final/169-context-EV.json",
+      "bytes": 314363,
+      "sha256": "db168e21ea2e7bcc9f29a415175ef6a00d486a7c1e61412a2957dd53bfbd6a36"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/independent-final/169-frequencies-final.json.gz",
+      "bytes": 38561,
+      "sha256": "d73c706ba8a4f95c25bdb9a6d54f69806d311d3ee52feba4ef6809c25d78675c"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/independent-final/conditional-range-EV.json",
+      "bytes": 6165,
+      "sha256": "c7ef9d2f7f118053ac3a34cf89f12034a90cda3f9f500f88bdb4bba70e616869"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/independent-final/freeze.json",
+      "bytes": 171,
+      "sha256": "6857827ef1af6cf72015e2a56ccb2dc50e9767ceba6a40fe4c988278f978f14f"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/independent-final/legacy-law-diagnosis.json",
+      "bytes": 2596,
+      "sha256": "8009d5e2834e11076fa486a3cd581a4790f806587682040b3bd4c03f2c9450cf"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/independent-final/native-tree-proof.json",
+      "bytes": 737850,
+      "sha256": "f297305d7cc960448733884bdd51b7f9318bfdcd99bd5d2b8d33ef8d69f61dc4"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/independent-final/progress.json.gz",
+      "bytes": 743134,
+      "sha256": "7a45b20f2f8eccc063c17b7c31715cd0870d13fb1bd73fd444f91647cc449c65"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/independent-final/result.json",
+      "bytes": 28956,
+      "sha256": "c94beb0ec379b76cddd68fa7682b9d5e93fbe7c0885b8accfdbbcb5b632db4a9"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/independent-final/values.json.gz",
+      "bytes": 743344,
+      "sha256": "dbd5c208794cbc23675b866be236f01993a7cf33b90084126433ad8ebdeaa889"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/A-0.xor.zst",
+      "bytes": 952111,
+      "sha256": "79a3f0b250667212990282ecfe8c51547e232672b18dc9f48d07b8397798c959"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/A-12000000.xor.zst",
+      "bytes": 2265635,
+      "sha256": "26d03d791efa9be2b39771dc50ffeb0aebdadca5891e06a8122d9cb4f44917a5"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/A-16000000.xor.zst",
+      "bytes": 2300610,
+      "sha256": "8c7c7340bdfe01186d65cde5c7fc2ecfb3a07bcfcfe64bd189a29ab5882b33cb"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/A-20000000.xor.zst",
+      "bytes": 2333306,
+      "sha256": "a78f056ba4623711480ddee725f5198c2d939af9560cfebaf44bd16130386421"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/A-24000000.xor.zst",
+      "bytes": 2177237,
+      "sha256": "77ed9bca9ec143552bbc8951f2b1a402113f84a12ad99bc9fac1e29172b0e2cb"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/A-28000000.xor.zst",
+      "bytes": 2201368,
+      "sha256": "f6ceeb59c85f157106b09fa9e5c3a30d3da1f762dcc2dd51619da2948831e5d0"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/A-32000000.xor.zst",
+      "bytes": 2379250,
+      "sha256": "92b6a7b37afc5d8dbac01a50de95364bd534a1dc3e090d4d7d9c483ded5cb4c5"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/A-36000000.xor.zst",
+      "bytes": 2367895,
+      "sha256": "e1bd9fbcb15bc10181bcfff3f42e37e0555b06687987d3191fd8f8c2fc2d13ea"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/A-4000000.xor.zst",
+      "bytes": 1732960,
+      "sha256": "23dcde52c6199ed6d575b2df4a7600219d9de0ed40f27ad5d7028e13b7155f6a"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/A-40000000.xor.zst",
+      "bytes": 2327833,
+      "sha256": "058d83be9b612f7897574652849d950208aa286da4355882101c48f403da767b"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/A-44000000.xor.zst",
+      "bytes": 2253253,
+      "sha256": "57f5b8e85d4fc10a9f4b455d1997fa5e8ba8b548033cb49bec419ec997445b17"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/A-48000000.xor.zst",
+      "bytes": 2350020,
+      "sha256": "1809bf8bdad05da4d94b50352de3d32318c0cd0fbf867c27eb87ec3705cab29e"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/A-52000000.xor.zst",
+      "bytes": 2198423,
+      "sha256": "baf3326767bd2bee4831fb982a7734837b516e496a5a3b2279a0870d9b4fee12"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/A-56000000.xor.zst",
+      "bytes": 1891830,
+      "sha256": "45f4559592b790a93acba8062e9914a9b2701032d0235e0192201ff47e9d919c"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/A-60000000.xor.zst",
+      "bytes": 830849,
+      "sha256": "136aafd95089a89e2c542b3cb15006dc572c8454dcb6f005207b0ad202fc8335"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/A-8000000.xor.zst",
+      "bytes": 2034755,
+      "sha256": "cceec3b13ffc30dc0ae5d5e321258b4d951b5664e2f10f3bede080e51a75dac9"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/R-0.xor.zst",
+      "bytes": 991422,
+      "sha256": "02666419b8415489414829650e49261d7290dfbb73d54b2376fa4fd54a68f200"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/R-12000000.xor.zst",
+      "bytes": 2212977,
+      "sha256": "efebb636074cf9459ed857e37c1f141004c5f9df396c3d658d64e44c2b947026"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/R-16000000.xor.zst",
+      "bytes": 2270821,
+      "sha256": "8ac21bd0000a932ad22b5b5ac6c9ca0381285c0982987e6f8111957cb289d8aa"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/R-20000000.xor.zst",
+      "bytes": 2298789,
+      "sha256": "326cad045053a8b38dd4d9e520e56afbf7399c138fa1d72c58969826d63c36ab"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/R-24000000.xor.zst",
+      "bytes": 2139376,
+      "sha256": "d047c26c1a3a5ede981e113de2a39b8fb8918b14b94b3e83b3d267e92a125969"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/R-28000000.xor.zst",
+      "bytes": 2247420,
+      "sha256": "cb3419b6e30c6b17776f0c691a98b11fa2f48db04f4b7621913062f9a01a10d3"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/R-32000000.xor.zst",
+      "bytes": 2293539,
+      "sha256": "190cafc409887a7281116c255a3f93dc428d6f1362cd58944cb264ce33b97a0c"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/R-36000000.xor.zst",
+      "bytes": 2379000,
+      "sha256": "51ff041df4845b424e53451826153df896bd589899740ad206b3ef54c264025f"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/R-4000000.xor.zst",
+      "bytes": 1540548,
+      "sha256": "d260740ddb23431d9f6414a94e911107030506574a2b47efc47e946d21944ae8"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/R-40000000.xor.zst",
+      "bytes": 2281353,
+      "sha256": "fbd50de063535e6f1cd6cb03f2e7a6e09e114535edf9e95b10f57cdce5cc3363"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/R-44000000.xor.zst",
+      "bytes": 2367842,
+      "sha256": "902d56c6b71e35a066495d4200c59c27b22abd85784c794e84949ac044489045"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/R-48000000.xor.zst",
+      "bytes": 2339138,
+      "sha256": "f36a575b5a0825eaf236144bbef7b36be403d5e5230504f31a6c5820071ec65f"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/R-52000000.xor.zst",
+      "bytes": 2315654,
+      "sha256": "900102a7ab48016f4e7b6b571004561566ecb23021a16bbb0de55cc873d05eef"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/R-56000000.xor.zst",
+      "bytes": 2350416,
+      "sha256": "a7968a744886a657ee56736d56afc24a6defdaa544abe9f412309632647c45e2"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/R-60000000.xor.zst",
+      "bytes": 1195916,
+      "sha256": "241a12fcb2e2487fdd6f558c06e7fee22d06446f55d2d454bcbb55bd8aeb47fe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/R-8000000.xor.zst",
+      "bytes": 2181790,
+      "sha256": "f0deadf95791b0b487673a7349f460092e50eeb40e33d4d69d8711ae76d747fe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/identity.json.zst",
+      "bytes": 1224006,
+      "sha256": "807b81bc2e43f8962c14fe915be0aea49fa61bd2779204294694a0b3f28014fd"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/prior-0.xor.zst",
+      "bytes": 43448,
+      "sha256": "2bddf7e0e93f5c998b9bc3c3390058a2147d813df43c21b912ff123a421c9b17"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/prior-12000000.xor.zst",
+      "bytes": 8475,
+      "sha256": "e41d4942dd017d9a92d9ffea1ddeed35409aeaa0bb5d71f0b9dc0eb175b832d3"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/prior-16000000.xor.zst",
+      "bytes": 2073,
+      "sha256": "f074eb48c4bb537c615d26f3dc97d7e9d2fa79c3e75a8234987a7d966abf5fbc"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/prior-20000000.xor.zst",
+      "bytes": 1314,
+      "sha256": "73885b8c1654ff8b572cbb31e48529e4fc687df0e1ec44b7707f305bfa6cde3b"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/prior-24000000.xor.zst",
+      "bytes": 11319,
+      "sha256": "0434e3c534a9bc990ac50d54bf7d375a760e604c8bf8114e08c90cc6ab836841"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/prior-28000000.xor.zst",
+      "bytes": 7714,
+      "sha256": "ad1866de1cbc2f3be79e2afb35ce13c6f4be7abb841ce2fff72bcd679ff42f3c"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/prior-32000000.xor.zst",
+      "bytes": 1313,
+      "sha256": "0c24d529b41d1ca6e26951b0d53b268c6805d04437575f62f1fbc5fc8ea93340"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/prior-36000000.xor.zst",
+      "bytes": 2482,
+      "sha256": "9654be2148a3f2590296972a966cbdad8447735543807bd4029b7910f07ee1c0"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/prior-4000000.xor.zst",
+      "bytes": 40570,
+      "sha256": "d7bb6a74c894290b7a0d1054080b88b19d660806cd213480a4c55c9a532e8560"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/prior-40000000.xor.zst",
+      "bytes": 3226,
+      "sha256": "dd4d4e87fc169d559dccc03a98bb4442ad92893877457d1e88a7bf6a4bdfd226"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/prior-44000000.xor.zst",
+      "bytes": 1725,
+      "sha256": "00de0bba38ec1c934113f6091b4ec920b74bdebc7ff410b3fb4be6a20b379bb9"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/prior-48000000.xor.zst",
+      "bytes": 1512,
+      "sha256": "c49c8ea568eeadf0f2d26fb1dcd93ef0cc1c6cb1321d1cf3927a0536310f8d74"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/prior-52000000.xor.zst",
+      "bytes": 2042,
+      "sha256": "8442cbe4dcaf34d2d80544987028c48d60b86800d71f384f587b065d18ae51f8"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/prior-56000000.xor.zst",
+      "bytes": 1272,
+      "sha256": "1d8ec35705c0f11863f2e9f37079c3bab12cef3ea541977d50879064efd79564"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/prior-60000000.xor.zst",
+      "bytes": 713,
+      "sha256": "dade93a32ae33a791a735fcbb4a96757feea6e70790df69d417f046d21a31a14"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/prior-8000000.xor.zst",
+      "bytes": 8334,
+      "sha256": "e01457d18872cf174ef95af9df26ab021df7bd110c9804d529c0935b352c0340"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/receipt.json",
+      "bytes": 193,
+      "sha256": "ad2c29382813e9a0076607ab48159acf9188ed229f129aa20a5e5bcb43c29221"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/visits-0.xor.zst",
+      "bytes": 152702,
+      "sha256": "00021e6489bb5b3172fc6d566c54ea73623567cf99339680b6840115f502df7e"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/visits-12000000.xor.zst",
+      "bytes": 86567,
+      "sha256": "b04cfe45547b4b1a6880f2ad460ffa84f5eca00f490e814153d210b7569bc070"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/visits-4000000.xor.zst",
+      "bytes": 104405,
+      "sha256": "6ed7306fbc1be384dc7ebf5b686bae3f086f6341b5a0bc8f7e9d744660305f68"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/last/visits-8000000.xor.zst",
+      "bytes": 115592,
+      "sha256": "80a4b0d0cdf78de5af80d635a7d9f7170856183912abdf2f176e37f275bde893"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/replay.json",
+      "bytes": 273,
+      "sha256": "432753c5149141c524624a25f5181936108cf1a033d9d31bf7717adde709bdc1"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/matched-control/result.json",
+      "bytes": 804,
+      "sha256": "d3bd3fd80e8a923e57aeec8bb615ff6bb7ed7653a9f111a933846535160e8ce1"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/rank-compression.json",
+      "bytes": 283,
+      "sha256": "8f693afb4c0dcfb8171d7841a916c22dec3415e8c92e8a8f9c6e8a124629d333"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/curve.json",
+      "bytes": 2517,
+      "sha256": "e8995c617f21d097d90eca339d05201597d59f04e51c09066850e8b6e39b8545"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/A-0.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/A-12000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/A-16000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/A-20000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/A-24000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/A-28000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/A-32000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/A-36000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/A-4000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/A-40000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/A-44000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/A-48000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/A-52000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/A-56000000.xor.zst",
+      "bytes": 118,
+      "sha256": "d5e9e15a646072484c87c408369443be51dfa17baf58df7dcdfbb37cff1d6245"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/A-8000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/R-0.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/R-12000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/R-16000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/R-20000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/R-24000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/R-28000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/R-32000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/R-36000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/R-4000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/R-40000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/R-44000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/R-48000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/R-52000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/R-56000000.xor.zst",
+      "bytes": 118,
+      "sha256": "d5e9e15a646072484c87c408369443be51dfa17baf58df7dcdfbb37cff1d6245"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/R-8000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/identity.json.zst",
+      "bytes": 1015905,
+      "sha256": "0f19dc3aa4f6744e0f6fc700ee0a2d4606f01e724e26038f8485edb0408ab843"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/prior-0.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/prior-12000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/prior-16000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/prior-20000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/prior-24000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/prior-28000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/prior-32000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/prior-36000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/prior-4000000.xor.zst",
+      "bytes": 3269,
+      "sha256": "dac190ee8cc6966bcf98425287b67fd2fe16625064eadff6a42eb4b50162981a"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/prior-40000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/prior-44000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/prior-48000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/prior-52000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/prior-56000000.xor.zst",
+      "bytes": 118,
+      "sha256": "d5e9e15a646072484c87c408369443be51dfa17baf58df7dcdfbb37cff1d6245"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/prior-8000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/receipt.json",
+      "bytes": 190,
+      "sha256": "7fda8b595e837e9edbe5d56caf536740d451a024a671c9efe81b341176ba9c27"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/visits-0.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/visits-12000000.xor.zst",
+      "bytes": 110,
+      "sha256": "73809cc4a6cd5b24ee3cfd456f6c5159dac99f0f7a65c12c00d3777c4a41edca"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/visits-4000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/initial/visits-8000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/A-0.xor.zst",
+      "bytes": 951583,
+      "sha256": "a18aebec53df6ca331bc3e292b5fb4222c0a8fc697f738428edf701f3e0ee177"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/A-12000000.xor.zst",
+      "bytes": 2267858,
+      "sha256": "d012dc91d0d684d63ef823d4df6a5d9380e97f708b33daeb45058c94e97eba2c"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/A-16000000.xor.zst",
+      "bytes": 2279646,
+      "sha256": "dd6d9694b3a0be532f0ebc63558c77c6f0afe892fc415f78bb6b9cf9c63b9ef1"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/A-20000000.xor.zst",
+      "bytes": 2328556,
+      "sha256": "b681d84b0464a0c77d99a75b14431d4da30d1b9801eddab82f32a2e3d02e97bd"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/A-24000000.xor.zst",
+      "bytes": 2203928,
+      "sha256": "8c69162d7cbf0199522f4d5519bb1539286d360ca5bd292fb35de099a2a1a54f"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/A-28000000.xor.zst",
+      "bytes": 2184803,
+      "sha256": "77dfdf43ab97e8de348bad58d13ea286bd6d38e7455981b95efc90b14851faa5"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/A-32000000.xor.zst",
+      "bytes": 2380907,
+      "sha256": "62b9810c641899ceb3ae97c3ae048074f6d50604495f31ba0d04cd1f7dd8cc44"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/A-36000000.xor.zst",
+      "bytes": 2375613,
+      "sha256": "668793b205d856dbef5febb6f568852f4bc5b3d57da4c9614c55a200f6e5bda0"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/A-4000000.xor.zst",
+      "bytes": 1730100,
+      "sha256": "3e35664ba05a6df67ef1146b715b602be403f13655891878499bcdd10d439db6"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/A-40000000.xor.zst",
+      "bytes": 2330943,
+      "sha256": "68daf247ff235c73f2782204fdaa857d25582aee15cad2098680ac9302fa5486"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/A-44000000.xor.zst",
+      "bytes": 2256604,
+      "sha256": "b01d54c7879b943a59a83c0e3cb49f3f2445c8cd10adf24e4f6715e84dbe111d"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/A-48000000.xor.zst",
+      "bytes": 2346522,
+      "sha256": "a24f349328e1e07955aa104ceaebba4c21f33192ec2572c0edf54d21bfae2ee1"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/A-52000000.xor.zst",
+      "bytes": 2192042,
+      "sha256": "b99ce4db156e2424814cfb88bb2539b72cbd9409ed359bbdb574b4b87e897c14"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/A-56000000.xor.zst",
+      "bytes": 1896532,
+      "sha256": "e8bfed191fe049d6463e7b62250921ed37398b31adcbc3b842dfa2fa09c916b1"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/A-60000000.xor.zst",
+      "bytes": 900186,
+      "sha256": "b85d4f5bde9a948c7ddbc26ede8029ac3f42d0e280f3a074cb8a2c6cabdb0857"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/A-8000000.xor.zst",
+      "bytes": 2044102,
+      "sha256": "b86027950423385b4bff361b42ea13c9ea159e68110c296a39eb7611215df9b8"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/R-0.xor.zst",
+      "bytes": 991590,
+      "sha256": "827cd0a4c7100cf0ad7c5a2f17d78904f71f252da25d972a49b68a311ed05824"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/R-12000000.xor.zst",
+      "bytes": 2206043,
+      "sha256": "dcb607cb1346527bd579d387c0ca4acb17e21c82a7a85863e748a5e64fcbabcf"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/R-16000000.xor.zst",
+      "bytes": 2247580,
+      "sha256": "3414e9320fda6b625bb825c508fac81490067e7e2bedec70e0d0f41502f08905"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/R-20000000.xor.zst",
+      "bytes": 2291662,
+      "sha256": "a591ea4e634476c09cd8537f5e8081baca8030e0abeeeb529b19f82ebbc149b1"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/R-24000000.xor.zst",
+      "bytes": 2167019,
+      "sha256": "6d89f31cd463eeb16d1e469bbb3e54ab9345fab1d37c79b4287cf88c2c57d139"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/R-28000000.xor.zst",
+      "bytes": 2233583,
+      "sha256": "211863356737f29ce405ddfda2127a7c41f8101b0b033475a06163eca29f305b"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/R-32000000.xor.zst",
+      "bytes": 2300478,
+      "sha256": "2c9d1b8357c136a0a8981338d92ab051f178842e1f29bf241ca9bc289f8512c2"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/R-36000000.xor.zst",
+      "bytes": 2380520,
+      "sha256": "0c07671c254f264b523ed5b12e7aaac8847ed8cea65beb4094d4631a93322166"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/R-4000000.xor.zst",
+      "bytes": 1537827,
+      "sha256": "6e6c872dca4fcd6679e9d1225b2e0f66507956461de73b8c8e085327cde49aba"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/R-40000000.xor.zst",
+      "bytes": 2287849,
+      "sha256": "950d43baf58210b730138f384c8296fb7401aeeec1e75db66014311e3e3e54b6"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/R-44000000.xor.zst",
+      "bytes": 2364637,
+      "sha256": "b3f442d161b0478f02808f04f17465cd538f4232ebeaa9cf82cc04417c119d17"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/R-48000000.xor.zst",
+      "bytes": 2330020,
+      "sha256": "2e1334e4a329d965d47d257c6727657c2fb39e8b0d074fa8d9950a60724b2c2a"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/R-52000000.xor.zst",
+      "bytes": 2313686,
+      "sha256": "1828bcc0dc2eea9019c7f4372280128f4995a1a52c5339fa498efc9d569b31bb"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/R-56000000.xor.zst",
+      "bytes": 2333816,
+      "sha256": "0aab3ab002501113fa856a404336e8f01ab582d379e454afdbd53f56ff27a454"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/R-60000000.xor.zst",
+      "bytes": 1291487,
+      "sha256": "7b477adc8e01992aaf5a8349742c3ad6e4f8059dcd0373721694b327d0884390"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/R-8000000.xor.zst",
+      "bytes": 2198810,
+      "sha256": "da8d3a9a64919b4c375c35cadd2766d3b56afa274ccf3b3a5db71e84c598436e"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/identity.json.zst",
+      "bytes": 1238517,
+      "sha256": "6494fe4737fab4128bd3fb4d254e39eb748970d63f8fee1e4fec4c295df1dd2a"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/prior-0.xor.zst",
+      "bytes": 43448,
+      "sha256": "2bddf7e0e93f5c998b9bc3c3390058a2147d813df43c21b912ff123a421c9b17"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/prior-12000000.xor.zst",
+      "bytes": 9592,
+      "sha256": "12fb59fdbe6d76c560f3c9eef48789d3c53af301935852fc02146531be97b1a3"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/prior-16000000.xor.zst",
+      "bytes": 2493,
+      "sha256": "cfcd9a399e1d9451e29c611b1fb1717da77e9acb0fbf7af2402d099cc6b821a8"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/prior-20000000.xor.zst",
+      "bytes": 1716,
+      "sha256": "0260f0556cb5dd7e2bcd525a29c22216a4d1a5ff69fb81d404ccbfcdba12de21"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/prior-24000000.xor.zst",
+      "bytes": 11078,
+      "sha256": "cec07e79c785c467bd24264ed0563771eb9275fe77167d31337094c684e1d94e"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/prior-28000000.xor.zst",
+      "bytes": 8617,
+      "sha256": "16730a7f654f3ff9b731d17d816a80f96376c2dc807bda953d96b87bb90cf1e2"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/prior-32000000.xor.zst",
+      "bytes": 1316,
+      "sha256": "f941f6fd964b6484fadab0a86bc29be1e6b18a26200a9e632141427d47927730"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/prior-36000000.xor.zst",
+      "bytes": 2461,
+      "sha256": "ccb4066ece8166cd4292ea0d9252fc92e2bf77e4eaad31a75ef5b6d4462ffdea"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/prior-4000000.xor.zst",
+      "bytes": 44536,
+      "sha256": "aac78e9d606043369297508eb21958b6f068bf3e5b45eaf8c2f48dc1573b2859"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/prior-40000000.xor.zst",
+      "bytes": 3882,
+      "sha256": "cf8e6d77d3a4495cde390fa6136dd492b1087c6f5692456f9f02d1f394e1e202"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/prior-44000000.xor.zst",
+      "bytes": 2268,
+      "sha256": "4db6741fcc00a530a5bb70d414cc24faa3b59265b52ad8e03a4ee1adb9de47bc"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/prior-48000000.xor.zst",
+      "bytes": 2163,
+      "sha256": "0cafebab65785262e7cded860d450e468fbd14840dccf0b6464e875219cc52a6"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/prior-52000000.xor.zst",
+      "bytes": 1288,
+      "sha256": "ab3ef51dcf0e1b805cc82b6c30daa9f0167413e4def5fedc1052be92cd1b1f31"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/prior-56000000.xor.zst",
+      "bytes": 1301,
+      "sha256": "528fff407687b422e85c5768add510ef5c40ddea32f705c1afd11009f352f36a"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/prior-60000000.xor.zst",
+      "bytes": 2080,
+      "sha256": "7e660acb8c339c883c544cfff2bd54e66afc9c80683c4ca548193276485e33fe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/prior-8000000.xor.zst",
+      "bytes": 12674,
+      "sha256": "55f2391d956d999a9f83a03f8e897e1def25d46608f747eb161f3618130b6b8b"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/receipt.json",
+      "bytes": 193,
+      "sha256": "d29957e20e063f54e702e581535855fbc03aeb4443c53ec980f05636e1cac4dc"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/visits-0.xor.zst",
+      "bytes": 153390,
+      "sha256": "11cd0fe52f0e8a6087627364e7ddff2166ad8df2741524c2eeac4c66a05ca1c2"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/visits-12000000.xor.zst",
+      "bytes": 92015,
+      "sha256": "4772a60d429abd02d0e28ef02d393e2c7ab852f2ff3b217220d4d5f6321382d7"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/visits-4000000.xor.zst",
+      "bytes": 100698,
+      "sha256": "2c6d13b74d090d61ebeaddc9dc7c229a4b8df8d099a8527c977df39840cbe505"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/last/visits-8000000.xor.zst",
+      "bytes": 108071,
+      "sha256": "0f4646bb84a42c511b323118ec0f5e0f7bd104322a67509acfa2b895c3fd14c1"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/replay.json",
+      "bytes": 321,
+      "sha256": "eb258e863d705fe13cc4378a4eb535d4d6560830858f9ac5ae52a258642dc1a6"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/refined/result.json",
+      "bytes": 3679,
+      "sha256": "8e30d3aa0523930d07cb7d9806225a89fd954d70ede3fc1875a5d40de3d6ba47"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/selection-rank.json.zst",
+      "bytes": 19506425,
+      "sha256": "a38a0bf3d0a5f12d9432ee1c59f9c5aa0efc057da3f433e89960c3bbccb608f4"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120101/selection-top8.json",
+      "bytes": 2519,
+      "sha256": "0d8bcfa8a7e4d319ca1a84f1928b29f5ab14574efcca9023395c892eaea6f8be"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/curve.json",
+      "bytes": 2511,
+      "sha256": "8ed348c338388233e36d1c3bc3e907cd215b0451376501c734fbbbdd18301da6"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/A-0.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/A-12000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/A-16000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/A-20000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/A-24000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/A-28000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/A-32000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/A-36000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/A-4000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/A-40000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/A-44000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/A-48000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/A-52000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/A-56000000.xor.zst",
+      "bytes": 67,
+      "sha256": "301602e168158871444504b390694cd2f328c28441b1694c35ff56e3c8d9404e"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/A-8000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/R-0.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/R-12000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/R-16000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/R-20000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/R-24000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/R-28000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/R-32000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/R-36000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/R-4000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/R-40000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/R-44000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/R-48000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/R-52000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/R-56000000.xor.zst",
+      "bytes": 67,
+      "sha256": "301602e168158871444504b390694cd2f328c28441b1694c35ff56e3c8d9404e"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/R-8000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/identity.json.zst",
+      "bytes": 284498,
+      "sha256": "7a4280de48f80c1172a5e7cfca5a0df5a611343568fcec77323a4111334f12f0"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/prior-0.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/prior-12000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/prior-16000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/prior-20000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/prior-24000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/prior-28000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/prior-32000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/prior-36000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/prior-4000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/prior-40000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/prior-44000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/prior-48000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/prior-52000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/prior-56000000.xor.zst",
+      "bytes": 67,
+      "sha256": "301602e168158871444504b390694cd2f328c28441b1694c35ff56e3c8d9404e"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/prior-8000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/receipt.json",
+      "bytes": 189,
+      "sha256": "ed16825d208bc19e9964c471384c1321dcacedf05be6a0ab7469690a262a2aa3"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/visits-0.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/visits-12000000.xor.zst",
+      "bytes": 102,
+      "sha256": "5f8e29758913a6069df1e6b0e3eade400e2cd74799b8be42c9114d259fa8b203"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/visits-4000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/initial/visits-8000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/A-0.xor.zst",
+      "bytes": 1600003,
+      "sha256": "77c07f3d40691219403bb71b89caae0ab98f6ac2a7be06bd29dd4e4cb459fe17"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/A-12000000.xor.zst",
+      "bytes": 2205712,
+      "sha256": "e49f47331ab2aff4e0cc470849856391cb97dfbbdd14fc13d0a69d68a7e85e28"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/A-16000000.xor.zst",
+      "bytes": 2336768,
+      "sha256": "609a5f0592d84726d1313f7a6be96796630006764264eb2c26013d9ca53d7c4e"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/A-20000000.xor.zst",
+      "bytes": 2322998,
+      "sha256": "4e4103c8358b428c9b4f37a3b18f44a25f0ae77fe1ef4d6edfd36f9eb8870907"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/A-24000000.xor.zst",
+      "bytes": 2467756,
+      "sha256": "daa5839fde91ab47126442b970dca4ec4745d719b601f317dd7b61e678b7d9a2"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/A-28000000.xor.zst",
+      "bytes": 2395608,
+      "sha256": "add5f199fcc54b33c73906f8542d02cafa575fe23803bd3df4a6effb44093c94"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/A-32000000.xor.zst",
+      "bytes": 2467767,
+      "sha256": "beca331a9707122bf93f876841818957957180a30d5be395e27aa09088c649e4"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/A-36000000.xor.zst",
+      "bytes": 2439866,
+      "sha256": "78540d69bc7c5a57838c5b8433240ffdf6a8b1e87ffcf55090e9338491854b5f"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/A-4000000.xor.zst",
+      "bytes": 1504374,
+      "sha256": "480d2275e1c8598104c438107e1149bbaf3351442fb062cd6aa019e43de05eca"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/A-40000000.xor.zst",
+      "bytes": 2426264,
+      "sha256": "2a247811595408311409e4b5935765098ab1cbd78a6dfc46006046cfc121304e"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/A-44000000.xor.zst",
+      "bytes": 2328134,
+      "sha256": "2f15a0ae80ce2fa8163e12bedd6e15c1f7d8a8b3810016267c89d78ae0eee7ba"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/A-48000000.xor.zst",
+      "bytes": 2214329,
+      "sha256": "a0ac4da7ce9e6fe2dd2f1d85797e162182db08a7bf44ca90c007e8247d313963"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/A-52000000.xor.zst",
+      "bytes": 2281488,
+      "sha256": "477fd58b52b0b17194d5a586556805daf88e18699be67e402dc529dc4a3d0e77"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/A-56000000.xor.zst",
+      "bytes": 1364245,
+      "sha256": "37f81a2e14832bded0b600fbe9e2161e8182ee0c1f71becaf715ab38ce4e4605"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/A-8000000.xor.zst",
+      "bytes": 1865131,
+      "sha256": "4efda01235754a92c0b2d5ba657e52235f54472b6d01443d91d1a1455e03fbfd"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/R-0.xor.zst",
+      "bytes": 1558395,
+      "sha256": "052276496b11e3b01a6dfe065eaa4e298f87250ede78b80dca118108a0d48148"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/R-12000000.xor.zst",
+      "bytes": 2222126,
+      "sha256": "b2328807ed2d22eeee8a5600fd9e03a8140271b1ef2300014646121ed91e189e"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/R-16000000.xor.zst",
+      "bytes": 2229179,
+      "sha256": "5bd8964162b2be5a2f0a57e6e4fbfb04a9fb29600a3f20c6129b4f872e827a87"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/R-20000000.xor.zst",
+      "bytes": 2338644,
+      "sha256": "0e58580837aa565dfa52312b088a495856eb152ad3e9fb1dbbcc62a63a2f3a92"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/R-24000000.xor.zst",
+      "bytes": 2297965,
+      "sha256": "6908199ab87ae9662d957fedbe1107f35fd81fb0a4eea5209aac0735d6831aec"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/R-28000000.xor.zst",
+      "bytes": 2322861,
+      "sha256": "fa06859d67c5c6a097ff78f4a9118750780991ee31e7aeca0ff818ffb9ee3544"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/R-32000000.xor.zst",
+      "bytes": 2326275,
+      "sha256": "71667c4b39cebf26fca933a0065729cbc75e75d8767d72d12c3f8164e7acc926"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/R-36000000.xor.zst",
+      "bytes": 2330993,
+      "sha256": "9beddb2caf5e37b6447717cdf5a6da6b8c1d99592513cdd9859812f2f0bc3a1e"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/R-4000000.xor.zst",
+      "bytes": 1567854,
+      "sha256": "f2d7e5fdd1589f23e320f47ebd89a24f6bca14f4e3d9c5b0be45d914c6f805d5"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/R-40000000.xor.zst",
+      "bytes": 2396276,
+      "sha256": "e7e3ecba143b6abd3a27f5be156001c88208b3cfaa72a7f9670600d5fe401770"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/R-44000000.xor.zst",
+      "bytes": 2302052,
+      "sha256": "fa1a43afeaa6e67f506686479e3feb33215b7d760427832f4f20553fbf114255"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/R-48000000.xor.zst",
+      "bytes": 2355108,
+      "sha256": "f75a0f9fa22c0acb7d8eed9c95d55aadcbb2366659e5b3f4d2088be77e1d3986"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/R-52000000.xor.zst",
+      "bytes": 2325454,
+      "sha256": "239c18c4c628338a01b95b01cf880ac8fc173884db14b751dba89ac152bfa372"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/R-56000000.xor.zst",
+      "bytes": 1660309,
+      "sha256": "c0bf75ad75f8cafa86efe1759cafc7d4de122f9ed84938f2d2cee52e52678e17"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/R-8000000.xor.zst",
+      "bytes": 1916737,
+      "sha256": "2c72597d9ede08f3e8a3dbe0bdab77f7b395bc825843d951f2dabf60a342495c"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/identity.json.zst",
+      "bytes": 305849,
+      "sha256": "bfa494bcb403ed7c9d6e4c9e5462606693d65bf0a4596de3af8d648add986052"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/prior-0.xor.zst",
+      "bytes": 36615,
+      "sha256": "ae0271075c0d4da5ce06294cac268b7c7f716480991bafc0e94c1a6eb4dca2ef"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/prior-12000000.xor.zst",
+      "bytes": 4903,
+      "sha256": "f2da0cd7593497e0150a2629700c81ac7eb25491ef59f4999f47948442878b57"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/prior-16000000.xor.zst",
+      "bytes": 1343,
+      "sha256": "f7a9a1d1aed2577e5276ed7026fd4eb195730fffb45b9b62615a26329889cd0a"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/prior-20000000.xor.zst",
+      "bytes": 1934,
+      "sha256": "92c97c0fd6155002bca72003136c82a03c3bc34f6b5545fe214fa307304f654b"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/prior-24000000.xor.zst",
+      "bytes": 2433,
+      "sha256": "d99a98e5d90bb9798d100f39fb7cf1b8951ac68a1b4641dc0b20a1965003296e"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/prior-28000000.xor.zst",
+      "bytes": 2726,
+      "sha256": "5db1fb73d2b12684603e1d4a0b94679ed6fcdb1788721f67f781ad86028de13f"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/prior-32000000.xor.zst",
+      "bytes": 1576,
+      "sha256": "e0d55978063532a4e52364fe61ef761838c47b740fae4913ab6c587204415890"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/prior-36000000.xor.zst",
+      "bytes": 1839,
+      "sha256": "46e93b36e0a118b33c7aa3ede66b5566ffd3475cff46bc0c9f4af5dfdde25532"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/prior-4000000.xor.zst",
+      "bytes": 32360,
+      "sha256": "1a3645b1bfa4d72903f2e9932f42c23815dbafe3a893098c553645c73e65e8e9"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/prior-40000000.xor.zst",
+      "bytes": 1330,
+      "sha256": "f6086d9437ab4d4b797bae5335c66d0ba469778b02b7b32518679da5debb2357"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/prior-44000000.xor.zst",
+      "bytes": 1356,
+      "sha256": "d165badb19d0df5158c189a1c211b571d4313de04ad8b47ad51bca61d6789156"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/prior-48000000.xor.zst",
+      "bytes": 1969,
+      "sha256": "59f88fd182e1b16e53135a80dfa1223f34cfeed6435856135a9004df389a738f"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/prior-52000000.xor.zst",
+      "bytes": 2017,
+      "sha256": "3d019940af0c7cebabe462a79dabd40dd81595bab2a7d8592409fbb14a42a5be"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/prior-56000000.xor.zst",
+      "bytes": 1795,
+      "sha256": "59134fd89cf399086cba871873323cc44039f863db91860068460c0b171dadf0"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/prior-8000000.xor.zst",
+      "bytes": 18709,
+      "sha256": "67e8c1cd1af8dad0d8bea16cfd079dcd3def05614aaa4b10bc5a28d0a1a5250f"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/receipt.json",
+      "bytes": 193,
+      "sha256": "49fdd2e52c6241a3938ceb4c9bb05621db65cb5b7216790b6e51c1d9af1a777d"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/visits-0.xor.zst",
+      "bytes": 154423,
+      "sha256": "c3d33d36294aaaadee53958442cc26bb99e8a42d95532a5f66a442f918d92072"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/visits-12000000.xor.zst",
+      "bytes": 75776,
+      "sha256": "a39516f03709b9cf69e45d4ee8b8862ad7ff6c2cecffe070b71bf76c019262d9"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/visits-4000000.xor.zst",
+      "bytes": 93077,
+      "sha256": "62741ff6c6cfe446da15b5c6b4131664a2d3aa33266d4dbe35d592e9c30d53d5"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/last/visits-8000000.xor.zst",
+      "bytes": 94702,
+      "sha256": "a9a759619d41c7ca6e5dae56053bbe7fe310dac2431e21caf94cb808c27d171c"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/replay.json",
+      "bytes": 321,
+      "sha256": "045dde11873a64257e04ff11bc8e03931fd85ad142efc8d5bbe3c2900057f198"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/control/result.json",
+      "bytes": 3343,
+      "sha256": "d7131ee99f84219330125c37731be967674def08b947afc362b3198eeab5aca1"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/independent-final/169-context-EV.json",
+      "bytes": 319371,
+      "sha256": "240edf7934d45336aa17b8d48b801926d541b94da6b07b79b1a889348d8f5d8c"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/independent-final/169-frequencies-final.json.gz",
+      "bytes": 38508,
+      "sha256": "17616a3d6010c8a5672a703d41deb15e5ef2a1af2b740b4f028d078853f7223b"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/independent-final/conditional-range-EV.json",
+      "bytes": 5970,
+      "sha256": "60cae17459e51774fb71a5c207ead1551b72df7669173559a321675e5da9595d"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/independent-final/freeze.json",
+      "bytes": 171,
+      "sha256": "13251226c52b589cbfe942dc48b1be8af9b769d8ad0d91f65bd61f5d4485095e"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/independent-final/legacy-law-diagnosis.json",
+      "bytes": 2581,
+      "sha256": "4e267e8f4d8adb09582a26823464c9f8fe964c8851f1fb4594e8294c46764323"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/independent-final/native-tree-proof.json",
+      "bytes": 737850,
+      "sha256": "f297305d7cc960448733884bdd51b7f9318bfdcd99bd5d2b8d33ef8d69f61dc4"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/independent-final/progress.json.gz",
+      "bytes": 702416,
+      "sha256": "0534d12582a9bca6d10487e610e08c2c6f2c79fd6f343738bc794de955a4dabc"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/independent-final/result.json",
+      "bytes": 28983,
+      "sha256": "368d0c4075e6e029fa00437f6925a4908e714ed6e70ea08d174a13c0a323f916"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/independent-final/values.json.gz",
+      "bytes": 702672,
+      "sha256": "ccdd57897e2a0dd1f073e86da8cbf48984b5836d6855356e00053eae0e91e973"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/A-0.xor.zst",
+      "bytes": 1662810,
+      "sha256": "deacf04e30eac1dd2dc3d9f01a46c4587930012b6a7dcb4b5e644ed4b9cb570a"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/A-12000000.xor.zst",
+      "bytes": 2244529,
+      "sha256": "059dc0e8740e3006bbebeebdfe7fd107ddd4582104473088d64c4b75852c9054"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/A-16000000.xor.zst",
+      "bytes": 2367730,
+      "sha256": "1e217e4d9c1bdfc27ccf26879c4c1c8fbac19824ca8a3706be1a535efe56d360"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/A-20000000.xor.zst",
+      "bytes": 2347314,
+      "sha256": "547e6fa5b0cdcb7eb855b153ad1d665a36345f6a3763a7212dcd633fd3fae2af"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/A-24000000.xor.zst",
+      "bytes": 2506428,
+      "sha256": "72696b977968b447b032e97597b67d75aa1459621f66e03287be77382af76f99"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/A-28000000.xor.zst",
+      "bytes": 2415149,
+      "sha256": "ac5167c92c65ba6758d2e24889837a8c13d9d49bdbb983f868c6b9f8218092e8"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/A-32000000.xor.zst",
+      "bytes": 2540009,
+      "sha256": "51ae8dccd7087f25f1cadc76c3bc71a12f8a5a7d3e545fc87502cbbced9f0929"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/A-36000000.xor.zst",
+      "bytes": 2485187,
+      "sha256": "8c9c50772cd67358e16e6810269cc9f85b408d5f512051cea43ff068d05af794"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/A-4000000.xor.zst",
+      "bytes": 1542471,
+      "sha256": "6ae14cc8694d32e92ec1c7ce27cdfafbce28c9410cbbe7871a2de938d760ffdf"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/A-40000000.xor.zst",
+      "bytes": 2494283,
+      "sha256": "48081c9fb399618c330442edc59d6daa29e848e9e5c1fa386ced51e481180d94"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/A-44000000.xor.zst",
+      "bytes": 2404340,
+      "sha256": "89d452d137ef1f7c6a6a7e3ab3e65daef4bae67339d2f225a393bf76c8d792eb"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/A-48000000.xor.zst",
+      "bytes": 2263495,
+      "sha256": "457916670f596ec748bffd7c11c7c644758d319e34dd61ad2812aa91a3a14af6"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/A-52000000.xor.zst",
+      "bytes": 2328134,
+      "sha256": "2881ccc441a448c880242930db511314eeccc1789a5f3884decc947fe3d5ab62"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/A-56000000.xor.zst",
+      "bytes": 1445881,
+      "sha256": "9388dedfe993b0c5c8d0729eb18914c1f1e917b8b7a9d427fa3f06f66c3c9b56"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/A-8000000.xor.zst",
+      "bytes": 1925089,
+      "sha256": "efff2285c6f5e599e92e0806860b668c6e1c54e24334ef02c55f62b622f41f49"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/R-0.xor.zst",
+      "bytes": 1610139,
+      "sha256": "ac91377785ff262fdec8776e0fbe58aa95519b0a8c2e058cbf7b82e8b0a6b80a"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/R-12000000.xor.zst",
+      "bytes": 2235675,
+      "sha256": "4093f0839ba11d8d0f9d32435c29a09f8edc57c4ef2fa49f63a3ca4a2a86bcb8"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/R-16000000.xor.zst",
+      "bytes": 2234321,
+      "sha256": "c29185bcb2710e0d39eac03d59af79d175879efcdeeb5cb3bd3542588d66e968"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/R-20000000.xor.zst",
+      "bytes": 2347011,
+      "sha256": "268d4c6e61d6196531c5c43b1a0661f3c37cbb44132e98e306989ecbebc96830"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/R-24000000.xor.zst",
+      "bytes": 2318296,
+      "sha256": "fddba5c3493db41413fd6fd84f15599afba8044578e9db1522c0e83f0e7b8e96"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/R-28000000.xor.zst",
+      "bytes": 2352133,
+      "sha256": "9645c8683739cc957061147d2bc0af8da1d446122b07a4d06e65a2fdf96adfe7"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/R-32000000.xor.zst",
+      "bytes": 2338261,
+      "sha256": "067569bcfed14817702f913950609935667d0c61702bdce29221f0524cbf2c21"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/R-36000000.xor.zst",
+      "bytes": 2325322,
+      "sha256": "04e2afe976d30d41cd3cd06d517d9aca69c4c30c38d86f376cf354ccc69ba828"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/R-4000000.xor.zst",
+      "bytes": 1585236,
+      "sha256": "0b2e2201e6184397c845e767a91975ee7a1c51e227a50a3cd8dab95e589d1f5e"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/R-40000000.xor.zst",
+      "bytes": 2390306,
+      "sha256": "341054b14e0d7287419d3e59164e0d57ac2969ef79806595818ebdf7ab128e32"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/R-44000000.xor.zst",
+      "bytes": 2324718,
+      "sha256": "ca459d464b5fcd87c5c2727e9257d40b7ce24ce702c2af17108003d8ef8a41c4"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/R-48000000.xor.zst",
+      "bytes": 2354899,
+      "sha256": "6b1384618f09865469ed851a5d1393b9438af4abe768253f3cb45487e22f3443"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/R-52000000.xor.zst",
+      "bytes": 2318614,
+      "sha256": "705d8eaccbb1c65a6de799482ded1f51626a3067f66f59ca0ff03a6f06690466"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/R-56000000.xor.zst",
+      "bytes": 1717809,
+      "sha256": "e58d23c80ac1e2f1ca7f53edb897bb5d9d37aa6f5b4c6dab6f045c51979c66e3"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/R-8000000.xor.zst",
+      "bytes": 1971399,
+      "sha256": "a2efb41a8f7309abc5b6afd4b386f2e8afab1984daca9267f9dff938c1bbf6fb"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/identity.json.zst",
+      "bytes": 308183,
+      "sha256": "bbbc1691c09934fbd830f0727b2e23f89add16021c71835d49f0bb6619372676"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/prior-0.xor.zst",
+      "bytes": 38508,
+      "sha256": "cf49c0605bea7b2fa3dc904936890f3545b907cf1df186a261c0802a21fdeadf"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/prior-12000000.xor.zst",
+      "bytes": 5986,
+      "sha256": "9f0c6d79daa685ce671ac2142719e48866ab3e238ce19fe17cd67a2b3a2e3b18"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/prior-16000000.xor.zst",
+      "bytes": 1359,
+      "sha256": "a23b7afd7c59ed64891367368a0ca433fd25cf99c003418eab314fc33722d590"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/prior-20000000.xor.zst",
+      "bytes": 1336,
+      "sha256": "f630aaa65b40e958b8f2fadb3daadcc170cb85fb4ae82228aeee732c6dd5632e"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/prior-24000000.xor.zst",
+      "bytes": 1526,
+      "sha256": "bc0d92eed391a6aa0b00fd5324f57bcc4cdbcc3bd3bc69a3402a947e8f4eae4a"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/prior-28000000.xor.zst",
+      "bytes": 1314,
+      "sha256": "1eda993799fb15152db86b23fb820dd829e3102910421366c6d102dcdf79e9f2"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/prior-32000000.xor.zst",
+      "bytes": 1335,
+      "sha256": "3001a5d3796d9668375ed2938a2b8c1f393c77f4a7be86ea3d7cdce9a4777370"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/prior-36000000.xor.zst",
+      "bytes": 1990,
+      "sha256": "2831da612e9801f2d01eaed08c02711b72ae784c028a7fa0be573bdc7ad5464f"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/prior-4000000.xor.zst",
+      "bytes": 35003,
+      "sha256": "ac6576f4432e7a3983ed1dcdf4f2788fff2cf23062e68e32382e8f70aed073d6"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/prior-40000000.xor.zst",
+      "bytes": 2910,
+      "sha256": "fadca3229d159bc5bc1e9d691a8994025857d88797c7e8d2e848804abbd6db33"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/prior-44000000.xor.zst",
+      "bytes": 1566,
+      "sha256": "f60b0b06b4753038985f6f6d251b8c0a920ff2f0464a0b9683e37b750a499a40"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/prior-48000000.xor.zst",
+      "bytes": 1522,
+      "sha256": "c9eef403235b3db539d6177f1cfc0e5823471d53dbba73ce7c5b5b95dd7ab33d"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/prior-52000000.xor.zst",
+      "bytes": 2027,
+      "sha256": "53051e343b1c350306838686660cf2bd45a31211dcbc80bc7786470cf6084d5c"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/prior-56000000.xor.zst",
+      "bytes": 1589,
+      "sha256": "6d2e2b0365a30b1182183f5fea4febd0895d91d55304a4d5f9f8b0142845620f"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/prior-8000000.xor.zst",
+      "bytes": 20522,
+      "sha256": "d0ff9172287073f2409e91bde1b12e775e615c339a1da168cdae1e5bac644e59"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/receipt.json",
+      "bytes": 193,
+      "sha256": "2b81fd3a94f731d038f2e66c13fdd090cc1f3bebdc4f796e5c517f73f8314d86"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/visits-0.xor.zst",
+      "bytes": 158374,
+      "sha256": "c3684b18fdc1043753bd64da4b46220273b0fb88fa437342d7dc0843f83d001b"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/visits-12000000.xor.zst",
+      "bytes": 81063,
+      "sha256": "8534d1fa72091444d2486638444e9ff6c8e0178771a121acb1f57066bdffc5de"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/visits-4000000.xor.zst",
+      "bytes": 103627,
+      "sha256": "60b1ce323ea7056d23c4d219785cea44bdf64b8c0d89e431e578ea2097490767"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/last/visits-8000000.xor.zst",
+      "bytes": 107217,
+      "sha256": "af64d03d31b55b28dd36b71022affc034591458bd04148b8c23ff262439713d8"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/replay.json",
+      "bytes": 273,
+      "sha256": "ca637e5297a4ebc6bb555d062d35e1cfb414dffbe0f6c1c41ca4cee74b2d0c86"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/matched-control/result.json",
+      "bytes": 804,
+      "sha256": "63f5e339b1e3b94aefa6ef08bd25449667a57c0b3f3de7ae11df2febd2aeb921"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/rank-compression.json",
+      "bytes": 283,
+      "sha256": "8078f7b48f9e39918f098f68ea72f25a5e7248e2b9dd2f5dc641073cb3338818"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/curve.json",
+      "bytes": 2517,
+      "sha256": "b3776aa794d8f7e58222c7e1e62ab7a5efa347285b7546f360e9398703db0bc1"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/A-0.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/A-12000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/A-16000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/A-20000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/A-24000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/A-28000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/A-32000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/A-36000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/A-4000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/A-40000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/A-44000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/A-48000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/A-52000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/A-56000000.xor.zst",
+      "bytes": 67,
+      "sha256": "cb7a0cd8bc2fe230c42876aa27f030c4a631fa66b94ff2a8a075ac9d3646e737"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/A-8000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/R-0.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/R-12000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/R-16000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/R-20000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/R-24000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/R-28000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/R-32000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/R-36000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/R-4000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/R-40000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/R-44000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/R-48000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/R-52000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/R-56000000.xor.zst",
+      "bytes": 67,
+      "sha256": "cb7a0cd8bc2fe230c42876aa27f030c4a631fa66b94ff2a8a075ac9d3646e737"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/R-8000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/identity.json.zst",
+      "bytes": 289386,
+      "sha256": "19d6abd7b725ac58e05c4f2e491ece27bbf56e05e867d55bac7a6f2f66c031e9"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/prior-0.xor.zst",
+      "bytes": 761,
+      "sha256": "79f29c2cf34222fc75bcd445b361f0b41f0e2366b285b1014adf72fe6f242887"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/prior-12000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/prior-16000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/prior-20000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/prior-24000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/prior-28000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/prior-32000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/prior-36000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/prior-4000000.xor.zst",
+      "bytes": 2900,
+      "sha256": "8c90a207388d8c3c15d5fb8e62f2eeda3e97b45da1c8d7a9f50611ddff866aab"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/prior-40000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/prior-44000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/prior-48000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/prior-52000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/prior-56000000.xor.zst",
+      "bytes": 67,
+      "sha256": "cb7a0cd8bc2fe230c42876aa27f030c4a631fa66b94ff2a8a075ac9d3646e737"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/prior-8000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/receipt.json",
+      "bytes": 190,
+      "sha256": "9e4531636aaea647028a866ecad0f9dd23a8ea9739f41e2c84b38c2bc7487b7b"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/visits-0.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/visits-12000000.xor.zst",
+      "bytes": 102,
+      "sha256": "af93a4694c85e098e2b713e3693d63843c90a3421000c938448e00fd04d4bc67"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/visits-4000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/initial/visits-8000000.xor.zst",
+      "bytes": 150,
+      "sha256": "1d323c54d85405098aec414b242d792e61a1ca520e984dd9bfc4f0d97f4b5fbe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/A-0.xor.zst",
+      "bytes": 1666834,
+      "sha256": "2f689cae979db1ff21ff48eb1f1b930fa9406007be1dab485e10300d3f64c80a"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/A-12000000.xor.zst",
+      "bytes": 2227663,
+      "sha256": "0538de8d657a6f780ab7da6c6defd0a4d255641707a96bb6c3631b6b597dead4"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/A-16000000.xor.zst",
+      "bytes": 2385142,
+      "sha256": "fdab6ce8ef4a090f5989c20afe635b937c6dad11ccdca7d7b844e4bdbd9df4ca"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/A-20000000.xor.zst",
+      "bytes": 2349135,
+      "sha256": "43eb589bf9cebe2a9fc91217e746842fcbf9dce7fa5d20d83e919d55e8f98a99"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/A-24000000.xor.zst",
+      "bytes": 2471039,
+      "sha256": "3e326f3a3b8f7689c9cf799e70e096cd3ad5a86d63778e5057e6c89ed82fa891"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/A-28000000.xor.zst",
+      "bytes": 2426490,
+      "sha256": "8e767346cbf77f71c40ba9ff8a15a8408ec62b9d089807ef68d161f49ee99c16"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/A-32000000.xor.zst",
+      "bytes": 2551177,
+      "sha256": "5a64614caba36b4527691ecc1f2d7610a5b50ec5ea9c358e65ef652b98c17ebe"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/A-36000000.xor.zst",
+      "bytes": 2486503,
+      "sha256": "09d0a58dd8329cf4f81d9fd6ab8f38910ac057cb4a39daec5c79327051b9943a"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/A-4000000.xor.zst",
+      "bytes": 1545690,
+      "sha256": "a98f393e6aae5d8d856ac557f4ff25732b43a960b96bf7c4574ec1137c5916d0"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/A-40000000.xor.zst",
+      "bytes": 2472679,
+      "sha256": "03df8b7c2f30311d11f52df6b056187a9d1d974c204d39088a94c607d150e553"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/A-44000000.xor.zst",
+      "bytes": 2416824,
+      "sha256": "af355b89146ec0d2d4302988eadb4632d425d342f8ab37d6bec88c1d4dfa4e96"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/A-48000000.xor.zst",
+      "bytes": 2261063,
+      "sha256": "2d4d2143585baf158e0dd61108da874c5c1fa8dcd8be9a6d7f9e447ee5ecbb87"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/A-52000000.xor.zst",
+      "bytes": 2363337,
+      "sha256": "493eb7d7f3e2b474a84ff1344c20dffeb86b36a23be649e77b9ec939044115ac"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/A-56000000.xor.zst",
+      "bytes": 1488156,
+      "sha256": "c8553cf040c9581b7fd024e72698e700b263056abf4b5fa3d5c63713ad219529"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/A-8000000.xor.zst",
+      "bytes": 1931038,
+      "sha256": "bef57e6f71734131fbdec12df68d670473c2b29ff0b4e6e07fd55d23b1a62113"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/R-0.xor.zst",
+      "bytes": 1611215,
+      "sha256": "beb4f479f7ea9b2b357eab8755b3d96a2017c9a2a91c3bb183d7e10edf6e813d"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/R-12000000.xor.zst",
+      "bytes": 2200315,
+      "sha256": "b85f175721c2dfe734ae12e8a5bce64968363f88d6c2e8789e7591e99015110a"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/R-16000000.xor.zst",
+      "bytes": 2263822,
+      "sha256": "769e1813279872ed1a4d0da5a256b3f4bcc88dfb2a0c68b9ca80f8cef06fe46a"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/R-20000000.xor.zst",
+      "bytes": 2343786,
+      "sha256": "a9587390f07dc9a05159d14c049e464a9ad2bae9c1b28901b2221ccf4e844065"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/R-24000000.xor.zst",
+      "bytes": 2284741,
+      "sha256": "950738add3cb19f2bccc20cfc2c8133078b9f59c343276691eead754ce8cf562"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/R-28000000.xor.zst",
+      "bytes": 2382602,
+      "sha256": "1d4389afc2ded899bf095baa17412bbb8e77408c1ff8276f0a59bb65be011dee"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/R-32000000.xor.zst",
+      "bytes": 2333159,
+      "sha256": "68a916f1899701cc5b2e574559d17c85e595bbfd7dea7f3748cbbb2fa09c7639"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/R-36000000.xor.zst",
+      "bytes": 2333496,
+      "sha256": "addeb66687d7a73717b312dfde7698819bd2385bd733008d876fad05afed9a19"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/R-4000000.xor.zst",
+      "bytes": 1584987,
+      "sha256": "1a57b6fb3958332535651df65ac19c9e720bf35651d50d5665d39dd75d5199da"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/R-40000000.xor.zst",
+      "bytes": 2373706,
+      "sha256": "0b88c2ad4e4fd82736c2ff5c1ca09c9d3c250034917a5fb87f8bf212405448d3"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/R-44000000.xor.zst",
+      "bytes": 2326650,
+      "sha256": "c66f4cd03b2c35abb902d4878ab3ce36f2af910d34c0f8c85581daf6fff78232"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/R-48000000.xor.zst",
+      "bytes": 2339907,
+      "sha256": "9106a7fb5fb834479c60a4c8b907dbfd6e169f0cac198682b0ef0ea83ee2da24"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/R-52000000.xor.zst",
+      "bytes": 2351640,
+      "sha256": "1a1051b12e2e344aca9cd1bbd55b0a046ae3fdf3877c0201b20ad561f737a344"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/R-56000000.xor.zst",
+      "bytes": 1771574,
+      "sha256": "c688ea903319d006c3f5f1d8c52dbdbc46fe00d0cc3e217d7ad06c393a5fe9f1"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/R-8000000.xor.zst",
+      "bytes": 1982418,
+      "sha256": "43f3815ada14e9003a477f3d0d350264a2206e7cf6081f153bba5404a3fe88cf"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/identity.json.zst",
+      "bytes": 342909,
+      "sha256": "289fd13cde1491320629a2e51ab9c4ad09eaf45deea0e451229b9dda8be5fa99"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/prior-0.xor.zst",
+      "bytes": 40171,
+      "sha256": "cd905de0576cd2aafaa0d9dd08631a49617aa8736c386c974e7bc17b8d1a8a2b"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/prior-12000000.xor.zst",
+      "bytes": 7530,
+      "sha256": "360d5c872edaa9d0a7c7534d9c726da4f270b3e34c4993919e38ea33f3a39801"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/prior-16000000.xor.zst",
+      "bytes": 1540,
+      "sha256": "9fff0c2f2b37393d03f62389fb632d63c312cb4bab9018803776f467f7952720"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/prior-20000000.xor.zst",
+      "bytes": 1415,
+      "sha256": "3531b8d0b8aa453b7a85e9b9a1f3fb52a646ab3bda52ded521f225a647fe81a1"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/prior-24000000.xor.zst",
+      "bytes": 1553,
+      "sha256": "11fc8888fff5cc5393fe5ee449fdd8446a86845421f5094b169abe1d4d6ef768"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/prior-28000000.xor.zst",
+      "bytes": 2115,
+      "sha256": "dab88303240c2fae507a34597edffc8953fba55f7843c5dbfc06615b39af3a44"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/prior-32000000.xor.zst",
+      "bytes": 1371,
+      "sha256": "6bc79a64f520efa373dc3581c24bb2261552865cdb47bf1d12c0af275a948bc4"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/prior-36000000.xor.zst",
+      "bytes": 2124,
+      "sha256": "5be9bcf968d354233875634129d6c3a4199fd600af59190e8133b9a0f1504d2f"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/prior-4000000.xor.zst",
+      "bytes": 43325,
+      "sha256": "a4f18c7eb00f4502db5d47b0dd44f6071df161a02f496e8ad13c9b71ef0e5e26"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/prior-40000000.xor.zst",
+      "bytes": 2715,
+      "sha256": "095d2f19c7bd1ec488ff721481fa882e619f2f312352ea90d77d7e6bfae2db51"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/prior-44000000.xor.zst",
+      "bytes": 1340,
+      "sha256": "86443d3c1caf84216d9f2f9d96ddfec0053119fff417e72d384997179d421f46"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/prior-48000000.xor.zst",
+      "bytes": 1533,
+      "sha256": "f45d3ea003a2861a43de7c83396f011c58abaed4349d0c01db51b0d2ab114305"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/prior-52000000.xor.zst",
+      "bytes": 2122,
+      "sha256": "11082f50210266ff05f8c11ca6fadee1a1cdb361e6e9d5de6607f394dcb1be1c"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/prior-56000000.xor.zst",
+      "bytes": 1851,
+      "sha256": "48840dc78c8ef3a1445974f0f2a176a605c288ef71d08f23cc3bf2b83cfc6256"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/prior-8000000.xor.zst",
+      "bytes": 19794,
+      "sha256": "2693e502c0d2248263844a9052670e9f22919506ca4d98c14c211bc7fcc3fa0d"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/receipt.json",
+      "bytes": 193,
+      "sha256": "40abd241128865ce0ffdec2da95d3dd13260ca196a43943901155ace729df56e"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/visits-0.xor.zst",
+      "bytes": 171000,
+      "sha256": "00ed7798985003afe4d9571c9510e9cd49d1aff7deea185da092096dad5d7e0e"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/visits-12000000.xor.zst",
+      "bytes": 80938,
+      "sha256": "23c1fdc8cf01c47ae209436a7d3e773a3b39301f611b72c5c619545696f7688b"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/visits-4000000.xor.zst",
+      "bytes": 101637,
+      "sha256": "90caa9405167519829f848943f154bee08789b5a480844238c7bb32ed92378ad"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/last/visits-8000000.xor.zst",
+      "bytes": 107205,
+      "sha256": "e2921539bd7718ed574778193622c8a92ed67dd7bcd82fc98171e64d6f9470c2"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/replay.json",
+      "bytes": 319,
+      "sha256": "ccbba88bda8a0b64926ad5b8039338a9ab772863e970b0c15c4b0d8693337ba7"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/refined/result.json",
+      "bytes": 3700,
+      "sha256": "db1f7184af82765647fef3ffed3aa4d07d6cd4187747e9b1c085281413dd7f1a"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/selection-rank.json.zst",
+      "bytes": 23231883,
+      "sha256": "ec6bf2db91e451b37ce3a5820cc032b08db8ac0b34f78421fc8aa9b74225db9f"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/17120102/selection-top8.json",
+      "bytes": 2508,
+      "sha256": "0f19d902ccea763bc9935e053ceee8755f235f4633e761f3fc0998fd346574ea"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/PLAN.md",
+      "bytes": 1749,
+      "sha256": "a59df2ac3a0bb8788f5d4cd3bd5cb429fed9bc15e39c1707da5ff0aea81575c8"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/README.md",
+      "bytes": 10803,
+      "sha256": "77addf375ada052dd1f9e53aa45c5be0182325931e5cc79275dc9acab03078b7"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/acceptance.json",
+      "bytes": 8408,
+      "sha256": "31675ca40e7f0d4fd4e2a6ebb724895b698101cc43f26f82e8a304eb4828c91e"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/multiplayer-cap.json",
+      "bytes": 2271,
+      "sha256": "768c7a440f63b73ebf1b7f39ec41d00f74d8b3a92b7013c7be515259bcbd67b0"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/multiplayer-variance.json",
+      "bytes": 1130,
+      "sha256": "d1a10f3b6f79cff0c581b4ec4de67529e7a37e019ec6d03b039b53674eeae9d3"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/native-regressions-195.txt",
+      "bytes": 38567,
+      "sha256": "2fea1993fbcd03bab85cd0289d5b117e4288012cc86ceb2ad454b763be4320c0"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/new-regressions-13.txt",
+      "bytes": 2245,
+      "sha256": "2f12ece9f1bdac99cd866a873c8e13bcb9061ebc6679358cfaecdfa8c0bcd3eb"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/prefix-first-pilot.txt",
+      "bytes": 800,
+      "sha256": "25c7e3bd70ea16bbd21f031e7f5188ad37c81a50053c34522efe1edfb5315890"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/prefix-repeat-pilot.txt",
+      "bytes": 815,
+      "sha256": "2e76ce3f698dc3d295e4706934e338a26facac394065b1ba50573387cd8d7439"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/prefix-variance-driver.py",
+      "bytes": 1992,
+      "sha256": "5b6762fd1a2757dd2f7aa1c160950f7fa2a020acf0c40651a94c11c53416cf85"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/ranking-driver.py",
+      "bytes": 873,
+      "sha256": "2bef28959942e40f5e9d7243bb1cd731370524340c0eb732ed27a6a8578a0cf1"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/storage-benchmark.json",
+      "bytes": 815,
+      "sha256": "888a8e5610a802d5f3c29c667c7d13e5a4eab1fc9796f8ca344a4f2a1666c0e5"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/storage-benchmark.py",
+      "bytes": 2176,
+      "sha256": "6e7b78520cf05e74d2e75b0d87abcb758a55cbbf899fb4d4ab68422d13dbd4cf"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/storage-benchmark.txt",
+      "bytes": 690,
+      "sha256": "ea500ee295a72c7209ede3863634990a1bbcc778ddf92ce033e1b459c70aab4b"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/summary.json",
+      "bytes": 112654,
+      "sha256": "531fd4e9264600e0192c337784356985a14bb3aa72275587620cdebd52342b25"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/symmetry-regression.txt",
+      "bytes": 259,
+      "sha256": "30c6a5981d1bf5446684fdde459896dfa07612df4fb91251ec62e9838a0b3a43"
+    },
+    {
+      "path": "docs/qa/cf-refinement-20261128/test-command.txt",
+      "bytes": 1424,
+      "sha256": "f57b978c8915497720b857864e8c54cb80f0d60e316cb4b4fc9f73068fde55ed"
+    }
+  ],
+  "excluded_local_raw_rankings": "Lossless .json.zst archives plus raw SHA receipts tracked; raw >100MiB not Git blobs",
+  "parent_checkpoints": "docs/qa/public-stream-final-20261127/{17120101,17120102}/t64/",
+  "restoration": "README.md; XOR delta requires immutable parent arrays; six replay receipts verify next-step RNG/R/A/visits"
+}

@@ -1,0 +1,8 @@
+test_counts_rejected (gto.qualification.test_release_deviation.Binomial.test_counts_rejected) ... ok
+test_independent_closed_form_endpoints_and_one_success (gto.qualification.test_release_deviation.Binomial.test_independent_closed_form_endpoints_and_one_success) ... ok
+test_no_hidden_card_input_and_independent_all_opponent_enumeration (gto.qualification.test_release_deviation.Nuts.test_no_hidden_card_input_and_independent_all_opponent_enumeration) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.060s
+
+OK

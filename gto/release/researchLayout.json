@@ -1,0 +1,350 @@
+{
+  "model_source_sha256": "bb879efc21c82af9c650ef4ef67337fcae772c9eebef44dd8eeeec106a3b2fd4",
+  "nodes": [
+    {
+      "actions": [
+        "fold",
+        "call",
+        "raise_to_5"
+      ],
+      "actor": 0,
+      "children": [
+        1,
+        2,
+        16
+      ],
+      "contributions": [
+        1,
+        2
+      ],
+      "history": [],
+      "raises": 0
+    },
+    {
+      "actions": [],
+      "actor": -1,
+      "children": [],
+      "matched": false,
+      "value": -1
+    },
+    {
+      "actions": [
+        "check",
+        "raise_to_5"
+      ],
+      "actor": 1,
+      "children": [
+        3,
+        4
+      ],
+      "contributions": [
+        2,
+        2
+      ],
+      "history": [
+        "call"
+      ],
+      "raises": 0
+    },
+    {
+      "actions": [],
+      "actor": -1,
+      "children": [],
+      "matched": true,
+      "value": 2
+    },
+    {
+      "actions": [
+        "fold",
+        "call",
+        "raise_to_18"
+      ],
+      "actor": 0,
+      "children": [
+        5,
+        6,
+        7
+      ],
+      "contributions": [
+        2,
+        5
+      ],
+      "history": [
+        "call",
+        "raise_to_5"
+      ],
+      "raises": 1
+    },
+    {
+      "actions": [],
+      "actor": -1,
+      "children": [],
+      "matched": false,
+      "value": -2
+    },
+    {
+      "actions": [],
+      "actor": -1,
+      "children": [],
+      "matched": true,
+      "value": 5
+    },
+    {
+      "actions": [
+        "fold",
+        "call",
+        "raise_to_42"
+      ],
+      "actor": 1,
+      "children": [
+        8,
+        9,
+        10
+      ],
+      "contributions": [
+        18,
+        5
+      ],
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18"
+      ],
+      "raises": 2
+    },
+    {
+      "actions": [],
+      "actor": -1,
+      "children": [],
+      "matched": false,
+      "value": 5
+    },
+    {
+      "actions": [],
+      "actor": -1,
+      "children": [],
+      "matched": true,
+      "value": 18
+    },
+    {
+      "actions": [
+        "fold",
+        "call",
+        "raise_to_100"
+      ],
+      "actor": 0,
+      "children": [
+        11,
+        12,
+        13
+      ],
+      "contributions": [
+        18,
+        42
+      ],
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "raises": 3
+    },
+    {
+      "actions": [],
+      "actor": -1,
+      "children": [],
+      "matched": false,
+      "value": -18
+    },
+    {
+      "actions": [],
+      "actor": -1,
+      "children": [],
+      "matched": true,
+      "value": 42
+    },
+    {
+      "actions": [
+        "fold",
+        "call"
+      ],
+      "actor": 1,
+      "children": [
+        14,
+        15
+      ],
+      "contributions": [
+        100,
+        42
+      ],
+      "history": [
+        "call",
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "raise_to_100"
+      ],
+      "raises": 4
+    },
+    {
+      "actions": [],
+      "actor": -1,
+      "children": [],
+      "matched": false,
+      "value": 42
+    },
+    {
+      "actions": [],
+      "actor": -1,
+      "children": [],
+      "matched": true,
+      "value": 100
+    },
+    {
+      "actions": [
+        "fold",
+        "call",
+        "raise_to_18"
+      ],
+      "actor": 1,
+      "children": [
+        17,
+        18,
+        19
+      ],
+      "contributions": [
+        5,
+        2
+      ],
+      "history": [
+        "raise_to_5"
+      ],
+      "raises": 1
+    },
+    {
+      "actions": [],
+      "actor": -1,
+      "children": [],
+      "matched": false,
+      "value": 2
+    },
+    {
+      "actions": [],
+      "actor": -1,
+      "children": [],
+      "matched": true,
+      "value": 5
+    },
+    {
+      "actions": [
+        "fold",
+        "call",
+        "raise_to_42"
+      ],
+      "actor": 0,
+      "children": [
+        20,
+        21,
+        22
+      ],
+      "contributions": [
+        5,
+        18
+      ],
+      "history": [
+        "raise_to_5",
+        "raise_to_18"
+      ],
+      "raises": 2
+    },
+    {
+      "actions": [],
+      "actor": -1,
+      "children": [],
+      "matched": false,
+      "value": -5
+    },
+    {
+      "actions": [],
+      "actor": -1,
+      "children": [],
+      "matched": true,
+      "value": 18
+    },
+    {
+      "actions": [
+        "fold",
+        "call",
+        "raise_to_100"
+      ],
+      "actor": 1,
+      "children": [
+        23,
+        24,
+        25
+      ],
+      "contributions": [
+        42,
+        18
+      ],
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42"
+      ],
+      "raises": 3
+    },
+    {
+      "actions": [],
+      "actor": -1,
+      "children": [],
+      "matched": false,
+      "value": 18
+    },
+    {
+      "actions": [],
+      "actor": -1,
+      "children": [],
+      "matched": true,
+      "value": 42
+    },
+    {
+      "actions": [
+        "fold",
+        "call"
+      ],
+      "actor": 0,
+      "children": [
+        26,
+        27
+      ],
+      "contributions": [
+        42,
+        100
+      ],
+      "history": [
+        "raise_to_5",
+        "raise_to_18",
+        "raise_to_42",
+        "raise_to_100"
+      ],
+      "raises": 4
+    },
+    {
+      "actions": [],
+      "actor": -1,
+      "children": [],
+      "matched": false,
+      "value": -42
+    },
+    {
+      "actions": [],
+      "actor": -1,
+      "children": [],
+      "matched": true,
+      "value": 100
+    }
+  ],
+  "scope": "existing_research_only_not_formal_spec"
+}

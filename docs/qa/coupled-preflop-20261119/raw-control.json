@@ -1,0 +1,17 @@
+{
+  "learning_expansion": false,
+  "results": [
+    {
+      "heldout_EV_bb": 0.19935250654541112,
+      "heldout_NC_bb": 2.954380997663579,
+      "policy_digest": "6833b5d25f765084681cacc64f1325a0d2e5755cfcd4a10090509f906abd5d79",
+      "seed": 17119101
+    },
+    {
+      "heldout_EV_bb": 0.12211752446415182,
+      "heldout_NC_bb": 4.775522445860209,
+      "policy_digest": "d7b85116285a61e374077c4a3be4febf338a491912e7e0d5f73fd2c862786786",
+      "seed": 17119102
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "base": "1e91f2c1a8b34a4d03cd1e30420e9856076fb8ea",
+  "current_native_sha256": "b51805c9bdd56b65121c398be32cb0db54811cf511e90ecc89dde91cdec1b8a9",
+  "sources": {
+    "gto/qualification/integrated_baseline_confirmation.py": "50c2b1674a6eeb074656b2ec7a84340ee78bf9baf695ea75d8ab28a6b676509e",
+    "gto/qualification/integrated_solver.py": "f35b3a0f9834191977a2e075bea58f15b0f8205343ce2cfdb0b807ef74b952bd",
+    "gto/qualification/integrated_native.cc": "8c918929443efc69441f22f0bed2582cb61f394b37f365d85afeeee39261d6fc",
+    "gto/qualification/integrated_multiplayer_study.py": "1454fe01751913536ac459cca4c221e7132f174926101acccaff8ffafd4762e1",
+    "gto/qualification/integrated_final_study.py": "31229ce8c5d5fcbaf483690eb6c1652cd784b4651b55283d371fc608220ed04d",
+    "gto/qualification/integrated_extension.py": "ff847dff298f35f9468a5c9d10eef1dddb2096a679e6ce0b3af4d76f5ae66a52",
+    "gto/qualification/integrated_precision.py": "d4f346febbc28064825091f4a029595dd75100a54f903cdf6e5f1a14f43ccbc8",
+    "gto/qualification/integrated_study.py": "7d1e8e5e85c5bce677d68e7751efe712fb406bc2b2185f9c645f0a3dec036e8d"
+  },
+  "note": "CP metadata carries exact per-trial identities; historical snapshots preserved; binary differences require explicit migration not silent identity override."
+}

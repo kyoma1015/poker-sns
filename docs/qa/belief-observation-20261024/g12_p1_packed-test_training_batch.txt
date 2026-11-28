@@ -1,0 +1,13 @@
+test_all_player_counts_use_native_engine (__main__.NativeTraining.test_all_player_counts_use_native_engine) ... ok
+test_contract_binds_stacks_and_rules (__main__.NativeTraining.test_contract_binds_stacks_and_rules) ... ok
+test_corrupt_resume_refused_before_training (__main__.NativeTraining.test_corrupt_resume_refused_before_training) ... ok
+test_existing_destination_never_overwritten (__main__.NativeTraining.test_existing_destination_never_overwritten) ... ok
+test_finite_budget_rejected_before_execution (__main__.NativeTraining.test_finite_budget_rejected_before_execution) ... ok
+test_publish_failure_leaves_no_partial_checkpoint (__main__.NativeTraining.test_publish_failure_leaves_no_partial_checkpoint) ... ok
+test_split_resume_equals_uninterrupted (__main__.NativeTraining.test_split_resume_equals_uninterrupted) ... ok
+test_stop_saves_completed_iteration_only (__main__.NativeTraining.test_stop_saves_completed_iteration_only) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.072s
+
+OK

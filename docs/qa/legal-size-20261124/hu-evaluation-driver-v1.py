@@ -1,0 +1,146 @@
+"""Bounded native legal-size study of one sparse joint external-sampling engine."""
+import argparse,copy,gc,gzip,json,random,resource,time,tempfile,shutil
+from pathlib import Path
+import numpy as np
+from gto.qualification import sparse_solver as s,fullstreet_solver as old
+from gto.qualification.action_native import native_value as raw_value,interval
+from gto.qualification.coupled_evaluate import Extra
+from gto.qualification.range_study import GeneralNuts
+from gto.qualification.native_mccfr import choose,betting
+from gto.qualification.policy import act,sha
+from gto.qualification.public_response import Observation,observe
+from gto.qualification.preflop_release_solver import load_policy
+from gto.qualification.evaluate import atomic
+from gto.native.training import NativeGame
+
+
+def rb_value(policy,native,game,deck,tape,module):
+    state=native.NativeState(game);rng=random.Random(tape)
+    for c in deck[:4]:state.apply_action(c)
+    while not state.is_terminal():
+        a=state.audit()
+        if state.is_chance_node():
+            if a['remaining']==[0,0] and len(a['board'])<5:
+                if a['live']!=[100,100]:raise ValueError('HU50 allin stake')
+                eq=module.equity_prefix(a['holes'][0]+a['holes'][1],a['board'],16,tape&((1<<64)-1))
+                return 50*(2*eq-1)
+            state.apply_action(deck[4+len(a['board'])]);continue
+        p=state.current_player();o=Observation(p,tuple(sorted(a['holes'][p])),tuple(a['board']),a['round'],a['price'],a['last_full'],tuple(a['remaining']),tuple(a['street']),tuple(a['live']),tuple(a['dead']),tuple(a['folded']),tuple(tuple(h) for h in a['history']),tuple(state.legal_actions()))
+        state.apply_action(choose(o.actions,policy.row(o,True),rng))
+    return state.returns()[0]/2
+
+
+def samples(seed,n):
+    r=random.Random(seed);return [(r.sample(range(52),9),r.getrandbits(128)) for _ in range(n)]
+
+def selection(q,native,module,worlds):
+    probe=Extra(q,'open3p5');base=[];gain=[]
+    for deck,tape in worlds:
+        v=rb_value(q,native,NativeGame([100,100]),deck,tape,module);base.append(v);gain.append(rb_value(probe,native,NativeGame([100,100]),deck,tape,module)-v)
+    return dict(SB_EV_bb=float(np.mean(base)),open3p5_gain_bb=float(np.mean(gain)),n=len(worlds))
+
+def archive_save(q,folder):
+    folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='sparse-save-') as stage:
+        q.save(stage);src=Path(stage)/'checkpoint.bin'
+        with src.open('rb') as inp,(folder/'checkpoint.bin.gz').open('wb') as out,gzip.GzipFile(fileobj=out,mode='wb',mtime=0) as z:
+            shutil.copyfileobj(inp,z)
+        shutil.copyfile(Path(stage)/'checkpoint.json',folder/'checkpoint.json')
+
+def archive_restore(q,folder):
+    folder=Path(folder)
+    with tempfile.TemporaryDirectory(prefix='sparse-restore-') as stage:
+        raw=Path(stage)/'checkpoint.bin'
+        with gzip.open(folder/'checkpoint.bin.gz','rb') as inp,raw.open('wb') as out:shutil.copyfileobj(inp,out)
+        shutil.copyfile(folder/'checkpoint.json',Path(stage)/'checkpoint.json');q.restore(stage)
+
+
+def train(module,native_build,out):
+    out=Path(out);out.mkdir(parents=True,exist_ok=True);base=load_policy(native_build,old.old.ARTIFACT);resource_records=[];results=[]
+    for seed in (17120101,17120102):
+        w,origin=s.warm(module,seed);folder=out/str(seed);folder.mkdir(exist_ok=True)
+        if seed==17120101:
+            for full,fine in ((True,True),(False,False),(False,True)):
+                q=s.Solver(module,w,origin,seed+1000000,full=full,refined=fine);start=time.monotonic();last=None
+                for _ in range(4):
+                    last=q.step(1.)
+                    if not last['complete']:break
+                resource_records.append(dict(full=full,refined=fine,last=last,stats=q.core.stats(),seconds=time.monotonic()-start,peak_RSS_bytes=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024));del q;gc.collect()
+            atomic(out/'resource-comparison.json',dict(records=resource_records,selection='allnative rejected if incomplete; same geometry engine with strength key continues; omission errors UNKNOWN'))
+        q=s.Solver(module,w,origin,seed+1100000,full=False,refined=True);del w;gc.collect();worlds=samples(seed+1200000,256)
+        archive_save(q,folder/'initial');initial=selection(q,base.native,module,worlds);archive_save(q,folder/'best');best=initial['open3p5_gain_bb'];curve=[dict(iterations=0,selection=initial)];start=time.monotonic();reason='STAGE_LIMIT';training_seconds=0.
+        for target in (64,256,1024):
+            while q.iteration<target and time.monotonic()-start<60:
+                r=q.step(min(1.,max(.01,60-(time.monotonic()-start))))
+                if not r['complete']:reason=r['error'];break
+            if not r['complete'] or q.iteration<target:
+                archive_save(q,folder/'last');break
+            archive_save(q,folder/'last');v=selection(q,base.native,module,worlds);curve.append(dict(iterations=q.iteration,selection=v,stats=q.core.stats(),seconds=time.monotonic()-start));print(json.dumps(dict(seed=seed,**curve[-1])),flush=True);atomic(folder/'selection.json',dict(curve=curve))
+            if v['open3p5_gain_bb']>best+1e-10:reason='FIRST_SELECTION_WORSENING';break
+            best=v['open3p5_gain_bb'];archive_save(q,folder/'best')
+        archive_restore(q,folder/'best');atomic(folder/'freeze.json',dict(policy_digest=q.policy_digest,iterations=q.iteration,source_sha256=sha(Path(__file__)),selection_finished=True,stop_reason=reason,final_evaluations=0))
+        result=dict(seed=seed,curve=curve,reason=reason,best_iterations=q.iteration,stats=q.core.stats(),seconds=time.monotonic()-start,peak_RSS_bytes=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024,ordinary_registry_admission=False)
+        atomic(folder/'training.json',result);results.append(result);del q;gc.collect()
+    return results
+
+
+class Force:
+    def __init__(self,base,action):self.base,self.action=base,action
+    def row(self,o,average=False):
+        if not o.history:
+            if self.action not in o.actions:raise ValueError('forced native root action')
+            return [float(a==self.action) for a in o.actions]
+        return self.base.row(o,True)
+
+def profile_stats(q):return copy.deepcopy(q.stats)
+
+def evaluate(module,native_build,out):
+    from gto.qualification.variance_study import compressed
+    out=Path(out);base=load_policy(native_build,old.old.ARTIFACT);native=base.native;game=NativeGame([100,100]);final_worlds=samples(17124301,8192);discovery_worlds=samples(17124201,256);records=[]
+    for si,seed in enumerate((17120101,17120102)):
+        folder=out/str(seed);w,origin=s.warm(module,seed);q=s.Solver(module,w,origin,seed+1100000);q.native=native;del w;gc.collect();archive_restore(q,folder/'best');frozen=q.policy_digest
+        parent=old.read_policy(s.PARENT/str(seed),old.load('/tmp/fullstreet-build/fullstreet.so'),base,'policy-best');parent.average_mass=parent.average_mass>0
+        kinds=['open3p5','threebet10p5','river_jam','river_nuts'];probes=[Extra(q,k) if k!='river_nuts' else GeneralNuts(q) for k in kinds];profiles=[parent,Extra(parent,'open3p5'),q,*probes];values=[[] for _ in profiles];raw=[];start=time.monotonic()
+        identity=dict(seed=17124301,n=8192,worlds=final_worlds,policy_digest=frozen,parent_digest=parent.policy_digest,source_sha256=sha(Path(__file__)),native_binary_sha256=sha(Path(native.__file__)),confidence_family=.999,events=40,estimator='same native policy; exact flop990/turn44 all-in suffix; uniform16preflop conditionalrunouts; CRN',formal_profile=False)
+        for i,(deck,tape) in enumerate(final_worlds):
+            if time.monotonic()-start>90:atomic(folder/'native.json',dict(status='INCOMPLETE_TIME_LIMIT',completed=i));break
+            for p,v in zip(profiles,values):v.append(rb_value(p,native,game,deck,tape,module))
+            if i<1024:raw.append(raw_value(q,native,game,deck,tape))
+            if (i+1)%1024==0:compressed(folder/'native-progress.json.gz',dict(identity=identity,completed=i+1,values=values,raw=raw));print(json.dumps(dict(seed=seed,worlds=i+1,seconds=time.monotonic()-start)),flush=True)
+        if len(values[0])!=8192:return
+        assert frozen==q.policy_digest
+        delta=.001/40;gainold=[a-b for a,b in zip(values[1],values[0])];gainnew=[a-b for a,b in zip(values[3],values[2])];native_result=dict(status='COMPLETE_UNVERIFIED',identity=identity,old_EV_bb=interval(values[0],-50,50,delta),new_EV_bb=interval(values[2],-50,50,delta),paired_EV_change_bb=interval([a-b for a,b in zip(values[2],values[0])],-100,100,delta),old_open3p5_gain_bb=interval(gainold,-100,100,delta),new_open3p5_gain_bb=interval(gainnew,-100,100,delta),open3p5_gain_reduction_bb=interval([a-b for a,b in zip(gainold,gainnew)],-200,200,delta),deviations={k:interval([(1 if k=='open3p5' else -1)*(a-b) for a,b in zip(v,values[2])],-100,100,delta) for k,v in zip(kinds,values[3:])},variance=dict(n=1024,raw_sample_variance=float(np.var(raw,ddof=1)),conditional_sample_variance=float(np.var(values[2][:1024],ddof=1)),raw_minus_conditional_bb=interval([a-b for a,b in zip(raw,values[2][:1024])],-100,100,delta)),new_query_stats=profile_stats(q),seconds=time.monotonic()-start,peak_RSS_bytes=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024,full_native_BR_upper=None,full_native_NashConv=None,all169_action_precision=None,omitted_action_error_upper=None,continuation_error_upper=None,ordinary_registry_admission=False)
+        atomic(folder/'native.json',native_result);records.append(native_result)
+        # All legal root actions on disjoint discovery set. No selected-action PASS.
+        q.stats={r:dict(queries=0,untrained=0,warm=0) for r in range(4)};actions=base.native.NativeState(game)
+        for c in discovery_worlds[0][0][:4]:actions.apply_action(c)
+        legal_actions=list(actions.legal_actions());scan=[];startscan=time.monotonic();basevals=[rb_value(q,native,game,d,t,module) for d,t in discovery_worlds]
+        for a in legal_actions:
+            if time.monotonic()-startscan>90:break
+            vals=[rb_value(Force(q,a),native,game,d,t,module)-v for (d,t),v in zip(discovery_worlds,basevals)]
+            scan.append(dict(native_action=a,raise_to_BB=(a-2)/2 if a>1 else None,gain_bb=interval(vals,-100,100,.001/(len(legal_actions)*2))))
+        other=max((r for r in scan if r['native_action'] not in (0,1,9)),key=lambda r:r['gain_bb']['mean']);atomic(folder/'all-root-discovery.json',dict(seed=17124201,n=256,total_legal=len(legal_actions),completed=len(scan),rows=scan,selected_other=other,omitted_size_upper=None,seconds=time.monotonic()-startscan,scope='fixed root actions only; all deeper histories/errors not bounded'))
+        # Independent confirmation of known3.5 and selectedother. Frozen policy.
+        confirm=samples(17124501,32768);attacks=[Extra(q,'open3p5'),Force(q,other['native_action'])];hist=[[],[],[],[]];oldhist=[];startconfirm=time.monotonic()
+        for i,(deck,tape) in enumerate(confirm):
+            if time.monotonic()-startconfirm>90:break
+            v=rb_value(q,native,game,deck,tape,module);pv=rb_value(parent,native,game,deck,tape,module);po=rb_value(Extra(parent,'open3p5'),native,game,deck,tape,module);aa=[rb_value(p,native,game,deck,tape,module) for p in attacks]
+            hist[0].append(aa[0]-v);hist[1].append(aa[1]-v);hist[2].append(po-pv);hist[3].append((po-pv)-(aa[0]-v))
+        if len(hist[0])==32768:
+            from collections import Counter
+            compressed(folder/'confirmation.json.gz',dict(seed=17124501,n=32768,policy_digest=frozen,old_digest=parent.policy_digest,other_action=other['native_action'],confidence_family=.999,events=8,known_gain_bb=interval(hist[0],-100,100,.001/8),other_gain_bb=interval(hist[1],-100,100,.001/8),old_known_gain_bb=interval(hist[2],-100,100,.001/8),known_reduction_bb=interval(hist[3],-200,200,.001/8),histograms=[dict(Counter(map(str,h))) for h in hist],seconds=time.monotonic()-startconfirm,full_native_BR_upper=None,ordinary_registry_admission=False))
+        else:atomic(folder/'confirmation-incomplete.json',dict(completed=len(hist[0]),target=32768,no_fixed_n_bound=True))
+        # Frequencies on real native prefixes, including off-grid responses.
+        freq={}
+        for name,prefix in [('rfi',[]),('vs_open3',[8]),('vs_open3p5',[9]),('vs_3bet10',[8,22]),('vs_3bet10p5',[8,23])]:
+            b=betting(base.rules)
+            for a in prefix:act(b,a)
+            freq[name]={label:dict(native_actions=observe(b,g[0],[]).actions,frequencies=q.row(observe(b,g[0],[]),True),native_action_EV_interval=None) for label,g in zip(model.CLASSES,model.classes())}
+        compressed(folder/'169-frequencies.json.gz',dict(policy_digest=frozen,rows=freq,all169_action_precision=None,ordinary_registry_admission=False))
+        # Freeze identity before changing to initial-prior control.
+        archive_restore(q,folder/'initial');init=[rb_value(q,native,game,d,t,module) for d,t in final_worlds];atomic(folder/'initial-prior-control.json',dict(policy_digest=q.policy_digest,SB_EV_bb=interval(init,-50,50,delta),learned_minus_initial_bb=interval([a-b for a,b in zip(values[2],init)],-100,100,delta),scope='same final worlds, postselection comparison only'))
+        atomic(out/'native-summary.json',dict(records=records,formal_acceptance=0,verified_RFI=0,verified_3bet=0));del q,parent;gc.collect()
+    return records
+
+if __name__=='__main__':
+    p=argparse.ArgumentParser();p.add_argument('--library',required=True);p.add_argument('--native-build',required=True);p.add_argument('--out',required=True);p.add_argument('--evaluate',action='store_true');a=p.parse_args();(evaluate if a.evaluate else train)(s.load(a.library),a.native_build,a.out)

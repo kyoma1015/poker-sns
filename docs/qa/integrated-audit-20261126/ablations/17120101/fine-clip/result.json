@@ -1,0 +1,160 @@
+{
+  "curve": [
+    {
+      "metric": {
+        "BR_BB_bb": 4.741637240107285,
+        "BR_SB_bb": 6.966603302804685,
+        "EV_bb": 0.13672619730966823,
+        "NashConv_bb": 11.70824054291197,
+        "full_native_BR_upper": null,
+        "physical_infosets": false,
+        "projection": {
+          "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+          "max_removed_mass": 0.9738409076418878,
+          "zero_mass_projected_rows": 0
+        }
+      },
+      "pure_seconds": 0.0,
+      "t": 0
+    },
+    {
+      "metric": {
+        "BR_BB_bb": 4.846427019865433,
+        "BR_SB_bb": 7.0536692007266035,
+        "EV_bb": 0.22588246481246316,
+        "NashConv_bb": 11.900096220592037,
+        "full_native_BR_upper": null,
+        "physical_infosets": false,
+        "projection": {
+          "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+          "max_removed_mass": 0.9738409076418878,
+          "zero_mass_projected_rows": 0
+        }
+      },
+      "pure_seconds": 0.7362217140000027,
+      "stats": {
+        "average_visited": 12512,
+        "halted": false,
+        "iterations": 4,
+        "regret_visited": 20859,
+        "rows": 39140
+      },
+      "t": 4
+    },
+    {
+      "metric": {
+        "BR_BB_bb": 5.037723273067924,
+        "BR_SB_bb": 7.210503509675871,
+        "EV_bb": 0.13988969624565717,
+        "NashConv_bb": 12.248226782743796,
+        "full_native_BR_upper": null,
+        "physical_infosets": false,
+        "projection": {
+          "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+          "max_removed_mass": 0.9860722377710761,
+          "zero_mass_projected_rows": 0
+        }
+      },
+      "pure_seconds": 3.4704363160000256,
+      "stats": {
+        "average_visited": 71901,
+        "halted": false,
+        "iterations": 16,
+        "regret_visited": 95588,
+        "rows": 170472
+      },
+      "t": 16
+    },
+    {
+      "metric": {
+        "BR_BB_bb": 5.279654929917107,
+        "BR_SB_bb": 7.4077646263879515,
+        "EV_bb": 0.2077134184940138,
+        "NashConv_bb": 12.68741955630506,
+        "full_native_BR_upper": null,
+        "physical_infosets": false,
+        "projection": {
+          "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+          "max_removed_mass": 0.9963082522650546,
+          "zero_mass_projected_rows": 0
+        }
+      },
+      "pure_seconds": 10.828514799000033,
+      "stats": {
+        "average_visited": 214676,
+        "halted": true,
+        "iterations": 48,
+        "regret_visited": 264580,
+        "rows": 500000
+      },
+      "t": 48
+    }
+  ],
+  "final": {
+    "BR_BB_bb": 5.466776995793069,
+    "BR_SB_bb": 8.267073700223659,
+    "EV_bb": 0.21037567432259563,
+    "NashConv_bb": 13.733850696016727,
+    "full_native_BR_upper": null,
+    "physical_infosets": false,
+    "projection": {
+      "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+      "max_removed_mass": 0.9738409076418878,
+      "zero_mass_projected_rows": 0
+    }
+  },
+  "final_boards": [
+    [
+      28,
+      24,
+      32,
+      2,
+      33
+    ],
+    [
+      28,
+      38,
+      22,
+      6,
+      10
+    ]
+  ],
+  "formal_acceptance": 0,
+  "full_native_BR_upper": null,
+  "initial": {
+    "BR_BB_bb": 4.741637240107285,
+    "BR_SB_bb": 6.966603302804685,
+    "EV_bb": 0.13672619730966823,
+    "NashConv_bb": 11.70824054291197,
+    "full_native_BR_upper": null,
+    "physical_infosets": false,
+    "projection": {
+      "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+      "max_removed_mass": 0.9738409076418878,
+      "zero_mass_projected_rows": 0
+    }
+  },
+  "peak_RSS_bytes": 730673152,
+  "policy_digest": "f2772bcd38338cd68142738bebfd0ce94f0c1bbdab0765604cb288b0f1156c70",
+  "pure_seconds": 10.828514799000033,
+  "reason": "INCOMPLETE_PAIR",
+  "seed": 17120101,
+  "selected": 0,
+  "selection_boards": [
+    [
+      34,
+      46,
+      24,
+      14,
+      2
+    ],
+    [
+      51,
+      36,
+      4,
+      47,
+      26
+    ]
+  ],
+  "tag": "fine-clip"
+}

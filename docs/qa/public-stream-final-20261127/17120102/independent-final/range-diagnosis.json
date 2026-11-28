@@ -1,0 +1,37 @@
+{
+  "contexts": {
+    "rfi": {
+      "interpretation": "Zero opponent posterior: conditional EV undefined, not a fabricated0. Zero own reach with nonzero opponent posterior: counterfactual decision EV remains defined.",
+      "max_opponent_history_likelihood": 1.0,
+      "positive_opponent_hand_classes": 169,
+      "prefix": [],
+      "undefined_zero_posterior_cells": 0,
+      "zero_hero_reach_but_defined_counterfactual_cells": 0
+    },
+    "vs_3bet10p5": {
+      "interpretation": "Zero opponent posterior: conditional EV undefined, not a fabricated0. Zero own reach with nonzero opponent posterior: counterfactual decision EV remains defined.",
+      "max_opponent_history_likelihood": 0.4733812931278012,
+      "positive_opponent_hand_classes": 169,
+      "prefix": [
+        8,
+        23
+      ],
+      "undefined_zero_posterior_cells": 0,
+      "zero_hero_reach_but_defined_counterfactual_cells": 0
+    },
+    "vs_open3p5": {
+      "interpretation": "Zero opponent posterior: conditional EV undefined, not a fabricated0. Zero own reach with nonzero opponent posterior: counterfactual decision EV remains defined.",
+      "max_opponent_history_likelihood": 0.09799286804576683,
+      "positive_opponent_hand_classes": 169,
+      "prefix": [
+        9
+      ],
+      "undefined_zero_posterior_cells": 0,
+      "zero_hero_reach_but_defined_counterfactual_cells": 0
+    }
+  },
+  "new_10p5_downstream_support_present": true,
+  "old_10p5_structural_support_omission": true,
+  "policy_digest": "258ccdb2e911f8c1f5ae1c150ae0327b310e3965b02e0311efad678937afcae0",
+  "unlearned_backoff_not_quality_proof": true
+}

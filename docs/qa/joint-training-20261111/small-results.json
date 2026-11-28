@@ -1,0 +1,308 @@
+{
+  "eligible_candidates": [
+    "delayed_output33"
+  ],
+  "formal_acceptance": [
+    0,
+    12
+  ],
+  "games": [
+    {
+      "baseline": {
+        "bb_gain": 0.004835267919059305,
+        "ev": 0.8392796371522961,
+        "nc": 0.006764417995549388,
+        "sb_gain": 0.0019291500764900826
+      },
+      "candidates": {
+        "damping05": {
+          "best_same_game_checkpoint": {
+            "additional_iterations": 128,
+            "bb_gain": 0.0036720842928832376,
+            "ev": 0.8393344470327592,
+            "nc": 0.005082018199225824,
+            "sb_gain": 0.0014099339063425864
+          },
+          "history_retained": true,
+          "points": [
+            {
+              "additional_iterations": 32,
+              "bb_gain": 0.004263937414982766,
+              "ev": 0.8392377111389991,
+              "nc": 0.006040199147382852,
+              "sb_gain": 0.0017762617324000862
+            },
+            {
+              "additional_iterations": 64,
+              "bb_gain": 0.004218569777529213,
+              "ev": 0.8390311764531064,
+              "nc": 0.006389419815766684,
+              "sb_gain": 0.0021708500382374707
+            },
+            {
+              "additional_iterations": 128,
+              "bb_gain": 0.0036720842928832376,
+              "ev": 0.8393344470327592,
+              "nc": 0.005082018199225824,
+              "sb_gain": 0.0014099339063425864
+            }
+          ]
+        },
+        "delayed_output33": {
+          "best_same_game_checkpoint": {
+            "additional_iterations": 128,
+            "bb_gain": 0.00011680317044626687,
+            "ev": 0.839674835706012,
+            "nc": 0.0002514892509094535,
+            "sb_gain": 0.00013468608046318664
+          },
+          "history_retained": true,
+          "points": [
+            {
+              "additional_iterations": 32,
+              "bb_gain": 0.0034702805874199383,
+              "ev": 0.8394459375616494,
+              "nc": 0.004920501409302558,
+              "sb_gain": 0.0014502208218826196
+            },
+            {
+              "additional_iterations": 64,
+              "bb_gain": 0.00039217408170622026,
+              "ev": 0.8396662071621462,
+              "nc": 0.0005889727081950236,
+              "sb_gain": 0.0001967986264888033
+            },
+            {
+              "additional_iterations": 128,
+              "bb_gain": 0.00011680317044626687,
+              "ev": 0.839674835706012,
+              "nc": 0.0002514892509094535,
+              "sb_gain": 0.00013468608046318664
+            }
+          ]
+        },
+        "full_history": {
+          "best_same_game_checkpoint": {
+            "additional_iterations": 128,
+            "bb_gain": 0.0014906537670663633,
+            "ev": 0.8396605268247836,
+            "nc": 0.0020651071240064267,
+            "sb_gain": 0.0005744533569400634
+          },
+          "history_retained": true,
+          "points": [
+            {
+              "additional_iterations": 32,
+              "bb_gain": 0.0034702805874199383,
+              "ev": 0.8394459375616494,
+              "nc": 0.004920501409302558,
+              "sb_gain": 0.0014502208218826196
+            },
+            {
+              "additional_iterations": 64,
+              "bb_gain": 0.0025847558907955426,
+              "ev": 0.8395702158157528,
+              "nc": 0.003595756432669295,
+              "sb_gain": 0.0010110005418737522
+            },
+            {
+              "additional_iterations": 128,
+              "bb_gain": 0.0014906537670663633,
+              "ev": 0.8396605268247836,
+              "nc": 0.0020651071240064267,
+              "sb_gain": 0.0005744533569400634
+            }
+          ]
+        },
+        "mixture25": {
+          "best_same_game_checkpoint": {
+            "additional_iterations": 128,
+            "bb_gain": 0.004047520954841399,
+            "ev": 0.8394232661441983,
+            "nc": 0.005589590277663703,
+            "sb_gain": 0.0015420693228223037
+          },
+          "history_retained": true,
+          "points": [
+            {
+              "additional_iterations": 32,
+              "bb_gain": 0.0044969570131435654,
+              "ev": 0.8393241481816286,
+              "nc": 0.0063034388489876525,
+              "sb_gain": 0.001806481835844087
+            },
+            {
+              "additional_iterations": 64,
+              "bb_gain": 0.004291177221396603,
+              "ev": 0.8393708191275636,
+              "nc": 0.0059722526048293645,
+              "sb_gain": 0.0016810753834327619
+            },
+            {
+              "additional_iterations": 128,
+              "bb_gain": 0.004047520954841399,
+              "ev": 0.8394232661441983,
+              "nc": 0.005589590277663703,
+              "sb_gain": 0.0015420693228223037
+            }
+          ]
+        }
+      },
+      "gate": {
+        "damping05": false,
+        "delayed_output33": true,
+        "mixture25": false
+      }
+    },
+    {
+      "baseline": {
+        "bb_gain": 0.0018975968005628396,
+        "ev": -0.12800848408085944,
+        "nc": 0.005129056596198861,
+        "sb_gain": 0.0032314597956360214
+      },
+      "candidates": {
+        "damping05": {
+          "best_same_game_checkpoint": {
+            "additional_iterations": 64,
+            "bb_gain": 0.0008445240133416188,
+            "ev": -0.12764445515393708,
+            "nc": 0.0036390002724203396,
+            "sb_gain": 0.002794476259078721
+          },
+          "history_retained": true,
+          "points": [
+            {
+              "additional_iterations": 32,
+              "bb_gain": 0.0017261943263357504,
+              "ev": -0.1279459117356214,
+              "nc": 0.004712403936366655,
+              "sb_gain": 0.0029862096100309043
+            },
+            {
+              "additional_iterations": 64,
+              "bb_gain": 0.0008445240133416188,
+              "ev": -0.12764445515393708,
+              "nc": 0.0036390002724203396,
+              "sb_gain": 0.002794476259078721
+            },
+            {
+              "additional_iterations": 128,
+              "bb_gain": 0.0010552371957469886,
+              "ev": -0.12776125251302428,
+              "nc": 0.0036723342403924553,
+              "sb_gain": 0.0026170970446454667
+            }
+          ]
+        },
+        "delayed_output33": {
+          "best_same_game_checkpoint": {
+            "additional_iterations": 128,
+            "bb_gain": 9.519148134906619e-05,
+            "ev": -0.127991432997818,
+            "nc": 0.00011172145293655844,
+            "sb_gain": 1.6529971587492254e-05
+          },
+          "history_retained": true,
+          "points": [
+            {
+              "additional_iterations": 32,
+              "bb_gain": 0.0010466207238081504,
+              "ev": -0.1278416669755029,
+              "nc": 0.003112327299519879,
+              "sb_gain": 0.0020657065757117288
+            },
+            {
+              "additional_iterations": 64,
+              "bb_gain": 0.0016793717673330155,
+              "ev": -0.1279959119563222,
+              "nc": 0.003809873102191663,
+              "sb_gain": 0.0021305013348586477
+            },
+            {
+              "additional_iterations": 128,
+              "bb_gain": 9.519148134906619e-05,
+              "ev": -0.127991432997818,
+              "nc": 0.00011172145293655844,
+              "sb_gain": 1.6529971587492254e-05
+            }
+          ]
+        },
+        "full_history": {
+          "best_same_game_checkpoint": {
+            "additional_iterations": 128,
+            "bb_gain": 0.0004945266696666228,
+            "ev": -0.12790597859365213,
+            "nc": 0.0012865695592106652,
+            "sb_gain": 0.0007920428895440423
+          },
+          "history_retained": true,
+          "points": [
+            {
+              "additional_iterations": 32,
+              "bb_gain": 0.0010466207238081504,
+              "ev": -0.1278416669755029,
+              "nc": 0.003112327299519879,
+              "sb_gain": 0.0020657065757117288
+            },
+            {
+              "additional_iterations": 64,
+              "bb_gain": 0.0006121989914783244,
+              "ev": -0.12783512611083805,
+              "nc": 0.0019676099547378256,
+              "sb_gain": 0.0013554109632595013
+            },
+            {
+              "additional_iterations": 128,
+              "bb_gain": 0.0004945266696666228,
+              "ev": -0.12790597859365213,
+              "nc": 0.0012865695592106652,
+              "sb_gain": 0.0007920428895440423
+            }
+          ]
+        },
+        "mixture25": {
+          "best_same_game_checkpoint": {
+            "additional_iterations": 128,
+            "bb_gain": 0.001593994510424246,
+            "ev": -0.12793569246647218,
+            "nc": 0.004168434836951812,
+            "sb_gain": 0.002574440326527566
+          },
+          "history_retained": true,
+          "points": [
+            {
+              "additional_iterations": 32,
+              "bb_gain": 0.001698979868707512,
+              "ev": -0.12795265271718695,
+              "nc": 0.004624874272029039,
+              "sb_gain": 0.0029258944033215273
+            },
+            {
+              "additional_iterations": 64,
+              "bb_gain": 0.0016111912888856494,
+              "ev": -0.12793020064776017,
+              "nc": 0.004338694935833581,
+              "sb_gain": 0.002727503646947932
+            },
+            {
+              "additional_iterations": 128,
+              "bb_gain": 0.001593994510424246,
+              "ev": -0.12793569246647218,
+              "nc": 0.004168434836951812,
+              "sb_gain": 0.002574440326527566
+            }
+          ]
+        }
+      },
+      "gate": {
+        "damping05": false,
+        "delayed_output33": true,
+        "mixture25": false
+      }
+    }
+  ],
+  "normal_GTO_added": 0,
+  "scope": "TWO FINITE GAMES ONLY",
+  "selection_warning": "optimization-game selection,not external or held-out validation"
+}

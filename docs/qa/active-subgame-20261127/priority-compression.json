@@ -1,0 +1,36 @@
+{
+  "records": [
+    {
+      "archive": "17120102/refine/priorities.json.zst",
+      "archive_sha256": "13694eac126e42124b1fbdc39f205d0d13a39083e10a2f7bf750b82c4b749cc5",
+      "lossless_verified": true,
+      "original": "17120102/refine/priorities.json",
+      "original_retained_in_workspace": true,
+      "original_sha256": "17407dcb3be4baad46e31bce4b4ba55d3f6f615b2c30c11613a29eb6038994bb"
+    },
+    {
+      "archive": "17120102/bounded/priorities.json.zst",
+      "archive_sha256": "2c404333ce4461f5e80a3f9a508097aa9b3d7d580ebaf1157a304035fe9d7ce2",
+      "lossless_verified": true,
+      "original": "17120102/bounded/priorities.json",
+      "original_retained_in_workspace": true,
+      "original_sha256": "2cbc9b4770bd731d1c8b13895a2d7d1e00a7083beccb2cc9500b1468d2b0d9e6"
+    },
+    {
+      "archive": "17120101/refine/priorities.json.zst",
+      "archive_sha256": "fcfc072bc6c51a86a4d1a2007d5d81b19193fef5fc1fa09ca40ad056dc12be5c",
+      "lossless_verified": true,
+      "original": "17120101/refine/priorities.json",
+      "original_retained_in_workspace": true,
+      "original_sha256": "8edf835c6c02c9cd784793c2b1eea807db79dbeaf2135fb125a44960e89a3a6f"
+    },
+    {
+      "archive": "17120101/bounded/priorities.json.zst",
+      "archive_sha256": "19c63974783882dfbe00ddb1c3c5ad2b97fd62def1fcda1abd918e72c7daebe2",
+      "lossless_verified": true,
+      "original": "17120101/bounded/priorities.json",
+      "original_retained_in_workspace": true,
+      "original_sha256": "7f6d88218f0f1beac9affd9d005135a5b708873863d5d8832f3f41d79b594b4c"
+    }
+  ]
+}

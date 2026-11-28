@@ -1,0 +1,20 @@
+test_cards_weights_and_six_nine_tree_cap_fail_closed (gto.qualification.test_multiplayer_expanded.ExpandedJoint.test_cards_weights_and_six_nine_tree_cap_fail_closed) ... ok
+test_different_actual_hidden_payoffs_and_lawful_BR (gto.qualification.test_multiplayer_expanded.ExpandedJoint.test_different_actual_hidden_payoffs_and_lawful_BR) ... ok
+test_expanded_checkpoint_resume_and_legacy_scope_stays_available (gto.qualification.test_multiplayer_expanded.ExpandedJoint.test_expanded_checkpoint_resume_and_legacy_scope_stays_available) ... ok
+test_independent_cashflow_refund_ante_rake_unequalstacks (gto.qualification.test_multiplayer_expanded.ExpandedJoint.test_independent_cashflow_refund_ante_rake_unequalstacks) ... ok
+test_native_RFI_threebet_short_allin_and_allstreet_own_public_keys (gto.qualification.test_multiplayer_expanded.ExpandedJoint.test_native_RFI_threebet_short_allin_and_allstreet_own_public_keys) ... ok
+test_native_profile_replays_same_finite_fullstreet_paths (gto.qualification.test_multiplayer_expanded.ExpandedJoint.test_native_profile_replays_same_finite_fullstreet_paths) ... ok
+test_terminal_path_regret_average_and_EV_match_vector_update (gto.qualification.test_multiplayer_expanded.ExpandedJoint.test_terminal_path_regret_average_and_EV_match_vector_update) ... ok
+test_all_owners_share_frozen_preupdate_policy_before_atomic_commit (gto.qualification.test_multiplayer_expanded.SparseNJoint.test_all_owners_share_frozen_preupdate_policy_before_atomic_commit) ... ok
+test_canonical_preflop_profile_reuses_suit_orbit_and_omits_forced_rows (gto.qualification.test_multiplayer_expanded.SparseNJoint.test_canonical_preflop_profile_reuses_suit_orbit_and_omits_forced_rows) ... ok
+test_cap_rolls_back_R_A_and_nextdraw_RNG_then_exact_resume (gto.qualification.test_multiplayer_expanded.SparseNJoint.test_cap_rolls_back_R_A_and_nextdraw_RNG_then_exact_resume) ... ok
+test_checkpoint_tamper_owner_and_invalid_chance_fail_closed (gto.qualification.test_multiplayer_expanded.SparseNJoint.test_checkpoint_tamper_owner_and_invalid_chance_fail_closed) ... ok
+test_exact_expected_N_owner_CF_average_with_zero_targets (gto.qualification.test_multiplayer_expanded.SparseNJoint.test_exact_expected_N_owner_CF_average_with_zero_targets) ... ok
+test_lazy_average_matches_full_oracle_including_prediscovery_and_resumes (gto.qualification.test_multiplayer_expanded.SparseNJoint.test_lazy_average_matches_full_oracle_including_prediscovery_and_resumes) ... ok
+test_six_nine_sparse_batch_and_unseen_legal_native_profile (gto.qualification.test_multiplayer_expanded.SparseNJoint.test_six_nine_sparse_batch_and_unseen_legal_native_profile) ... ok
+test_trajectory_proposal_retains_tiny_positive_zero_target_support (gto.qualification.test_multiplayer_expanded.SparseNJoint.test_trajectory_proposal_retains_tiny_positive_zero_target_support) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 7.969s
+
+OK

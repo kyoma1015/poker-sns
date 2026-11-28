@@ -1,0 +1,14 @@
+{
+  "RNG": "none: all fixed-board chance/private outcomes integrated",
+  "R_A_visits_SHA256": [
+    "3a712bb52da3fbf5d5bbee5dd9579f5f2139589506ea9c77301142e074653f24",
+    "9bfb7e8ef484b707d962f1aa832f12365b4f7f8b0b355a9cdb75d1c0b46cd92e",
+    "860ea171f7e7003a5559db2884f5059a291c27bb1529b8c0699af7913100a302"
+  ],
+  "independent_instance_nextstep_exact": true,
+  "nextstep_sha256": "02cd8d26ebc049154ce4dd452c637279c5a693b8577e4656cf4cdcb763e79c54",
+  "proof_checkpoint_not_selected": true,
+  "source_sha256": "0a3fac93358a433722c88812fd99104db8f24390d3fb02e2a200dd41fe651e87",
+  "t": 237,
+  "warm_prior_source_sha256": "843aa5048af947f4734b2903426d5ca4ea1a27c46c7a34cc75a8984d0eecfb06"
+}

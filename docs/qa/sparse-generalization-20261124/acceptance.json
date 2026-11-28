@@ -1,0 +1,107 @@
+{
+  "base": "d6d086de6aaa7148d09e895de4a063a413ff58da",
+  "formal_pass": 0,
+  "previous_formal_pass": 0,
+  "verified_RFI": 0,
+  "verified_3bet": 0,
+  "items": [
+    {
+      "id": 1,
+      "requirement": "RFI",
+      "formal_pass": false,
+      "current": "HU50 selected2 research policies; no significant EV improvement",
+      "missing_next": "Fix meaningful river regret+average transfer and nativeBR/error bounds"
+    },
+    {
+      "id": 2,
+      "requirement": "vs-open/3bet",
+      "formal_pass": false,
+      "current": "HU response legal; support12/99 atRFI,87raises omitted",
+      "missing_next": "Adaptive downstream response learning and omitted-size bound"
+    },
+    {
+      "id": 3,
+      "requirement": "vs3bet/4bet",
+      "formal_pass": false,
+      "current": "vs10/10.5BB169frequency rows saved; EV unknown",
+      "missing_next": "Generate accurate vs3bet/4bet conditional actionEV"
+    },
+    {
+      "id": 4,
+      "requirement": "169 frequencies",
+      "formal_pass": false,
+      "current": "HU1690 frequency rows andN5746 research rows, many priors",
+      "missing_next": "Qualify ALL approved profiles/positions, no prior row promotion"
+    },
+    {
+      "id": 5,
+      "requirement": "Verified EV",
+      "formal_pass": false,
+      "current": "33462/33462 RFIrootEV cells measured;formalprecision0",
+      "missing_next": "Narrow conditional intervals; vsopen/vs3bet EV; GTO/model error bounds"
+    },
+    {
+      "id": 6,
+      "requirement": "MTT/ring",
+      "formal_pass": false,
+      "current": "Research chipEV only; no formal MTT/ring profiles",
+      "missing_next": "Approve modes/ICM/rake scope and generate qualified data"
+    },
+    {
+      "id": 7,
+      "requirement": "2\u20139 players",
+      "formal_pass": false,
+      "current": "3 exact oracle protected;6/9 sparse policies generated2seeds each",
+      "missing_next": "Improve CF coverage and native/unilateral error qualification"
+    },
+    {
+      "id": 8,
+      "requirement": "Formal stacks",
+      "formal_pass": false,
+      "current": "0/20 approved formal stack values",
+      "missing_next": "Owner chooses authoritative20 list; all profile validation"
+    },
+    {
+      "id": 9,
+      "requirement": "Positions",
+      "formal_pass": false,
+      "current": "HU and6/9positionfrequency research only; formal0",
+      "missing_next": "All required2..9seat strategies and contexts"
+    },
+    {
+      "id": 10,
+      "requirement": "BB ante/rake/unequal stacks",
+      "formal_pass": false,
+      "current": "Native sidepot/refund/ante/rake/unequal-stack oracles protected",
+      "missing_next": "Approve profiles and qualify corresponding strategies"
+    },
+    {
+      "id": 11,
+      "requirement": "Formal sizing",
+      "formal_pass": false,
+      "current": "HUroot12/99support; all99EV measured, omissions boundsUNKNOWN;N3/10/shove",
+      "missing_next": "Certify generic/offtree size gain upper bound and formal grid"
+    },
+    {
+      "id": 12,
+      "requirement": "Poker ID search",
+      "formal_pass": false,
+      "current": "Existing search/8blocked candidates preserved;ordinary0",
+      "missing_next": "Admit only qualified same-digest certificate, then search QA"
+    }
+  ],
+  "approval_pending": [
+    "formal20 stack values",
+    "MTT/ring profiles",
+    "formal size profiles",
+    "ante type/amount",
+    "rake/cap",
+    "unequal-stack profile matrix"
+  ],
+  "scope": "2..9 players; HU50 is not initial release",
+  "measured_RFI_root_EV_cells": 33462,
+  "missing_RFI_root_EV_cells": 0,
+  "formal_precision_cells": 0,
+  "full_native_BR_upper": null,
+  "full_native_NashConv": null
+}

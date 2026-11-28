@@ -1,0 +1,8 @@
+{
+  "final_evaluations": 0,
+  "iterations": 0,
+  "policy_digest": "f691179c3a55cd525bb119bc11896f1cb2ccaa9f254b8c81b15ed9f361a518d3",
+  "selection_finished": true,
+  "source_sha256": "b338d101f487362b71a5c59471897f0c2e73e376732483734a92fb5204462fce",
+  "stop_reason": "FIRST_SELECTION_WORSENING"
+}

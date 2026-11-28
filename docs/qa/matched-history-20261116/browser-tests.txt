@@ -1,0 +1,23 @@
+PASS B01 unsupported ordinary default condition renders169 unknown cells
+PASS B02 player counts update native-seat positions
+PASS B03 unsupported conditions never display a strategy or EV
+PASS B04 isolated synthetic fixture renders frequencies and selected-hand EV
+PASS B05 editing any condition clears stale results
+PASS B06 no unhandled browser errors; external requests blocked
+PASS B07 actual native-certified test data displays169hands, EV intervals and statistical confidence
+PASS B08 abstract HU50BB research is opt-in, displays169 model hands and never enables formal GTO cells
+PASS B11 conditional EV refinement displays exact checkdown AA without ordinary GTO admission
+PASS B09 abstract research covers vs-open vs3bet and vs4bet with exact actor lookup
+PASS B10 changed conditions clear research and never interpolate unsupported sizes
+PASS B12 explicit opener history advances position/stage, refuses fallback and stays within390px
+PASS B13 illegal history edits retain the prior history and clear results
+PASS I01 opt-in research gate preserves ordinary verified catalog on390px
+PASS I02 all4 public histories,169 tap cells and actionEV details
+PASS I03 both independently trained continuation models
+PASS I06 exact-model numeric guard is distinct from sampling confidence and realGTO accuracy
+PASS I04 condition edit removes stale strategy; unsupported conditions never interpolate
+PASS I05 no external traffic, browser errors or page overflow at390px
+PASS C01 mobile2CALL stages,5models and169frequency range preserved
+PASS C02 continuation BR is explicitly separate from wholegame GTO precision
+PASS C03 input errors clear stale audit and range data
+PASS C04 unsupported player count fails closed,no browser errors/overflow/external traffic

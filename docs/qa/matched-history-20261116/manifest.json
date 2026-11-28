@@ -1,0 +1,49 @@
+{
+  "claim": "small exact conditional games only; no full population improvement",
+  "evidence_sha256": {
+    "FROZEN_COMPARISON.md": "ae8c51f6e6916e3e4bb68389c04bab80832244e0ac65c0063ff475fd6081bc5a",
+    "PROTOCOL.md": "15bd4de0ff07ec1ad29a3aca0ec90dbbbfc7fd2f4624a765165d843bdbcfcc54",
+    "browser-tests.txt": "421bfe05624549767595d4ba3da045eed924771caf331cfa7dcb6854ddd714e4",
+    "checkpoint-check.json": "dbe2aa496fbaad404b39139b361f627b1f150136274e024d5d1cb08d827a7fb8",
+    "checkpoints/0.25-32-cfr_plus.json": "85129ccd795b8430cb68bb1f6329c087c8d86ed611eff29d66b0313dcaa6c423",
+    "checkpoints/0.25-32-dcfr.json": "478d8ecd7ea8401dba72affdbd687cb01e21044eab6ac1345bddc1013e2c7a72",
+    "checkpoints/0.25-32-vanilla.json": "0625b043d9cb1d261da76e96e58589905b15483b17ef855fd61bff2f7357c7b9",
+    "checkpoints/0.25-4-cfr_plus.json": "b108399034fbbbe068933aa8adc055c14e1496e220c8857bdff468afbf82d72a",
+    "checkpoints/0.25-4-dcfr.json": "5cad97d05b33d78bd712ba354e8c825fd223580d61baf89739438701bf15ca27",
+    "checkpoints/0.25-4-vanilla.json": "11d06afe02f3d77551733abc46dbe9d1e24cc3e46f988e3ce06ed8410706edc6",
+    "checkpoints/0.5-32-cfr_plus.json": "23db44c87a115518e42950564ae31661d053e56823242ad90e5bf3bc039fe8c1",
+    "checkpoints/0.5-32-dcfr.json": "00e1027291145506fd6ecc8f21c672bd924e83ba62dac7c03d6ac2b2a5c7953f",
+    "checkpoints/0.5-32-vanilla.json": "b47ea164170670566d7535e5146403255bd391ff27e5bd285c13575683b994f4",
+    "checkpoints/0.5-4-cfr_plus.json": "2e4746fe8c59739d6bab1f4d075234f71ff993d858092cf776794e034adea2e1",
+    "checkpoints/0.5-4-dcfr.json": "f566032cfb3598d04b04f9cf1fb09b79d5a8f69bbbb569d07032a7509406ca52",
+    "checkpoints/0.5-4-vanilla.json": "d2059c1a7292a064b8255c843e214450f683e9c8a6ddf4052c0d1af4350687b6",
+    "frozen-comparison.json": "c0da0c82e3504355ba98e61b5bd204e0a7648d36b03c1c14b2c621c01f603bb5",
+    "node-tests.txt": "1079957eb20fc4709108d81a351467a52a874d51f10991dd801c859fa8becc36",
+    "python-tests.txt": "ccdd0243050743586b9faae587184216d40955f646ea77ded238f9afa45ddd87",
+    "results.json": "91af242a520031102578f5336da8d4815bd3128c0c852e75434104bf451068c8"
+  },
+  "runtime": {
+    "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+    "machine": "x86_64",
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+  },
+  "source_sha256": {
+    "docs/qa/independent-preflop-20261105/teacher.json": "81d602acf9d35715a182ba63c6902cdf5f043827368cecfd0be03233f274ae77",
+    "docs/qa/suit-exact-preflop-20261106/results.json": "cae8d1cf855e5cb2970b0b6fd22edb1342e916b3ac8223783a74650430b5f7c3",
+    "gto/abstract/fullsupport.py": "055a3b6bcdaab64d32c17c6747e2a6316bdbab123facebb454d10ada7ce959cb",
+    "gto/abstract/joint_reach.cc": "b8405cd63aa25e79de524e878eab18379ef817e35622f93d4b65f65e227f59a0",
+    "gto/abstract/joint_reach.py": "f418a394ab1fc7f12b588d5fdbc334f87de7e792df620b902110d34995c0f629",
+    "gto/abstract/joint_stream.py": "0d6d2b19ab009e9116510bd066c7da14451198f1862520c76a9530e93894bbfe",
+    "gto/abstract/joint_vector.cc": "a72816f2228ab49d991818b6d36ac1e6ca7fbbfe7f7fc578e58af5b2e660c6c2",
+    "gto/abstract/joint_vector.py": "7d484ff5bff3e4b6aec8dbbfa4725ff616e4ad2adf9b95c338c729ce1df408b9",
+    "gto/abstract/matched_frozen.py": "959db914d2cb3b226531300ad15e768f740c251add5fd80c3b8c37bf0de67524",
+    "gto/abstract/matched_history.py": "fef649c1768300d7af66e7a1d78b316e1027977028468bf0f1c7e0326a264054",
+    "gto/abstract/model.py": "bb879efc21c82af9c650ef4ef67337fcae772c9eebef44dd8eeeec106a3b2fd4",
+    "src/GtoPreflop.tsx": "f785167472e33558358e8425324cf8f6398b47a24a250fb370f897cb0d302a5c",
+    "src/gto/abstractResearch.ts": "387f89240fb3222e5dac051c8d44d3ee2f78bd8329aeed3a03ac78db4ef3abaf",
+    "src/gto/independentResearch.ts": "dbfecbd303266ddc37ac318b3eefefaf9af737226c1e1e94ebd07d62686cc698",
+    "src/gto/preflopHistory.ts": "a498388877492cd938d94a469e653be291f3ffbab4fda7c36416efed76576ad5",
+    "src/gto/rangeCatalog.ts": "0e507622da1178348173a9e33f75efd4ecc2475e4ee6f6613e8dee736d38aec9",
+    "tests/test_matched_history.py": "bb5510499f87daf4cf1af5e68fcfb8b05acbe9971072a29f3c2d651b3831b34d"
+  }
+}

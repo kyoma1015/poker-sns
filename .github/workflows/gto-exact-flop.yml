@@ -1,0 +1,35 @@
+name: GTO exact fixed-flop and heldout continuation research
+on:
+  push:
+    branches: ['codex/c-native-hand169-bridge-20261023']
+    paths:
+      - 'gto/abstract/flop_exact*'
+      - 'gto/abstract/continuation_learning.py'
+      - 'gto/abstract/flop_conditional.py'
+      - 'gto/abstract/precision_native.cc'
+      - 'gto/abstract/precision_runouts.py'
+      - 'gto/abstract/frozen_flop_reach.py'
+      - 'gto/abstract/flop_tree_ablation.py'
+      - 'gto/abstract/model.py'
+      - 'gto/hand169.py'
+      - 'docs/qa/ev-precision-20261030/frozen-inputs.json'
+      - 'docs/qa/exact-flop-20261031/**'
+      - 'tests/test_flop_exact.py'
+      - '.github/workflows/gto-exact-flop.yml'
+permissions:
+  contents: read
+jobs:
+  exact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Independent cached exact990 and heldout isolation tests
+        run: python -B -m unittest tests.test_flop_exact -v
+      - name: All hole pairs, independent MC seeds and separate continuation learning
+        run: |
+          python -B -m gto.abstract.flop_exact_study --build-dir "$RUNNER_TEMP/exact" --output "$RUNNER_TEMP/exact.json" --benchmark "$RUNNER_TEMP/benchmark.json"
+          python -B -m gto.abstract.verify_export --actual "$RUNNER_TEMP/exact.json" --expected docs/qa/exact-flop-20261031/results.json

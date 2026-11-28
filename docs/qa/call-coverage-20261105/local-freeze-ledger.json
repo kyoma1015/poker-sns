@@ -1,0 +1,17 @@
+{
+  "commits": [
+    {
+      "date": "2026-11-05T06:44:57Z",
+      "local_sha": "558076dbcfcbb0cb773f59119847fec311aed0d5",
+      "message": "Preregister high-reach CALL continuations, chance-priority coverage and fixed-budget comparisons",
+      "tree": "885f47352568abcf1278ba27f4e8db6f9c157933"
+    },
+    {
+      "date": "2026-11-05T06:50:58Z",
+      "local_sha": "e2b0a6c7ace30187b63eed09cd7fb977cfbbd926",
+      "message": "Implement generic matched-prefix reach and lock true-chance draws before CALL evaluation",
+      "tree": "16bc8896539268888cd5560aa0d951f88f746383"
+    }
+  ],
+  "note": "local freeze precedes evaluation; public API commit timestamps will be later, not external trusted preregistration"
+}

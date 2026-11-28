@@ -1,0 +1,2431 @@
+{
+  "report": {
+    "actions": [
+      1,
+      4
+    ],
+    "combo_provenance": [
+      {
+        "cards": [
+          0,
+          5
+        ],
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1326",
+            "numerator": "1"
+          }
+        },
+        "hero_counterfactual_mass": {
+          "rational": {
+            "denominator": "205476480",
+            "numerator": "1"
+          }
+        },
+        "hero_information_digest": "890ab014ee6ae4e59137e47ab5198b6d3e0694264ba9f0d28219b7f3beaafa4d",
+        "observation_evidence_mass": {
+          "rational": {
+            "denominator": "205476480",
+            "numerator": "1"
+          }
+        },
+        "support_complete": false,
+        "support_digest": "8e4c7377f7812f8f542b082b2156e4c243f89539443f2dd719f6fad05c977abe",
+        "support_size": 2
+      }
+    ],
+    "concrete_combinations": 1,
+    "config_digest": "359e33d4b01cf7e0a6aeced6848488299385da0a1500cf4a251f02a83de036c6",
+    "hand169_ev": null,
+    "hands": {
+      "22": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "32o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1326",
+            "numerator": "1"
+          }
+        },
+        "observed_action_values": [
+          {
+            "rational": {
+              "denominator": "1",
+              "numerator": "1"
+            }
+          },
+          {
+            "rational": {
+              "denominator": "1",
+              "numerator": "2"
+            }
+          }
+        ],
+        "observed_combinations": 1
+      },
+      "32s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "33": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 6,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "42o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 7,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "42s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 2,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "43o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "43s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "44": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "52o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "52s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "53o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "53s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "54o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "54s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "55": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 6,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "62o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 6,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "62s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "63o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "63s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "64o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 7,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "64s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 2,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "65o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "65s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "66": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "72o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "72s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "73o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "73s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "74o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "74s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "75o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "75s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "76o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "76s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "77": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 6,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "82o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 7,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "82s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 2,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "83o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "83s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "84o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 7,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "84s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 2,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "85o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "85s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "86o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 7,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "86s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 2,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "87o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "87s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "88": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "92o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "92s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "93o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "93s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "94o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "94s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "95o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "95s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "96o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "96s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "97o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "97s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "98o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "98s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "99": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 6,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "A2o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "A2s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "A3o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "A3s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "A4o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "A4s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "A5o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "A5s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "A6o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "A6s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "A7o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "A7s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "A8o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "A8s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "A9o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "A9s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "AA": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 6,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "AJo": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "AJs": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "AKo": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "AKs": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "AQo": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "AQs": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "ATo": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "ATs": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "J2o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "J2s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "J3o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "J3s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "J4o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "J4s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "J5o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "J5s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "J6o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "J6s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "J7o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "J7s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "J8o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "J8s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "J9o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "J9s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "JJ": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 6,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "JTo": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "JTs": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "K2o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "K2s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "K3o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "K3s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "K4o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "K4s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "K5o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "K5s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "K6o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "K6s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "K7o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "K7s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "K8o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "K8s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "K9o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "K9s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "KJo": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "KJs": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "KK": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 6,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "KQo": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "KQs": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "KTo": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "KTs": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "Q2o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "Q2s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "Q3o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "Q3s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "Q4o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "Q4s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "Q5o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "Q5s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "Q6o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "Q6s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "Q7o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "Q7s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "Q8o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "Q8s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "Q9o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "Q9s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "QJo": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 12,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "QJs": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 4,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "QQ": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 6,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "QTo": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "QTs": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "T2o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 7,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "T2s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 2,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "T3o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "T3s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "T4o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 7,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "T4s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 2,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "T5o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "T5s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "T6o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 7,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "T6s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 2,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "T7o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "T7s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "T8o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 7,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "T8s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 2,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "T9o": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 9,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "T9s": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      },
+      "TT": {
+        "complete_class_action_values": null,
+        "coverage_complete": false,
+        "eligible_combinations": 3,
+        "ev": null,
+        "explicit_hero_mass": {
+          "rational": {
+            "denominator": "1",
+            "numerator": "0"
+          }
+        },
+        "observed_action_values": null,
+        "observed_combinations": 0
+      }
+    },
+    "native_infoset_ev": null,
+    "observation_digest": "def9d4f7397a695fe52ce310a9f566a392872b6b610a2dc84b71009681e0384d",
+    "policy_digest": "b2b7e02851e75669cc982dfd32105de2ef7d5f740b8f6c86ffa75e468fba4c02",
+    "schema": "pokerid-explicit-belief-action169-v1",
+    "scope": "finite explicit-belief action values, not full-strategy or equilibrium EV",
+    "strategy_convergence": "UNKNOWN",
+    "support_complete": false,
+    "weight_provenance": "explicit caller-supplied exact hero reach; not inferred from visits"
+  },
+  "sha256": "418f0a4bdca743b6d4e44fad0440654e01270e89aeb543b2a50e65d41d48d036"
+}

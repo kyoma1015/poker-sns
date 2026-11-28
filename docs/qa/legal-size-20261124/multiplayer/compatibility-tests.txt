@@ -1,0 +1,16 @@
+test_cards_weights_and_six_nine_tree_cap_fail_closed (gto.qualification.test_multiplayer_expanded.ExpandedJoint.test_cards_weights_and_six_nine_tree_cap_fail_closed) ... ok
+test_different_actual_hidden_payoffs_and_lawful_BR (gto.qualification.test_multiplayer_expanded.ExpandedJoint.test_different_actual_hidden_payoffs_and_lawful_BR) ... ok
+test_expanded_checkpoint_resume_and_legacy_scope_stays_available (gto.qualification.test_multiplayer_expanded.ExpandedJoint.test_expanded_checkpoint_resume_and_legacy_scope_stays_available) ... ok
+test_independent_cashflow_refund_ante_rake_unequalstacks (gto.qualification.test_multiplayer_expanded.ExpandedJoint.test_independent_cashflow_refund_ante_rake_unequalstacks) ... ok
+test_native_RFI_threebet_short_allin_and_allstreet_own_public_keys (gto.qualification.test_multiplayer_expanded.ExpandedJoint.test_native_RFI_threebet_short_allin_and_allstreet_own_public_keys) ... ok
+test_terminal_path_regret_average_and_EV_match_vector_update (gto.qualification.test_multiplayer_expanded.ExpandedJoint.test_terminal_path_regret_average_and_EV_match_vector_update) ... ok
+test_N_owner_regret_and_average_match_independent_path_products (gto.qualification.test_generalize.MultiJoint.test_N_owner_regret_and_average_match_independent_path_products) ... ok
+test_N_player_BR_cannot_choose_using_hidden_world (gto.qualification.test_generalize.MultiJoint.test_N_player_BR_cannot_choose_using_hidden_world) ... ok
+test_all_players_complete_pure_br_matches_independent_enumeration (gto.qualification.test_generalize.MultiJoint.test_all_players_complete_pure_br_matches_independent_enumeration) ... ok
+test_checkpoint_resume_and_config_identity_fail_closed (gto.qualification.test_generalize.MultiJoint.test_checkpoint_resume_and_config_identity_fail_closed) ... ok
+test_six_nine_native_profile_utilities_and_information_limits (gto.qualification.test_generalize.MultiJoint.test_six_nine_native_profile_utilities_and_information_limits) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 1.325s
+
+OK

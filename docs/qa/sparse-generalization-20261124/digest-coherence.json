@@ -1,0 +1,32 @@
+{
+  "rows": [
+    {
+      "seed": 17120101,
+      "policy_digest": "df24ef6adecd2e18bbd92a68005c18c6d65c35c1dbf6d68a7a2a786ffa3390ff",
+      "consistent_artifacts": [
+        "confirmation.json",
+        "169-fold-jam-EV.json",
+        "reuse-decomposition.json",
+        "169-frequencies.json.gz",
+        "169-all-root-EV.json.gz",
+        "world-values.json.gz",
+        "confirmation-values.json.gz"
+      ],
+      "checkpoint_sha256": "fff3848c6689dd8c75df408672a5de31a45f1f88817bf1a5ebdc48dec352fee2"
+    },
+    {
+      "seed": 17120102,
+      "policy_digest": "eb0d0fe48f3dad3b4e8e65fb2b53598b90b14f40505340d1d4e3771057070598",
+      "consistent_artifacts": [
+        "confirmation.json",
+        "169-fold-jam-EV.json",
+        "reuse-decomposition.json",
+        "169-frequencies.json.gz",
+        "169-all-root-EV.json.gz",
+        "world-values.json.gz",
+        "confirmation-values.json.gz"
+      ],
+      "checkpoint_sha256": "d8f2f3b7d1e3534726f7ec070cb897713b3f25fcb9e902d3338a55afc3802e2c"
+    }
+  ]
+}

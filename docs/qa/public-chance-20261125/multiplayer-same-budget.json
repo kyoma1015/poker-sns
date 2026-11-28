@@ -1,0 +1,17 @@
+{
+  "comparison": "same finite game, wallclock budget, sampled vs integrated; no6/9 extrapolation",
+  "rows": [
+    {
+      "gain_sum": 0.12305322499628982,
+      "iterations": 2518,
+      "seconds": 22.818598307000684,
+      "seed": 17124101
+    },
+    {
+      "gain_sum": 0.09316470861225122,
+      "iterations": 2685,
+      "seconds": 22.819104706999497,
+      "seed": 17124102
+    }
+  ]
+}

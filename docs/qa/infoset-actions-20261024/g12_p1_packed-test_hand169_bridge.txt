@@ -1,0 +1,14 @@
+test_action_identity_mismatch_rejected (__main__.BridgeTests.test_action_identity_mismatch_rejected) ... ok
+test_actual_trained_native_context_export (__main__.BridgeTests.test_actual_trained_native_context_export) ... ok
+test_card_encoding_from_native_header (__main__.BridgeTests.test_card_encoding_from_native_header) ... ok
+test_context_does_not_mix_board_or_betting_history (__main__.BridgeTests.test_context_does_not_mix_board_or_betting_history) ... ok
+test_oracle_node_budget_and_policy_normalization (__main__.BridgeTests.test_oracle_node_budget_and_policy_normalization) ... ok
+test_ordered_holes_merge_by_explicit_mass (__main__.BridgeTests.test_ordered_holes_merge_by_explicit_mass) ... ok
+test_reach_not_invented (__main__.BridgeTests.test_reach_not_invented) ... ok
+test_real_poker_fold_oracle (__main__.BridgeTests.test_real_poker_fold_oracle) ... ok
+test_real_poker_river_oracle (__main__.BridgeTests.test_real_poker_river_oracle) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.038s
+
+OK

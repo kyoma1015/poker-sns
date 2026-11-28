@@ -1,0 +1,846 @@
+{
+  "formal_acceptance": 0,
+  "ordinary_registry_admission": false,
+  "rows": [
+    {
+      "any_significant_seat_EV_change": false,
+      "confidence_family": 0.999,
+      "events_budget": 80,
+      "expanded_training": false,
+      "method": "fixed-n Hoeffding, simultaneous seats/profile differences",
+      "ordinary_adoption": false,
+      "paired_vs_prior": [
+        {
+          "scope": "all-seat profile sensitivity, not unilateraldeviation or BR",
+          "seat_EV_change_bb": [
+            {
+              "interval": [
+                -73.4324049204245,
+                73.4324049204245
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -73.4324049204245,
+                73.4324049204245
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -73.4324049204245,
+                73.4324049204245
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -73.4324049204245,
+                73.4324049204245
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -73.4324049204245,
+                73.4324049204245
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -73.4324049204245,
+                73.4324049204245
+              ],
+              "mean": 0.0,
+              "n": 256
+            }
+          ],
+          "seed": 17124101
+        },
+        {
+          "scope": "all-seat profile sensitivity, not unilateraldeviation or BR",
+          "seat_EV_change_bb": [
+            {
+              "interval": [
+                -73.4324049204245,
+                73.4324049204245
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -73.4324049204245,
+                73.4324049204245
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -73.4324049204245,
+                73.4324049204245
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -73.4324049204245,
+                73.4324049204245
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -73.4324049204245,
+                73.4324049204245
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -73.4324049204245,
+                73.4324049204245
+              ],
+              "mean": 0.0,
+              "n": 256
+            }
+          ],
+          "seed": 17124102
+        }
+      ],
+      "players": 6,
+      "profiles": [
+        {
+          "coverage": {
+            "first_untrained_seats": [
+              0,
+              0,
+              256,
+              0,
+              0,
+              0
+            ],
+            "paths_untrained": 256,
+            "strategic_preflop_decisions": 2258,
+            "untrained_path_rate": 1.0,
+            "untrained_strategic_preflop_decisions": 2258,
+            "untrained_strategic_preflop_rate": 1.0
+          },
+          "full_native_BR_upper": null,
+          "full_native_NashConv": null,
+          "mean_rake_bb": 3.185546875,
+          "name": "prior",
+          "policy_digest": "5fe4f3b378ad3a0a61b05e059550dbcf4f0513a4de864718883e4a7e9711c9cd",
+          "root_UTG_fold_gain_interval_bb": [
+            -37.60682746021225,
+            30.0
+          ],
+          "seat_EV_bb": [
+            {
+              "interval": [
+                -37.95253058521225,
+                35.47987433521225
+              ],
+              "mean": -1.236328125,
+              "n": 256
+            },
+            {
+              "interval": [
+                -37.89784308521225,
+                35.53456183521225
+              ],
+              "mean": -1.181640625,
+              "n": 256
+            },
+            {
+              "interval": [
+                -30.0,
+                37.60682746021225
+              ],
+              "mean": 0.890625,
+              "n": 256
+            },
+            {
+              "interval": [
+                -38.38221808521225,
+                35.05018683521225
+              ],
+              "mean": -1.666015625,
+              "n": 256
+            },
+            {
+              "interval": [
+                -35.37440558521225,
+                38.05799933521225
+              ],
+              "mean": 1.341796875,
+              "n": 256
+            },
+            {
+              "interval": [
+                -30.0,
+                35.38221808521225
+              ],
+              "mean": -1.333984375,
+              "n": 256
+            }
+          ],
+          "unilateral_probe_scope": "seat2rootfoldhasexactutility0; loweronly, notBR"
+        },
+        {
+          "coverage": {
+            "first_untrained_seats": [
+              0,
+              0,
+              254,
+              2,
+              0,
+              0
+            ],
+            "paths_untrained": 256,
+            "strategic_preflop_decisions": 2258,
+            "untrained_path_rate": 1.0,
+            "untrained_strategic_preflop_decisions": 2242,
+            "untrained_strategic_preflop_rate": 0.9929140832595217
+          },
+          "full_native_BR_upper": null,
+          "full_native_NashConv": null,
+          "mean_rake_bb": 3.185546875,
+          "name": "learned-17124101",
+          "policy_digest": "f80edd6911561b6a045170b8d3adecb75ed2f8f18af86b03ffa5f9dd041f7a79",
+          "root_UTG_fold_gain_interval_bb": [
+            -37.60682746021225,
+            30.0
+          ],
+          "seat_EV_bb": [
+            {
+              "interval": [
+                -37.95253058521225,
+                35.47987433521225
+              ],
+              "mean": -1.236328125,
+              "n": 256
+            },
+            {
+              "interval": [
+                -37.89784308521225,
+                35.53456183521225
+              ],
+              "mean": -1.181640625,
+              "n": 256
+            },
+            {
+              "interval": [
+                -30.0,
+                37.60682746021225
+              ],
+              "mean": 0.890625,
+              "n": 256
+            },
+            {
+              "interval": [
+                -38.38221808521225,
+                35.05018683521225
+              ],
+              "mean": -1.666015625,
+              "n": 256
+            },
+            {
+              "interval": [
+                -35.37440558521225,
+                38.05799933521225
+              ],
+              "mean": 1.341796875,
+              "n": 256
+            },
+            {
+              "interval": [
+                -30.0,
+                35.38221808521225
+              ],
+              "mean": -1.333984375,
+              "n": 256
+            }
+          ],
+          "unilateral_probe_scope": "seat2rootfoldhasexactutility0; loweronly, notBR"
+        },
+        {
+          "coverage": {
+            "first_untrained_seats": [
+              0,
+              0,
+              244,
+              11,
+              1,
+              0
+            ],
+            "paths_untrained": 256,
+            "strategic_preflop_decisions": 2258,
+            "untrained_path_rate": 1.0,
+            "untrained_strategic_preflop_decisions": 2231,
+            "untrained_strategic_preflop_rate": 0.9880425155004429
+          },
+          "full_native_BR_upper": null,
+          "full_native_NashConv": null,
+          "mean_rake_bb": 3.185546875,
+          "name": "learned-17124102",
+          "policy_digest": "394cc8920b1a126ad0b4280b15ab5ce0d39747ab4736cb61848e2de23b41ce75",
+          "root_UTG_fold_gain_interval_bb": [
+            -37.60682746021225,
+            30.0
+          ],
+          "seat_EV_bb": [
+            {
+              "interval": [
+                -37.95253058521225,
+                35.47987433521225
+              ],
+              "mean": -1.236328125,
+              "n": 256
+            },
+            {
+              "interval": [
+                -37.89784308521225,
+                35.53456183521225
+              ],
+              "mean": -1.181640625,
+              "n": 256
+            },
+            {
+              "interval": [
+                -30.0,
+                37.60682746021225
+              ],
+              "mean": 0.890625,
+              "n": 256
+            },
+            {
+              "interval": [
+                -38.38221808521225,
+                35.05018683521225
+              ],
+              "mean": -1.666015625,
+              "n": 256
+            },
+            {
+              "interval": [
+                -35.37440558521225,
+                38.05799933521225
+              ],
+              "mean": 1.341796875,
+              "n": 256
+            },
+            {
+              "interval": [
+                -30.0,
+                35.38221808521225
+              ],
+              "mean": -1.333984375,
+              "n": 256
+            }
+          ],
+          "unilateral_probe_scope": "seat2rootfoldhasexactutility0; loweronly, notBR"
+        }
+      ],
+      "seconds": 3.4835894259995257,
+      "seed": 17124206,
+      "worlds_per_profile": 256
+    },
+    {
+      "any_significant_seat_EV_change": false,
+      "confidence_family": 0.999,
+      "events_budget": 80,
+      "expanded_training": false,
+      "method": "fixed-n Hoeffding, simultaneous seats/profile differences",
+      "ordinary_adoption": false,
+      "paired_vs_prior": [
+        {
+          "scope": "all-seat profile sensitivity, not unilateraldeviation or BR",
+          "seat_EV_change_bb": [
+            {
+              "interval": [
+                -110.14860738063675,
+                110.14860738063675
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -110.14860738063675,
+                110.14860738063675
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -110.14860738063675,
+                110.14860738063675
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -110.14860738063675,
+                110.14860738063675
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -110.14860738063675,
+                110.14860738063675
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -110.14860738063675,
+                110.14860738063675
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -110.14860738063675,
+                110.14860738063675
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -110.14860738063675,
+                110.14860738063675
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -110.14860738063675,
+                110.14860738063675
+              ],
+              "mean": 0.0,
+              "n": 256
+            }
+          ],
+          "seed": 17124101
+        },
+        {
+          "scope": "all-seat profile sensitivity, not unilateraldeviation or BR",
+          "seat_EV_change_bb": [
+            {
+              "interval": [
+                -110.14860738063675,
+                110.14860738063675
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -110.14860738063675,
+                110.14860738063675
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -110.14860738063675,
+                110.14860738063675
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -110.14860738063675,
+                110.14860738063675
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -110.14860738063675,
+                110.14860738063675
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -110.14860738063675,
+                110.14860738063675
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -110.14860738063675,
+                110.14860738063675
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -110.14860738063675,
+                110.14860738063675
+              ],
+              "mean": 0.0,
+              "n": 256
+            },
+            {
+              "interval": [
+                -110.14860738063675,
+                110.14860738063675
+              ],
+              "mean": 0.0,
+              "n": 256
+            }
+          ],
+          "seed": 17124102
+        }
+      ],
+      "players": 9,
+      "profiles": [
+        {
+          "coverage": {
+            "first_untrained_seats": [
+              0,
+              0,
+              256,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "paths_untrained": 256,
+            "strategic_preflop_decisions": 3414,
+            "untrained_path_rate": 1.0,
+            "untrained_strategic_preflop_decisions": 3414,
+            "untrained_strategic_preflop_rate": 1.0
+          },
+          "full_native_BR_upper": null,
+          "full_native_NashConv": null,
+          "mean_rake_bb": 7.306640625,
+          "name": "prior",
+          "policy_digest": "a85f4826a62804b720c212768e10b6ab116a07b1e2dd2361ec2980564d4a18d3",
+          "root_UTG_fold_gain_interval_bb": [
+            -54.146569315318374,
+            30.0
+          ],
+          "seat_EV_bb": [
+            {
+              "interval": [
+                -49.545006815318374,
+                60.603600565318374
+              ],
+              "mean": 5.529296875,
+              "n": 256
+            },
+            {
+              "interval": [
+                -40.0,
+                52.724694315318374
+              ],
+              "mean": -2.349609375,
+              "n": 256
+            },
+            {
+              "interval": [
+                -30.0,
+                54.146569315318374
+              ],
+              "mean": -0.927734375,
+              "n": 256
+            },
+            {
+              "interval": [
+                -50.0,
+                54.545006815318374
+              ],
+              "mean": -0.529296875,
+              "n": 256
+            },
+            {
+              "interval": [
+                -40.0,
+                55.277428690318374
+              ],
+              "mean": 0.203125,
+              "n": 256
+            },
+            {
+              "interval": [
+                -30.0,
+                52.447350565318374
+              ],
+              "mean": -2.626953125,
+              "n": 256
+            },
+            {
+              "interval": [
+                -50.0,
+                51.617272440318374
+              ],
+              "mean": -3.45703125,
+              "n": 256
+            },
+            {
+              "interval": [
+                -40.0,
+                53.658288065318374
+              ],
+              "mean": -1.416015625,
+              "n": 256
+            },
+            {
+              "interval": [
+                -30.0,
+                53.341881815318374
+              ],
+              "mean": -1.732421875,
+              "n": 256
+            }
+          ],
+          "unilateral_probe_scope": "seat2rootfoldhasexactutility0; loweronly, notBR"
+        },
+        {
+          "coverage": {
+            "first_untrained_seats": [
+              0,
+              0,
+              254,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "paths_untrained": 256,
+            "strategic_preflop_decisions": 3414,
+            "untrained_path_rate": 1.0,
+            "untrained_strategic_preflop_decisions": 3406,
+            "untrained_strategic_preflop_rate": 0.9976567076742824
+          },
+          "full_native_BR_upper": null,
+          "full_native_NashConv": null,
+          "mean_rake_bb": 7.306640625,
+          "name": "learned-17124101",
+          "policy_digest": "55e7a5d71f5f7e2a054b7fb3e4f40eb7659d3338475db9e7bc3e4af07214303a",
+          "root_UTG_fold_gain_interval_bb": [
+            -54.146569315318374,
+            30.0
+          ],
+          "seat_EV_bb": [
+            {
+              "interval": [
+                -49.545006815318374,
+                60.603600565318374
+              ],
+              "mean": 5.529296875,
+              "n": 256
+            },
+            {
+              "interval": [
+                -40.0,
+                52.724694315318374
+              ],
+              "mean": -2.349609375,
+              "n": 256
+            },
+            {
+              "interval": [
+                -30.0,
+                54.146569315318374
+              ],
+              "mean": -0.927734375,
+              "n": 256
+            },
+            {
+              "interval": [
+                -50.0,
+                54.545006815318374
+              ],
+              "mean": -0.529296875,
+              "n": 256
+            },
+            {
+              "interval": [
+                -40.0,
+                55.277428690318374
+              ],
+              "mean": 0.203125,
+              "n": 256
+            },
+            {
+              "interval": [
+                -30.0,
+                52.447350565318374
+              ],
+              "mean": -2.626953125,
+              "n": 256
+            },
+            {
+              "interval": [
+                -50.0,
+                51.617272440318374
+              ],
+              "mean": -3.45703125,
+              "n": 256
+            },
+            {
+              "interval": [
+                -40.0,
+                53.658288065318374
+              ],
+              "mean": -1.416015625,
+              "n": 256
+            },
+            {
+              "interval": [
+                -30.0,
+                53.341881815318374
+              ],
+              "mean": -1.732421875,
+              "n": 256
+            }
+          ],
+          "unilateral_probe_scope": "seat2rootfoldhasexactutility0; loweronly, notBR"
+        },
+        {
+          "coverage": {
+            "first_untrained_seats": [
+              0,
+              0,
+              252,
+              4,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "paths_untrained": 256,
+            "strategic_preflop_decisions": 3414,
+            "untrained_path_rate": 1.0,
+            "untrained_strategic_preflop_decisions": 3398,
+            "untrained_strategic_preflop_rate": 0.9953134153485648
+          },
+          "full_native_BR_upper": null,
+          "full_native_NashConv": null,
+          "mean_rake_bb": 7.306640625,
+          "name": "learned-17124102",
+          "policy_digest": "23e81aabad513173ab1f05f6880db0bcba82fdae6de31438e59fad3e03a7d2d2",
+          "root_UTG_fold_gain_interval_bb": [
+            -54.146569315318374,
+            30.0
+          ],
+          "seat_EV_bb": [
+            {
+              "interval": [
+                -49.545006815318374,
+                60.603600565318374
+              ],
+              "mean": 5.529296875,
+              "n": 256
+            },
+            {
+              "interval": [
+                -40.0,
+                52.724694315318374
+              ],
+              "mean": -2.349609375,
+              "n": 256
+            },
+            {
+              "interval": [
+                -30.0,
+                54.146569315318374
+              ],
+              "mean": -0.927734375,
+              "n": 256
+            },
+            {
+              "interval": [
+                -50.0,
+                54.545006815318374
+              ],
+              "mean": -0.529296875,
+              "n": 256
+            },
+            {
+              "interval": [
+                -40.0,
+                55.277428690318374
+              ],
+              "mean": 0.203125,
+              "n": 256
+            },
+            {
+              "interval": [
+                -30.0,
+                52.447350565318374
+              ],
+              "mean": -2.626953125,
+              "n": 256
+            },
+            {
+              "interval": [
+                -50.0,
+                51.617272440318374
+              ],
+              "mean": -3.45703125,
+              "n": 256
+            },
+            {
+              "interval": [
+                -40.0,
+                53.658288065318374
+              ],
+              "mean": -1.416015625,
+              "n": 256
+            },
+            {
+              "interval": [
+                -30.0,
+                53.341881815318374
+              ],
+              "mean": -1.732421875,
+              "n": 256
+            }
+          ],
+          "unilateral_probe_scope": "seat2rootfoldhasexactutility0; loweronly, notBR"
+        }
+      ],
+      "seconds": 3.5146928310023213,
+      "seed": 17124209,
+      "worlds_per_profile": 256
+    }
+  ],
+  "verified_strategies": 0
+}

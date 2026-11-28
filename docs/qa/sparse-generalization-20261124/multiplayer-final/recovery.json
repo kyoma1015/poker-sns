@@ -1,0 +1,6 @@
+{
+  "current_source_sha256": "30bafa0a7220350bc1fb6930ca74c940904ea22b876585689ad2194007d7b893",
+  "same_SparseJoint_class_sha256": "c3faff7d8658c6b4ed1d98e3f6714436b4fdc97b0c826f27b7f85641080ea77c",
+  "scope": "only runcontroller NumPy scalar serialization fixed; R/A/RNG source class unchanged",
+  "source_sha256": "c757db2c523d8b86302366870a520250ee395777495385aaa43304a5aeba0e29"
+}

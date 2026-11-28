@@ -1,0 +1,8 @@
+test_all_finite_chance_raw_CF_matches_independent_three_owner_oracle (gto.qualification.test_stream_multiplayer.NOwner.test_all_finite_chance_raw_CF_matches_independent_three_owner_oracle) ... ok
+test_six_nine_conditional_decks_information_and_resume (gto.qualification.test_stream_multiplayer.NOwner.test_six_nine_conditional_decks_information_and_resume) ... ok
+test_systematic_CDF_expected_mass_equals_exact_target (gto.qualification.test_stream_multiplayer.StrataProposal.test_systematic_CDF_expected_mass_equals_exact_target) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 11.468s
+
+OK

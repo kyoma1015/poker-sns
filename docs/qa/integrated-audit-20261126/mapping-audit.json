@@ -1,0 +1,28 @@
+{
+  "max_within_legacy_info_policy_difference": 0.0,
+  "example": null,
+  "initial_new_abstract_BR": {
+    "EV_bb": 0.13663968115999636,
+    "BR_SB_bb": 6.244929663964745,
+    "BR_BB_bb": 4.155998353813374,
+    "NashConv_bb": 10.400928017778119,
+    "physical_infosets": false,
+    "full_native_BR_upper": null
+  },
+  "boards": [
+    [
+      34,
+      46,
+      24,
+      14,
+      2
+    ],
+    [
+      51,
+      36,
+      4,
+      47,
+      26
+    ]
+  ]
+}

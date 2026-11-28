@@ -1,0 +1,90 @@
+{
+  "best": {
+    "EV": 0.3282335069444445,
+    "gains": {
+      "fold": -0.8282335069444444,
+      "open3p5": -0.19566514756944442,
+      "open8": -1.9769496725063131,
+      "river_jam": 0.029296875,
+      "river_nuts": 0.0,
+      "threebet10p5": 0.157470703125
+    },
+    "score": 0.157470703125
+  },
+  "curve": [
+    {
+      "iterations": 26,
+      "max_effective_inverse_proposal": 18332524.006873753,
+      "new_updates": 26,
+      "pure_seconds": 5.162810045999322,
+      "selection": {
+        "EV": 0.3282335069444445,
+        "gains": {
+          "fold": -0.8282335069444444,
+          "open3p5": -0.19566514756944442,
+          "open8": -1.9769496725063131,
+          "river_jam": 0.029296875,
+          "river_nuts": 0.0,
+          "threebet10p5": 0.157470703125
+        },
+        "score": 0.157470703125
+      },
+      "stats": {
+        "average_visited": 99798,
+        "halted": false,
+        "iterations": 26,
+        "regret_visited": 126798,
+        "rows": 237486
+      }
+    },
+    {
+      "iterations": 50,
+      "max_effective_inverse_proposal": 56713387.02019981,
+      "new_updates": 50,
+      "pure_seconds": 10.126791282998056,
+      "selection": {
+        "EV": 0.960501006155303,
+        "gains": {
+          "fold": -1.460501006155303,
+          "open3p5": -1.590627959280303,
+          "open8": -1.5255755800189394,
+          "river_jam": 0.1865234375,
+          "river_nuts": 0.0,
+          "threebet10p5": -0.3347389914772727
+        },
+        "score": 0.1865234375
+      },
+      "stats": {
+        "average_visited": 193418,
+        "halted": false,
+        "iterations": 50,
+        "regret_visited": 241005,
+        "rows": 438896
+      }
+    }
+  ],
+  "formal_acceptance": 0,
+  "full_native_BR_upper": null,
+  "full_native_NashConv": null,
+  "initial": {
+    "EV": 0.5071022727272727,
+    "gains": {
+      "fold": -1.0071022727272727,
+      "open3p5": -0.1921608664772727,
+      "open8": -0.3640358664772727,
+      "river_jam": -0.853515625,
+      "river_nuts": 0.0,
+      "threebet10p5": 0.4061562894570707
+    },
+    "score": 0.4061562894570707
+  },
+  "last_iterations": 50,
+  "parent_iterations": 0,
+  "peak_RSS_bytes": 445116416,
+  "policy_digest": "5fad5485ea6d791a6c3d7d5550348950619f3de745c9511adf951cd30a2abcab",
+  "pure_training_seconds": 10.126791282998056,
+  "seed": 17120102,
+  "selected_iterations": 26,
+  "stop_reason": "NO_REPEATED_SELECTION_TREND",
+  "timed_best_IO_seconds": 3.1605742499996268
+}

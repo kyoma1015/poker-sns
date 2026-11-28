@@ -1,0 +1,18 @@
+test_systematic_CDF_expected_mass_equals_exact_target (gto.qualification.test_stream_multiplayer.StrataProposal.test_systematic_CDF_expected_mass_equals_exact_target) ... ERROR
+
+======================================================================
+ERROR: test_systematic_CDF_expected_mass_equals_exact_target (gto.qualification.test_stream_multiplayer.StrataProposal.test_systematic_CDF_expected_mass_equals_exact_target)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/poker-sns/gto/qualification/test_stream_multiplayer.py", line 20, in test_systematic_CDF_expected_mass_equals_exact_target
+    for a,b in zip(cuts,cuts[1:]):got+=np.bincount(systematic_indices(weights,K,(a+b)/2),minlength=len(weights))*(b-a)/K
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/poker-sns/gto/qualification/stream_multiplayer.py", line 56, in systematic_indices
+    if np.any(w<=0) or abs(w.sum()-1)>1e-12 or not 0<=u<1 or K<1:raise ValueError('normalized systematic strata')
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: normalized systematic strata
+
+----------------------------------------------------------------------
+Ran 1 test in 0.691s
+
+FAILED (errors=1)

@@ -1,0 +1,68 @@
+{
+  "records": [
+    {
+      "full": true,
+      "last": {
+        "complete": false,
+        "error": "node/time budget; incomplete pair discarded",
+        "iterations": 0,
+        "nodes": 150272,
+        "rows": 78097
+      },
+      "peak_RSS_bytes": 275648512,
+      "refined": true,
+      "seconds": 1.027445379000028,
+      "stats": {
+        "action_entries": 1032160,
+        "average_visited": 0,
+        "estimated_row_bytes": 59179480,
+        "iterations": 0,
+        "regret_visited": 0,
+        "rows": 78097
+      }
+    },
+    {
+      "full": false,
+      "last": {
+        "complete": true,
+        "error": "",
+        "iterations": 4,
+        "nodes": 1735,
+        "rows": 2934
+      },
+      "peak_RSS_bytes": 275714048,
+      "refined": false,
+      "seconds": 0.01726274500015279,
+      "stats": {
+        "action_entries": 16032,
+        "average_visited": 2512,
+        "estimated_row_bytes": 1371052,
+        "iterations": 4,
+        "regret_visited": 426,
+        "rows": 2934
+      }
+    },
+    {
+      "full": false,
+      "last": {
+        "complete": true,
+        "error": "",
+        "iterations": 4,
+        "nodes": 1556,
+        "rows": 2455
+      },
+      "peak_RSS_bytes": 275714048,
+      "refined": true,
+      "seconds": 0.022496262000004208,
+      "stats": {
+        "action_entries": 14222,
+        "average_visited": 2130,
+        "estimated_row_bytes": 1228536,
+        "iterations": 4,
+        "regret_visited": 329,
+        "rows": 2455
+      }
+    }
+  ],
+  "selection": "allnative rejected if incomplete; same geometry engine with strength key continues; omission errors UNKNOWN"
+}

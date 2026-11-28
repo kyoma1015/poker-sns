@@ -1,0 +1,45 @@
+{
+  "extra_support": [
+    {
+      "actions": [
+        18,
+        19
+      ],
+      "history": [],
+      "round": 0
+    }
+  ],
+  "scope": "old independent discovery now selection only; top2 omitted root means, no fixed-size special case",
+  "selected": [
+    {
+      "gain_bb": {
+        "interval": [
+          -25.44625334113737,
+          26.389938236970707
+        ],
+        "mean": 0.47184244791666674,
+        "n": 256,
+        "radius": 25.91809578905404,
+        "variance": 53.91680659486429
+      },
+      "native_action": 18,
+      "raise_to_BB": 8.0
+    },
+    {
+      "gain_bb": {
+        "interval": [
+          -25.508862927293162,
+          26.436922823126498
+        ],
+        "mean": 0.46402994791666674,
+        "n": 256,
+        "radius": 25.97289287520983,
+        "variance": 56.48258408483755
+      },
+      "native_action": 19,
+      "raise_to_BB": 8.5
+    }
+  ],
+  "source": "docs/qa/legal-size-20261124/hu-final/17120101/all-root-discovery.json",
+  "source_sha256": "f7001948b4eb11758d2df7b84cf7d26a714ffb0a5a798919f5db5104bc9580ef"
+}

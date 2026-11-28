@@ -1,0 +1,60 @@
+{
+  "best_iterations": 64,
+  "curve": [
+    {
+      "iterations": 0,
+      "selection": {
+        "SB_EV_bb": 0.5815084438131315,
+        "n": 256,
+        "open3p5_gain_bb": -0.5614889125631315
+      }
+    },
+    {
+      "iterations": 64,
+      "seconds": 2.9161280439998336,
+      "selection": {
+        "SB_EV_bb": 0.5312154750631315,
+        "n": 256,
+        "open3p5_gain_bb": -0.6381490688131315
+      },
+      "stats": {
+        "action_entries": 316409,
+        "average_visited": 49381,
+        "estimated_row_bytes": 28864556,
+        "iterations": 64,
+        "regret_visited": 10035,
+        "rows": 59240
+      }
+    },
+    {
+      "iterations": 256,
+      "seconds": 14.681003524000062,
+      "selection": {
+        "SB_EV_bb": -0.04601187657828276,
+        "n": 256,
+        "open3p5_gain_bb": -0.15857796717171724
+      },
+      "stats": {
+        "action_entries": 1309551,
+        "average_visited": 205961,
+        "estimated_row_bytes": 119175280,
+        "iterations": 256,
+        "regret_visited": 39869,
+        "rows": 245025
+      }
+    }
+  ],
+  "ordinary_registry_admission": false,
+  "peak_RSS_bytes": 415133696,
+  "reason": "FIRST_SELECTION_WORSENING",
+  "seconds": 15.016568315999848,
+  "seed": 17120102,
+  "stats": {
+    "action_entries": 316409,
+    "average_visited": 49381,
+    "estimated_row_bytes": 28864556,
+    "iterations": 64,
+    "regret_visited": 10035,
+    "rows": 59240
+  }
+}

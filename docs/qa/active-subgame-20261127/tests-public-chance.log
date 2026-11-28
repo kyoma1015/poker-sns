@@ -1,0 +1,15 @@
+test_active_raw_CF_average_and_BR_match_existing_CSR (gto.qualification.test_active_chance.ActiveOracle.test_active_raw_CF_average_and_BR_match_existing_CSR) ... ok
+test_features_are_suit_invariant_and_prefix_rank_is_exact (gto.qualification.test_active_chance.ActiveOracle.test_features_are_suit_invariant_and_prefix_rank_is_exact) ... ok
+test_native_adapter_matches_training_rows_and_explicit_offtree_backoff (gto.qualification.test_active_chance.ActiveOracle.test_native_adapter_matches_training_rows_and_explicit_offtree_backoff) ... ok
+test_suit_orbit_response_scores_equal_explicit_24_permutations (gto.qualification.test_active_chance.ActiveOracle.test_suit_orbit_response_scores_equal_explicit_24_permutations) ... ok
+test_csr_more_than_four_actions_and_exact_checkpoint_replay (gto.qualification.test_public_chance.PublicChance.test_csr_more_than_four_actions_and_exact_checkpoint_replay) ... ok
+test_future_information_prefix_and_board_law_validation (gto.qualification.test_public_chance.PublicChance.test_future_information_prefix_and_board_law_validation) ... ok
+test_rank_prefix_card_removal_matches_direct_all_pairs (gto.qualification.test_public_chance.PublicChance.test_rank_prefix_card_removal_matches_direct_all_pairs) ... ok
+test_regret_average_ev_br_and_action_ev_match_frozen_dense_kernel (gto.qualification.test_public_chance.PublicChance.test_regret_average_ev_br_and_action_ev_match_frozen_dense_kernel) ... ok
+test_two_player_joint_convergence_and_current_range_recomputation (gto.qualification.test_public_chance.PublicChance.test_two_player_joint_convergence_and_current_range_recomputation) ... ok
+test_weighted_public_chance_and_shared_prefix_BR_match_dense_oracle (gto.qualification.test_public_chance.PublicChance.test_weighted_public_chance_and_shared_prefix_BR_match_dense_oracle) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 19.616s
+
+OK

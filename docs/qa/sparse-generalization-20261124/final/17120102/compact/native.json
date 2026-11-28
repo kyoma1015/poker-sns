@@ -1,0 +1,112 @@
+{
+  "SB_EV_bb": {
+    "interval": [
+      -0.7005134044587388,
+      1.1531350185488587
+    ],
+    "mean": 0.22631080704506,
+    "n": 8192,
+    "radius": 0.9268242115037988,
+    "variance": 92.39118601489992
+  },
+  "abstraction_error_upper": null,
+  "binary_sha256": "f23625a462eb87a0339123bb6ac2ab99daf8d6f4e3d006895237ee0ffe4728cc",
+  "checkpoint_source": "docs/qa/sparse-generalization-20261124/hu-final/17120102/compact",
+  "continuation_error_upper": null,
+  "deviations": {
+    "open3p5": {
+      "interval": [
+        -1.096018406547845,
+        1.5128191656032426
+      ],
+      "mean": 0.20840037952769885,
+      "n": 8192,
+      "radius": 1.3044187860755438,
+      "variance": 91.91619725562695
+    },
+    "open8": {
+      "interval": [
+        -1.2016602919759298,
+        1.4667221039432594
+      ],
+      "mean": 0.13253090598366477,
+      "n": 8192,
+      "radius": 1.3341911979595946,
+      "variance": 102.20562426295126
+    },
+    "river_jam": {
+      "interval": [
+        -1.8270429883327313,
+        0.6787275586452313
+      ],
+      "mean": -0.57415771484375,
+      "n": 8192,
+      "radius": 1.2528852734889813,
+      "variance": 75.39600771434897
+    },
+    "river_nuts": {
+      "interval": [
+        -0.7580091526422331,
+        0.7580091526422331
+      ],
+      "mean": 0.0,
+      "n": 8192,
+      "radius": 0.7580091526422331,
+      "variance": 0.0
+    },
+    "threebet10p5": {
+      "interval": [
+        -0.8832517733712408,
+        1.192393915002396
+      ],
+      "mean": 0.15457107081557767,
+      "n": 8192,
+      "radius": 1.0378228441868185,
+      "variance": 24.10423071865366
+    }
+  },
+  "final_seed": 17129501,
+  "formal_pass": false,
+  "full_native_BR_upper": null,
+  "full_native_NashConv": null,
+  "iteration": 64,
+  "mode": "compact",
+  "n": 8192,
+  "omitted_action_error_upper": null,
+  "path_coverage": {
+    "current_untrained": 6444,
+    "no_parent_or_current": 374
+  },
+  "peak_RSS_bytes": 218132480,
+  "policy_digest": "eb0d0fe48f3dad3b4e8e65fb2b53598b90b14f40505340d1d4e3771057070598",
+  "query_coverage": {
+    "0": {
+      "default": 264,
+      "queries": 13852,
+      "trained": 5021,
+      "warm_only": 8567
+    },
+    "1": {
+      "default": 300,
+      "queries": 6711,
+      "trained": 164,
+      "warm_only": 6247
+    },
+    "2": {
+      "default": 313,
+      "queries": 3827,
+      "trained": 29,
+      "warm_only": 3485
+    },
+    "3": {
+      "default": 348,
+      "queries": 2095,
+      "trained": 2,
+      "warm_only": 1745
+    }
+  },
+  "seconds": 8.475881638998544,
+  "seed": 17120102,
+  "source_sha256": "65932655b8eb9448e68c0843b87b2d773d2503e41c340648f76ede27dad719de",
+  "status": "COMPLETE_UNVERIFIED"
+}

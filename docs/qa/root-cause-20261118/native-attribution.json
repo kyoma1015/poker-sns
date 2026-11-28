@@ -1,0 +1,1740 @@
+{
+  "confidence_family": 0.999,
+  "contrasts": [
+    {
+      "candidate": "both-learned",
+      "control": "both-uniform",
+      "paired_ev_change_bb": {
+        "interval": [
+          -0.8164011687397816,
+          2.6982371062397816
+        ],
+        "mean": 0.94091796875,
+        "n": 8192,
+        "radius": 1.7573191374897816,
+        "variance": 615.204725222424
+      }
+    },
+    {
+      "candidate": "both-learned",
+      "control": "SB-learned",
+      "paired_ev_change_bb": {
+        "interval": [
+          -0.6430489051121138,
+          0.6318184363621138
+        ],
+        "mean": -0.005615234375,
+        "n": 8192,
+        "radius": 0.6374336707371138,
+        "variance": 3.1232134903209317
+      }
+    },
+    {
+      "candidate": "both-learned",
+      "control": "BB-learned",
+      "paired_ev_change_bb": {
+        "interval": [
+          -0.8227766348294427,
+          2.6948469473294425
+        ],
+        "mean": 0.93603515625,
+        "n": 8192,
+        "radius": 1.7588117910794427,
+        "variance": 616.7287855477811
+      }
+    },
+    {
+      "candidate": "SB-learned",
+      "control": "both-uniform",
+      "paired_ev_change_bb": {
+        "interval": [
+          -0.8090803096819816,
+          2.7021467159319816
+        ],
+        "mean": 0.946533203125,
+        "n": 8192,
+        "radius": 1.7556135128069816,
+        "variance": 613.4655208818177
+      }
+    }
+  ],
+  "decision_counts": {
+    "0:0:positive_S": 7538,
+    "0:0:uniform_prior": 6642,
+    "0:1:uniform_prior": 2917,
+    "0:2:uniform_prior": 846,
+    "0:3:uniform_prior": 237,
+    "1:0:positive_S": 296,
+    "1:0:uniform_prior": 10007,
+    "1:1:uniform_prior": 3945,
+    "1:2:uniform_prior": 1087,
+    "1:3:uniform_prior": 320
+  },
+  "elapsed_seconds": 10.379079055999682,
+  "event_counts": {
+    "any_untrained": 8121,
+    "seat0_any_untrained": 6792,
+    "seat1_any_untrained": 8016
+  },
+  "events": 8,
+  "expanded_training": false,
+  "first_untrained_partition": {
+    "(0, 0)": {
+      "conditional_mean_bb": -1.6744621141253508,
+      "n": 1069,
+      "root_EV_contribution_bb": -0.218505859375
+    },
+    "(1, 0)": {
+      "conditional_mean_bb": -2.8826712231240212,
+      "n": 7023,
+      "root_EV_contribution_bb": -2.4713134765625
+    },
+    "(1, 1)": {
+      "conditional_mean_bb": -0.5689655172413793,
+      "n": 29,
+      "root_EV_contribution_bb": -0.00201416015625
+    },
+    "all-positive-S": {
+      "conditional_mean_bb": 0.323943661971831,
+      "n": 71,
+      "root_EV_contribution_bb": 0.0028076171875
+    }
+  },
+  "full_native_paths": 32768,
+  "n": 8192,
+  "ordinary_registry_admission": false,
+  "profiles": [
+    {
+      "ev_bb": {
+        "interval": [
+          -4.769319598987191,
+          -0.6087321588253092
+        ],
+        "mean": -2.68902587890625,
+        "n": 8192,
+        "radius": 2.080293720080941,
+        "variance": 1377.8417828624727
+      },
+      "full_br_gain_lower_bb": 0.10873215882530918,
+      "full_br_upper_bb": null,
+      "learned_seats": [
+        0,
+        1
+      ],
+      "name": "both-learned",
+      "nashconv_bb": null,
+      "nashconv_lower_bb": 0.10873215882530918,
+      "nashconv_upper_bb": null,
+      "policy_digest": "98c067adef633e4b36b9e989db4016d4a52a678b54baeeb351caf5ea50ffcefb",
+      "sb_fold_gain_interval_bb": [
+        0.10873215882530918,
+        4.269319598987191
+      ],
+      "source_policy_digest": "a4c0f1f50290d6908157a34d05fb67878c4a6d9ecd61f014ad7a0426d8b344c9"
+    },
+    {
+      "ev_bb": {
+        "interval": [
+          -4.763627824885743,
+          -0.6031934641767571
+        ],
+        "mean": -2.68341064453125,
+        "n": 8192,
+        "radius": 2.080217180354493,
+        "variance": 1377.724902393675
+      },
+      "full_br_gain_lower_bb": 0.10319346417675712,
+      "full_br_upper_bb": null,
+      "learned_seats": [
+        0
+      ],
+      "name": "SB-learned",
+      "nashconv_bb": null,
+      "nashconv_lower_bb": 0.10319346417675712,
+      "nashconv_upper_bb": null,
+      "policy_digest": "378872bbac2e37f9099a143cb836c7bf666f4d6b86417cc52af4af6b911d489c",
+      "sb_fold_gain_interval_bb": [
+        0.10319346417675712,
+        4.263627824885743
+      ],
+      "source_policy_digest": "a4c0f1f50290d6908157a34d05fb67878c4a6d9ecd61f014ad7a0426d8b344c9"
+    },
+    {
+      "ev_bb": {
+        "interval": [
+          -5.69234620641663,
+          -1.5577758638958694
+        ],
+        "mean": -3.62506103515625,
+        "n": 8192,
+        "radius": 2.0672851712603806,
+        "variance": 1358.0481778744331
+      },
+      "full_br_gain_lower_bb": 1.0577758638958694,
+      "full_br_upper_bb": null,
+      "learned_seats": [
+        1
+      ],
+      "name": "BB-learned",
+      "nashconv_bb": null,
+      "nashconv_lower_bb": 1.0577758638958694,
+      "nashconv_upper_bb": null,
+      "policy_digest": "f8ebc7f2355f76f5977918dbe48047de2cb610ff78ad4563957a634c1025ed24",
+      "sb_fold_gain_interval_bb": [
+        1.0577758638958694,
+        5.19234620641663
+      ],
+      "source_policy_digest": "a4c0f1f50290d6908157a34d05fb67878c4a6d9ecd61f014ad7a0426d8b344c9"
+    },
+    {
+      "ev_bb": {
+        "interval": [
+          -5.69636973589145,
+          -1.5635179594210507
+        ],
+        "mean": -3.62994384765625,
+        "n": 8192,
+        "radius": 2.0664258882351993,
+        "variance": 1356.7457483548003
+      },
+      "full_br_gain_lower_bb": 1.0635179594210507,
+      "full_br_upper_bb": null,
+      "learned_seats": [],
+      "name": "both-uniform",
+      "nashconv_bb": null,
+      "nashconv_lower_bb": 1.0635179594210507,
+      "nashconv_upper_bb": null,
+      "policy_digest": "32a72c4992fc4cd405a1c16aef97f44be2679322df4db312e1be759d1d776093",
+      "sb_fold_gain_interval_bb": [
+        1.0635179594210507,
+        5.19636973589145
+      ],
+      "source_policy_digest": "a4c0f1f50290d6908157a34d05fb67878c4a6d9ecd61f014ad7a0426d8b344c9"
+    }
+  ],
+  "root_coverage": [
+    {
+      "hand": "AA",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.004524886877828055,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "AKs",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "AQs",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "AJs",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "ATs",
+      "has_R": true,
+      "has_S": false,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "A9s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "A8s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "A7s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "A6s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "A5s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "A4s",
+      "has_R": false,
+      "has_S": false,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "A3s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "A2s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "AKo",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "KK",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.004524886877828055,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "KQs",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "KJs",
+      "has_R": false,
+      "has_S": false,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "KTs",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "K9s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "K8s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "K7s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "K6s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "K5s",
+      "has_R": true,
+      "has_S": false,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "K4s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "K3s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "K2s",
+      "has_R": false,
+      "has_S": false,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "AQo",
+      "has_R": true,
+      "has_S": false,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "KQo",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "QQ",
+      "has_R": false,
+      "has_S": false,
+      "mass": 0.004524886877828055,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "QJs",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "QTs",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "Q9s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "Q8s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "Q7s",
+      "has_R": true,
+      "has_S": false,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "Q6s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "Q5s",
+      "has_R": true,
+      "has_S": false,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "Q4s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "Q3s",
+      "has_R": true,
+      "has_S": false,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "Q2s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "AJo",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "KJo",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 7,
+      "stage_S_updates": 7,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "QJo",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "JJ",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.004524886877828055,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "JTs",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "J9s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "J8s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "J7s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "J6s",
+      "has_R": false,
+      "has_S": false,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "J5s",
+      "has_R": false,
+      "has_S": false,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "J4s",
+      "has_R": true,
+      "has_S": false,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "J3s",
+      "has_R": true,
+      "has_S": false,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "J2s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "ATo",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 6,
+      "stage_S_updates": 6,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "KTo",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "QTo",
+      "has_R": true,
+      "has_S": false,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "JTo",
+      "has_R": true,
+      "has_S": false,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "TT",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.004524886877828055,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "T9s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "T8s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "T7s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "T6s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "T5s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "T4s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "T3s",
+      "has_R": true,
+      "has_S": false,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "T2s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "A9o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "K9o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "Q9o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "J9o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "T9o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "99",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.004524886877828055,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "98s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "97s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "96s",
+      "has_R": false,
+      "has_S": false,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "95s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "94s",
+      "has_R": true,
+      "has_S": false,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "93s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "92s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "A8o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "K8o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "Q8o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "J8o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "T8o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "98o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "88",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.004524886877828055,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "87s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "86s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "85s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "84s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "83s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "82s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "A7o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "K7o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 4,
+      "stage_S_updates": 4,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "Q7o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "J7o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 4,
+      "stage_S_updates": 4,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "T7o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "97o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "87o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "77",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.004524886877828055,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "76s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "75s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "74s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "73s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "72s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "A6o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "K6o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 4,
+      "stage_S_updates": 4,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "Q6o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "J6o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 5,
+      "stage_S_updates": 5,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "T6o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "96o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 5,
+      "stage_S_updates": 5,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "86o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "76o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "66",
+      "has_R": true,
+      "has_S": false,
+      "mass": 0.004524886877828055,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "65s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "64s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "63s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "62s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "A5o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 8,
+      "stage_S_updates": 8,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "K5o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "Q5o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 4,
+      "stage_S_updates": 4,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "J5o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "T5o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "95o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "85o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "75o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "65o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "55",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.004524886877828055,
+      "stage_R_updates": 4,
+      "stage_S_updates": 4,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "54s",
+      "has_R": false,
+      "has_S": false,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "53s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "52s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "A4o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "K4o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "Q4o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "J4o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "T4o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "94o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "84o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "74o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "64o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "54o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 4,
+      "stage_S_updates": 4,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "44",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.004524886877828055,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "43s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "42s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "A3o",
+      "has_R": true,
+      "has_S": false,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "K3o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "Q3o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "J3o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "T3o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 4,
+      "stage_S_updates": 4,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "93o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 6,
+      "stage_S_updates": 6,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "83o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "73o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "63o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 6,
+      "stage_S_updates": 6,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "53o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "43o",
+      "has_R": true,
+      "has_S": false,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "33",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.004524886877828055,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "32s",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.0030165912518853697,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "A2o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 6,
+      "stage_S_updates": 6,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "K2o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "Q2o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 5,
+      "stage_S_updates": 5,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "J2o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 4,
+      "stage_S_updates": 4,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "T2o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "92o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "82o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 1,
+      "stage_S_updates": 1,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "72o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 5,
+      "stage_S_updates": 5,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "62o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "52o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "42o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 3,
+      "stage_S_updates": 3,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "32o",
+      "has_R": true,
+      "has_S": true,
+      "mass": 0.00904977375565611,
+      "stage_R_updates": 2,
+      "stage_S_updates": 2,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    },
+    {
+      "hand": "22",
+      "has_R": false,
+      "has_S": false,
+      "mass": 0.004524886877828055,
+      "stage_R_updates": 0,
+      "stage_S_updates": 0,
+      "stage_count_note": "new stage only; warm ancestor counts reset by original experiment"
+    }
+  ],
+  "seed": 17118034,
+  "status": "COMPLETE_DIAGNOSTIC_NOT_A_CANDIDATE"
+}

@@ -1,0 +1,231 @@
+test_all_legal_sizes_and_fold_refund (gto.qualification.test_qualification.IndependentNativeReplay.test_all_legal_sizes_and_fold_refund) ... ok
+test_every_flop_teacher_is_seat_oriented (gto.qualification.test_qualification.IndependentNativeReplay.test_every_flop_teacher_is_seat_oriented) ... ok
+test_independent_real_paths_both_contexts_and_arms (gto.qualification.test_qualification.IndependentNativeReplay.test_independent_real_paths_both_contexts_and_arms) ... ok
+test_own_public_only_policy_interface (gto.qualification.test_qualification.IndependentNativeReplay.test_own_public_only_policy_interface) ... ok
+test_short_one_chip_allin_has_unambiguous_id (gto.qualification.test_qualification.IndependentNativeReplay.test_short_one_chip_allin_has_unambiguous_id) ... ok
+test_absence_of_exploit_does_not_certify (gto.qualification.test_qualification.StatisticsAndEvidence.test_absence_of_exploit_does_not_certify) ... ok
+test_conditional_posterior_is_not_uniform_or_unconditional (gto.qualification.test_qualification.StatisticsAndEvidence.test_conditional_posterior_is_not_uniform_or_unconditional) ... ok
+test_interval_covers_constant_and_is_bounded (gto.qualification.test_qualification.StatisticsAndEvidence.test_interval_covers_constant_and_is_bounded) ... ok
+test_missing_and_single_samples_are_unknown (gto.qualification.test_qualification.StatisticsAndEvidence.test_missing_and_single_samples_are_unknown) ... ok
+test_receipt_and_frozen_proposal (gto.qualification.test_qualification.StatisticsAndEvidence.test_receipt_and_frozen_proposal) ... ok
+test_bad_cards_and_terminal_rejected (gto.qualification.test_public_response.PublicResponseTests.test_bad_cards_and_terminal_rejected) ... ok
+test_bounded_native_paths_all_streets_and_short_allin (gto.qualification.test_public_response.PublicResponseTests.test_bounded_native_paths_all_streets_and_short_allin) ... ok
+test_every_root_size_and_169_classes_have_exact_response (gto.qualification.test_public_response.PublicResponseTests.test_every_root_size_and_169_classes_have_exact_response) ... ok
+test_full_history_not_just_price_and_cards (gto.qualification.test_public_response.PublicResponseTests.test_full_history_not_just_price_and_cards) ... ok
+test_invalid_rows_rejected (gto.qualification.test_public_response.PublicResponseTests.test_invalid_rows_rejected) ... ok
+test_unknown_is_error_not_fold (gto.qualification.test_public_response.PublicResponseTests.test_unknown_is_error_not_fold) ... ok
+test_all_root_sizes_sb_responses_and_short_allin (gto.qualification.test_native_mccfr.NativeSolver.test_all_root_sizes_sb_responses_and_short_allin) ... ok
+test_checkpoint_resume_exact_and_policy_changes (gto.qualification.test_native_mccfr.NativeSolver.test_checkpoint_resume_exact_and_policy_changes) ... ok
+test_native_replay_and_no_evaluation_update (gto.qualification.test_native_mccfr.NativeSolver.test_native_replay_and_no_evaluation_update) ... ok
+test_source_open_posterior_and_card_removal (gto.qualification.test_native_mccfr.NativeSolver.test_source_open_posterior_and_card_removal) ... ok
+test_expected_estimator_matches_independent_matched_history_cf_vectors (gto.qualification.test_native_mccfr.OutcomeEstimator.test_expected_estimator_matches_independent_matched_history_cf_vectors) ... ok
+test_exact_169_orbits_and_global_suit_permutations (gto.qualification.test_variance_mccfr.RevisitAndResume.test_exact_169_orbits_and_global_suit_permutations) ... ok
+test_external_branch_randomness_cannot_advance_or_rewind_deal_stream (gto.qualification.test_variance_mccfr.RevisitAndResume.test_external_branch_randomness_cannot_advance_or_rewind_deal_stream) ... ok
+test_external_freezes_full_batch_and_restarts_exactly (gto.qualification.test_variance_mccfr.RevisitAndResume.test_external_freezes_full_batch_and_restarts_exactly) ... ok
+test_public_fold_baseline_is_exact_native_payoff (gto.qualification.test_variance_mccfr.RevisitAndResume.test_public_fold_baseline_is_exact_native_payoff) ... ok
+test_resume_and_explicit_migration (gto.qualification.test_variance_mccfr.RevisitAndResume.test_resume_and_explicit_migration) ... ok
+test_same_infoset_real_regret_and_average_accumulate (gto.qualification.test_variance_mccfr.RevisitAndResume.test_same_infoset_real_regret_and_average_accumulate) ... ok
+test_suit_orbit_preserves_history_rank_and_board_information (gto.qualification.test_variance_mccfr.RevisitAndResume.test_suit_orbit_preserves_history_rank_and_board_information) ... ok
+test_expected_cf_and_variance_against_exact_values (gto.qualification.test_variance_mccfr.UnbiasedBaseline.test_expected_cf_and_variance_against_exact_values) ... ok
+test_external_first_expectation_and_average_match_independent_cf (gto.qualification.test_variance_mccfr.UnbiasedBaseline.test_external_first_expectation_and_average_match_independent_cf) ... ok
+test_recursive_cv_expected_cf_matches_independent_oracle (gto.qualification.test_variance_mccfr.UnbiasedBaseline.test_recursive_cv_expected_cf_matches_independent_oracle) ... ok
+test_control_and_corrected_use_identical_regret_updates (gto.qualification.test_average_support.AverageSupport.test_control_and_corrected_use_identical_regret_updates) ... ok
+test_other_average_expectation_matches_exact_realization_sum_with_zero_target (gto.qualification.test_average_support.AverageSupport.test_other_average_expectation_matches_exact_realization_sum_with_zero_target) ... ok
+test_resume_source_preservation_and_frozen_pair (gto.qualification.test_average_support.AverageSupport.test_resume_source_preservation_and_frozen_pair) ... ok
+test_zero_opponent_support_average_is_reachable_only_via_exploring_opponent (gto.qualification.test_average_support.AverageSupport.test_zero_opponent_support_average_is_reachable_only_via_exploring_opponent) ... ok
+test_general_pi_q_cf_and_average_with_zero_opponent_targets (gto.qualification.test_action_baseline.GeneralOracle.test_general_pi_q_cf_and_average_with_zero_opponent_targets) ... ok
+test_proposal_has_full_support_and_normalization (gto.qualification.test_action_baseline.GeneralOracle.test_proposal_has_full_support_and_normalization) ... ok
+test_prior_action_predictions_are_used_without_hidden_cards (gto.qualification.test_action_baseline.WarmResume.test_prior_action_predictions_are_used_without_hidden_cards) ... ok
+test_warm_preserves_corrected_R_S_and_exact_resume (gto.qualification.test_action_baseline.WarmResume.test_warm_preserves_corrected_R_S_and_exact_resume) ... ok
+test_mixture_conditioning_preserves_finite_distribution_expectation (gto.qualification.test_conditional_action.IndependentFiniteOracle.test_mixture_conditioning_preserves_finite_distribution_expectation) ... ok
+test_restricted_br_integrates_hidden_worlds_before_max (gto.qualification.test_conditional_action.IndependentFiniteOracle.test_restricted_br_integrates_hidden_worlds_before_max) ... ok
+test_call_posterior_mass_preserves_card_removal_and_source_open_weights (gto.qualification.test_conditional_action.NativeConditionalOracle.test_call_posterior_mass_preserves_card_removal_and_source_open_weights) ... ok
+test_terminal_allin_integral_equals_native_probability_weighted_payoffs (gto.qualification.test_conditional_action.NativeConditionalOracle.test_terminal_allin_integral_equals_native_probability_weighted_payoffs) ... ok
+test_actual_production_collector_matches_card_game_oracle (gto.qualification.test_blind_oracle.BlindGame.test_actual_production_collector_matches_card_game_oracle) ... ok
+test_blind_fold_showdown_net_and_card_removal (gto.qualification.test_blind_oracle.BlindGame.test_blind_fold_showdown_net_and_card_removal) ... ok
+test_checkpoint_exact_continuation_all_three_methods (gto.qualification.test_blind_oracle.BlindGame.test_checkpoint_exact_continuation_all_three_methods) ... ok
+test_complete_br_equals_independent_private_plan_enumeration (gto.qualification.test_blind_oracle.BlindGame.test_complete_br_equals_independent_private_plan_enumeration) ... ok
+test_conditional_ev_times_reach_equals_root_contribution (gto.qualification.test_blind_oracle.BlindGame.test_conditional_ev_times_reach_equals_root_contribution) ... ok
+test_external_expectation_end_to_end_equals_full_tree (gto.qualification.test_blind_oracle.BlindGame.test_external_expectation_end_to_end_equals_full_tree) ... ok
+test_first_external_actual_collector_exact_expectation (gto.qualification.test_blind_oracle.BlindGame.test_first_external_actual_collector_exact_expectation) ... ok
+test_outcome_expectation_end_to_end_equals_full_tree (gto.qualification.test_blind_oracle.BlindGame.test_outcome_expectation_end_to_end_equals_full_tree) ... ok
+test_native_first_external_checkpoint_continues_exactly (gto.qualification.test_blind_oracle.NativeBlindLedger.test_native_first_external_checkpoint_continues_exactly) ... ok
+test_reference_and_native_match_independent_chip_ledger (gto.qualification.test_blind_oracle.NativeBlindLedger.test_reference_and_native_match_independent_chip_ledger) ... ok
+test_action_prior_positive_and_family_not_size_count (gto.qualification.test_coverage_solver.ChanceAndBatch.test_action_prior_positive_and_family_not_size_count) ... ok
+test_actual_adaptive_pair_applies_chance_correction_to_R_and_S (gto.qualification.test_coverage_solver.ChanceAndBatch.test_actual_adaptive_pair_applies_chance_correction_to_R_and_S) ... ok
+test_adaptive_predictable_proposal_exact_expectation_and_weight_bound (gto.qualification.test_coverage_solver.ChanceAndBatch.test_adaptive_predictable_proposal_exact_expectation_and_weight_bound) ... ok
+test_frozen_batch_chance_weight_matches_independent_CF_and_average (gto.qualification.test_coverage_solver.ChanceAndBatch.test_frozen_batch_chance_weight_matches_independent_CF_and_average) ... ok
+test_interrupted_batch_never_publishes_partial_rows (gto.qualification.test_coverage_solver.ChanceAndBatch.test_interrupted_batch_never_publishes_partial_rows) ... ok
+test_true_card_law_and_no_replacement (gto.qualification.test_coverage_solver.ChanceAndBatch.test_true_card_law_and_no_replacement) ... ok
+test_adaptive_native_resume_RNG_and_priority_exact (gto.qualification.test_coverage_solver.CoverageResume.test_adaptive_native_resume_RNG_and_priority_exact) ... ok
+test_family_warm_rows_unchanged_and_exact_resume (gto.qualification.test_coverage_solver.CoverageResume.test_family_warm_rows_unchanged_and_exact_resume) ... ok
+test_lossless_deterministic_and_failed_encoding_preserves_previous (gto.qualification.test_coverage_solver.FastCheckpoint.test_lossless_deterministic_and_failed_encoding_preserves_previous) ... ok
+test_all169_stage_policies_normalized_and_legal (gto.qualification.preflop_release_tests.ReleaseRoute.test_all169_stage_policies_normalized_and_legal) ... ok
+test_every_abstract_action_matches_independent_native_state (gto.qualification.preflop_release_tests.ReleaseRoute.test_every_abstract_action_matches_independent_native_state) ... ok
+test_explicit_postflop_controller_has_no_future_card_input (gto.qualification.preflop_release_tests.ReleaseRoute.test_explicit_postflop_controller_has_no_future_card_input) ... ok
+test_source_identity_and_blocker_are_preserved (gto.qualification.preflop_release_tests.ReleaseRoute.test_source_identity_and_blocker_are_preserved) ... ok
+test_unknown_size_reuses_frozen_full_policy_not_fold_completion (gto.qualification.preflop_release_tests.ReleaseRoute.test_unknown_size_reuses_frozen_full_policy_not_fold_completion) ... ok
+test_counts_rejected (gto.qualification.test_release_deviation.Binomial.test_counts_rejected) ... ok
+test_independent_closed_form_endpoints_and_one_success (gto.qualification.test_release_deviation.Binomial.test_independent_closed_form_endpoints_and_one_success) ... ok
+test_no_hidden_card_input_and_independent_all_opponent_enumeration (gto.qualification.test_release_deviation.Nuts.test_no_hidden_card_input_and_independent_all_opponent_enumeration) ... ok
+test_future_board_cache_never_contaminates_previous_street (gto.qualification.test_range_continuation.PublicRanges.test_future_board_cache_never_contaminates_previous_street) ... ok
+test_joint_card_removal_rank_and_bucket_mass_matches_enumeration (gto.qualification.test_range_continuation.PublicRanges.test_joint_card_removal_rank_and_bucket_mass_matches_enumeration) ... ok
+test_no_future_card_or_opponent_hand_argument (gto.qualification.test_range_continuation.PublicRanges.test_no_future_card_or_opponent_hand_argument) ... ok
+test_one_chip_short_allin_marker_matches_actual_native (gto.qualification.test_range_continuation.PublicRanges.test_one_chip_short_allin_marker_matches_actual_native) ... ok
+test_policy_normalized_and_cache_order_cannot_change_same_observation (gto.qualification.test_range_continuation.PublicRanges.test_policy_normalized_and_cache_order_cannot_change_same_observation) ... ok
+test_preflop_all169_remains_exactly_frozen_B (gto.qualification.test_range_continuation.PublicRanges.test_preflop_all169_remains_exactly_frozen_B) ... ok
+test_preflop_posterior_uses_likelihood_and_own_public_removal (gto.qualification.test_range_continuation.PublicRanges.test_preflop_posterior_uses_likelihood_and_own_public_removal) ... ok
+test_public_action_updates_range_and_unknown_raise_short_allin_legal (gto.qualification.test_range_continuation.PublicRanges.test_public_action_updates_range_and_unknown_raise_short_allin_legal) ... ok
+test_selected_public_bet_updates_exact_conditional_likelihood (gto.qualification.test_range_continuation.PublicRanges.test_selected_public_bet_updates_exact_conditional_likelihood) ... ok
+test_conditional_sampler_resume_keeps_samples_rng_and_counters (gto.qualification.test_range_evaluation.Resume.test_conditional_sampler_resume_keeps_samples_rng_and_counters) ... ok
+test_partial_EV_sampler_resume_exactly_matches_uninterrupted (gto.qualification.test_range_evaluation.Resume.test_partial_EV_sampler_resume_exactly_matches_uninterrupted) ... ok
+test_kernel_scalar_replay_with_native_oracle (gto.qualification.test_preflop_reopt.NativeTests.test_kernel_scalar_replay_with_native_oracle) ... ok
+test_mixture_sampler_matches_every_bucket_probabilities (gto.qualification.test_preflop_reopt.NativeTests.test_mixture_sampler_matches_every_bucket_probabilities) ... ok
+test_aggregation_skips_shared_cards_and_preserves_net (gto.qualification.test_preflop_reopt.WeightTests.test_aggregation_skips_shared_cards_and_preserves_net) ... ok
+test_board_chance_correction_exact_small_deck (gto.qualification.test_preflop_reopt.WeightTests.test_board_chance_correction_exact_small_deck) ... ok
+test_actual_preflop_posterior_matches_bayes_with_blockers (gto.qualification.test_coupled_preflop.Oracles.test_actual_preflop_posterior_matches_bayes_with_blockers) ... ok
+test_endogenous_response_changes_game_without_regret_bug (gto.qualification.test_coupled_preflop.Oracles.test_endogenous_response_changes_game_without_regret_bug) ... ok
+test_epoch_rebuilds_ranges_instead_of_reusing_stale_cache (gto.qualification.test_coupled_preflop.Oracles.test_epoch_rebuilds_ranges_instead_of_reusing_stale_cache) ... ok
+test_regret_average_and_information_constrained_br (gto.qualification.test_coupled_preflop.Oracles.test_regret_average_and_information_constrained_br) ... ok
+test_sparse_card_removal_and_range_scaling (gto.qualification.test_coupled_preflop.Oracles.test_sparse_card_removal_and_range_scaling) ... ok
+test_bayes_and_future_board_hidden_at_preflop (gto.qualification.test_joint_release.JointOracles.test_bayes_and_future_board_hidden_at_preflop) ... ok
+test_exact_convergence_against_all64_pure_policies (gto.qualification.test_joint_release.JointOracles.test_exact_convergence_against_all64_pure_policies) ... ok
+test_gradients_average_and_current_reach_match_path_oracle (gto.qualification.test_joint_release.JointOracles.test_gradients_average_and_current_reach_match_path_oracle) ... ok
+test_nonnegative_lattice_statistical_lower_bound (gto.qualification.test_joint_release.JointOracles.test_nonnegative_lattice_statistical_lower_bound) ... ok
+test_schedule_and_resume_match_independent_joint_teacher (gto.qualification.test_joint_release.JointOracles.test_schedule_and_resume_match_independent_joint_teacher) ... ok
+test_absolute_nuts_jam_dominates_check_for_all990_opponents (gto.qualification.test_joint_release.NativeOracle.test_absolute_nuts_jam_dominates_check_for_all990_opponents) ... ok
+test_all_tree_actions_and_cashflows_with_original_native (gto.qualification.test_joint_release.NativeOracle.test_all_tree_actions_and_cashflows_with_original_native) ... ok
+test_conditional990_runouts_and_blockers_match_original_rank (gto.qualification.test_joint_release.NativeOracle.test_conditional990_runouts_and_blockers_match_original_rank) ... ok
+test_same_digest_guard_and_short_allin_legal_response (gto.qualification.test_joint_release.NativeOracle.test_same_digest_guard_and_short_allin_legal_response) ... ok
+test_chance_weights_card_removal_and_showdown_symmetry (gto.qualification.test_fullstreet.FullstreetExact.test_chance_weights_card_removal_and_showdown_symmetry) ... ok
+test_complete_br_and_convergence_in_three_games (gto.qualification.test_fullstreet.FullstreetExact.test_complete_br_and_convergence_in_three_games) ... ok
+test_current_reach_regret_average_matches_independent_path_products (gto.qualification.test_fullstreet.FullstreetExact.test_current_reach_regret_average_matches_independent_path_products) ... ok
+test_future_suffix_not_visible_at_preflop_or_flop (gto.qualification.test_fullstreet.FullstreetExact.test_future_suffix_not_visible_at_preflop_or_flop) ... ok
+test_real_regret_average_checkpoint_resume_is_bit_exact (gto.qualification.test_fullstreet.FullstreetExact.test_real_regret_average_checkpoint_resume_is_bit_exact) ... ok
+test_all_three_street_tree_actions_and_cashflows_original_native (gto.qualification.test_fullstreet.FullstreetNative.test_all_three_street_tree_actions_and_cashflows_original_native) ... ok
+test_physical_pair_equity_and_absolute_nuts_use_original_rank (gto.qualification.test_fullstreet.FullstreetNative.test_physical_pair_equity_and_absolute_nuts_use_original_rank) ... ok
+test_same_policy_bayes_range_with_exact_blockers (gto.qualification.test_fullstreet.FullstreetNative.test_same_policy_bayes_range_with_exact_blockers) ... ok
+test_source_guard_explicit_unlearned_and_short_allin_legal_response (gto.qualification.test_fullstreet.FullstreetNative.test_source_guard_explicit_unlearned_and_short_allin_legal_response) ... ok
+test_all_seats_own_cards_and_causal_public_board_only (gto.qualification.test_multiplayer_scope.MultiplayerScope.test_all_seats_own_cards_and_causal_public_board_only) ... ok
+test_ante_rake_sidepot_vector_is_not_zero_sum (gto.qualification.test_multiplayer_scope.MultiplayerScope.test_ante_rake_sidepot_vector_is_not_zero_sum) ... ok
+test_hu_contract_and_mutated_rules_cannot_label_multiplayer (gto.qualification.test_multiplayer_scope.MultiplayerScope.test_hu_contract_and_mutated_rules_cannot_label_multiplayer) ... ok
+test_missing_illegal_and_invalid_inputs_fail_without_partial_ev (gto.qualification.test_multiplayer_scope.MultiplayerScope.test_missing_illegal_and_invalid_inputs_fail_without_partial_ev) ... ok
+test_no_flop_no_drop_with_bb_ante (gto.qualification.test_multiplayer_scope.MultiplayerScope.test_no_flop_no_drop_with_bb_ante) ... ok
+test_unequal_six_and_nine_player_sidepots_refund_hand_oracle (gto.qualification.test_multiplayer_scope.MultiplayerScope.test_unequal_six_and_nine_player_sidepots_refund_hand_oracle) ... ok
+test_first_nonimprovement_stops_instead_of_comparing_old_baseline (gto.qualification.test_generalize.ChanceBoard.test_first_nonimprovement_stops_instead_of_comparing_old_baseline) ... ok
+test_sampled_board_expectation_matches_exact_mixture_and_path_oracle (gto.qualification.test_generalize.ChanceBoard.test_sampled_board_expectation_matches_exact_mixture_and_path_oracle) ... ok
+test_sampled_both_owner_updates_use_one_fixed_strategy (gto.qualification.test_generalize.ChanceBoard.test_sampled_both_owner_updates_use_one_fixed_strategy) ... ok
+test_splits_cannot_share_flops_and_rng_is_reproducible (gto.qualification.test_generalize.ChanceBoard.test_splits_cannot_share_flops_and_rng_is_reproducible) ... ok
+test_N_owner_regret_and_average_match_independent_path_products (gto.qualification.test_generalize.MultiJoint.test_N_owner_regret_and_average_match_independent_path_products) ... ok
+test_N_player_BR_cannot_choose_using_hidden_world (gto.qualification.test_generalize.MultiJoint.test_N_player_BR_cannot_choose_using_hidden_world) ... ok
+test_all_players_complete_pure_br_matches_independent_enumeration (gto.qualification.test_generalize.MultiJoint.test_all_players_complete_pure_br_matches_independent_enumeration) ... ok
+test_checkpoint_resume_and_config_identity_fail_closed (gto.qualification.test_generalize.MultiJoint.test_checkpoint_resume_and_config_identity_fail_closed) ... ok
+test_six_nine_native_profile_utilities_and_information_limits (gto.qualification.test_generalize.MultiJoint.test_six_nine_native_profile_utilities_and_information_limits) ... ok
+In file included from /tmp/native-qualification/g11_native_state.h:3,
+                 from /workspace/poker-sns/gto/qualification/sparse_native.cc:2:
+/tmp/native-qualification/g11_rules_embed.h:19:8: warning: ‘pokerid7rules::Ledger’ declared with greater visibility than the type of its field ‘pokerid7rules::Ledger::input_stacks’ [-Wattributes]
+   19 | struct Ledger {
+      |        ^~~~~~
+/tmp/native-qualification/g11_rules_embed.h:19:8: warning: ‘pokerid7rules::Ledger’ declared with greater visibility than the type of its field ‘pokerid7rules::Ledger::input_rules’ [-Wattributes]
+/tmp/native-qualification/g11_native_state.h:7:8: warning: ‘pokerid11state::Spec’ declared with greater visibility than the type of its field ‘pokerid11state::Spec::stacks’ [-Wattributes]
+    7 | struct Spec {
+      |        ^~~~
+/tmp/native-qualification/g11_native_state.h:7:8: warning: ‘pokerid11state::Spec’ declared with greater visibility than the type of its field ‘pokerid11state::Spec::rules’ [-Wattributes]
+test_adaptive_public_node_support_is_not_a_fixed_size_patch (gto.qualification.test_sparse_solver.SparseNative.test_adaptive_public_node_support_is_not_a_fixed_size_patch) ... ok
+test_all_root_sizes_get_actual_legal_responses_without_alias_or_fold_fill (gto.qualification.test_sparse_solver.SparseNative.test_all_root_sizes_get_actual_legal_responses_without_alias_or_fold_fill) ... ok
+test_allin_future_randomness_cannot_change_action_path (gto.qualification.test_sparse_solver.SparseNative.test_allin_future_randomness_cannot_change_action_path) ... ok
+test_batched_root_EV_matches_independent_fold_settlement_oracle (gto.qualification.test_sparse_solver.SparseNative.test_batched_root_EV_matches_independent_fold_settlement_oracle) ... ok
+test_budget_abort_does_not_apply_partial_regret_or_averages (gto.qualification.test_sparse_solver.SparseNative.test_budget_abort_does_not_apply_partial_regret_or_averages) ... ok
+test_compact_shares_suit_isomorphs_and_keeps_category_draw_and_public_history (gto.qualification.test_sparse_solver.SparseNative.test_compact_shares_suit_isomorphs_and_keeps_category_draw_and_public_history) ... ok
+test_exact_conditional_allin_expectation_matches_original_rank (gto.qualification.test_sparse_solver.SparseNative.test_exact_conditional_allin_expectation_matches_original_rank) ... ok
+test_external_regrets_and_average_expectation_match_independent_native_tree (gto.qualification.test_sparse_solver.SparseNative.test_external_regrets_and_average_expectation_match_independent_native_tree) ... ok
+test_refinement_splits_pair_and_set_aliased_by_old_flag (gto.qualification.test_sparse_solver.SparseNative.test_refinement_splits_pair_and_set_aliased_by_old_flag) ... ok
+test_resume_saves_priors_warm_flags_and_rng_bit_exact (gto.qualification.test_sparse_solver.SparseNative.test_resume_saves_priors_warm_flags_and_rng_bit_exact) ... ok
+test_shared_rank_memory_prevents_known_paired_board_information_loss (gto.qualification.test_sparse_solver.SparseNative.test_shared_rank_memory_prevents_known_paired_board_information_loss) ... ok
+test_short_allin_after_actual_raise_history_uses_native_legal_response (gto.qualification.test_sparse_solver.SparseNative.test_short_allin_after_actual_raise_history_uses_native_legal_response) ... ok
+test_cards_weights_and_six_nine_tree_cap_fail_closed (gto.qualification.test_multiplayer_expanded.ExpandedJoint.test_cards_weights_and_six_nine_tree_cap_fail_closed) ... ok
+test_different_actual_hidden_payoffs_and_lawful_BR (gto.qualification.test_multiplayer_expanded.ExpandedJoint.test_different_actual_hidden_payoffs_and_lawful_BR) ... ok
+test_expanded_checkpoint_resume_and_legacy_scope_stays_available (gto.qualification.test_multiplayer_expanded.ExpandedJoint.test_expanded_checkpoint_resume_and_legacy_scope_stays_available) ... ok
+test_independent_cashflow_refund_ante_rake_unequalstacks (gto.qualification.test_multiplayer_expanded.ExpandedJoint.test_independent_cashflow_refund_ante_rake_unequalstacks) ... ok
+test_native_RFI_threebet_short_allin_and_allstreet_own_public_keys (gto.qualification.test_multiplayer_expanded.ExpandedJoint.test_native_RFI_threebet_short_allin_and_allstreet_own_public_keys) ... ok
+test_native_profile_replays_same_finite_fullstreet_paths (gto.qualification.test_multiplayer_expanded.ExpandedJoint.test_native_profile_replays_same_finite_fullstreet_paths) ... ok
+test_terminal_path_regret_average_and_EV_match_vector_update (gto.qualification.test_multiplayer_expanded.ExpandedJoint.test_terminal_path_regret_average_and_EV_match_vector_update) ... ok
+test_all_owners_share_frozen_preupdate_policy_before_atomic_commit (gto.qualification.test_multiplayer_expanded.SparseNJoint.test_all_owners_share_frozen_preupdate_policy_before_atomic_commit) ... ok
+test_canonical_preflop_profile_reuses_suit_orbit_and_omits_forced_rows (gto.qualification.test_multiplayer_expanded.SparseNJoint.test_canonical_preflop_profile_reuses_suit_orbit_and_omits_forced_rows) ... ok
+test_cap_rolls_back_R_A_and_nextdraw_RNG_then_exact_resume (gto.qualification.test_multiplayer_expanded.SparseNJoint.test_cap_rolls_back_R_A_and_nextdraw_RNG_then_exact_resume) ... ok
+test_checkpoint_tamper_owner_and_invalid_chance_fail_closed (gto.qualification.test_multiplayer_expanded.SparseNJoint.test_checkpoint_tamper_owner_and_invalid_chance_fail_closed) ... ok
+test_exact_expected_N_owner_CF_average_with_zero_targets (gto.qualification.test_multiplayer_expanded.SparseNJoint.test_exact_expected_N_owner_CF_average_with_zero_targets) ... ok
+test_lazy_average_matches_full_oracle_including_prediscovery_and_resumes (gto.qualification.test_multiplayer_expanded.SparseNJoint.test_lazy_average_matches_full_oracle_including_prediscovery_and_resumes) ... ok
+test_six_nine_sparse_batch_and_unseen_legal_native_profile (gto.qualification.test_multiplayer_expanded.SparseNJoint.test_six_nine_sparse_batch_and_unseen_legal_native_profile) ... ok
+test_trajectory_proposal_retains_tiny_positive_zero_target_support (gto.qualification.test_multiplayer_expanded.SparseNJoint.test_trajectory_proposal_retains_tiny_positive_zero_target_support) ... ok
+test_csr_more_than_four_actions_and_exact_checkpoint_replay (gto.qualification.test_public_chance.PublicChance.test_csr_more_than_four_actions_and_exact_checkpoint_replay) ... ok
+test_future_information_prefix_and_board_law_validation (gto.qualification.test_public_chance.PublicChance.test_future_information_prefix_and_board_law_validation) ... ok
+test_rank_prefix_card_removal_matches_direct_all_pairs (gto.qualification.test_public_chance.PublicChance.test_rank_prefix_card_removal_matches_direct_all_pairs) ... ok
+test_regret_average_ev_br_and_action_ev_match_frozen_dense_kernel (gto.qualification.test_public_chance.PublicChance.test_regret_average_ev_br_and_action_ev_match_frozen_dense_kernel) ... ok
+test_two_player_joint_convergence_and_current_range_recomputation (gto.qualification.test_public_chance.PublicChance.test_two_player_joint_convergence_and_current_range_recomputation) ... ok
+test_weighted_public_chance_and_shared_prefix_BR_match_dense_oracle (gto.qualification.test_public_chance.PublicChance.test_weighted_public_chance_and_shared_prefix_BR_match_dense_oracle) ... ok
+test_all_owner_raw_regret_average_and_resume_match_independent_paths (gto.qualification.test_private_integrated_joint.IntegratedJoint.test_all_owner_raw_regret_average_and_resume_match_independent_paths) ... ok
+test_native_off_half_BB_grid_min_raise_allin_and_short_allin (gto.qualification.test_private_integrated_joint.IntegratedJoint.test_native_off_half_BB_grid_min_raise_allin_and_short_allin) ... ok
+In file included from /tmp/native-qualification/g11_native_state.h:3,
+                 from /workspace/poker-sns/gto/qualification/sparse_native.cc:2,
+                 from /workspace/poker-sns/gto/qualification/integrated_native.cc:4:
+/tmp/native-qualification/g11_rules_embed.h:19:8: warning: ‘pokerid7rules::Ledger’ declared with greater visibility than the type of its field ‘pokerid7rules::Ledger::input_stacks’ [-Wattributes]
+   19 | struct Ledger {
+      |        ^~~~~~
+/tmp/native-qualification/g11_rules_embed.h:19:8: warning: ‘pokerid7rules::Ledger’ declared with greater visibility than the type of its field ‘pokerid7rules::Ledger::input_rules’ [-Wattributes]
+/tmp/native-qualification/g11_native_state.h:7:8: warning: ‘pokerid11state::Spec’ declared with greater visibility than the type of its field ‘pokerid11state::Spec::stacks’ [-Wattributes]
+    7 | struct Spec {
+      |        ^~~~
+/tmp/native-qualification/g11_native_state.h:7:8: warning: ‘pokerid11state::Spec’ declared with greater visibility than the type of its field ‘pokerid11state::Spec::rules’ [-Wattributes]
+test_all_checkpoint_support_and_preflop_average_survive_import (gto.qualification.test_integrated_solver.Integrated.test_all_checkpoint_support_and_preflop_average_survive_import) ... ok
+test_generic_support_prefix_memory_prior_and_checkpoint (gto.qualification.test_integrated_solver.Integrated.test_generic_support_prefix_memory_prior_and_checkpoint) ... ok
+test_multiplayer_batch_expectation_and_existing_sampler_replay (gto.qualification.test_integrated_solver.Integrated.test_multiplayer_batch_expectation_and_existing_sampler_replay) ... ok
+test_public_plan_expectation_matches_dense_native_reference (gto.qualification.test_integrated_solver.Integrated.test_public_plan_expectation_matches_dense_native_reference) ... ok
+test_stratified_EV_allocation_and_native_context_payoffs (gto.qualification.test_integrated_solver.Integrated.test_stratified_EV_allocation_and_native_context_payoffs) ... ok
+test_coarse_prior_constancy_signed_checkpoint_and_snapshot_query (gto.qualification.test_integrated_audit.NativeAudit.test_coarse_prior_constancy_signed_checkpoint_and_snapshot_query) ... In file included from /tmp/native-qualification/g11_native_state.h:3,
+                 from /workspace/poker-sns/gto/qualification/sparse_native.cc:2,
+                 from /workspace/poker-sns/gto/qualification/integrated_native.cc:4:
+/tmp/native-qualification/g11_rules_embed.h:19:8: warning: ‘pokerid7rules::Ledger’ declared with greater visibility than the type of its field ‘pokerid7rules::Ledger::input_stacks’ [-Wattributes]
+   19 | struct Ledger {
+      |        ^~~~~~
+/tmp/native-qualification/g11_rules_embed.h:19:8: warning: ‘pokerid7rules::Ledger’ declared with greater visibility than the type of its field ‘pokerid7rules::Ledger::input_rules’ [-Wattributes]
+/tmp/native-qualification/g11_native_state.h:7:8: warning: ‘pokerid11state::Spec’ declared with greater visibility than the type of its field ‘pokerid11state::Spec::stacks’ [-Wattributes]
+    7 | struct Spec {
+      |        ^~~~
+/tmp/native-qualification/g11_native_state.h:7:8: warning: ‘pokerid11state::Spec’ declared with greater visibility than the type of its field ‘pokerid11state::Spec::rules’ [-Wattributes]
+ok
+test_rotation_is_a_chance_bijection_not_strategy_or_seat_permutation (gto.qualification.test_integrated_audit.RestrictedOracle.test_rotation_is_a_chance_bijection_not_strategy_or_seat_permutation) ... ok
+test_same_infoset_aggregated_BR_matches_existing_independent_dense_kernel (gto.qualification.test_integrated_audit.RestrictedOracle.test_same_infoset_aggregated_BR_matches_existing_independent_dense_kernel) ... ok
+test_unbiased_raw_estimator_does_not_imply_unbiased_clip (gto.qualification.test_integrated_audit.RestrictedOracle.test_unbiased_raw_estimator_does_not_imply_unbiased_clip) ... ok
+test_active_raw_CF_average_and_BR_match_existing_CSR (gto.qualification.test_active_chance.ActiveOracle.test_active_raw_CF_average_and_BR_match_existing_CSR) ... ok
+test_cross_instance_resume_restores_warm_prior_and_next_update (gto.qualification.test_active_chance.ActiveOracle.test_cross_instance_resume_restores_warm_prior_and_next_update) ... ok
+test_features_are_suit_invariant_and_prefix_rank_is_exact (gto.qualification.test_active_chance.ActiveOracle.test_features_are_suit_invariant_and_prefix_rank_is_exact) ... ok
+test_native_adapter_matches_training_rows_and_explicit_offtree_backoff (gto.qualification.test_active_chance.ActiveOracle.test_native_adapter_matches_training_rows_and_explicit_offtree_backoff) ... ok
+test_six_action_CSR_is_not_truncated_to_four (gto.qualification.test_active_chance.ActiveOracle.test_six_action_CSR_is_not_truncated_to_four) ... ok
+test_suit_orbit_response_scores_equal_explicit_24_permutations (gto.qualification.test_active_chance.ActiveOracle.test_suit_orbit_response_scores_equal_explicit_24_permutations) ... ok
+test_vectorized_initialization_preserves_reference_and_rejects_mixed_rows (gto.qualification.test_active_chance.ActiveOracle.test_vectorized_initialization_preserves_reference_and_rejects_mixed_rows) ... ok
+test_batched_causal_features_equal_preserved_scalar_function (gto.qualification.test_stream_chance.Streaming.test_batched_causal_features_equal_preserved_scalar_function) ... ok
+test_cached_partitions_match_original_and_preserve_history (gto.qualification.test_stream_chance.Streaming.test_cached_partitions_match_original_and_preserve_history) ... ok
+test_depth_first_BR_and_finite_refinement_envelope_match_matrix_oracle (gto.qualification.test_stream_chance.Streaming.test_depth_first_BR_and_finite_refinement_envelope_match_matrix_oracle) ... ok
+test_exact_stratum_partition_and_causal_features (gto.qualification.test_stream_chance.Streaming.test_exact_stratum_partition_and_causal_features) ... ok
+test_extra_legal_response_size_has_real_descendants (gto.qualification.test_stream_chance.Streaming.test_extra_legal_response_size_has_real_descendants) ... ok
+test_new_bank_current_policy_matches_pre_draw_frozen_native_policy (gto.qualification.test_stream_chance.Streaming.test_new_bank_current_policy_matches_pre_draw_frozen_native_policy) ... ok
+test_streamed_raw_CF_average_and_clip_match_joint_weighted_kernel (gto.qualification.test_stream_chance.Streaming.test_streamed_raw_CF_average_and_clip_match_joint_weighted_kernel) ... ok
+test_vectorized_native_parent_cache_matches_original (gto.qualification.test_stream_chance.Streaming.test_vectorized_native_parent_cache_matches_original) ... ok
+test_all_finite_chance_raw_CF_matches_independent_three_owner_oracle (gto.qualification.test_stream_multiplayer.NOwner.test_all_finite_chance_raw_CF_matches_independent_three_owner_oracle) ... ok
+test_six_nine_conditional_decks_information_and_resume (gto.qualification.test_stream_multiplayer.NOwner.test_six_nine_conditional_decks_information_and_resume) ... ok
+test_systematic_CDF_expected_mass_equals_exact_target (gto.qualification.test_stream_multiplayer.StrataProposal.test_systematic_CDF_expected_mass_equals_exact_target) ... ok
+test_shards_restore_rng_optimizer_and_reject_modified_bytes (gto.qualification.test_stream_checkpoint.Checkpoint.test_shards_restore_rng_optimizer_and_reject_modified_bytes) ... /workspace/poker-sns/gto/qualification/public_stream_study.py:50: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp95hjntw_/checkpoint/receipt.json' mode='r' encoding='UTF-8'>
+  folder=Path(folder);receipt=json.load(open(folder/'receipt.json'));path=folder/'identity.json.zst'
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/workspace/poker-sns/gto/qualification/public_stream_study.py:50: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp95hjntw_/checkpoint/receipt.json' mode='r' encoding='UTF-8'>
+  folder=Path(folder);receipt=json.load(open(folder/'receipt.json'));path=folder/'identity.json.zst'
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+
+----------------------------------------------------------------------
+Ran 186 tests in 439.315s
+
+OK
+exact lazy active-R/A/RNG rows 25317 15117
+tiny native root gradient mean/variance control/baseline [(0.8999932311711273, 4.38364800593775), (0.8999932311711225, 2.236406117411228)]

@@ -1,0 +1,11 @@
+{
+  "full_BR_upper_bb": null,
+  "native_public_states": 534,
+  "omitted_size_error_bb": null,
+  "ordinary_registry_admission": false,
+  "policy_digest": "f290ba1f24d9fb27fc7a8291d507ce892effe1ca0260d1e83194a0b2f32acd6f",
+  "private_rows": 1602,
+  "seconds": 7.21545716699984,
+  "status": "LEGALITY_ONLY_PASS_NOT_ACCURACY",
+  "verified_strategy_count": 0
+}

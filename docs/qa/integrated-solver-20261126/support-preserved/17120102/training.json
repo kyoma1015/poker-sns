@@ -1,0 +1,83 @@
+{
+  "best": {
+    "EV": -0.027851759785353522,
+    "gains": {
+      "fold": -0.47214824021464646,
+      "open3p5": 0.36671894728535354,
+      "open8": 0.38722675978535354,
+      "river_jam": 0.275390625,
+      "river_nuts": 0.087890625,
+      "threebet10p5": -0.0939966066919192
+    },
+    "score": 0.38722675978535354
+  },
+  "curve": [
+    {
+      "iterations": 20,
+      "pure_seconds": 5.340074364000429,
+      "selection": {
+        "EV": 0.37177685053661613,
+        "gains": {
+          "fold": -0.8717768505366161,
+          "open3p5": -0.024608881786616132,
+          "open8": -0.6416089607007576,
+          "river_jam": 0.73828125,
+          "river_nuts": 0.087890625,
+          "threebet10p5": -0.17129300820707072
+        },
+        "score": 0.73828125
+      },
+      "stats": {
+        "average_visited": 83746,
+        "halted": false,
+        "iterations": 20,
+        "regret_visited": 106443,
+        "rows": 188638
+      }
+    },
+    {
+      "iterations": 33,
+      "pure_seconds": 10.08923434500116,
+      "selection": {
+        "EV": -0.07425820707070716,
+        "gains": {
+          "fold": -0.42574179292929293,
+          "open3p5": 0.14457070707070713,
+          "open8": 0.5973800505050505,
+          "river_jam": 0.251953125,
+          "river_nuts": 0.087890625,
+          "threebet10p5": -0.1559195470328283
+        },
+        "score": 0.5973800505050505
+      },
+      "stats": {
+        "average_visited": 141327,
+        "halted": false,
+        "iterations": 33,
+        "regret_visited": 172880,
+        "rows": 305001
+      }
+    }
+  ],
+  "formal_acceptance": 0,
+  "full_native_BR_upper": null,
+  "initial": {
+    "EV": -0.027851759785353522,
+    "gains": {
+      "fold": -0.47214824021464646,
+      "open3p5": 0.36671894728535354,
+      "open8": 0.38722675978535354,
+      "river_jam": 0.275390625,
+      "river_nuts": 0.087890625,
+      "threebet10p5": -0.0939966066919192
+    },
+    "score": 0.38722675978535354
+  },
+  "last_iterations": 33,
+  "peak_RSS_bytes": 338251776,
+  "policy_digest": "6cf7c106a06135cd6fcf61a67f6cba75d462fc808fb42b39a393c573c50ee3d9",
+  "pure_seconds": 10.08923434500116,
+  "seed": 17120102,
+  "selected_iterations": 0,
+  "stop_reason": "NO_REPEATED_SELECTION_TREND"
+}

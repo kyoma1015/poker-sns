@@ -1,0 +1,28 @@
+{
+  "base_head": "af804c7a8173099fb737c2822fc872f8df6e737c",
+  "records": [
+    {
+      "new_binary": "146934fdbfaab7e49e70ae3c7cc6fb3678590378b3f7291f705143ad7f3d0066",
+      "new_build_next_batch_bit_exact": true,
+      "old_binary": "f23625a462eb87a0339123bb6ac2ab99daf8d6f4e3d006895237ee0ffe4728cc",
+      "raw_sha256": "fff3848c6689dd8c75df408672a5de31a45f1f88817bf1a5ebdc48dec352fee2",
+      "restored_real_R_A_RNG": true,
+      "same_binary": false,
+      "seed": 17120101,
+      "source_hashes_match": true,
+      "strict_old_binary_resume": false
+    },
+    {
+      "new_binary": "146934fdbfaab7e49e70ae3c7cc6fb3678590378b3f7291f705143ad7f3d0066",
+      "new_build_next_batch_bit_exact": true,
+      "old_binary": "f23625a462eb87a0339123bb6ac2ab99daf8d6f4e3d006895237ee0ffe4728cc",
+      "raw_sha256": "d8f2f3b7d1e3534726f7ec070cb897713b3f25fcb9e902d3338a55afc3802e2c",
+      "restored_real_R_A_RNG": true,
+      "same_binary": false,
+      "seed": 17120102,
+      "source_hashes_match": true,
+      "strict_old_binary_resume": false
+    }
+  ],
+  "untracked_old_environment_recovered": false
+}

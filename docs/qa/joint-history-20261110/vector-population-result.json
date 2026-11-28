@@ -1,0 +1,33 @@
+{
+  "identity": "0509c1c715fbc83ae5bed480aca6642f2dd05ec34e6c990cd67a953b31ae3806",
+  "orbits": 1755,
+  "physical_coverage": 1.0,
+  "cpu_seconds": 1052.314011245,
+  "wall_seconds": 1128.4539452559998,
+  "max_abs_errors": {
+    "action_den": 1.0234868508263162e-16,
+    "action_num": 3.3306690738754696e-16,
+    "avg": 1.3010426069826053e-16,
+    "grad": 4.3021142204224816e-16,
+    "leaf": 2.463307335887066e-16,
+    "metrics": 1.968925023021484e-12
+  },
+  "backend_cpu": {
+    "original": 723.7233712850002,
+    "vector": 190.40829013400176
+  },
+  "full_population_pass": true,
+  "normal_GTO": false,
+  "real_game_error": "UNKNOWN",
+  "root_metrics": {
+    "original": {
+      "root_nc": 0.9321071527220774,
+      "root_sb_ev": 0.030880258444870145
+    },
+    "vector": {
+      "root_nc": 0.932107152722077,
+      "root_sb_ev": 0.030880258444870284
+    }
+  },
+  "max_action_ev_difference": 9.237055564881302e-14
+}

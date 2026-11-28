@@ -1,0 +1,26 @@
+{
+  "curve": [
+    {
+      "EV_bb": 0.24999999999999906,
+      "finite_game_NC_bb": 1.2960179968043075,
+      "iterations": 0
+    },
+    {
+      "EV_bb": 0.26836306398826476,
+      "finite_game_NC_bb": 0.01798601848053194,
+      "iterations": 16
+    },
+    {
+      "EV_bb": 0.2607434953939221,
+      "finite_game_NC_bb": 0.0014794092479989418,
+      "iterations": 64
+    },
+    {
+      "EV_bb": 0.26020839327079265,
+      "finite_game_NC_bb": 0.00015516601175902256,
+      "iterations": 256
+    }
+  ],
+  "formal_acceptance": 0,
+  "scope": "tiny two-player fixed-board/all compatible private pairs, abstract keys, complete finite BR crosschecked with dense oracle; not full native"
+}

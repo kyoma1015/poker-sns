@@ -1,0 +1,9 @@
+test_bad_policy_and_budget_fail_closed (__main__.Rollout.test_bad_policy_and_budget_fail_closed) ... ok
+test_preflop_fold_exact_and_nonmutation (__main__.Rollout.test_preflop_fold_exact_and_nonmutation) ... ok
+test_reproducibility (__main__.Rollout.test_reproducibility) ... ok
+test_turn_river_against_exact_oracle_with_rake_and_ante (__main__.Rollout.test_turn_river_against_exact_oracle_with_rake_and_ante) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.275s
+
+OK

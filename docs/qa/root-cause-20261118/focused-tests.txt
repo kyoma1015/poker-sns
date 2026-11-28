@@ -1,0 +1,15 @@
+test_actual_production_collector_matches_card_game_oracle (gto.qualification.test_blind_oracle.BlindGame.test_actual_production_collector_matches_card_game_oracle) ... ok
+test_blind_fold_showdown_net_and_card_removal (gto.qualification.test_blind_oracle.BlindGame.test_blind_fold_showdown_net_and_card_removal) ... ok
+test_checkpoint_exact_continuation_all_three_methods (gto.qualification.test_blind_oracle.BlindGame.test_checkpoint_exact_continuation_all_three_methods) ... ok
+test_complete_br_equals_independent_private_plan_enumeration (gto.qualification.test_blind_oracle.BlindGame.test_complete_br_equals_independent_private_plan_enumeration) ... ok
+test_conditional_ev_times_reach_equals_root_contribution (gto.qualification.test_blind_oracle.BlindGame.test_conditional_ev_times_reach_equals_root_contribution) ... ok
+test_external_expectation_end_to_end_equals_full_tree (gto.qualification.test_blind_oracle.BlindGame.test_external_expectation_end_to_end_equals_full_tree) ... ok
+test_first_external_actual_collector_exact_expectation (gto.qualification.test_blind_oracle.BlindGame.test_first_external_actual_collector_exact_expectation) ... ok
+test_outcome_expectation_end_to_end_equals_full_tree (gto.qualification.test_blind_oracle.BlindGame.test_outcome_expectation_end_to_end_equals_full_tree) ... ok
+test_native_first_external_checkpoint_continues_exactly (gto.qualification.test_blind_oracle.NativeBlindLedger.test_native_first_external_checkpoint_continues_exactly) ... ok
+test_reference_and_native_match_independent_chip_ledger (gto.qualification.test_blind_oracle.NativeBlindLedger.test_reference_and_native_match_independent_chip_ledger) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 1.059s
+
+OK

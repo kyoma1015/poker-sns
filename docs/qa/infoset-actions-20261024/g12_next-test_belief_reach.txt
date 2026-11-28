@@ -1,0 +1,18 @@
+test_chance_separate_from_prior_and_zero_mass (__main__.Belief.test_chance_separate_from_prior_and_zero_mass) ... ok
+test_checkpoint_snapshot_determinism (__main__.Belief.test_checkpoint_snapshot_determinism) ... ok
+test_distinct_showdown_ev_exact_weighted_belief (__main__.Belief.test_distinct_showdown_ev_exact_weighted_belief) ... ok
+test_fold_ev_and_belief_mass (__main__.Belief.test_fold_ev_and_belief_mass) ... ok
+test_illegal_and_duplicate_private_cards (__main__.Belief.test_illegal_and_duplicate_private_cards) ... ok
+test_legal_history_and_unknown_policy_refuse (__main__.Belief.test_legal_history_and_unknown_policy_refuse) ... ok
+test_mass_and_bounds_refuse (__main__.Belief.test_mass_and_bounds_refuse) ... ok
+test_multiplayer_not_silently_approximated (__main__.Belief.test_multiplayer_not_silently_approximated) ... ok
+test_public_card_blocker_inconsistent_support_refuses (__main__.Belief.test_public_card_blocker_inconsistent_support_refuses) ... ok
+test_snapshot_requires_observed_rows (__main__.Belief.test_snapshot_requires_observed_rows) ... ok
+test_snapshot_survives_later_solver_training (__main__.Belief.test_snapshot_survives_later_solver_training) ... ok
+test_strategy_bayes_and_counterfactual_separate (__main__.Belief.test_strategy_bayes_and_counterfactual_separate) ... ok
+test_zero_observation_unknown (__main__.Belief.test_zero_observation_unknown) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 1.855s
+
+OK

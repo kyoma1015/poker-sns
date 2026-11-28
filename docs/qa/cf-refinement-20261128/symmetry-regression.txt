@@ -1,0 +1,6 @@
+test_quotient_matches_explicit_all144_symmetry_worlds (gto.qualification.test_symmetry_br.Symmetry.test_quotient_matches_explicit_all144_symmetry_worlds) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 10.367s
+
+OK

@@ -1,0 +1,377 @@
+{
+  "added": 16,
+  "before": [
+    0,
+    1,
+    6,
+    7,
+    8,
+    9,
+    10,
+    12,
+    18,
+    19,
+    102
+  ],
+  "imported": {
+    "all_old_actions_preserved": true,
+    "average_frequency_max_error": 0.0,
+    "public_nodes": 509,
+    "rows": 2384
+  },
+  "ranking": [
+    {
+      "action": 11,
+      "mean": 0.84375
+    },
+    {
+      "action": 13,
+      "mean": 1.125
+    },
+    {
+      "action": 14,
+      "mean": 1.09375
+    },
+    {
+      "action": 15,
+      "mean": 1.328125
+    },
+    {
+      "action": 16,
+      "mean": 1.5625
+    },
+    {
+      "action": 17,
+      "mean": 1.5625
+    },
+    {
+      "action": 20,
+      "mean": 1.25
+    },
+    {
+      "action": 21,
+      "mean": 1.234375
+    },
+    {
+      "action": 22,
+      "mean": 1.21875
+    },
+    {
+      "action": 23,
+      "mean": 1.203125
+    },
+    {
+      "action": 24,
+      "mean": 1.1875
+    },
+    {
+      "action": 25,
+      "mean": 1.171875
+    },
+    {
+      "action": 26,
+      "mean": 1.15625
+    },
+    {
+      "action": 27,
+      "mean": 1.140625
+    },
+    {
+      "action": 28,
+      "mean": 1.125
+    },
+    {
+      "action": 29,
+      "mean": 1.109375
+    },
+    {
+      "action": 30,
+      "mean": 1.09375
+    },
+    {
+      "action": 31,
+      "mean": 1.078125
+    },
+    {
+      "action": 32,
+      "mean": 1.0625
+    },
+    {
+      "action": 33,
+      "mean": 1.046875
+    },
+    {
+      "action": 34,
+      "mean": 1.03125
+    },
+    {
+      "action": 35,
+      "mean": 1.015625
+    },
+    {
+      "action": 36,
+      "mean": 1.0
+    },
+    {
+      "action": 37,
+      "mean": 0.984375
+    },
+    {
+      "action": 38,
+      "mean": 0.96875
+    },
+    {
+      "action": 39,
+      "mean": 0.953125
+    },
+    {
+      "action": 40,
+      "mean": 0.9375
+    },
+    {
+      "action": 41,
+      "mean": 0.921875
+    },
+    {
+      "action": 42,
+      "mean": 1.53125
+    },
+    {
+      "action": 43,
+      "mean": 1.53125
+    },
+    {
+      "action": 44,
+      "mean": 1.53125
+    },
+    {
+      "action": 45,
+      "mean": 1.53125
+    },
+    {
+      "action": 46,
+      "mean": 1.53125
+    },
+    {
+      "action": 47,
+      "mean": 1.53125
+    },
+    {
+      "action": 48,
+      "mean": 1.53125
+    },
+    {
+      "action": 49,
+      "mean": 1.53125
+    },
+    {
+      "action": 50,
+      "mean": 1.53125
+    },
+    {
+      "action": 51,
+      "mean": 1.53125
+    },
+    {
+      "action": 52,
+      "mean": 0.78125
+    },
+    {
+      "action": 53,
+      "mean": 1.5
+    },
+    {
+      "action": 54,
+      "mean": 1.46875
+    },
+    {
+      "action": 55,
+      "mean": 1.4375
+    },
+    {
+      "action": 56,
+      "mean": 1.40625
+    },
+    {
+      "action": 57,
+      "mean": 1.375
+    },
+    {
+      "action": 58,
+      "mean": 1.34375
+    },
+    {
+      "action": 59,
+      "mean": 1.3125
+    },
+    {
+      "action": 60,
+      "mean": 1.28125
+    },
+    {
+      "action": 61,
+      "mean": 1.25
+    },
+    {
+      "action": 62,
+      "mean": 1.21875
+    },
+    {
+      "action": 63,
+      "mean": 1.1875
+    },
+    {
+      "action": 64,
+      "mean": 1.15625
+    },
+    {
+      "action": 65,
+      "mean": 1.125
+    },
+    {
+      "action": 66,
+      "mean": 1.09375
+    },
+    {
+      "action": 67,
+      "mean": 1.0625
+    },
+    {
+      "action": 68,
+      "mean": 1.03125
+    },
+    {
+      "action": 69,
+      "mean": 1.0
+    },
+    {
+      "action": 70,
+      "mean": 0.96875
+    },
+    {
+      "action": 71,
+      "mean": 0.9375
+    },
+    {
+      "action": 72,
+      "mean": 0.90625
+    },
+    {
+      "action": 73,
+      "mean": 0.875
+    },
+    {
+      "action": 74,
+      "mean": 0.84375
+    },
+    {
+      "action": 75,
+      "mean": 0.8125
+    },
+    {
+      "action": 76,
+      "mean": 0.78125
+    },
+    {
+      "action": 77,
+      "mean": 0.75
+    },
+    {
+      "action": 78,
+      "mean": 0.71875
+    },
+    {
+      "action": 79,
+      "mean": 0.6875
+    },
+    {
+      "action": 80,
+      "mean": 0.65625
+    },
+    {
+      "action": 81,
+      "mean": 0.625
+    },
+    {
+      "action": 82,
+      "mean": 0.59375
+    },
+    {
+      "action": 83,
+      "mean": 0.5625
+    },
+    {
+      "action": 84,
+      "mean": 0.53125
+    },
+    {
+      "action": 85,
+      "mean": 0.5
+    },
+    {
+      "action": 86,
+      "mean": 0.46875
+    },
+    {
+      "action": 87,
+      "mean": 0.4375
+    },
+    {
+      "action": 88,
+      "mean": 0.40625
+    },
+    {
+      "action": 89,
+      "mean": 0.375
+    },
+    {
+      "action": 90,
+      "mean": 0.34375
+    },
+    {
+      "action": 91,
+      "mean": 0.3125
+    },
+    {
+      "action": 92,
+      "mean": 0.28125
+    },
+    {
+      "action": 93,
+      "mean": 0.25
+    },
+    {
+      "action": 94,
+      "mean": 0.21875
+    },
+    {
+      "action": 95,
+      "mean": 0.1875
+    },
+    {
+      "action": 96,
+      "mean": 0.15625
+    },
+    {
+      "action": 97,
+      "mean": 0.125
+    },
+    {
+      "action": 98,
+      "mean": 0.09375
+    },
+    {
+      "action": 99,
+      "mean": 0.0625
+    },
+    {
+      "action": 100,
+      "mean": 0.03125
+    },
+    {
+      "action": 101,
+      "mean": 0.0
+    }
+  ],
+  "scope": "all inherited action sets/R/A preserved; discovery only, not safety proof"
+}

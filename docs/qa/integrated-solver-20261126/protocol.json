@@ -1,0 +1,48 @@
+{
+  "base": "1e91f2c1a8b34a4d03cd1e30420e9856076fb8ea",
+  "scope": "offline HU50 integration; full2..9 release unchanged",
+  "gates": [
+    "raw vector regret/average and EV expectation equals independent dense oracle before CFR+clip; tolerance1e-10",
+    "same key implies constant warm prior; exact native history and generic support; no fixed4actions",
+    "same preupdate policy for both owners; strict checkpoint/RNG nextstep",
+    "old sparse vs PCS vs integrated paired fresh native worlds, full precision/bounds UNKNOWN remain"
+  ],
+  "pilot_seconds_per_seed": 10,
+  "selection_seed": 17136101,
+  "final_seed": 17136201,
+  "memory_budget_bytes": 805306368,
+  "qa_budget_bytes": 104857600,
+  "extension": "only independent selection trend, stages30/90seconds; final never selected on",
+  "formal_acceptance": 0,
+  "normal_registry": false,
+  "halt": "any incomplete pair/overflow/budget error stops run, no rejection resampling",
+  "root_integration_gate": {
+    "reason": "v2 public-root variance and row growth; no final-based candidate selection",
+    "selection_seed": 17136701,
+    "final_seed": 17136801,
+    "discovery_seed": 17136601,
+    "rows": 500000,
+    "memory_ceiling": 805306368,
+    "justification": "v2 peak273MB at200k; sparse capacity within768MiB; no fulltree/nodecap increase",
+    "root": "sum all supported root public actions/private pairs beforeclip; common future RNG",
+    "known_size_selection_guard": "3.5 gain<=same-trial initial+.1; no native PASS inferred"
+  },
+  "qa_budget_revision": {
+    "original": 104857600,
+    "current": 134217728,
+    "reason": "preserve both original v2 and root-marginalized failed/selected checkpoints; no data deletion or extra fees",
+    "disk_free_before_stage": "6GiB+"
+  },
+  "seed2_extension": {
+    "reason": "both selection checkpoints .157/.187 below initial.406; final not used",
+    "start": "selected complete root checkpoint t26",
+    "seconds": 30,
+    "memory_bytes": 1610612736,
+    "rows": 1500000,
+    "qa_bytes": 268435456,
+    "selection_seed": 17136701,
+    "final_seed": 17137001,
+    "estimate": "438896rows/RSS445MB;1.5m sparsely allocated rows approximately1.2-1.4GiB; gzip~60MB percheckpoint; free8GiB memory/6GiB disk",
+    "no_fulltree_expansion": true
+  }
+}

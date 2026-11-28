@@ -1,0 +1,75 @@
+{
+  "best": {
+    "EV": 0.3282335069444445,
+    "gains": {
+      "fold": -0.8282335069444444,
+      "open3p5": -0.19566514756944442,
+      "open8": -1.9769496725063131,
+      "river_jam": 0.029296875,
+      "river_nuts": 0.0,
+      "threebet10p5": 0.157470703125
+    },
+    "score": 0.157470703125
+  },
+  "curve": [
+    {
+      "iterations": 102,
+      "max_effective_inverse_proposal": 56713387.02019981,
+      "pure_seconds": 15.344445699999973,
+      "selection": {
+        "EV": 0.7051274463383838,
+        "gains": {
+          "fold": -1.2051274463383839,
+          "open3p5": -0.06681068497474743,
+          "open8": 0.38154247553661613,
+          "river_jam": 0.283203125,
+          "river_nuts": 0.0390625,
+          "threebet10p5": 0.04916844223484851
+        },
+        "score": 0.38154247553661613
+      },
+      "stats": {
+        "average_visited": 381064,
+        "halted": false,
+        "iterations": 102,
+        "regret_visited": 476553,
+        "rows": 876290
+      }
+    },
+    {
+      "iterations": 170,
+      "max_effective_inverse_proposal": 83187061.96707924,
+      "pure_seconds": 29.58824170000004,
+      "selection": {
+        "EV": 0.8874536379419191,
+        "gains": {
+          "fold": -1.3874536379419191,
+          "open3p5": -0.4044103140782829,
+          "open8": -0.8988419349747474,
+          "river_jam": 1.470703125,
+          "river_nuts": 0.0,
+          "threebet10p5": 0.032470703125
+        },
+        "score": 1.470703125
+      },
+      "stats": {
+        "average_visited": 656509,
+        "halted": true,
+        "iterations": 170,
+        "regret_visited": 811460,
+        "rows": 1500000
+      }
+    }
+  ],
+  "formal_acceptance": 0,
+  "full_native_BR_upper": null,
+  "last_iterations": 170,
+  "peak_RSS_bytes": 1221664768,
+  "policy_digest": "951c589bea23bb480e916a489d80b8b380df76fb2e5a50bfc947e7d3b1631200",
+  "pure_seconds": 29.58824170000004,
+  "scope": "same solver;26..50 replay included in elapsed/iterations, not claimed new twice",
+  "seed": 17120102,
+  "selected_iterations": 26,
+  "start_iterations": 26,
+  "stop_reason": "INCOMPLETE_PAIR_HALT"
+}

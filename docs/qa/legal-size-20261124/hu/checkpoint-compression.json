@@ -1,0 +1,43 @@
+{
+  "rows": [
+    {
+      "file": "17120101/initial/checkpoint.bin.gz",
+      "raw_sha256": "605c6dd9664635e67f42529d242a29548e43b1418304b8adcbf5781723d5c8be",
+      "raw_bytes": 6477,
+      "compressed_bytes": 3434
+    },
+    {
+      "file": "17120101/last/checkpoint.bin.gz",
+      "raw_sha256": "9c1bb65ce9a7de555d5e85295ef5cacfc2e3e1bec0bf4e4e770e5009db330d6c",
+      "raw_bytes": 76534607,
+      "compressed_bytes": 20459299
+    },
+    {
+      "file": "17120101/best/checkpoint.bin.gz",
+      "raw_sha256": "6a7f84b4da3abe1dd5e92c68f7cd5f085095e163dc72cb8916286ff822e521b1",
+      "raw_bytes": 70224650,
+      "compressed_bytes": 18867070
+    },
+    {
+      "file": "17120102/initial/checkpoint.bin.gz",
+      "raw_sha256": "65595d23cdd61bee526ba95a2f1d902259319a2717cf74dc9b72676e44e6f903",
+      "raw_bytes": 6480,
+      "compressed_bytes": 3442
+    },
+    {
+      "file": "17120102/last/checkpoint.bin.gz",
+      "raw_sha256": "edae9c3bee0d037b25b06526f56c0fdc3ebb909c6e2d1b940230490d866aa0c4",
+      "raw_bytes": 16549118,
+      "compressed_bytes": 4622214
+    },
+    {
+      "file": "17120102/best/checkpoint.bin.gz",
+      "raw_sha256": "65595d23cdd61bee526ba95a2f1d902259319a2717cf74dc9b72676e44e6f903",
+      "raw_bytes": 6480,
+      "compressed_bytes": 3442
+    }
+  ],
+  "lossless": true,
+  "raw_working_MiB": 156,
+  "scope": "new task checkpoints only; original parent checkpoints untouched"
+}

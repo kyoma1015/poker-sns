@@ -1,0 +1,7 @@
+{
+  "scope": "prototype root-stage1 EV only, NOT formal evidence",
+  "issue": "precision source edited while first run was executing; embedded source_sha reflects file at receipt time, not executed module",
+  "executed_snapshot_sha256": "66fa4d8b88015a4070e932c391d7aa21e9875bcde21ef37a34bec7f315581159",
+  "receipt_time_source_sha256": "a5918b318b3229af07f6806356c23ac9ccf833f2c4c271f9e8e53b4e54816247",
+  "action": "original numeric receipts preserved; final support-preserved candidates will run with frozen source and correct root/counterfactual fields"
+}

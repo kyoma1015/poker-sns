@@ -1,0 +1,95 @@
+{
+  "curve": [
+    {
+      "coverage": {
+        "0": {
+          "default": 17,
+          "queries": 867,
+          "trained": 0,
+          "warm_only": 850
+        },
+        "1": {
+          "default": 8,
+          "queries": 419,
+          "trained": 0,
+          "warm_only": 411
+        },
+        "2": {
+          "default": 9,
+          "queries": 234,
+          "trained": 0,
+          "warm_only": 225
+        },
+        "3": {
+          "default": 11,
+          "queries": 120,
+          "trained": 0,
+          "warm_only": 109
+        }
+      },
+      "elapsed_seconds": 0.23079274899919255,
+      "iterations": 0,
+      "path_coverage": {
+        "current_untrained": 512,
+        "no_parent_or_current": 18
+      },
+      "pure_training_seconds": 0.0,
+      "selection_EV_bb": -0.6290517479482323,
+      "selection_open3p5_gain_bb": 1.1683583885732323,
+      "stats": {
+        "action_entries": 8371,
+        "average_visited": 0,
+        "estimated_row_bytes": 543536,
+        "iterations": 0,
+        "regret_visited": 0,
+        "rows": 1060
+      }
+    },
+    {
+      "coverage": {
+        "0": {
+          "default": 17,
+          "queries": 901,
+          "trained": 328,
+          "warm_only": 556
+        },
+        "1": {
+          "default": 43,
+          "queries": 444,
+          "trained": 279,
+          "warm_only": 122
+        },
+        "2": {
+          "default": 42,
+          "queries": 155,
+          "trained": 37,
+          "warm_only": 76
+        },
+        "3": {
+          "default": 47,
+          "queries": 99,
+          "trained": 4,
+          "warm_only": 48
+        }
+      },
+      "elapsed_seconds": 0.986503133000042,
+      "iterations": 64,
+      "path_coverage": {
+        "current_untrained": 399,
+        "no_parent_or_current": 66
+      },
+      "pure_training_seconds": 0.5373469730038778,
+      "selection_EV_bb": -0.5171539614898989,
+      "selection_open3p5_gain_bb": 1.3031758009785355,
+      "stats": {
+        "action_entries": 283283,
+        "average_visited": 44203,
+        "estimated_row_bytes": 24063149,
+        "iterations": 64,
+        "regret_visited": 7868,
+        "rows": 52628
+      }
+    }
+  ],
+  "source_sha256": "5df5a46c3044ed7b38f08e4a5a92e3075a5e4e1a321240e94a81a793230105e5"
+}

@@ -1,0 +1,85 @@
+{
+  "CPU": 722.2827243580005,
+  "curve": [
+    {
+      "CPU_seconds": 0.0,
+      "NC": {
+        "BR_BB_bb": 5.451270525472694,
+        "BR_SB_bb": 5.964068472349597,
+        "EV_bb": -0.14882038417811402,
+        "NashConv_bb": 11.41533899782229,
+        "full_native_BR_upper": null,
+        "physical_infosets": false
+      },
+      "checkpoint": "docs/qa/stream-subgame-20261127/17120102/fixed-fast/t0",
+      "t": 0
+    },
+    {
+      "CPU_seconds": 90.91269068800007,
+      "NC": {
+        "BR_BB_bb": 1.209008778846579,
+        "BR_SB_bb": 1.2405635208338215,
+        "EV_bb": -0.0368708938714984,
+        "NashConv_bb": 2.4495722996804004,
+        "full_native_BR_upper": null,
+        "physical_infosets": false
+      },
+      "checkpoint": "docs/qa/stream-subgame-20261127/17120102/fixed-fast/t90",
+      "t": 17
+    },
+    {
+      "CPU_seconds": 182.27789651000018,
+      "NC": {
+        "BR_BB_bb": 0.48306629540624635,
+        "BR_SB_bb": 0.5854802686198305,
+        "EV_bb": 0.031848605095103295,
+        "NashConv_bb": 1.068546564026077,
+        "full_native_BR_upper": null,
+        "physical_infosets": false
+      },
+      "checkpoint": "docs/qa/stream-subgame-20261127/17120102/fixed-fast/t180",
+      "t": 34
+    },
+    {
+      "CPU_seconds": 364.25391758600034,
+      "NC": {
+        "BR_BB_bb": 0.12883333709591577,
+        "BR_SB_bb": 0.30312771217958023,
+        "EV_bb": 0.08036406795836765,
+        "NashConv_bb": 0.431961049275496,
+        "full_native_BR_upper": null,
+        "physical_infosets": false
+      },
+      "checkpoint": "docs/qa/stream-subgame-20261127/17120102/fixed-fast/t360",
+      "t": 71
+    },
+    {
+      "CPU_seconds": 722.2827243580005,
+      "NC": {
+        "BR_BB_bb": 0.012543204542550035,
+        "BR_SB_bb": 0.21049648232110063,
+        "EV_bb": 0.09553159934565066,
+        "NashConv_bb": 0.22303968686365067,
+        "full_native_BR_upper": null,
+        "physical_infosets": false
+      },
+      "checkpoint": "docs/qa/stream-subgame-20261127/17120102/fixed-fast/t720",
+      "t": 138
+    }
+  ],
+  "fine_last": {
+    "BR_BB_bb": 0.33615491596541713,
+    "BR_SB_bb": 0.6252172246080124,
+    "EV_bb": 0.09553159934565066,
+    "NashConv_bb": 0.9613721405734296,
+    "full_native_BR_upper": null,
+    "physical_infosets": true
+  },
+  "formal_pass": 0,
+  "seed": 17120102,
+  "warm": {
+    "exact": 393629,
+    "new_uniform": 1604620,
+    "parent": 6125
+  }
+}

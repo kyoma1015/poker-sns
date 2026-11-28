@@ -1,0 +1,10 @@
+{
+  "CPU_seconds": 0.17062520199999653,
+  "active_action_cells": 1075859,
+  "boards": 2,
+  "checkpoint_unchanged": true,
+  "nodes": 2939,
+  "scope": "vectorized warm initializer only, not training/setup/app response",
+  "source_sha256": "41005368330afb1bc985b1728d8eb9ecb28495c4bdd47dcc190ba2dcac1468bc",
+  "wall_seconds": 0.17091782399984368
+}

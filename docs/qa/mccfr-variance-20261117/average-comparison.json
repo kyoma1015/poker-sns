@@ -1,0 +1,36 @@
+{
+  "arms": [
+    {
+      "average_infosets": 472,
+      "average_revisit_rate": 0.08349514563106797,
+      "average_updates": 515,
+      "name": "average-control",
+      "new_S_initialization": "zero; only R/RNG reused",
+      "old_S_preserved_at_source": true,
+      "paired_iterations": 128,
+      "policy_digest": "11eb270d37bd489e767f93846535265b7caf9a0dc35dd5f807240bb556f29a4d",
+      "regret_infosets": 472,
+      "regret_updates": 515,
+      "total_infosets": 1309,
+      "training_seconds": 0.4282371459994465
+    },
+    {
+      "average_infosets": 466,
+      "average_revisit_rate": 0.08447937131630645,
+      "average_updates": 509,
+      "name": "average-corrected",
+      "new_S_initialization": "zero; only R/RNG reused",
+      "old_S_preserved_at_source": true,
+      "paired_iterations": 128,
+      "policy_digest": "c848ede7d11d0723ec6f558b606d59467f7f31866fe73cfc46c1e1093009ad60",
+      "regret_infosets": 472,
+      "regret_updates": 515,
+      "total_infosets": 1668,
+      "training_seconds": 0.5640781849997438
+    }
+  ],
+  "expanded_learning": false,
+  "formal_acceptance_complete": 0,
+  "regrets_identical": true,
+  "status": "BLOCKED_UNVERIFIED"
+}

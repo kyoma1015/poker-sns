@@ -1,0 +1,132 @@
+{
+  "source_checklists": [
+    "docs/qa/ev-precision-20261030/ACCEPTANCE.md",
+    "docs/qa/root-br-20261105/MVP_ACCEPTANCE.md"
+  ],
+  "before": 0,
+  "after": 0,
+  "delta": 0,
+  "total": 12,
+  "items": [
+    {
+      "id": 1,
+      "requirement": "RFI",
+      "formal_status": "PARTIAL",
+      "formal_pass": false,
+      "witnessed_implementation": "HU50モデル169行を完全方策・独立BRに結び候補化",
+      "minimum_remaining": "正式条件のRFI方策を生成し全対象ゲームで検証",
+      "blocker": "全ゲーム偏差・継続誤差・正式条件未検証",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually"
+    },
+    {
+      "id": 2,
+      "requirement": "vs open／3bet",
+      "formal_status": "PARTIAL",
+      "formal_pass": false,
+      "witnessed_implementation": "位置・履歴・サイズを結合した169行候補と改変拒否",
+      "minimum_remaining": "各条件の対open F/C/3betを同一方策で検証",
+      "blocker": "条件別の実戦品質を証明するデータ不足",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually"
+    },
+    {
+      "id": 3,
+      "requirement": "vs3bet／4bet",
+      "formal_status": "PARTIAL",
+      "formal_pass": false,
+      "witnessed_implementation": "既存vs3bet/vs4betを含む候補出力を維持",
+      "minimum_remaining": "各条件の後続応答・全合法サイズの検証",
+      "blocker": "正式サイズと後続ゲーム精度不足",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually"
+    },
+    {
+      "id": 4,
+      "requirement": "169頻度",
+      "formal_status": "PARTIAL",
+      "formal_pass": false,
+      "witnessed_implementation": "8候補×169=1352行、各1326コンボ整合",
+      "minimum_remaining": "正式条件全体の同じ完全性と品質を確保",
+      "blocker": "正式profile coverage未確定",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually"
+    },
+    {
+      "id": 5,
+      "requirement": "verified EV",
+      "formal_status": "PARTIAL",
+      "formal_pass": false,
+      "witnessed_implementation": "行動EV区間と頻度加重EVを照合し表示内容hashへ結合",
+      "minimum_remaining": "実ゲームEV区間と全体偏差の独立検証を取得",
+      "blocker": "固定継続モデル誤差が未評価",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually"
+    },
+    {
+      "id": 6,
+      "requirement": "MTT/ring",
+      "formal_status": "PARTIAL",
+      "formal_pass": false,
+      "witnessed_implementation": "入力・native回帰を維持、候補はHU chipEV/zero rake",
+      "minimum_remaining": "両形式の条件別方策と検証を追加",
+      "blocker": "MTT/ringの正式strategy coverage不足",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually"
+    },
+    {
+      "id": 7,
+      "requirement": "2〜9人",
+      "formal_status": "PARTIAL",
+      "formal_pass": false,
+      "witnessed_implementation": "全人数の位置・履歴入力と既存native回帰を維持",
+      "minimum_remaining": "人数別の実方策・独立一方偏差検証を追加",
+      "blocker": "新しい戦略生成モデルはHUのみ",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually"
+    },
+    {
+      "id": 8,
+      "requirement": "正式20スタック",
+      "formal_status": "BLOCKED",
+      "formal_pass": false,
+      "witnessed_implementation": "原典O06候補7値とQ05の20条件要求を識別",
+      "minimum_remaining": "20値と各format/seatへの割当・stack意味を確定",
+      "blocker": "正式20値の原典が未回収",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually"
+    },
+    {
+      "id": 9,
+      "requirement": "位置別戦略",
+      "formal_status": "PARTIAL",
+      "formal_pass": false,
+      "witnessed_implementation": "2〜9人の座席順・手番・opener履歴を区別",
+      "minimum_remaining": "各人数・位置の検証済みデータを追加",
+      "blocker": "候補戦略はHU SB/BBのみ",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually"
+    },
+    {
+      "id": 10,
+      "requirement": "BB ante/rake",
+      "formal_status": "PARTIAL",
+      "formal_pass": false,
+      "witnessed_implementation": "条件入力と既存決済oraclesを維持",
+      "minimum_remaining": "正式ante/rake条件ごとの戦略検証を追加",
+      "blocker": "元の正式profile mappingとstrategy不足",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually"
+    },
+    {
+      "id": 11,
+      "requirement": "正式全サイズ",
+      "formal_status": "BLOCKED",
+      "formal_pass": false,
+      "witnessed_implementation": "研究木の2.5/9/21/50を正式原典から区別",
+      "minimum_remaining": "stack/position/history別の全サイズとraise-to意味を確定",
+      "blocker": "全サイズ原典が未回収",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually"
+    },
+    {
+      "id": 12,
+      "requirement": "Poker ID検索",
+      "formal_status": "PARTIAL",
+      "formal_pass": false,
+      "witnessed_implementation": "hash照合・非同期競合制御・行動EV・エラー表示を実装",
+      "minimum_remaining": "資格を満たしたデータだけをregistryへ接続",
+      "blocker": "通常GTOに登録可能な正式データ0",
+      "evidence": "node/browser/candidate receipts in this folder; prior native regressions: starting HEAD six CI families SUCCESS, not rerun manually"
+    }
+  ]
+}

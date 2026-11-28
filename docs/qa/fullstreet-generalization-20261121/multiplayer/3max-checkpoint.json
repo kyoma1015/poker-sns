@@ -1,0 +1,288 @@
+{
+  "A": {
+    "{\"actions\":[0,1,6,7,8,9,10,11,12],\"actor\":0,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,true],\"history\":[[0,2,0,2,2]],\"last_full\":2,\"live\":[1,2,0],\"own\":[0,1],\"price\":2,\"remaining\":[9,8,10],\"round\":0,\"street\":[1,2,0]}": [
+      0.25,
+      263.75
+    ],
+    "{\"actions\":[0,1,6,7,8,9,10,11,12],\"actor\":0,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,true],\"history\":[[0,2,0,2,2]],\"last_full\":2,\"live\":[1,2,0],\"own\":[2,3],\"price\":2,\"remaining\":[9,8,10],\"round\":0,\"street\":[1,2,0]}": [
+      0.25,
+      263.75
+    ],
+    "{\"actions\":[0,1,6,7,8,9,10,11,12],\"actor\":2,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,false],\"history\":[],\"last_full\":2,\"live\":[1,2,0],\"own\":[4,5],\"price\":2,\"remaining\":[9,8,10],\"round\":0,\"street\":[1,2,0]}": [
+      0.5,
+      527.5
+    ],
+    "{\"actions\":[0,1],\"actor\":0,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,false],\"history\":[[0,2,10,10,8]],\"last_full\":8,\"live\":[1,2,10],\"own\":[0,1],\"price\":10,\"remaining\":[9,8,0],\"round\":0,\"street\":[1,2,10]}": [
+      263.75,
+      0.25
+    ],
+    "{\"actions\":[0,1],\"actor\":0,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,false],\"history\":[[0,2,10,10,8]],\"last_full\":8,\"live\":[1,2,10],\"own\":[2,3],\"price\":10,\"remaining\":[9,8,0],\"round\":0,\"street\":[1,2,10]}": [
+      263.75,
+      0.25
+    ],
+    "{\"actions\":[0,1],\"actor\":1,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,false],\"history\":[[0,2,10,10,8],[0,0,1,10,8]],\"last_full\":8,\"live\":[10,2,10],\"own\":[0,1],\"price\":10,\"remaining\":[0,8,0],\"round\":0,\"street\":[10,2,10]}": [
+      263.75,
+      0.25
+    ],
+    "{\"actions\":[0,1],\"actor\":1,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,false],\"history\":[[0,2,10,10,8],[0,0,1,10,8]],\"last_full\":8,\"live\":[10,2,10],\"own\":[2,3],\"price\":10,\"remaining\":[0,8,0],\"round\":0,\"street\":[10,2,10]}": [
+      263.75,
+      0.25
+    ],
+    "{\"actions\":[0,1],\"actor\":1,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,true],\"history\":[[0,2,0,2,2],[0,0,10,10,8]],\"last_full\":8,\"live\":[10,2,0],\"own\":[0,1],\"price\":10,\"remaining\":[0,8,10],\"round\":0,\"street\":[10,2,0]}": [
+      0.25,
+      263.75
+    ],
+    "{\"actions\":[0,1],\"actor\":1,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,true],\"history\":[[0,2,0,2,2],[0,0,10,10,8]],\"last_full\":8,\"live\":[10,2,0],\"own\":[2,3],\"price\":10,\"remaining\":[0,8,10],\"round\":0,\"street\":[10,2,0]}": [
+      0.25,
+      263.75
+    ],
+    "{\"actions\":[0,1],\"actor\":1,\"board\":[],\"dead\":[0,0,0],\"folded\":[true,false,false],\"history\":[[0,2,10,10,8],[0,0,0,10,8]],\"last_full\":8,\"live\":[1,2,10],\"own\":[0,1],\"price\":10,\"remaining\":[9,8,0],\"round\":0,\"street\":[1,2,10]}": [
+      263.75,
+      0.25
+    ],
+    "{\"actions\":[0,1],\"actor\":1,\"board\":[],\"dead\":[0,0,0],\"folded\":[true,false,false],\"history\":[[0,2,10,10,8],[0,0,0,10,8]],\"last_full\":8,\"live\":[1,2,10],\"own\":[2,3],\"price\":10,\"remaining\":[9,8,0],\"round\":0,\"street\":[1,2,10]}": [
+      263.75,
+      0.25
+    ]
+  },
+  "R": {
+    "{\"actions\":[0,1,6,7,8,9,10,11,12],\"actor\":0,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,true],\"history\":[[0,2,0,2,2]],\"last_full\":2,\"live\":[1,2,0],\"own\":[0,1],\"price\":2,\"remaining\":[9,8,10],\"round\":0,\"street\":[1,2,0]}": [
+      0.0,
+      0.125
+    ],
+    "{\"actions\":[0,1,6,7,8,9,10,11,12],\"actor\":0,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,true],\"history\":[[0,2,0,2,2]],\"last_full\":2,\"live\":[1,2,0],\"own\":[2,3],\"price\":2,\"remaining\":[9,8,10],\"round\":0,\"street\":[1,2,0]}": [
+      0.0,
+      0.125
+    ],
+    "{\"actions\":[0,1,6,7,8,9,10,11,12],\"actor\":2,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,false],\"history\":[],\"last_full\":2,\"live\":[1,2,0],\"own\":[4,5],\"price\":2,\"remaining\":[9,8,10],\"round\":0,\"street\":[1,2,0]}": [
+      0.0,
+      2.875
+    ],
+    "{\"actions\":[0,1],\"actor\":0,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,false],\"history\":[[0,2,10,10,8]],\"last_full\":8,\"live\":[1,2,10],\"own\":[0,1],\"price\":10,\"remaining\":[9,8,0],\"round\":0,\"street\":[1,2,10]}": [
+      0.5625,
+      0.0
+    ],
+    "{\"actions\":[0,1],\"actor\":0,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,false],\"history\":[[0,2,10,10,8]],\"last_full\":8,\"live\":[1,2,10],\"own\":[2,3],\"price\":10,\"remaining\":[9,8,0],\"round\":0,\"street\":[1,2,10]}": [
+      0.5625,
+      0.0
+    ],
+    "{\"actions\":[0,1],\"actor\":1,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,false],\"history\":[[0,2,10,10,8],[0,0,1,10,8]],\"last_full\":8,\"live\":[10,2,10],\"own\":[0,1],\"price\":10,\"remaining\":[0,8,0],\"round\":0,\"street\":[10,2,10]}": [
+      0.25,
+      0.0
+    ],
+    "{\"actions\":[0,1],\"actor\":1,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,false],\"history\":[[0,2,10,10,8],[0,0,1,10,8]],\"last_full\":8,\"live\":[10,2,10],\"own\":[2,3],\"price\":10,\"remaining\":[0,8,0],\"round\":0,\"street\":[10,2,10]}": [
+      0.25,
+      0.0
+    ],
+    "{\"actions\":[0,1],\"actor\":1,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,true],\"history\":[[0,2,0,2,2],[0,0,10,10,8]],\"last_full\":8,\"live\":[10,2,0],\"own\":[0,1],\"price\":10,\"remaining\":[0,8,10],\"round\":0,\"street\":[10,2,0]}": [
+      0.0,
+      0.0625
+    ],
+    "{\"actions\":[0,1],\"actor\":1,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,true],\"history\":[[0,2,0,2,2],[0,0,10,10,8]],\"last_full\":8,\"live\":[10,2,0],\"own\":[2,3],\"price\":10,\"remaining\":[0,8,10],\"round\":0,\"street\":[10,2,0]}": [
+      0.0,
+      0.0625
+    ],
+    "{\"actions\":[0,1],\"actor\":1,\"board\":[],\"dead\":[0,0,0],\"folded\":[true,false,false],\"history\":[[0,2,10,10,8],[0,0,0,10,8]],\"last_full\":8,\"live\":[1,2,10],\"own\":[0,1],\"price\":10,\"remaining\":[9,8,0],\"round\":0,\"street\":[1,2,10]}": [
+      0.25,
+      0.0
+    ],
+    "{\"actions\":[0,1],\"actor\":1,\"board\":[],\"dead\":[0,0,0],\"folded\":[true,false,false],\"history\":[[0,2,10,10,8],[0,0,0,10,8]],\"last_full\":8,\"live\":[1,2,10],\"own\":[2,3],\"price\":10,\"remaining\":[9,8,0],\"round\":0,\"street\":[1,2,10]}": [
+      0.25,
+      0.0
+    ]
+  },
+  "actions": {
+    "{\"actions\":[0,1,6,7,8,9,10,11,12],\"actor\":0,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,true],\"history\":[[0,2,0,2,2]],\"last_full\":2,\"live\":[1,2,0],\"own\":[0,1],\"price\":2,\"remaining\":[9,8,10],\"round\":0,\"street\":[1,2,0]}": [
+      0,
+      12
+    ],
+    "{\"actions\":[0,1,6,7,8,9,10,11,12],\"actor\":0,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,true],\"history\":[[0,2,0,2,2]],\"last_full\":2,\"live\":[1,2,0],\"own\":[2,3],\"price\":2,\"remaining\":[9,8,10],\"round\":0,\"street\":[1,2,0]}": [
+      0,
+      12
+    ],
+    "{\"actions\":[0,1,6,7,8,9,10,11,12],\"actor\":2,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,false],\"history\":[],\"last_full\":2,\"live\":[1,2,0],\"own\":[4,5],\"price\":2,\"remaining\":[9,8,10],\"round\":0,\"street\":[1,2,0]}": [
+      0,
+      12
+    ],
+    "{\"actions\":[0,1],\"actor\":0,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,false],\"history\":[[0,2,10,10,8]],\"last_full\":8,\"live\":[1,2,10],\"own\":[0,1],\"price\":10,\"remaining\":[9,8,0],\"round\":0,\"street\":[1,2,10]}": [
+      0,
+      1
+    ],
+    "{\"actions\":[0,1],\"actor\":0,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,false],\"history\":[[0,2,10,10,8]],\"last_full\":8,\"live\":[1,2,10],\"own\":[2,3],\"price\":10,\"remaining\":[9,8,0],\"round\":0,\"street\":[1,2,10]}": [
+      0,
+      1
+    ],
+    "{\"actions\":[0,1],\"actor\":1,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,false],\"history\":[[0,2,10,10,8],[0,0,1,10,8]],\"last_full\":8,\"live\":[10,2,10],\"own\":[0,1],\"price\":10,\"remaining\":[0,8,0],\"round\":0,\"street\":[10,2,10]}": [
+      0,
+      1
+    ],
+    "{\"actions\":[0,1],\"actor\":1,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,false],\"history\":[[0,2,10,10,8],[0,0,1,10,8]],\"last_full\":8,\"live\":[10,2,10],\"own\":[2,3],\"price\":10,\"remaining\":[0,8,0],\"round\":0,\"street\":[10,2,10]}": [
+      0,
+      1
+    ],
+    "{\"actions\":[0,1],\"actor\":1,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,true],\"history\":[[0,2,0,2,2],[0,0,10,10,8]],\"last_full\":8,\"live\":[10,2,0],\"own\":[0,1],\"price\":10,\"remaining\":[0,8,10],\"round\":0,\"street\":[10,2,0]}": [
+      0,
+      1
+    ],
+    "{\"actions\":[0,1],\"actor\":1,\"board\":[],\"dead\":[0,0,0],\"folded\":[false,false,true],\"history\":[[0,2,0,2,2],[0,0,10,10,8]],\"last_full\":8,\"live\":[10,2,0],\"own\":[2,3],\"price\":10,\"remaining\":[0,8,10],\"round\":0,\"street\":[10,2,0]}": [
+      0,
+      1
+    ],
+    "{\"actions\":[0,1],\"actor\":1,\"board\":[],\"dead\":[0,0,0],\"folded\":[true,false,false],\"history\":[[0,2,10,10,8],[0,0,0,10,8]],\"last_full\":8,\"live\":[1,2,10],\"own\":[0,1],\"price\":10,\"remaining\":[9,8,0],\"round\":0,\"street\":[1,2,10]}": [
+      0,
+      1
+    ],
+    "{\"actions\":[0,1],\"actor\":1,\"board\":[],\"dead\":[0,0,0],\"folded\":[true,false,false],\"history\":[[0,2,10,10,8],[0,0,0,10,8]],\"last_full\":8,\"live\":[1,2,10],\"own\":[2,3],\"price\":10,\"remaining\":[9,8,0],\"round\":0,\"street\":[1,2,10]}": [
+      0,
+      1
+    ]
+  },
+  "digest": "a54fa9464165dba9885b94a01190391affff31d85cc9a70112c2ad9a1a54355d",
+  "identity": {
+    "action_scope": "native fold/maxlegalraise or all-in-call only",
+    "config": {
+      "fixture": null,
+      "rules": {
+        "ante_order": "ante_first",
+        "bb": 2,
+        "bba": 0,
+        "cap_scope": "whole_hand",
+        "collection": "terminal",
+        "dead_eligibility": "all_live",
+        "no_flop_no_drop": true,
+        "rake_ante": true,
+        "rake_cap": null,
+        "rake_rate": "0",
+        "rounding": "floor",
+        "stack_basis": "before_ante",
+        "version": "pokerid-nlhe-reference-1"
+      },
+      "schema": 1,
+      "stacks": [
+        10,
+        10,
+        10
+      ]
+    },
+    "decks": [
+      [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      [
+        2,
+        3,
+        0,
+        1,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51
+      ]
+    ],
+    "formal_profile": false,
+    "native_binary_sha256": "190f7bbf49f367eae43b6ca9553f027815987acc44dfd9247318e3968d61a627",
+    "ordinary_registry_admission": false,
+    "schema": "native-finite-N-owner-joint-v1",
+    "source_sha256": "d8c2cf2f43dba1cb41d00a9e504ed8d9587534bc290d34c6a2cd76e97e88db4f",
+    "weights": [
+      0.5,
+      0.5
+    ]
+  },
+  "t": 32
+}

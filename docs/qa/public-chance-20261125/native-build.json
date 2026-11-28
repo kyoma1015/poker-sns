@@ -1,0 +1,21 @@
+{
+  "command": [
+    "c++",
+    "-O2",
+    "-std=c++20",
+    "-fno-fast-math",
+    "-ffp-contract=off",
+    "-shared",
+    "-fPIC",
+    "/tmp/native-qualification/replay.cc",
+    "-I/tmp/native-qualification",
+    "-I/tmp/native-qualification/headers/pybind11/include",
+    "-I/opt/codex/runtimes/codex-primary-runtime/dependencies/python/include/python3.12",
+    "-o",
+    "/tmp/native-qualification/_qualification_native.cpython-312-x86_64-linux-gnu.so"
+  ],
+  "wheel_sha256": "237c41e29157b962835d356b370ededd57594a26d5894a795960f0047cb5caf5",
+  "native_binary_sha256": "b51805c9bdd56b65121c398be32cb0db54811cf511e90ecc89dde91cdec1b8a9",
+  "rules_sha256": "870b64c0253be86ef139d0c2437d202d9d4f10097e871dd8bde526402dd49353",
+  "state_sha256": "9eaee82e4a42aca63ea30f2f80dae31ec4b4e28d58b72e0da355a048e6ca6988"
+}

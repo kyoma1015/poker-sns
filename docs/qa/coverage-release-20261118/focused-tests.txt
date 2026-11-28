@@ -1,0 +1,14 @@
+test_action_prior_positive_and_family_not_size_count (gto.qualification.test_coverage_solver.ChanceAndBatch.test_action_prior_positive_and_family_not_size_count) ... ok
+test_actual_adaptive_pair_applies_chance_correction_to_R_and_S (gto.qualification.test_coverage_solver.ChanceAndBatch.test_actual_adaptive_pair_applies_chance_correction_to_R_and_S) ... ok
+test_adaptive_predictable_proposal_exact_expectation_and_weight_bound (gto.qualification.test_coverage_solver.ChanceAndBatch.test_adaptive_predictable_proposal_exact_expectation_and_weight_bound) ... ok
+test_frozen_batch_chance_weight_matches_independent_CF_and_average (gto.qualification.test_coverage_solver.ChanceAndBatch.test_frozen_batch_chance_weight_matches_independent_CF_and_average) ... ok
+test_interrupted_batch_never_publishes_partial_rows (gto.qualification.test_coverage_solver.ChanceAndBatch.test_interrupted_batch_never_publishes_partial_rows) ... ok
+test_true_card_law_and_no_replacement (gto.qualification.test_coverage_solver.ChanceAndBatch.test_true_card_law_and_no_replacement) ... ok
+test_adaptive_native_resume_RNG_and_priority_exact (gto.qualification.test_coverage_solver.CoverageResume.test_adaptive_native_resume_RNG_and_priority_exact) ... ok
+test_family_warm_rows_unchanged_and_exact_resume (gto.qualification.test_coverage_solver.CoverageResume.test_family_warm_rows_unchanged_and_exact_resume) ... ok
+test_lossless_deterministic_and_failed_encoding_preserves_previous (gto.qualification.test_coverage_solver.FastCheckpoint.test_lossless_deterministic_and_failed_encoding_preserves_previous) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 2.507s
+
+OK

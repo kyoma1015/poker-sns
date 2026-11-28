@@ -1,0 +1,86 @@
+{
+  "records": [
+    {
+      "players": 6,
+      "seed": 17124101,
+      "rows": 14637,
+      "unique_public_states": 6171,
+      "per_seat": {
+        "0": 2971,
+        "3": 2083,
+        "4": 2434,
+        "1": 2887,
+        "2": 1703,
+        "5": 2559
+      },
+      "original_key_bytes": 6294740,
+      "factored_public_key_bytes": 2444454,
+      "private_index_bytes": 29274,
+      "repeated_state_text_saving_fraction": 0.6070166519983351,
+      "scope": "exact lossless index accounting only; row cap unchanged; not quality evidence"
+    },
+    {
+      "players": 6,
+      "seed": 17124102,
+      "rows": 13645,
+      "unique_public_states": 5840,
+      "per_seat": {
+        "0": 2813,
+        "3": 1914,
+        "4": 2162,
+        "1": 2704,
+        "2": 1587,
+        "5": 2465
+      },
+      "original_key_bytes": 5912008,
+      "factored_public_key_bytes": 2320321,
+      "private_index_bytes": 27290,
+      "repeated_state_text_saving_fraction": 0.6029080136562739,
+      "scope": "exact lossless index accounting only; row cap unchanged; not quality evidence"
+    },
+    {
+      "players": 9,
+      "seed": 17124101,
+      "rows": 19930,
+      "unique_public_states": 14471,
+      "per_seat": {
+        "0": 2578,
+        "3": 1781,
+        "6": 2552,
+        "4": 1935,
+        "7": 2529,
+        "1": 2444,
+        "2": 1369,
+        "5": 2249,
+        "8": 2493
+      },
+      "original_key_bytes": 9730568,
+      "factored_public_key_bytes": 6794211,
+      "private_index_bytes": 39860,
+      "repeated_state_text_saving_fraction": 0.29766987908619513,
+      "scope": "exact lossless index accounting only; row cap unchanged; not quality evidence"
+    },
+    {
+      "players": 9,
+      "seed": 17124102,
+      "rows": 19804,
+      "unique_public_states": 14353,
+      "per_seat": {
+        "0": 2544,
+        "3": 1814,
+        "6": 2532,
+        "4": 1974,
+        "7": 2471,
+        "1": 2386,
+        "2": 1415,
+        "5": 2215,
+        "8": 2453
+      },
+      "original_key_bytes": 9663509,
+      "factored_public_key_bytes": 6740253,
+      "private_index_bytes": 39608,
+      "repeated_state_text_saving_fraction": 0.2984058896204267,
+      "scope": "exact lossless index accounting only; row cap unchanged; not quality evidence"
+    }
+  ]
+}

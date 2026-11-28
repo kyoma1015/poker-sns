@@ -1,0 +1,140 @@
+{
+  "curve": [
+    {
+      "coverage": {
+        "0": {
+          "default": 6,
+          "queries": 804,
+          "trained": 0,
+          "warm_only": 798
+        },
+        "1": {
+          "default": 2,
+          "queries": 415,
+          "trained": 0,
+          "warm_only": 413
+        },
+        "2": {
+          "default": 2,
+          "queries": 196,
+          "trained": 0,
+          "warm_only": 194
+        },
+        "3": {
+          "default": 5,
+          "queries": 99,
+          "trained": 0,
+          "warm_only": 94
+        }
+      },
+      "elapsed_seconds": 0.21231033000003663,
+      "iterations": 0,
+      "path_coverage": {
+        "current_untrained": 512,
+        "no_parent_or_current": 10
+      },
+      "pure_training_seconds": 0.0,
+      "selection_EV_bb": -0.5130849510732323,
+      "selection_open3p5_gain_bb": 0.7582021385732323,
+      "stats": {
+        "action_entries": 8371,
+        "average_visited": 0,
+        "estimated_row_bytes": 543536,
+        "iterations": 0,
+        "regret_visited": 0,
+        "rows": 1060
+      }
+    },
+    {
+      "coverage": {
+        "0": {
+          "default": 10,
+          "queries": 835,
+          "trained": 286,
+          "warm_only": 539
+        },
+        "1": {
+          "default": 12,
+          "queries": 416,
+          "trained": 9,
+          "warm_only": 395
+        },
+        "2": {
+          "default": 12,
+          "queries": 196,
+          "trained": 2,
+          "warm_only": 182
+        },
+        "3": {
+          "default": 15,
+          "queries": 110,
+          "trained": 1,
+          "warm_only": 94
+        }
+      },
+      "elapsed_seconds": 1.000558796000405,
+      "iterations": 64,
+      "path_coverage": {
+        "current_untrained": 394,
+        "no_parent_or_current": 15
+      },
+      "pure_training_seconds": 0.6015050269816129,
+      "selection_EV_bb": -0.4706291429924242,
+      "selection_open3p5_gain_bb": 0.7323478929924242,
+      "stats": {
+        "action_entries": 327521,
+        "average_visited": 49336,
+        "estimated_row_bytes": 27435525,
+        "iterations": 64,
+        "regret_visited": 8552,
+        "rows": 58565
+      }
+    },
+    {
+      "coverage": {
+        "0": {
+          "default": 22,
+          "queries": 859,
+          "trained": 454,
+          "warm_only": 383
+        },
+        "1": {
+          "default": 28,
+          "queries": 400,
+          "trained": 12,
+          "warm_only": 360
+        },
+        "2": {
+          "default": 28,
+          "queries": 200,
+          "trained": 3,
+          "warm_only": 169
+        },
+        "3": {
+          "default": 30,
+          "queries": 125,
+          "trained": 1,
+          "warm_only": 94
+        }
+      },
+      "elapsed_seconds": 3.4335530959979224,
+      "iterations": 128,
+      "path_coverage": {
+        "current_untrained": 352,
+        "no_parent_or_current": 30
+      },
+      "pure_training_seconds": 1.3318094429851044,
+      "selection_EV_bb": -0.4875167692550504,
+      "selection_open3p5_gain_bb": 0.7453292692550504,
+      "stats": {
+        "action_entries": 679973,
+        "average_visited": 105938,
+        "estimated_row_bytes": 58470662,
+        "iterations": 128,
+        "regret_visited": 20055,
+        "rows": 126341
+      }
+    }
+  ],
+  "source_sha256": "3592048fa0fcf96625473d9bdb685b4015971df32114f7a242e6b9473e6a7257"
+}

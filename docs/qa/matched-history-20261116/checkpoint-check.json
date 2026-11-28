@@ -1,0 +1,6 @@
+{
+  "actual_final_checkpoints": 12,
+  "max_nashconv_recomputed_error_bb": 0.0,
+  "original_full_population_RS_restored": false,
+  "portable_identity_change_RS_t_numeric_parity": "PASS12/12; no checkpoint numeric history reset"
+}

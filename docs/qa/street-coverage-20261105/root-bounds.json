@@ -1,0 +1,36 @@
+{
+  "computed_root_board_probability": 0.00015370111829851498,
+  "conditional_prefixes": {
+    "vs_3bet": {
+      "call_leaf_probability": 0.024493875627518404,
+      "evaluated_root_board_probability": 0.00014317232940396182,
+      "root_sb_contribution_interval_bb": [
+        -0.4885555160755148,
+        0.38253051304341956
+      ]
+    },
+    "vs_4bet": {
+      "call_leaf_probability": 0.0017938975662108846,
+      "evaluated_root_board_probability": 1.0528788894553177e-05,
+      "root_sb_contribution_interval_bb": [
+        -0.016870998810242337,
+        0.046917843941199626
+      ]
+    }
+  },
+  "confidence": 0.99,
+  "exact_fold_terminal_root_contribution_bb": -0.055161178162137496,
+  "other_call_ev_contribution_bounds_bb": [
+    -28.126657539369944,
+    28.126657539369944
+  ],
+  "other_call_probability_unknown": 0.5625331507873989,
+  "policy_updated": false,
+  "real_game_approximation_error": "UNKNOWN",
+  "root_sb_ev_interval_bb": [
+    -28.687245232417837,
+    28.500944718192425
+  ],
+  "scope": "fixed frozen preflop actions; new uniform512 restricted continuations at two CALL leaves; all other CALL continuations unconstrained within50BB. NOT original frozen full payoff or GTO.",
+  "two_profile_call_probability": 0.02628777319372929
+}

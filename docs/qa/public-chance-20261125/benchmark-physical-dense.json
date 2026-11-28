@@ -1,0 +1,18 @@
+{
+  "EV_and_BR": [
+    -0.5697302240512071,
+    10.501970742993729
+  ],
+  "block_seconds": 0.10926826800005074,
+  "board": [
+    0,
+    5,
+    10,
+    15,
+    20
+  ],
+  "mode": "physical-dense",
+  "native_nodes": 884,
+  "owner_seconds": 0.6336118749995876,
+  "peak_RSS_bytes": 429645824
+}

@@ -1,0 +1,15 @@
+{
+  "accessed_splits": [
+    "train",
+    "validation"
+  ],
+  "final_test_accessed": false,
+  "protocol_sha256": "7ead47ef86391ab38403ee6fedd3f97a0d6ed7c949698ca60124a8dec79a0424",
+  "selected_shared_method": "global_knn9",
+  "selection_sha256": "29ac15a97e2ebee6f3e982b8e92142ded74867eca5de7f3ba68cfcd8d86e93fb",
+  "source_sha256": {
+    "factorial_game.py": "f0b646c7d9792a167031dff7b99a1c1c9f5e7a1547735838987c2e1b9edbb897",
+    "factorial_study.py": "d81c55a7446ae8d741006fc4e3f031b11cb2fc539eaddb4d8de7bdb9a307d9f3",
+    "factorial_transfer.py": "4811c5c7c065a20eda2be8c3c110ac1613a93ee2de50c1e4abcc9d1fd3c387c2"
+  }
+}

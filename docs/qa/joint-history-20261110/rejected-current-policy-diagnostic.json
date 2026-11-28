@@ -1,0 +1,28 @@
+{
+  "scope": "post-outcome tiny diagnostic only,no new learning",
+  "cases": [
+    {
+      "current": {
+        "nc": 0.03843460864422388,
+        "sb_gain": 0.007656307793288963,
+        "bb_gain": 0.030778300850934914,
+        "ev": 0.8393085147562092
+      },
+      "average_nc": 0.0020651071240064267,
+      "baseline_nc": 0.006764417995549388,
+      "gate_for_extra_population_current_policy_measurement": false
+    },
+    {
+      "current": {
+        "nc": 0.02091345701709535,
+        "sb_gain": 5.231476668976498e-05,
+        "bb_gain": 0.020861142250405584,
+        "ev": -0.12784847342196196
+      },
+      "average_nc": 0.0012865695592106652,
+      "baseline_nc": 0.005129056596198861,
+      "gate_for_extra_population_current_policy_measurement": false
+    }
+  ],
+  "extra_full_population_allowed": false
+}

@@ -1,0 +1,69 @@
+{
+  "formal_acceptance": 0,
+  "games": [
+    {
+      "case": 0,
+      "curve": [
+        {
+          "EV_bb": 0.23492187499999997,
+          "NC_bb": 1.124375,
+          "iterations": 0
+        },
+        {
+          "EV_bb": 0.8383567241311373,
+          "NC_bb": 0.01746268069796242,
+          "iterations": 16
+        },
+        {
+          "EV_bb": 0.8397732233417318,
+          "NC_bb": 0.002502402716398233,
+          "iterations": 64
+        },
+        {
+          "EV_bb": 0.8396742992461025,
+          "NC_bb": 0.0002422635539495177,
+          "iterations": 256
+        },
+        {
+          "EV_bb": 0.8396769149145986,
+          "NC_bb": 4.099338038865419e-05,
+          "iterations": 1024
+        }
+      ],
+      "gate": true
+    },
+    {
+      "case": 1,
+      "curve": [
+        {
+          "EV_bb": 0.008515624999999995,
+          "NC_bb": 1.383125,
+          "iterations": 0
+        },
+        {
+          "EV_bb": -0.13142471860783694,
+          "NC_bb": 0.019952863300731205,
+          "iterations": 16
+        },
+        {
+          "EV_bb": -0.1283767477384393,
+          "NC_bb": 0.0015322886961536553,
+          "iterations": 64
+        },
+        {
+          "EV_bb": -0.1280171281521265,
+          "NC_bb": 0.00014897949754280604,
+          "iterations": 256
+        },
+        {
+          "EV_bb": -0.1279937769636503,
+          "NC_bb": 3.574501931849494e-05,
+          "iterations": 1024
+        }
+      ],
+      "gate": true
+    }
+  ],
+  "gate": true,
+  "scope": "existing exact2type2public-outcome game,all64 pure strategies/player"
+}

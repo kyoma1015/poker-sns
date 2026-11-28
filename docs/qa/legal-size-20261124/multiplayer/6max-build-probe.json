@@ -1,0 +1,14 @@
+{
+  "status": "BLOCKED_INCOMPLETE_TREE",
+  "reason": "finite tree/time cap; nodes=20000",
+  "seconds": 9.031632478000006,
+  "no_partial_policy_or_BR": true,
+  "peak_rss_bytes": 74907648,
+  "external_elapsed_seconds": 9.438213233000056,
+  "external_peak_rss_bytes": 74985472,
+  "node_cap": 20000,
+  "constructor_seconds_cap": 10,
+  "RSS_cap_bytes": 268435456,
+  "training": false,
+  "original2000cap_result_unchanged": true
+}

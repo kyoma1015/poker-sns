@@ -1,0 +1,74 @@
+{
+  "records": [
+    {
+      "coverage": {
+        "0": {
+          "average": 5053,
+          "both": 5053,
+          "queries": 5283,
+          "regret": 5070
+        },
+        "1": {
+          "average": 290,
+          "both": 290,
+          "queries": 1560,
+          "regret": 309
+        },
+        "2": {
+          "average": 18,
+          "both": 18,
+          "queries": 1200,
+          "regret": 22
+        },
+        "3": {
+          "average": 1,
+          "both": 1,
+          "queries": 1153,
+          "regret": 2
+        }
+      },
+      "diagnostic": "last checkpoint, independent coverage only; not candidate selection",
+      "evaluation_seed": 17137601,
+      "last_iterations": 43,
+      "seconds": 0.6560373209999852,
+      "seed": 17120101,
+      "selected_nextstep_exact": true,
+      "worlds": 2048
+    },
+    {
+      "coverage": {
+        "0": {
+          "average": 4395,
+          "both": 4395,
+          "queries": 4589,
+          "regret": 4408
+        },
+        "1": {
+          "average": 116,
+          "both": 116,
+          "queries": 1295,
+          "regret": 126
+        },
+        "2": {
+          "average": 5,
+          "both": 5,
+          "queries": 959,
+          "regret": 6
+        },
+        "3": {
+          "average": 0,
+          "both": 0,
+          "queries": 795,
+          "regret": 0
+        }
+      },
+      "diagnostic": "last checkpoint, independent coverage only; not candidate selection",
+      "evaluation_seed": 17137601,
+      "last_iterations": 33,
+      "seconds": 0.8223627319998741,
+      "seed": 17120102,
+      "selected_nextstep_exact": true,
+      "worlds": 2048
+    }
+  ]
+}

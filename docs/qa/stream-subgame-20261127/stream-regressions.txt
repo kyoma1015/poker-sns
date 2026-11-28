@@ -1,0 +1,30 @@
+test_batched_causal_features_equal_preserved_scalar_function (gto.qualification.test_stream_chance.Streaming.test_batched_causal_features_equal_preserved_scalar_function) ... ok
+test_cached_partitions_match_original_and_preserve_history (gto.qualification.test_stream_chance.Streaming.test_cached_partitions_match_original_and_preserve_history) ... ok
+test_depth_first_BR_and_finite_refinement_envelope_match_matrix_oracle (gto.qualification.test_stream_chance.Streaming.test_depth_first_BR_and_finite_refinement_envelope_match_matrix_oracle) ... ok
+test_exact_stratum_partition_and_causal_features (gto.qualification.test_stream_chance.Streaming.test_exact_stratum_partition_and_causal_features) ... ok
+test_extra_legal_response_size_has_real_descendants (gto.qualification.test_stream_chance.Streaming.test_extra_legal_response_size_has_real_descendants) ... ok
+test_new_bank_current_policy_matches_pre_draw_frozen_native_policy (gto.qualification.test_stream_chance.Streaming.test_new_bank_current_policy_matches_pre_draw_frozen_native_policy) ... ok
+test_streamed_raw_CF_average_and_clip_match_joint_weighted_kernel (gto.qualification.test_stream_chance.Streaming.test_streamed_raw_CF_average_and_clip_match_joint_weighted_kernel) ... ok
+test_vectorized_native_parent_cache_matches_original (gto.qualification.test_stream_chance.Streaming.test_vectorized_native_parent_cache_matches_original) ... ok
+test_all_finite_chance_raw_CF_matches_independent_three_owner_oracle (gto.qualification.test_stream_multiplayer.NOwner.test_all_finite_chance_raw_CF_matches_independent_three_owner_oracle) ... ok
+test_six_nine_conditional_decks_information_and_resume (gto.qualification.test_stream_multiplayer.NOwner.test_six_nine_conditional_decks_information_and_resume) ... ok
+test_systematic_CDF_expected_mass_equals_exact_target (gto.qualification.test_stream_multiplayer.StrataProposal.test_systematic_CDF_expected_mass_equals_exact_target) ... ok
+test_shards_restore_rng_optimizer_and_reject_modified_bytes (gto.qualification.test_stream_checkpoint.Checkpoint.test_shards_restore_rng_optimizer_and_reject_modified_bytes) ... /workspace/poker-sns/gto/qualification/public_stream_study.py:50: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp8ks53713/checkpoint/receipt.json' mode='r' encoding='UTF-8'>
+  folder=Path(folder);receipt=json.load(open(folder/'receipt.json'));path=folder/'identity.json.zst'
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/workspace/poker-sns/gto/qualification/public_stream_study.py:50: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/tmp8ks53713/checkpoint/receipt.json' mode='r' encoding='UTF-8'>
+  folder=Path(folder);receipt=json.load(open(folder/'receipt.json'));path=folder/'identity.json.zst'
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_active_raw_CF_average_and_BR_match_existing_CSR (gto.qualification.test_active_chance.ActiveOracle.test_active_raw_CF_average_and_BR_match_existing_CSR) ... ok
+test_cross_instance_resume_restores_warm_prior_and_next_update (gto.qualification.test_active_chance.ActiveOracle.test_cross_instance_resume_restores_warm_prior_and_next_update) ... ok
+test_features_are_suit_invariant_and_prefix_rank_is_exact (gto.qualification.test_active_chance.ActiveOracle.test_features_are_suit_invariant_and_prefix_rank_is_exact) ... ok
+test_native_adapter_matches_training_rows_and_explicit_offtree_backoff (gto.qualification.test_active_chance.ActiveOracle.test_native_adapter_matches_training_rows_and_explicit_offtree_backoff) ... ok
+test_six_action_CSR_is_not_truncated_to_four (gto.qualification.test_active_chance.ActiveOracle.test_six_action_CSR_is_not_truncated_to_four) ... ok
+test_suit_orbit_response_scores_equal_explicit_24_permutations (gto.qualification.test_active_chance.ActiveOracle.test_suit_orbit_response_scores_equal_explicit_24_permutations) ... ok
+test_vectorized_initialization_preserves_reference_and_rejects_mixed_rows (gto.qualification.test_active_chance.ActiveOracle.test_vectorized_initialization_preserves_reference_and_rejects_mixed_rows) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 76.717s
+
+OK

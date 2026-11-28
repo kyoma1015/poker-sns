@@ -1,0 +1,6 @@
+test_trajectory_proposal_retains_tiny_positive_zero_target_support (gto.qualification.test_multiplayer_expanded.SparseNJoint.test_trajectory_proposal_retains_tiny_positive_zero_target_support) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.159s
+
+OK

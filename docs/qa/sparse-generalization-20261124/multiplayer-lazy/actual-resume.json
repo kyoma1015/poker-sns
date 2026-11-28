@@ -1,0 +1,36 @@
+{
+  "rows": [
+    {
+      "identical_next_checkpoint_digest": "2041411950739a392361f07988545bc9536d252967dfd05e740c9547908fc2a0",
+      "no_automatic_resume": true,
+      "players": 6,
+      "seconds": 1.2700487360016268,
+      "seed": 17124101,
+      "source_checkpoint_digest": "e5b8398adde02f310b00667b87b1b40606449712bba4d9094edda0d3be94c3d9"
+    },
+    {
+      "identical_next_checkpoint_digest": "10372c7def2c223742ddbc4aeb866b64bbc9783691809778cfabeb50df49d930",
+      "no_automatic_resume": true,
+      "players": 6,
+      "seconds": 1.0747971790005977,
+      "seed": 17124102,
+      "source_checkpoint_digest": "7d4919f59ec92059bf447b85699fca470f288769dcc67b11b55ae4f9d585948b"
+    },
+    {
+      "identical_next_checkpoint_digest": "0c129e40a25655512c3b02cff49a25add519366ea8a56f2b1b31d546ee7f988c",
+      "no_automatic_resume": true,
+      "players": 9,
+      "seconds": 1.6277289089994156,
+      "seed": 17124101,
+      "source_checkpoint_digest": "4d6491cdf0ee6e212b9e62f2d965db483035147bb86c67cb7200e59c9e1f46b2"
+    },
+    {
+      "identical_next_checkpoint_digest": "6ee00fcc37badfa298b5a73baa859a8570d76e9aa90289bcac1ffa4307fd8cfb",
+      "no_automatic_resume": true,
+      "players": 9,
+      "seconds": 1.495557259000634,
+      "seed": 17124102,
+      "source_checkpoint_digest": "81b1246fbef59ecb3a1860413b9807e43210134e295065eb230f177106a67612"
+    }
+  ]
+}

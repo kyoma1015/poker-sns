@@ -1,0 +1,34 @@
+✔ research is separate from verified GTO and real-game error remains unknown (2.612429ms)
+✔ research lookup requires exact stack sizes position and history (2.866291ms)
+✔ both continuation models contain normalized169 hands and model EV intervals (4.933601ms)
+✔ all4 frozen reach configurations and5 continuation profiles remain research-only (1.900489ms)
+✔ uncomputed stages, missing/invalid data and false admission fail closed (0.363197ms)
+✔ unphysical future envelope and nonfinite BR are rejected (4.423633ms)
+✔ new fixed-game research169x4x2 rows, EV intervals and exact conditions (16.239336ms)
+✔ unsupported player, seat, stack, ante, rake and size do not interpolate (1.671955ms)
+✔ existing HU1BB remains verified and separate from ordinary HU50 research (1.57532ms)
+✔ research data cannot be promoted into verified GTO via labels or catalog (0.777199ms)
+✔ corrupt frequency, history or action EV interval fails closed (19.950167ms)
+✔ numerical guard never masquerades as statistical confidence or real-game proof (6.499386ms)
+✔ precision data remains research-only with unknown reference and game error (0.173692ms)
+✔ all169 conditional profiles and actions bind to their original frozen policy (8.548177ms)
+✔ AA/KK/AKo/AKs checkdown values have no sampling uncertainty without claiming real GTO (1.088247ms)
+✔ grid has169 unique classes and1326 concrete combinations (0.376056ms)
+✔ decimal query normalization preserves exact condition lookup (1.846728ms)
+✔ all2..9 seats map to unique native seat numbers (0.525961ms)
+✔ unreviewed claimed verification cannot enable display (0.467803ms)
+✔ partial class or combination coverage is rejected (1.521358ms)
+✔ unknown EV, invalid frequencies and nonfinite EV are rejected (1.656732ms)
+✔ local drift or sampled confidence cannot substitute for full-game certificate (2.239128ms)
+✔ invalid modes, seats and MTT rake are rejected (0.320182ms)
+✔ actual native full-game evidence yields one separate test range with169EV intervals (0.823669ms)
+✔ the forced-blind certificate cannot be reused for ordinary RFI or other stack sizes (0.218629ms)
+✔ missing array entries cannot cross the verified release boundary (0.517979ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 199.402391

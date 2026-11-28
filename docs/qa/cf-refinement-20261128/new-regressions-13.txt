@@ -1,0 +1,18 @@
+test_CF_gap_matches_independent_active_kernel_fine_gradients (gto.qualification.test_cf_refine.Refine.test_CF_gap_matches_independent_active_kernel_fine_gradients) ... ok
+test_delta_roundtrip_and_tamper_rejected (gto.qualification.test_cf_refine.Refine.test_delta_roundtrip_and_tamper_rejected) ... ok
+test_local_CF_gap_nonnegative_and_existing_split_not_reselected (gto.qualification.test_cf_refine.Refine.test_local_CF_gap_nonnegative_and_existing_split_not_reselected) ... ok
+test_prefix_projection_and_no_invented_split_history (gto.qualification.test_cf_refine.Refine.test_prefix_projection_and_no_invented_split_history) ... ok
+test_three_owner_audit_gradient_and_average_and_resume (gto.qualification.test_prefix_sampling.Oracle.test_three_owner_audit_gradient_and_average_and_resume) ... ok
+test_uniform_marginals_and_independent_downstream_stream (gto.qualification.test_prefix_sampling.Quantile.test_uniform_marginals_and_independent_downstream_stream) ... ok
+test_generic_root_size_budget_and_joint_response_update (gto.qualification.test_adaptive_support.NativeSupport.test_generic_root_size_budget_and_joint_response_update) ... ok
+test_HU50_all_covered_terminal_rewards_but_omitted_sizes_UNKNOWN (gto.qualification.test_native_tree_bound.NativeBound.test_HU50_all_covered_terminal_rewards_but_omitted_sizes_UNKNOWN) ... ok
+test_complete_HU1BB_actions_exact_terminal_basis_not_fullchance_certificate (gto.qualification.test_native_tree_bound.NativeBound.test_complete_HU1BB_actions_exact_terminal_basis_not_fullchance_certificate) ... ok
+test_bounded_variance_envelope_and_spending (gto.qualification.test_range_ev.ConditionalEV.test_bounded_variance_envelope_and_spending) ... ok
+test_exact_fixed_board_card_removal_ties_and_weighted_expectation (gto.qualification.test_range_ev.ConditionalEV.test_exact_fixed_board_card_removal_ties_and_weighted_expectation) ... ok
+test_weighted_nontrivial_fixed_board_expectation (gto.qualification.test_range_ev.ConditionalEV.test_weighted_nontrivial_fixed_board_expectation) ... ok
+test_zero_call_exact_profit (gto.qualification.test_range_ev.ConditionalEV.test_zero_call_exact_profit) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 18.894s
+
+OK

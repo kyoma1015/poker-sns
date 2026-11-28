@@ -1,0 +1,24 @@
+{
+  "SB_EV_bb": {
+    "interval": [
+      -0.7077070053928392,
+      0.9570038680625046
+    ],
+    "mean": 0.12464843133483271,
+    "n": 8192,
+    "radius": 0.8323554367276719,
+    "variance": 74.42250868546765
+  },
+  "learned_minus_initial_bb": {
+    "interval": [
+      -1.0624168288941358,
+      0.8793101271106762
+    ],
+    "mean": -0.09155335089172979,
+    "n": 8192,
+    "radius": 0.970863478002406,
+    "variance": 22.001521809996113
+  },
+  "policy_digest": "5ce3218fe525ad3afcd5a14f795134a536030ff148654890a99bd6a8ad26fdbe",
+  "scope": "same final worlds, postselection comparison only"
+}

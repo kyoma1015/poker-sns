@@ -1,0 +1,18 @@
+[
+  {
+    "seed": 17119201,
+    "original_epoch": 128,
+    "replay_epoch": 129,
+    "identical_R_and_S": true,
+    "original_checkpoint_unchanged": true,
+    "note": "one-step recovery verification only,not a new quality candidate"
+  },
+  {
+    "seed": 17119202,
+    "original_epoch": 128,
+    "replay_epoch": 129,
+    "identical_R_and_S": true,
+    "original_checkpoint_unchanged": true,
+    "note": "one-step recovery verification only,not a new quality candidate"
+  }
+]

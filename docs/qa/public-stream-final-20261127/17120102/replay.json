@@ -1,0 +1,9 @@
+{
+  "bank_seed": 4588932318468537883,
+  "hashes": [
+    "4d744165b49e85c9e1ecfc613d0e091fc3901512cbaf9e838cfc95ddbbf3a7bd",
+    "26e107ba81762baf3f30b197e26b7e1b6b057a96451cd447c7d492aa16ff2186",
+    "62d3ece221b79c1f59960900ff59ebfec16183e5ed733b4d82670e8a316269ec"
+  ],
+  "next_fresh_bank_and_step_exact": true
+}

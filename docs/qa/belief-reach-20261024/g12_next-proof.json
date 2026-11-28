@@ -1,0 +1,259 @@
+{
+  "canonical_sha256": "8e2c4b63611aed0b22243ea1a2c976b56b16be7c9be888a928a1cf9342e8939a",
+  "result": {
+    "river": {
+      "support": [
+        {
+          "opponent_cards": [
+            48,
+            49
+          ],
+          "prior": {
+            "numerator": 1,
+            "denominator": 4
+          },
+          "chance_reach": {
+            "numerator": 1,
+            "denominator": 205476480
+          },
+          "strategy_reach": [
+            {
+              "numerator": 1,
+              "denominator": 1
+            },
+            {
+              "numerator": 1,
+              "denominator": 1
+            }
+          ],
+          "mass": {
+            "numerator": 1,
+            "denominator": 821905920
+          },
+          "values": [
+            {
+              "numerator": -2,
+              "denominator": 1
+            },
+            {
+              "numerator": 2,
+              "denominator": 1
+            }
+          ]
+        },
+        {
+          "opponent_cards": [
+            40,
+            45
+          ],
+          "prior": {
+            "numerator": 3,
+            "denominator": 4
+          },
+          "chance_reach": {
+            "numerator": 1,
+            "denominator": 205476480
+          },
+          "strategy_reach": [
+            {
+              "numerator": 1,
+              "denominator": 1
+            },
+            {
+              "numerator": 1,
+              "denominator": 1
+            }
+          ],
+          "mass": {
+            "numerator": 1,
+            "denominator": 273968640
+          },
+          "values": [
+            {
+              "numerator": 2,
+              "denominator": 1
+            },
+            {
+              "numerator": -2,
+              "denominator": 1
+            }
+          ]
+        }
+      ],
+      "evidence_mass": {
+        "numerator": 1,
+        "denominator": 205476480
+      },
+      "posterior": [
+        {
+          "numerator": 1,
+          "denominator": 4
+        },
+        {
+          "numerator": 3,
+          "denominator": 4
+        }
+      ],
+      "conditional_ev": [
+        {
+          "numerator": 1,
+          "denominator": 1
+        },
+        {
+          "numerator": -1,
+          "denominator": 1
+        }
+      ],
+      "counterfactual_mass": null,
+      "nodes": 2,
+      "native_infoset_ev": null,
+      "hand169_ev": null,
+      "scope": "heads-up explicit support conditional belief and full-state policy; not equilibrium",
+      "support_complete": false,
+      "strategy_convergence": "UNKNOWN"
+    },
+    "bayes": {
+      "support": [
+        {
+          "opponent_cards": [
+            48,
+            49
+          ],
+          "prior": {
+            "numerator": 1,
+            "denominator": 4
+          },
+          "chance_reach": {
+            "numerator": 1,
+            "denominator": 1
+          },
+          "strategy_reach": [
+            {
+              "numerator": 1,
+              "denominator": 4
+            },
+            {
+              "numerator": 1,
+              "denominator": 1
+            }
+          ],
+          "mass": {
+            "numerator": 1,
+            "denominator": 16
+          },
+          "values": [
+            {
+              "numerator": -1,
+              "denominator": 1
+            },
+            {
+              "numerator": 1,
+              "denominator": 1
+            }
+          ]
+        },
+        {
+          "opponent_cards": [
+            44,
+            45
+          ],
+          "prior": {
+            "numerator": 3,
+            "denominator": 4
+          },
+          "chance_reach": {
+            "numerator": 1,
+            "denominator": 1
+          },
+          "strategy_reach": [
+            {
+              "numerator": 1,
+              "denominator": 2
+            },
+            {
+              "numerator": 1,
+              "denominator": 1
+            }
+          ],
+          "mass": {
+            "numerator": 3,
+            "denominator": 8
+          },
+          "values": [
+            {
+              "numerator": -1,
+              "denominator": 1
+            },
+            {
+              "numerator": 1,
+              "denominator": 1
+            }
+          ]
+        }
+      ],
+      "evidence_mass": {
+        "numerator": 7,
+        "denominator": 16
+      },
+      "posterior": [
+        {
+          "numerator": 1,
+          "denominator": 7
+        },
+        {
+          "numerator": 6,
+          "denominator": 7
+        }
+      ],
+      "conditional_ev": [
+        {
+          "numerator": -1,
+          "denominator": 1
+        },
+        {
+          "numerator": 1,
+          "denominator": 1
+        }
+      ],
+      "counterfactual_mass": {
+        "numerator": 1,
+        "denominator": 1
+      },
+      "nodes": 2,
+      "native_infoset_ev": null,
+      "hand169_ev": null,
+      "scope": "heads-up explicit support conditional belief and full-state policy; not equilibrium",
+      "support_complete": false,
+      "strategy_convergence": "UNKNOWN"
+    },
+    "snapshot_policy": {
+      "0": {
+        "numerator": 4651020084840547,
+        "denominator": 97671421781612839
+      },
+      "1": {
+        "numerator": 18604080339355748,
+        "denominator": 97671421781612839
+      },
+      "6": {
+        "numerator": 74416321357416544,
+        "denominator": 97671421781612839
+      }
+    },
+    "snapshot_after_training": {
+      "0": {
+        "numerator": 4651020084840547,
+        "denominator": 97671421781612839
+      },
+      "1": {
+        "numerator": 18604080339355748,
+        "denominator": 97671421781612839
+      },
+      "6": {
+        "numerator": 74416321357416544,
+        "denominator": 97671421781612839
+      }
+    },
+    "snapshot_stable": true
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "candidate_selection_allowed": false,
+  "confidence_family": 0.999,
+  "evaluation_seed": 17136901,
+  "formal_acceptance": 0,
+  "full_native_BR_upper": null,
+  "n": 32768,
+  "old_PCS_gain": {
+    "interval": [
+      1.073446733799811,
+      2.876812311117132
+    ],
+    "mean": 1.9751295224584715,
+    "n": 32768,
+    "radius": 0.9016827886586605,
+    "variance": 871.487100512821
+  },
+  "old_sparse_gain": {
+    "interval": [
+      -0.13444906496502923,
+      0.6644859141699693
+    ],
+    "mean": 0.26501842460247,
+    "n": 32768,
+    "radius": 0.3994674895674992,
+    "variance": 95.51714681683859
+  },
+  "paired_PCS_minus_sparse_gain": {
+    "interval": [
+      0.664979262048629,
+      2.755242933663374
+    ],
+    "mean": 1.7101110978560015,
+    "n": 32768,
+    "radius": 1.0451318358073725,
+    "variance": 854.2358469467744
+  },
+  "policy_digests": [
+    "eff2ebbc8eee480dbac07d7a05911eafe1eba375b1509087430576b072bb63e6",
+    "69e0ccb894e4b426208c7ae6d2f3fafea5aae2bc8a3ada2761185ac8b69f6753"
+  ],
+  "seconds": 67.85609739000006,
+  "seed": 17120102,
+  "source_sha256": "50c2b1674a6eeb074656b2ec7a84340ee78bf9baf695ea75d8ab28a6b676509e"
+}

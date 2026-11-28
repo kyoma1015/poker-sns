@@ -1,0 +1,8 @@
+{
+  "source_executed_sha256": "1a94155ec429fe93156f72e55b0d1099cea37a751a1104022df38750d4a0bd85",
+  "training_CPU_budget_per_arm_seconds": 6,
+  "scope_of_recorded_CPU_seconds": "includes training, export, serialization and nextstep replay; NOT pure training time",
+  "exact_pure_training_CPU": "not captured in original receipt",
+  "future_driver": "captures pure training and checkpoint/replay separately; prior trials not rerun",
+  "formal_adoption": false
+}

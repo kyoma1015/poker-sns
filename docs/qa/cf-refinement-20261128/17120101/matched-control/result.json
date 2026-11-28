@@ -1,0 +1,26 @@
+{
+  "NC": {
+    "BR_BB_bb": 1.309650218290425,
+    "BR_SB_bb": 1.532343253104175,
+    "EV_bb": 0.05111103626148542,
+    "NashConv_bb": 2.8419934713946002,
+    "full_native_BR_upper": null,
+    "physical_infosets": false,
+    "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+  },
+  "extra_CPU_seconds": 16.576041590000003,
+  "fine": {
+    "BR_BB_bb": 1.6616540695950648,
+    "BR_SB_bb": 1.9681044578666507,
+    "EV_bb": 0.05111103626148542,
+    "NashConv_bb": 3.6297585274617155,
+    "full_native_BR_upper": null,
+    "physical_infosets": true,
+    "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+  },
+  "formal_pass": 0,
+  "from_t": 84,
+  "public_draws_match_refined": true,
+  "seed": 17120101,
+  "t": 86
+}

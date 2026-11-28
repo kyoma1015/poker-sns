@@ -1,0 +1,150 @@
+{
+  "best": {
+    "CPU_seconds": 0.0,
+    "NC": {
+      "BR_BB_bb": 4.6609131870068845,
+      "BR_SB_bb": 5.298594808645373,
+      "EV_bb": -0.09529622481118302,
+      "NashConv_bb": 9.959507995652258,
+      "full_native_BR_upper": null,
+      "physical_infosets": false
+    },
+    "checkpoint": "docs/qa/stream-subgame-20261127/17120101/t0",
+    "peak_RSS_bytes": 3611512832,
+    "selection": {
+      "EV": -0.14164841777146464,
+      "gains": {
+        "fold": -0.3583515822285353,
+        "open3p5": -0.3700555358270202,
+        "open7": -0.41129310684974757,
+        "open8": -0.4976695667613637,
+        "river_jam": -0.1396484375,
+        "river_nuts": 0.0,
+        "threebet10p5": -0.04880593039772728
+      },
+      "policy_digest": "a0be492fa7705d46616bdd5af7462c10b2dc11fb3703e476727d447fc287f272",
+      "scope": "selection only; no significance/PASS claim",
+      "score": 0
+    },
+    "t": 0
+  },
+  "curve": [
+    {
+      "CPU_seconds": 0.0,
+      "NC": {
+        "BR_BB_bb": 4.6609131870068845,
+        "BR_SB_bb": 5.298594808645373,
+        "EV_bb": -0.09529622481118302,
+        "NashConv_bb": 9.959507995652258,
+        "full_native_BR_upper": null,
+        "physical_infosets": false
+      },
+      "checkpoint": "docs/qa/stream-subgame-20261127/17120101/t0",
+      "peak_RSS_bytes": 3611512832,
+      "selection": {
+        "EV": -0.14164841777146464,
+        "gains": {
+          "fold": -0.3583515822285353,
+          "open3p5": -0.3700555358270202,
+          "open7": -0.41129310684974757,
+          "open8": -0.4976695667613637,
+          "river_jam": -0.1396484375,
+          "river_nuts": 0.0,
+          "threebet10p5": -0.04880593039772728
+        },
+        "policy_digest": "a0be492fa7705d46616bdd5af7462c10b2dc11fb3703e476727d447fc287f272",
+        "scope": "selection only; no significance/PASS claim",
+        "score": 0
+      },
+      "t": 0
+    },
+    {
+      "CPU_seconds": 32.374448110999964,
+      "NC": {
+        "BR_BB_bb": 3.6948412841364733,
+        "BR_SB_bb": 6.135801172305566,
+        "EV_bb": 0.2516722263132306,
+        "NashConv_bb": 9.830642456442039,
+        "full_native_BR_upper": null,
+        "physical_infosets": false
+      },
+      "checkpoint": "docs/qa/stream-subgame-20261127/17120101/t30",
+      "peak_RSS_bytes": 3977134080,
+      "selection": {
+        "EV": -0.6971805456912878,
+        "gains": {
+          "fold": 0.19718054569128785,
+          "open3p5": -0.8777200718118686,
+          "open7": 0.0672989662247474,
+          "open8": 0.2090731534090909,
+          "river_jam": -0.03125,
+          "river_nuts": 0.0,
+          "threebet10p5": 0.055199208885732334
+        },
+        "policy_digest": "d35bcac9f83b31e799e342e0eb72c63fa137767f4b30ad960638fafebe561946",
+        "scope": "selection only; no significance/PASS claim",
+        "score": 0.26427236229482326
+      },
+      "t": 6
+    },
+    {
+      "CPU_seconds": 94.14283072099991,
+      "NC": {
+        "BR_BB_bb": 1.3268519358967141,
+        "BR_SB_bb": 1.3431342436347515,
+        "EV_bb": -0.07137757936888207,
+        "NashConv_bb": 2.669986179531466,
+        "full_native_BR_upper": null,
+        "physical_infosets": false
+      },
+      "checkpoint": "docs/qa/stream-subgame-20261127/17120101/t90",
+      "peak_RSS_bytes": 3979210752,
+      "selection": {
+        "EV": -0.3496438999368686,
+        "gains": {
+          "fold": -0.15035610006313135,
+          "open3p5": -0.4327392578125,
+          "open7": -1.145886353772096,
+          "open8": -0.14653986150568182,
+          "river_jam": -0.1328125,
+          "river_nuts": 0.0,
+          "threebet10p5": 0.08289683948863637
+        },
+        "policy_digest": "8a119402031fec7beef17c53589b392785de4ca8d04c2a4e5c101ad7b35177b6",
+        "scope": "selection only; no significance/PASS claim",
+        "score": 0.08289683948863637
+      },
+      "t": 17
+    },
+    {
+      "CPU_seconds": 183.120080038,
+      "NC": {
+        "BR_BB_bb": 0.5637014151535629,
+        "BR_SB_bb": 0.665905563611647,
+        "EV_bb": -0.004248591760283804,
+        "NashConv_bb": 1.2296069787652097,
+        "full_native_BR_upper": null,
+        "physical_infosets": false
+      },
+      "checkpoint": "docs/qa/stream-subgame-20261127/17120101/t180",
+      "peak_RSS_bytes": 3981615104,
+      "selection": {
+        "EV": 0.10235657354797979,
+        "gains": {
+          "fold": -0.6023565735479798,
+          "open3p5": -0.4134558475378788,
+          "open7": -0.9735958214962122,
+          "open8": -0.47090657552083337,
+          "river_jam": 0.13037109375,
+          "river_nuts": 0.0,
+          "threebet10p5": 0.16320184264520202
+        },
+        "policy_digest": "8f710ae93fd58f9435dc17ed570a7daee11ac28abbe9cb401b4c3147147e5699",
+        "scope": "selection only; no significance/PASS claim",
+        "score": 0.16320184264520202
+      },
+      "t": 34
+    }
+  ],
+  "stop": "BUDGET_360"
+}

@@ -1,0 +1,72 @@
+{
+  "SB_EV_bb": {
+    "interval": [
+      -0.8053126082500046,
+      0.898429445568502
+    ],
+    "mean": 0.046558418659248736,
+    "n": 8192,
+    "radius": 0.8518710269092533,
+    "variance": 68.83865211283151
+  },
+  "abstraction_error_upper": null,
+  "binary_sha256": "f6257bdb849c3dfd6672081a9a90cd1e3591e63c57a9ce44ef59ee13a9209482",
+  "checkpoint_source": "docs/qa/legal-size-20261124/hu-final/17120101/best",
+  "continuation_error_upper": null,
+  "deviations": {
+    "open3p5": {
+      "interval": [
+        -0.8312615522214031,
+        1.6440661114859234
+      ],
+      "mean": 0.4064022796322601,
+      "n": 8192,
+      "radius": 1.2376638318536632,
+      "variance": 70.82926326344075
+    }
+  },
+  "final_seed": 17129501,
+  "formal_pass": false,
+  "full_native_BR_upper": null,
+  "full_native_NashConv": null,
+  "iteration": 64,
+  "mode": "legacy",
+  "n": 8192,
+  "omitted_action_error_upper": null,
+  "path_coverage": {
+    "current_untrained": 6874,
+    "no_parent_or_current": 1011
+  },
+  "peak_RSS_bytes": 218075136,
+  "policy_digest": "4864081d387096007ed3db55b56bf50c496293e3f744dfc79e93142eed1e2984",
+  "query_coverage": {
+    "0": {
+      "default": 281,
+      "queries": 14554,
+      "trained": 5009,
+      "warm_only": 9264
+    },
+    "1": {
+      "default": 367,
+      "queries": 5279,
+      "trained": 0,
+      "warm_only": 4912
+    },
+    "2": {
+      "default": 939,
+      "queries": 2674,
+      "trained": 0,
+      "warm_only": 1735
+    },
+    "3": {
+      "default": 1074,
+      "queries": 1959,
+      "trained": 0,
+      "warm_only": 885
+    }
+  },
+  "seconds": 2.261024613999325,
+  "seed": 17120101,
+  "source_sha256": "65932655b8eb9448e68c0843b87b2d773d2503e41c340648f76ede27dad719de",
+  "status": "COMPLETE_UNVERIFIED"
+}

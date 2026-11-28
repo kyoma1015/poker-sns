@@ -1,0 +1,495 @@
+{
+  "cases": [
+    {
+      "board_weights": [
+        0.5,
+        0.5
+      ],
+      "identity": "7d4d5cfba4ec8c3fa0b7d44669c0d82b5b63d06c5553222f073d1942027bdeb0",
+      "initial": {
+        "bb_gain_bb": 0.7204169004863448,
+        "independent_pure_br_error_bb": 0.0,
+        "nashconv_bb": 0.859307893752338,
+        "sb_ev_bb": -0.6195868406285072,
+        "sb_gain_bb": 0.1388909932659932
+      },
+      "methods": {
+        "cfr_plus": [
+          {
+            "additional_iterations": 32,
+            "bb_gain_bb": 0.010430585388774949,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.013280614556606674,
+            "sb_ev_bb": -0.5028500291678317,
+            "sb_gain_bb": 0.0028500291678317247
+          },
+          {
+            "additional_iterations": 128,
+            "bb_gain_bb": 0.0007871453305028364,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.0010076201064821433,
+            "sb_ev_bb": -0.5002204747759793,
+            "sb_gain_bb": 0.00022047477597930687
+          }
+        ],
+        "dcfr": [
+          {
+            "additional_iterations": 32,
+            "bb_gain_bb": 0.010153579745383667,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.013843619634758442,
+            "sb_ev_bb": -0.5036900398893748,
+            "sb_gain_bb": 0.0036900398893747743
+          },
+          {
+            "additional_iterations": 128,
+            "bb_gain_bb": 0.00021372839581634828,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.00029318252229926234,
+            "sb_ev_bb": -0.5000794541264829,
+            "sb_gain_bb": 7.945412648291406e-05
+          }
+        ],
+        "vanilla": [
+          {
+            "additional_iterations": 32,
+            "bb_gain_bb": 0.16683928691367345,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.2073587443477234,
+            "sb_ev_bb": -0.5405194574340499,
+            "sb_gain_bb": 0.040519457434049944
+          },
+          {
+            "additional_iterations": 128,
+            "bb_gain_bb": 0.04880745130438768,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.06310918306235058,
+            "sb_ev_bb": -0.5143017317579629,
+            "sb_gain_bb": 0.014301731757962899
+          }
+        ]
+      },
+      "teacher_iterations": 4
+    },
+    {
+      "board_weights": [
+        0.5,
+        0.5
+      ],
+      "identity": "7d4d5cfba4ec8c3fa0b7d44669c0d82b5b63d06c5553222f073d1942027bdeb0",
+      "initial": {
+        "bb_gain_bb": 0.01317669156260226,
+        "independent_pure_br_error_bb": 0.0,
+        "nashconv_bb": 0.0167516842702653,
+        "sb_ev_bb": -0.503574992707663,
+        "sb_gain_bb": 0.0035749927076630383
+      },
+      "methods": {
+        "cfr_plus": [
+          {
+            "additional_iterations": 32,
+            "bb_gain_bb": 0.0033266340348632184,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.004252350622451995,
+            "sb_ev_bb": -0.5009257165875888,
+            "sb_gain_bb": 0.0009257165875887763
+          },
+          {
+            "additional_iterations": 128,
+            "bb_gain_bb": 0.0005363811195662205,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.0006867150073525119,
+            "sb_ev_bb": -0.5001503338877863,
+            "sb_gain_bb": 0.00015033388778629142
+          }
+        ],
+        "dcfr": [
+          {
+            "additional_iterations": 32,
+            "bb_gain_bb": 0.011592616598453676,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.01475069287514752,
+            "sb_ev_bb": -0.5031580762766938,
+            "sb_gain_bb": 0.003158076276693844
+          },
+          {
+            "additional_iterations": 128,
+            "bb_gain_bb": 0.0038819163915438937,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.004960614366048333,
+            "sb_ev_bb": -0.5010786979745044,
+            "sb_gain_bb": 0.001078697974504439
+          }
+        ],
+        "vanilla": [
+          {
+            "additional_iterations": 32,
+            "bb_gain_bb": 0.01241855548905857,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.01579444516910722,
+            "sb_ev_bb": -0.5033758896800486,
+            "sb_gain_bb": 0.0033758896800486493
+          },
+          {
+            "additional_iterations": 128,
+            "bb_gain_bb": 0.010590523831865317,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.013483062949237845,
+            "sb_ev_bb": -0.5028925391173725,
+            "sb_gain_bb": 0.002892539117372528
+          }
+        ]
+      },
+      "teacher_iterations": 32
+    },
+    {
+      "board_weights": [
+        0.25,
+        0.75
+      ],
+      "identity": "dc52c9f11c808cd9a9d6d613e96ac68c96e0167c4f960abeb4619a8a44d90b78",
+      "initial": {
+        "bb_gain_bb": 0.6515415964081308,
+        "independent_pure_br_error_bb": 0.0,
+        "nashconv_bb": 0.9857841924110917,
+        "sb_ev_bb": -0.8342425960029609,
+        "sb_gain_bb": 0.3342425960029609
+      },
+      "methods": {
+        "cfr_plus": [
+          {
+            "additional_iterations": 32,
+            "bb_gain_bb": 0.006526135800189459,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.014801564450617088,
+            "sb_ev_bb": -0.5082754286504276,
+            "sb_gain_bb": 0.00827542865042763
+          },
+          {
+            "additional_iterations": 128,
+            "bb_gain_bb": 0.0004916667693589671,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.001123016851687253,
+            "sb_ev_bb": -0.5006313500823283,
+            "sb_gain_bb": 0.0006313500823282858
+          }
+        ],
+        "dcfr": [
+          {
+            "additional_iterations": 32,
+            "bb_gain_bb": 0.00661581842241632,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.015003412157723939,
+            "sb_ev_bb": -0.5083875937353076,
+            "sb_gain_bb": 0.008387593735307619
+          },
+          {
+            "additional_iterations": 128,
+            "bb_gain_bb": 0.00013905352113419145,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.000317744804866793,
+            "sb_ev_bb": -0.5001786912837326,
+            "sb_gain_bb": 0.00017869128373260157
+          }
+        ],
+        "vanilla": [
+          {
+            "additional_iterations": 32,
+            "bb_gain_bb": 0.11518203650198156,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.23471052200264086,
+            "sb_ev_bb": -0.6195284855006593,
+            "sb_gain_bb": 0.11952848550065931
+          },
+          {
+            "additional_iterations": 128,
+            "bb_gain_bb": 0.03241241181661114,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.07143363713123851,
+            "sb_ev_bb": -0.5390212253146274,
+            "sb_gain_bb": 0.03902122531462737
+          }
+        ]
+      },
+      "teacher_iterations": 4
+    },
+    {
+      "board_weights": [
+        0.25,
+        0.75
+      ],
+      "identity": "dc52c9f11c808cd9a9d6d613e96ac68c96e0167c4f960abeb4619a8a44d90b78",
+      "initial": {
+        "bb_gain_bb": 0.008248197375961719,
+        "independent_pure_br_error_bb": 0.0,
+        "nashconv_bb": 0.01867015515930104,
+        "sb_ev_bb": -0.5104219577833393,
+        "sb_gain_bb": 0.01042195778333932
+      },
+      "methods": {
+        "cfr_plus": [
+          {
+            "additional_iterations": 32,
+            "bb_gain_bb": 0.0020788120991057646,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.004739347078899447,
+            "sb_ev_bb": -0.5026605349797937,
+            "sb_gain_bb": 0.002660534979793683
+          },
+          {
+            "additional_iterations": 128,
+            "bb_gain_bb": 0.00033501956195169935,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.0007653603978347023,
+            "sb_ev_bb": -0.500430340835883,
+            "sb_gain_bb": 0.000430340835883003
+          }
+        ],
+        "dcfr": [
+          {
+            "additional_iterations": 32,
+            "bb_gain_bb": 0.007254640708681204,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.016440002106238416,
+            "sb_ev_bb": -0.5091853613975572,
+            "sb_gain_bb": 0.009185361397557212
+          },
+          {
+            "additional_iterations": 128,
+            "bb_gain_bb": 0.0024260441981628356,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.005528724061733548,
+            "sb_ev_bb": -0.5031026798635707,
+            "sb_gain_bb": 0.003102679863570712
+          }
+        ],
+        "vanilla": [
+          {
+            "additional_iterations": 32,
+            "bb_gain_bb": 0.007772616103344232,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.017603289150198043,
+            "sb_ev_bb": -0.5098306730468538,
+            "sb_gain_bb": 0.00983067304685381
+          },
+          {
+            "additional_iterations": 128,
+            "bb_gain_bb": 0.006626387911433884,
+            "independent_pure_br_error_bb": 0.0,
+            "nashconv_bb": 0.015027198055047153,
+            "sb_ev_bb": -0.5084008101436133,
+            "sb_gain_bb": 0.008400810143613269
+          }
+        ]
+      },
+      "teacher_iterations": 32
+    }
+  ],
+  "eligible_small_followup_only": [],
+  "formal_acceptance": [
+    0,
+    12
+  ],
+  "frozen_population_nashconv_bb": 0.9321071527220774,
+  "full_population_started": false,
+  "inherited_average_semantics": "Actual linear teacher mass retained. Vanilla new mass weight1; DCFR discounts inherited mass too. Continuation variants, not a claim of textbook global averaging from iteration1.",
+  "max_vector_path_error": 8.881784197001252e-16,
+  "normal_GTO_added": 0,
+  "population_improvement": "UNMEASURED",
+  "scope": "EXPLICIT8WORLDS_ACTUAL270NODE_TREE_NOT_FULL_POPULATION",
+  "wall_seconds": 39.61033956600022,
+  "worlds": [
+    {
+      "equity": 0.14343434343434344,
+      "flop": [
+        0,
+        5,
+        22
+      ],
+      "holes": [
+        [
+          48,
+          29
+        ],
+        [
+          46,
+          47
+        ]
+      ],
+      "mass": 0.125,
+      "runout_count": 990,
+      "signals": [
+        520,
+        112
+      ]
+    },
+    {
+      "equity": 0.14343434343434344,
+      "flop": [
+        0,
+        5,
+        22
+      ],
+      "holes": [
+        [
+          48,
+          29
+        ],
+        [
+          42,
+          43
+        ]
+      ],
+      "mass": 0.125,
+      "runout_count": 990,
+      "signals": [
+        520,
+        224
+      ]
+    },
+    {
+      "equity": 0.14343434343434344,
+      "flop": [
+        0,
+        5,
+        22
+      ],
+      "holes": [
+        [
+          48,
+          25
+        ],
+        [
+          46,
+          47
+        ]
+      ],
+      "mass": 0.125,
+      "runout_count": 990,
+      "signals": [
+        624,
+        112
+      ]
+    },
+    {
+      "equity": 0.14343434343434344,
+      "flop": [
+        0,
+        5,
+        22
+      ],
+      "holes": [
+        [
+          48,
+          25
+        ],
+        [
+          42,
+          43
+        ]
+      ],
+      "mass": 0.125,
+      "runout_count": 990,
+      "signals": [
+        624,
+        224
+      ]
+    },
+    {
+      "equity": 0.1595959595959596,
+      "flop": [
+        8,
+        13,
+        18
+      ],
+      "holes": [
+        [
+          48,
+          29
+        ],
+        [
+          46,
+          47
+        ]
+      ],
+      "mass": 0.125,
+      "runout_count": 990,
+      "signals": [
+        520,
+        112
+      ]
+    },
+    {
+      "equity": 0.1595959595959596,
+      "flop": [
+        8,
+        13,
+        18
+      ],
+      "holes": [
+        [
+          48,
+          29
+        ],
+        [
+          42,
+          43
+        ]
+      ],
+      "mass": 0.125,
+      "runout_count": 990,
+      "signals": [
+        520,
+        224
+      ]
+    },
+    {
+      "equity": 0.28888888888888886,
+      "flop": [
+        8,
+        13,
+        18
+      ],
+      "holes": [
+        [
+          48,
+          25
+        ],
+        [
+          46,
+          47
+        ]
+      ],
+      "mass": 0.125,
+      "runout_count": 990,
+      "signals": [
+        624,
+        112
+      ]
+    },
+    {
+      "equity": 0.28888888888888886,
+      "flop": [
+        8,
+        13,
+        18
+      ],
+      "holes": [
+        [
+          48,
+          25
+        ],
+        [
+          42,
+          43
+        ]
+      ],
+      "mass": 0.125,
+      "runout_count": 990,
+      "signals": [
+        624,
+        224
+      ]
+    }
+  ]
+}

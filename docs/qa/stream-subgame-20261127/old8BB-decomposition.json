@@ -1,0 +1,75 @@
+{
+  "records": [
+    {
+      "seed": 17120101,
+      "source": "docs/qa/active-subgame-20261127/17120101/native-confirm-32768/values.json.gz",
+      "baseline_shift": {
+        "n": 32768,
+        "mean": -1.2570490981593276,
+        "variance": 268.9436419957432,
+        "radius": 0.5679828374380984,
+        "interval": [
+          -1.825031935597426,
+          -0.6890662607212292
+        ]
+      },
+      "forced8_shift": {
+        "n": 32768,
+        "mean": 0.4638772829614504,
+        "variance": 356.0502368404808,
+        "radius": 0.6307936527030945,
+        "interval": [
+          -0.1669163697416441,
+          1.094670935664545
+        ]
+      },
+      "gain_difference": {
+        "n": 32768,
+        "mean": 1.720926381120778,
+        "variance": 428.5569392704951,
+        "radius": 0.8283095676152461,
+        "interval": [
+          0.8926168135055319,
+          2.5492359487360243
+        ]
+      }
+    },
+    {
+      "seed": 17120102,
+      "source": "docs/qa/active-subgame-20261127/17120102/native-confirm-32768/values.json.gz",
+      "baseline_shift": {
+        "n": 32768,
+        "mean": -0.008874218873303344,
+        "variance": 171.19228949213945,
+        "radius": 0.48366547029126117,
+        "interval": [
+          -0.49253968916456453,
+          0.4747912514179578
+        ]
+      },
+      "forced8_shift": {
+        "n": 32768,
+        "mean": 2.288444172252308,
+        "variance": 292.8074657897747,
+        "radius": 0.5860931153340684,
+        "interval": [
+          1.7023510569182396,
+          2.8745372875863766
+        ]
+      },
+      "gain_difference": {
+        "n": 32768,
+        "mean": 2.2973183911256116,
+        "variance": 336.99653997670544,
+        "radius": 0.7686940039103586,
+        "interval": [
+          1.528624387215253,
+          3.0660123950359703
+        ]
+      }
+    }
+  ],
+  "scope": "paired prior confirmation algebra; diagnostic NOT new independent evidence",
+  "cause": "relative gain = forced-action EV shift minus on-policy EV shift; policy replacement changes BOTH response and baseline; structural attribution requires controlled ablation",
+  "finding": "Seed1: relative8BB gain increase1.720926BB is mostly negative on-policy baseline shift(-1.257049BB); forced8EV shift+.463877BB is not significant. Seed2: baseline shift-.008874BB, forced8EV shift+2.288444BB is significant. Therefore one baseline-only explanation is false across seeds; continuation/response changed materially in seed2. This paired algebra alone cannot identify a unique infoset cause."
+}

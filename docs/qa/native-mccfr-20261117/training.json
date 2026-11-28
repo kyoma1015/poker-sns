@@ -1,0 +1,10 @@
+{
+  "policy_digest": "6bb5c89a082769c27f2b593b41e8c848995cb98c547476a86f5e52f1ba65dba5",
+  "iteration": 256,
+  "new_iterations": 256,
+  "visited_information_sets": 1022,
+  "elapsed_seconds": 0.7778033870000627,
+  "algorithmically_complete_policies": 1,
+  "qualified_policies": 0,
+  "status": "BLOCKED_UNVERIFIED"
+}

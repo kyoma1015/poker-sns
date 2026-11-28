@@ -1,0 +1,18 @@
+[
+  {
+    "codec": "gzip9",
+    "wall_seconds": 7.521987676999743,
+    "CPU_seconds": 3.803031484,
+    "raw_bytes": 124094587,
+    "stored_bytes": 19328589,
+    "roundtrip_SHA256": "ea8e266e542e7721e93d1886c3baeb44d16562fc966688e1251e9b2f8c26bb63"
+  },
+  {
+    "codec": "zstd1",
+    "wall_seconds": 0.8123171560000628,
+    "CPU_seconds": 0.543001457,
+    "raw_bytes": 124094587,
+    "stored_bytes": 19642687,
+    "roundtrip_SHA256": "ea8e266e542e7721e93d1886c3baeb44d16562fc966688e1251e9b2f8c26bb63"
+  }
+]

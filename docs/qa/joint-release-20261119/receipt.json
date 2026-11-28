@@ -1,0 +1,18 @@
+{
+  "baseline_head": "fbdd08327e029f07da22957cc43adf696d335e9e",
+  "source_sha256": {
+    "gto/qualification/joint_release.py": "db05064b82a33cfc19856ddd02b32d1835920c041712ab33725e29fb5b29df97",
+    "gto/qualification/joint_release_eval.py": "2861b88e97fa90ee8c06180b69ee647ec8ec5b7cd77e91113f192ccb8a7f8a0a",
+    "gto/qualification/joint_river_bound.py": "c648701b33c15fb4b2329156044f074925967b422a92f852f6dba91b8c8c8333",
+    "gto/abstract/joint_vector.cc": "a72816f2228ab49d991818b6d36ac1e6ca7fbbfe7f7fc578e58af5b2e660c6c2",
+    "gto/abstract/flop_exact_matrix.cc": "55d6ef38d16d8e868b241bb1ed7485e953c30b051abd807d3c5e10df61dd04f1",
+    "gto/abstract/precision_native.cc": "7b1ac459ea0794c76b64321fe3242eae710c4b1995bcbd1b4030257df328e79a"
+  },
+  "source_guard_replay_same_pre_and_post_policies": {
+    "17119201": true,
+    "17119202": true
+  },
+  "formal_acceptance": 0,
+  "verified_RFI": 0,
+  "verified_threebet": 0
+}

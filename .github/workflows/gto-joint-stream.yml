@@ -1,0 +1,248 @@
+name: GTO population streaming and resumable joint learning
+on:
+  push:
+    branches: ['codex/c-native-hand169-bridge-20261023']
+    paths:
+      - 'gto/abstract/joint_stream*'
+      - 'gto/abstract/joint_update*'
+      - 'gto/abstract/joint_history.py'
+      - 'gto/abstract/joint_alternating.py'
+      - 'gto/abstract/joint_realization.py'
+      - 'gto/abstract/joint_vector*'
+      - 'gto/abstract/joint_training*'
+      - 'gto/abstract/pure_br*'
+      - 'tests/test_pure_br*'
+      - 'docs/qa/pure-br-20261112/**'
+      - 'tests/test_joint_training*'
+      - 'docs/qa/joint-training-20261111/**'
+      - 'tests/test_joint_vector.py'
+      - 'tests/test_joint_realization.py'
+      - 'tests/test_joint_history.py'
+      - 'tests/test_joint_alternating.py'
+      - 'docs/qa/joint-history-20261110/**'
+      - 'tests/test_joint_updates.py'
+      - 'tests/test_joint_update_report.py'
+      - 'docs/qa/joint-updates-20261108/**'
+      - 'tests/test_joint_stream.py'
+      - 'tests/test_joint_stream_study.py'
+      - 'tests/test_joint_stream_export.py'
+      - 'docs/qa/joint-stream-20261108/**'
+      - '.github/workflows/gto-joint-stream.yml'
+permissions:
+  contents: read
+jobs:
+  population-stream:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Preserve all frozen engines, ranges and UI
+        run: |
+          python -B - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          for folder in ['independent-preflop-20261105','suit-exact-preflop-20261106','continuation-audit-20261106']:
+           for group in json.loads(Path('docs/qa',folder,'dependency-manifest.json').read_text()).values():
+            for p,h in group.items():assert hashlib.sha256(Path(p).read_bytes()).hexdigest()==h,p
+          from gto.abstract.joint_stream_cache import population
+          rows=population();assert len(rows)==1755 and sum(r['multiplicity'] for r in rows)==22100
+          print('PASS protected identities and full physical board population')
+          PY
+      - name: Exact monolithic parity, independent BR, atomic restart and resource stops
+        run: python -B -m unittest tests.test_joint_stream tests.test_joint_stream_study tests.test_joint_stream_export tests.test_joint_updates tests.test_joint_update_report tests.test_joint_history tests.test_joint_alternating tests.test_joint_realization tests.test_joint_vector tests.test_joint_training tests.test_joint_training_study tests.test_joint_training_report tests.test_joint_training_window tests.test_joint_training_evidence tests.test_pure_br -v
+      - name: Verify approved telemetry-only compatibility transition
+        run: PYTHONPATH=. python -B docs/qa/joint-stream-20261108/migrate_timing.py --verify-source-only
+      - name: Replay registered averaging study without promoting research data
+        run: |
+          python -B - <<'PY'
+          import json
+          from pathlib import Path
+          from gto.abstract.joint_training_study import run
+          from gto.abstract.independent_verify import compare
+          expected=json.loads(Path('docs/qa/joint-training-20261111/small-results.json').read_text())
+          compare(run(),expected)
+          assert expected['normal_GTO_added']==0 and expected['formal_acceptance']==[0,12]
+          print('PASS tiny fixed averaging study replay;not whole-population or externalGTO evidence')
+          PY
+      - name: Guard actual full-epoch training evidence and initial resource refusal
+        run: |
+          python -B - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          from gto.abstract.joint_training_report import compare
+          from gto.abstract.independent_verify import compare as check
+          root=Path('docs/qa/joint-training-20261111');load=lambda n:json.loads((root/n).read_text())
+          expected=load('results.json')
+          actual=compare(load('legacy-training.json'),load('vector-training.json'),load('parity.json'),{k:load(k+'-evaluation.json') for k in ('legacy','vector')})
+          check(actual,{k:expected[k] for k in actual})
+          for name,h in expected['evidence_sha256'].items():assert hashlib.sha256((root/name).read_bytes()).hexdigest()==h
+          assert hashlib.sha256(Path('gto/abstract/joint_training.py').read_bytes()).hexdigest()==load('registration.json')['source_sha256']
+          gate=load('window-space-gate.json');assert not gate['space_gate_pass'] and not gate['additional_training_started']
+          assert gate['available_bytes']<gate['required_before_start_bytes']
+          assert expected['adopted_strategies']==0 and expected['formal_acceptance']==[0,12]
+          print('PASS actual training evidence hashes/research guards;no full1755replay or externalGTO claim')
+          PY
+      - name: Guard registered complete delayed-average outcomes and unsupported rows
+        run: |
+          python -B - <<'PY'
+          import base64,gzip,hashlib,json,math
+          from pathlib import Path
+          from gto.abstract import fullsupport as fs
+          root=Path('docs/qa/joint-training-20261111');load=lambda n:json.loads((root/n).read_text())
+          summary=load('window-summary.json');result=load('window-result.json');points=load('window-training-points.json')
+          assert result['status']=='COMPLETE' and result['normal_GTO_added']==0 and result['formal_acceptance']==[0,12]
+          assert [p['meta']['epoch'] for p in points]==[5,6,7] and sum(p['blocks'] for p in points)==10530
+          assert all(p['meta']['cursor']==p['meta']['owner']==0 for p in points)
+          for path,h in load('window-registration.json')['source_hashes'].items():assert hashlib.sha256(Path(path).relative_to('/workspace/poker-gto-value').read_bytes()).hexdigest()==h
+          for name,h in summary['evidence_sha256'].items():assert hashlib.sha256((root/name).read_bytes()).hexdigest()==h
+          for name in ('full7','delayed7'):
+           r=load('window-'+name+'.json');assert r['epoch']==7 and r['coverage']==1 and r['evaluated_orbits']==r['population_orbits']==1755
+           actual_frequency=fs.unpack(r['preflop_frequency'])
+           packet=json.loads(gzip.decompress(base64.b64decode((root/(name+'-research-ranges.json.gz.b64')).read_bytes())))
+           assert packet['normal_gto_eligible'] is False and packet['policy_checkpoint_digest']==r['state_digest']
+           for context in packet['ranges']:
+            assert len(context['hands'])==169
+            layout=next(row for row in r['preflop_layout'] if row['history']==context['history']);base=layout['base'];width=len(layout['actions'])
+            supported=0
+            for index,hand in enumerate(context['hands']):
+             p=hand['frequencies'];q=hand['action_ev_bb'];assert all(math.isfinite(x) for x in p+q) and abs(math.fsum(p)-1)<1e-10
+             start=base+index*width;assert p==actual_frequency[start:start+width] and q==r['preflop_action_ev_bb'][start:start+width]
+             assert abs(hand['model_ev_bb']-math.fsum(a*b for a,b in zip(p,q)))<1e-10
+             assert hand['average_mass']>=0 and hand['average_supported']==(hand['average_mass']>0)
+             supported+=hand['average_supported']
+             if not hand['average_supported']:assert hand['strategy_source']=='ZERO_AVERAGE_MASS_UNIFORM_EXTENSION' and max(abs(x-1/len(p)) for x in p)<1e-10
+            assert supported==summary[name]['support'][context['context']]['supported']
+          candidates=result['candidates_nashconv_bb'];assert result['selected_same_game_profile']==min(candidates,key=candidates.get)
+          assert result['strictly_improves_frozen']==(min(candidates.values())<candidates['immutable_frozen']-1e-8)
+          bound=(28*candidates['full7']-10*load('vector-evaluation.json')['restricted_nashconv_interval_bb'][1])/18
+          assert candidates['delayed7']+1e-8>=bound
+          assert load('window-placement.json')['pass'] and load('window-snapshot-validation.json')['matches_measured_original_vector4']
+          print('PASS failed candidates retained,actual169support disclosed,model-only averaging identity;no fullpopulation replay')
+          PY
+      - name: Full-population results qualification remains explicit
+        run: |
+          python -B - <<'PY'
+          import json,hashlib
+          from pathlib import Path
+          p=Path('docs/qa/joint-stream-20261108/results.json')
+          if not p.exists():
+           print('Full local population experiment PENDING; no numerical population claim verified by this CI')
+          else:
+           r=json.loads(p.read_text())
+           from gto.abstract.joint_stream import source_identity
+           from gto.abstract.joint_stream_cache import identity
+           assert r['source_identity']==source_identity() and r['producer_identity']==identity()
+           from gto.abstract import fullsupport as fs,joint_stream_cache as cache
+           from gto.abstract.joint_reach_study import tree
+           expected=fs.digest({'source':source_identity(),'producer':identity(),'population':cache.population(),'nodes':tree()[0],'version':1})
+           assert r['checkpoint_identity']==expected
+           assert r['formal_acceptance']==0 and r['normal_GTO_ranges']==0
+           for result in r['evaluations'].values():
+            assert result['population_orbits']==1755 and result['coverage']==1 and result['evaluated_orbits']==1755
+            assert result['full_real_game_gto_verified'] is False
+           print('PASS local artifact identities/coverage/qualification guards; full numerical population replay is NOT performed in this short CI')
+          PY
+
+      - name: Independently guard registered update comparison artifacts
+        run: |
+          python -B - <<'PYCODE'
+          import base64,gzip,hashlib,json
+          from pathlib import Path
+          from gto.abstract.joint_update_report import checked,improves
+          from gto.abstract import joint_updates as u,joint_stream_cache as cache
+          root=Path('docs/qa/joint-updates-20261108');path=root/'results.json'
+          if not path.exists():
+           print('Registered full-population comparison PENDING; no quality claim')
+          else:
+           result=json.loads(path.read_text());registration=json.loads((root/'registration.json').read_text())
+           assert result['formal_acceptance']==[0,12] and result['ordinary_GTO_added']==0
+           assert result['all_registered_checkpoints_completed']
+           for method,points in result['methods'].items():
+            assert registration['identities'][method]==u.identity(method,cache.population())
+            for point in points:
+             name=method+'-epoch'+str(point['epoch'])+'.json';raw=gzip.decompress(base64.b64decode((root/'checkpoints'/ (name+'.gz.b64')).read_bytes()))
+             assert hashlib.sha256(raw).hexdigest()==result['evidence_sha256'][name]
+             original=json.loads(raw);verified=checked(original)
+             assert original['method']==method and original['epoch']==point['epoch']
+             for key,value in verified.items():assert point[key]==value,(method,key)
+             assert point['improves_frozen']==improves(point['nashconv_bb'],result['frozen_baseline']['nashconv_bb'])
+           print('PASS update report/identity/numeric packet hashes/research isolation; full numerical population replay NOT performed')
+          PYCODE
+
+      - name: Replay finite history study with independently checked LP certificate
+        run: |
+          python -B - <<'PYCODE'
+          import json
+          from pathlib import Path
+          from gto.abstract.joint_history import study
+          expected=json.loads(Path('docs/qa/joint-history-20261110/small-results.json').read_text())
+          actual=study(references=[g['reference'] for g in expected['games']])
+          from gto.abstract.independent_verify import compare
+          compare(actual,expected)
+          assert actual['full_population_gate_pass']
+          print('PASS tiny history study replay,all64pureBR certificate;not fullHU50GTO')
+          PYCODE
+
+      - name: Guard full-population history and exact backend evidence
+        run: |
+          python -B - <<'PYCODE'
+          import base64,gzip,hashlib,json
+          from pathlib import Path
+          from gto.abstract.joint_update_report import checked,improves
+          from gto.abstract.joint_stream_export import export
+          root=Path('docs/qa/joint-history-20261110');path=root/'results.json'
+          if not path.exists():
+           print('Full population history comparison PENDING;no population quality claim')
+          else:
+           r=json.loads(path.read_text());assert r['formal_acceptance']==[0,12] and r['normal_GTO_added']==0 and r['UI_added']==0
+           best={'name':'immutable_frozen','nashconv_bb':r['baseline']['nashconv_bb']}
+           for name,point in r['points'].items():
+            raw=(root/(name+'.json')).read_bytes();x=json.loads(raw);actual=checked(x)
+            assert hashlib.sha256(raw).hexdigest()==point['source_sha256']
+            for key,value in actual.items():assert point[key]==value,(name,key)
+            packet=json.loads(gzip.decompress(base64.b64decode((root/(name+'-research-ranges.json.gz.b64')).read_bytes())))
+            assert packet==export(x) and packet['normal_gto_eligible'] is False
+            if improves(point['nashconv_bb'],best['nashconv_bb']):best={'name':name,'nashconv_bb':point['nashconv_bb']}
+           assert best==r['selected_same_game_profile']
+           v=json.loads((root/'vector-population-result.json').read_text());assert v['full_population_pass'] and v['orbits']==1755 and v['physical_coverage']==1
+           assert max(v['max_abs_errors'].values())<1e-8 and v['max_action_ev_difference']<1e-8
+           assert abs(v['root_metrics']['vector']['root_nc']-r['baseline']['nashconv_bb'])<1e-8
+           for file,h in json.loads((root/'vector-sample-benchmark.json').read_text())['source_sha256'].items():assert hashlib.sha256(Path(file).read_bytes()).hexdigest()==h
+           print('PASS complete numeric artifacts,research isolation,protected baseline selection;shortCI doesNOT replay all1755kernels')
+          PYCODE
+
+      - name: Check measured pure BR realization and signed attribution evidence
+        run: |
+          python -B - <<'PYCODE'
+          import hashlib,json
+          from pathlib import Path
+          from gto.abstract import pure_br_report as report
+          root=Path('docs/qa/pure-br-20261112')
+          for name,h in json.loads((root/'evidence-manifest.json').read_text()).items():
+           assert hashlib.sha256((root/name).read_bytes()).hexdigest()==h,name
+          for name,h in json.loads((root/'provenance.json').read_text())['source_sha256'].items():
+           assert hashlib.sha256(Path(name).read_bytes()).hexdigest()==h,name
+          for target in ('frozen','full7'):
+           cert=report.read(root/(target+'-certificate.json.gz.b64'))
+           measured=json.loads((root/(target+'-result.json')).read_text())
+           print(target,report.check(cert,measured))
+          print('PASS measured full-population artifacts;short CI does NOT rerun1755world kernels or verify NLHE accuracy')
+          PYCODE
+      - name: Replay preregistered matched small-game diagnostic with no promotion
+        run: |
+          python -B - <<'PYCODE'
+          import json
+          from pathlib import Path
+          from gto.abstract.pure_br_small import run
+          from gto.abstract.independent_verify import compare
+          expected=json.loads(Path('docs/qa/pure-br-20261112/small-results.json').read_text())
+          compare(run(),expected)
+          assert not expected['eligible_for_later_population_registration']
+          assert expected['formal_acceptance']==[0,12] and expected['normal_GTO_added']==0
+          print('PASS same-fixture8cohort9method replay;zero eligible new population methods,not externalGTO/heldout evidence')
+          PYCODE

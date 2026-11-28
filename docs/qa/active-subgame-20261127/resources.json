@@ -1,0 +1,18 @@
+{
+  "RAM_limit_bytes": 8589934592,
+  "app_search_latency": null,
+  "artifact_bytes_before_ledger": 118576802,
+  "compiler": "14.2.0",
+  "cpu_quota": "200000 100000",
+  "full_release_certified_CPU_hours": null,
+  "full_release_certified_storage_bytes": null,
+  "no_paid_resources_requested": true,
+  "numpy": "2.3.5",
+  "per_bounded_checkpoint_bytes": {
+    "17120101": 13526462,
+    "17120102": 13507895
+  },
+  "python": "3.12.14",
+  "qualified_cache_miss_seconds": null,
+  "training_CPU_total_seconds": 360.70586557200056
+}

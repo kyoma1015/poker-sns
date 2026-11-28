@@ -1,0 +1,40 @@
+{
+  "counts": {
+    "0": {
+      "average_trained": 5021,
+      "queries": 13852,
+      "strategic": 13852,
+      "strategic_average_trained": 5021,
+      "strategic_both": 3600,
+      "strategic_regret_trained": 3640
+    },
+    "1": {
+      "average_trained": 164,
+      "queries": 6711,
+      "strategic": 6711,
+      "strategic_average_trained": 164,
+      "strategic_both": 30,
+      "strategic_regret_trained": 57
+    },
+    "2": {
+      "average_trained": 29,
+      "queries": 3827,
+      "strategic": 3827,
+      "strategic_average_trained": 29,
+      "strategic_both": 4,
+      "strategic_regret_trained": 10
+    },
+    "3": {
+      "average_trained": 2,
+      "queries": 2095,
+      "strategic": 2095,
+      "strategic_average_trained": 2,
+      "strategic_both": 0,
+      "strategic_regret_trained": 4
+    }
+  },
+  "final_seed": 17129501,
+  "policy_digest": "eb0d0fe48f3dad3b4e8e65fb2b53598b90b14f40505340d1d4e3771057070598",
+  "scope": "posthoc decomposition of same frozen final paths, no selection or strategy changes",
+  "worlds": 8192
+}

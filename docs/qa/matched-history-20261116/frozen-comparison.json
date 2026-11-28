@@ -1,0 +1,71 @@
+{
+  "frozen_population_nashconv_bb": 0.9321071527220774,
+  "games": [
+    {
+      "board_weights": [
+        0.5,
+        0.5
+      ],
+      "candidate_final128": [
+        {
+          "methods": {
+            "cfr_plus": 0.0010076201064821433,
+            "dcfr": 0.00029318252229926234,
+            "vanilla": 0.06310918306235058
+          },
+          "teacher_iterations": 4
+        },
+        {
+          "methods": {
+            "cfr_plus": 0.0006867150073525119,
+            "dcfr": 0.004960614366048333,
+            "vanilla": 0.013483062949237845
+          },
+          "teacher_iterations": 32
+        }
+      ],
+      "frozen_policy_on_same_tiny_game": {
+        "bb_gain_bb": 0.12829998927036712,
+        "independent_pure_br_error_bb": 0.0,
+        "nashconv_bb": 17.882833003139005,
+        "sb_ev_bb": -18.254533013868638,
+        "sb_gain_bb": 17.754533013868638
+      }
+    },
+    {
+      "board_weights": [
+        0.25,
+        0.75
+      ],
+      "candidate_final128": [
+        {
+          "methods": {
+            "cfr_plus": 0.001123016851687253,
+            "dcfr": 0.000317744804866793,
+            "vanilla": 0.07143363713123851
+          },
+          "teacher_iterations": 4
+        },
+        {
+          "methods": {
+            "cfr_plus": 0.0007653603978347023,
+            "dcfr": 0.005528724061733548,
+            "vanilla": 0.015027198055047153
+          },
+          "teacher_iterations": 32
+        }
+      ],
+      "frozen_policy_on_same_tiny_game": {
+        "bb_gain_bb": 0.08104276373761365,
+        "independent_pure_br_error_bb": 0.0,
+        "nashconv_bb": 16.905222286733817,
+        "sb_ev_bb": -17.324179522996204,
+        "sb_gain_bb": 16.824179522996204
+      }
+    }
+  ],
+  "gate_changed": false,
+  "normal_GTO_added": 0,
+  "population_improvement": "UNMEASURED",
+  "scope": "SAME_REGISTERED_TINY_GAMES_ONLY_NOT_POPULATION_0_932107_COMPARISON"
+}

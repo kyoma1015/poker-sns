@@ -1,0 +1,203 @@
+{
+  "approval_pending": [
+    "formal20 stack values",
+    "MTT/ring profiles",
+    "formal size profiles",
+    "ante type/amount",
+    "rake/cap",
+    "unequal-stack profile matrix",
+    "A7 numerical quality values (thresholds unchanged; pending, not formally accepted)"
+  ],
+  "base": "7ff7687119976300f7775e88fdd3bb5e8b9522c7",
+  "evidence": "public-stream-final-20261127/summary.json; per-seed same-digest final receipts, source/build/RNG replay; stream-subgame artifact ledger",
+  "formal_pass": 0,
+  "items": [
+    {
+      "compute_evidence_or_limit": "CPU2/RAM8GiB; per-run timing/RSS in saved receipts. Full native BR upper and certified whole-release profile compute/cachemiss cost UNKNOWN.",
+      "current": "Active unchanged private-vector kernel,3923 native bounded nodes; uniform52 streaming implemented; independent quality not qualified",
+      "dependencies": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "formal_pass": false,
+      "id": 1,
+      "missing_next": "Same-game native joint continuation with legal-size support; independent native BR upper and quality certificate",
+      "requirement": "RFI"
+    },
+    {
+      "compute_evidence_or_limit": "CPU2/RAM8GiB; per-run timing/RSS in saved receipts. Full native BR upper and certified whole-release profile compute/cachemiss cost UNKNOWN.",
+      "current": "Native independent32768worlds:8BB gain reduction vs previous active significant both seeds;3.5/10.5 gains nonsignificant, no safety proof",
+      "dependencies": [
+        1,
+        4,
+        5,
+        11
+      ],
+      "formal_pass": false,
+      "id": 2,
+      "missing_next": "Qualify all required vs-open/3bet contexts, generic size responses and omitted-size error",
+      "requirement": "vs-open/3bet"
+    },
+    {
+      "compute_evidence_or_limit": "CPU2/RAM8GiB; per-run timing/RSS in saved receipts. Full native BR upper and certified whole-release profile compute/cachemiss cost UNKNOWN.",
+      "current": "Both seeds vs10.5 posterior positive169/169; structural zero-range fixed; all169 exact Fold EV now defined, Jam/other actions precision not qualified",
+      "dependencies": [
+        2,
+        4,
+        5,
+        11
+      ],
+      "formal_pass": false,
+      "id": 3,
+      "missing_next": "Same-digest deeper raise responses and independent action EV/BR evidence",
+      "requirement": "vs3bet/4bet"
+    },
+    {
+      "compute_evidence_or_limit": "CPU2/RAM8GiB; per-run timing/RSS in saved receipts. Full native BR upper and certified whole-release profile compute/cachemiss cost UNKNOWN.",
+      "current": "Both seeds x RFI/vs3.5open/vs10.5threebet x169 frequencies saved,507 rows per digest; required full profile/position quality not qualified",
+      "dependencies": [
+        1,
+        2,
+        3,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "formal_pass": false,
+      "id": 4,
+      "missing_next": "Qualified full profile/position mixed frequencies with prior/learned distinction",
+      "requirement": "169 frequencies"
+    },
+    {
+      "compute_evidence_or_limit": "CPU2/RAM8GiB; per-run timing/RSS in saved receipts. Full native BR upper and certified whole-release profile compute/cachemiss cost UNKNOWN.",
+      "current": "Per final digest: Fold507 exact; Jam proposal97/111; formal precision0. Old Fold338+Jam203/210 and33462root measurements remain separate",
+      "dependencies": [
+        1,
+        2,
+        3,
+        11
+      ],
+      "formal_pass": false,
+      "id": 5,
+      "missing_next": "All169/native action precision plus uniform continuation/chance/info/size error envelopes",
+      "requirement": "Verified EV"
+    },
+    {
+      "compute_evidence_or_limit": "CPU2/RAM8GiB; per-run timing/RSS in saved receipts. Full native BR upper and certified whole-release profile compute/cachemiss cost UNKNOWN.",
+      "current": "Existing unapproved MTT/ring/ICM mode proposals unchanged",
+      "dependencies": [
+        8,
+        10
+      ],
+      "formal_pass": false,
+      "id": 6,
+      "missing_next": "Approve modes/units/profile and qualify condition-matched engine/strategies",
+      "requirement": "MTT/ring"
+    },
+    {
+      "compute_evidence_or_limit": "CPU2/RAM8GiB; per-run timing/RSS in saved receipts. Full native BR upper and certified whole-release profile compute/cachemiss cost UNKNOWN.",
+      "current": "3exact .023738946 preserved; new12CPU K4 IID/strat sumgain .298375/.112391 and .170206/.214564; mixed, no adoption;6/9 two seeds resumed with paired256world native uncertainty inadequate",
+      "dependencies": [
+        1,
+        4,
+        5,
+        8,
+        9,
+        10,
+        11
+      ],
+      "formal_pass": false,
+      "id": 7,
+      "missing_next": "Multiway reach/chance/variance improvements and independent unilateral BR evidence",
+      "requirement": "2–9 players"
+    },
+    {
+      "compute_evidence_or_limit": "CPU2/RAM8GiB; per-run timing/RSS in saved receipts. Full native BR upper and certified whole-release profile compute/cachemiss cost UNKNOWN.",
+      "current": "20 concrete values pendingA1; no formal profile adopted; HU50 research only",
+      "dependencies": [
+        6,
+        10
+      ],
+      "formal_pass": false,
+      "id": 8,
+      "missing_next": "Approve existing20stack list; shared cache/local solve without enumerating all unequal vectors",
+      "requirement": "Formal stacks"
+    },
+    {
+      "compute_evidence_or_limit": "CPU2/RAM8GiB; per-run timing/RSS in saved receipts. Full native BR upper and certified whole-release profile compute/cachemiss cost UNKNOWN.",
+      "current": "All seats/positions remain required; no full qualified position matrix",
+      "dependencies": [
+        1,
+        2,
+        3,
+        7,
+        8
+      ],
+      "formal_pass": false,
+      "id": 9,
+      "missing_next": "Generate/certify every required position and distinct history",
+      "requirement": "Positions"
+    },
+    {
+      "compute_evidence_or_limit": "CPU2/RAM8GiB; per-run timing/RSS in saved receipts. Full native BR upper and certified whole-release profile compute/cachemiss cost UNKNOWN.",
+      "current": "Existing native ledgers/independentN oracles retained; no full strategy quality across ante/rake/unequal inputs",
+      "dependencies": [
+        6,
+        7,
+        8
+      ],
+      "formal_pass": false,
+      "id": 10,
+      "missing_next": "Approved exact cashflow profile plus condition-matched multiway training/BR",
+      "requirement": "BB ante/rake/unequal stacks"
+    },
+    {
+      "compute_evidence_or_limit": "CPU2/RAM8GiB; per-run timing/RSS in saved receipts. Full native BR upper and certified whole-release profile compute/cachemiss cost UNKNOWN.",
+      "current": "Native legality preserved; root87raises omitted; allsize uniform error upper UNKNOWN; formal size proposal pending",
+      "dependencies": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "formal_pass": false,
+      "id": 11,
+      "missing_next": "Adaptive legal support/downstream learning and proved omitted-size/abstraction transfer bounds",
+      "requirement": "Formal sizing"
+    },
+    {
+      "compute_evidence_or_limit": "CPU2/RAM8GiB; per-run timing/RSS in saved receipts. Full native BR upper and certified whole-release profile compute/cachemiss cost UNKNOWN.",
+      "current": "Existing registry/search boundary retained; zero unverified additions; full application accepted strategy count0",
+      "dependencies": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "formal_pass": false,
+      "id": 12,
+      "missing_next": "Only complete accepted evidence/digest enters existing registry/search",
+      "requirement": "Poker ID search"
+    }
+  ],
+  "previous_formal_pass": 0,
+  "scope": "2..9 players; HU50 is not initial release",
+  "verified_3bet": 0,
+  "verified_RFI": 0
+}

@@ -1,0 +1,100 @@
+{
+  "chosen": [
+    {
+      "node": 126,
+      "coarse": 632,
+      "round": 2,
+      "owner": 1,
+      "CF_gap": 0.0059057986488903185,
+      "on_policy_reach": 5.70467755191601e-05
+    },
+    {
+      "node": 126,
+      "coarse": 476,
+      "round": 2,
+      "owner": 1,
+      "CF_gap": 0.005815773278081405,
+      "on_policy_reach": 0.0004061647262518345
+    },
+    {
+      "node": 126,
+      "coarse": 563,
+      "round": 2,
+      "owner": 1,
+      "CF_gap": 0.005674905403161152,
+      "on_policy_reach": 1.0327265682945473e-05
+    },
+    {
+      "node": 165,
+      "coarse": 1264,
+      "round": 3,
+      "owner": 1,
+      "CF_gap": 0.005535044982039586,
+      "on_policy_reach": 5.209683797628343e-06
+    },
+    {
+      "node": 165,
+      "coarse": 952,
+      "round": 3,
+      "owner": 1,
+      "CF_gap": 0.005407487497925394,
+      "on_policy_reach": 5.3125460304391456e-05
+    },
+    {
+      "node": 126,
+      "coarse": 451,
+      "round": 2,
+      "owner": 1,
+      "CF_gap": 0.004920117633048502,
+      "on_policy_reach": 8.963527971557375e-06
+    },
+    {
+      "node": 126,
+      "coarse": 435,
+      "round": 2,
+      "owner": 1,
+      "CF_gap": 0.0038915362776765676,
+      "on_policy_reach": 0.0002019522814938604
+    },
+    {
+      "node": 5,
+      "coarse": 451,
+      "round": 2,
+      "owner": 1,
+      "CF_gap": 0.0037343997339324567,
+      "on_policy_reach": 0.0004377351690098756
+    }
+  ],
+  "before": {
+    "coarse": {
+      "EV_bb": 0.08778273301449761,
+      "BR_SB_bb": 1.6109904462154807,
+      "BR_BB_bb": 1.3223448204954529,
+      "NashConv_bb": 2.933335266710934,
+      "physical_infosets": false,
+      "full_native_BR_upper": null,
+      "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+    },
+    "fine": {
+      "EV_bb": 0.08778273301449761,
+      "BR_SB_bb": 2.277260649022025,
+      "BR_BB_bb": 1.849381919829458,
+      "NashConv_bb": 4.126642568851484,
+      "physical_infosets": true,
+      "full_native_BR_upper": null,
+      "scope": "exact finite-catalog/private-pair/public-support BR; full target chance error UNKNOWN"
+    },
+    "exact_same_policy_finite_information_gains": [
+      0.6662702028065444,
+      0.5270370993340052
+    ],
+    "finite_fine_NC_upper": 4.126642568851484,
+    "full_native_NC_upper": null,
+    "chance_error_upper": null,
+    "omitted_size_error_upper": null,
+    "continuation_error_upper": null
+  },
+  "seconds": 91.30484457700004,
+  "peak_RSS_bytes": 2716528640,
+  "formal_pass": 0
+}

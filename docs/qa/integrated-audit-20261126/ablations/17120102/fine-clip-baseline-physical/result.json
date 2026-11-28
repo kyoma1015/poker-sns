@@ -1,0 +1,185 @@
+{
+  "checkpoint_wall_seconds": 2.750253404000432,
+  "curve": [
+    {
+      "metric": {
+        "BR_BB_bb": 1.9664338156103032,
+        "BR_SB_bb": 3.3947357531202043,
+        "EV_bb": 0.1060850256115407,
+        "NashConv_bb": 5.361169568730507,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "projection": {
+          "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+          "max_removed_mass": 0.5889573950044795,
+          "zero_mass_projected_rows": 0
+        }
+      },
+      "pure_seconds": 0.0,
+      "t": 0
+    },
+    {
+      "metric": {
+        "BR_BB_bb": 2.124351701005037,
+        "BR_SB_bb": 3.5158129335140993,
+        "EV_bb": 0.024857620889789267,
+        "NashConv_bb": 5.640164634519136,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "projection": {
+          "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+          "max_removed_mass": 0.9227589988327904,
+          "zero_mass_projected_rows": 0
+        }
+      },
+      "pure_seconds": 0.8661594100000052,
+      "stats": {
+        "average_visited": 23009,
+        "halted": false,
+        "iterations": 4,
+        "regret_visited": 25428,
+        "rows": 26700
+      },
+      "t": 4
+    },
+    {
+      "metric": {
+        "BR_BB_bb": 2.3520129803409366,
+        "BR_SB_bb": 3.750340546625716,
+        "EV_bb": 0.11257622249290034,
+        "NashConv_bb": 6.1023535269666525,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "projection": {
+          "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+          "max_removed_mass": 0.9693116562630302,
+          "zero_mass_projected_rows": 0
+        }
+      },
+      "pure_seconds": 3.411624834000012,
+      "stats": {
+        "average_visited": 58675,
+        "halted": false,
+        "iterations": 16,
+        "regret_visited": 70657,
+        "rows": 71601
+      },
+      "t": 16
+    },
+    {
+      "metric": {
+        "BR_BB_bb": 2.8480274217370476,
+        "BR_SB_bb": 3.839631580613737,
+        "EV_bb": 0.18952649951659806,
+        "NashConv_bb": 6.6876590023507845,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "projection": {
+          "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+          "max_removed_mass": 0.9494782404074756,
+          "zero_mass_projected_rows": 0
+        }
+      },
+      "pure_seconds": 15.113440769999972,
+      "stats": {
+        "average_visited": 239500,
+        "halted": false,
+        "iterations": 64,
+        "regret_visited": 294032,
+        "rows": 294664
+      },
+      "t": 64
+    },
+    {
+      "metric": {
+        "BR_BB_bb": 3.0515516264811913,
+        "BR_SB_bb": 4.489048340442732,
+        "EV_bb": 0.4045436669594789,
+        "NashConv_bb": 7.540599966923923,
+        "full_native_BR_upper": null,
+        "physical_infosets": true,
+        "projection": {
+          "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+          "max_removed_mass": 0.9994610633877107,
+          "zero_mass_projected_rows": 0
+        }
+      },
+      "pure_seconds": 24.91829620099995,
+      "stats": {
+        "average_visited": 407474,
+        "halted": true,
+        "iterations": 112,
+        "regret_visited": 495871,
+        "rows": 500000
+      },
+      "t": 112
+    }
+  ],
+  "final": {
+    "BR_BB_bb": 4.104467866065827,
+    "BR_SB_bb": 6.3287913261508635,
+    "EV_bb": 0.2397869090042154,
+    "NashConv_bb": 10.43325919221669,
+    "full_native_BR_upper": null,
+    "physical_infosets": true,
+    "projection": {
+      "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+      "max_removed_mass": 0.5889573950044795,
+      "zero_mass_projected_rows": 0
+    }
+  },
+  "final_boards": [
+    [
+      4,
+      28,
+      20,
+      30,
+      10
+    ],
+    [
+      2,
+      0,
+      49,
+      11,
+      19
+    ]
+  ],
+  "formal_acceptance": 0,
+  "full_native_BR_upper": null,
+  "initial": {
+    "BR_BB_bb": 1.9664338156103032,
+    "BR_SB_bb": 3.3947357531202043,
+    "EV_bb": 0.1060850256115407,
+    "NashConv_bb": 5.361169568730507,
+    "full_native_BR_upper": null,
+    "physical_infosets": true,
+    "projection": {
+      "action_projection": "condition on restricted native actions; zero-mass projection uniform, never native certificate",
+      "max_removed_mass": 0.5889573950044795,
+      "zero_mass_projected_rows": 0
+    }
+  },
+  "peak_RSS_bytes": 742498304,
+  "policy_digest": "ddcac690b59dc6c7b128c9305e541e00f607db6290a751eb8a10a6fae593c49d",
+  "pure_seconds": 24.91829620099995,
+  "reason": "INCOMPLETE_PAIR",
+  "seed": 17120102,
+  "selected": 0,
+  "selection_boards": [
+    [
+      34,
+      46,
+      24,
+      14,
+      2
+    ],
+    [
+      51,
+      36,
+      4,
+      47,
+      26
+    ]
+  ],
+  "tag": "fine-clip-baseline-physical"
+}

@@ -1,0 +1,76 @@
+{
+  "base": "7ff7687119976300f7775e88fdd3bb5e8b9522c7",
+  "branch": "codex/c-native-hand169-bridge-20261023",
+  "state": "open",
+  "draft": true,
+  "successful_CI_manual_rerun": false,
+  "runs": [
+    {
+      "id": 45952261918,
+      "name": "GTO preflop release candidate verification",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "id": 45952261959,
+      "name": "GTO matched-history CFR verification",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "id": 45952261928,
+      "name": "GTO standalone static demo verification",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "id": 45952261912,
+      "name": "GTO preflop search verification",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "id": 45952261964,
+      "name": "GTO full-game qualification boundary verification",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "id": 45952262044,
+      "name": "GTO preflop abstraction research verification",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "id": 45952261913,
+      "name": "GTO fixed-policy EV precision verification",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "id": 45952262045,
+      "name": "GTO reconstructed native verification",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1
+    },
+    {
+      "id": 45952246310,
+      "name": "GTO full-game qualification boundary verification",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1
+    }
+  ],
+  "cpu_cores": 2,
+  "memory_bytes": 8589934592,
+  "old_actual_checkpoint_replay": "both bounded seeds source/build/checkpoint/initial SHA and nextstep-proof exact PASS; see legacy-replay.txt",
+  "old_session_uncommitted_files": "only currently accessible workspace; inaccessible prior sessions cannot be claimed recovered"
+}

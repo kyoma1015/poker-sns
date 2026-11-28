@@ -1,0 +1,38 @@
+{
+  "exact_tree_match": "UNKNOWN",
+  "is_free": true,
+  "library_name": "HU Cash",
+  "reference_accuracy_verified": false,
+  "retrieved_date": "2026-10-31",
+  "source": "https://api.gtobase.com/v2/get_libraries_no_auth",
+  "spots": [
+    {
+      "all_positions": [
+        "SB",
+        "BB"
+      ],
+      "default_stack": "100",
+      "eff_stacks": [
+        "50",
+        "75",
+        "100"
+      ],
+      "max_stack": 100,
+      "min_stack": 50,
+      "parsable": false,
+      "parse_max_stack": 100,
+      "parse_min_stack": 50,
+      "postflop_count": 10,
+      "postflop_type": "partially",
+      "sort_index": 1,
+      "spot": "HU Cash",
+      "spot_id": 107,
+      "spot_positions": [
+        "SB",
+        "BB"
+      ],
+      "spot_view_only": true
+    }
+  ],
+  "strategy_data_acquired": false
+}

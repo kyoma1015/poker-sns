@@ -1,0 +1,27 @@
+{
+  "base": "cdeb899d68eb70dabb7291501d4db1674aa4836b",
+  "python": "3.12.14",
+  "logical_CPUs": 3,
+  "cpu_quota": "200000 100000",
+  "RAM_quota": "8589934592",
+  "QA_budget_bytes": 536870912,
+  "QA_bytes": 402742078,
+  "sources": {
+    "gto/qualification/integrated_baseline_confirmation.py": "50c2b1674a6eeb074656b2ec7a84340ee78bf9baf695ea75d8ab28a6b676509e",
+    "gto/qualification/integrated_solver.py": "30621e2a5904ba40d3e9657ce3a9b7adabbdc03f4fb2072cd4e199c93e8c41df",
+    "gto/qualification/integrated_native.cc": "4491655ef68fd21fadb8ba89333a585479c24b118c23350ea31d08aad2a262c4",
+    "gto/qualification/integrated_multiplayer_study.py": "1454fe01751913536ac459cca4c221e7132f174926101acccaff8ffafd4762e1",
+    "gto/qualification/integrated_same_game.py": "a247d3a3274183b0c0da9d32bf9f1692d393375c4bc4201e17a327dbd0169324",
+    "gto/qualification/integrated_br.py": "05d810a8baa6ef03b4378e0d6d24338c8a56a18555ea5d285e2f053ee9ef391f",
+    "gto/qualification/integrated_multiplayer_audit.py": "0e68fb58092695b2664c77c4fadde54ccdaee1d5bbe50d7bf4d87d98b57087bc",
+    "gto/qualification/integrated_audit_native.py": "965ff505a47626279f512b893ebbb177b2a5982cdf32cba9c1887b161cdd2d47",
+    "gto/qualification/integrated_final_study.py": "31229ce8c5d5fcbaf483690eb6c1652cd784b4651b55283d371fc608220ed04d",
+    "gto/qualification/integrated_extension.py": "ff847dff298f35f9468a5c9d10eef1dddb2096a679e6ce0b3af4d76f5ae66a52",
+    "gto/qualification/integrated_precision.py": "d4f346febbc28064825091f4a029595dd75100a54f903cdf6e5f1a14f43ccbc8",
+    "gto/qualification/integrated_study.py": "7d1e8e5e85c5bce677d68e7751efe712fb406bc2b2185f9c645f0a3dec036e8d",
+    "gto/qualification/integrated_audit.py": "a188b14a1305569a686bf777343ed4df2858edc6daa37e66b76cdde4f046134d"
+  },
+  "native_binary_sha256": "b51805c9bdd56b65121c398be32cb0db54811cf511e90ecc89dde91cdec1b8a9",
+  "integrated_binary_sha256": "07d34a7dc0c31a7513c41b554007b1a6399043b1bf457e9250f133d4c013f039",
+  "formal_acceptance": 0
+}

@@ -1,0 +1,22 @@
+{
+  "rfi": {
+    "hands": 169,
+    "changed_vs_old": 166,
+    "changed_vs_matched_control": 156
+  },
+  "vs_3bet": {
+    "hands": 169,
+    "changed_vs_old": 159,
+    "changed_vs_matched_control": 148
+  },
+  "vs_4bet": {
+    "hands": 169,
+    "changed_vs_old": 135,
+    "changed_vs_matched_control": 119
+  },
+  "vs_open": {
+    "hands": 169,
+    "changed_vs_old": 169,
+    "changed_vs_matched_control": 166
+  }
+}

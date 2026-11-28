@@ -1,0 +1,46 @@
+{
+  "approved_change": "rename reporting row offset; no numerical update changes",
+  "base": "9e865e5668d001e080714ca3258e5a71b8e8a947",
+  "current_source_identity": {
+    "joint_stream.cc": "c3fcbffab8fa5e429e7240f63de11a7b86659cc6e7d46277a268a7897e34336c",
+    "joint_stream.py": "0d6d2b19ab009e9116510bd066c7da14451198f1862520c76a9530e93894bbfe"
+  },
+  "historical_source_identity": {
+    "joint_stream.cc": "c3fcbffab8fa5e429e7240f63de11a7b86659cc6e7d46277a268a7897e34336c",
+    "joint_stream.py": "a28b2e2240fee84630b7e9a21562b8f982f958e3a4c13060cf7ce6f5832db6ba"
+  },
+  "new_checkpoint_identity": "251cccffb1b5dfcc3f990049e7bb5ebe1ebbb82889ebb6bb9d346e54e580715a",
+  "old_checkpoint_identity": "c93363985c714754307239bd97f0b45a9dd52a7dfaa40d834ec2600bc4e841a5",
+  "receipts": [
+    {
+      "epoch": 4,
+      "name": "uniform4",
+      "new_identity": "251cccffb1b5dfcc3f990049e7bb5ebe1ebbb82889ebb6bb9d346e54e580715a",
+      "numeric_digest_after": "2dfc6deea6d20a6a97ca313334b28d946874f4f4afc0bf676b1efd1e6bf282c3",
+      "numeric_digest_before": "2dfc6deea6d20a6a97ca313334b28d946874f4f4afc0bf676b1efd1e6bf282c3",
+      "numeric_state_unchanged": true,
+      "old_identity": "c93363985c714754307239bd97f0b45a9dd52a7dfaa40d834ec2600bc4e841a5",
+      "original_backup": "/workspace/joint-stream-before-timing/uniform4.sqlite"
+    },
+    {
+      "epoch": 0,
+      "name": "frozen",
+      "new_identity": "251cccffb1b5dfcc3f990049e7bb5ebe1ebbb82889ebb6bb9d346e54e580715a",
+      "numeric_digest_after": "2240880702b76f89df010bc8af952615fd2b649984633c90ce2427e41a290122",
+      "numeric_digest_before": "2240880702b76f89df010bc8af952615fd2b649984633c90ce2427e41a290122",
+      "numeric_state_unchanged": true,
+      "old_identity": "c93363985c714754307239bd97f0b45a9dd52a7dfaa40d834ec2600bc4e841a5",
+      "original_backup": "/workspace/joint-stream-before-timing/frozen.sqlite"
+    },
+    {
+      "epoch": 2,
+      "name": "warm2",
+      "new_identity": "251cccffb1b5dfcc3f990049e7bb5ebe1ebbb82889ebb6bb9d346e54e580715a",
+      "numeric_digest_after": "25cbe3db53f414c167b450622a4949b34bd7cf93ed26866eabdc5f27c1ca1957",
+      "numeric_digest_before": "25cbe3db53f414c167b450622a4949b34bd7cf93ed26866eabdc5f27c1ca1957",
+      "numeric_state_unchanged": true,
+      "old_identity": "c93363985c714754307239bd97f0b45a9dd52a7dfaa40d834ec2600bc4e841a5",
+      "original_backup": "/workspace/joint-stream-before-timing/warm2.sqlite"
+    }
+  ]
+}

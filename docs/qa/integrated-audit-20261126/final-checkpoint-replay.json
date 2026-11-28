@@ -1,0 +1,38 @@
+[
+  {
+    "kind": "native_trained_last",
+    "seed": 17120101,
+    "nextstep_SHA256": "c1918bbb82b455a3acfea1c936ccb450e775b159ade9f8bc2871d56c31ac4de5",
+    "exact": true
+  },
+  {
+    "kind": "native_trained_last",
+    "seed": 17120102,
+    "nextstep_SHA256": "f7e43c9b546b7ffff2c79cfa5c5c35fc13f0cee7f004b2325a9003576d0f0583",
+    "exact": true
+  },
+  {
+    "kind": "same_game_exact",
+    "seed": 17120101,
+    "nextstep_SHA256": "fa37e2acb201cb8122ff8f841d54e801584f0b4f25617968043d60aced974d61",
+    "exact": true
+  },
+  {
+    "kind": "same_game_sample",
+    "seed": 17120101,
+    "nextstep_SHA256": "b5e80a5bd9a36447ecfc8c1abbb567dd186ac6b095ec16b286de796f792836e0",
+    "exact": true
+  },
+  {
+    "kind": "same_game_exact",
+    "seed": 17120102,
+    "nextstep_SHA256": "55183b4f5bee2a77af05d67f4ec84c5b4ffa16880975c0588be0f2f2bea538c5",
+    "exact": true
+  },
+  {
+    "kind": "same_game_sample",
+    "seed": 17120102,
+    "nextstep_SHA256": "0e7bd7086da1b82f4d4c43df6c11c3436d5d0db94b6268a40c82be01a14e2a35",
+    "exact": true
+  }
+]

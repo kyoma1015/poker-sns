@@ -1,0 +1,16 @@
+{
+  "completed_worlds": 8,
+  "formal_acceptance": 0,
+  "full_169_action_native_EV_precision_bb": null,
+  "full_native_BR_upper_bb": null,
+  "nashconv_bb": null,
+  "policies": {
+    "passive_control": "fa2ba4f7584a62c9d03478b3e2df29e52d3fc02976f13294c02aa5a401cf15f3",
+    "range_reoptimized": "65b9610c35ce044a3c3ba5895ab92a908da686c8eaeca64699efc1ee0fe7fb0d"
+  },
+  "range_coupling_error_bb": null,
+  "requested_worlds": 8,
+  "seconds": 39.274988784000016,
+  "status": "BLOCKED_UNVERIFIED",
+  "verified_strategies": 0
+}

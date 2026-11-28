@@ -1,0 +1,100 @@
+{
+  "cases": [
+    {
+      "additional_iterations": 16,
+      "board_weights": [
+        0.5,
+        0.5
+      ],
+      "initial": {
+        "bb_gain_bb": 0.01317669156260226,
+        "independent_pure_br_error_bb": 0.0,
+        "nashconv_bb": 0.0167516842702653,
+        "sb_ev_bb": -0.503574992707663,
+        "sb_gain_bb": 0.0035749927076630383
+      },
+      "methods": {
+        "R0S0": {
+          "bb_gain_bb": 0.012786396014606627,
+          "independent_pure_br_error_bb": 0.0,
+          "nashconv_bb": 0.01625898767408096,
+          "sb_ev_bb": -0.5034725916594743,
+          "sb_gain_bb": 0.0034725916594743333
+        },
+        "R0S1": {
+          "bb_gain_bb": 0.01259034306596929,
+          "independent_pure_br_error_bb": 0.0,
+          "nashconv_bb": 0.01601141741347445,
+          "sb_ev_bb": -0.5034210743475052,
+          "sb_gain_bb": 0.0034210743475051597
+        },
+        "R1S0": {
+          "bb_gain_bb": 0.012786396014606627,
+          "independent_pure_br_error_bb": 0.0,
+          "nashconv_bb": 0.01625898767408096,
+          "sb_ev_bb": -0.5034725916594743,
+          "sb_gain_bb": 0.0034725916594743333
+        },
+        "R1S1": {
+          "bb_gain_bb": 0.01259034306596929,
+          "independent_pure_br_error_bb": 0.0,
+          "nashconv_bb": 0.01601141741347445,
+          "sb_ev_bb": -0.5034210743475052,
+          "sb_gain_bb": 0.0034210743475051597
+        }
+      },
+      "teacher_actual_iterations": 32
+    },
+    {
+      "additional_iterations": 16,
+      "board_weights": [
+        0.25,
+        0.75
+      ],
+      "initial": {
+        "bb_gain_bb": 0.008248197375961719,
+        "independent_pure_br_error_bb": 0.0,
+        "nashconv_bb": 0.01867015515930104,
+        "sb_ev_bb": -0.5104219577833393,
+        "sb_gain_bb": 0.01042195778333932
+      },
+      "methods": {
+        "R0S0": {
+          "bb_gain_bb": 0.008003348472759186,
+          "independent_pure_br_error_bb": 0.0,
+          "nashconv_bb": 0.01812103294873335,
+          "sb_ev_bb": -0.5101176844759742,
+          "sb_gain_bb": 0.010117684475974165
+        },
+        "R0S1": {
+          "bb_gain_bb": 0.007880368344862276,
+          "independent_pure_br_error_bb": 0.0,
+          "nashconv_bb": 0.017845109936827308,
+          "sb_ev_bb": -0.509964741591965,
+          "sb_gain_bb": 0.009964741591965032
+        },
+        "R1S0": {
+          "bb_gain_bb": 0.008003348472759186,
+          "independent_pure_br_error_bb": 0.0,
+          "nashconv_bb": 0.01812103294873335,
+          "sb_ev_bb": -0.5101176844759742,
+          "sb_gain_bb": 0.010117684475974165
+        },
+        "R1S1": {
+          "bb_gain_bb": 0.007880368344862276,
+          "independent_pure_br_error_bb": 0.0,
+          "nashconv_bb": 0.017845109936827308,
+          "sb_ev_bb": -0.509964741591965,
+          "sb_gain_bb": 0.009964741591965032
+        }
+      },
+      "teacher_actual_iterations": 32
+    }
+  ],
+  "new_population_runs": 0,
+  "normal_GTO_added": 0,
+  "schema": "pokerid-short-dcfr-factorial-v1",
+  "scope": "two existing tiny games only; inherited linear S retained; not population accuracy",
+  "seconds": 8.185606001000451,
+  "stopped_after_fixed_budget": true
+}

@@ -1,0 +1,12 @@
+test_active_raw_CF_average_and_BR_match_existing_CSR (gto.qualification.test_active_chance.ActiveOracle.test_active_raw_CF_average_and_BR_match_existing_CSR) ... ok
+test_cross_instance_resume_restores_warm_prior_and_next_update (gto.qualification.test_active_chance.ActiveOracle.test_cross_instance_resume_restores_warm_prior_and_next_update) ... ok
+test_features_are_suit_invariant_and_prefix_rank_is_exact (gto.qualification.test_active_chance.ActiveOracle.test_features_are_suit_invariant_and_prefix_rank_is_exact) ... ok
+test_native_adapter_matches_training_rows_and_explicit_offtree_backoff (gto.qualification.test_active_chance.ActiveOracle.test_native_adapter_matches_training_rows_and_explicit_offtree_backoff) ... ok
+test_six_action_CSR_is_not_truncated_to_four (gto.qualification.test_active_chance.ActiveOracle.test_six_action_CSR_is_not_truncated_to_four) ... ok
+test_suit_orbit_response_scores_equal_explicit_24_permutations (gto.qualification.test_active_chance.ActiveOracle.test_suit_orbit_response_scores_equal_explicit_24_permutations) ... ok
+test_vectorized_initialization_preserves_reference_and_rejects_mixed_rows (gto.qualification.test_active_chance.ActiveOracle.test_vectorized_initialization_preserves_reference_and_rejects_mixed_rows) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 9.950s
+
+OK
